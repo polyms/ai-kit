@@ -39,7 +39,7 @@ _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` files)
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/pm` → `/to-issues` → `/ux` → `/dev`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
+The stage chain that turns ideas into shipped code: `/align` → `/pm` → `/to-issues` → `/ux` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
 **Setup**:
@@ -59,8 +59,12 @@ Design flows and UI specs from a PRD. Invoke with `/ux`. _(Planned.)_
 _Avoid_: design, UI phase
 
 **Dev**:
-Ship production code from spec — TDD, debugging, review. Invoke with `/dev`.
+Ship production code from spec — TDD, debugging. Pre-merge review via `code-review`. Invoke with `/dev`.
 _Avoid_: implementation, coding phase
+
+**Code review**:
+Two-axis review skill (Standards + Spec) since a pinned git fixed point — parallel sub-agents, side-by-side findings. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code". Invoke with `/code-review`.
+_Avoid_: PR review (generic), lint check
 
 **Handoff**:
 Transfer between pipeline stages — summary plus `## Next Step` pointing to exactly one next skill.

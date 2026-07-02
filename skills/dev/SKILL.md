@@ -9,11 +9,11 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 ## Quick Router
 
-| Intent                | Workflow                                  | Reference                      |
-| --------------------- | ----------------------------------------- | ------------------------------ |
-| New feature from spec | [Implement workflow](#implement-workflow) | [tdd-guide.md](tdd-guide.md)   |
-| Bug / regression      | [Debug workflow](#debug-workflow)         | [debug-loop.md](debug-loop.md) |
-| Code review           | [Review workflow](#review-workflow)       | —                              |
+| Intent                | Workflow                                               | Reference                      |
+| --------------------- | ------------------------------------------------------ | ------------------------------ |
+| New feature from spec | [Implement workflow](#implement-workflow)              | [tdd-guide.md](tdd-guide.md)   |
+| Bug / regression      | [Debug workflow](#debug-workflow)                      | [debug-loop.md](debug-loop.md) |
+| Branch / PR review    | **`code-review`** — pre-merge gate, not red-green loop | —                              |
 
 ## Implement Workflow
 
@@ -68,22 +68,6 @@ One vertical slice at a time — see [tdd-guide.md](tdd-guide.md):
 6. Cleanup debug logs; state hypothesis in commit message
 
 **Completion criterion:** Loop goes green; regression test exists or seam gap documented.
-
-## Review Workflow
-
-Review diff on two axes:
-
-**Standards** — correctness, security, types, naming (glossary), test quality, a11y
-
-**Spec** — does it implement the PRD/stories? Missing ACs?
-
-Format feedback:
-
-- **Critical** — must fix before merge
-- **Suggestion** — consider improving
-- **Nice to have** — optional
-
-**Completion criterion:** Every Critical item is fixed or filed as a follow-up issue; Suggestions and Nice-to-haves listed explicitly.
 
 ## Stack Defaults
 

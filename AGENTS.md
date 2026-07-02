@@ -18,7 +18,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Pipeline
 
-Idea → `/align` → `/pm` → `/to-issues` → `/ux` → `/dev`; raw issues via `/triage`. Specs in GitHub Issues; glossary in `CONTEXT.md`.
+Idea → `/align` → `/pm` → `/to-issues` → `/ux` → `/dev` → `/code-review`; raw issues via `/triage`. Specs in GitHub Issues; glossary in `CONTEXT.md`.
 
 ### Invocation
 

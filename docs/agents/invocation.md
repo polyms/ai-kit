@@ -17,9 +17,9 @@ A user-invoked skill has no model-facing description — **no other skill can fi
 
 ## ai-kit examples
 
-| User-invoked                                          | Model-invoked                                  |
-| ----------------------------------------------------- | ---------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/to-issues`, `/triage` | `align-loop`, `domain-modeling`, `/pm`, `/dev` |
+| User-invoked                                          | Model-invoked                                                 |
+| ----------------------------------------------------- | ------------------------------------------------------------- |
+| `/align`, `/setup`, `/craft`, `/to-issues`, `/triage` | `align-loop`, `domain-modeling`, `/pm`, `/dev`, `code-review` |
 
 Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling`; `/triage` runs `align-loop` + `domain-modeling` when grilling.
 

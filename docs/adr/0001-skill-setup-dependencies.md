@@ -29,12 +29,13 @@ When publishing issues, apply labels from `docs/agents/triage-labels.md` when th
 
 Reference "the project's domain glossary" and "ADRs in the area you're touching" in prose only. If docs are absent, the skill still works; output is less sharp.
 
-| Skill             | Soft use                                              |
-| ----------------- | ----------------------------------------------------- |
-| `/dev`            | Read `CONTEXT.md` + `docs/adr/` if present            |
-| `align-loop`      | Same when exploring codebase                          |
-| `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve        |
-| `/pm`             | Glossary vocabulary in specs when `CONTEXT.md` exists |
+| Skill             | Soft use                                                      |
+| ----------------- | ------------------------------------------------------------- |
+| `/dev`            | Read `CONTEXT.md` + `docs/adr/` if present                    |
+| `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch |
+| `align-loop`      | Same when exploring codebase                                  |
+| `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve                |
+| `/pm`             | Glossary vocabulary in specs when `CONTEXT.md` exists         |
 
 Do **not** cargo-cult the `/setup` pointer into soft-dependency skills.
 
