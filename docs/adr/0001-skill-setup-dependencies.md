@@ -20,6 +20,7 @@ Include an explicit prerequisite — run `/setup` if the required `docs/agents/*
 
 | Skill        | Requires                                                       |
 | ------------ | -------------------------------------------------------------- |
+| `/to-prd`    | `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` |
 | `/to-issues` | `docs/agents/issue-tracker.md`                                 |
 | `/triage`    | `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` |
 

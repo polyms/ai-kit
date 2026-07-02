@@ -39,7 +39,7 @@ _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` files)
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/pm` → `/to-issues` → `/ux` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
+The stage chain that turns ideas into shipped code: `/align` → `/pm` or `/to-prd` → `/to-issues` → `/ux` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
 **Setup**:
@@ -51,8 +51,12 @@ Align before you build — grill decisions, sharpen domain language, update `CON
 _Avoid_: discovery, planning session
 
 **PM**:
-Turn ideas into engineering-ready specs — PRD, user stories, acceptance criteria. Invoke with `/pm`.
+Turn ideas into engineering-ready specs — PRD, user stories, acceptance criteria. Invoke with `/pm`. May interview; uses full enterprise PRD template.
 _Avoid_: product management (when meaning the `/pm` skill)
+
+**To PRD**:
+Synthesize the current conversation into a lean PRD and publish to the issue tracker — no interview. Invoke with `/to-prd`.
+_Avoid_: publish PRD (generic), write PRD (when meaning `/pm` discovery workflow)
 
 **UX**:
 Design flows and UI specs from a PRD. Invoke with `/ux`. _(Planned.)_
@@ -85,7 +89,7 @@ Structured output one stage creates and the next stage consumes — PRD, ADR, gl
 _Avoid_: output, deliverable, document
 
 **PRD**:
-Product Requirements Document — full spec for engineering and design review. In ai-kit: published to GitHub Issues.
+Product Requirements Document — full spec for engineering and design review. In ai-kit: published to the issue tracker (often a `PRD: <feature>` issue).
 _Avoid_: spec, requirements doc
 
 **ADR**:
@@ -125,7 +129,7 @@ User-invoked skill for writing and editing ai-kit skills. Authoring vocabulary (
 _Avoid_: skill writing, meta-skill
 
 **Hard setup dependency**:
-Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without it (e.g. `/to-issues`, `/triage`). See ADR-0001.
+Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without it (e.g. `/to-prd`, `/to-issues`, `/triage`). See ADR-0001.
 _Avoid_: must run setup (when meaning hard dependency only)
 
 **Soft setup dependency**:

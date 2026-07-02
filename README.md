@@ -27,7 +27,8 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 ```
 /setup       → configure repo for ai-kit pipeline (run once)
 /align       → align before you build (grill + domain language)
-/pm          → requirements, PRD, user stories
+/pm          → requirements, PRD, user stories (discovery + enterprise template)
+/to-prd      → synthesize conversation into lean PRD, publish to GitHub
 /to-issues   → break spec into vertical-slice GitHub issues
 /triage      → move raw issues through triage state machine
 /ux          → UI/UX (planned)
@@ -52,6 +53,7 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | `/setup`       | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
 | `/align`       | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md  |
 | `/pm`          | [`pm`](skills/pm/)                                                                                           | **Available** | Requirements, PRD, user stories, prioritization                 |
+| `/to-prd`      | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Synthesize conversation into lean PRD, publish to GitHub Issues |
 | `/to-issues`   | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
 | `/triage`      | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
 | `/ux`          | `ux`                                                                                                         | Planned       | UI/UX flows, wireframes, design specs, a11y                     |
@@ -106,11 +108,25 @@ Includes:
 - [PRD template](skills/pm/prd-template.md) (14 sections)
 - [User story guide](skills/pm/user-story-guide.md) (INVEST, Gherkin AC, DoR/DoD)
 
+For synthesizing an aligned conversation without interview, use `/to-prd` instead (lean template, publishes to issue tracker).
+
 **Agent** (optional — isolated context for long PM sessions):
 
 ```
 Use the pm agent to write a PRD for [feature]
 ```
+
+### `/to-prd` — Synthesize & Publish PRD
+
+When the conversation is aligned and you want the PRD on GitHub — no interview:
+
+```
+/to-prd
+
+Chốt PRD từ cuộc chat này — publish lên GitHub.
+```
+
+Synthesizes from current conversation + codebase context using [prd-template.md](skills/to-prd/prd-template.md) (lean template — not `/pm`'s enterprise template). Sketches test seams (user confirms), publishes via `gh issue create` with mapped `ready-for-agent` label from `triage-labels.md`. Hands off to `/to-issues`.
 
 ### `/setup` — One-Time Repo Configuration
 
@@ -132,7 +148,7 @@ Clarify plans and sharpen domain language before specs or code:
 Làm rõ kế hoạch [feature] trước khi viết PRD.
 ```
 
-`/align` (user-invoked) orchestrates; **`align-loop`** (model-invoked) auto-fires when you clarify plans in EN or VI; **`domain-modeling`** maintains `CONTEXT.md` and ADRs when terms resolve. Hands off to `/pm`, `/ux`, or `/dev`.
+`/align` (user-invoked) orchestrates; **`align-loop`** (model-invoked) auto-fires when you clarify plans in EN or VI; **`domain-modeling`** maintains `CONTEXT.md` and ADRs when terms resolve. Hands off to `/pm`, `/to-prd`, `/ux`, or `/dev`.
 
 ### `/dev` — Fullstack Implementation
 
@@ -169,7 +185,7 @@ Break an approved PRD or plan into independently-grabbable vertical-slice issues
 Bẻ PRD #42 thành issues — vertical slices, publish lên GitHub.
 ```
 
-After `/pm` produces a PRD or user stories, `/to-issues` drafts tracer-bullet slices, quizzes you on granularity and dependencies, then publishes to GitHub via `gh` with the `ready-for-agent` label when triage labels are configured. Hands off to `/dev` for the first unblocked slice. See [issue-template.md](skills/to-issues/issue-template.md).
+After `/pm` or `/to-prd` produces a PRD or user stories, `/to-issues` drafts tracer-bullet slices, quizzes you on granularity and dependencies, then publishes to GitHub via `gh` with the `ready-for-agent` label when triage labels are configured. Hands off to `/dev` for the first unblocked slice. See [issue-template.md](skills/to-issues/issue-template.md).
 
 ### `/triage` — Issue Backlog Triage
 
@@ -234,6 +250,9 @@ ai-kit/
     │   ├── SKILL.md
     │   ├── prd-template.md
     │   └── user-story-guide.md
+    ├── to-prd/
+    │   ├── SKILL.md
+    │   └── prd-template.md
     ├── to-issues/
     │   ├── SKILL.md
     │   └── issue-template.md
@@ -287,13 +306,13 @@ Run `/craft` before authoring or editing skills. Then:
 ## Agentic fullstack pipeline
 
 ```
-Idea → /align → /pm → /to-issues → /ux → /dev → /code-review → ship
+Idea → /align → /pm or /to-prd → /to-issues → /ux → /dev → /code-review → ship
 Raw issues → /triage → ready-for-agent → /dev → /code-review
 ```
 
 Run `/setup` once per repo first (includes triage label mapping).
 
-Each stage produces artifacts the next agent can consume. PM writes PRD and stories; `/to-issues` publishes vertical-slice GitHub issues; `/triage` processes inbound backlog into `ready-for-agent` issues with agent briefs; UX adds flows and component notes; Dev implements against briefs and specs; `/code-review` gates merge on Standards + Spec before ship.
+Each stage produces artifacts the next agent can consume. `/pm` or `/to-prd` writes PRD and stories; `/to-issues` publishes vertical-slice GitHub issues; `/triage` processes inbound backlog into `ready-for-agent` issues with agent briefs; UX adds flows and component notes; Dev implements against briefs and specs; `/code-review` gates merge on Standards + Spec before ship.
 
 ## Daily workflow
 
@@ -308,6 +327,7 @@ Each stage produces artifacts the next agent can consume. PM writes PRD and stor
 - [x] `/setup` — repo configuration for ai-kit pipeline
 - [x] `/align` + `align-loop` + `domain-modeling` — alignment and domain docs with auto-discovery (EN/VI)
 - [x] `/pm` — requirements, PRD, user stories
+- [x] `/to-prd` — synthesize conversation into lean PRD, publish to GitHub (from Matt's to-prd)
 - [x] `/to-issues` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
 - [x] `/triage` — issue backlog triage, agent briefs, `ready-for-agent` (from Matt's triage)
 - [x] `/dev` — fullstack implementation, TDD, debugging

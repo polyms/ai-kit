@@ -21,7 +21,7 @@ Reading `CONTEXT.md` ≠ `domain-modeling`. Active glossary/ADR updates = `domai
 
 ## Setup dependencies (ADR-0001)
 
-- **Hard** (`/to-issues`, `/triage`): prerequisite → `/setup` if `docs/agents/*.md` missing.
+- **Hard** (`/to-prd`, `/to-issues`, `/triage`): prerequisite → `/setup` if `docs/agents/*.md` missing.
 - **Soft** (`/dev`, `/pm`, `align-loop`): mention glossary/ADRs optionally; no `/setup` gate.
 
 Full reference: `docs/agents/invocation.md`, `docs/adr/0001-skill-setup-dependencies.md`.

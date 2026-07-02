@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Setup — Configure Repo for ai-kit
 
-Scaffold per-repo configuration that `/pm`, `/align`, `/triage`, `/to-issues`, and `/dev` assume. Prompt-driven — explore, confirm with user, then write.
+Scaffold per-repo configuration that `/pm`, `/to-prd`, `/align`, `/triage`, `/to-issues`, and `/dev` assume. Prompt-driven — explore, confirm with user, then write.
 
 ## Process
 
@@ -50,7 +50,7 @@ See [context-format.md](context-format.md) and [adr-format.md](adr-format.md).
 
 **C — Pipeline artifacts**
 
-Where specs land after `/pm` and `/align`:
+Where specs land after `/pm`, `/to-prd`, and `/align`:
 
 | Artifact | Default path                 |
 | -------- | ---------------------------- |
@@ -111,7 +111,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Pipeline
 
-Idea → `/align` → `/pm` → `/to-issues` → `/ux` → `/dev`; raw issues via `/triage`. Specs in [path]; glossary in `CONTEXT.md`.
+Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/ux` → `/dev`; raw issues via `/triage`. Specs in [path]; glossary in `CONTEXT.md`.
 ```
 
 Write docs using templates:
@@ -126,6 +126,6 @@ Write docs using templates:
 
 ### 5. Done
 
-Tell user setup is complete. Mention `/align` before building, `/pm` for specs, `/triage` for backlog issues. Remind them to create GitHub labels matching `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later.
+Tell user setup is complete. Mention `/align` before building, `/pm` or `/to-prd` for specs, `/triage` for backlog issues. Remind them to create GitHub labels matching `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later.
 
-**Completion criterion:** User notified setup is complete; `/align`, `/pm`, and `/triage` mentioned; label creation reminder given.
+**Completion criterion:** User notified setup is complete; `/align`, `/pm` or `/to-prd`, and `/triage` mentioned; label creation reminder given.

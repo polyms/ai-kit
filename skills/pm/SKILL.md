@@ -9,13 +9,14 @@ Turn ideas into engineering-ready artifacts. Read this skill fully before produc
 
 ## Quick Router
 
-| User intent            | Workflow                                            | Reference                                  |
-| ---------------------- | --------------------------------------------------- | ------------------------------------------ |
-| "Viết PRD" / write PRD | [PRD workflow](#prd-workflow)                       | [prd-template.md](prd-template.md)         |
-| User stories / backlog | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md) |
-| Làm rõ req / clarify   | [Discovery workflow](#discovery-workflow)           | —                                          |
-| Ưu tiên / prioritize   | [Prioritization workflow](#prioritization-workflow) | —                                          |
-| Review req hiện có     | [Refinement workflow](#refinement-workflow)         | —                                          |
+| User intent                                 | Workflow                                            | Reference                                  |
+| ------------------------------------------- | --------------------------------------------------- | ------------------------------------------ |
+| Chốt PRD / publish from aligned chat        | User invokes `/to-prd` — not this skill             | —                                          |
+| "Viết PRD" / write PRD (discovery + formal) | [PRD workflow](#prd-workflow)                       | [prd-template.md](prd-template.md)         |
+| User stories / backlog                      | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md) |
+| Làm rõ req / clarify                        | [Discovery workflow](#discovery-workflow)           | —                                          |
+| Ưu tiên / prioritize                        | [Prioritization workflow](#prioritization-workflow) | —                                          |
+| Review req hiện có                          | [Refinement workflow](#refinement-workflow)         | —                                          |
 
 ## Discovery Workflow
 
@@ -32,6 +33,8 @@ Turn ideas into engineering-ready artifacts. Read this skill fully before produc
 ## PRD Workflow
 
 **Goal:** Complete PRD ready for engineering + design review.
+
+**Boundary:** Aligned-chat synthesize/publish → `/to-prd` (Quick Router). Below is discovery + enterprise PRD only.
 
 1. Run discovery if problem statement is missing
 2. Fill [prd-template.md](prd-template.md) — every section, no empty headers

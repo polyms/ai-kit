@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Run an [`align-loop`](../align-loop/SKILL.md) session. Use [`domain-modeling`](../domain-modeling/SKILL.md) when engineering or overloaded terms are involved.
 
-Close the communication gap before `/pm`, `/ux`, or `/dev`. Follow [`align-loop`](../align-loop/SKILL.md) pacing.
+Close the communication gap before `/pm`, `/to-prd`, `/ux`, or `/dev`. Follow [`align-loop`](../align-loop/SKILL.md) pacing.
 
 Run `/setup` first if `docs/agents/` is missing.
 
@@ -23,11 +23,12 @@ Run `/setup` first if `docs/agents/` is missing.
 
 Enter when align-loop (+ domain-modeling, if used) completion criteria are met.
 
-| Next step | When                                        |
-| --------- | ------------------------------------------- |
-| `/pm`     | Need PRD, user stories, or formal spec      |
-| `/dev`    | Small, well-bounded change with clear seams |
-| `/ux`     | UI flows or design specs needed first       |
+| Next step | When                                                                |
+| --------- | ------------------------------------------------------------------- |
+| `/pm`     | Need discovery interview, formal PRD, stories, or prioritization    |
+| `/to-prd` | Conversation is aligned — synthesize lean PRD and publish to issue tracker |
+| `/dev`    | Small, well-bounded change with clear seams                         |
+| `/ux`     | UI flows or design specs needed first                               |
 
 End with:
 
@@ -39,10 +40,10 @@ End with:
 - [if any]
 
 ## Next Step
-→ /pm | /ux | /dev
+→ /pm | /to-prd | /ux | /dev
 ```
 
-**Completion criterion:** Handoff block delivered with `## Next Step` pointing to exactly one of `/pm`, `/ux`, or `/dev`.
+**Completion criterion:** Handoff block delivered with `## Next Step` pointing to exactly one of `/pm`, `/to-prd`, `/ux`, or `/dev`.
 
 ## Agent
 

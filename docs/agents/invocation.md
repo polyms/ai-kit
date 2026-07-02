@@ -19,7 +19,7 @@ A user-invoked skill has no model-facing description — **no other skill can fi
 
 | User-invoked                                          | Model-invoked                                                 |
 | ----------------------------------------------------- | ------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/to-issues`, `/triage` | `align-loop`, `domain-modeling`, `/pm`, `/dev`, `code-review` |
+| `/align`, `/setup`, `/craft`, `/to-prd`, `/to-issues`, `/triage` | `align-loop`, `domain-modeling`, `/pm`, `/dev`, `code-review` |
 
 Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling`; `/triage` runs `align-loop` + `domain-modeling` when grilling.
 

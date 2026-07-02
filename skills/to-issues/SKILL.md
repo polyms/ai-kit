@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tracer bullet** vertical slices.
 
-**Upstream:** `/pm` produces PRDs and user stories. This skill turns approved specs into implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
+**Upstream:** `/pm` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
 
 **Prerequisites:** Issue tracker and domain docs should already be configured — run `/setup` if `docs/agents/issue-tracker.md` is missing.
 
@@ -26,7 +26,7 @@ Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tr
 
 ### 1. Gather context
 
-Work from whatever is already in the conversation. If the user passes an issue reference (number, URL, or path), fetch it:
+Work from whatever is already in the conversation. If the user passes an issue reference (number, URL, or path), fetch it — PRDs from `/to-prd` use title `PRD: <feature>`:
 
 ```bash
 gh issue view <number> --comments
