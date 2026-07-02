@@ -39,7 +39,7 @@ _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` files)
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/pm` → `/ux` → `/dev`. Each stage produces artifacts the next stage consumes.
+The stage chain that turns ideas into shipped code: `/align` → `/pm` → `/to-issues` → `/ux` → `/dev`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
 **Setup**:
@@ -65,6 +65,14 @@ _Avoid_: implementation, coding phase
 **Handoff**:
 Transfer between pipeline stages — summary plus `## Next Step` pointing to exactly one next skill.
 _Avoid_: handover, transition
+
+**Triage**:
+Move raw GitHub issues through a state machine — categorise, verify, grill, write agent briefs. Invoke with `/triage`.
+_Avoid_: backlog grooming (when meaning the triage skill specifically)
+
+**To Issues**:
+Break an approved PRD or plan into vertical-slice GitHub issues. Invoke with `/to-issues`.
+_Avoid_: issue splitting (generic)
 
 ## Artifacts
 
@@ -92,8 +100,30 @@ _Avoid_: context file, domain model file
 Model-invoked skill that sharpens the domain model — challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs when warranted.
 _Avoid_: domain design, terminology session
 
+## Triage
+
+**Triage role**:
+A canonical label role in the triage state machine — either a **state** (`needs-triage`, `ready-for-agent`, …) or **category** (`bug`, `enhancement`). Mapped to tracker label strings in `docs/agents/triage-labels.md`.
+_Avoid_: label, tag (when meaning triage roles specifically)
+
+**Agent brief**:
+Structured comment on a `ready-for-agent` issue or PR — the AFK contract `/dev` works from. Original issue body is context; the brief is authoritative.
+_Avoid_: spec comment, triage notes
+
+**ready-for-agent**:
+Triage state role — issue fully specified with an agent brief attached; pick up with `/dev`.
+_Avoid_: AFK-ready, agent-ready
+
 ## Authoring
 
 **Craft**:
 User-invoked skill for writing and editing ai-kit skills. Authoring vocabulary (predictability, sprawl, context load, pruning) lives in `skills/craft/glossary.md` — not duplicated here.
 _Avoid_: skill writing, meta-skill
+
+**Hard setup dependency**:
+Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without it (e.g. `/to-issues`, `/triage`). See ADR-0001.
+_Avoid_: must run setup (when meaning hard dependency only)
+
+**Soft setup dependency**:
+Skill that reads `CONTEXT.md` / ADRs when present but works without them (e.g. `/dev`, `/pm`).
+_Avoid_: optional context

@@ -14,9 +14,9 @@ Run `/setup` first if `docs/agents/` is missing.
 
 ## Quick Router
 
-| Intent                           | Mode                                                                         |
-| -------------------------------- | ---------------------------------------------------------------------------- |
-| Plan alignment (no domain terms) | [`align-loop`](../align-loop/SKILL.md)                                       |
+| Intent                           | Mode                                                                                      |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| Plan alignment (no domain terms) | [`align-loop`](../align-loop/SKILL.md)                                                    |
 | Engineering + domain terms       | [`align-loop`](../align-loop/SKILL.md) + [`domain-modeling`](../domain-modeling/SKILL.md) |
 
 ## Handoff

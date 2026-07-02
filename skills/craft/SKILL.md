@@ -35,9 +35,11 @@ skills/<name>/
 
 ## Invocation
 
-See **User-invoked by default** in ai-kit Conventions above. Full vocabulary: [glossary.md](glossary.md) — **Model-invoked**, **User-invoked**, **Context load**, **Router skill**.
+Repo rules: [docs/agents/invocation.md](../../docs/agents/invocation.md). Setup deps: [ADR-0001](../../docs/adr/0001-skill-setup-dependencies.md).
 
-Pick model-invocation only when the agent must reach the skill on its own, or another skill must.
+See **User-invoked by default** in ai-kit Conventions above. Vocabulary: [glossary.md](glossary.md) — **Model-invoked**, **User-invoked**, **Context load**, **Router skill**.
+
+Pick model-invocation only when the agent must reach the skill on its own, or another skill must. Classify **hard vs soft** `/setup` dependency before writing prerequisites.
 
 When user-invoked skills multiply, add a **router skill** — one user-invoked skill naming others and when to reach each.
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Setup — Configure Repo for ai-kit
 
-Scaffold per-repo configuration that `/pm`, `/align`, and `/dev` assume. Prompt-driven — explore, confirm with user, then write.
+Scaffold per-repo configuration that `/pm`, `/align`, `/triage`, `/to-issues`, and `/dev` assume. Prompt-driven — explore, confirm with user, then write.
 
 ## Process
 
@@ -60,7 +60,20 @@ Where specs land after `/pm` and `/align`:
 
 Confirm or override paths.
 
-**Completion criterion:** Issue tracker, domain layout, and artifact paths all confirmed by user.
+**D — Triage labels**
+
+Map canonical triage roles to label strings on the issue tracker. Required for `/triage` and `/to-issues`.
+
+| Role type    | Canonical roles                                                               |
+| ------------ | ----------------------------------------------------------------------------- |
+| **State**    | `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix` |
+| **Category** | `bug`, `enhancement`                                                          |
+
+Default: label strings equal canonical names unless the user overrides. Show the mapping table; confirm or edit the right-hand column.
+
+Remind user to create matching labels on the remote tracker after setup (see [triage-labels.md](triage-labels.md) for `gh label create` examples).
+
+**Completion criterion:** All seven role mappings confirmed; issue tracker, domain layout, artifact paths, and triage labels all confirmed by user.
 
 ### 3. Confirm draft
 
@@ -69,6 +82,7 @@ Show before writing:
 - `## Agent skills` block for `CLAUDE.md` or `AGENTS.md`
 - `docs/agents/issue-tracker.md`
 - `docs/agents/domain.md`
+- `docs/agents/triage-labels.md`
 
 Let user edit.
 
@@ -91,9 +105,13 @@ If `## Agent skills` exists, update in-place — don't duplicate.
 
 [single-context or multi-context]. See `docs/agents/domain.md`.
 
+### Triage labels
+
+Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
+
 ### Pipeline
 
-Idea → `/align` → `/pm` → `/ux` → `/dev`. Specs in [path]; glossary in `CONTEXT.md`.
+Idea → `/align` → `/pm` → `/to-issues` → `/ux` → `/dev`; raw issues via `/triage`. Specs in [path]; glossary in `CONTEXT.md`.
 ```
 
 Write docs using templates:
@@ -102,11 +120,12 @@ Write docs using templates:
 - GitLab → [issue-tracker-gitlab.md](issue-tracker-gitlab.md)
 - Local → [issue-tracker-local.md](issue-tracker-local.md)
 - Domain → [domain.md](domain.md)
+- Triage labels → [triage-labels.md](triage-labels.md)
 
-**Completion criterion:** `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and agent config file written to disk.
+**Completion criterion:** `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, and agent config file written to disk.
 
 ### 5. Done
 
-Tell user setup is complete. Mention `/align` before building, `/pm` for specs. They can edit `docs/agents/*.md` directly later.
+Tell user setup is complete. Mention `/align` before building, `/pm` for specs, `/triage` for backlog issues. Remind them to create GitHub labels matching `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later.
 
-**Completion criterion:** User notified setup is complete; `/align` and `/pm` mentioned as next steps.
+**Completion criterion:** User notified setup is complete; `/align`, `/pm`, and `/triage` mentioned; label creation reminder given.

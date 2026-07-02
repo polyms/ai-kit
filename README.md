@@ -25,11 +25,13 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 `ai-kit` is the shared brain for **agentic fullstack dev** at Polyms. Each capability is a short-named skill or agent you invoke with a slash command:
 
 ```
-/setup → configure repo for ai-kit pipeline (run once)
-/align → align before you build (grill + domain language)
-/pm    → requirements, PRD, user stories
-/ux    → UI/UX (planned)
-/dev   → fullstack implementation, TDD, debugging
+/setup     → configure repo for ai-kit pipeline (run once)
+/align     → align before you build (grill + domain language)
+/pm        → requirements, PRD, user stories
+/to-issues → break spec into vertical-slice GitHub issues
+/triage    → move raw issues through triage state machine
+/ux        → UI/UX (planned)
+/dev       → fullstack implementation, TDD, debugging
 ```
 
 The goal: a coherent pipeline where PM artifacts hand off cleanly to design and engineering agents — without reinventing prompts every project.
@@ -44,14 +46,16 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ### Catalog
 
-| Invoke   | Name                                                          | Status        | Domain                                                         |
-| -------- | ------------------------------------------------------------- | ------------- | -------------------------------------------------------------- |
-| `/setup` | [`setup`](skills/setup/)                                      | **Available** | Repo config — issue tracker, domain docs, pipeline             |
-| `/align` | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md |
-| `/pm`    | [`pm`](skills/pm/)                                            | **Available** | Requirements, PRD, user stories, prioritization                |
-| `/ux`    | `ux`                                                          | Planned       | UI/UX flows, wireframes, design specs, a11y                    |
-| `/dev`   | [`dev`](skills/dev/)                                          | **Available** | Fullstack implementation, TDD, debugging, review               |
-| `/craft` | [`craft`](skills/craft/)                                      | **Available** | Authoring and editing skills — predictability, pruning         |
+| Invoke       | Name                                                                                                         | Status        | Domain                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------- |
+| `/setup`     | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
+| `/align`     | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md  |
+| `/pm`        | [`pm`](skills/pm/)                                                                                           | **Available** | Requirements, PRD, user stories, prioritization                 |
+| `/to-issues` | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
+| `/triage`    | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
+| `/ux`        | `ux`                                                                                                         | Planned       | UI/UX flows, wireframes, design specs, a11y                     |
+| `/dev`       | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack implementation, TDD, debugging, review                |
+| `/craft`     | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning          |
 
 Each skill ships with an optional matching agent for work that needs a separate context (long PRDs, multi-step design, large refactors). Use `/craft` when writing or editing any skill.
 
@@ -114,7 +118,7 @@ Run once per repo before other skills:
 /setup
 ```
 
-Configures issue tracker (GitHub/GitLab/local), domain docs layout (`CONTEXT.md`, ADRs), and pipeline artifact paths.
+Configures issue tracker (GitHub/GitLab/local), domain docs layout (`CONTEXT.md`, ADRs), triage label mapping, and pipeline artifact paths.
 
 ### `/align` — Align Before You Build
 
@@ -137,6 +141,31 @@ Implement [feature] from PRD at docs/prd/feature-x.md
 ```
 
 TDD vertical slices, disciplined debugging, code review. See [tdd-guide.md](skills/dev/tdd-guide.md) and [debug-loop.md](skills/dev/debug-loop.md).
+
+### `/to-issues` — Spec to GitHub Issues
+
+Break an approved PRD or plan into independently-grabbable vertical-slice issues:
+
+```
+/to-issues
+
+Bẻ PRD #42 thành issues — vertical slices, publish lên GitHub.
+```
+
+After `/pm` produces a PRD or user stories, `/to-issues` drafts tracer-bullet slices, quizzes you on granularity and dependencies, then publishes to GitHub via `gh` with the `ready-for-agent` label when triage labels are configured. Hands off to `/dev` for the first unblocked slice. See [issue-template.md](skills/to-issues/issue-template.md).
+
+### `/triage` — Issue Backlog Triage
+
+Move raw GitHub issues (and optional external PRs) through a triage state machine:
+
+```
+/triage
+
+Show me what needs attention.
+Phân loại issue #42 — verify và viết agent brief.
+```
+
+Categorises (`bug` / `enhancement`), verifies claims, grills via `align-loop` + `domain-modeling` when needed, writes agent briefs, manages `.out-of-scope/`. Issues reaching `ready-for-agent` hand off to `/dev`. Complements `/to-issues` — triage processes inbound backlog; `/to-issues` creates slices from specs. See [agent-brief.md](skills/triage/agent-brief.md) and [triage-labels.md](docs/agents/triage-labels.md).
 
 ### `/craft` — Writing Great Skills
 
@@ -185,6 +214,13 @@ ai-kit/
     │   ├── SKILL.md
     │   ├── prd-template.md
     │   └── user-story-guide.md
+    ├── to-issues/
+    │   ├── SKILL.md
+    │   └── issue-template.md
+    ├── triage/
+    │   ├── SKILL.md
+    │   ├── agent-brief.md
+    │   └── out-of-scope.md
     └── setup/
         ├── SKILL.md
         ├── adr-format.md
@@ -192,7 +228,17 @@ ai-kit/
         ├── domain.md
         ├── issue-tracker-github.md
         ├── issue-tracker-gitlab.md
-        └── issue-tracker-local.md
+        ├── issue-tracker-local.md
+        └── triage-labels.md
+```
+
+`docs/agents/` (per-repo, written by `/setup`):
+
+```
+docs/agents/
+├── issue-tracker.md
+├── domain.md
+└── triage-labels.md
 ```
 
 ## Adding skills and agents
@@ -215,16 +261,19 @@ Run `/craft` before authoring or editing skills. Then:
 | Bilingual triggers                 | English WHAT + EN/VI WHEN in every description |
 | Templates in separate files        | `prd-template.md`, linked from `SKILL.md`      |
 | No built-in tool skills            | Do not copy Cursor `skills-cursor/` content    |
+| Invocation rules                   | `docs/agents/invocation.md`, ADR-0001          |
+| Cursor rule when editing skills    | `.cursor/rules/skill-invocation.mdc`           |
 
 ## Agentic fullstack pipeline
 
 ```
-Idea → /align (align) → /pm (spec) → /ux (design) → /dev (build) → ship
+Idea → /align → /pm → /to-issues → /ux → /dev → ship
+Raw issues → /triage → ready-for-agent → /dev
 ```
 
-Run `/setup` once per repo first.
+Run `/setup` once per repo first (includes triage label mapping).
 
-Each stage produces artifacts the next agent can consume. PM writes PRD and stories; UX adds flows and component notes; Dev implements against both.
+Each stage produces artifacts the next agent can consume. PM writes PRD and stories; `/to-issues` publishes vertical-slice GitHub issues; `/triage` processes inbound backlog into `ready-for-agent` issues with agent briefs; UX adds flows and component notes; Dev implements against briefs and specs.
 
 ## Daily workflow
 
@@ -239,6 +288,8 @@ Each stage produces artifacts the next agent can consume. PM writes PRD and stor
 - [x] `/setup` — repo configuration for ai-kit pipeline
 - [x] `/align` + `align-loop` + `domain-modeling` — alignment and domain docs with auto-discovery (EN/VI)
 - [x] `/pm` — requirements, PRD, user stories
+- [x] `/to-issues` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
+- [x] `/triage` — issue backlog triage, agent briefs, `ready-for-agent` (from Matt's triage)
 - [x] `/dev` — fullstack implementation, TDD, debugging
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
 - [ ] `/ux` — UI/UX flows, wireframes, design handoff
