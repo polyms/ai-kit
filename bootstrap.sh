@@ -22,6 +22,7 @@ link_dir() {
 
 link_dir "$REPO/agents" "$CURSOR/agents"
 link_dir "$REPO/skills" "$CURSOR/skills"
+link_dir "$REPO/.cursor/rules" "$CURSOR/rules"
 
 for skill in "$REPO"/skills/*/; do
   name="$(basename "$skill")"

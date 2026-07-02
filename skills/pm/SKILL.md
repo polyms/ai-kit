@@ -1,6 +1,6 @@
 ---
 name: pm
-description: Product management and requirements — PRDs, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Use when user mentions /pm, requirements, PRD, product spec, user stories, feature definition, prioritization, or stakeholder alignment.
+description: Product management and requirements — PRDs, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Use when user mentions /pm, requirements, PRD, viết PRD, user stories, làm rõ yêu cầu, ưu tiên backlog, or stakeholder alignment.
 ---
 
 # PM — Product Management & Requirements
@@ -118,4 +118,4 @@ For deep PM work in an isolated context, delegate to the **pm** agent:
 Use the pm agent to [task]
 ```
 
-The agent loads this skill automatically.
+The agent reads this skill when invoked.
