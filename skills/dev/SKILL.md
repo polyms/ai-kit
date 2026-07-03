@@ -84,7 +84,7 @@ Match project conventions when they exist — these are fallbacks only.
 For large refactors or multi-file implementation in isolated context:
 
 ```
-Use the dev agent to [task]
+Use the dev-agent to [task]
 ```
 
 The agent reads this skill when invoked.

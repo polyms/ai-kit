@@ -31,8 +31,9 @@ Two contexts — don't mix them:
 | ---------------------------------------------------------------------------- | ----------------------- | ------------------------------------------- |
 | **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/pm`, `/dev`, `/arch`, `/arch-refactor`    |
 | **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev` |
+| **Agent name** — isolated subagent for deep work                             | `<skill>-agent` suffix  | `Use pm-agent`, `agents/pm-agent.md`        |
 
-User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type `/dev`; agents delegate to `dev`).
+User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type `/dev`; agents delegate to `dev`). Subagent files use the `-agent` suffix to distinguish from their matching skill (`pm` vs `pm-agent`).
 
 ## Dependencies between skills
 

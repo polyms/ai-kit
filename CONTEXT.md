@@ -33,8 +33,8 @@ Workflow file at `skills/<name>/SKILL.md` — the agent reads and follows it in 
 _Avoid_: prompt, instruction, rule
 
 **Agent**:
-Subagent file at `agents/<name>.md` — runs in isolated context for long tasks (large PRDs, multi-step refactors). Reads the matching skill, then executes.
-_Avoid_: subagent, bot, assistant (when referring to `agents/*.md` files)
+Subagent file at `agents/<name>-agent.md` — runs in isolated context for long tasks (large PRDs, multi-step refactors). Reads the matching skill, then executes. Suffix `-agent` distinguishes from the skill (`pm` skill vs `pm-agent`).
+_Avoid_: subagent, bot, assistant (when referring to `agents/*-agent.md` files)
 
 ## Pipeline
 

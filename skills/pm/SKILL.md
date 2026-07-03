@@ -115,10 +115,10 @@ Before delivering any artifact, verify:
 
 ## Agent
 
-For deep PM work in an isolated context, delegate to the **pm** agent:
+For deep PM work in an isolated context, delegate to the **pm-agent**:
 
 ```
-Use the pm agent to [task]
+Use the pm-agent to [task]
 ```
 
 The agent reads this skill when invoked.

@@ -50,7 +50,7 @@ End with:
 For long alignment sessions in isolated context:
 
 ```
-Use the align agent to [task]
+Use the align-agent to [task]
 ```
 
 The agent reads this skill when invoked.

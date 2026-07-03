@@ -20,7 +20,7 @@ When authoring skills in this repo:
 | Slash in invoke context    | `/name` in pipeline, handoffs, Invoke column — all skills        |
 | No slash in delegation     | `Run align-loop`, `Use arch`, reaches `dev` — model-invoked only |
 | Folder = skill name        | `skills/pm/SKILL.md` → `name: pm`                                |
-| Optional agent             | `agents/pm.md` for isolated deep work                            |
+| Optional agent             | `agents/pm-agent.md` for isolated deep work (`<name>-agent` suffix) |
 | Templates in sibling files | `prd-template.md`, linked from `SKILL.md`                        |
 | User-invoked by default    | `disable-model-invocation: true` unless agent must auto-reach    |
 | Bilingual descriptions     | WHAT in English; triggers in EN + VI (users mix both languages)  |

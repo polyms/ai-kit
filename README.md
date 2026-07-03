@@ -46,7 +46,7 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | Type          | Path               | Purpose                                                |
 | ------------- | ------------------ | ------------------------------------------------------ |
 | **Skills**    | `skills/<name>/`   | Workflows, templates, and checklists (`/pm`, `/ux`, …) |
-| **Agents**    | `agents/<name>.md` | Specialized subagents for isolated deep work           |
+| **Agents**    | `agents/<name>-agent.md` | Specialized subagents for isolated deep work           |
 | **Bootstrap** | `bootstrap.sh`     | Symlink into local AI tool directories                 |
 
 ### Catalog
@@ -91,7 +91,7 @@ Restart your editor or start a new chat session after bootstrap.
 
 ```bash
 ln -sfn ~/src/ai-kit/skills/pm ~/.cursor/skills/pm
-ln -sfn ~/src/ai-kit/agents/pm.md ~/.cursor/agents/pm.md
+ln -sfn ~/src/ai-kit/agents/pm-agent.md ~/.cursor/agents/pm-agent.md
 ```
 
 ## Usage
@@ -118,7 +118,7 @@ For synthesizing an aligned conversation without interview, use `/to-prd` instea
 **Agent** (optional — isolated context for long PM sessions):
 
 ```
-Use the pm agent to write a PRD for [feature]
+Use the pm-agent to write a PRD for [feature]
 ```
 
 ### `/to-prd` — Synthesize & Publish PRD
@@ -247,9 +247,9 @@ ai-kit/
 ├── LICENSE
 ├── bootstrap.sh
 ├── agents/
-│   ├── align.md
-│   ├── dev.md
-│   └── pm.md
+│   ├── align-agent.md
+│   ├── dev-agent.md
+│   └── pm-agent.md
 └── skills/
     ├── align/
     │   └── SKILL.md
@@ -313,8 +313,8 @@ docs/agents/
 Run `/craft` before authoring or editing skills. Then:
 
 1. Create `skills/<name>/SKILL.md` with frontmatter `name` and `description`
-2. Optionally add `agents/<name>.md` for isolated deep work
-3. Keep names **short** — lowercase, 2–4 chars when possible (`pm`, `ux`, `dev`)
+2. Optionally add `agents/<name>-agent.md` for isolated deep work (suffix `-agent` distinguishes from the skill)
+3. Keep skill names **short** — lowercase, 2–4 chars when possible (`pm`, `ux`, `dev`)
 4. Commit and push; `git pull` on other machines is enough when using directory symlinks
 
 ### Conventions
@@ -323,7 +323,7 @@ Run `/craft` before authoring or editing skills. Then:
 | ---------------------------------- | ---------------------------------------------- |
 | Short invoke name                  | `/pm`, not `/product-management`               |
 | Skill folder = skill name          | `skills/pm/SKILL.md` → `name: pm`              |
-| Agent file = agent name            | `agents/pm.md` → `name: pm`                    |
+| Agent file = agent name            | `agents/pm-agent.md` → `name: pm-agent`          |
 | Description includes trigger terms | `/pm`, viết PRD, user stories (EN + VI)        |
 | Bilingual triggers                 | English WHAT + EN/VI WHEN in every description |
 | Templates in separate files        | `prd-template.md`, linked from `SKILL.md`      |
