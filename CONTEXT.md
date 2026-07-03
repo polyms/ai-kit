@@ -33,13 +33,13 @@ Workflow file at `skills/<name>/SKILL.md` — the agent reads and follows it in 
 _Avoid_: prompt, instruction, rule
 
 **Agent**:
-Subagent file at `agents/<name>-agent.md` — runs in isolated context for long tasks (large PRDs, multi-step refactors). Reads the matching skill, then executes. Suffix `-agent` distinguishes from the skill (`pm` skill vs `pm-agent`).
+Subagent at `agents/<name>-agent.md` — isolated context for long tasks. **Principal** tier: `align-agent`, `pm-agent`, `design-agent`, `dev-agent` — one dedicated owner per pipeline stage. Reads the matching skill, then executes. Suffix `-agent` distinguishes from the skill (`pm` vs `pm-agent`).
 _Avoid_: subagent, bot, assistant (when referring to `agents/*-agent.md` files)
 
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/pm` or `/to-prd` → `/to-issues` → `/ux` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
+The stage chain that turns ideas into shipped code: `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
 **Setup**:
@@ -58,9 +58,13 @@ _Avoid_: product management (when meaning the `/pm` skill)
 Synthesize the current conversation into a lean PRD and publish to the issue tracker — no interview. Invoke with `/to-prd`.
 _Avoid_: publish PRD (generic), write PRD (when meaning `/pm` discovery workflow)
 
-**UX**:
-Design flows and UI specs from a PRD. Invoke with `/ux`. _(Planned.)_
-_Avoid_: design, UI phase
+**Design**:
+Turn a PRD into an engineering-ready UI spec at `docs/design/<feature>.md`, mapped to `@polyms/core-ui`. Invoke with `/design`. Long sessions: `design-agent`.
+_Avoid_: UX phase, UI spec (generic)
+
+**Core UI**:
+Design system library (`@polyms/core-ui`, Tailwind CSS 4) and matching `/core-ui` skill for composing primitives — not part of ai-kit; ships with the lib repo.
+_Avoid_: component library (generic), shadcn
 
 **Dev**:
 Ship production code from spec — TDD, debugging. Pre-merge review via `code-review`. Invoke with `/dev`.
@@ -143,3 +147,61 @@ _Avoid_: must run setup (when meaning hard dependency only)
 **Soft setup dependency**:
 Skill that reads `CONTEXT.md` / ADRs when present but works without them (e.g. `/dev`, `/pm`).
 _Avoid_: optional context
+
+## Kit site
+
+**Kit site**:
+The static web app in this repo that introduces ai-kit to end users — hero, skill catalog, sample prompts, bootstrap CTA. Deployed separately from markdown docs; not the README.
+_Avoid_: website, docs site (when meaning the kit site app)
+
+**Landing page**:
+The kit site's home screen — value proposition, quick start, and entry into the skill catalog.
+_Avoid_: homepage (generic), marketing page
+
+**Skill catalog**:
+Browsable index of skills on the kit site — invoke name, description, status, domain tag, link to detail and sample prompt. Richer UX than the README catalog table.
+_Avoid_: skill list, skills page (generic)
+
+**Sample prompt**:
+Copy-paste example showing how to invoke a skill in chat — bilingual EN/VI where the skill supports it. Lives on the kit site; README may mirror for contributors.
+_Avoid_: example prompt, starter prompt
+
+**Content overlay**:
+Curated metadata layered on `skills/*/SKILL.md` frontmatter — status, domain tag, sample prompts, agent hint. Frontmatter is base; overlay fills fields README maintains today that frontmatter lacks.
+_Avoid_: generated content, skill config (generic)
+
+**Locale toggle**:
+Kit site control switching UI chrome between Vietnamese (default) and English (optional). Prompt samples remain bilingual EN/VI per skill regardless of toggle.
+_Avoid_: i18n (when meaning the toggle specifically), language switcher (generic)
+
+**Umami**:
+Privacy-friendly analytics on the kit site — pageviews and optional custom events via Umami script; no cookie banner for basic tracking. Configured at build time via env. v1 events: `copy_prompt`, `pipeline_section_view`, `cta_quick_start`, `theme_toggle`, `command_palette_open`.
+_Avoid_: GA, Google Analytics, tracking (generic)
+
+**Theme toggle**:
+Kit site control switching between dark (default) and light UI chrome; persists `localStorage` key `ai-kit-theme`. First visit respects `prefers-color-scheme` when unset.
+_Avoid_: dark mode (generic), color scheme (generic)
+
+**Font stack**:
+Kit site typography — **Quicksand** for UI/display (loaded via `@polyms/core-ui/styles/_fonts.css`, same as core-ui setup); **JetBrains Mono** for invoke lines, prompts, and pipeline rail (app-owned `@font-face` or Google Fonts). Map to Tailwind `--font-sans` / `--font-mono` in `apps/landing/`.
+_Avoid_: system font stack (when meaning kit site after font decision), web font (generic)
+
+**Featured skill teaser**:
+Compact landing strip below the hero — four entry-point commands (`/setup`, `/align`, `/pm`, `/dev`) with one-line descriptions and links to skill detail; distinct from the hero terminal animation (pipeline path). Full catalog remains at `/skills`.
+_Avoid_: top skills, skill highlights (generic)
+
+**Default client router**:
+Polyms `/dev` greenfield routing — **TanStack Router** (`@tanstack/react-router`) by default; **TanStack Start** when SSR or server routes are required. Match existing repo stack when already chosen.
+_Avoid_: react-router-dom (greenfield default), page router (generic)
+
+**Default client store**:
+Polyms `/dev` greenfield client state — **Zustand** for UI chrome and cross-route state; shareable filters/tabs in **router search params**, not the store. Not Redux on greenfield.
+_Avoid_: Redux (greenfield default), god store
+
+**Kit site router**:
+Client routing for the kit site SPA — TanStack Router (`@tanstack/react-router`) with typed routes and search params for catalog filters. Static deploy; no SSR.
+_Avoid_: react-router (when meaning kit site stack), page router (generic)
+
+**Kit site store**:
+Zustand stores for kit site UI state — theme, locale, command palette open/close; persist theme/locale via `localStorage`. Catalog filter state lives in router search params, not the store.
+_Avoid_: Redux, React Context (when meaning kit site global UI state)

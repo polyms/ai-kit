@@ -32,7 +32,7 @@ Look for the originating spec, in this order:
 
 1. Issue references in commit messages (`#123`, `Closes #45`, `Refs #123`) — fetch with `gh issue view <number> --comments`. When the issue has an agent brief comment (`ready-for-agent`), treat the brief as authoritative over the issue body (triage convention).
 2. A path the user passed as an argument.
-3. A PRD/spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
+3. A PRD/spec file under `docs/`, `docs/design/`, `specs/`, or `.scratch/` matching the branch name or feature.
 
 If nothing is found, ask the user where the spec is. If they say there isn't one, skip the Spec sub-agent and report **no spec available** explicitly.
 

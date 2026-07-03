@@ -53,4 +53,13 @@ Offer an ADR only when all three are true:
 
 If any condition is missing, skip the ADR. Use [adr-format.md](../setup/adr-format.md).
 
+## During align-loop
+
+When `/align`, `/triage`, or `/arch-refactor` runs align-loop, stay active for the **whole session** — not only when the user says "domain":
+
+- Challenge overloaded terms **in the grill question itself** before offering A–D
+- Invent concrete edge-case scenarios as lettered options when domain boundaries are fuzzy (see [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md))
+- After the user picks, update `CONTEXT.md` **immediately** and show the new or edited glossary line in chat
+- Cross-reference code when a pick implies behavior — surface contradictions as the next grill question
+
 **Completion criterion:** Every overloaded term is resolved or logged as Open Question; `CONTEXT.md` is updated inline for each resolution; ADRs are created only for decisions that pass the three-part test.

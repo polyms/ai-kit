@@ -17,14 +17,14 @@ This command is _informed_ by the project's domain model and built on shared des
 
 ## References
 
-| Topic           | Read when                                                   |
-| --------------- | ----------------------------------------------------------- |
-| Arch vocabulary | `arch` skill — glossary, principles, design-it-twice        |
-| HTML report     | [HTML-REPORT.md](HTML-REPORT.md) — scaffold, diagrams, tone |
-| Domain glossary | `CONTEXT.md` at repo root                                   |
-| ADRs            | `docs/adr/` — decisions in the area you are touching        |
-| Grill           | `align-loop` skill — design tree walk (model-invoked)       |
-| Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline        |
+| Topic           | Read when                                                                        |
+| --------------- | -------------------------------------------------------------------------------- |
+| Arch vocabulary | `arch` skill — glossary, principles, design-it-twice                             |
+| HTML report     | [HTML-REPORT.md](HTML-REPORT.md) — scaffold, diagrams, tone                      |
+| Domain glossary | `CONTEXT.md` at repo root                                                        |
+| ADRs            | `docs/adr/` — decisions in the area you are touching                             |
+| Grill           | `align-loop` skill — one question, options A–D + `(Recommended)` (model-invoked) |
+| Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline                             |
 
 ## Process
 
@@ -62,7 +62,7 @@ Do NOT propose interfaces yet. After the file is written, ask the user: "Which o
 
 ### 3. Grilling loop
 
-Once the user picks a candidate, run **`align-loop`** to walk the design tree — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.
+Once the user picks a candidate, run **`align-loop`** with **`domain-modeling`** to walk the design tree — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive. One question, A–D + `(Recommended)`; see [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md).
 
 Run **`domain-modeling`** inline as terms resolve.
 

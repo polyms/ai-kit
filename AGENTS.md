@@ -18,7 +18,11 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Pipeline
 
-Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/ux` → `/dev` → `/code-review`; raw issues via `/triage`. Specs on issue tracker; glossary in `CONTEXT.md`.
+Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Specs on issue tracker; glossary in `CONTEXT.md`.
+
+### Design stack
+
+`/design` — UI spec from PRD at `docs/design/`; `@polyms/core-ui` + `/core-ui` skill for implementation (lib repo, not ai-kit). Long sessions: `design-agent` in `agents/design-agent.md`.
 
 ### Maintenance
 
@@ -27,3 +31,20 @@ Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/ux` → `/dev` �
 ### Invocation
 
 User-invoked vs model-invoked skills; hard vs soft `/setup` dependencies. See `docs/agents/invocation.md` and `docs/adr/0001-skill-setup-dependencies.md`.
+
+### Voice
+
+Chat tone for grill and agents — plain language, natural assistant. See `docs/agents/voice.md`.
+
+### Principal agents
+
+Isolated subagents for deep work — one **principal** owner per pipeline stage:
+
+| Agent          | Role                        | Owns                                            |
+| -------------- | --------------------------- | ----------------------------------------------- |
+| `align-agent`  | Principal engineer          | Alignment, domain language, `CONTEXT.md`, ADRs  |
+| `pm-agent`     | Principal product manager   | PRD, stories, acceptance criteria, scope        |
+| `design-agent` | Principal product designer  | `docs/design/` UI specs, `@polyms/core-ui` maps |
+| `dev-agent`    | Principal software engineer | Implementation, TDD, production code            |
+
+Handoffs: align → pm/to-prd → design → dev. Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.

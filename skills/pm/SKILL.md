@@ -1,6 +1,6 @@
 ---
 name: pm
-description: Product management and requirements — PRDs, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Use when user mentions /pm, requirements, PRD, viết PRD, user stories, làm rõ yêu cầu, ưu tiên backlog, or stakeholder alignment.
+description: Product management and requirements — PRDs, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Use when user mentions /pm, requirements, PRD, viết PRD, user stories, ưu tiên backlog, or stakeholder alignment. Plan grill or design-tree alignment → `/align`, not this skill.
 ---
 
 # PM — Product Management & Requirements
@@ -12,6 +12,7 @@ Turn ideas into engineering-ready artifacts. Read this skill fully before produc
 | User intent                                 | Workflow                                            | Reference                                  |
 | ------------------------------------------- | --------------------------------------------------- | ------------------------------------------ |
 | Chốt PRD / publish from aligned chat        | User invokes `/to-prd` — not this skill             | —                                          |
+| Plan still fuzzy / stress-test before spec  | User invokes `/align` — not this skill              | —                                          |
 | "Viết PRD" / write PRD (discovery + formal) | [PRD workflow](#prd-workflow)                       | [prd-template.md](prd-template.md)         |
 | User stories / backlog                      | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md) |
 | Làm rõ req / clarify                        | [Discovery workflow](#discovery-workflow)           | —                                          |
@@ -34,7 +35,7 @@ Turn ideas into engineering-ready artifacts. Read this skill fully before produc
 
 **Goal:** Complete PRD ready for engineering + design review.
 
-**Boundary:** Aligned-chat synthesize/publish → `/to-prd` (Quick Router). Below is discovery + enterprise PRD only.
+**Boundary:** Aligned-chat synthesize/publish → `/to-prd` (Quick Router). Plan still fuzzy or needs design-tree grill → `/align`. Below is discovery + enterprise PRD only — not align-loop.
 
 1. Run discovery if problem statement is missing
 2. Fill [prd-template.md](prd-template.md) — every section, no empty headers

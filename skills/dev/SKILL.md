@@ -21,11 +21,12 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 ### 1. Orient
 
-- Read PRD, user stories, or `/align` decisions
+- Read PRD, user stories, `/design` spec at `docs/design/<feature>.md`, or `/align` decisions
 - Read `CONTEXT.md` — use glossary vocabulary in code and tests
 - Identify modules and **seams** (public interfaces to test at)
+- **Greenfield UI with routing:** confirm routing branch before seam work if the slice touches routes — default **TanStack Router**; **TanStack Start** when the user needs SSR or server routes (see [stack-defaults.md](stack-defaults.md))
 
-**Completion criterion:** Spec source and relevant glossary terms identified; candidate seams listed.
+**Completion criterion:** Spec source and relevant glossary terms identified; candidate seams listed; routing branch noted when applicable.
 
 ### 2. Confirm seams
 
@@ -34,6 +35,8 @@ Before any test, list seams under test. Get user confirmation. Prefer existing s
 > "What's the public interface, and which seams should we test?"
 
 **Completion criterion:** User confirms seams under test before any failing test is written.
+
+When implementing UI, use **`core-ui`** for primitives. Read design spec **§4 CSS** and **§8 visual acceptance** first — run [visual-ship.md](visual-ship.md) (CSS before wiring). If `core-ui` is not in context, ask the user to attach or invoke `/core-ui`.
 
 ### 3. Red-green loop
 
@@ -53,6 +56,7 @@ One vertical slice at a time — see [tdd-guide.md](tdd-guide.md):
 - [ ] Accessibility considered (labels, focus, contrast)
 - [ ] No secrets or credentials in code
 - [ ] Conventional commit ready
+- [ ] **UI from `docs/design/`:** [visual-ship.md](visual-ship.md) passed — CSS layer + dark acceptance vs visual reference
 
 **Completion criterion:** Every ship checklist item verified.
 
@@ -71,10 +75,23 @@ One vertical slice at a time — see [tdd-guide.md](tdd-guide.md):
 
 ## Stack Defaults
 
-When stack is unspecified, prefer:
+When stack is unspecified, prefer [stack-defaults.md](stack-defaults.md):
 
-- React functional components + hooks (no class components unless error boundary)
-- Zustand over Redux
+**Routing**
+
+- Default: **TanStack Router** (`@tanstack/react-router`) — typed routes, search params
+- SSR / fullstack greenfield: **TanStack Start** (Router included)
+- Match existing project conventions when the repo already chose a stack
+
+**State**
+
+- Default: **Zustand** — UI chrome and cross-route client state; small domain-split stores
+- Shareable/bookmarkable state → router search params, not Zustand
+- Not Redux on greenfield
+
+**React**
+
+- Functional components + hooks (no class components unless error boundary)
 - Type-safe, accessible, performance-focused
 
 Match project conventions when they exist — these are fallbacks only.

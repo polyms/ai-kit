@@ -30,15 +30,16 @@ When publishing issues, apply labels from `docs/agents/triage-labels.md` when th
 
 Reference "the project's domain glossary" and "ADRs in the area you're touching" in prose only. If docs are absent, the skill still works; output is less sharp.
 
-| Skill             | Soft use                                                      |
-| ----------------- | ------------------------------------------------------------- |
-| `dev`             | Read `CONTEXT.md` + `docs/adr/` if present                    |
-| `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch |
-| `align-loop`      | Same when exploring codebase                                  |
-| `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve                |
-| `pm`              | Glossary vocabulary in specs when `CONTEXT.md` exists         |
-| `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces   |
-| `arch-refactor`   | Same; reaches `arch`, `align-loop`, `domain-modeling`         |
+| Skill             | Soft use                                                                          |
+| ----------------- | --------------------------------------------------------------------------------- |
+| `dev`             | Read `CONTEXT.md` + `docs/adr/` if present                                        |
+| `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch                     |
+| `align-loop`      | Same when exploring codebase                                                      |
+| `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve                                    |
+| `pm`              | Glossary vocabulary in specs when `CONTEXT.md` exists                             |
+| `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/core-ui` before component map |
+| `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces                       |
+| `arch-refactor`   | Same; reaches `arch`, `align-loop`, `domain-modeling`                             |
 
 Do **not** cargo-cult the `/setup` pointer into soft-dependency skills.
 
@@ -46,4 +47,4 @@ Do **not** cargo-cult the `/setup` pointer into soft-dependency skills.
 
 - Hard-dependency skills stay token-light on setup prose — one prerequisite line, not repeated setup docs inline.
 - Authors adding skills must classify hard vs soft before writing prerequisites.
-- `/setup` remains the single place that writes `docs/agents/issue-tracker.md`, `domain.md`, and `triage-labels.md`.
+- `/setup` remains the single place that writes `docs/agents/issue-tracker.md`, `domain.md`, `triage-labels.md`, and `design.md`.
