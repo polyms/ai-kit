@@ -25,16 +25,19 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 `ai-kit` is the shared brain for **agentic fullstack dev** at Polyms. Each capability is a short-named skill or agent you invoke with a slash command:
 
 ```
-/setup       → configure repo for ai-kit pipeline (run once)
-/align       → align before you build (grill + domain language)
-/pm          → requirements, PRD, user stories (discovery + enterprise template)
-/to-prd      → synthesize conversation into lean PRD, publish to GitHub
-/to-issues   → break spec into vertical-slice GitHub issues
-/triage      → move raw issues through triage state machine
-/ux          → UI/UX (planned)
-/dev         → fullstack implementation, TDD, debugging
-/code-review → two-axis review (Standards + Spec) before merge
+/setup         → configure repo for ai-kit pipeline (run once)
+/align         → align before you build (grill + domain language)
+/pm            → requirements, PRD, user stories (discovery + enterprise template)
+/to-prd        → synthesize conversation into lean PRD, publish to GitHub
+/to-issues     → break spec into vertical-slice GitHub issues
+/triage        → move raw issues through triage state machine
+/ux            → UI/UX (planned)
+/dev           → fullstack implementation, TDD, debugging
+/code-review   → two-axis review (Standards + Spec) before merge
+/arch-refactor → scan codebase for deepening opportunities (maintenance)
 ```
+
+`arch` (model-invoked) supplies architecture vocabulary — module, seam, depth, leverage, locality.
 
 The goal: a coherent pipeline where PM artifacts hand off cleanly to design and engineering agents — without reinventing prompts every project.
 
@@ -48,22 +51,24 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ### Catalog
 
-| Invoke         | Name                                                                                                         | Status        | Domain                                                          |
-| -------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------- |
-| `/setup`       | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
-| `/align`       | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md  |
-| `/pm`          | [`pm`](skills/pm/)                                                                                           | **Available** | Requirements, PRD, user stories, prioritization                 |
-| `/to-prd`      | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Synthesize conversation into lean PRD, publish to GitHub Issues |
-| `/to-issues`   | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
-| `/triage`      | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
-| `/ux`          | `ux`                                                                                                         | Planned       | UI/UX flows, wireframes, design specs, a11y                     |
-| `/dev`         | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack implementation, TDD, debugging                        |
-| `/code-review` | [`code-review`](skills/code-review/)                                                                         | **Available** | Two-axis review — Standards + Spec, parallel sub-agents         |
-| `/craft`       | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning          |
+| Invoke           | Name                                                                                                         | Status        | Domain                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------- |
+| `/setup`         | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
+| `/align`         | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md  |
+| `/pm`            | [`pm`](skills/pm/)                                                                                           | **Available** | Requirements, PRD, user stories, prioritization                 |
+| `/to-prd`        | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Synthesize conversation into lean PRD, publish to GitHub Issues |
+| `/to-issues`     | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
+| `/triage`        | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
+| `/ux`            | `ux`                                                                                                         | Planned       | UI/UX flows, wireframes, design specs, a11y                     |
+| `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack implementation, TDD, debugging                        |
+| `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Two-axis review — Standards + Spec, parallel sub-agents         |
+| `/craft`         | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning          |
+| `/arch-refactor` | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates |
+| `/arch`          | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)   |
 
 Each skill ships with an optional matching agent for work that needs a separate context (long PRDs, multi-step design, large refactors). Use `/craft` when writing or editing any skill.
 
-**Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery for model-invoked skills (`align-loop`, `domain-modeling`, `pm`, `dev`, `code-review`).
+**Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `pm`, `dev`, `code-review`).
 
 ## Quick start
 
@@ -212,6 +217,22 @@ Review skills/pm/SKILL.md for sprawl and no-ops.
 
 Covers predictability, invocation, information hierarchy, leading words, and pruning. See [glossary.md](skills/craft/glossary.md).
 
+### `/arch-refactor` — Architecture Maintenance
+
+Scan the codebase for deepening opportunities — shallow modules, seam leakage, poor test surfaces:
+
+```
+/arch-refactor
+
+Rà soát kiến trúc — tìm chỗ deepen module.
+```
+
+Explores organically, writes a visual HTML report to the OS temp directory (Tailwind + Mermaid), then grills your chosen candidate via `align-loop` + `domain-modeling`. Uses **`arch`** vocabulary throughout. Hands off to `/dev` when the design is resolved. Maintenance skill — outside the daily ship pipeline.
+
+### `/arch` — Architecture Vocabulary
+
+Model-invoked vocabulary for deep modules — seam, depth, leverage, locality, design-it-twice. Skills `dev` and `/arch-refactor` reach for it when placing seams or deepening interfaces. See [SKILL.md](skills/arch/SKILL.md), [DEEPENING.md](skills/arch/DEEPENING.md), [DESIGN-IT-TWICE.md](skills/arch/DESIGN-IT-TWICE.md).
+
 ### Upcoming
 
 ```
@@ -234,6 +255,13 @@ ai-kit/
     │   └── SKILL.md
     ├── align-loop/
     │   └── SKILL.md
+    ├── arch/
+    │   ├── SKILL.md
+    │   ├── DEEPENING.md
+    │   └── DESIGN-IT-TWICE.md
+    ├── arch-refactor/
+    │   ├── SKILL.md
+    │   └── HTML-REPORT.md
     ├── craft/
     │   ├── SKILL.md
     │   └── glossary.md
@@ -333,6 +361,7 @@ Each stage produces artifacts the next agent can consume. `/pm` or `/to-prd` wri
 - [x] `/dev` — fullstack implementation, TDD, debugging
 - [x] `/code-review` — two-axis review, parallel sub-agents (from Matt's code-review)
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
+- [x] `/arch-refactor` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)
 - [ ] `/ux` — UI/UX flows, wireframes, design handoff
 - [ ] Frontmatter validation script
 - [ ] Claude agent support

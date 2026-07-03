@@ -82,6 +82,14 @@ _Avoid_: backlog grooming (when meaning the triage skill specifically)
 Break an approved PRD or plan into vertical-slice GitHub issues. Invoke with `/to-issues`.
 _Avoid_: issue splitting (generic)
 
+**Arch**:
+Model-invoked vocabulary skill for designing deep modules — other skills reach it when placing seams or deepening interfaces. Full glossary in `skills/arch/SKILL.md`.
+_Avoid_: codebase design (generic), architecture patterns (when meaning the `arch` skill)
+
+**Arch refactor**:
+Maintenance scan for deepening opportunities — HTML report, then grill chosen candidate. Invoke with `/arch-refactor`.
+_Avoid_: architecture review (generic), refactor (when meaning `/dev`)
+
 ## Artifacts
 
 **Artifact**:

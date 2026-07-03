@@ -17,15 +17,26 @@ A user-invoked skill has no model-facing description — **no other skill can fi
 
 ## ai-kit examples
 
-| User-invoked                                          | Model-invoked                                                 |
-| ----------------------------------------------------- | ------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/to-prd`, `/to-issues`, `/triage` | `align-loop`, `domain-modeling`, `/pm`, `/dev`, `code-review` |
+| User-invoked                                                                       | Model-invoked                                                       |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `/align`, `/setup`, `/craft`, `/to-prd`, `/to-issues`, `/triage`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `pm`, `dev`, `code-review` |
 
-Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling`; `/triage` runs `align-loop` + `domain-modeling` when grilling.
+Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling`; `/triage` runs `align-loop` + `domain-modeling` when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch` when deepening.
+
+## Slash prefix
+
+Two contexts — don't mix them:
+
+| Context                                                                      | Form                    | Examples                                    |
+| ---------------------------------------------------------------------------- | ----------------------- | ------------------------------------------- |
+| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/pm`, `/dev`, `/arch`, `/arch-refactor`    |
+| **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev` |
+
+User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type `/dev`; agents delegate to `dev`).
 
 ## Dependencies between skills
 
-Express dependencies as **`/skill`-style prose** ("Run `align-loop`", "Use `domain-modeling`"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
+Express dependencies as skill-name prose ("Run `align-loop`", "Use `domain-modeling`"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
 
 Shared reference inside a skill folder (templates, glossaries) is fine via sibling links. Cross-skill behavior reaches through **invoking** the model-invoked skill.
 

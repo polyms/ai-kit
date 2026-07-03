@@ -32,11 +32,13 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 
 | Skill             | Soft use                                                      |
 | ----------------- | ------------------------------------------------------------- |
-| `/dev`            | Read `CONTEXT.md` + `docs/adr/` if present                    |
+| `dev`             | Read `CONTEXT.md` + `docs/adr/` if present                    |
 | `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch |
 | `align-loop`      | Same when exploring codebase                                  |
 | `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve                |
-| `/pm`             | Glossary vocabulary in specs when `CONTEXT.md` exists         |
+| `pm`              | Glossary vocabulary in specs when `CONTEXT.md` exists         |
+| `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces   |
+| `arch-refactor`   | Same; reaches `arch`, `align-loop`, `domain-modeling`         |
 
 Do **not** cargo-cult the `/setup` pointer into soft-dependency skills.
 

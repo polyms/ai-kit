@@ -12,10 +12,10 @@ Synthesize the **current conversation** and codebase understanding into a PRD an
 
 **Boundary vs `/pm`:**
 
-| Skill     | When                                              | Behavior                                                                 |
-| --------- | ------------------------------------------------- | ------------------------------------------------------------------------ |
-| `/pm`     | Discovery, formal PRD writing, stories, priority  | May interview; enterprise template via `/pm` |
-| `/to-prd` | "We've talked enough — ship the PRD"              | **Synthesize only** — no discovery interview; [prd-template.md](prd-template.md) (lean template) |
+| Skill     | When                                             | Behavior                                                                                         |
+| --------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `/pm`     | Discovery, formal PRD writing, stories, priority | May interview; enterprise template via `/pm`                                                     |
+| `/to-prd` | "We've talked enough — ship the PRD"             | **Synthesize only** — no discovery interview; [prd-template.md](prd-template.md) (lean template) |
 
 **Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain language before synthesis.
 
@@ -27,9 +27,9 @@ Synthesize the **current conversation** and codebase understanding into a PRD an
 
 | Topic           | Read when                                                                                      |
 | --------------- | ---------------------------------------------------------------------------------------------- |
-| Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands       |
+| Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands      |
 | Triage labels   | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping |
-| PRD body        | [prd-template.md](prd-template.md)                                                           |
+| PRD body        | [prd-template.md](prd-template.md)                                                             |
 | Domain glossary | `CONTEXT.md` at repo root                                                                      |
 | ADRs            | `docs/adr/` — decisions in the area you are touching                                           |
 

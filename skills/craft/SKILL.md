@@ -14,15 +14,17 @@ Adapted from [Matt Pocock's `writing-great-skills`](https://github.com/mattpococ
 
 When authoring skills in this repo:
 
-| Rule                       | Example                                                         |
-| -------------------------- | --------------------------------------------------------------- |
-| Short invoke name          | `/pm`, `/align`, `/dev` — not `/product-management`             |
-| Folder = skill name        | `skills/pm/SKILL.md` → `name: pm`                               |
-| Optional agent             | `agents/pm.md` for isolated deep work                           |
-| Templates in sibling files | `prd-template.md`, linked from `SKILL.md`                       |
-| User-invoked by default    | `disable-model-invocation: true` unless agent must auto-reach   |
-| Bilingual descriptions     | WHAT in English; triggers in EN + VI (users mix both languages) |
-| No Cursor built-ins        | Do not copy `skills-cursor/` content                            |
+| Rule                       | Example                                                          |
+| -------------------------- | ---------------------------------------------------------------- |
+| Short invoke name          | `/pm`, `/align`, `/dev` — not `/product-management`              |
+| Slash in invoke context    | `/name` in pipeline, handoffs, Invoke column — all skills        |
+| No slash in delegation     | `Run align-loop`, `Use arch`, reaches `dev` — model-invoked only |
+| Folder = skill name        | `skills/pm/SKILL.md` → `name: pm`                                |
+| Optional agent             | `agents/pm.md` for isolated deep work                            |
+| Templates in sibling files | `prd-template.md`, linked from `SKILL.md`                        |
+| User-invoked by default    | `disable-model-invocation: true` unless agent must auto-reach    |
+| Bilingual descriptions     | WHAT in English; triggers in EN + VI (users mix both languages)  |
+| No Cursor built-ins        | Do not copy `skills-cursor/` content                             |
 
 Structure:
 

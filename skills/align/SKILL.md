@@ -23,12 +23,12 @@ Run `/setup` first if `docs/agents/` is missing.
 
 Enter when align-loop (+ domain-modeling, if used) completion criteria are met.
 
-| Next step | When                                                                |
-| --------- | ------------------------------------------------------------------- |
-| `/pm`     | Need discovery interview, formal PRD, stories, or prioritization    |
+| Next step | When                                                                       |
+| --------- | -------------------------------------------------------------------------- |
+| `/pm`     | Need discovery interview, formal PRD, stories, or prioritization           |
 | `/to-prd` | Conversation is aligned — synthesize lean PRD and publish to issue tracker |
-| `/dev`    | Small, well-bounded change with clear seams                         |
-| `/ux`     | UI flows or design specs needed first                               |
+| `/dev`    | Small, well-bounded change with clear seams                                |
+| `/ux`     | UI flows or design specs needed first                                      |
 
 End with:
 

@@ -29,7 +29,7 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 ### 2. Confirm seams
 
-Before any test, list seams under test. Get user confirmation. Prefer existing seams; propose new ones at the highest level possible.
+Before any test, list seams under test. Get user confirmation. Prefer existing seams; propose new ones at the highest level possible. For full module/seam vocabulary and deepening principles, use **`arch`**.
 
 > "What's the public interface, and which seams should we test?"
 
