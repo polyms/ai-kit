@@ -3,6 +3,7 @@
   "framework": "tanstack-start",
   "buildCommand": "pnpm exec nx build landing",
   "installCommand": "bash scripts/vercel-install.sh",
+  "outputDirectory": ".output",
   "git": {
     "deploymentEnabled": {
       "main": true

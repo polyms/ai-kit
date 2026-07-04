@@ -47,7 +47,7 @@ export function SkillCommandRow({
       <span className='hidden shrink-0 font-invoke text-muted sm:inline'>&gt;</span>
       <div className='min-w-0 flex-1'>
         <div className='flex flex-wrap items-baseline gap-x-3 gap-y-1'>
-          <span className='font-bold font-invoke text-lg text-primary-700 md:min-w-[7rem] md:text-xl'>
+          <span className='font-bold font-invoke text-lg text-primary-700 md:min-w-28 md:text-xl'>
             {highlightInvoke(skill.invoke, highlight)}
           </span>
           <span className='text-muted text-sm'>{skill.name}</span>
