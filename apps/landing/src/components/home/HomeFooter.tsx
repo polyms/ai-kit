@@ -15,8 +15,8 @@ export function HomeFooter() {
   }, [])
 
   return (
-    <footer className='demo-shell relative mx-5 mb-5 overflow-hidden rounded-[28px] bg-slate-900 text-[#eceff4]'>
-      <div aria-hidden className='demo-footer__glow pointer-events-none absolute inset-0' />
+    <footer className='app-shell relative mx-5 mb-5 overflow-hidden rounded-[28px] bg-slate-900 text-[#eceff4]'>
+      <div aria-hidden className='app-footer__glow pointer-events-none absolute inset-0' />
       <div className='relative flex flex-wrap gap-[60px] px-11 pt-14 pb-8'>
         <div className='min-w-[260px] flex-[1_1_280px]'>
           <div className='mb-3.5'>

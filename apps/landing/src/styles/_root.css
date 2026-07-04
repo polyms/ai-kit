@@ -1,0 +1,17 @@
+@theme {
+  --font-sans: 'Quicksand', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Quicksand', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* app brand orange #e14709 */
+  --color-primary-50: #fef3ee;
+  --color-primary-100: #fde4d6;
+  --color-primary-200: #fbc5ad;
+  --color-primary-300: #f79d79;
+  --color-primary-400: #f26d43;
+  --color-primary-500: #e14709;
+  --color-primary-600: #c93f08;
+  --color-primary-700: #e14709;
+  --color-primary-800: #9a2f0c;
+  --color-primary-900: #7c290d;
+  --color-primary-950: #431205;
+}

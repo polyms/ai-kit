@@ -10,13 +10,13 @@ const LINES = [
 
 export function HomeQuickStart() {
   return (
-    <section className='demo-shell mx-auto max-w-[820px] px-10 pb-24' id='start'>
+    <section className='app-shell mx-auto max-w-[820px] px-10 pb-24' id='start'>
       <div
         className={`relative overflow-hidden rounded-[22px] bg-slate-900 shadow-popout ${HOME_PLAYFUL ? '-rotate-[0.6deg]' : ''}`}
       >
         <Programming
           aria-hidden
-          className='demo-terminal__watermark pointer-events-none absolute -top-2.5 right-6 opacity-35'
+          className='app-terminal__watermark pointer-events-none absolute -top-2.5 right-6 opacity-35'
           color={BRAND_ACCENT}
           size={80}
         />

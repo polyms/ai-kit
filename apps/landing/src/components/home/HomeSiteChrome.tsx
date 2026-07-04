@@ -3,7 +3,7 @@ import { Moon, Sun } from '@solar-icons/react-perf/Bold'
 import { m } from '../../paraglide/messages.js'
 import { useAppStore } from '../../stores/useAppStore'
 
-/** Locale + theme — kept out of demo header clone */
+/** Locale + theme — kept out of app header clone */
 export function HomeSiteChrome() {
   const locale = useAppStore(s => s.locale)
   const setLocale = useAppStore(s => s.setLocale)

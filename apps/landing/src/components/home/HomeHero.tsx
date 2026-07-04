@@ -25,7 +25,7 @@ function FloatingIcon({
   return (
     <div
       aria-hidden
-      className='demo-floating-icon absolute flex items-center justify-center border border-line bg-body'
+      className='app-floating-icon absolute flex items-center justify-center border border-line bg-body'
       style={{
         top,
         right,
@@ -42,19 +42,19 @@ function FloatingIcon({
 
 export function HomeHero() {
   return (
-    <section className='demo-hero demo-shell relative overflow-hidden bg-no-repeat'>
-      <div aria-hidden className='demo-hero__glow pointer-events-none absolute rounded-full opacity-70' />
+    <section className='app-hero app-shell relative overflow-hidden bg-no-repeat'>
+      <div aria-hidden className='app-hero__glow pointer-events-none absolute rounded-full opacity-70' />
       <FloatingIcon icon={Rocket2} right={140} rotate={-8} top={70} />
       <FloatingIcon icon={MagicStick3} right={60} rotate={6} size={26} top={260} />
       <FloatingIcon icon={Code2} right={280} rotate={10} size={24} top={180} />
       <FloatingIcon bottom={40} icon={ChatRoundDots} right={220} rotate={-6} size={22} />
 
-      <div className='demo-hero__content relative z-10'>
-        <span className='badge badge-primary demo-hero__badge inline-flex font-mono'>{m.hero_badge()}</span>
-        <h1 className='demo-hero__title font-bold font-sans text-fg tracking-tight'>
+      <div className='app-hero__content relative z-10'>
+        <span className='badge badge-primary app-hero__badge inline-flex font-mono'>{m.hero_badge()}</span>
+        <h1 className='app-hero__title font-bold font-sans text-fg tracking-tight'>
           {m.hero_line1()}
           <br />
-          <span className='demo-hero__accent'>{m.hero_line2()}</span>
+          <span className='app-hero__accent'>{m.hero_line2()}</span>
         </h1>
         <p className='my-9 max-w-lg font-semibold text-fg text-lg'>{m.hero_sub()}</p>
         <div className='flex flex-wrap items-center gap-3.5'>

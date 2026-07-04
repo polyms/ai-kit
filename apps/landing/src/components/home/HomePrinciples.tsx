@@ -23,7 +23,7 @@ const PRINCIPLE_BODIES = [
 
 export function HomePrinciples() {
   return (
-    <section className='demo-shell mx-auto max-w-[1080px] px-10 pt-2.5 pb-24'>
+    <section className='app-shell mx-auto max-w-[1080px] px-10 pt-2.5 pb-24'>
       <div className='mb-8 flex items-baseline gap-3.5'>
         <h2 className='m-0 font-bold font-sans text-[34px] leading-[1.1] tracking-tight'>
           {m.principles_title()}
@@ -31,7 +31,7 @@ export function HomePrinciples() {
         <span aria-hidden className='h-px flex-1 bg-line' />
         <span className='font-mono text-muted text-xs'>{m.principles_kicker()}</span>
       </div>
-      <div className='demo-principles-grid'>
+      <div className='app-principles-grid'>
         {CELLS.map((n, i) => {
           const Icon = ICONS[i]!
           const featured = i === 0
@@ -39,12 +39,12 @@ export function HomePrinciples() {
             HOME_PLAYFUL && i % 2 === 0 ? '-rotate-[0.4deg]' : HOME_PLAYFUL ? 'rotate-[0.4deg]' : ''
           return (
             <article
-              className={`card p-[22px] transition-transform duration-300 ease-in-out ${featured ? 'demo-principle-card--featured' : ''} ${playfulRotate}`}
+              className={`card p-[22px] transition-transform duration-300 ease-in-out ${featured ? 'app-principle-card--featured' : ''} ${playfulRotate}`}
               key={n}
             >
               <div className='flex items-start justify-between'>
                 <span
-                  className={`demo-principle-card__icon flex size-11 items-center justify-center rounded-xl ${featured ? 'demo-principle-card__icon--featured' : ''}`}
+                  className={`app-principle-card__icon flex size-11 items-center justify-center rounded-xl ${featured ? 'app-principle-card__icon--featured' : ''}`}
                 >
                   <Icon aria-hidden color={BRAND_ACCENT} size={24} />
                 </span>

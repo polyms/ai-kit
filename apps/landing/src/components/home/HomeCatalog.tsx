@@ -8,7 +8,7 @@ import { SkillStatusBadge } from '../SkillStatusBadge'
 
 export function HomeCatalog() {
   return (
-    <section className='demo-shell mx-auto max-w-[1080px] px-10 pt-2.5 pb-[110px]' id='catalog'>
+    <section className='app-shell mx-auto max-w-[1080px] px-10 pt-2.5 pb-[110px]' id='catalog'>
       <div className='mb-2 flex items-baseline gap-3.5'>
         <h2 className='m-0 font-bold font-sans text-[34px] leading-[1.1] tracking-tight'>
           {m.catalog_title()}
@@ -16,17 +16,17 @@ export function HomeCatalog() {
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
       <p className='mb-7 text-muted'>{m.home_catalog_intro()}</p>
-      <div className='demo-catalog-grid'>
+      <div className='app-catalog-grid'>
         {skillOverlays.map(skill => {
           const label = domainLabel(skill.domain)
           return (
             <Link
-              className='demo-catalog-card card flex items-start gap-3.5 px-[18px] py-4 no-underline transition-colors duration-200 hover:bg-surface-2/50 focus-visible:outline-2 focus-visible:outline-primary-700'
+              className='app-catalog-card card flex items-start gap-3.5 px-[18px] py-4 no-underline transition-colors duration-200 hover:bg-surface-2/50 focus-visible:outline-2 focus-visible:outline-primary-700'
               key={skill.slug}
               params={{ slug: skill.slug }}
               to='/skills/$slug'
             >
-              <span className='demo-catalog-card__icon flex size-10 shrink-0 items-center justify-center rounded-[10px]'>
+              <span className='app-catalog-card__icon flex size-10 shrink-0 items-center justify-center rounded-[10px]'>
                 <SkillIcon slug={skill.slug} />
               </span>
               <span className='min-w-0 flex-1'>

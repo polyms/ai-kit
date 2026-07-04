@@ -26,7 +26,7 @@ export function HomeHeader() {
   const pathname = useRouterState({ select: s => s.location.pathname })
 
   return (
-    <header className='demo-header sticky top-0 z-20 flex items-center justify-between border-line border-b px-10 py-4 backdrop-blur-[10px]'>
+    <header className='app-header sticky top-0 z-20 flex items-center justify-between border-line border-b px-10 py-4 backdrop-blur-[10px]'>
       <div className='flex items-center gap-2.5'>
         <PolymsWordmark
           iconClassName='text-slate-500'
@@ -34,7 +34,7 @@ export function HomeHeader() {
           textClassName='font-sans text-lg text-fg'
         />
         <span
-          className={`demo-header__brand-pill rounded-full border border-info border-dashed px-2.5 py-0.5 font-bold font-mono text-xs ${HOME_PLAYFUL ? 'demo-header__brand-pill--playful' : ''}`}
+          className={`app-header__brand-pill rounded-full border border-info border-dashed px-2.5 py-0.5 font-bold font-mono text-xs ${HOME_PLAYFUL ? 'app-header__brand-pill--playful' : ''}`}
         >
           ai-kit
         </span>

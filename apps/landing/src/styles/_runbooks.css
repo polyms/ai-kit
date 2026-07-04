@@ -1,0 +1,19 @@
+.runbook-section {
+  @apply scroll-mt-24 border-line border-b py-8;
+}
+
+.issue-block {
+  @apply border-primary-700 border-s-4 py-2 ps-4;
+}
+
+.runbook-markdown {
+  @apply rounded-lg border border-line bg-surface p-4;
+}
+
+.badge-status-available {
+  @apply rounded-md bg-success-500/10 px-2 py-0.5 text-success-600 text-xs;
+}
+
+.badge-status-planned {
+  @apply rounded-md border border-line bg-surface-2/50 px-2 py-0.5 text-muted text-xs;
+}

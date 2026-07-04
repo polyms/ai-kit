@@ -7,6 +7,7 @@ import { m } from '../paraglide/messages.js'
 import type { Locale } from '../stores/useAppStore'
 import { useAppStore } from '../stores/useAppStore'
 import globalsCss from '../styles/globals.css?url'
+import homeCss from '../components/home/home.css?url'
 
 const origin = `${__ORIGIN_POLYMS__}/favicon`
 
@@ -25,6 +26,7 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'stylesheet', href: globalsCss },
+      { rel: 'stylesheet', href: homeCss },
       { rel: 'icon', href: `${origin}/favicon.svg`, type: 'image/svg+xml' },
       { rel: 'icon', href: `${origin}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
       { rel: 'apple-touch-icon', href: `${origin}/favicon-180x180.png`, sizes: '180x180' },
@@ -74,7 +76,7 @@ function RootLayout() {
       </head>
       <body>
         <Toast>
-          <div className='demo-shell min-h-dvh'>
+          <div className='app-shell min-h-dvh'>
             <a
               className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2'
               href='#main'
