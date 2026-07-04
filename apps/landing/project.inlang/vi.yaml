@@ -1,0 +1,128 @@
+# https://inlang.com/schema/inlang-message-format
+
+# --- catalog ---
+catalog_agentHint: Agent
+catalog_back: Quay lại danh mục
+catalog_clear: Xóa bộ lọc
+catalog_copied: Đã sao chép
+catalog_copy: Sao chép
+catalog_copyFail: Không sao chép được — chọn và copy thủ công
+catalog_empty: Không có skill nào khớp bộ lọc
+catalog_filterAll: Tất cả
+catalog_filterModel: Model-invoked
+catalog_filterUser: User-invoked
+catalog_notFound: Không tìm thấy skill
+catalog_samplePrompt: Sample prompt
+catalog_search: Tìm skill…
+catalog_status_available: Available
+catalog_status_planned: Planned
+catalog_sub: 13 skill — invoke, mô tả, trạng thái, domain
+catalog_title: Danh mục kỹ năng
+catalog_viewAll: Xem toàn bộ danh mục
+catalog_viewSource: Mở trên GitHub
+
+# --- domain ---
+domain_alignment: Alignment
+domain_architecture: Architecture
+domain_authoring: Authoring
+domain_design: Design
+domain_devops: DevOps
+domain_implementation: Implementation
+domain_repoConfig: Cấu hình repo
+domain_requirements: Requirements
+domain_review: Review
+domain_triage: Triage
+
+# --- footer ---
+footer_blurb: Kỹ năng agent cho real engineering — một kit version-controlled, symlink global xuyên project.
+footer_col_community: Cộng đồng
+footer_col_pipeline: Pipeline
+footer_col_resources: Tài nguyên
+footer_copyright: MIT © 2026 Polyms
+footer_link_catalog: Danh mục skill
+footer_link_discussions: Discussions
+footer_link_issues: Issues
+footer_starGithub: Star trên GitHub
+
+# --- hero ---
+hero_badge: Cursor-first · tool-agnostic by design
+hero_ctaPrimary: git clone ai-kit
+hero_ctaSecondary: Đọc tài liệu →
+hero_line1: Real engineering,
+hero_line2: không phải vibe coding.
+hero_sub: ai-kit là bộ não dùng chung của Polyms cho agentic fullstack — skill tên ngắn invoke bằng slash, từ requirements đến code đã review.
+
+# --- home ---
+home_catalog_intro: Mỗi capability là skill hoặc agent ngắn tên — invoke bằng slash command.
+
+# --- nav ---
+nav_catalog: Kỹ năng
+nav_docs: Tài liệu
+nav_github: GitHub
+nav_locale: Ngôn ngữ giao diện
+nav_overview: Tổng quan
+nav_pipeline: Pipeline
+nav_runbooks: Runbooks
+nav_skip: Bỏ qua điều hướng
+nav_start: Bắt đầu nhanh
+nav_theme: Giao diện
+
+# --- palette ---
+palette_hint: ↑↓ chọn · Enter mở · Esc đóng
+palette_placeholder: Gõ để lọc skill…
+palette_title: Command palette
+
+# --- principles ---
+principles_1_body: /pm thu hẹp khoảng cách giao tiếp — discovery, PRD, acceptance criteria kiểm chứng được
+principles_1_title: Align trước khi build
+principles_2_body: Skill tên ngắn (/pm, /design, /dev) ghép theo task — không quy trình nặng
+principles_2_title: Nhỏ và ghép được
+principles_3_body: /dev mã hóa TDD, types, debug có kỷ luật — tín hiệu nhanh, không codegen mù
+principles_3_title: Vòng phản hồi
+principles_4_body: Spec đặt tên module và seam; skill code chống ball of mud mà agent thúc đẩy
+principles_4_title: Thiết kế mỗi ngày
+principles_5_body: Fork, chỉnh, commit lại — skill là của bạn, không phải prompt hộp đen
+principles_5_title: Hack và sở hữu
+principles_kicker: 5 nguyên tắc
+principles_title: Real engineering
+
+# --- runbooks ---
+runbooks_audience: Audience
+runbooks_axisTags: Axis tags
+runbooks_backToIndex: Về danh sách runbooks
+runbooks_backToRunbook: Về runbook
+runbooks_cause: Cause
+runbooks_col_id: ID
+runbooks_col_issueId: Issue ID
+runbooks_col_match: Khớp
+runbooks_col_symptom: Symptom
+runbooks_col_tags: Tags
+runbooks_col_type: Loại
+runbooks_copied: Đã copy
+runbooks_copy: Copy
+runbooks_empty: Không có runbook khớp tìm kiếm.
+runbooks_fallback: 'Bản mirror trên GitHub:'
+runbooks_fix: Fix
+runbooks_greenfield: Greenfield checklist
+runbooks_issueNotFound: Không tìm thấy issue.
+runbooks_kicker: RUNBOOKS
+runbooks_knownIssues: Known issues
+runbooks_notFound: Không tìm thấy runbook.
+runbooks_relatedFiles: Related files
+runbooks_results: Kết quả
+runbooks_resultsCaption: Kết quả tìm runbook
+runbooks_searchLabel: Tìm runbook theo symptom
+runbooks_searchPlaceholder: No Output Directory named .output
+runbooks_stackProfile: Stack profile (correct state)
+runbooks_sub: Symptom → cause → fix → verify. Tìm theo thông báo lỗi hoặc trigger phrase.
+runbooks_symptom: Symptom
+runbooks_symptomIndex: Symptom index
+runbooks_title: Runbooks
+runbooks_verify: Verify
+
+# --- skillDetail ---
+skillDetail_boundaries: Ran giới
+skillDetail_downstream: Downstream
+skillDetail_pipeline: Pipeline
+skillDetail_upstream: Upstream
+skillDetail_whenToUse: Khi nào dùng

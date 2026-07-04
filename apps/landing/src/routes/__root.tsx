@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
-import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import { Modal, Toast } from '@polyms/core-ui'
-import { HomeFooter, HomeHeader } from '../components/home'
+import { createRootRoute, HeadContent, Outlet, Scripts, useRouterState } from '@tanstack/react-router'
+import { useEffect } from 'react'
 import { CommandPalette } from '../components/CommandPalette'
+import { HomeFooter, HomeHeader } from '../components/home'
+import { m } from '../paraglide/messages.js'
+import type { Locale } from '../stores/useAppStore'
 import { useAppStore } from '../stores/useAppStore'
-import { useT } from '../lib/i18n'
 import globalsCss from '../styles/globals.css?url'
 
 export const Route = createRootRoute({
@@ -32,16 +33,18 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   const hydrate = useAppStore(s => s.hydrate)
+  const locale = useAppStore(s => s.locale)
   const togglePalette = useAppStore(s => s.togglePalette)
   const setPaletteOpen = useAppStore(s => s.setPaletteOpen)
-  const t = useT()
-
+  const pathname = useRouterState({ select: s => s.location.pathname })
+  const hideCommandPalette = pathname.startsWith('/runbooks')
   useEffect(() => {
     hydrate()
   }, [hydrate])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
+      if (hideCommandPalette) return
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault()
         togglePalette()
@@ -50,10 +53,10 @@ function RootLayout() {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [togglePalette, setPaletteOpen])
+  }, [togglePalette, setPaletteOpen, hideCommandPalette])
 
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang={locale satisfies Locale} suppressHydrationWarning>
       <head>
         <HeadContent />
         <script
@@ -70,10 +73,10 @@ function RootLayout() {
         <Toast>
           <div className='demo-shell min-h-dvh'>
             <a
-              href='#main'
               className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-surface focus:px-3 focus:py-2'
+              href='#main'
             >
-              {t('nav.skip')}
+              {m.nav_skip()}
             </a>
             <HomeHeader />
             <main id='main'>
@@ -81,7 +84,7 @@ function RootLayout() {
             </main>
             <HomeFooter />
           </div>
-          <CommandPalette />
+          {!hideCommandPalette ? <CommandPalette /> : null}
           <Modal.Container />
           <Toast.Container />
         </Toast>

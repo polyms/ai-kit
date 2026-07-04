@@ -1,14 +1,16 @@
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import { nitro } from 'nitro/vite'
 import react from '@vitejs/plugin-react'
+import { nitro } from 'nitro/vite'
 import { defineConfig } from 'vite'
+import { paraglideCompilerOptions } from './project.inlang/paraglide.options'
 
 export default defineConfig({
+  resolve: { tsconfigPaths: true },
   plugins: [
-    tanstackStart({
-      // autoCodeSplitting: true,
-    }),
+    paraglideVitePlugin(paraglideCompilerOptions),
+    tanstackStart(),
     react(),
     tailwindcss(),
     nitro({

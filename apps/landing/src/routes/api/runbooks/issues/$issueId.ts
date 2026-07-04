@@ -1,5 +1,5 @@
-import type {} from '@tanstack/react-start'
 import { createFileRoute } from '@tanstack/react-router'
+import type {} from '@tanstack/react-start'
 import { getIssue } from '../../../../lib/runbooks/runbook-service'
 
 export const Route = createFileRoute('/api/runbooks/issues/$issueId')({

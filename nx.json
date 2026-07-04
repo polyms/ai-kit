@@ -4,5 +4,6 @@
     "build": {
       "cache": true
     }
-  }
+  },
+  "analytics": false
 }

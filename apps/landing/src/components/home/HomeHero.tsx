@@ -1,6 +1,6 @@
 import { Button } from '@polyms/core-ui'
 import { ChatRoundDots, Code2, MagicStick3, Rocket2 } from '@solar-icons/react-perf/BoldDuotone'
-import { useT } from '../../lib/i18n'
+import { m } from '../../paraglide/messages.js'
 import { BRAND_ACCENT, HOME_PLAYFUL } from './brand'
 
 type SolarIcon = typeof Rocket2
@@ -24,6 +24,7 @@ function FloatingIcon({
   const box = size * 1.9
   return (
     <div
+      aria-hidden
       className='demo-floating-icon absolute flex items-center justify-center border border-line bg-body'
       style={{
         top,
@@ -33,48 +34,45 @@ function FloatingIcon({
         height: box,
         transform: `rotate(${rotate}deg)`,
       }}
-      aria-hidden
     >
-      <Icon size={size} color={BRAND_ACCENT} aria-hidden />
+      <Icon aria-hidden color={BRAND_ACCENT} size={size} />
     </div>
   )
 }
 
 export function HomeHero() {
-  const t = useT()
-
   return (
     <section className='demo-hero demo-shell relative overflow-hidden bg-no-repeat'>
-      <div className='demo-hero__glow pointer-events-none absolute rounded-full opacity-70' aria-hidden />
-      <FloatingIcon icon={Rocket2} top={70} right={140} rotate={-8} />
-      <FloatingIcon icon={MagicStick3} top={260} right={60} size={26} rotate={6} />
-      <FloatingIcon icon={Code2} top={180} right={280} size={24} rotate={10} />
-      <FloatingIcon icon={ChatRoundDots} bottom={40} right={220} size={22} rotate={-6} />
+      <div aria-hidden className='demo-hero__glow pointer-events-none absolute rounded-full opacity-70' />
+      <FloatingIcon icon={Rocket2} right={140} rotate={-8} top={70} />
+      <FloatingIcon icon={MagicStick3} right={60} rotate={6} size={26} top={260} />
+      <FloatingIcon icon={Code2} right={280} rotate={10} size={24} top={180} />
+      <FloatingIcon bottom={40} icon={ChatRoundDots} right={220} rotate={-6} size={22} />
 
       <div className='demo-hero__content relative z-10'>
-        <span className='badge badge-primary demo-hero__badge inline-flex font-mono'>{t('hero.badge')}</span>
+        <span className='badge badge-primary demo-hero__badge inline-flex font-mono'>{m.hero_badge()}</span>
         <h1 className='demo-hero__title font-bold font-sans text-fg tracking-tight'>
-          {t('hero.line1')}
+          {m.hero_line1()}
           <br />
-          <span className='demo-hero__accent'>{t('hero.line2')}</span>
+          <span className='demo-hero__accent'>{m.hero_line2()}</span>
         </h1>
-        <p className='my-9 max-w-lg font-semibold text-fg text-lg'>{t('hero.sub')}</p>
+        <p className='my-9 max-w-lg font-semibold text-fg text-lg'>{m.hero_sub()}</p>
         <div className='flex flex-wrap items-center gap-3.5'>
-          <Button variant='primary' size='xl' rounded render={<a href='#start' />} className='font-bold'>
-            <Rocket2 size={20} color='#ffffff' aria-hidden />
-            {t('hero.ctaPrimary')}
+          <Button className='font-bold' render={<a href='#start' />} rounded size='xl' variant='primary'>
+            <Rocket2 aria-hidden color='#ffffff' size={20} />
+            {m.hero_ctaPrimary()}
           </Button>
           <Button
-            variant='light'
-            size='xl'
-            outlined
-            rounded
             className='font-bold'
+            outlined
             render={
-              <a href='https://github.com/polyms/ai-kit#readme' target='_blank' rel='noopener noreferrer' />
+              <a href='https://github.com/polyms/ai-kit#readme' rel='noopener noreferrer' target='_blank' />
             }
+            rounded
+            size='xl'
+            variant='light'
           >
-            {t('hero.ctaSecondary')}
+            {m.hero_ctaSecondary()}
           </Button>
         </div>
       </div>

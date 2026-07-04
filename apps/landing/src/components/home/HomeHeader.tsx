@@ -1,10 +1,10 @@
 import { Button, NavigationMenu } from '@polyms/core-ui'
+import { Code2 } from '@solar-icons/react-perf/BoldDuotone'
 import { useRouterState } from '@tanstack/react-router'
 import { GITHUB_REPO } from '../../content/overlay'
-import { useT } from '../../lib/i18n'
+import { m } from '../../paraglide/messages.js'
 import { HOME_PLAYFUL } from './brand'
-import { useDemoNavActive, type DemoNavId } from './useDemoNavActive'
-import { Code2 } from '@solar-icons/react-perf/BoldDuotone'
+import { type DemoNavId, useDemoNavActive } from './useDemoNavActive'
 
 const NAV: { id: DemoNavId | 'runbooks'; href: string; external?: boolean }[] = [
   { id: 'overview', href: '/#main' },
@@ -13,15 +13,21 @@ const NAV: { id: DemoNavId | 'runbooks'; href: string; external?: boolean }[] = 
   { id: 'start', href: '/#start' },
 ]
 
+const NAV_LABELS: Record<(typeof NAV)[number]['id'], () => string> = {
+  overview: m.nav_overview,
+  catalog: m.nav_catalog,
+  runbooks: m.nav_runbooks,
+  start: m.nav_start,
+}
+
 export function HomeHeader() {
-  const t = useT()
   const isActive = useDemoNavActive()
   const pathname = useRouterState({ select: s => s.location.pathname })
 
   return (
     <header className='demo-header sticky top-0 z-20 flex items-center justify-between border-line border-b px-10 py-4 backdrop-blur-[10px]'>
       <div className='flex items-center gap-2.5'>
-        <img src='/favicon.svg' alt='' className='size-7' />
+        <img alt='' className='size-7' src='/favicon.svg' />
         <span className='font-bold font-sans text-[19px]'>Polyms</span>
         <span
           className={`demo-header__brand-pill rounded-full border border-info border-dashed px-2.5 py-0.5 font-bold font-mono text-xs ${HOME_PLAYFUL ? 'demo-header__brand-pill--playful' : ''}`}
@@ -30,19 +36,19 @@ export function HomeHeader() {
         </span>
       </div>
 
-      <NavigationMenu className='rounded-full border border-line p-1' aria-label={t('nav.skip')}>
+      <NavigationMenu aria-label={m.nav_skip()} className='rounded-full border border-line p-1'>
         <NavigationMenu.List variant='bare'>
           {NAV.map(item => (
             <NavigationMenu.Item key={item.id}>
               <NavigationMenu.Link
-                href={item.href}
-                variant='trigger'
-                className='font-bold'
                 active={
                   item.id === 'runbooks' ? pathname.startsWith('/runbooks') : isActive(item.id as DemoNavId)
                 }
+                className='font-bold'
+                href={item.href}
+                variant='trigger'
               >
-                {item.id === 'runbooks' ? t('nav.runbooks') : t(`nav.${item.id}` as 'nav.overview')}
+                {NAV_LABELS[item.id]()}
               </NavigationMenu.Link>
             </NavigationMenu.Item>
           ))}
@@ -51,14 +57,9 @@ export function HomeHeader() {
       </NavigationMenu>
 
       <div className='flex gap-2'>
-        <Button
-          variant='primary'
-          rounded
-          size='lg'
-          render={<a href={GITHUB_REPO} target='_blank' rel='noopener noreferrer' />}
-        >
+        <Button render={<a href={GITHUB_REPO} rel='noopener noreferrer' target='_blank' />} rounded size='lg'>
           <Code2 className='size-4' />
-          {t('nav.github')}
+          {m.nav_github()}
         </Button>
       </div>
     </header>

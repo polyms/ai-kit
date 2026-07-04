@@ -10,9 +10,9 @@ const INVOKE_RE = /`(\/[a-z][a-z0-9-]*)`|(\/[a-z][a-z0-9-]*)/g
 function SkillInvokeBadge({ invoke, slug }: { invoke: string; slug: string }) {
   return (
     <Link
-      to='/skills/$slug'
-      params={{ slug }}
       className='inline align-baseline no-underline hover:opacity-90'
+      params={{ slug }}
+      to='/skills/$slug'
     >
       <span className='badge badge-info font-invoke text-xs'>{invoke}</span>
     </Link>
@@ -35,7 +35,7 @@ export function SkillInvokeText({ text }: { text: string }) {
     }
 
     if (skillSlugSet.has(slug)) {
-      parts.push(<SkillInvokeBadge key={`${start}-${invoke}`} invoke={invoke} slug={slug} />)
+      parts.push(<SkillInvokeBadge invoke={invoke} key={`${start}-${invoke}`} slug={slug} />)
     } else {
       parts.push(match[0])
     }

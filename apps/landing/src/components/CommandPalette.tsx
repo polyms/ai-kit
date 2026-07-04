@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { Field, Modal } from '@polyms/core-ui'
-import { getSkills } from '../lib/skills'
-import { useAppStore } from '../stores/useAppStore'
-import { useT } from '../lib/i18n'
-import { trackEvent } from '../lib/umami'
+import { useNavigate, useRouterState } from '@tanstack/react-router'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { IconMagnifier } from '../lib/icons'
+import { m } from '../paraglide/messages.js'
+import { getSkills } from '../lib/skills'
+import { trackEvent } from '../lib/umami'
+import { useAppStore } from '../stores/useAppStore'
 import { SkillCommandRow } from './SkillCommandRow'
 
 export function CommandPalette() {
@@ -16,7 +16,6 @@ export function CommandPalette() {
   const [activeIndex, setActiveIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
-  const t = useT()
   const skills = getSkills()
 
   const filtered = useMemo(() => {
@@ -59,21 +58,17 @@ export function CommandPalette() {
   }
 
   return (
-    <Modal open={open} onOpenChange={handleOpenChange}>
-      <Modal.Content size='lg' className='max-w-2xl overflow-hidden p-0'>
+    <Modal onOpenChange={handleOpenChange} open={open}>
+      <Modal.Content className='max-w-2xl overflow-hidden p-0' size='lg'>
         <div className='relative border-line border-b'>
           <Field>
             <Field.Control
-              ref={inputRef}
-              type='search'
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              placeholder={t('palette.placeholder')}
-              aria-label={t('palette.title')}
-              aria-controls={listboxId}
               aria-activedescendant={activeOptionId}
               aria-autocomplete='list'
+              aria-controls={listboxId}
+              aria-label={m.palette_title()}
               className='rounded-none border-0 bg-transparent py-3 ps-10 pe-4 font-invoke text-sm shadow-none'
+              onChange={e => setQuery(e.target.value)}
               onKeyDown={e => {
                 if (e.key === 'ArrowDown') {
                   e.preventDefault()
@@ -87,41 +82,45 @@ export function CommandPalette() {
                   goToSkill(filtered[activeIndex].slug)
                 }
               }}
+              placeholder={m.palette_placeholder()}
+              ref={inputRef}
+              type='search'
+              value={query}
             />
           </Field>
           <IconMagnifier
-            size={18}
             aria-hidden
             className='pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-muted'
+            size={18}
           />
         </div>
         <div
+          aria-label={m.palette_title()}
+          className='max-h-80 overflow-y-auto'
           id={listboxId}
           role='listbox'
-          className='max-h-80 overflow-y-auto'
-          aria-label={t('palette.title')}
         >
           {filtered.map((skill, i) => (
             <SkillCommandRow
-              key={skill.slug}
-              id={`command-palette-option-${skill.slug}`}
-              skill={skill}
               active={i === activeIndex}
               asButton
               asOption
               highlight={query}
-              onMouseEnter={() => setActiveIndex(i)}
+              id={`command-palette-option-${skill.slug}`}
+              key={skill.slug}
               onClick={() => goToSkill(skill.slug)}
+              onMouseEnter={() => setActiveIndex(i)}
+              skill={skill}
             />
           ))}
           {filtered.length === 0 && (
             <div className='px-4 py-8 text-center'>
               <p className='font-invoke text-muted'>&gt; 0 results</p>
-              <p className='mt-2 text-muted text-sm'>{t('catalog.empty')}</p>
+              <p className='mt-2 text-muted text-sm'>{m.catalog_empty()}</p>
             </div>
           )}
         </div>
-        <p className='border-line border-t px-4 py-2 font-invoke text-muted text-xs'>{t('palette.hint')}</p>
+        <p className='border-line border-t px-4 py-2 font-invoke text-muted text-xs'>{m.palette_hint()}</p>
       </Modal.Content>
     </Modal>
   )

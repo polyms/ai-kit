@@ -1,7 +1,7 @@
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
 import { HomeSiteChrome } from '../../components/home/HomeSiteChrome'
 import { AxisTagRow, RunbookBreadcrumb } from '../../components/runbooks'
-import { useT } from '../../lib/i18n'
+import { m } from '../../paraglide/messages.js'
 import { getRunbook } from '../../lib/runbooks/runbook-service'
 import { defaultRunbooksSearch } from '../../lib/runbooks-search'
 
@@ -18,16 +18,15 @@ export const Route = createFileRoute('/runbooks/$id')({
 })
 
 function RunbookNotFound() {
-  const t = useT()
   return (
     <div className='page-x section-y mx-auto max-w-4xl'>
-      <p className='text-muted'>{t('runbooks.notFound')}</p>
+      <p className='text-muted'>{m.runbooks_notFound()}</p>
       <RouterLink
-        to='/runbooks'
-        search={defaultRunbooksSearch}
         className='link link-primary mt-4 inline-block'
+        search={defaultRunbooksSearch}
+        to='/runbooks'
       >
-        {t('runbooks.backToIndex')}
+        {m.runbooks_backToIndex()}
       </RouterLink>
     </div>
   )
@@ -35,13 +34,12 @@ function RunbookNotFound() {
 
 function RunbookDetailPage() {
   const { runbook } = Route.useLoaderData()
-  const t = useT()
 
   return (
     <>
       <div className='runbook-page page-x section-y mx-auto max-w-4xl'>
         <RunbookBreadcrumb
-          items={[{ label: t('runbooks.title'), href: '/runbooks' }, { label: runbook.id }]}
+          items={[{ label: m.runbooks_title(), href: '/runbooks' }, { label: runbook.id }]}
         />
 
         <p className='label-mono'>{runbook.id}</p>
@@ -49,20 +47,20 @@ function RunbookDetailPage() {
           {runbook.id}: {runbook.title}
         </h1>
         <p className='mt-2 text-muted'>
-          {t('runbooks.audience')}: {runbook.audience}
+          {m.runbooks_audience()}: {runbook.audience}
         </p>
         <div className='mt-4'>
           <AxisTagRow tags={runbook.axisTags} />
         </div>
 
-        <section id='symptom-index' className='runbook-section mt-12'>
-          <h2 className='h2'>{t('runbooks.symptomIndex')}</h2>
+        <section className='runbook-section mt-12' id='symptom-index'>
+          <h2 className='h2'>{m.runbooks_symptomIndex()}</h2>
           <div className='mt-4 overflow-x-auto'>
             <table className='table-hover table-bordered table w-full'>
               <thead className='thead-light'>
                 <tr>
-                  <th scope='col'>{t('runbooks.col.symptom')}</th>
-                  <th scope='col'>{t('runbooks.col.issueId')}</th>
+                  <th scope='col'>{m.runbooks_col_symptom()}</th>
+                  <th scope='col'>{m.runbooks_col_issueId()}</th>
                 </tr>
               </thead>
               <tbody>
@@ -71,9 +69,9 @@ function RunbookDetailPage() {
                     <td>{issue.symptom}</td>
                     <td className='font-mono text-sm'>
                       <RouterLink
-                        to='/runbooks/issues/$issueId'
-                        params={{ issueId: issue.id }}
                         className='link link-primary'
+                        params={{ issueId: issue.id }}
+                        to='/runbooks/issues/$issueId'
                       >
                         {issue.id}
                       </RouterLink>
@@ -85,18 +83,18 @@ function RunbookDetailPage() {
           </div>
         </section>
 
-        <section id='stack-profile' className='runbook-section mt-12'>
-          <h2 className='h2'>{t('runbooks.stackProfile')}</h2>
+        <section className='runbook-section mt-12' id='stack-profile'>
+          <h2 className='h2'>{m.runbooks_stackProfile()}</h2>
           <div className='runbook-markdown mt-4 whitespace-pre-wrap font-mono text-sm leading-relaxed'>
             {runbook.stackProfileMarkdown}
           </div>
         </section>
 
-        <section id='greenfield' className='runbook-section mt-12'>
-          <h2 className='h2'>{t('runbooks.greenfield')}</h2>
+        <section className='runbook-section mt-12' id='greenfield'>
+          <h2 className='h2'>{m.runbooks_greenfield()}</h2>
           <ul className='mt-4 list-none space-y-2'>
             {runbook.greenfieldChecklist.map(item => (
-              <li key={item} className='flex gap-2 text-sm'>
+              <li className='flex gap-2 text-sm' key={item}>
                 <span aria-hidden className='text-primary-700'>
                   ✓
                 </span>
@@ -106,15 +104,15 @@ function RunbookDetailPage() {
           </ul>
         </section>
 
-        <section id='known-issues' className='runbook-section mt-12'>
-          <h2 className='h2'>{t('runbooks.knownIssues')}</h2>
+        <section className='runbook-section mt-12' id='known-issues'>
+          <h2 className='h2'>{m.runbooks_knownIssues()}</h2>
           <ul className='mt-4 space-y-2'>
             {runbook.knownIssues.map(issue => (
               <li key={issue.id}>
                 <RouterLink
-                  to='/runbooks/issues/$issueId'
-                  params={{ issueId: issue.id }}
                   className='link link-primary font-mono text-sm'
+                  params={{ issueId: issue.id }}
+                  to='/runbooks/issues/$issueId'
                 >
                   {issue.id}
                 </RouterLink>

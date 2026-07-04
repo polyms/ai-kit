@@ -1,7 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import type { SkillOverlay } from '../content/overlay'
+import { m } from '../paraglide/messages.js'
+import { domainLabel } from '../lib/skills'
 import { SkillStatusBadge } from './SkillStatusBadge'
-import { useT, type MessageKey } from '../lib/i18n'
 
 type SkillCommandRowProps = {
   skill: SkillOverlay
@@ -40,8 +41,7 @@ export function SkillCommandRow({
   id,
   asOption,
 }: SkillCommandRowProps) {
-  const t = useT()
-  const domainLabel = t(`domain.${skill.domain}` as MessageKey)
+  const label = domainLabel(skill.domain)
 
   const inner = (
     <>
@@ -57,10 +57,10 @@ export function SkillCommandRow({
         {skill.footnote && <p className='mt-1 text-muted text-xs'>{skill.footnote}</p>}
       </div>
       <div className='flex shrink-0 flex-wrap gap-2 text-xs'>
-        <span className='rounded-md border border-line px-2 py-0.5 text-muted'>{domainLabel}</span>
+        <span className='rounded-md border border-line px-2 py-0.5 text-muted'>{label}</span>
         <SkillStatusBadge status={skill.status} />
         <span className='rounded-md border border-line px-2 py-0.5 text-muted'>
-          {skill.invocation === 'user' ? t('catalog.filterUser') : t('catalog.filterModel')}
+          {skill.invocation === 'user' ? m.catalog_filterUser() : m.catalog_filterModel()}
         </span>
       </div>
     </>
@@ -75,14 +75,14 @@ export function SkillCommandRow({
   if (asButton && asOption) {
     return (
       <button
-        type='button'
-        id={id}
-        role='option'
         aria-selected={active ?? false}
-        tabIndex={active ? 0 : -1}
         className={className}
-        onMouseEnter={onMouseEnter}
+        id={id}
         onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        role='option'
+        tabIndex={active ? 0 : -1}
+        type='button'
       >
         {inner}
       </button>
@@ -91,7 +91,7 @@ export function SkillCommandRow({
 
   if (asButton) {
     return (
-      <button type='button' id={id} className={className} onMouseEnter={onMouseEnter} onClick={onClick}>
+      <button className={className} id={id} onClick={onClick} onMouseEnter={onMouseEnter} type='button'>
         {inner}
       </button>
     )
@@ -99,11 +99,11 @@ export function SkillCommandRow({
 
   return (
     <Link
-      to='/skills/$slug'
-      params={{ slug: skill.slug }}
       className={className}
-      onMouseEnter={onMouseEnter}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      params={{ slug: skill.slug }}
+      to='/skills/$slug'
     >
       {inner}
     </Link>

@@ -20,8 +20,8 @@
   }
 
   .demo-header__brand-pill--playful {
-    transform: rotate(-2deg);
     border: 1px dashed color-mix(in oklab, var(--brand-accent) 45%, transparent);
+    transform: rotate(-2deg);
   }
 
   /* Hero — layout, gradient glow, display type scale + wavy accent */
@@ -79,8 +79,8 @@
 
   /* Principles — accent-tinted surfaces */
   .demo-principle-card--featured {
-    border-color: color-mix(in oklab, var(--brand-accent) 25%, transparent);
     background: color-mix(in oklab, var(--brand-accent) 6%, var(--body));
+    border-color: color-mix(in oklab, var(--brand-accent) 25%, transparent);
   }
 
   .demo-principle-card__icon {

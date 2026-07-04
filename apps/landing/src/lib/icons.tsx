@@ -1,4 +1,3 @@
-import type { ComponentProps } from 'react'
 import {
   ArrowRight,
   Command,
@@ -8,6 +7,7 @@ import {
   SquareArrowRight,
   Sun,
 } from '@solar-icons/react-perf/Linear'
+import type { ComponentProps } from 'react'
 
 type IconProps = ComponentProps<typeof Sun>
 

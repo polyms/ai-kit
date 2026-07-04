@@ -14,7 +14,7 @@ export function TerminalPromptBlock({ label, text, skill, source, children }: Te
     <div className='overflow-hidden rounded-lg border border-line bg-surface'>
       <div className='flex items-center justify-between border-line border-b px-4 py-2'>
         <span className='font-invoke text-muted text-xs'>{label}</span>
-        {text && <CopyPromptButton text={text} skill={skill} source={source} />}
+        {text && <CopyPromptButton skill={skill} source={source} text={text} />}
       </div>
       {children ?? (
         <pre className='overflow-x-auto whitespace-pre-wrap p-4 font-invoke text-primary-700 text-sm leading-relaxed'>

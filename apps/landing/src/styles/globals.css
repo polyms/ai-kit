@@ -1,6 +1,6 @@
 @import '@polyms/core-ui/styles/tailwind.css';
 @import '@polyms/core-ui/styles/_fonts.css';
-@import './fonts.css';
+@import './_fonts.css';
 @import '../components/home/home.css';
 
 @theme {
@@ -62,11 +62,11 @@
   }
 
   .runbook-section {
-    @apply border-line border-t pt-10;
+    @apply scroll-mt-24 border-line border-b py-8;
   }
 
   .issue-block {
-    @apply border-primary-700;
+    @apply border-primary-700 border-s-4 py-2 ps-4;
   }
 
   .runbook-markdown {

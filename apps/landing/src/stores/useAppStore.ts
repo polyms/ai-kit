@@ -1,9 +1,10 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { trackEvent } from '../lib/umami'
+import { getLocale, type Locale, setLocale as setParaglideLocale } from '../paraglide/runtime'
 
 export type Theme = 'dark' | 'light'
-export type Locale = 'vi' | 'en'
+export type { Locale }
 
 function applyTheme(theme: Theme) {
   document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -19,12 +20,6 @@ function readStoredTheme(): Theme {
   return 'light'
 }
 
-function readStoredLocale(): Locale {
-  const stored = localStorage.getItem('ai-kit-locale')
-  if (stored === 'vi' || stored === 'en') return stored
-  return 'en'
-}
-
 type AppState = {
   theme: Theme
   locale: Locale
@@ -32,7 +27,7 @@ type AppState = {
   hydrated: boolean
   setTheme: (theme: Theme) => void
   toggleTheme: () => void
-  setLocale: (locale: Locale) => void
+  setLocale: (locale: Locale) => Promise<void>
   setPaletteOpen: (open: boolean) => void
   togglePalette: () => void
   hydrate: () => void
@@ -42,12 +37,12 @@ export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       theme: 'light',
-      locale: 'en',
+      locale: 'vi',
       paletteOpen: false,
       hydrated: false,
       hydrate: () => {
         const theme = readStoredTheme()
-        const locale = readStoredLocale()
+        const locale = getLocale()
         applyTheme(theme)
         applyLocale(locale)
         set({ theme, locale, hydrated: true })
@@ -62,9 +57,9 @@ export const useAppStore = create<AppState>()(
         const next = get().theme === 'dark' ? 'light' : 'dark'
         get().setTheme(next)
       },
-      setLocale: locale => {
+      setLocale: async locale => {
+        await setParaglideLocale(locale, { reload: false })
         applyLocale(locale)
-        localStorage.setItem('ai-kit-locale', locale)
         set({ locale })
       },
       setPaletteOpen: paletteOpen => set({ paletteOpen }),
@@ -76,10 +71,10 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'ai-kit-app-store',
-      partialize: state => ({ theme: state.theme, locale: state.locale }),
+      partialize: state => ({ theme: state.theme }),
       onRehydrateStorage: () => state => {
         const theme = readStoredTheme()
-        const locale = readStoredLocale()
+        const locale = getLocale()
         applyTheme(theme)
         applyLocale(locale)
         if (state) {

@@ -1,0 +1,128 @@
+# https://inlang.com/schema/inlang-message-format
+
+# --- catalog ---
+catalog_agentHint: Agent
+catalog_back: Back to catalog
+catalog_clear: Clear filters
+catalog_copied: Copied
+catalog_copy: Copy
+catalog_copyFail: Could not copy — select text manually
+catalog_empty: No skills match your filters
+catalog_filterAll: All
+catalog_filterModel: Model-invoked
+catalog_filterUser: User-invoked
+catalog_notFound: Skill not found
+catalog_samplePrompt: Sample prompt
+catalog_search: Find skill…
+catalog_status_available: Available
+catalog_status_planned: Planned
+catalog_sub: 13 skills — invoke, description, status, domain
+catalog_title: Skill catalog
+catalog_viewAll: View full catalog
+catalog_viewSource: View on GitHub
+
+# --- domain ---
+domain_alignment: Alignment
+domain_architecture: Architecture
+domain_authoring: Authoring
+domain_design: Design
+domain_devops: DevOps
+domain_implementation: Implementation
+domain_repoConfig: Repo config
+domain_requirements: Requirements
+domain_review: Review
+domain_triage: Triage
+
+# --- footer ---
+footer_blurb: Agent skills for real engineering — one version-controlled kit, linked globally across projects.
+footer_col_community: Community
+footer_col_pipeline: Pipeline
+footer_col_resources: Resources
+footer_copyright: MIT © 2026 Polyms
+footer_link_catalog: Skill catalog
+footer_link_discussions: Discussions
+footer_link_issues: Issues
+footer_starGithub: Star on GitHub
+
+# --- hero ---
+hero_badge: Cursor-first · tool-agnostic by design
+hero_ctaPrimary: git clone ai-kit
+hero_ctaSecondary: Read the docs →
+hero_line1: Real engineering,
+hero_line2: not vibe coding.
+hero_sub: ai-kit is Polyms' shared brain for agentic fullstack dev — short-named skills you invoke with a slash command, from product requirements to shipped, reviewed code.
+
+# --- home ---
+home_catalog_intro: Each capability is a short-named skill or agent, invoked with a slash command.
+
+# --- nav ---
+nav_catalog: Skills
+nav_docs: Docs
+nav_github: GitHub
+nav_locale: Interface language
+nav_overview: Overview
+nav_pipeline: Pipeline
+nav_runbooks: Runbooks
+nav_skip: Skip navigation
+nav_start: Quick start
+nav_theme: Theme
+
+# --- palette ---
+palette_hint: ↑↓ select · Enter open · Esc close
+palette_placeholder: Type to filter skills…
+palette_title: Command palette
+
+# --- principles ---
+principles_1_body: /pm closes the communication gap — discovery, PRD, testable acceptance criteria
+principles_1_title: Align before you build
+principles_2_body: Short-named skills (/pm, /design, /dev) you combine per task — no heavyweight process
+principles_2_title: Small and composable
+principles_3_body: /dev encodes TDD, types, and debugging discipline — fast signal, not blind codegen
+principles_3_title: Feedback loops
+principles_4_body: Specs name modules and seams; code skills resist the ball of mud agents accelerate
+principles_4_title: Design every day
+principles_5_body: Fork, adapt, commit back — skills are yours, not black-box prompts
+principles_5_title: Hack and own them
+principles_kicker: five principles
+principles_title: Real engineering
+
+# --- runbooks ---
+runbooks_audience: Audience
+runbooks_axisTags: Axis tags
+runbooks_backToIndex: Back to runbooks
+runbooks_backToRunbook: Back to runbook
+runbooks_cause: Cause
+runbooks_col_id: ID
+runbooks_col_issueId: Issue ID
+runbooks_col_match: Match
+runbooks_col_symptom: Symptom
+runbooks_col_tags: Tags
+runbooks_col_type: Type
+runbooks_copied: Copied
+runbooks_copy: Copy
+runbooks_empty: No runbooks match your search.
+runbooks_fallback: 'Mirror on GitHub:'
+runbooks_fix: Fix
+runbooks_greenfield: Greenfield checklist
+runbooks_issueNotFound: Issue not found.
+runbooks_kicker: RUNBOOKS
+runbooks_knownIssues: Known issues
+runbooks_notFound: Runbook not found.
+runbooks_relatedFiles: Related files
+runbooks_results: Results
+runbooks_resultsCaption: Runbook search results
+runbooks_searchLabel: Search runbooks by symptom
+runbooks_searchPlaceholder: No Output Directory named .output
+runbooks_stackProfile: Stack profile (correct state)
+runbooks_sub: Symptom → cause → fix → verify. Search by error message or trigger phrase.
+runbooks_symptom: Symptom
+runbooks_symptomIndex: Symptom index
+runbooks_title: Runbooks
+runbooks_verify: Verify
+
+# --- skillDetail ---
+skillDetail_boundaries: Boundaries
+skillDetail_downstream: Downstream
+skillDetail_pipeline: Pipeline
+skillDetail_upstream: Upstream
+skillDetail_whenToUse: When to use

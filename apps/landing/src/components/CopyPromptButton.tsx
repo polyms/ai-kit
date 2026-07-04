@@ -1,8 +1,8 @@
 import { Button, Toast } from '@polyms/core-ui'
 import { copyText } from '../lib/copy'
-import { trackEvent } from '../lib/umami'
-import { useT } from '../lib/i18n'
 import { IconCopy } from '../lib/icons'
+import { m } from '../paraglide/messages.js'
+import { trackEvent } from '../lib/umami'
 
 type CopyPromptButtonProps = {
   text: string
@@ -12,20 +12,19 @@ type CopyPromptButtonProps = {
 }
 
 export function CopyPromptButton({ text, skill, source = 'detail', className }: CopyPromptButtonProps) {
-  const t = useT()
   const toastManager = Toast.useToastManager()
 
   const handleCopy = async () => {
     const ok = await copyText(text)
     if (ok) {
       toastManager.add({
-        title: t('catalog.copied'),
+        title: m.catalog_copied(),
         type: 'success',
       })
       trackEvent('copy_prompt', { skill: skill ?? 'unknown', source })
     } else {
       toastManager.add({
-        title: t('catalog.copyFail'),
+        title: m.catalog_copyFail(),
         type: 'danger',
       })
     }
@@ -33,13 +32,13 @@ export function CopyPromptButton({ text, skill, source = 'detail', className }: 
 
   return (
     <Button
-      type='button'
-      size='sm'
-      onClick={handleCopy}
       className={`inline-flex items-center gap-1.5 ${className ?? ''}`}
+      onClick={handleCopy}
+      size='sm'
+      type='button'
     >
-      <IconCopy size={16} aria-hidden />
-      {t('catalog.copy')}
+      <IconCopy aria-hidden size={16} />
+      {m.catalog_copy()}
     </Button>
   )
 }

@@ -1,31 +1,30 @@
 import { Link } from '@tanstack/react-router'
 import { skillOverlays } from '../../content/overlay'
+import { m } from '../../paraglide/messages.js'
+import { SkillIcon } from '../../lib/skill-icons'
+import { domainLabel } from '../../lib/skills'
 import { defaultSkillsSearch } from '../../lib/skills-search'
 import { SkillStatusBadge } from '../SkillStatusBadge'
-import { useT, type MessageKey } from '../../lib/i18n'
-import { SkillIcon } from '../../lib/skill-icons'
 
 export function HomeCatalog() {
-  const t = useT()
-
   return (
-    <section id='catalog' className='demo-shell mx-auto max-w-[1080px] px-10 pt-2.5 pb-[110px]'>
+    <section className='demo-shell mx-auto max-w-[1080px] px-10 pt-2.5 pb-[110px]' id='catalog'>
       <div className='mb-2 flex items-baseline gap-3.5'>
         <h2 className='m-0 font-bold font-sans text-[34px] leading-[1.1] tracking-tight'>
-          {t('catalog.title')}
+          {m.catalog_title()}
         </h2>
-        <span className='h-px flex-1 bg-line' aria-hidden />
+        <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
-      <p className='mb-7 text-muted'>{t('home.catalog.intro')}</p>
+      <p className='mb-7 text-muted'>{m.home_catalog_intro()}</p>
       <div className='demo-catalog-grid'>
         {skillOverlays.map(skill => {
-          const domainLabel = t(`domain.${skill.domain}` as MessageKey)
+          const label = domainLabel(skill.domain)
           return (
             <Link
-              key={skill.slug}
-              to='/skills/$slug'
-              params={{ slug: skill.slug }}
               className='demo-catalog-card card flex items-start gap-3.5 px-[18px] py-4 no-underline transition-colors duration-200 hover:bg-surface-2/50 focus-visible:outline-2 focus-visible:outline-primary-700'
+              key={skill.slug}
+              params={{ slug: skill.slug }}
+              to='/skills/$slug'
             >
               <span className='demo-catalog-card__icon flex size-10 shrink-0 items-center justify-center rounded-[10px]'>
                 <SkillIcon slug={skill.slug} />
@@ -41,7 +40,7 @@ export function HomeCatalog() {
                 <span className='line-clamp-2 block text-[13px] text-muted leading-normal'>
                   {skill.description}
                 </span>
-                <span className='mt-1 block text-[11px] text-muted'>{domainLabel}</span>
+                <span className='mt-1 block text-[11px] text-muted'>{label}</span>
               </span>
             </Link>
           )
@@ -49,11 +48,11 @@ export function HomeCatalog() {
       </div>
       <p className='mt-8'>
         <Link
-          to='/skills'
-          search={defaultSkillsSearch}
           className='font-invoke text-primary-700 text-sm hover:underline'
+          search={defaultSkillsSearch}
+          to='/skills'
         >
-          {t('catalog.viewAll')} →
+          {m.catalog_viewAll()} →
         </Link>
       </p>
     </section>

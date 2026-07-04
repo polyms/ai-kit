@@ -1,4 +1,5 @@
-import { skillOverlays, type SkillOverlay } from '../content/overlay'
+import { m } from '../paraglide/messages.js'
+import { type SkillOverlay, skillOverlays } from '../content/overlay'
 
 export function getSkills(): SkillOverlay[] {
   return skillOverlays
@@ -43,3 +44,30 @@ export const domainOptions = [
   'architecture',
   'devops',
 ] as const
+
+export type SkillDomain = SkillOverlay['domain']
+
+export function domainLabel(domain: SkillDomain): string {
+  switch (domain) {
+    case 'repo-config':
+      return m.domain_repoConfig()
+    case 'alignment':
+      return m.domain_alignment()
+    case 'requirements':
+      return m.domain_requirements()
+    case 'triage':
+      return m.domain_triage()
+    case 'design':
+      return m.domain_design()
+    case 'implementation':
+      return m.domain_implementation()
+    case 'review':
+      return m.domain_review()
+    case 'authoring':
+      return m.domain_authoring()
+    case 'architecture':
+      return m.domain_architecture()
+    case 'devops':
+      return m.domain_devops()
+  }
+}

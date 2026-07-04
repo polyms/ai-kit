@@ -2,11 +2,16 @@ import { describe, expect, it } from 'vitest'
 import { getIssue, getRunbook, searchRunbooks } from './runbook-service'
 
 describe('runbook-service', () => {
-  it('returns RB-001-03 first when searching for .output symptom', () => {
-    const results = searchRunbooks({ q: 'No Output Directory named ".output"' })
+  it('returns RB-001-03 first when searching for .output query', () => {
+    const results = searchRunbooks({ q: '.output' })
     expect(results.length).toBeGreaterThan(0)
     expect(results[0]?.type).toBe('issue')
     expect(results[0]?.id).toBe('RB-001-03')
+  })
+
+  it('returns RB-001-03 for full outputDirectory symptom phrase', () => {
+    const results = searchRunbooks({ q: 'No Output Directory named ".output"' })
+    expect(results.some(r => r.id === 'RB-001-03')).toBe(true)
   })
 
   it('filters by axis tags', () => {

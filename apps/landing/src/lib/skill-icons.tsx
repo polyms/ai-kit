@@ -1,4 +1,3 @@
-import type { ComponentProps, ReactElement } from 'react'
 import {
   ChatRoundDots,
   ChecklistMinimalistic,
@@ -13,6 +12,7 @@ import {
   SortByTime,
   Structure,
 } from '@solar-icons/react-perf/BoldDuotone'
+import type { ComponentProps, ReactElement } from 'react'
 
 type IconComponent = (props: ComponentProps<typeof LinkRound>) => ReactElement
 

@@ -80,13 +80,30 @@ export function searchRunbooks(params: SearchRunbooksParams = {}): SearchResultI
       for (const issue of runbook.knownIssues) {
         const issueAxisScore = axisIntersection(issue.axisTags, axes)
         if (axes?.length && issueAxisScore === 0) continue
-        const issueText = [issue.title, issue.symptom, ...issue.triggerPhrases, ...issue.cause].join(' ')
-        const issueScore = scoreMatch(issueText, q) * Math.max(axisScore, issueAxisScore)
-        if (issueScore > 0.15) {
-          const match = issue.triggerPhrases.find(t => normalize(t).includes(normalize(q))) ?? issue.symptom
+
+        let issueScore = 0
+        let match = issue.symptom
+
+        for (const phrase of issue.triggerPhrases) {
+          const phraseScore = scoreMatch(phrase, q)
+          if (phraseScore > issueScore) {
+            issueScore = phraseScore * 2.5
+            match = phrase
+          }
+        }
+
+        const issueText = [issue.title, issue.symptom, ...issue.cause].join(' ')
+        const textScore = scoreMatch(issueText, q)
+        if (textScore > issueScore) {
+          issueScore = textScore
+          match = issue.symptom
+        }
+
+        const finalScore = issueScore * Math.max(axisScore, issueAxisScore)
+        if (finalScore > 0.15) {
           results.push({
             ...issueToResult(issue, runbook.id, match),
-            score: issueScore + 0.5,
+            score: finalScore + 0.5,
           })
         }
       }

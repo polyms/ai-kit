@@ -149,3 +149,5 @@ vite.config.ts.timestamp-*
 .vercel/
 .DS_Store
 .vercel
+
+.claude/worktrees

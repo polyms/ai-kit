@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
 import { Field, Tabs, Toggle, ToggleGroup } from '@polyms/core-ui'
-import type { SkillsSearch } from '../lib/skills-search'
-import { domainOptions, filterSkills, getSkills } from '../lib/skills'
-import { useT, type MessageKey } from '../lib/i18n'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { IconMagnifier } from '../lib/icons'
+import { m } from '../paraglide/messages.js'
+import { domainLabel, domainOptions, filterSkills, getSkills } from '../lib/skills'
+import type { SkillsSearch } from '../lib/skills-search'
 import { SkillCommandRow } from './SkillCommandRow'
 
 type SkillCommandListProps = {
@@ -12,7 +12,6 @@ type SkillCommandListProps = {
 }
 
 export function SkillCommandList({ search, onSearchChange }: SkillCommandListProps) {
-  const t = useT()
   const [debouncedQ, setDebouncedQ] = useState(search.q)
   const [activeIndex, setActiveIndex] = useState(0)
   const searchRef = useRef<HTMLInputElement>(null)
@@ -63,58 +62,58 @@ export function SkillCommandList({ search, onSearchChange }: SkillCommandListPro
       <div className='relative'>
         <Field>
           <Field.Control
+            className='min-h-11 ps-10 font-invoke'
+            onChange={e => onSearchChange({ q: e.target.value })}
+            placeholder={m.catalog_search()}
             ref={searchRef}
             type='search'
             value={search.q}
-            onChange={e => onSearchChange({ q: e.target.value })}
-            placeholder={t('catalog.search')}
-            className='min-h-11 ps-10 font-invoke'
           />
         </Field>
         <IconMagnifier
-          size={18}
           aria-hidden
           className='pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted'
+          size={18}
         />
       </div>
 
       <ToggleGroup
-        aria-label={t('catalog.filterAll')}
+        aria-label={m.catalog_filterAll()}
         className='toggle-group flex gap-2 overflow-x-auto pb-1'
-        value={[search.domain]}
         onValueChange={values => {
           const next = values[0]
           if (next) onSearchChange({ domain: next as SkillsSearch['domain'] })
         }}
+        value={[search.domain]}
       >
         {domainChips.map(d => (
-          <Toggle key={d} className='toggle min-h-11 shrink-0 px-3 text-sm' value={d}>
-            {d === 'all' ? t('catalog.filterAll') : t(`domain.${d}` as MessageKey)}
+          <Toggle className='toggle min-h-11 shrink-0 px-3 text-sm' key={d} value={d}>
+            {d === 'all' ? m.catalog_filterAll() : domainLabel(d)}
           </Toggle>
         ))}
       </ToggleGroup>
 
       <Tabs
-        value={search.invocation}
         onValueChange={v => onSearchChange({ invocation: v as SkillsSearch['invocation'] })}
+        value={search.invocation}
       >
         <Tabs.List className='mb-0'>
-          <Tabs.Tab value='all'>{t('catalog.filterAll')}</Tabs.Tab>
-          <Tabs.Tab value='user'>{t('catalog.filterUser')}</Tabs.Tab>
-          <Tabs.Tab value='model'>{t('catalog.filterModel')}</Tabs.Tab>
+          <Tabs.Tab value='all'>{m.catalog_filterAll()}</Tabs.Tab>
+          <Tabs.Tab value='user'>{m.catalog_filterUser()}</Tabs.Tab>
+          <Tabs.Tab value='model'>{m.catalog_filterModel()}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
 
       {skills.length === 0 ? (
         <div className='border border-line border-dashed py-16 text-center'>
           <p className='font-invoke text-muted'>&gt; 0 results</p>
-          <p className='mt-2 text-muted text-sm'>{t('catalog.empty')}</p>
+          <p className='mt-2 text-muted text-sm'>{m.catalog_empty()}</p>
           <button
-            type='button'
-            onClick={() => onSearchChange({ q: '', domain: 'all', invocation: 'all' })}
             className='mt-4 text-primary-700 text-sm hover:underline'
+            onClick={() => onSearchChange({ q: '', domain: 'all', invocation: 'all' })}
+            type='button'
           >
-            {t('catalog.clear')}
+            {m.catalog_clear()}
           </button>
         </div>
       ) : (
@@ -122,10 +121,10 @@ export function SkillCommandList({ search, onSearchChange }: SkillCommandListPro
           {skills.map((skill, i) => (
             <li key={skill.slug}>
               <SkillCommandRow
-                skill={skill}
                 active={i === activeIndex}
                 highlight={debouncedQ}
                 onMouseEnter={() => setActiveIndex(i)}
+                skill={skill}
               />
             </li>
           ))}

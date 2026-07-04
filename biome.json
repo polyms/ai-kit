@@ -12,7 +12,7 @@
     },
     "enabled": true,
     "includes": [
-      "web/**/*",
+      "apps/landing/**/*",
       ".vscode/settings.json",
       "biome.json",
       "!**/tsconfig*",
