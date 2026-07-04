@@ -29,21 +29,21 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 
 ## References
 
-| Topic           | Read when                                                                                           |
-| --------------- | --------------------------------------------------------------------------------------------------- |
-| Brief inference | [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — **mandatory** before layout                              |
-| Anti-slop       | [ANTI-SLOP.md](ANTI-SLOP.md) — big bans + composition; cite in spec                                 |
-| Quality bar     | [QUALITY-BAR.md](QUALITY-BAR.md) — visual reference + measurable craft intent                     |
-| CSS intent      | [CSS-INTENT.md](CSS-INTENT.md) — **required** §4 in spec; `/dev` implements before wiring         |
+| Topic           | Read when                                                                                                      |
+| --------------- | -------------------------------------------------------------------------------------------------------------- |
+| Brief inference | [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — **mandatory** before layout                                         |
+| Anti-slop       | [ANTI-SLOP.md](ANTI-SLOP.md) — big bans + composition; cite in spec                                            |
+| Quality bar     | [QUALITY-BAR.md](QUALITY-BAR.md) — visual reference + measurable craft intent                                  |
+| CSS intent      | [CSS-INTENT.md](CSS-INTENT.md) — **required** §4 in spec; `/dev` implements before wiring                      |
 | Visual accept   | [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — criteria `/dev` proves via [visual-ship](../dev/visual-ship.md) |
-| Spec template   | [design-spec-template.md](design-spec-template.md)                                                  |
-| Pre-flight      | [PREFLIGHT.md](PREFLIGHT.md) — must pass before handoff                                             |
-| Redesign        | [REDESIGN.md](REDESIGN.md) — audit-first when modernizing existing UI                               |
-| Domain glossary | `CONTEXT.md` at repo root                                                                           |
-| ADRs            | `docs/adr/` — do not re-litigate recorded decisions                                                 |
-| PRD source      | Issue tracker, `docs/`, or conversation — fetch per issue-tracker if needed                         |
-| Component API   | **`/core-ui`** in `@polyms/core-ui` — user invokes before component map, or attached in chat        |
-| External ref    | [Taste Skill](https://www.tasteskill.dev/) — anti-slop discipline only; DS locked to core-ui        |
+| Spec template   | [design-spec-template.md](design-spec-template.md)                                                             |
+| Pre-flight      | [PREFLIGHT.md](PREFLIGHT.md) — must pass before handoff                                                        |
+| Redesign        | [REDESIGN.md](REDESIGN.md) — audit-first when modernizing existing UI                                          |
+| Domain glossary | `CONTEXT.md` at repo root                                                                                      |
+| ADRs            | `docs/adr/` — do not re-litigate recorded decisions                                                            |
+| PRD source      | Issue tracker, `docs/`, or conversation — fetch per issue-tracker if needed                                    |
+| Component API   | **`/core-ui`** in `@polyms/core-ui` — user invokes before component map, or attached in chat                   |
+| External ref    | [Taste Skill](https://www.tasteskill.dev/) — anti-slop discipline only; DS locked to core-ui                   |
 
 ## Quick Router
 

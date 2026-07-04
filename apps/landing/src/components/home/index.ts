@@ -1,0 +1,6 @@
+export { HomeCatalog } from './HomeCatalog'
+export { HomeFooter } from './HomeFooter'
+export { HomeHeader } from './HomeHeader'
+export { HomeHero } from './HomeHero'
+export { HomePrinciples } from './HomePrinciples'
+export { HomeQuickStart } from './HomeQuickStart'

@@ -6,13 +6,13 @@ PRD decides **which screens exist**. Craft is **measurable** — type scale, sur
 
 ## Craft bar
 
-| Dimension | Bar |
-| --------- | --- |
-| **Visual reference** | **Required** for UI specs — URL or screenshot (e.g. [tasteskill.dev](https://www.tasteskill.dev/) craft tier). Borrow composition density, not brand. |
-| **CSS intent** | §4 [CSS-INTENT.md](CSS-INTENT.md) — named classes, surfaces, grids; `/dev` implements before wiring |
-| **Visual acceptance** | §8 [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — `/dev` proves via [visual-ship.md](../dev/visual-ship.md) |
-| **core-ui** | Primitives and tokens — not ad-hoc one-off styling |
-| **Content** | Copy from PRD/README/CONTEXT — not invented marketing fluff |
+| Dimension             | Bar                                                                                                                                                   |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Visual reference**  | **Required** for UI specs — URL or screenshot (e.g. [tasteskill.dev](https://www.tasteskill.dev/) craft tier). Borrow composition density, not brand. |
+| **CSS intent**        | §4 [CSS-INTENT.md](CSS-INTENT.md) — named classes, surfaces, grids; `/dev` implements before wiring                                                   |
+| **Visual acceptance** | §8 [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — `/dev` proves via [visual-ship.md](../dev/visual-ship.md)                                           |
+| **core-ui**           | Primitives and tokens — not ad-hoc one-off styling                                                                                                    |
+| **Content**           | Copy from PRD/README/CONTEXT — not invented marketing fluff                                                                                           |
 
 ## Spec must record (§1b)
 

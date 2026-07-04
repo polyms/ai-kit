@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "tanstack-start",
+  "buildCommand": "pnpm exec nx build landing",
+  "installCommand": "pnpm install",
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

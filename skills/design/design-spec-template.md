@@ -63,14 +63,14 @@ flowchart LR
 
 Per [CSS-INTENT.md](CSS-INTENT.md) — **required for UI**. `/dev` implements this before feature wiring.
 
-| Topic | Decision |
-| ----- | -------- |
-| Type scale | [named classes + breakpoint sizes] |
-| Surface rhythm | [body vs surface sections; border seams] |
-| Layout shells | [page-x, max-width per route] |
-| Grids | [grid-area / template per breakpoint if bento or asymmetric] |
-| Theme | [dark-first, flash script, tokens] |
-| globals.css | [custom classes to add in `@layer components`] |
+| Topic          | Decision                                                     |
+| -------------- | ------------------------------------------------------------ |
+| Type scale     | [named classes + breakpoint sizes]                           |
+| Surface rhythm | [body vs surface sections; border seams]                     |
+| Layout shells  | [page-x, max-width per route]                                |
+| Grids          | [grid-area / template per breakpoint if bento or asymmetric] |
+| Theme          | [dark-first, flash script, tokens]                           |
+| globals.css    | [custom classes to add in `@layer components`]               |
 
 ## 5. Component map
 

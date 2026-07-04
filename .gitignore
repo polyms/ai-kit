@@ -142,4 +142,10 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 .nx
+.tanstack/
+.nitro/
+.vinxi/
+.output/
+.vercel/
 .DS_Store
+.vercel

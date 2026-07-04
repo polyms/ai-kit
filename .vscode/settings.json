@@ -25,6 +25,6 @@
     "*.mdx": "markdown"
   },
   "tailwindCSS.classFunctions": ["clsx"],
-  "tailwindCSS.experimental.configFile": "web/src/styles/tailwind.css",
+  "tailwindCSS.experimental.configFile": "apps/landing/src/styles/globals.css",
   "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,0 +1,119 @@
+/* demo/ landing — custom values only; layout/type via Tailwind in components */
+
+@layer components {
+  .demo-shell {
+    --brand-accent: #e14709;
+    --font-display: var(--font-sans);
+  }
+
+  /* Header — frosted shell + brand pill tints */
+  .demo-header {
+    background: color-mix(in oklab, var(--body) 88%, transparent);
+  }
+
+  .demo-header__brand-pill {
+    color: var(--brand-accent);
+    background: color-mix(in oklab, var(--brand-accent) 8%, transparent);
+    transition:
+      transform 0.3s ease,
+      border 0.3s ease;
+  }
+
+  .demo-header__brand-pill--playful {
+    transform: rotate(-2deg);
+    border: 1px dashed color-mix(in oklab, var(--brand-accent) 45%, transparent);
+  }
+
+  /* Hero — layout, gradient glow, display type scale + wavy accent */
+  .demo-hero {
+    padding: 110px 40px 90px;
+    background-position: center -80px;
+    background-size: 1500px;
+  }
+
+  .demo-hero__glow {
+    top: -160px;
+    right: -160px;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(
+      circle at 30% 30%,
+      color-mix(in oklab, var(--brand-accent) 35%, transparent),
+      transparent 70%
+    );
+  }
+
+  .demo-hero__content {
+    max-width: 720px;
+  }
+
+  .demo-hero__badge {
+    margin-bottom: 22px;
+    transform: rotate(-1.5deg);
+  }
+
+  .demo-hero__title {
+    margin: 18px 0 24px;
+    font-size: clamp(2.75rem, 2rem + 3.2vw, 5rem);
+    line-height: 0.98;
+  }
+
+  .demo-hero__accent {
+    color: var(--brand-accent);
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: color-mix(in oklab, var(--brand-accent) 45%, transparent);
+    text-underline-offset: 10px;
+  }
+
+  /* Floating icon — design-system shadow token */
+  .demo-floating-icon {
+    border-radius: 18px;
+    box-shadow: var(--shadow-raised, 0 4px 12px rgb(0 0 0 / 0.08));
+  }
+
+  /* Terminal watermark */
+  .demo-terminal__watermark {
+    color: var(--brand-accent);
+  }
+
+  /* Principles — accent-tinted surfaces */
+  .demo-principle-card--featured {
+    border-color: color-mix(in oklab, var(--brand-accent) 25%, transparent);
+    background: color-mix(in oklab, var(--brand-accent) 6%, var(--body));
+  }
+
+  .demo-principle-card__icon {
+    background: color-mix(in oklab, var(--brand-accent) 8%, transparent);
+  }
+
+  .demo-principle-card__icon--featured {
+    background: color-mix(in oklab, var(--brand-accent) 14%, transparent);
+  }
+
+  /* Responsive auto-fit grids */
+  .demo-principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .demo-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px;
+  }
+
+  .demo-catalog-card__icon {
+    background: color-mix(in oklab, var(--brand-accent) 8%, transparent);
+  }
+
+  /* Footer — radial glow */
+  .demo-footer__glow {
+    background: radial-gradient(
+      circle at 15% 20%,
+      color-mix(in oklab, var(--brand-accent) 35%, transparent),
+      transparent 55%
+    );
+  }
+}
