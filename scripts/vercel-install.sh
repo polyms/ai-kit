@@ -7,6 +7,9 @@ if [ -z "$token" ]; then
   exit 1
 fi
 
-# Vercel does not expand ${GITHUB_TOKEN} in committed .npmrc during install.
-printf '\n//npm.pkg.github.com/:_authToken=%s\n' "$token" >> .npmrc
+export GITHUB_TOKEN="$token"
+
+# pnpm ignores ${GITHUB_TOKEN} in committed .npmrc — inject auth via user config instead.
+pnpm config set "//npm.pkg.github.com/:_authToken" "$GITHUB_TOKEN" --location user
+
 exec pnpm install --frozen-lockfile

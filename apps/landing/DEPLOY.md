@@ -32,7 +32,7 @@ cd apps/landing && pnpm preview
 
 ## Vercel install failures
 
-Vercel does **not** expand `${GITHUB_TOKEN}` in committed `.npmrc`. `vercel.json` runs `scripts/vercel-install.sh`, which appends the token from `GITHUB_TOKEN` (or `NPM_TOKEN`) before `pnpm install`.
+Vercel does **not** expand `${GITHUB_TOKEN}` in committed `.npmrc`. `vercel.json` runs `scripts/vercel-install.sh`, which exports `GITHUB_TOKEN` (or `NPM_TOKEN`) and sets GitHub Packages auth in the ephemeral user `.npmrc` before `pnpm install`.
 
 Add `GITHUB_TOKEN` in Vercel → Project → Settings → Environment Variables (Production + Preview). Use a PAT with `read:packages`, not the auto-generated repo token unless it has package access.
 
