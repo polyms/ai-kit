@@ -86,7 +86,14 @@
       "semicolons": "asNeeded",
       "trailingCommas": "es5"
     },
-    "globals": []
+    "globals": [
+      "__ORIGIN_POLYMS__",
+      "__VERSION__",
+      "__GLITCHTIP_DSN__",
+      "__PHONE__",
+      "__EMAIL__",
+      "__THEME_COLOR__"
+    ]
   },
   "json": {
     "formatter": { "enabled": true, "indentWidth": 2, "lineWidth": 110 }

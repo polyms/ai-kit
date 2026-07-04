@@ -1,6 +1,22 @@
 {
+  "background_color": "#ffffff",
+  "display": "standalone",
   "icons": [
-    { "sizes": "192x192", "src": "/favicon-192x192.png", "type": "image/png" },
-    { "sizes": "512x512", "src": "/favicon-512x512.png", "type": "image/png" }
-  ]
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "https://polyms.dev/favicon/favicon-192x192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "https://polyms.dev/favicon/favicon-512x512.png",
+      "type": "image/png"
+    }
+  ],
+  "name": "ai-kit — Polyms",
+  "short_name": "ai-kit",
+  "start_url": ".",
+  "theme_color": "#f97316"
 }

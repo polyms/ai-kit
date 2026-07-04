@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { skillOverlays } from '../../content/overlay'
-import { m } from '../../paraglide/messages.js'
 import { SkillIcon } from '../../lib/skill-icons'
 import { domainLabel } from '../../lib/skills'
 import { defaultSkillsSearch } from '../../lib/skills-search'
+import { m } from '../../paraglide/messages.js'
 import { SkillStatusBadge } from '../SkillStatusBadge'
 
 export function HomeCatalog() {
@@ -31,9 +31,7 @@ export function HomeCatalog() {
               </span>
               <span className='min-w-0 flex-1'>
                 <span className='mb-0.5 flex flex-wrap items-center gap-2'>
-                  <span className='font-bold font-mono text-[var(--brand-accent)] text-sm'>
-                    {skill.invoke}
-                  </span>
+                  <span className='font-bold font-mono text-(--brand-accent) text-sm'>{skill.invoke}</span>
                   <SkillStatusBadge status={skill.status} />
                 </span>
                 <span className='mb-0.5 block font-semibold text-[13px] text-fg'>{skill.name}</span>

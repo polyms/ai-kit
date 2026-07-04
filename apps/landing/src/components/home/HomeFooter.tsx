@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { GITHUB_REPO } from '../../content/overlay'
 import { injectUmami } from '../../lib/umami'
 import { m } from '../../paraglide/messages.js'
+import { PolymsWordmark } from '../PolymsWordmark'
 
 const PIPELINE_LINKS = ['/align', '/pm', '/to-prd', '/to-issues', '/dev', '/code-review'] as const
 
@@ -18,9 +19,8 @@ export function HomeFooter() {
       <div aria-hidden className='demo-footer__glow pointer-events-none absolute inset-0' />
       <div className='relative flex flex-wrap gap-[60px] px-11 pt-14 pb-8'>
         <div className='min-w-[260px] flex-[1_1_280px]'>
-          <div className='mb-3.5 flex items-center gap-2.5'>
-            <img alt='' height={30} src='/favicon.svg' width={30} />
-            <span className='font-bold font-sans text-[22px]'>Polyms</span>
+          <div className='mb-3.5'>
+            <PolymsWordmark iconClassName='text-white' size='footer' textClassName='font-sans' />
           </div>
           <p className='mb-5 max-w-sm font-semibold text-body'>{m.footer_blurb()}</p>
           <Button

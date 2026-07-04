@@ -2,6 +2,7 @@
   "name": "@polyms/landing",
   "private": true,
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && tsc --noEmit",
@@ -14,11 +15,9 @@
     "@solar-icons/react-perf": "^2.1.1",
     "@tanstack/react-router": "1.170.17",
     "@tanstack/react-start": "^1.168.27",
+    "clsx": "^2.1.1",
     "react": "~19.2.7",
     "react-dom": "~19.2.7",
     "zustand": "^5.0.14"
-  },
-  "devDependencies": {
-    "typescript": "~6.0.3"
   }
 }

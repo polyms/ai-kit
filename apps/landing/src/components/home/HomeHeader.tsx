@@ -3,6 +3,7 @@ import { Code2 } from '@solar-icons/react-perf/BoldDuotone'
 import { useRouterState } from '@tanstack/react-router'
 import { GITHUB_REPO } from '../../content/overlay'
 import { m } from '../../paraglide/messages.js'
+import { PolymsWordmark } from '../PolymsWordmark'
 import { HOME_PLAYFUL } from './brand'
 import { type DemoNavId, useDemoNavActive } from './useDemoNavActive'
 
@@ -27,8 +28,11 @@ export function HomeHeader() {
   return (
     <header className='demo-header sticky top-0 z-20 flex items-center justify-between border-line border-b px-10 py-4 backdrop-blur-[10px]'>
       <div className='flex items-center gap-2.5'>
-        <img alt='' className='size-7' src='/favicon.svg' />
-        <span className='font-bold font-sans text-[19px]'>Polyms</span>
+        <PolymsWordmark
+          iconClassName='text-slate-500'
+          size='header'
+          textClassName='font-sans text-lg text-fg'
+        />
         <span
           className={`demo-header__brand-pill rounded-full border border-info border-dashed px-2.5 py-0.5 font-bold font-mono text-xs ${HOME_PLAYFUL ? 'demo-header__brand-pill--playful' : ''}`}
         >
@@ -57,7 +61,12 @@ export function HomeHeader() {
       </NavigationMenu>
 
       <div className='flex gap-2'>
-        <Button render={<a href={GITHUB_REPO} rel='noopener noreferrer' target='_blank' />} rounded size='lg'>
+        <Button
+          render={<a href={GITHUB_REPO} rel='noopener noreferrer' target='_blank' />}
+          rounded
+          size='lg'
+          variant='info'
+        >
           <Code2 className='size-4' />
           {m.nav_github()}
         </Button>

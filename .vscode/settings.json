@@ -26,5 +26,6 @@
   },
   "tailwindCSS.classFunctions": ["clsx"],
   "tailwindCSS.experimental.configFile": "apps/landing/src/styles/globals.css",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib"
 }

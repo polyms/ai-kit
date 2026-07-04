@@ -8,6 +8,8 @@ import type { Locale } from '../stores/useAppStore'
 import { useAppStore } from '../stores/useAppStore'
 import globalsCss from '../styles/globals.css?url'
 
+const origin = `${__ORIGIN_POLYMS__}/favicon`
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -18,13 +20,14 @@ export const Route = createRootRoute({
         content: 'Polyms agent skills — align, spec, ship. Agent skills for real engineering.',
       },
       { title: 'ai-kit — Polyms' },
+      { name: 'theme-color', content: __THEME_COLOR__ },
+      { name: 'version', content: __VERSION__ },
     ],
     links: [
       { rel: 'stylesheet', href: globalsCss },
-      { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
-      { rel: 'icon', href: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { rel: 'icon', href: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { rel: 'apple-touch-icon', href: '/favicon-180x180.png', sizes: '180x180' },
+      { rel: 'icon', href: `${origin}/favicon.svg`, type: 'image/svg+xml' },
+      { rel: 'icon', href: `${origin}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
+      { rel: 'apple-touch-icon', href: `${origin}/favicon-180x180.png`, sizes: '180x180' },
       { rel: 'manifest', href: '/site.webmanifest' },
     ],
   }),
@@ -73,7 +76,7 @@ function RootLayout() {
         <Toast>
           <div className='demo-shell min-h-dvh'>
             <a
-              className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-surface focus:px-3 focus:py-2'
+              className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2'
               href='#main'
             >
               {m.nav_skip()}
