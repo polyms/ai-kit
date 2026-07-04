@@ -13,6 +13,14 @@ export default defineConfig({
     tailwindcss(),
     nitro({
       preset: process.env.VERCEL ? 'vercel' : undefined,
+      ...(process.env.VERCEL
+        ? {
+            output: {
+              // Monorepo root is two levels up; Vercel expects Build Output API at repo/.vercel/output
+              dir: '../../.vercel/output',
+            },
+          }
+        : {}),
     }),
   ],
   base: '/',

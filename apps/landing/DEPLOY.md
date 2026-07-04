@@ -11,7 +11,9 @@
    - `VITE_UMAMI_WEBSITE_ID` (optional)
 5. Deploy
 
-Build: `scripts/vercel-install.sh` → `pnpm exec nx build landing` → output in `apps/landing/.output/`
+Build: `scripts/vercel-install.sh` → `nx build landing --skip-nx-cache` → Build Output API at `.vercel/output/`.
+
+Do **not** set `outputDirectory` in `vercel.json` — that wraps Nitro output as static files and breaks SSR routing (`config.json` loses `dest: /__server`).
 
 Nitro uses the `vercel` preset when `VERCEL=1` during build.
 

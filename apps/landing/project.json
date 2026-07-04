@@ -10,7 +10,7 @@
         "cwd": "apps/landing",
         "command": "pnpm run build"
       },
-      "outputs": ["{projectRoot}/.output"]
+      "outputs": ["{projectRoot}/.output", "{projectRoot}/.vercel/output"]
     },
     "serve": {
       "executor": "nx:run-commands",
