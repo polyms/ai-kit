@@ -6,12 +6,12 @@
 2. **Root Directory:** repo root (`./`) — `vercel.json` lives here
 3. Framework preset: **TanStack Start** (from `vercel.json`)
 4. Add env vars:
-   - `NPM_TOKEN` or `GITHUB_TOKEN` — required for `@polyms/core-ui` from GitHub Packages
+   - `GITHUB_TOKEN` — GitHub PAT with `read:packages` (required for `@polyms/core-ui`)
    - `VITE_UMAMI_SCRIPT_URL` (optional)
    - `VITE_UMAMI_WEBSITE_ID` (optional)
 5. Deploy
 
-Build: `pnpm install` → `pnpm exec nx build landing` → output in `apps/landing/.output/`
+Build: `scripts/vercel-install.sh` → `pnpm exec nx build landing` → output in `apps/landing/.output/`
 
 Nitro uses the `vercel` preset when `VERCEL=1` during build.
 
@@ -32,7 +32,9 @@ cd apps/landing && pnpm preview
 
 ## Vercel install failures
 
-If `pnpm install` fails on Vercel, add a project env var `NPM_TOKEN` with a GitHub PAT that has `read:packages`. Vercel injects it into `.npmrc` for `@polyms` scope.
+Vercel does **not** expand `${GITHUB_TOKEN}` in committed `.npmrc`. `vercel.json` runs `scripts/vercel-install.sh`, which appends the token from `GITHUB_TOKEN` (or `NPM_TOKEN`) before `pnpm install`.
+
+Add `GITHUB_TOKEN` in Vercel → Project → Settings → Environment Variables (Production + Preview). Use a PAT with `read:packages`, not the auto-generated repo token unless it has package access.
 
 ## GitHub Pages
 
