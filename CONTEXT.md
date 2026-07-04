@@ -74,6 +74,10 @@ _Avoid_: implementation, coding phase
 Two-axis review skill (Standards + Spec) since a pinned git fixed point — parallel sub-agents, side-by-side findings. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code". Invoke with `/code-review`.
 _Avoid_: PR review (generic), lint check
 
+**DevOps**:
+Deploy, CI, and infra ownership — symptom → fix via runbooks at `docs/runbooks/`. Invoke with `/devops` (planned). Long sessions: `devops-agent` (planned).
+_Avoid_: SRE (generic), ops runbook (when meaning the skill specifically)
+
 **Handoff**:
 Transfer between pipeline stages — summary plus `## Next Step` pointing to exactly one next skill.
 _Avoid_: handover, transition
@@ -107,6 +111,22 @@ _Avoid_: spec, requirements doc
 **ADR**:
 Architecture Decision Record — a hard-to-reverse decision that needs context to understand. Stored in `docs/adr/`.
 _Avoid_: decision doc, RFC
+
+**Runbook**:
+Operational playbook — symptom → cause → fix → verify for deploy/CI/infra. **CMS-authored** in ai-kit (self-built); published realtime to MCP (agents) and kit site (humans); decoupled from skill bootstrap version.
+_Avoid_: deploy doc (generic), troubleshooting guide
+
+**Stack profile**:
+Declared tooling/deploy combination — e.g. biome + prettier, eslint + prettier, TanStack Start + Vercel. Defines what “correct” config looks like and greenfield checklist; tagged so agents match the repo’s mix.
+_Avoid_: stack doc (generic), project README (when meaning profile catalog)
+
+**Stack manifest**:
+Per-repo record of stack axes for the dimension matrix — detected from repo files during `/setup`, user-confirmed, written to `docs/agents/stack-profile.md`. MCP and devops agents use it to filter runbook search; user may edit after setup.
+_Avoid_: stack.yaml (generic), tech stack file (when meaning setup output specifically)
+
+**Ops CMS**:
+Runbook/wiki admin on the kit site at `/ops/*` — CMS-authored content, dimension matrix, known issues. **Prisma + Postgres (Supabase)**. OIDC **resource server** trusting [polyms.dev](https://polyms.dev/) SSO for write/admin; **public read** at `/runbooks/*` and MCP search endpoints (rate-limited at edge).
+_Avoid_: admin panel (generic), Notion wiki (when meaning kit site ops)
 
 **Glossary**:
 Canonical domain vocabulary for the repo. Lives in `CONTEXT.md` — glossary only, no specs.
@@ -159,16 +179,24 @@ The kit site's home screen — value proposition, quick start, and entry into th
 _Avoid_: homepage (generic), marketing page
 
 **Skill catalog**:
-Browsable index of skills on the kit site — invoke name, description, status, domain tag, link to detail and sample prompt. Richer UX than the README catalog table.
+Browsable index of skills on the kit site — invoke name, description, status, domain tag, link to detail and sample prompt. Homepage grid and `/skills` share one overlay registry. Richer UX than the README catalog table.
 _Avoid_: skill list, skills page (generic)
+
+**Skill detail**:
+Kit site page at `/skills/:slug` — invoke panel, badges, extended overlay copy, sample prompt (available only), agent panel, GitHub source. Single route for skills; no separate `/agents/*` pages.
+_Avoid_: skill page (generic), agent detail page
 
 **Sample prompt**:
 Copy-paste example showing how to invoke a skill in chat — bilingual EN/VI where the skill supports it. Lives on the kit site; README may mirror for contributors.
 _Avoid_: example prompt, starter prompt
 
 **Content overlay**:
-Curated metadata layered on `skills/*/SKILL.md` frontmatter — status, domain tag, sample prompts, agent hint. Frontmatter is base; overlay fills fields README maintains today that frontmatter lacks.
+Curated metadata layered on `skills/*/SKILL.md` frontmatter — status, domain tag, sample prompts, agent hint, and kit-site detail fields (summary, whenToUse, pipeline, boundaries, agent panel). Frontmatter is base; overlay fills fields README maintains today that frontmatter lacks.
 _Avoid_: generated content, skill config (generic)
+
+**Planned skill**:
+Skill or agent listed on the kit site before its `SKILL.md` or `agents/*-agent.md` ships in the repo — overlay `status: planned`; detail page shows Planned badge, no sample prompt.
+_Avoid_: roadmap item (generic), coming soon (UI label only)
 
 **Locale toggle**:
 Kit site control switching UI chrome between Vietnamese (default) and English (optional). Prompt samples remain bilingual EN/VI per skill regardless of toggle.
