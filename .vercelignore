@@ -1,16 +1,16 @@
 # Monorepo — exclude paths outside the landing app from Vercel upload
 # (mirrors core-ui vercel.json monorepo pattern; speeds deploys when root = apps/landing)
 
-# Other apps / demos
-demo/
+# Other apps / demos (root-only — avoid matching apps/landing/src/routes/skills/)
+/demo/
 
-# Skills source (not needed at runtime — overlay is bundled)
-skills/
-agents/
-.cursor/
+# Repo skills/agents source (not runtime — overlay is bundled in landing)
+/skills/
+/agents/
+/.cursor/
 
 # Docs and contributor content
-docs/
+/docs/
 *.md
 !apps/landing/**/*.md
 
