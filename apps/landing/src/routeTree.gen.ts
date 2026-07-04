@@ -12,7 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as QuickStartRouteImport } from './routes/quick-start'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SkillsIndexRouteImport } from './routes/skills/index'
+import { Route as RunbooksIndexRouteImport } from './routes/runbooks/index'
 import { Route as SkillsSlugRouteImport } from './routes/skills/$slug'
+import { Route as RunbooksIdRouteImport } from './routes/runbooks/$id'
+import { Route as RunbooksIssuesIssueIdRouteImport } from './routes/runbooks/issues/$issueId'
+import { Route as ApiRunbooksSearchRouteImport } from './routes/api/runbooks/search'
+import { Route as ApiRunbooksIdRouteImport } from './routes/api/runbooks/$id'
+import { Route as ApiRunbooksIssuesIssueIdRouteImport } from './routes/api/runbooks/issues/$issueId'
 
 const QuickStartRoute = QuickStartRouteImport.update({
   id: '/quick-start',
@@ -29,44 +35,130 @@ const SkillsIndexRoute = SkillsIndexRouteImport.update({
   path: '/skills/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RunbooksIndexRoute = RunbooksIndexRouteImport.update({
+  id: '/runbooks/',
+  path: '/runbooks/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SkillsSlugRoute = SkillsSlugRouteImport.update({
   id: '/skills/$slug',
   path: '/skills/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RunbooksIdRoute = RunbooksIdRouteImport.update({
+  id: '/runbooks/$id',
+  path: '/runbooks/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RunbooksIssuesIssueIdRoute = RunbooksIssuesIssueIdRouteImport.update({
+  id: '/runbooks/issues/$issueId',
+  path: '/runbooks/issues/$issueId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRunbooksSearchRoute = ApiRunbooksSearchRouteImport.update({
+  id: '/api/runbooks/search',
+  path: '/api/runbooks/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRunbooksIdRoute = ApiRunbooksIdRouteImport.update({
+  id: '/api/runbooks/$id',
+  path: '/api/runbooks/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRunbooksIssuesIssueIdRoute =
+  ApiRunbooksIssuesIssueIdRouteImport.update({
+    id: '/api/runbooks/issues/$issueId',
+    path: '/api/runbooks/issues/$issueId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/quick-start': typeof QuickStartRoute
+  '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/runbooks/': typeof RunbooksIndexRoute
   '/skills/': typeof SkillsIndexRoute
+  '/api/runbooks/$id': typeof ApiRunbooksIdRoute
+  '/api/runbooks/search': typeof ApiRunbooksSearchRoute
+  '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
+  '/api/runbooks/issues/$issueId': typeof ApiRunbooksIssuesIssueIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/quick-start': typeof QuickStartRoute
+  '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/runbooks': typeof RunbooksIndexRoute
   '/skills': typeof SkillsIndexRoute
+  '/api/runbooks/$id': typeof ApiRunbooksIdRoute
+  '/api/runbooks/search': typeof ApiRunbooksSearchRoute
+  '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
+  '/api/runbooks/issues/$issueId': typeof ApiRunbooksIssuesIssueIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/quick-start': typeof QuickStartRoute
+  '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/runbooks/': typeof RunbooksIndexRoute
   '/skills/': typeof SkillsIndexRoute
+  '/api/runbooks/$id': typeof ApiRunbooksIdRoute
+  '/api/runbooks/search': typeof ApiRunbooksSearchRoute
+  '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
+  '/api/runbooks/issues/$issueId': typeof ApiRunbooksIssuesIssueIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/quick-start' | '/skills/$slug' | '/skills/'
+  fullPaths:
+    | '/'
+    | '/quick-start'
+    | '/runbooks/$id'
+    | '/skills/$slug'
+    | '/runbooks/'
+    | '/skills/'
+    | '/api/runbooks/$id'
+    | '/api/runbooks/search'
+    | '/runbooks/issues/$issueId'
+    | '/api/runbooks/issues/$issueId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/quick-start' | '/skills/$slug' | '/skills'
-  id: '__root__' | '/' | '/quick-start' | '/skills/$slug' | '/skills/'
+  to:
+    | '/'
+    | '/quick-start'
+    | '/runbooks/$id'
+    | '/skills/$slug'
+    | '/runbooks'
+    | '/skills'
+    | '/api/runbooks/$id'
+    | '/api/runbooks/search'
+    | '/runbooks/issues/$issueId'
+    | '/api/runbooks/issues/$issueId'
+  id:
+    | '__root__'
+    | '/'
+    | '/quick-start'
+    | '/runbooks/$id'
+    | '/skills/$slug'
+    | '/runbooks/'
+    | '/skills/'
+    | '/api/runbooks/$id'
+    | '/api/runbooks/search'
+    | '/runbooks/issues/$issueId'
+    | '/api/runbooks/issues/$issueId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   QuickStartRoute: typeof QuickStartRoute
+  RunbooksIdRoute: typeof RunbooksIdRoute
   SkillsSlugRoute: typeof SkillsSlugRoute
+  RunbooksIndexRoute: typeof RunbooksIndexRoute
   SkillsIndexRoute: typeof SkillsIndexRoute
+  ApiRunbooksIdRoute: typeof ApiRunbooksIdRoute
+  ApiRunbooksSearchRoute: typeof ApiRunbooksSearchRoute
+  RunbooksIssuesIssueIdRoute: typeof RunbooksIssuesIssueIdRoute
+  ApiRunbooksIssuesIssueIdRoute: typeof ApiRunbooksIssuesIssueIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,11 +184,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/runbooks/': {
+      id: '/runbooks/'
+      path: '/runbooks'
+      fullPath: '/runbooks/'
+      preLoaderRoute: typeof RunbooksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/skills/$slug': {
       id: '/skills/$slug'
       path: '/skills/$slug'
       fullPath: '/skills/$slug'
       preLoaderRoute: typeof SkillsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/runbooks/$id': {
+      id: '/runbooks/$id'
+      path: '/runbooks/$id'
+      fullPath: '/runbooks/$id'
+      preLoaderRoute: typeof RunbooksIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/runbooks/issues/$issueId': {
+      id: '/runbooks/issues/$issueId'
+      path: '/runbooks/issues/$issueId'
+      fullPath: '/runbooks/issues/$issueId'
+      preLoaderRoute: typeof RunbooksIssuesIssueIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/runbooks/search': {
+      id: '/api/runbooks/search'
+      path: '/api/runbooks/search'
+      fullPath: '/api/runbooks/search'
+      preLoaderRoute: typeof ApiRunbooksSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/runbooks/$id': {
+      id: '/api/runbooks/$id'
+      path: '/api/runbooks/$id'
+      fullPath: '/api/runbooks/$id'
+      preLoaderRoute: typeof ApiRunbooksIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/runbooks/issues/$issueId': {
+      id: '/api/runbooks/issues/$issueId'
+      path: '/api/runbooks/issues/$issueId'
+      fullPath: '/api/runbooks/issues/$issueId'
+      preLoaderRoute: typeof ApiRunbooksIssuesIssueIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -105,8 +239,14 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   QuickStartRoute: QuickStartRoute,
+  RunbooksIdRoute: RunbooksIdRoute,
   SkillsSlugRoute: SkillsSlugRoute,
+  RunbooksIndexRoute: RunbooksIndexRoute,
   SkillsIndexRoute: SkillsIndexRoute,
+  ApiRunbooksIdRoute: ApiRunbooksIdRoute,
+  ApiRunbooksSearchRoute: ApiRunbooksSearchRoute,
+  RunbooksIssuesIssueIdRoute: RunbooksIssuesIssueIdRoute,
+  ApiRunbooksIssuesIssueIdRoute: ApiRunbooksIssuesIssueIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

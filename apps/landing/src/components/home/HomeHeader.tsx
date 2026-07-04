@@ -1,20 +1,22 @@
 import { Button, NavigationMenu } from '@polyms/core-ui'
+import { useRouterState } from '@tanstack/react-router'
 import { GITHUB_REPO } from '../../content/overlay'
 import { useT } from '../../lib/i18n'
 import { HOME_PLAYFUL } from './brand'
 import { useDemoNavActive, type DemoNavId } from './useDemoNavActive'
 import { Code2 } from '@solar-icons/react-perf/BoldDuotone'
 
-const NAV: { id: DemoNavId; href: string }[] = [
+const NAV: { id: DemoNavId | 'runbooks'; href: string; external?: boolean }[] = [
   { id: 'overview', href: '/#main' },
   { id: 'catalog', href: '/#catalog' },
+  { id: 'runbooks', href: '/runbooks' },
   { id: 'start', href: '/#start' },
-  { id: 'pipeline', href: '/#catalog' },
 ]
 
 export function HomeHeader() {
   const t = useT()
   const isActive = useDemoNavActive()
+  const pathname = useRouterState({ select: s => s.location.pathname })
 
   return (
     <header className='demo-header sticky top-0 z-20 flex items-center justify-between border-line border-b px-10 py-4 backdrop-blur-[10px]'>
@@ -36,9 +38,11 @@ export function HomeHeader() {
                 href={item.href}
                 variant='trigger'
                 className='font-bold'
-                active={isActive(item.id)}
+                active={
+                  item.id === 'runbooks' ? pathname.startsWith('/runbooks') : isActive(item.id as DemoNavId)
+                }
               >
-                {t(`nav.${item.id}` as 'nav.overview')}
+                {item.id === 'runbooks' ? t('nav.runbooks') : t(`nav.${item.id}` as 'nav.overview')}
               </NavigationMenu.Link>
             </NavigationMenu.Item>
           ))}
@@ -49,15 +53,8 @@ export function HomeHeader() {
       <div className='flex gap-2'>
         <Button
           variant='primary'
-          outlined
           rounded
-          render={<a href={GITHUB_REPO} target='_blank' rel='noopener noreferrer' />}
-        >
-          {t('nav.docs')}
-        </Button>
-        <Button
-          variant='primary'
-          rounded
+          size='lg'
           render={<a href={GITHUB_REPO} target='_blank' rel='noopener noreferrer' />}
         >
           <Code2 className='size-4' />

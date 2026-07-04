@@ -41,4 +41,5 @@ export const domainOptions = [
   'review',
   'authoring',
   'architecture',
+  'devops',
 ] as const

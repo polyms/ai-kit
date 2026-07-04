@@ -1,9 +1,14 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
+import { AgentPanel } from '../../components/AgentPanel'
+import { SkillDetailSection } from '../../components/SkillDetailSection'
+import { SkillStatusBadge } from '../../components/SkillStatusBadge'
+import { TerminalPromptBlock } from '../../components/TerminalPromptBlock'
+import { GITHUB_REPO } from '../../content/overlay'
+import { useT, type MessageKey } from '../../lib/i18n'
+import { PipelineDisplay } from '../../lib/pipeline-display'
 import { defaultSkillsSearch } from '../../lib/skills-search'
 import { getSkillBySlug } from '../../lib/skills'
-import { TerminalPromptBlock } from '../../components/TerminalPromptBlock'
-import { useT } from '../../lib/i18n'
-import { GITHUB_REPO } from '../../content/overlay'
+import { SkillInvokeText } from '../../components/SkillInvokeText'
 
 export const Route = createFileRoute('/skills/$slug')({
   component: SkillDetailPage,
@@ -29,7 +34,9 @@ function SkillDetailPage() {
     )
   }
 
-  const domainLabel = t(`domain.${skill.domain}` as 'domain.alignment')
+  const domainLabel = t(`domain.${skill.domain}` as MessageKey)
+  const summary = skill.summary ?? skill.description
+  const showPrompt = skill.status === 'available' && skill.samplePrompt
 
   return (
     <div className='page-x py-10 md:py-12'>
@@ -42,57 +49,87 @@ function SkillDetailPage() {
 
         <div className='mt-6 flex flex-wrap items-center gap-2'>
           <span className='rounded-md border border-line px-2 py-0.5 text-muted text-xs'>{domainLabel}</span>
-          <span className='rounded-md bg-success-500/10 px-2 py-0.5 text-success-600 text-xs'>
-            {t('catalog.status.available')}
-          </span>
+          <SkillStatusBadge status={skill.status} />
           <span className='rounded-md border border-line px-2 py-0.5 text-muted text-xs'>
             {skill.invocation === 'user' ? t('catalog.filterUser') : t('catalog.filterModel')}
           </span>
         </div>
 
-        <p className='mt-4 text-muted'>{skill.description}</p>
-        {skill.footnote && <p className='mt-2 text-muted text-sm'>{skill.footnote}</p>}
+        <p className='mt-4 text-base text-fg leading-relaxed'>
+          <SkillInvokeText text={summary} />
+        </p>
 
-        {skill.samplePrompt && (
+        {skill.whenToUse && (
+          <SkillDetailSection label={t('skillDetail.whenToUse')}>
+            <p>
+              <SkillInvokeText text={skill.whenToUse} />
+            </p>
+          </SkillDetailSection>
+        )}
+
+        {skill.pipeline && (
+          <SkillDetailSection label={t('skillDetail.pipeline')}>
+            <PipelineDisplay
+              pipeline={skill.pipeline}
+              upstreamLabel={t('skillDetail.upstream')}
+              downstreamLabel={t('skillDetail.downstream')}
+            />
+          </SkillDetailSection>
+        )}
+
+        {skill.boundaries && (
+          <SkillDetailSection label={t('skillDetail.boundaries')}>
+            <p>
+              <SkillInvokeText text={skill.boundaries} />
+            </p>
+          </SkillDetailSection>
+        )}
+
+        {skill.footnote && (
+          <p className='mt-4 text-muted text-sm'>
+            <SkillInvokeText text={skill.footnote} />
+          </p>
+        )}
+
+        {showPrompt && (
           <div className='mt-8'>
             <p className='label-mono mb-3'>{t('catalog.samplePrompt')}</p>
-            <TerminalPromptBlock label='prompt' text={skill.samplePrompt} skill={skill.slug} />
+            <TerminalPromptBlock label='prompt' text={skill.samplePrompt!} skill={skill.slug} />
           </div>
         )}
 
-        {skill.agentHint && (
-          <div className='mt-6 border-line border-s-4 border-dashed bg-surface-2/30 p-4'>
-            <p className='label-mono'>{t('catalog.agentHint')}</p>
-            <pre className='mt-2 font-invoke text-sm'>{skill.agentHint}</pre>
-          </div>
-        )}
-
-        {!skill.samplePrompt && skill.slug === 'arch' && (
+        {!showPrompt && skill.slug === 'arch' && (
           <div className='mt-8 border border-line bg-surface p-4 text-muted text-sm'>
             Model-invoked — agent reaches via description when placing seams or deepening modules.
           </div>
         )}
+
+        {skill.agentPanel && <AgentPanel panel={skill.agentPanel} relatedAgents={skill.relatedAgents} />}
 
         <div className='mt-8 flex flex-wrap gap-4 font-invoke text-sm'>
           <a
             href={`${GITHUB_REPO}/tree/main/${skill.githubPath}`}
             target='_blank'
             rel='noopener noreferrer'
-            className='text-primary-700 hover:underline'
+            className={
+              skill.status === 'planned' ? 'text-muted hover:text-fg' : 'text-primary-700 hover:underline'
+            }
           >
             {t('catalog.viewSource')} ↗
           </a>
-          {skill.relatedAgents?.map(agent => (
-            <a
-              key={agent}
-              href={`${GITHUB_REPO}/blob/main/agents/${agent}.md`}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-muted hover:text-fg'
-            >
-              {agent} ↗
-            </a>
-          ))}
+          {skill.relatedAgents &&
+            !skill.agentPanel &&
+            skill.relatedAgents.map(agent => (
+              <a
+                key={agent}
+                href={`${GITHUB_REPO}/blob/main/agents/${agent}.md`}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-muted hover:text-fg'
+              >
+                {agent} ↗
+              </a>
+            ))}
         </div>
 
         <Link

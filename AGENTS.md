@@ -12,6 +12,10 @@ GitHub issues via `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 Single-context: `CONTEXT.md` + `docs/adr/` at repo root. See `docs/agents/domain.md`.
 
+### Runbooks
+
+Deploy/CI/infra symptom → fix playbooks for agents. See `docs/agents/runbooks.md` and `docs/runbooks/`.
+
 ### Triage labels
 
 Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.

@@ -1,6 +1,9 @@
-import { useT } from '../../lib/i18n'
+import { Link } from '@tanstack/react-router'
+import { skillOverlays } from '../../content/overlay'
+import { defaultSkillsSearch } from '../../lib/skills-search'
+import { SkillStatusBadge } from '../SkillStatusBadge'
+import { useT, type MessageKey } from '../../lib/i18n'
 import { SkillIcon } from '../../lib/skill-icons'
-import { DEMO_CATALOG_ITEMS } from './demo-catalog'
 
 export function HomeCatalog() {
   const t = useT()
@@ -15,27 +18,44 @@ export function HomeCatalog() {
       </div>
       <p className='mb-7 text-muted'>{t('home.catalog.intro')}</p>
       <div className='demo-catalog-grid'>
-        {DEMO_CATALOG_ITEMS.map(skill => (
-          <div
-            key={skill.invoke}
-            className='demo-catalog-card card flex cursor-default items-start gap-3.5 px-[18px] py-4 no-underline transition-colors duration-200'
-          >
-            <span className='demo-catalog-card__icon flex size-10 shrink-0 items-center justify-center rounded-[10px]'>
-              <SkillIcon slug={skill.invoke.slice(1)} />
-            </span>
-            <span className='min-w-0 flex-1'>
-              <span className='mb-0.5 flex flex-wrap items-center gap-2'>
-                <span className='font-bold font-mono text-[var(--brand-accent)] text-sm'>{skill.invoke}</span>
-                <span className={skill.status === 'available' ? 'badge badge-success' : 'badge badge-light'}>
-                  {skill.status === 'available' ? t('catalog.status.available') : t('catalog.status.planned')}
-                </span>
+        {skillOverlays.map(skill => {
+          const domainLabel = t(`domain.${skill.domain}` as MessageKey)
+          return (
+            <Link
+              key={skill.slug}
+              to='/skills/$slug'
+              params={{ slug: skill.slug }}
+              className='demo-catalog-card card flex items-start gap-3.5 px-[18px] py-4 no-underline transition-colors duration-200 hover:bg-surface-2/50 focus-visible:outline-2 focus-visible:outline-primary-700'
+            >
+              <span className='demo-catalog-card__icon flex size-10 shrink-0 items-center justify-center rounded-[10px]'>
+                <SkillIcon slug={skill.slug} />
               </span>
-              <span className='mb-0.5 block font-semibold text-[13px] text-fg'>{skill.name}</span>
-              <span className='block text-[13px] text-muted leading-normal'>{skill.domain}</span>
-            </span>
-          </div>
-        ))}
+              <span className='min-w-0 flex-1'>
+                <span className='mb-0.5 flex flex-wrap items-center gap-2'>
+                  <span className='font-bold font-mono text-[var(--brand-accent)] text-sm'>
+                    {skill.invoke}
+                  </span>
+                  <SkillStatusBadge status={skill.status} />
+                </span>
+                <span className='mb-0.5 block font-semibold text-[13px] text-fg'>{skill.name}</span>
+                <span className='line-clamp-2 block text-[13px] text-muted leading-normal'>
+                  {skill.description}
+                </span>
+                <span className='mt-1 block text-[11px] text-muted'>{domainLabel}</span>
+              </span>
+            </Link>
+          )
+        })}
       </div>
+      <p className='mt-8'>
+        <Link
+          to='/skills'
+          search={defaultSkillsSearch}
+          className='font-invoke text-primary-700 text-sm hover:underline'
+        >
+          {t('catalog.viewAll')} →
+        </Link>
+      </p>
     </section>
   )
 }

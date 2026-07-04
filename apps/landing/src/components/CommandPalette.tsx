@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { Field, Modal } from '@polyms/core-ui'
 import { getSkills } from '../lib/skills'
 import { useAppStore } from '../stores/useAppStore'
@@ -9,6 +9,7 @@ import { IconMagnifier } from '../lib/icons'
 import { SkillCommandRow } from './SkillCommandRow'
 
 export function CommandPalette() {
+  const pathname = useRouterState({ select: s => s.location.pathname })
   const open = useAppStore(s => s.paletteOpen)
   const setPaletteOpen = useAppStore(s => s.setPaletteOpen)
   const [query, setQuery] = useState('')
@@ -52,6 +53,10 @@ export function CommandPalette() {
   const activeOptionId = filtered[activeIndex]
     ? `command-palette-option-${filtered[activeIndex].slug}`
     : undefined
+
+  if (pathname.startsWith('/runbooks') || pathname.startsWith('/ops')) {
+    return null
+  }
 
   return (
     <Modal open={open} onOpenChange={handleOpenChange}>

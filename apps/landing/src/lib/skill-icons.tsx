@@ -8,6 +8,7 @@ import {
   LinkRound,
   MagicStick3,
   PaletteRound,
+  ServerSquare,
   ShieldCheck,
   SortByTime,
   Structure,
@@ -29,7 +30,8 @@ export const skillIconBySlug: Record<string, IconComponent> = {
   'code-review': p => <ShieldCheck {...iconProps} {...p} />,
   craft: p => <MagicStick3 {...iconProps} {...p} />,
   'arch-refactor': p => <Structure {...iconProps} {...p} />,
-  ux: p => <PaletteRound {...iconProps} {...p} />,
+  arch: p => <Structure {...iconProps} {...p} />,
+  devops: p => <ServerSquare {...iconProps} {...p} />,
 }
 
 export function SkillIcon({ slug }: { slug: string }) {

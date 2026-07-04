@@ -1,5 +1,7 @@
 # Vercel deploy — TanStack Start + Nitro
 
+**Runbook (symptom → fix):** [docs/runbooks/vercel-tanstack-start-monorepo.md](../../docs/runbooks/vercel-tanstack-start-monorepo.md) (RB-001)
+
 ## Quick deploy
 
 1. Import the repo at [vercel.com](https://vercel.com)
@@ -33,6 +35,8 @@ cd apps/landing && pnpm preview
 - No `index.html` / `main.tsx` — entry is `src/router.tsx` + document shell in `__root.tsx`
 
 ## Vercel install failures
+
+See [RB-001-01](../../docs/runbooks/vercel-tanstack-start-monorepo.md#rb-001-01-github-packages-auth) in the runbook.
 
 Vercel does **not** expand `${GITHUB_TOKEN}` in committed `.npmrc`. `vercel.json` runs `scripts/vercel-install.sh`, which exports `GITHUB_TOKEN` (or `NPM_TOKEN`) and sets GitHub Packages auth in the ephemeral user `.npmrc` before `pnpm install`.
 

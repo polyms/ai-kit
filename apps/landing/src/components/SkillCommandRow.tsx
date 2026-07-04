@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import type { SkillOverlay } from '../content/overlay'
+import { SkillStatusBadge } from './SkillStatusBadge'
 import { useT, type MessageKey } from '../lib/i18n'
 
 type SkillCommandRowProps = {
@@ -57,9 +58,7 @@ export function SkillCommandRow({
       </div>
       <div className='flex shrink-0 flex-wrap gap-2 text-xs'>
         <span className='rounded-md border border-line px-2 py-0.5 text-muted'>{domainLabel}</span>
-        <span className='rounded-md bg-success-500/10 px-2 py-0.5 text-success-600'>
-          {t('catalog.status.available')}
-        </span>
+        <SkillStatusBadge status={skill.status} />
         <span className='rounded-md border border-line px-2 py-0.5 text-muted'>
           {skill.invocation === 'user' ? t('catalog.filterUser') : t('catalog.filterModel')}
         </span>

@@ -6,6 +6,7 @@ How `/align`, `/pm`, and `/dev` consume domain documentation.
 
 - **`CONTEXT.md`** at repo root
 - **`docs/adr/`** — ADRs touching the work area
+- **`docs/runbooks/`** — deploy/CI ops (symptom → fix); index at `docs/agents/runbooks.md`
 
 If files don't exist, proceed silently. `/align` creates them lazily when terms resolve.
 
