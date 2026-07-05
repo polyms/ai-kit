@@ -15,4 +15,4 @@ pnpm config set "//npm.pkg.github.com/:_authToken" "$GITHUB_TOKEN" --location us
 pnpm install --frozen-lockfile
 
 # Prisma client/types are generated — not committed. Must exist before nx build.
-pnpm nx run landing:run -- db:generate
+pnpm --filter @polyms/landing db:generate
