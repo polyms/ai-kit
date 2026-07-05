@@ -1,10 +1,14 @@
-import type { Prisma, Runbook as PrismaRunbook, StackGuide as PrismaStackGuide } from '@prisma/client'
+import type { Prisma } from '../../../prisma/schema/client.ts'
 import { prisma } from '../db.server'
 import type { SeamSection, StackGuide } from './guide.types'
 
-type StackGuideWithRunbook = PrismaStackGuide & {
-  relatedRunbook: Pick<PrismaRunbook, 'id' | 'slug' | 'title'> | null
-}
+const publishedGuideInclude = {
+  relatedRunbook: { select: { id: true, slug: true, title: true } },
+} as const
+
+type StackGuideRow = Prisma.StackGuideGetPayload<{
+  include: typeof publishedGuideInclude
+}>
 
 function parseSeamSections(value: Prisma.JsonValue): SeamSection[] {
   if (!Array.isArray(value)) return []
@@ -16,7 +20,7 @@ function parseSeamSections(value: Prisma.JsonValue): SeamSection[] {
   })
 }
 
-function mapStackGuide(row: StackGuideWithRunbook): StackGuide {
+function mapStackGuide(row: StackGuideRow): StackGuide {
   return {
     id: row.id,
     slug: row.slug,
@@ -30,10 +34,6 @@ function mapStackGuide(row: StackGuideWithRunbook): StackGuide {
     relatedRunbook: row.relatedRunbook,
   }
 }
-
-const publishedGuideInclude = {
-  relatedRunbook: { select: { id: true, slug: true, title: true } },
-} as const
 
 export async function listStackGuidesFromDb(): Promise<StackGuide[]> {
   const rows = await prisma.stackGuide.findMany({

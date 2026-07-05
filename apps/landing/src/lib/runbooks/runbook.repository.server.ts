@@ -1,28 +1,26 @@
-import type { KnownIssue as PrismaKnownIssue, Runbook as PrismaRunbook } from '@prisma/client'
+import type { Prisma } from '../../../prisma/schema/client.ts'
 import { prisma } from '../db.server'
 import type { KnownIssue, Runbook } from './runbook.types'
 
-type RunbookWithIssues = PrismaRunbook & {
-  knownIssues: PrismaKnownIssue[]
-  stackGuide: { id: string; slug: string; title: string; status: string } | null
+const publishedRunbookInclude = {
+  knownIssues: { orderBy: { id: 'asc' as const } },
+  stackGuide: { select: { id: true, slug: true, title: true, status: true } },
+} as const
+
+type RunbookRow = Prisma.RunbookGetPayload<{
+  include: typeof publishedRunbookInclude
+}>
+
+function mapKnownIssue({
+  runbookId: _runbookId,
+  createdAt: _createdAt,
+  updatedAt: _updatedAt,
+  ...issue
+}: Prisma.KnownIssueModel): KnownIssue {
+  return issue
 }
 
-function mapKnownIssue(row: PrismaKnownIssue): KnownIssue {
-  return {
-    id: row.id,
-    slug: row.slug,
-    title: row.title,
-    symptom: row.symptom,
-    cause: row.cause,
-    fix: row.fix,
-    verify: row.verify,
-    triggerPhrases: row.triggerPhrases,
-    relatedFiles: row.relatedFiles,
-    axisTags: row.axisTags,
-  }
-}
-
-function mapRunbook(row: RunbookWithIssues): Runbook {
+function mapRunbook(row: RunbookRow): Runbook {
   const relatedStackGuide =
     row.stackGuide && row.stackGuide.status === 'published'
       ? { id: row.stackGuide.id, slug: row.stackGuide.slug, title: row.stackGuide.title }
@@ -42,11 +40,6 @@ function mapRunbook(row: RunbookWithIssues): Runbook {
     relatedStackGuide,
   }
 }
-
-const publishedRunbookInclude = {
-  knownIssues: { orderBy: { id: 'asc' as const } },
-  stackGuide: { select: { id: true, slug: true, title: true, status: true } },
-} as const
 
 export async function listRunbooksFromDb(): Promise<Runbook[]> {
   const rows = await prisma.runbook.findMany({

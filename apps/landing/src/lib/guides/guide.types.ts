@@ -1,23 +1,13 @@
+import type { Runbook as DbRunbook, StackGuide as DbStackGuide } from '../../../prisma/schema/client.ts'
+
 export type SeamSection = {
   title: string
   body: string
 }
 
-export type StackGuide = {
-  id: string
-  slug: string
-  title: string
-  summary: string
-  audience: string
-  axisTags: string[]
-  designChecklist: string[]
+export type StackGuide = Omit<DbStackGuide, 'status' | 'createdAt' | 'updatedAt' | 'seamSections'> & {
   seamSections: SeamSection[]
-  relatedRunbookId: string | null
-  relatedRunbook?: {
-    id: string
-    slug: string
-    title: string
-  } | null
+  relatedRunbook?: Pick<DbRunbook, 'id' | 'slug' | 'title'> | null
 }
 
 export type SearchStackGuidesParams = {

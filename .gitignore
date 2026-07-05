@@ -151,3 +151,4 @@ vite.config.ts.timestamp-*
 .vercel
 
 .claude/worktrees
+/apps/landing/prisma/schema
