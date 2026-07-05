@@ -16,7 +16,7 @@ import type { ComponentProps, ReactElement } from 'react'
 
 type IconComponent = (props: ComponentProps<typeof LinkRound>) => ReactElement
 
-const iconProps = { size: 22, color: 'var(--brand-accent)' } as const
+const iconProps = { size: 22, className: 'text-primary-600' } as const
 
 export const skillIconBySlug: Record<string, IconComponent> = {
   setup: p => <LinkRound {...iconProps} {...p} />,

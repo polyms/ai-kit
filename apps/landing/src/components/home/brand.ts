@@ -1,4 +1,2 @@
-/** App default — polyms/ai-kit builder orange */
-export const BRAND_ACCENT = '#e14709'
-
+/** Accent tokens live on body via home.css — matches landing-tokens.css */
 export const HOME_PLAYFUL = true

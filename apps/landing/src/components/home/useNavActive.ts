@@ -1,9 +1,9 @@
 import { useRouterState } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
-export type DemoNavId = 'overview' | 'catalog' | 'start'
+export type NavId = 'overview' | 'catalog' | 'start' | 'pipeline'
 
-export function useDemoNavActive() {
+export function useNavActive() {
   const pathname = useRouterState({ select: s => s.location.pathname })
   const [hash, setHash] = useState('')
 
@@ -14,11 +14,12 @@ export function useDemoNavActive() {
     return () => window.removeEventListener('hashchange', sync)
   }, [])
 
-  return (id: DemoNavId): boolean => {
+  return (id: NavId): boolean => {
     if (pathname !== '/') return false
     if (id === 'overview') return !hash || hash === '#'
     if (id === 'start') return hash === '#start'
     if (id === 'catalog') return hash === '#catalog'
+    if (id === 'pipeline') return hash === '#pipeline'
     return false
   }
 }

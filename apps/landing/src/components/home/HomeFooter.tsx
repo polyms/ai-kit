@@ -22,7 +22,7 @@ export function HomeFooter() {
           <div className='mb-3.5'>
             <PolymsWordmark iconClassName='text-white' size='footer' textClassName='font-sans' />
           </div>
-          <p className='mb-5 max-w-sm font-semibold text-body'>{m.footer_blurb()}</p>
+          <p className='mb-5 max-w-xs text-[#c0c8d4] text-sm leading-relaxed'>{m.footer_blurb()}</p>
           <Button
             render={<a href={GITHUB_REPO} rel='noopener noreferrer' target='_blank' />}
             rounded

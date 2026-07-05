@@ -1,58 +1,69 @@
 import { Link } from '@tanstack/react-router'
 import { skillOverlays } from '../../content/overlay'
 import { SkillIcon } from '../../lib/skill-icons'
-import { domainLabel } from '../../lib/skills'
-import { defaultSkillsSearch } from '../../lib/skills-search'
 import { m } from '../../paraglide/messages.js'
-import { SkillStatusBadge } from '../SkillStatusBadge'
+import { HOME_PLAYFUL } from './brand'
+import { catalogCategory, catalogDisplayName } from './catalogCategory'
+import { HomeSectionChip } from './HomeSectionChip'
+
+/** Order + membership aligned with ui_kits/ai-kit-landing/Catalog.jsx */
+const HOME_CATALOG_SLUGS = [
+  'setup',
+  'align',
+  'pm',
+  'to-prd',
+  'to-issues',
+  'triage',
+  'design',
+  'dev',
+  'code-review',
+  'craft',
+  'arch-refactor',
+  'arch',
+] as const
+
+const homeCatalogSkills = HOME_CATALOG_SLUGS.map(slug => skillOverlays.find(s => s.slug === slug)).filter(
+  (s): s is NonNullable<typeof s> => s != null,
+)
 
 export function HomeCatalog() {
   return (
-    <section className='app-shell mx-auto max-w-[1080px] px-10 pt-2.5 pb-[110px]' id='catalog'>
-      <div className='mb-2 flex items-baseline gap-3.5'>
-        <h2 className='m-0 font-bold font-sans text-[34px] leading-[1.1] tracking-tight'>
-          {m.catalog_title()}
-        </h2>
+    <section className='app-home-section app-home-section--catalog app-shell mx-auto max-w-[1080px]' id='catalog'>
+      <HomeSectionChip label='catalog' n='03' />
+      <div className='mb-3 flex items-baseline gap-3.5'>
+        <h2 className='app-catalog__title m-0 font-bold font-sans tracking-tight'>{m.home_catalog_heading()}</h2>
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
-      <p className='mb-7 text-muted'>{m.home_catalog_intro()}</p>
+      <p className='mb-8 text-muted'>{m.home_catalog_intro()}</p>
       <div className='app-catalog-grid'>
-        {skillOverlays.map(skill => {
-          const label = domainLabel(skill.domain)
+        {homeCatalogSkills.map((skill, i) => {
+          const featured = i === 0
+          const playfulRotate =
+            HOME_PLAYFUL && i % 2 === 0 ? '-rotate-[0.3deg]' : HOME_PLAYFUL ? 'rotate-[0.3deg]' : ''
           return (
             <Link
-              className='app-catalog-card card flex items-start gap-3.5 px-[18px] py-4 no-underline transition-colors duration-200 hover:bg-surface-2/50 focus-visible:outline-2 focus-visible:outline-primary-700'
+              className={`app-catalog-card flex flex-col rounded-[24px] border p-7 no-underline transition-transform duration-300 ease-in-out hover:opacity-95 ${featured ? 'app-catalog-card--featured' : 'border-line bg-body'} ${playfulRotate}`}
               key={skill.slug}
               params={{ slug: skill.slug }}
               to='/skills/$slug'
             >
-              <span className='app-catalog-card__icon flex size-10 shrink-0 items-center justify-center rounded-[10px]'>
-                <SkillIcon slug={skill.slug} />
-              </span>
-              <span className='min-w-0 flex-1'>
-                <span className='mb-0.5 flex flex-wrap items-center gap-2'>
-                  <span className='font-bold font-mono text-(--brand-accent) text-sm'>{skill.invoke}</span>
-                  <SkillStatusBadge status={skill.status} />
+              <div className='mb-5 flex items-center justify-between'>
+                <span className='app-catalog-card__icon flex size-11 items-center justify-center rounded-full'>
+                  <SkillIcon slug={skill.slug} />
                 </span>
-                <span className='mb-0.5 block font-semibold text-[13px] text-fg'>{skill.name}</span>
-                <span className='line-clamp-2 block text-[13px] text-muted leading-normal'>
-                  {skill.description}
+                <span className='rounded-full border border-line px-3 py-1 font-bold font-mono text-[11px] text-muted tracking-wider'>
+                  {catalogCategory(skill.slug)}
                 </span>
-                <span className='mt-1 block text-[11px] text-muted'>{label}</span>
-              </span>
+              </div>
+              <div className='mb-1.5 font-bold font-mono text-[19px] text-primary-600'>{skill.invoke}</div>
+              <div className='mb-2.5 font-bold font-sans text-[18px] text-fg'>
+                {catalogDisplayName(skill.slug, skill.name)}
+              </div>
+              <div className='text-[14.5px] text-muted leading-relaxed'>{skill.description}</div>
             </Link>
           )
         })}
       </div>
-      <p className='mt-8'>
-        <Link
-          className='font-invoke text-primary-700 text-sm hover:underline'
-          search={defaultSkillsSearch}
-          to='/skills'
-        >
-          {m.catalog_viewAll()} →
-        </Link>
-      </p>
     </section>
   )
 }

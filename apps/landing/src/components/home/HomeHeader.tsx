@@ -1,50 +1,58 @@
 import { Button, NavigationMenu } from '@polyms/core-ui'
 import { Code2 } from '@solar-icons/react-perf/BoldDuotone'
-import { useRouterState } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { GITHUB_REPO } from '../../content/overlay'
 import { m } from '../../paraglide/messages.js'
 import { PolymsWordmark } from '../PolymsWordmark'
 import { HOME_PLAYFUL } from './brand'
-import { type DemoNavId, useDemoNavActive } from './useDemoNavActive'
+import { type NavId, useNavActive } from './useNavActive'
 
-const NAV: { id: DemoNavId | 'runbooks' | 'guides'; href: string; external?: boolean }[] = [
+const HOME_NAV: { id: NavId; href: string }[] = [
   { id: 'overview', href: '/#main' },
+  { id: 'pipeline', href: '/#pipeline' },
   { id: 'catalog', href: '/#catalog' },
-  { id: 'runbooks', href: '/runbooks' },
-  { id: 'guides', href: '/guides' },
   { id: 'start', href: '/#start' },
 ]
 
-const NAV_LABELS: Record<(typeof NAV)[number]['id'], () => string> = {
+const SITE_NAV: { id: NavId | 'runbooks' | 'guides'; href: string }[] = [
+  ...HOME_NAV,
+  { id: 'runbooks', href: '/runbooks' },
+  { id: 'guides', href: '/guides' },
+]
+
+const NAV_LABELS: Record<(typeof SITE_NAV)[number]['id'], () => string> = {
   overview: m.nav_overview,
   catalog: m.nav_catalog,
+  start: m.nav_start,
+  pipeline: m.nav_pipeline,
   runbooks: m.nav_runbooks,
   guides: m.nav_guides,
-  start: m.nav_start,
 }
 
 export function HomeHeader() {
-  const isActive = useDemoNavActive()
+  const isActive = useNavActive()
   const pathname = useRouterState({ select: s => s.location.pathname })
+  const onHome = pathname === '/'
+  const nav = onHome ? HOME_NAV : SITE_NAV
 
   return (
-    <header className='app-header sticky top-0 z-20 flex items-center justify-between border-line border-b px-10 py-4 backdrop-blur-[10px]'>
-      <div className='flex items-center gap-2.5'>
+    <header className='app-header sticky top-0 z-20 flex items-center justify-between px-10 py-4'>
+      <Link className='flex items-center gap-2.5 no-underline' to='/'>
         <PolymsWordmark
-          iconClassName='text-slate-500'
+          iconClassName='h-7 w-7 text-slate-500'
           size='header'
-          textClassName='font-sans text-lg text-fg'
+          textClassName='font-sans text-[19px] text-fg'
         />
         <span
-          className={`app-header__brand-pill rounded-full border border-info border-dashed px-2.5 py-0.5 font-bold font-mono text-xs ${HOME_PLAYFUL ? 'app-header__brand-pill--playful' : ''}`}
+          className={`app-header__brand-pill rounded-full px-2.5 py-0.5 font-bold font-mono text-xs ${HOME_PLAYFUL ? 'app-header__brand-pill--playful' : ''}`}
         >
           ai-kit
         </span>
-      </div>
+      </Link>
 
-      <NavigationMenu aria-label={m.nav_skip()} className='rounded-full border border-line p-1'>
-        <NavigationMenu.List variant='bare'>
-          {NAV.map(item => (
+      <NavigationMenu aria-label={m.nav_skip()}>
+        <NavigationMenu.List className='app-header__nav-list'>
+          {nav.map(item => (
             <NavigationMenu.Item key={item.id}>
               <NavigationMenu.Link
                 active={
@@ -52,10 +60,11 @@ export function HomeHeader() {
                     ? pathname.startsWith('/runbooks')
                     : item.id === 'guides'
                       ? pathname.startsWith('/guides')
-                      : isActive(item.id as DemoNavId)
+                      : isActive(item.id as NavId)
                 }
                 className='font-bold'
                 href={item.href}
+                size='lg'
                 variant='trigger'
               >
                 {NAV_LABELS[item.id]()}
@@ -71,7 +80,7 @@ export function HomeHeader() {
           render={<a href={GITHUB_REPO} rel='noopener noreferrer' target='_blank' />}
           rounded
           size='lg'
-          variant='info'
+          variant='primary'
         >
           <Code2 className='size-4' />
           {m.nav_github()}

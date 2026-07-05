@@ -1,118 +1,311 @@
-/* Landing app chrome — custom values only; layout/type via Tailwind in components */
+/* Landing app chrome — mirrors ui_kits/ai-kit-landing/landing-tokens.css */
+
+@layer base {
+  body {
+    --brand-accent: var(--color-primary-600);
+    --accent: var(--color-primary-600);
+    --accent-bright: var(--color-primary-500);
+    --accent-soft: var(--color-primary-100);
+    --accent-dim: var(--color-primary-300);
+    --accent-foreground: #ffffff;
+    --accent-glow: color-mix(in oklab, var(--color-primary-500) 22%, transparent);
+    --terminal-bg: oklch(22% 0.04 255);
+    --terminal-line: oklch(32% 0.04 250);
+    --terminal-prompt: var(--color-primary-500);
+    --terminal-text: oklch(96% 0.008 90);
+    --terminal-dim: oklch(66% 0.02 240);
+  }
+
+  /* Page-level gradient wash — landing-tokens.css (layered on body, not ::before) */
+  body:has(.app-page) {
+    background-color: var(--body);
+    background-image: linear-gradient(
+      200deg,
+      color-mix(in oklab, var(--accent) 9%, var(--body)) 0%,
+      color-mix(in oklab, var(--accent) 3%, var(--body)) 42%,
+      var(--body) 68%
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top center;
+    background-size: 100% 70vh;
+  }
+}
 
 @layer components {
   .app-shell {
-    --brand-accent: #e14709;
     --font-display: var(--font-sans);
   }
 
-  /* Header — frosted shell + brand pill tints */
+  /* Header shell — transparent like ui kit; blur lives on nav toolbar only */
   .app-header {
-    background: color-mix(in oklab, var(--body) 88%, transparent);
+    background: transparent;
+  }
+
+  /* Nav toolbar pill — frosted blur (not the full header bar) */
+  .app-header__nav-list {
+    background: color-mix(in oklab, var(--body) 88%, transparent) !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .app-header__brand-pill {
-    color: var(--brand-accent);
-    background: color-mix(in oklab, var(--brand-accent) 8%, transparent);
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 8%, transparent);
+    border: 1px solid var(--line);
     transition:
       transform 0.3s ease,
       border 0.3s ease;
   }
 
   .app-header__brand-pill--playful {
-    border: 1px dashed color-mix(in oklab, var(--brand-accent) 45%, transparent);
+    border: 1px dashed color-mix(in oklab, var(--accent) 45%, transparent);
     transform: rotate(-2deg);
   }
 
-  /* Hero — layout, gradient glow, display type scale + wavy accent */
+  /* Hero — dot grid layered on body linear-gradient wash */
   .app-hero {
-    padding: 110px 40px 90px;
+    min-height: calc(100dvh - 84px);
+    padding: 48px 40px 4rem 40px;
+  }
+
+  .app-hero__decor {
+    z-index: 0;
+    background-image: url('/patterns/bg-grid-hero.svg');
+    background-repeat: no-repeat;
     background-position: center -80px;
     background-size: 1500px;
   }
 
-  .app-hero__glow {
-    top: -160px;
-    right: -160px;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(
-      circle at 30% 30%,
-      color-mix(in oklab, var(--brand-accent) 35%, transparent),
-      transparent 70%
-    );
-  }
-
   .app-hero__content {
-    max-width: 720px;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-inline: 0;
   }
 
-  .app-hero__badge {
-    margin-bottom: 22px;
+  .app-hero__layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 40px;
+    width: 100%;
+  }
+
+  .app-hero__copy {
+    grid-row: 3;
+    grid-column: 1;
+    min-width: 280px;
+    max-width: 460px;
+  }
+
+  /* Align card — centered in right column (full hero stack height) */
+  .app-hero__align-float {
+    display: flex;
+    grid-row: 1 / 4;
+    grid-column: 2;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
+
+  @media (max-width: 900px) {
+    .app-hero__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .app-hero__title,
+    .app-hero__copy {
+      grid-row: auto;
+      grid-column: 1;
+    }
+
+    .app-hero__align-float {
+      grid-row: auto;
+      grid-column: 1;
+      justify-content: flex-start;
+      margin-top: 40px;
+    }
+  }
+
+  .app-hero__badge--playful {
     transform: rotate(-1.5deg);
   }
 
   .app-hero__title {
-    margin: 18px 0 24px;
+    grid-row: 2;
+    grid-column: 1;
+    margin: 0 0 56px;
     font-size: clamp(2.75rem, 2rem + 3.2vw, 5rem);
     line-height: 0.98;
+    letter-spacing: -0.02em;
   }
 
   .app-hero__accent {
-    color: var(--brand-accent);
+    color: var(--accent);
     text-decoration: underline;
     text-decoration-style: wavy;
-    text-decoration-color: color-mix(in oklab, var(--brand-accent) 45%, transparent);
+    text-decoration-color: color-mix(in oklab, var(--accent) 45%, transparent);
     text-underline-offset: 10px;
   }
 
-  /* Floating icon — design-system shadow token */
   .app-floating-icon {
     border-radius: 18px;
     box-shadow: var(--shadow-raised, 0 4px 12px rgb(0 0 0 / 0.08));
   }
 
-  /* Terminal watermark */
+  /* Shared section rhythm */
+  .app-home-section {
+    padding: 64px 40px 120px;
+    scroll-margin-top: 96px;
+  }
+
+  .app-home-section--catalog {
+    padding-bottom: 130px;
+  }
+
+  .app-pipeline__title {
+    font-size: clamp(2rem, 1.6rem + 1.8vw, 2.75rem);
+  }
+
+  /* Terminal blocks */
+  .app-terminal {
+    background: var(--terminal-bg);
+    box-shadow:
+      var(--shadow-popout),
+      0 0 60px -20px var(--accent-glow);
+  }
+
+  .app-terminal__bar {
+    border-bottom: 1px solid var(--terminal-line);
+  }
+
+  .app-terminal__title {
+    color: var(--terminal-dim);
+  }
+
+  .app-terminal__prompt {
+    color: var(--terminal-prompt);
+  }
+
+  .app-terminal__dim {
+    color: var(--terminal-dim);
+  }
+
+  .app-terminal__text {
+    color: var(--terminal-text);
+  }
+
+  .app-terminal__repo {
+    color: var(--accent-dim);
+  }
+
   .app-terminal__watermark {
-    color: var(--brand-accent);
+    color: var(--accent);
   }
 
-  /* Principles — accent-tinted surfaces */
-  .app-principle-card--featured {
-    background: color-mix(in oklab, var(--brand-accent) 6%, var(--body));
-    border-color: color-mix(in oklab, var(--brand-accent) 25%, transparent);
+  .app-terminal-cursor {
+    background: var(--terminal-text);
+    animation: terminal-blink 1s step-end infinite;
   }
 
-  .app-principle-card__icon {
-    background: color-mix(in oklab, var(--brand-accent) 8%, transparent);
+  @keyframes terminal-blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
   }
 
-  .app-principle-card__icon--featured {
-    background: color-mix(in oklab, var(--brand-accent) 14%, transparent);
+  /* Ticker */
+  .app-ticker {
+    background: var(--terminal-bg);
+    border-bottom: 1px solid var(--terminal-line);
   }
 
-  /* Responsive auto-fit grids */
-  .app-principles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px;
+  .app-ticker__track {
+    animation: ticker-scroll 26s linear infinite;
   }
 
+  .app-ticker__word {
+    color: var(--terminal-dim);
+  }
+
+  .app-ticker__dot {
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  @keyframes ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Catalog heading scale */
+  .app-catalog__title {
+    font-size: clamp(2rem, 1.6rem + 1.8vw, 2.75rem);
+  }
+
+  /* Principles */
+  .app-principles__title {
+    font-size: clamp(2rem, 1.6rem + 1.8vw, 2.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+
+  .app-principles__num--featured {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+
+  .app-principles__num {
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
+  }
+
+  /* Install */
+  .app-install__title {
+    font-size: clamp(2rem, 1.6rem + 1.8vw, 2.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  /* Catalog card grid */
   .app-catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .app-catalog-card--featured {
+    background: color-mix(in oklab, var(--accent) 8%, var(--body));
+    border-color: color-mix(in oklab, var(--accent) 30%, transparent);
   }
 
   .app-catalog-card__icon {
-    background: color-mix(in oklab, var(--brand-accent) 8%, transparent);
+    background: color-mix(in oklab, var(--accent) 9%, transparent);
   }
 
-  /* Footer — radial glow */
+  .app-catalog-card--featured .app-catalog-card__icon {
+    background: color-mix(in oklab, var(--accent) 16%, transparent);
+  }
+
   .app-footer__glow {
     background: radial-gradient(
       circle at 15% 20%,
-      color-mix(in oklab, var(--brand-accent) 35%, transparent),
+      color-mix(in oklab, var(--accent) 35%, transparent),
       transparent 55%
     );
   }

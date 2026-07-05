@@ -1,13 +1,22 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { HomeCatalog, HomeHero, HomePrinciples, HomeQuickStart } from '../components/home'
+import {
+  HomeCatalog,
+  HomeHero,
+  HomePipeline,
+  HomePrinciples,
+  HomeQuickStart,
+  HomeTicker,
+} from '../components/home'
 
 function HomePage() {
   return (
     <>
       <HomeHero />
-      <HomeQuickStart />
       <HomePrinciples />
+      <HomePipeline />
       <HomeCatalog />
+      <HomeTicker />
+      <HomeQuickStart />
     </>
   )
 }
