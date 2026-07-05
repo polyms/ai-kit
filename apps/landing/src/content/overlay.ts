@@ -77,14 +77,8 @@ export const skillOverlays: SkillOverlay[] = [
     invocation: 'user',
     domain: 'alignment',
     samplePrompt: '/align\n\nGrill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.',
-    footnote: 'Kèm align-loop + domain-modeling (model-invoked)',
+    footnote: 'Kèm align-loop + domain-modeling (model-invoked). Interactive grill — no subagent.',
     githubPath: 'skills/align/',
-    relatedAgents: ['align-agent'],
-    agentPanel: {
-      role: 'PRINCIPAL ENGINEER',
-      owns: ['CONTEXT.md', 'ADRs', 'alignment grill'],
-      invokeHint: 'Use the align-agent to grill [plan or feature]',
-    },
     summary:
       'Close the communication gap before PM, design, or dev — make implicit decisions explicit and land vocabulary in CONTEXT.md.',
     whenToUse:

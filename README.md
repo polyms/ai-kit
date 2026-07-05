@@ -264,7 +264,6 @@ ai-kit/
 ├── LICENSE
 ├── bootstrap.sh
 ├── agents/
-│   ├── align-agent.md
 │   ├── design-agent.md
 │   ├── dev-agent.md
 │   └── pm-agent.md

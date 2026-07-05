@@ -44,7 +44,7 @@ Output path: `docs/design/ai-kit-landing.md`
 ### Preservation rules (không đổi — v3.1 deltas noted)
 
 - Routes: `/`, `/skills`, `/skills/:slug`, `/#quick-start`, `/quick-start` → redirect `/#quick-start` — **cấm** `/agents/*` routes (agents = panel on skill detail)
-- **13 skills** in overlay (12 available + **1 planned** `/devops`); 11 sample prompts + arch model hint (available skills only); pipeline nodes (main + triage) — content preserved for future §3.2; 4 principal agents — content preserved for future §3.3; 5 principles full list
+- **13 skills** in overlay (12 available + **1 planned** `/devops`); 11 sample prompts + arch model hint (available skills only); pipeline nodes (main + triage) — content preserved for future §3.2; 3 principal agents (`/align` skill-only) — content preserved for future §3.3; 5 principles full list
 - **Single registry:** `apps/landing/src/content/overlay.ts` — **cấm** `demo-catalog.ts` or parallel catalogs
 - Quick start blocks, copy clipboard + toast (available skills only), locale VI/EN, theme dark/light
 - Umami: `copy_prompt`, `pipeline_section_view`, `cta_quick_start`, `theme_toggle`, `command_palette_open`
@@ -792,33 +792,33 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 
 ### §3.3 Principal agents (process panels) — **DEFERRED (future pass)**
 
-> v3.1: Principal agent **landing panels** deferred. Agent content surfaces on **skill detail** via `agentPanel` when `relatedAgents` present. Panel CTA links to parent skill detail (e.g. `/skills/design`), **not** `/agents/*`.
+> v3.1: Principal agent **landing panels** deferred. Agent content surfaces on **skill detail** via `agentPanel` when `relatedAgents` present. Panel CTA links to parent skill detail (e.g. `/skills/design`), **not** `/agents/*`. **`/align`** has no agent — interactive grill stays in the main chat.
 
 | Field | Value                         |
 | ----- | ----------------------------- |
-| Goal  | 4 principals — owns field nổi |
+| Goal  | 3 principals — owns field nổi |
 | Entry | Scroll landing                |
 | Exit  | `/skills/:slug`               |
 
-**States:** Loading = 4 skeletons; Empty = N/A; Error = hide + console; Success = bento panels.
+**States:** Loading = 3 skeletons; Empty = N/A; Error = hide + console; Success = bento panels.
 
 ```
-┌─ align-agent — col-span-2 ─────────────┐ ┌─ pm-agent — offset ─┐
-│ border-s-4 border-primary-700          │ │ PRINCIPAL PM        │
-│ PRINCIPAL ENGINEER                     │ │ owns: PRD, stories  │
-└────────────────────────────────────────┘ └─────────────────────┘
-┌─ design-agent ─┐ ┌─ dev-agent — col-span-2 ────────────────────┐
-└────────────────┘ └──────────────────────────────────────────────┘
+┌─ pm-agent — col-span-2 ────────────────┐ ┌─ design-agent — offset ─┐
+│ border-s-4 border-primary-700          │ │ PRINCIPAL DESIGNER      │
+│ PRINCIPAL PM                           │ │ owns: docs/design/      │
+└────────────────────────────────────────┘ └─────────────────────────┘
+┌─ dev-agent — col-span-full ─────────────────────────────────────────┐
+│ PRINCIPAL ENGINEER · owns: TDD, production code                     │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 | Agent        | Stamp              | Owns                      |
 | ------------ | ------------------ | ------------------------- |
-| align-agent  | PRINCIPAL ENGINEER | CONTEXT.md, ADRs, grill   |
 | pm-agent     | PRINCIPAL PM       | PRD, stories, AC          |
 | design-agent | PRINCIPAL DESIGNER | docs/design/, core-ui map |
 | dev-agent    | PRINCIPAL ENGINEER | TDD, production code      |
 
-- **cấm:** 4× identical `rounded-xl border bg-surface p-6` cards.
+- **cấm:** 3× identical `rounded-xl border bg-surface p-6` cards.
 - CTA: `font-invoke text-sm text-primary-700` link — not Button.
 
 #### Grid map — `default` (`<768px`) — 1 column stack
@@ -830,21 +830,19 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
   gap: 1px;
   background: var(--line);
 }
-.p-agent-align  { grid-column: 1; grid-row: 1; min-height: 160px; border-s-4 border-primary-700; }
-.p-agent-pm     { grid-column: 1; grid-row: 2; min-height: 120px; }
-.p-agent-design { grid-column: 1; grid-row: 3; min-height: 120px; }
-.p-agent-dev    { grid-column: 1; grid-row: 4; min-height: 160px; border-s-4 border-primary-700; }
+.p-agent-pm     { grid-column: 1; grid-row: 1; min-height: 160px; border-s-4 border-primary-700; }
+.p-agent-design { grid-column: 1; grid-row: 2; min-height: 120px; }
+.p-agent-dev    { grid-column: 1; grid-row: 3; min-height: 160px; border-s-4 border-primary-700; }
 ```
 
 ```
 ┌─ PRINCIPALS — page-x section-y border-b — gap-px bg-line ─────────────────────┐
-│ h2 — «4 principal agents»                                                      │
-│ ┌─ #1 align-agent — full width, border-s-4 accent — min-h 160px ─────────────┐ │
-│ │ PRINCIPAL ENGINEER · owns: CONTEXT.md, ADRs                                 │ │
+│ h2 — «3 principal agents» (+ `/align` skill — no agent)                        │
+│ ┌─ #1 pm-agent — full width, border-s-4 accent — min-h 160px ────────────────┐ │
+│ │ PRINCIPAL PM · owns: PRD, stories, AC                                        │ │
 │ └────────────────────────────────────────────────────────────────────────────┘ │
-│ ┌─ #2 pm-agent ──────────────────────────────────────────────────────────────┐ │
-│ ┌─ #3 design-agent ──────────────────────────────────────────────────────────┐ │
-│ ┌─ #4 dev-agent — full width, border-s-4 accent — min-h 160px ───────────────┐ │
+│ ┌─ #2 design-agent ──────────────────────────────────────────────────────────┐ │
+│ ┌─ #3 dev-agent — full width, border-s-4 accent — min-h 160px ───────────────┐ │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -856,17 +854,11 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
   }
-  .p-agent-align {
+  .p-agent-pm {
     grid-column: 1 / 3;
     grid-row: 1 / 2;
     min-height: 140px;
   } /* span 2 */
-  .p-agent-pm {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    min-height: 120px;
-    transform: translateY(-12px);
-  } /* offset stamp */
   .p-agent-design {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
@@ -880,33 +872,32 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 }
 ```
 
-#### Grid map — `lg` (`≥1024px`) — 4-col bento with spans
+#### Grid map — `lg` (`≥1024px`) — 3-col bento with spans
 
 ```css
 @media (min-width: 1024px) {
   .principal-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto;
   }
-  .p-agent-align  { grid-column: 1 / 3; grid-row: 1 / 2; min-height: 160px; padding: p-8; }
-  .p-agent-pm     { grid-column: 3 / 5; grid-row: 1 / 2; min-height: 120px; margin-top: 2rem; } /* visual offset down */
-  .p-agent-design { grid-column: 1 / 2; grid-row: 2 / 3; min-height: 130px; }
-  .p-agent-dev    { grid-column: 2 / 5; grid-row: 2 / 3; min-height: 150px; border-s-4 border-primary-700; }
+  .p-agent-pm     { grid-column: 1 / 3; grid-row: 1 / 2; min-height: 160px; padding: p-8; }
+  .p-agent-design { grid-column: 3 / 4; grid-row: 1 / 2; min-height: 120px; margin-top: 2rem; }
+  .p-agent-dev    { grid-column: 1 / 4; grid-row: 2 / 3; min-height: 150px; border-s-4 border-primary-700; }
 }
 ```
 
 ```
-┌─ lg: 4-col ───────────────────────────────────────────────────────────────────┐
-│ ┌─ align col 1-2 ──────────────┐ ┌─ pm col 3-4 offset-y ──────────────────┐ │
+┌─ lg: 3-col ───────────────────────────────────────────────────────────────────┐
+│ ┌─ pm col 1-2 ─────────────────┐ ┌─ design col 3 offset-y ────────────────┐ │
 │ └──────────────────────────────┘ └────────────────────────────────────────┘ │
-│ ┌─ design col 1 ┐ ┌─ dev col 2-4 — border-s-4 ────────────────────────────┐ │
-│ └───────────────┘ └──────────────────────────────────────────────────────────┘ │
+│ ┌─ dev col 1-3 — border-s-4 ──────────────────────────────────────────────┐ │
+│ └───────────────────────────────────────────────────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 #### Cell anatomy (all breakpoints)
 
-| Element | Hero panels (align, dev)                           | Compact (pm, design)             |
+| Element | Hero panels (pm, dev)                              | Compact (design)                 |
 | ------- | -------------------------------------------------- | -------------------------------- |
 | Surface | `bg-body`                                          | `bg-body`                        |
 | Accent  | `border-s-4 border-primary-700`                    | none or `border-s-2 border-line` |
@@ -1051,7 +1042,7 @@ Footnote on `/align` row: align-loop + domain-modeling (model-invoked). `/arch` 
 │   invoke: agentPanel.invokeHint (font-invoke)                                  │
 │   links: relatedAgents → GitHub agents/*.md                                    │
 │                                                                                │
-│ LINKS ROW — viewSource ↗ · align-agent ↗ · pm-agent ↗                          │
+│ LINKS ROW — viewSource ↗ · pm-agent ↗ · design-agent ↗                         │
 │ ← Back to catalog                                                              │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -1657,7 +1648,7 @@ Full checkbox audit — PRD item → spec section. **v3.1 catalog slice** items 
 | Pipeline triage branch (dashed parallel)        | §3.2 triage row y=200 + dashed CSS          | defer  | ✓   |
 | Pipeline nodes clickable → skill detail         | §3.2 click rules + non-clickable exceptions | defer  | ✓   |
 | Caption `/setup` once per repo                  | §3.2 caption                                | defer  | ✓   |
-| 4 principal agent cards                         | §3.3 + grid maps                            | defer  | ✓   |
+| 3 principal agent cards (+ `/align` skill-only) | §3.3 + grid maps                            | defer  | ✓   |
 | CTA band: catalog + quick start                 | §3.4 Footer CTA band                        | P2     | ✓   |
 | Featured teaser 4 skills                        | §3.0 Featured skill teaser                  | defer  | ✓   |
 

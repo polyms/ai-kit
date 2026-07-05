@@ -54,12 +54,4 @@ End with:
 
 **Completion criterion:** Handoff block delivered with `## Next Step` pointing to exactly one of `/pm`, `/to-prd`, `/design`, or `/dev`.
 
-## Agent
-
-For long alignment sessions in isolated context:
-
-```
-Use the align-agent to [task]
-```
-
-The agent reads this skill when invoked.
+Alignment is **interactive** — stay in this chat for the whole grill. There is no `align-agent` subagent; subagents run autonomously and cannot wait for one answer per turn.

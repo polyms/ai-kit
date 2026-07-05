@@ -47,13 +47,12 @@ Chat tone for grill and agents — plain language, natural assistant. See `docs/
 
 ### Principal agents
 
-Isolated subagents for deep work — one **principal** owner per pipeline stage:
+Isolated subagents for deep artifact work — one **principal** owner per downstream pipeline stage. **`/align`** is skill-only (interactive grill in the main chat; no subagent — subagents cannot pause for one-question-at-a-time dialogue):
 
 | Agent          | Role                        | Owns                                            |
 | -------------- | --------------------------- | ----------------------------------------------- |
-| `align-agent`  | Principal engineer          | Alignment, domain language, `CONTEXT.md`, ADRs  |
 | `pm-agent`     | Principal product manager   | PRD, stories, acceptance criteria, scope        |
 | `design-agent` | Principal product designer  | `docs/design/` UI specs, `@polyms/core-ui` maps |
 | `dev-agent`    | Principal software engineer | Implementation, TDD, production code            |
 
-Handoffs: align → pm/to-prd → design → dev. Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.
+Handoffs: `/align` → pm/to-prd → design → dev. Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.

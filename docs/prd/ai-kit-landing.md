@@ -124,7 +124,7 @@ Tham chiếu đầy đủ: `docs/design/ai-kit-landing.md`. Tóm tắt bắt bu�
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
 | **Slash commands là UI** | Invoke `/pm`, `/align` hiển thị như lệnh thật — monospace, prefix `/`, copy one-click                                                 | Skill nhỏ, composable — user ở quyền điều khiển |
 | **Pipeline là hệ thống** | Main path + triage branch như **living diagram** — stage highlight, artifact output labels (`PRD`, `docs/design/`, `ready-for-agent`) | Mỗi stage produce artifact next stage consume   |
-| **Agents là principals** | 4 agent cards như «process owner» — owns field cụ thể, không avatar stock                                                             | Handoff có lane; không relitigate downstream    |
+| **Agents là principals** | 3 agent cards như «process owner» — owns field cụ thể; `/align` skill-only (grill tương tác) | Handoff có lane; không relitigate downstream    |
 | **Prompts là contract**  | Sample prompt blocks giống snippet trong terminal/chat — bilingual, không marketing rewrite                                           | Copy-paste = invoke thật trong Cursor           |
 | **Dogfood core-ui**      | Component map từ `@polyms/core-ui` — site chứng minh design system                                                                    | Design every day — spec map tới primitives      |
 
@@ -142,7 +142,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 - [ ] **Pipeline — triage branch:** `Raw issues → /triage → ready-for-agent → /dev → /code-review` (visual parallel, dashed)
 - [ ] Pipeline nodes clickable → skill detail (trừ Idea, ship)
 - [ ] Caption `/setup` một lần mỗi repo
-- [ ] **4 principal agent cards:** align-agent, pm-agent, design-agent, dev-agent — vai trò, owns, link skill
+- [ ] **3 principal agent cards:** pm-agent, design-agent, dev-agent — vai trò, owns, link skill (`/align` = skill-only, no agent card)
 - [ ] CTA band: catalog + quick start anchor
 
 #### Skill catalog (`/skills`)

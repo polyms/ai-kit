@@ -33,7 +33,7 @@ Workflow file at `skills/<name>/SKILL.md` — the agent reads and follows it in 
 _Avoid_: prompt, instruction, rule
 
 **Agent**:
-Subagent at `agents/<name>-agent.md` — isolated context for long tasks. **Principal** tier: `align-agent`, `pm-agent`, `design-agent`, `dev-agent` — one dedicated owner per pipeline stage. Reads the matching skill, then executes. Suffix `-agent` distinguishes from the skill (`pm` vs `pm-agent`).
+Subagent at `agents/<name>-agent.md` — isolated context for long artifact work. **Principal** tier: `pm-agent`, `design-agent`, `dev-agent`. **`/align`** has no agent — grill is interactive in the main chat. Reads the matching skill, then executes. Suffix `-agent` distinguishes from the skill (`pm` vs `pm-agent`).
 _Avoid_: subagent, bot, assistant (when referring to `agents/*-agent.md` files)
 
 ## Pipeline
