@@ -3,17 +3,16 @@ import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
 import { HomeSiteChrome } from '../../../components/home/HomeSiteChrome'
 import { AxisTagRow, RunbookBreadcrumb } from '../../../components/runbooks'
 import { copyText } from '../../../lib/copy'
+import { defaultRunbooksSearch, getRunbookIssueFn } from '../../../lib/runbooks/runbook.fns'
 import { m } from '../../../paraglide/messages.js'
-import { getIssue } from '../../../lib/runbooks/runbook-service'
-import { defaultRunbooksSearch } from '../../../lib/runbooks-search'
 
 export const Route = createFileRoute('/runbooks/issues/$issueId')({
-  loader: ({ params: { issueId } }) => {
-    const found = getIssue(issueId)
-    if (!found) {
+  loader: async ({ params: { issueId } }) => {
+    try {
+      return await getRunbookIssueFn({ data: { issueId } })
+    } catch {
       throw new Error('NOT_FOUND')
     }
-    return found
   },
   component: IssueDetailPage,
   errorComponent: IssueNotFound,

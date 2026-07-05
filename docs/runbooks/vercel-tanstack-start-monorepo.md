@@ -33,6 +33,8 @@ related_files:
 audience: devops-agent
 ---
 
+> **Git snapshot** — live canonical content: [RB-001 on kit site](https://ai-kit.polyms.dev/runbooks/RB-001). Agents retrieve via [docs/agents/runbooks.md](../agents/runbooks.md), not this file.
+
 # RB-001: Vercel + TanStack Start + Nitro (pnpm Nx monorepo)
 
 Reference implementation: **ai-kit** landing app (`apps/landing/`), repo root = Vercel project root.

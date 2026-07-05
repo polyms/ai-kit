@@ -1,6 +1,6 @@
 # Vercel deploy — TanStack Start + Nitro
 
-**Runbook (symptom → fix):** [docs/runbooks/vercel-tanstack-start-monorepo.md](../../docs/runbooks/vercel-tanstack-start-monorepo.md) (RB-001)
+**Runbook (symptom → fix):** [RB-001 on kit site](https://ai-kit.polyms.dev/runbooks/RB-001) — live CMS; git snapshot: [docs/runbooks/vercel-tanstack-start-monorepo.md](../../docs/runbooks/vercel-tanstack-start-monorepo.md)
 
 ## Quick deploy
 
@@ -9,6 +9,7 @@
 3. Framework preset: **TanStack Start** (from `vercel.json`)
 4. Add env vars:
    - `GITHUB_TOKEN` — GitHub PAT with `read:packages` (required for `@polyms/core-ui`)
+   - `DATABASE_URL` — Supabase Postgres URI (required for `/runbooks/*` CMS read)
    - `VITE_UMAMI_SCRIPT_URL` (optional)
    - `VITE_UMAMI_WEBSITE_ID` (optional)
 5. Deploy
@@ -22,10 +23,20 @@ Nitro uses the `vercel` preset when `VERCEL=1` during build.
 ## Local
 
 ```bash
-pnpm dev          # from repo root
+cp apps/landing/.env.example apps/landing/.env.local
+# Set DATABASE_URL to your Supabase Postgres URI
+
+pnpm install
+cd apps/landing && pnpm db:generate && pnpm db:migrate && pnpm db:seed
+
+pnpm dev            # from repo root
+pnpm landing:dev    # same as pnpm dev
+# from apps/landing: pnpm dev  (or pnpm -w landing:dev from repo root)
 pnpm build        # produces apps/landing/.output/
 cd apps/landing && pnpm preview
 ```
+
+Runbooks read from Postgres at runtime — `DATABASE_URL` must be set for `/runbooks/*` and `/guides/*`.
 
 ## Stack notes
 
@@ -36,7 +47,7 @@ cd apps/landing && pnpm preview
 
 ## Vercel install failures
 
-See [RB-001-01](../../docs/runbooks/vercel-tanstack-start-monorepo.md#rb-001-01-github-packages-auth) in the runbook.
+See [RB-001-01](https://ai-kit.polyms.dev/runbooks/issues/RB-001-01) on the kit site (git snapshot: [RB-001-01](../../docs/runbooks/vercel-tanstack-start-monorepo.md#rb-001-01-github-packages-auth)).
 
 Vercel does **not** expand `${GITHUB_TOKEN}` in committed `.npmrc`. `vercel.json` runs `scripts/vercel-install.sh`, which exports `GITHUB_TOKEN` (or `NPM_TOKEN`) and sets GitHub Packages auth in the ephemeral user `.npmrc` before `pnpm install`.
 

@@ -1,8 +1,8 @@
 import { Field } from '@polyms/core-ui'
 import { Link as RouterLink } from '@tanstack/react-router'
+import { defaultRunbooksSearch } from '../../lib/runbooks/runbook.fns'
+import type { SearchResultItem } from '../../lib/runbooks/runbook.types'
 import { m } from '../../paraglide/messages.js'
-import type { SearchResultItem } from '../../lib/runbooks/types'
-import { defaultRunbooksSearch } from '../../lib/runbooks-search'
 
 type RunbookSearchProps = {
   query: string

@@ -1,9 +1,9 @@
 import { Field, Tabs, Toggle, ToggleGroup } from '@polyms/core-ui'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { IconMagnifier } from '../lib/icons'
-import { m } from '../paraglide/messages.js'
 import { domainLabel, domainOptions, filterSkills, getSkills } from '../lib/skills'
 import type { SkillsSearch } from '../lib/skills-search'
+import { m } from '../paraglide/messages.js'
 import { SkillCommandRow } from './SkillCommandRow'
 
 type SkillCommandListProps = {

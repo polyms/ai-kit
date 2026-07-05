@@ -24,6 +24,11 @@ export type Runbook = {
   greenfieldChecklist: string[]
   knownIssues: KnownIssue[]
   relatedFiles: string[]
+  relatedStackGuide?: {
+    id: string
+    slug: string
+    title: string
+  } | null
 }
 
 export type SearchResultItem =

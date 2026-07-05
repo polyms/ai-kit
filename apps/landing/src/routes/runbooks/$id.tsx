@@ -1,17 +1,17 @@
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
+import { SiblingLink } from '../../components/guides'
 import { HomeSiteChrome } from '../../components/home/HomeSiteChrome'
 import { AxisTagRow, RunbookBreadcrumb } from '../../components/runbooks'
+import { defaultRunbooksSearch, getRunbookFn } from '../../lib/runbooks/runbook.fns'
 import { m } from '../../paraglide/messages.js'
-import { getRunbook } from '../../lib/runbooks/runbook-service'
-import { defaultRunbooksSearch } from '../../lib/runbooks-search'
 
 export const Route = createFileRoute('/runbooks/$id')({
-  loader: ({ params: { id } }) => {
-    const runbook = getRunbook(id)
-    if (!runbook) {
+  loader: async ({ params: { id } }) => {
+    try {
+      return { runbook: await getRunbookFn({ data: { id } }) }
+    } catch {
       throw new Error('NOT_FOUND')
     }
-    return { runbook }
   },
   component: RunbookDetailPage,
   errorComponent: RunbookNotFound,
@@ -52,6 +52,14 @@ function RunbookDetailPage() {
         <div className='mt-4'>
           <AxisTagRow tags={runbook.axisTags} />
         </div>
+
+        {runbook.relatedStackGuide ? (
+          <SiblingLink
+            id={runbook.relatedStackGuide.id}
+            kind='guide'
+            title={runbook.relatedStackGuide.title}
+          />
+        ) : null}
 
         <section className='runbook-section mt-12' id='symptom-index'>
           <h2 className='h2'>{m.runbooks_symptomIndex()}</h2>

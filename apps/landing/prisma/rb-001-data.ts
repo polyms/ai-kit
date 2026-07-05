@@ -1,4 +1,9 @@
-import type { Runbook } from './types'
+import type { Runbook } from '../src/lib/runbooks/runbook.types'
+
+/** Nx app folder name — stored as `{project}` in CMS; substitute per repo (e.g. `landing`, `web`). */
+export const PROJECT = '{project}'
+
+const appRoot = `apps/${PROJECT}`
 
 export const RB001: Runbook = {
   id: 'RB-001',
@@ -23,18 +28,18 @@ export const RB001: Runbook = {
     '.vercelignore',
     '.npmrc',
     'scripts/vercel-install.sh',
-    'apps/landing/vite.config.ts',
-    'apps/landing/project.json',
-    'apps/landing/DEPLOY.md',
+    `${appRoot}/vite.config.ts`,
+    `${appRoot}/project.json`,
+    `${appRoot}/DEPLOY.md`,
   ],
   stackProfileMarkdown: `### Outputs (two modes)
 
 | Command | VERCEL | Output path | Purpose |
 | --- | --- | --- | --- |
-| pnpm build (local) | unset | apps/landing/.output/ | Local preview (pnpm preview) |
+| pnpm build (local) | unset | ${appRoot}/.output/ | Local preview (pnpm preview) |
 | vercel build / Vercel CI | 1 | repo root .vercel/output/ | Build Output API v3 for deploy |
 
-Nitro **vercel** preset must be active when VERCEL=1. In a monorepo with Vercel root = repo root, Nitro output.dir must point to **../../.vercel/output** from apps/landing/.
+Nitro **vercel** preset must be active when VERCEL=1. In a monorepo with Vercel root = repo root, Nitro output.dir must point to **../../.vercel/output** from ${appRoot}/.
 
 ### Build Output API layout (expected)
 
@@ -55,7 +60,7 @@ Must contain a catch-all route to the server function:
 { "src": "/(.*)", "dest": "/__server" }
 \`\`\`
 
-### Repo files (ai-kit)
+### Repo files (monorepo app)
 
 | File | Role |
 | --- | --- |
@@ -63,16 +68,17 @@ Must contain a catch-all route to the server function:
 | scripts/vercel-install.sh | GitHub Packages auth before pnpm install |
 | .vercelignore | Shrink upload; **root-anchored** patterns only |
 | .npmrc | Scope registry only — **no** committed auth token |
-| apps/landing/vite.config.ts | nitro preset vercel + monorepo output.dir when VERCEL=1 |`,
+| ${appRoot}/vite.config.ts | nitro preset vercel + monorepo output.dir when VERCEL=1 |`,
   greenfieldChecklist: [
     'Vercel Root Directory = repo root (or adjust Nitro output.dir relative to app package)',
     'vercel.json: framework: "tanstack-start", omit outputDirectory',
-    'buildCommand runs Nx/app build with --skip-nx-cache (or separate cache key for Vercel builds)',
+    `buildCommand runs nx build ${PROJECT} --skip-nx-cache (or separate cache key for Vercel builds)`,
     'installCommand sets GitHub Packages auth without mutating committed .npmrc',
     'Vercel env: GITHUB_TOKEN (PAT, read:packages) on Production + Preview',
+    'Vercel env: DATABASE_URL (Postgres) when app reads CMS content at runtime',
     '.npmrc: @polyms:registry + registry.npmjs.org — no token in git',
     '.vercelignore: /skills/, /docs/, /agents/ — leading / so apps/*/src/routes/skills/ is not excluded',
-    'vite.config.ts: Nitro vercel preset + monorepo output.dir when VERCEL=1',
+    `${appRoot}/vite.config.ts: Nitro vercel preset + monorepo output.dir when VERCEL=1`,
     'Commit generated routeTree.gen.ts (or ensure route files are not stripped by ignore rules)',
     'Verify: rm -rf .vercel/output && vercel build → success; config.json has /__server',
   ],
@@ -103,10 +109,10 @@ Must contain a catch-all route to the server function:
       symptom:
         'vercel build succeeds once, then fails with No Output Directory named "dist" (or empty/wrong .vercel/output/config.json).',
       cause: [
-        'Nx cache hit from a prior local pnpm build where VERCEL was unset. That run restores apps/landing/.output/ but not repo root .vercel/output/. Vercel CLI then falls back to looking for dist.',
+        `Nx cache hit from a prior local pnpm build where VERCEL was unset. That run restores ${appRoot}/.output/ but not repo root .vercel/output/. Vercel CLI then falls back to looking for dist.`,
       ],
       fix: [
-        'vercel.json buildCommand must include --skip-nx-cache on the Nx build, or',
+        `vercel.json buildCommand must include --skip-nx-cache on nx build ${PROJECT}, or`,
         'Use a dedicated Nx target for Vercel whose inputs include VERCEL=1, or',
         'Run pnpm exec nx reset before debugging locally.',
       ],
@@ -117,7 +123,7 @@ Must contain a catch-all route to the server function:
         "grep -q '__server' .vercel/output/config.json",
       ],
       triggerPhrases: ['No Output Directory named "dist"', 'nx cache', 'vercel build'],
-      relatedFiles: ['vercel.json', 'apps/landing/project.json'],
+      relatedFiles: ['vercel.json', `${appRoot}/project.json`],
       axisTags: ['vercel', 'nx', 'monorepo', 'build-output-api'],
     },
     {
@@ -131,7 +137,7 @@ Must contain a catch-all route to the server function:
       ],
       fix: [
         'Remove outputDirectory from vercel.json.',
-        'Let Nitro emit Build Output API directly to repo root .vercel/output/ (configure output.dir in vite.config.ts for monorepo).',
+        `Let Nitro emit Build Output API directly to repo root .vercel/output/ (configure output.dir in ${appRoot}/vite.config.ts for monorepo).`,
         'Keep framework: "tanstack-start".',
       ],
       verify: [
@@ -145,7 +151,7 @@ Must contain a catch-all route to the server function:
         'nested static/static',
         'outputDirectory',
       ],
-      relatedFiles: ['vercel.json', 'apps/landing/vite.config.ts'],
+      relatedFiles: ['vercel.json', `${appRoot}/vite.config.ts`],
       axisTags: ['vercel', 'tanstack-start', 'nitro', 'ssr', 'build-output-api'],
     },
     {
@@ -155,22 +161,88 @@ Must contain a catch-all route to the server function:
       symptom:
         'TypeScript: "/skills/$slug" not in route union (only /, /quick-start). Or Vercel build passes but skill pages 404 / router tree missing routes.',
       cause: [
-        'Pattern skills/ in .vercelignore matches any directory named skills, including apps/landing/src/routes/skills/. TanStack Router regenerates a reduced route tree without those files.',
+        `Pattern skills/ in .vercelignore matches any directory named skills, including ${appRoot}/src/routes/skills/. TanStack Router regenerates a reduced route tree without those files.`,
       ],
       fix: [
         'Anchor ignore patterns to repo root only: /skills/, /agents/, /docs/, /demo/',
         'Not skills/ (matches everywhere).',
       ],
       verify: [
-        'apps/landing/src/routes/skills/ present in deployment upload.',
-        'apps/landing/src/routeTree.gen.ts includes /skills/$slug.',
-        'pnpm exec tsc --noEmit in apps/landing/ passes.',
+        `${appRoot}/src/routes/skills/ present in deployment upload.`,
+        `${appRoot}/src/routeTree.gen.ts includes /skills/$slug.`,
+        `pnpm exec tsc --noEmit in ${appRoot}/ passes.`,
       ],
       triggerPhrases: ['vercelignore skills', 'TypeScript route /skills/$slug', 'routes missing on Vercel'],
-      relatedFiles: ['.vercelignore', 'apps/landing/src/routeTree.gen.ts'],
+      relatedFiles: ['.vercelignore', `${appRoot}/src/routeTree.gen.ts`],
       axisTags: ['vercel', 'tanstack-start', 'monorepo'],
+    },
+    {
+      id: 'RB-001-05',
+      slug: 'rb-001-05-database-url-missing',
+      title: 'DATABASE_URL missing at runtime',
+      symptom:
+        'CMS-backed routes (/runbooks/*, /guides/*, /ops/*) return 500 or empty; PrismaClientInitializationError in server logs.',
+      cause: [
+        'DATABASE_URL not set on Vercel or local .env for the Start app.',
+        'Migrations or seed not applied to the Postgres instance.',
+      ],
+      fix: [
+        'Set DATABASE_URL to Postgres URI on Vercel (Production + Preview) and in .env.local for local dev.',
+        `From ${appRoot}/: pnpm db:migrate && pnpm db:seed after DATABASE_URL is configured.`,
+        'Use Supabase pooled URI for serverless; direct URL for migrations if provider requires it.',
+      ],
+      verify: [
+        'curl -s http://localhost:6300/runbooks/RB-001 | head   # HTML or JSON, not 500',
+        `pnpm db:seed in ${appRoot}/ completes without error`,
+      ],
+      triggerPhrases: ['PrismaClientInitializationError', 'DATABASE_URL', 'runbooks 500', 'Invalid prisma'],
+      relatedFiles: [`${appRoot}/.env.example`, `${appRoot}/prisma/schema.prisma`, 'vercel.json'],
+      axisTags: ['vercel', 'tanstack-start', 'postgres', 'prisma'],
+    },
+    {
+      id: 'RB-001-06',
+      slug: 'rb-001-06-static-ci-output-mismatch',
+      title: 'Static CI expects dist, Start uses Nitro build output',
+      symptom:
+        'GitHub Actions (or similar) uploads dist/ artifact but nx/vite build writes Nitro output — workflow green but deployed site 404.',
+      cause: [
+        'Deploy workflow written for static Vite SPA (dist/) before TanStack Start + Nitro adoption.',
+        'Start/Nitro local preview and Vercel Build Output API use Nitro build dir or .vercel/output/, not dist/.',
+      ],
+      fix: [
+        'Prefer Vercel with vercel.json for TanStack Start production deploy.',
+        'Or update CI artifact path to match Start output (.vercel/output after vercel build, or Nitro preview dir).',
+        `Remove stale dist/ upload steps referencing ${appRoot}/dist/.`,
+      ],
+      verify: [
+        `ls ${appRoot}/.output/ after pnpm build   # exists`,
+        `test ! -d ${appRoot}/dist || echo "dist/ is legacy — do not deploy"`,
+      ],
+      triggerPhrases: ['dist empty', 'GitHub Pages 404', 'nitro output vs dist', 'Start deploy workflow'],
+      relatedFiles: ['.github/workflows/', 'vercel.json', `${appRoot}/project.json`],
+      axisTags: ['tanstack-start', 'nitro', 'ci', 'github-actions'],
+    },
+    {
+      id: 'RB-001-07',
+      slug: 'rb-001-07-router-start-version-mismatch',
+      title: 'TanStack Router vs Start version mismatch',
+      symptom:
+        'Build fails: cannot resolve ./ssr/server from @tanstack/react-router, or peer dependency warnings on react-router vs react-start.',
+      cause: [
+        '@tanstack/react-router version below @tanstack/react-start requirement (≥ 1.168 for SSR export).',
+        'Legacy @tanstack/router-plugin still installed alongside Start — conflicting route generation.',
+      ],
+      fix: [
+        `Align @tanstack/react-router with @tanstack/react-start peer range in ${appRoot}/package.json.`,
+        'Remove @tanstack/router-plugin when Start is the bundler entry.',
+        '@tanstack/react-start replaces router-plugin — entry is src/router.tsx + __root.tsx document shell.',
+      ],
+      verify: [`pnpm build in ${appRoot}/ succeeds`, 'No duplicate router-plugin in package.json'],
+      triggerPhrases: ['ssr/server', 'react-router peer', 'router-plugin conflict', 'Start build fail'],
+      relatedFiles: [`${appRoot}/package.json`, `${appRoot}/vite.config.ts`, `${appRoot}/src/router.tsx`],
+      axisTags: ['tanstack-start', 'tanstack-router', 'ssr', 'nitro'],
     },
   ],
 }
 
-export const RUNBOOKS: Runbook[] = [RB001]
+export const RUNBOOK_SEED = [RB001] as const

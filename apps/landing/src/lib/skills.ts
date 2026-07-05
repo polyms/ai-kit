@@ -1,5 +1,5 @@
-import { m } from '../paraglide/messages.js'
 import { type SkillOverlay, skillOverlays } from '../content/overlay'
+import { m } from '../paraglide/messages.js'
 
 export function getSkills(): SkillOverlay[] {
   return skillOverlays

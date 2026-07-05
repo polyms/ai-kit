@@ -58,6 +58,9 @@ export function HomeFooter() {
             <a className='link font-medium no-underline' href='/runbooks'>
               {m.nav_runbooks()}
             </a>
+            <a className='link font-medium no-underline' href='/guides'>
+              {m.nav_guides()}
+            </a>
             <a className='link font-medium no-underline' href='#catalog'>
               {m.footer_link_catalog()}
             </a>

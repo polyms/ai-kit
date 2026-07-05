@@ -1,8 +1,8 @@
 import { Button, Toast } from '@polyms/core-ui'
 import { copyText } from '../lib/copy'
 import { IconCopy } from '../lib/icons'
-import { m } from '../paraglide/messages.js'
 import { trackEvent } from '../lib/umami'
+import { m } from '../paraglide/messages.js'
 
 type CopyPromptButtonProps = {
   text: string

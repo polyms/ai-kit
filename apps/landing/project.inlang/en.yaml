@@ -63,6 +63,7 @@ nav_locale: Interface language
 nav_overview: Overview
 nav_pipeline: Pipeline
 nav_runbooks: Runbooks
+nav_guides: Stack guides
 nav_skip: Skip navigation
 nav_start: Quick start
 nav_theme: Theme
@@ -119,6 +120,66 @@ runbooks_symptom: Symptom
 runbooks_symptomIndex: Symptom index
 runbooks_title: Runbooks
 runbooks_verify: Verify
+runbooks_siblingGuide: Stack guide
+
+# --- guides ---
+guides_audience: Audience
+guides_backToIndex: Back to stack guides
+guides_col_id: ID
+guides_col_match: Match
+guides_col_tags: Axis tags
+guides_col_title: Title
+guides_designChecklist: Design checklist
+guides_empty: No stack guides match your search
+guides_kicker: STACK GUIDES
+guides_localNav: On this page
+guides_notFound: Stack guide not found
+guides_relatedRunbook: Related runbook
+guides_results: Results
+guides_resultsCaption: Stack guide search results
+guides_searchLabel: Search stack guides
+guides_searchPlaceholder: tanstack router zustand monorepo
+guides_siblingRunbook: Runbook
+guides_sub: Design seams, routing, state. Search by stack axis or topic.
+guides_title: Stack guides
+
+# --- ops ---
+ops_col_actions: Actions
+ops_col_id: ID
+ops_col_status: Status
+ops_col_tags: Axis tags
+ops_col_title: Title
+ops_col_updated: Updated
+ops_createRunbook: New runbook
+ops_createGuide: New stack guide
+ops_edit: Edit
+ops_loginCta: Sign in with polyms.dev
+ops_loginDev: Dev sign-in
+ops_loginDevDisabled: Dev sign-in is disabled. Set OPS_DEV_BYPASS=true on the server.
+ops_loginNetworkError: Network error — try again.
+ops_loginOidcMissing: OIDC is not configured. Set OIDC_CLIENT_ID and OIDC_CLIENT_SECRET.
+ops_loginSub: Sign in with your Polyms account to edit runbooks and stack guides.
+ops_loginTitle: Ops CMS
+ops_matrixEmpty: No axis data — add tags to content
+ops_matrixLegendGap: gap
+ops_matrixLegendCovered: covered
+ops_matrixRunbooks: Runbook
+ops_matrixGuides: Stack guide
+ops_matrixTitle: Coverage matrix
+ops_matrixSub: Rows = axis combinations from content tags. Gaps per content type.
+ops_nav_guides: Stack guides
+ops_nav_matrix: Matrix
+ops_nav_runbooks: Runbooks
+ops_nav_signOut: Sign out
+ops_runbooksEmpty: No runbooks yet
+ops_runbooksTitle: Runbooks
+ops_guidesEmpty: No stack guides yet
+ops_guidesTitle: Stack guides
+ops_sessionExpired: Session expired. Sign in again to continue.
+ops_signInAgain: Sign in again
+ops_status_draft: draft
+ops_status_published: published
+ops_viewPublic: View public
 
 # --- skillDetail ---
 skillDetail_boundaries: Boundaries

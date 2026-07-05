@@ -12,9 +12,14 @@ GitHub issues via `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 Single-context: `CONTEXT.md` + `docs/adr/` at repo root. See `docs/agents/domain.md`.
 
-### Runbooks
+### Runbooks & stack guides
 
-Deploy/CI/infra symptom → fix playbooks for agents. See `docs/agents/runbooks.md` and `docs/runbooks/`.
+Deploy/CI/infra **Runbooks** and stack-combo **Stack guides** live in Ops CMS (Postgres). Agents retrieve via MCP or kit site — not git markdown body:
+
+- [docs/agents/ops-cms-mcp.md](docs/agents/ops-cms-mcp.md) — MCP at `ai-kit.polyms.dev/mcp`, Cursor setup
+- [docs/agents/runbooks.md](docs/agents/runbooks.md) — `/devops`, deploy-aware `/dev`
+- [docs/agents/stack-guides.md](docs/agents/stack-guides.md) — `/arch`, deploy-aware `/dev`
+- [docs/runbooks/](docs/runbooks/) — contributor snapshot only
 
 ### Triage labels
 

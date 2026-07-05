@@ -1,5 +1,4 @@
-import { RUNBOOKS } from './rb-001-seed'
-import type { KnownIssue, Runbook, SearchResultItem, SearchRunbooksParams } from './types'
+import type { KnownIssue, Runbook, SearchResultItem, SearchRunbooksParams } from './runbook.types'
 
 function normalize(text: string): string {
   return text.toLowerCase().trim()
@@ -46,27 +45,14 @@ function runbookToResult(runbook: Runbook, match: string): SearchResultItem {
   }
 }
 
-export function listRunbooks(): Runbook[] {
-  return RUNBOOKS
-}
-
-export function getRunbook(id: string): Runbook | undefined {
-  return RUNBOOKS.find(rb => rb.id === id || rb.slug === id)
-}
-
-export function getIssue(id: string): { issue: KnownIssue; runbook: Runbook } | undefined {
-  for (const runbook of RUNBOOKS) {
-    const issue = runbook.knownIssues.find(ki => ki.id === id || ki.slug === id)
-    if (issue) return { issue, runbook }
-  }
-  return undefined
-}
-
-export function searchRunbooks(params: SearchRunbooksParams = {}): SearchResultItem[] {
+export function searchRunbooksFromCatalog(
+  runbooks: Runbook[],
+  params: SearchRunbooksParams = {}
+): SearchResultItem[] {
   const { q = '', axes, limit = 20 } = params
   const results: Array<SearchResultItem & { score: number }> = []
 
-  for (const runbook of RUNBOOKS) {
+  for (const runbook of runbooks) {
     const axisScore = axisIntersection(runbook.axisTags, axes)
     if (axes?.length && axisScore === 0) continue
 

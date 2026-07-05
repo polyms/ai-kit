@@ -3,5 +3,6 @@
 @import './_typography.css' layer(components);
 @import './_layouts.css' layer(components);
 @import './_runbooks.css' layer(components);
+@import './_guides.css' layer(components);
 @import './_skills.css' layer(components);
 @import './_utilities.css' layer(utilities);

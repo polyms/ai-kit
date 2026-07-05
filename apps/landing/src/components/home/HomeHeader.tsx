@@ -7,10 +7,11 @@ import { PolymsWordmark } from '../PolymsWordmark'
 import { HOME_PLAYFUL } from './brand'
 import { type DemoNavId, useDemoNavActive } from './useDemoNavActive'
 
-const NAV: { id: DemoNavId | 'runbooks'; href: string; external?: boolean }[] = [
+const NAV: { id: DemoNavId | 'runbooks' | 'guides'; href: string; external?: boolean }[] = [
   { id: 'overview', href: '/#main' },
   { id: 'catalog', href: '/#catalog' },
   { id: 'runbooks', href: '/runbooks' },
+  { id: 'guides', href: '/guides' },
   { id: 'start', href: '/#start' },
 ]
 
@@ -18,6 +19,7 @@ const NAV_LABELS: Record<(typeof NAV)[number]['id'], () => string> = {
   overview: m.nav_overview,
   catalog: m.nav_catalog,
   runbooks: m.nav_runbooks,
+  guides: m.nav_guides,
   start: m.nav_start,
 }
 
@@ -46,7 +48,11 @@ export function HomeHeader() {
             <NavigationMenu.Item key={item.id}>
               <NavigationMenu.Link
                 active={
-                  item.id === 'runbooks' ? pathname.startsWith('/runbooks') : isActive(item.id as DemoNavId)
+                  item.id === 'runbooks'
+                    ? pathname.startsWith('/runbooks')
+                    : item.id === 'guides'
+                      ? pathname.startsWith('/guides')
+                      : isActive(item.id as DemoNavId)
                 }
                 className='font-bold'
                 href={item.href}

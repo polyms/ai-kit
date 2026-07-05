@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import type { SkillOverlay } from '../content/overlay'
-import { m } from '../paraglide/messages.js'
 import { domainLabel } from '../lib/skills'
+import { m } from '../paraglide/messages.js'
 import { SkillStatusBadge } from './SkillStatusBadge'
 
 type SkillCommandRowProps = {

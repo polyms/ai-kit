@@ -10,19 +10,38 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as QuickStartRouteImport } from './routes/quick-start'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as OpsRouteRouteImport } from './routes/ops/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SkillsIndexRouteImport } from './routes/skills/index'
 import { Route as RunbooksIndexRouteImport } from './routes/runbooks/index'
+import { Route as OpsIndexRouteImport } from './routes/ops/index'
+import { Route as GuidesIndexRouteImport } from './routes/guides/index'
 import { Route as SkillsSlugRouteImport } from './routes/skills/$slug'
 import { Route as RunbooksIdRouteImport } from './routes/runbooks/$id'
+import { Route as OpsLoginRouteImport } from './routes/ops/login'
+import { Route as GuidesIdRouteImport } from './routes/guides/$id'
+import { Route as OpsRunbooksIndexRouteImport } from './routes/ops/runbooks/index'
+import { Route as OpsMatrixIndexRouteImport } from './routes/ops/matrix/index'
+import { Route as OpsGuidesIndexRouteImport } from './routes/ops/guides/index'
 import { Route as RunbooksIssuesIssueIdRouteImport } from './routes/runbooks/issues/$issueId'
-import { Route as ApiRunbooksSearchRouteImport } from './routes/api/runbooks/search'
-import { Route as ApiRunbooksIdRouteImport } from './routes/api/runbooks/$id'
-import { Route as ApiRunbooksIssuesIssueIdRouteImport } from './routes/api/runbooks/issues/$issueId'
+import { Route as ApiOpsAuthLogoutRouteImport } from './routes/api/ops/auth/logout'
+import { Route as ApiOpsAuthLoginRouteImport } from './routes/api/ops/auth/login'
+import { Route as ApiOpsAuthCallbackRouteImport } from './routes/api/ops/auth/callback'
 
 const QuickStartRoute = QuickStartRouteImport.update({
   id: '/quick-start',
   path: '/quick-start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpsRouteRoute = OpsRouteRouteImport.update({
+  id: '/ops',
+  path: '/ops',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -40,6 +59,16 @@ const RunbooksIndexRoute = RunbooksIndexRouteImport.update({
   path: '/runbooks/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OpsIndexRoute = OpsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OpsRouteRoute,
+} as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SkillsSlugRoute = SkillsSlugRouteImport.update({
   id: '/skills/$slug',
   path: '/skills/$slug',
@@ -50,115 +79,195 @@ const RunbooksIdRoute = RunbooksIdRouteImport.update({
   path: '/runbooks/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OpsLoginRoute = OpsLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => OpsRouteRoute,
+} as any)
+const GuidesIdRoute = GuidesIdRouteImport.update({
+  id: '/guides/$id',
+  path: '/guides/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpsRunbooksIndexRoute = OpsRunbooksIndexRouteImport.update({
+  id: '/runbooks/',
+  path: '/runbooks/',
+  getParentRoute: () => OpsRouteRoute,
+} as any)
+const OpsMatrixIndexRoute = OpsMatrixIndexRouteImport.update({
+  id: '/matrix/',
+  path: '/matrix/',
+  getParentRoute: () => OpsRouteRoute,
+} as any)
+const OpsGuidesIndexRoute = OpsGuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => OpsRouteRoute,
+} as any)
 const RunbooksIssuesIssueIdRoute = RunbooksIssuesIssueIdRouteImport.update({
   id: '/runbooks/issues/$issueId',
   path: '/runbooks/issues/$issueId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRunbooksSearchRoute = ApiRunbooksSearchRouteImport.update({
-  id: '/api/runbooks/search',
-  path: '/api/runbooks/search',
+const ApiOpsAuthLogoutRoute = ApiOpsAuthLogoutRouteImport.update({
+  id: '/api/ops/auth/logout',
+  path: '/api/ops/auth/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRunbooksIdRoute = ApiRunbooksIdRouteImport.update({
-  id: '/api/runbooks/$id',
-  path: '/api/runbooks/$id',
+const ApiOpsAuthLoginRoute = ApiOpsAuthLoginRouteImport.update({
+  id: '/api/ops/auth/login',
+  path: '/api/ops/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRunbooksIssuesIssueIdRoute =
-  ApiRunbooksIssuesIssueIdRouteImport.update({
-    id: '/api/runbooks/issues/$issueId',
-    path: '/api/runbooks/issues/$issueId',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+const ApiOpsAuthCallbackRoute = ApiOpsAuthCallbackRouteImport.update({
+  id: '/api/ops/auth/callback',
+  path: '/api/ops/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ops': typeof OpsRouteRouteWithChildren
+  '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
+  '/guides/$id': typeof GuidesIdRoute
+  '/ops/login': typeof OpsLoginRoute
   '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/ops/': typeof OpsIndexRoute
   '/runbooks/': typeof RunbooksIndexRoute
   '/skills/': typeof SkillsIndexRoute
-  '/api/runbooks/$id': typeof ApiRunbooksIdRoute
-  '/api/runbooks/search': typeof ApiRunbooksSearchRoute
   '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
-  '/api/runbooks/issues/$issueId': typeof ApiRunbooksIssuesIssueIdRoute
+  '/ops/guides/': typeof OpsGuidesIndexRoute
+  '/ops/matrix/': typeof OpsMatrixIndexRoute
+  '/ops/runbooks/': typeof OpsRunbooksIndexRoute
+  '/api/ops/auth/callback': typeof ApiOpsAuthCallbackRoute
+  '/api/ops/auth/login': typeof ApiOpsAuthLoginRoute
+  '/api/ops/auth/logout': typeof ApiOpsAuthLogoutRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
+  '/guides/$id': typeof GuidesIdRoute
+  '/ops/login': typeof OpsLoginRoute
   '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/guides': typeof GuidesIndexRoute
+  '/ops': typeof OpsIndexRoute
   '/runbooks': typeof RunbooksIndexRoute
   '/skills': typeof SkillsIndexRoute
-  '/api/runbooks/$id': typeof ApiRunbooksIdRoute
-  '/api/runbooks/search': typeof ApiRunbooksSearchRoute
   '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
-  '/api/runbooks/issues/$issueId': typeof ApiRunbooksIssuesIssueIdRoute
+  '/ops/guides': typeof OpsGuidesIndexRoute
+  '/ops/matrix': typeof OpsMatrixIndexRoute
+  '/ops/runbooks': typeof OpsRunbooksIndexRoute
+  '/api/ops/auth/callback': typeof ApiOpsAuthCallbackRoute
+  '/api/ops/auth/login': typeof ApiOpsAuthLoginRoute
+  '/api/ops/auth/logout': typeof ApiOpsAuthLogoutRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ops': typeof OpsRouteRouteWithChildren
+  '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
+  '/guides/$id': typeof GuidesIdRoute
+  '/ops/login': typeof OpsLoginRoute
   '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/ops/': typeof OpsIndexRoute
   '/runbooks/': typeof RunbooksIndexRoute
   '/skills/': typeof SkillsIndexRoute
-  '/api/runbooks/$id': typeof ApiRunbooksIdRoute
-  '/api/runbooks/search': typeof ApiRunbooksSearchRoute
   '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
-  '/api/runbooks/issues/$issueId': typeof ApiRunbooksIssuesIssueIdRoute
+  '/ops/guides/': typeof OpsGuidesIndexRoute
+  '/ops/matrix/': typeof OpsMatrixIndexRoute
+  '/ops/runbooks/': typeof OpsRunbooksIndexRoute
+  '/api/ops/auth/callback': typeof ApiOpsAuthCallbackRoute
+  '/api/ops/auth/login': typeof ApiOpsAuthLoginRoute
+  '/api/ops/auth/logout': typeof ApiOpsAuthLogoutRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ops'
+    | '/mcp'
     | '/quick-start'
+    | '/guides/$id'
+    | '/ops/login'
     | '/runbooks/$id'
     | '/skills/$slug'
+    | '/guides/'
+    | '/ops/'
     | '/runbooks/'
     | '/skills/'
-    | '/api/runbooks/$id'
-    | '/api/runbooks/search'
     | '/runbooks/issues/$issueId'
-    | '/api/runbooks/issues/$issueId'
+    | '/ops/guides/'
+    | '/ops/matrix/'
+    | '/ops/runbooks/'
+    | '/api/ops/auth/callback'
+    | '/api/ops/auth/login'
+    | '/api/ops/auth/logout'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/mcp'
     | '/quick-start'
+    | '/guides/$id'
+    | '/ops/login'
     | '/runbooks/$id'
     | '/skills/$slug'
+    | '/guides'
+    | '/ops'
     | '/runbooks'
     | '/skills'
-    | '/api/runbooks/$id'
-    | '/api/runbooks/search'
     | '/runbooks/issues/$issueId'
-    | '/api/runbooks/issues/$issueId'
+    | '/ops/guides'
+    | '/ops/matrix'
+    | '/ops/runbooks'
+    | '/api/ops/auth/callback'
+    | '/api/ops/auth/login'
+    | '/api/ops/auth/logout'
   id:
     | '__root__'
     | '/'
+    | '/ops'
+    | '/mcp'
     | '/quick-start'
+    | '/guides/$id'
+    | '/ops/login'
     | '/runbooks/$id'
     | '/skills/$slug'
+    | '/guides/'
+    | '/ops/'
     | '/runbooks/'
     | '/skills/'
-    | '/api/runbooks/$id'
-    | '/api/runbooks/search'
     | '/runbooks/issues/$issueId'
-    | '/api/runbooks/issues/$issueId'
+    | '/ops/guides/'
+    | '/ops/matrix/'
+    | '/ops/runbooks/'
+    | '/api/ops/auth/callback'
+    | '/api/ops/auth/login'
+    | '/api/ops/auth/logout'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OpsRouteRoute: typeof OpsRouteRouteWithChildren
+  McpRoute: typeof McpRoute
   QuickStartRoute: typeof QuickStartRoute
+  GuidesIdRoute: typeof GuidesIdRoute
   RunbooksIdRoute: typeof RunbooksIdRoute
   SkillsSlugRoute: typeof SkillsSlugRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
   RunbooksIndexRoute: typeof RunbooksIndexRoute
   SkillsIndexRoute: typeof SkillsIndexRoute
-  ApiRunbooksIdRoute: typeof ApiRunbooksIdRoute
-  ApiRunbooksSearchRoute: typeof ApiRunbooksSearchRoute
   RunbooksIssuesIssueIdRoute: typeof RunbooksIssuesIssueIdRoute
-  ApiRunbooksIssuesIssueIdRoute: typeof ApiRunbooksIssuesIssueIdRoute
+  ApiOpsAuthCallbackRoute: typeof ApiOpsAuthCallbackRoute
+  ApiOpsAuthLoginRoute: typeof ApiOpsAuthLoginRoute
+  ApiOpsAuthLogoutRoute: typeof ApiOpsAuthLogoutRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -168,6 +277,20 @@ declare module '@tanstack/react-router' {
       path: '/quick-start'
       fullPath: '/quick-start'
       preLoaderRoute: typeof QuickStartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ops': {
+      id: '/ops'
+      path: '/ops'
+      fullPath: '/ops'
+      preLoaderRoute: typeof OpsRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -191,6 +314,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RunbooksIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ops/': {
+      id: '/ops/'
+      path: '/'
+      fullPath: '/ops/'
+      preLoaderRoute: typeof OpsIndexRouteImport
+      parentRoute: typeof OpsRouteRoute
+    }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/skills/$slug': {
       id: '/skills/$slug'
       path: '/skills/$slug'
@@ -205,6 +342,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RunbooksIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ops/login': {
+      id: '/ops/login'
+      path: '/login'
+      fullPath: '/ops/login'
+      preLoaderRoute: typeof OpsLoginRouteImport
+      parentRoute: typeof OpsRouteRoute
+    }
+    '/guides/$id': {
+      id: '/guides/$id'
+      path: '/guides/$id'
+      fullPath: '/guides/$id'
+      preLoaderRoute: typeof GuidesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ops/runbooks/': {
+      id: '/ops/runbooks/'
+      path: '/runbooks'
+      fullPath: '/ops/runbooks/'
+      preLoaderRoute: typeof OpsRunbooksIndexRouteImport
+      parentRoute: typeof OpsRouteRoute
+    }
+    '/ops/matrix/': {
+      id: '/ops/matrix/'
+      path: '/matrix'
+      fullPath: '/ops/matrix/'
+      preLoaderRoute: typeof OpsMatrixIndexRouteImport
+      parentRoute: typeof OpsRouteRoute
+    }
+    '/ops/guides/': {
+      id: '/ops/guides/'
+      path: '/guides'
+      fullPath: '/ops/guides/'
+      preLoaderRoute: typeof OpsGuidesIndexRouteImport
+      parentRoute: typeof OpsRouteRoute
+    }
     '/runbooks/issues/$issueId': {
       id: '/runbooks/issues/$issueId'
       path: '/runbooks/issues/$issueId'
@@ -212,41 +384,65 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RunbooksIssuesIssueIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/runbooks/search': {
-      id: '/api/runbooks/search'
-      path: '/api/runbooks/search'
-      fullPath: '/api/runbooks/search'
-      preLoaderRoute: typeof ApiRunbooksSearchRouteImport
+    '/api/ops/auth/logout': {
+      id: '/api/ops/auth/logout'
+      path: '/api/ops/auth/logout'
+      fullPath: '/api/ops/auth/logout'
+      preLoaderRoute: typeof ApiOpsAuthLogoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/runbooks/$id': {
-      id: '/api/runbooks/$id'
-      path: '/api/runbooks/$id'
-      fullPath: '/api/runbooks/$id'
-      preLoaderRoute: typeof ApiRunbooksIdRouteImport
+    '/api/ops/auth/login': {
+      id: '/api/ops/auth/login'
+      path: '/api/ops/auth/login'
+      fullPath: '/api/ops/auth/login'
+      preLoaderRoute: typeof ApiOpsAuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/runbooks/issues/$issueId': {
-      id: '/api/runbooks/issues/$issueId'
-      path: '/api/runbooks/issues/$issueId'
-      fullPath: '/api/runbooks/issues/$issueId'
-      preLoaderRoute: typeof ApiRunbooksIssuesIssueIdRouteImport
+    '/api/ops/auth/callback': {
+      id: '/api/ops/auth/callback'
+      path: '/api/ops/auth/callback'
+      fullPath: '/api/ops/auth/callback'
+      preLoaderRoute: typeof ApiOpsAuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
+interface OpsRouteRouteChildren {
+  OpsLoginRoute: typeof OpsLoginRoute
+  OpsIndexRoute: typeof OpsIndexRoute
+  OpsGuidesIndexRoute: typeof OpsGuidesIndexRoute
+  OpsMatrixIndexRoute: typeof OpsMatrixIndexRoute
+  OpsRunbooksIndexRoute: typeof OpsRunbooksIndexRoute
+}
+
+const OpsRouteRouteChildren: OpsRouteRouteChildren = {
+  OpsLoginRoute: OpsLoginRoute,
+  OpsIndexRoute: OpsIndexRoute,
+  OpsGuidesIndexRoute: OpsGuidesIndexRoute,
+  OpsMatrixIndexRoute: OpsMatrixIndexRoute,
+  OpsRunbooksIndexRoute: OpsRunbooksIndexRoute,
+}
+
+const OpsRouteRouteWithChildren = OpsRouteRoute._addFileChildren(
+  OpsRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OpsRouteRoute: OpsRouteRouteWithChildren,
+  McpRoute: McpRoute,
   QuickStartRoute: QuickStartRoute,
+  GuidesIdRoute: GuidesIdRoute,
   RunbooksIdRoute: RunbooksIdRoute,
   SkillsSlugRoute: SkillsSlugRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
   RunbooksIndexRoute: RunbooksIndexRoute,
   SkillsIndexRoute: SkillsIndexRoute,
-  ApiRunbooksIdRoute: ApiRunbooksIdRoute,
-  ApiRunbooksSearchRoute: ApiRunbooksSearchRoute,
   RunbooksIssuesIssueIdRoute: RunbooksIssuesIssueIdRoute,
-  ApiRunbooksIssuesIssueIdRoute: ApiRunbooksIssuesIssueIdRoute,
+  ApiOpsAuthCallbackRoute: ApiOpsAuthCallbackRoute,
+  ApiOpsAuthLoginRoute: ApiOpsAuthLoginRoute,
+  ApiOpsAuthLogoutRoute: ApiOpsAuthLogoutRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

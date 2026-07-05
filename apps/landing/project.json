@@ -18,6 +18,14 @@
         "cwd": "apps/landing",
         "command": "pnpm run dev"
       }
+    },
+    "run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/landing",
+        "command": "pnpm run",
+        "forwardAllArgs": true
+      }
     }
   }
 }

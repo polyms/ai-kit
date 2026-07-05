@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { HomeSiteChrome } from '../../components/home/HomeSiteChrome'
 import { RunbookResultsTable, RunbookSearch } from '../../components/runbooks'
+import { searchRunbooksFn } from '../../lib/runbooks/runbook.fns'
 import { m } from '../../paraglide/messages.js'
-import { searchRunbooks } from '../../lib/runbooks/runbook-service'
 
 type RunbooksSearch = {
   q: string
@@ -13,8 +13,8 @@ export const Route = createFileRoute('/runbooks/')({
     q: typeof search.q === 'string' ? search.q : '',
   }),
   loaderDeps: ({ search: { q } }) => ({ q }),
-  loader: ({ deps: { q } }) => ({
-    results: searchRunbooks({ q }),
+  loader: async ({ deps: { q } }) => ({
+    results: await searchRunbooksFn({ data: { q } }),
   }),
   component: RunbooksIndexPage,
 })

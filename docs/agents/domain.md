@@ -6,7 +6,10 @@ How `/align`, `/pm`, and `/dev` consume domain documentation.
 
 - **`CONTEXT.md`** at repo root
 - **`docs/adr/`** — ADRs touching the work area
-- **`docs/runbooks/`** — deploy/CI ops (symptom → fix); index at `docs/agents/runbooks.md`
+- **`docs/agents/runbooks.md`** — how to retrieve **Runbooks** (Ops CMS / `/runbooks/*`, MCP); deploy/CI symptom → fix
+- **`docs/agents/stack-guides.md`** — how to retrieve **Stack guides** (`/guides/*`, MCP); stack-combo design knowledge for `/arch` and deploy-aware `/dev`
+- **`docs/agents/ops-cms-mcp.md`** — MCP endpoint, Cursor setup, catalog tool names
+- **`docs/runbooks/`** — git **snapshot** of runbooks for contributors — not live agent retrieval
 
 If files don't exist, proceed silently. `/align` creates them lazily when terms resolve.
 

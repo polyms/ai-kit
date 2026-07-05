@@ -5,19 +5,30 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && tsc --noEmit",
+    "build": "prisma generate && vite build && tsc --noEmit",
     "preview": "vite preview",
     "test": "vitest run",
-    "i18n": "tsx scripts/compile-i18n.ts"
+    "i18n": "tsx scripts/compile-i18n.ts",
+    "db:generate": "prisma generate",
+    "db:format": "prisma format",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "prisma generate && prisma db seed"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@polyms/core-ui": "0.4.35",
+    "@prisma/client": "^6.19.0",
     "@solar-icons/react-perf": "^2.1.1",
     "@tanstack/react-router": "1.170.17",
     "@tanstack/react-start": "^1.168.27",
     "clsx": "^2.1.1",
     "react": "~19.2.7",
     "react-dom": "~19.2.7",
+    "zod": "^4.4.3",
     "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.0"
   }
 }

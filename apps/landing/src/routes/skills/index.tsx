@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { SkillCommandList } from '../../components/SkillCommandList'
-import { m } from '../../paraglide/messages.js'
 import type { SkillsSearch } from '../../lib/skills-search'
+import { m } from '../../paraglide/messages.js'
 
 export const Route = createFileRoute('/skills/')({
   validateSearch: (search: Record<string, unknown>): SkillsSearch => ({

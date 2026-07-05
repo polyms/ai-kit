@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Runbook {
+  id                   String       @id
+  slug                 String       @unique
+  title                String
+  summary              String       @db.Text
+  audience             String
+  axisTags             String[]
+  relatedFiles         String[]
+  stackProfileMarkdown String       @db.Text
+  greenfieldChecklist  String[]
+  status               String       @default("published")
+  createdAt            DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt            DateTime     @updatedAt @db.Timestamptz(3)
+  knownIssues          KnownIssue[]
+  stackGuide           StackGuide?
+
+  @@index([status])
+  @@map("runbooks")
+}
+
+model KnownIssue {
+  id             String   @id
+  slug           String   @unique
+  runbookId      String
+  runbook        Runbook  @relation(fields: [runbookId], references: [id], onDelete: Cascade)
+  title          String
+  symptom        String   @db.Text
+  cause          String[]
+  fix            String[]
+  verify         String[]
+  triggerPhrases String[]
+  relatedFiles   String[]
+  axisTags       String[]
+  createdAt      DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([runbookId])
+  @@map("known_issues")
+}
+
+/// Stack guide — wiki content type for stack-combo design knowledge (Ops CMS Phase 3).
+model StackGuide {
+  id               String   @id
+  slug             String   @unique
+  title            String
+  summary          String   @db.Text
+  audience         String   @default("arch")
+  axisTags         String[]
+  designChecklist  String[]
+  seamSections     Json     @default("[]")
+  relatedRunbookId String?  @unique
+  relatedRunbook   Runbook? @relation(fields: [relatedRunbookId], references: [id], onDelete: SetNull)
+  status           String   @default("published")
+  createdAt        DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt        DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([status])
+  @@index([relatedRunbookId])
+  @@map("stack_guides")
+}

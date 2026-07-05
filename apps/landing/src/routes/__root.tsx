@@ -3,11 +3,11 @@ import { createRootRoute, HeadContent, Outlet, Scripts, useRouterState } from '@
 import { useEffect } from 'react'
 import { CommandPalette } from '../components/CommandPalette'
 import { HomeFooter, HomeHeader } from '../components/home'
+import homeCss from '../components/home/home.css?url'
 import { m } from '../paraglide/messages.js'
 import type { Locale } from '../stores/useAppStore'
 import { useAppStore } from '../stores/useAppStore'
 import globalsCss from '../styles/globals.css?url'
-import homeCss from '../components/home/home.css?url'
 
 const origin = `${__ORIGIN_POLYMS__}/favicon`
 
@@ -42,7 +42,9 @@ function RootLayout() {
   const togglePalette = useAppStore(s => s.togglePalette)
   const setPaletteOpen = useAppStore(s => s.setPaletteOpen)
   const pathname = useRouterState({ select: s => s.location.pathname })
-  const hideCommandPalette = pathname.startsWith('/runbooks')
+  const hideCommandPalette =
+    pathname.startsWith('/runbooks') || pathname.startsWith('/guides') || pathname.startsWith('/ops')
+  const hideFooter = pathname.startsWith('/ops')
   useEffect(() => {
     hydrate()
   }, [hydrate])
@@ -87,7 +89,7 @@ function RootLayout() {
             <main id='main'>
               <Outlet />
             </main>
-            <HomeFooter />
+            {!hideFooter ? <HomeFooter /> : null}
           </div>
           {!hideCommandPalette ? <CommandPalette /> : null}
           <Modal.Container />
