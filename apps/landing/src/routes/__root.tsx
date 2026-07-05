@@ -2,9 +2,7 @@ import { Modal, Toast } from '@polyms/core-ui'
 import { createRootRoute, HeadContent, Outlet, Scripts, useRouterState } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { CommandPalette } from '../components/CommandPalette'
-import { HomeFooter, HomeHeader } from '../components/home'
 import homeCss from '../components/home/home.css?url'
-import { m } from '../paraglide/messages.js'
 import type { Locale } from '../stores/useAppStore'
 import { useAppStore } from '../stores/useAppStore'
 import globalsCss from '../styles/globals.css?url'
@@ -44,7 +42,6 @@ function RootLayout() {
   const pathname = useRouterState({ select: s => s.location.pathname })
   const hideCommandPalette =
     pathname.startsWith('/runbooks') || pathname.startsWith('/guides') || pathname.startsWith('/ops')
-  const hideFooter = pathname.startsWith('/ops')
   useEffect(() => {
     hydrate()
   }, [hydrate])
@@ -78,19 +75,7 @@ function RootLayout() {
       </head>
       <body>
         <Toast>
-          <div className={pathname === '/' ? 'app-page min-h-dvh' : 'min-h-dvh'}>
-            <a
-              className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2'
-              href='#main'
-            >
-              {m.nav_skip()}
-            </a>
-            <HomeHeader />
-            <main id='main'>
-              <Outlet />
-            </main>
-            {!hideFooter ? <HomeFooter /> : null}
-          </div>
+          <Outlet />
           {!hideCommandPalette ? <CommandPalette /> : null}
           <Modal.Container />
           <Toast.Container />

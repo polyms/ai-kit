@@ -66,7 +66,11 @@ function AlignCard() {
 
 export function HomeHero() {
   return (
-    <section className='app-hero app-shell relative flex flex-col justify-start overflow-hidden'>
+    <section
+      className='app-hero app-shell relative flex flex-col justify-start overflow-hidden'
+      id='content'
+      tabIndex={-1}
+    >
       <div aria-hidden className='app-hero__decor pointer-events-none absolute inset-0 overflow-hidden'>
         <FloatingIcon icon={Rocket2} right={160} rotate={-8} top={64} />
         <FloatingIcon icon={Code2} right={48} rotate={10} size={24} top={150} />

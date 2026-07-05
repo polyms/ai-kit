@@ -3,56 +3,33 @@ import { HOME_PLAYFUL } from './brand'
 import { HomeSectionChip } from './HomeSectionChip'
 
 const STAGES = [
-  { labelKey: 'pipeline_stage_idea' as const },
-  { labelKey: 'pipeline_stage_align' as const, invoke: '/align' },
-  { labelKey: 'pipeline_stage_pm' as const, invoke: '/pm' },
-  { labelKey: 'pipeline_stage_issues' as const, invoke: '/to-issues' },
-  { labelKey: 'pipeline_stage_design' as const, invoke: '/design' },
-  { labelKey: 'pipeline_stage_dev' as const, invoke: '/dev' },
-  { labelKey: 'pipeline_stage_review' as const, invoke: '/code-review' },
-  { labelKey: 'pipeline_stage_ship' as const },
+  { label: m.pipeline_stage_idea },
+  { label: m.pipeline_stage_align, invoke: '/align' },
+  { label: m.pipeline_stage_pm, invoke: '/pm' },
+  { label: m.pipeline_stage_issues, invoke: '/to-issues' },
+  { label: m.pipeline_stage_design, invoke: '/design' },
+  { label: m.pipeline_stage_dev, invoke: '/dev' },
+  { label: m.pipeline_stage_review, invoke: '/code-review' },
+  { label: m.pipeline_stage_ship },
 ] as const
 
 const AGENTS = [
   {
     name: 'pm-agent',
-    roleKey: 'pipeline_agent_pm_role' as const,
-    ownsKey: 'pipeline_agent_pm_owns' as const,
+    role: m.pipeline_agent_pm_role,
+    owns: m.pipeline_agent_pm_owns,
   },
   {
     name: 'design-agent',
-    roleKey: 'pipeline_agent_design_role' as const,
-    ownsKey: 'pipeline_agent_design_owns' as const,
+    role: m.pipeline_agent_design_role,
+    owns: m.pipeline_agent_design_owns,
   },
   {
     name: 'dev-agent',
-    roleKey: 'pipeline_agent_dev_role' as const,
-    ownsKey: 'pipeline_agent_dev_owns' as const,
+    role: m.pipeline_agent_dev_role,
+    owns: m.pipeline_agent_dev_owns,
   },
 ] as const
-
-const STAGE_LABELS = {
-  pipeline_stage_idea: m.pipeline_stage_idea,
-  pipeline_stage_align: m.pipeline_stage_align,
-  pipeline_stage_pm: m.pipeline_stage_pm,
-  pipeline_stage_issues: m.pipeline_stage_issues,
-  pipeline_stage_design: m.pipeline_stage_design,
-  pipeline_stage_dev: m.pipeline_stage_dev,
-  pipeline_stage_review: m.pipeline_stage_review,
-  pipeline_stage_ship: m.pipeline_stage_ship,
-} as const
-
-const AGENT_ROLES = {
-  pipeline_agent_pm_role: m.pipeline_agent_pm_role,
-  pipeline_agent_design_role: m.pipeline_agent_design_role,
-  pipeline_agent_dev_role: m.pipeline_agent_dev_role,
-} as const
-
-const AGENT_OWNS = {
-  pipeline_agent_pm_owns: m.pipeline_agent_pm_owns,
-  pipeline_agent_design_owns: m.pipeline_agent_design_owns,
-  pipeline_agent_dev_owns: m.pipeline_agent_dev_owns,
-} as const
 
 function StageChip({
   label,
@@ -91,8 +68,8 @@ export function HomePipeline() {
         {STAGES.map((stage, i) => (
           <StageChip
             invoke={'invoke' in stage ? stage.invoke : undefined}
-            key={stage.labelKey}
-            label={STAGE_LABELS[stage.labelKey]()}
+            key={'invoke' in stage ? stage.invoke : i}
+            label={stage.label()}
             last={i === STAGES.length - 1}
           />
         ))}
@@ -114,8 +91,8 @@ export function HomePipeline() {
               key={agent.name}
             >
               <div className='mb-2 font-bold font-mono text-[15px] text-primary-600'>{agent.name}</div>
-              <div className='mb-1.5 font-bold text-[15px] text-fg'>{AGENT_ROLES[agent.roleKey]()}</div>
-              <div className='text-[13.5px] text-muted leading-snug'>{AGENT_OWNS[agent.ownsKey]()}</div>
+              <div className='mb-1.5 font-bold text-[15px] text-fg'>{agent.role()}</div>
+              <div className='text-[13.5px] text-muted leading-snug'>{agent.owns()}</div>
             </div>
           )
         })}
