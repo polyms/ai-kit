@@ -25,8 +25,7 @@ export function HomePrinciples() {
     <section className='app-home-section app-shell mx-auto max-w-[900px]'>
       <HomeSectionChip label='principles' n='01' />
       <h2 className='app-principles__title m-0 mb-12 font-bold font-sans text-fg'>
-        {m.principles_titlePrefix()}{' '}
-        <span className='app-hero__accent'>{m.principles_titleAccent()}</span>
+        {m.principles_titlePrefix()} <span className='app-hero__accent'>{m.principles_titleAccent()}</span>
       </h2>
 
       <div className='flex flex-col'>

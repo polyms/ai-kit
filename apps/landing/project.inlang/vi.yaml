@@ -86,8 +86,7 @@ nav_github: GitHub
 nav_locale: Ngôn ngữ giao diện
 nav_overview: Tổng quan
 nav_pipeline: Pipeline
-nav_runbooks: Runbooks
-nav_guides: Stack guides
+nav_knowledge: Knowledge
 nav_skip: Bỏ qua điều hướng
 nav_start: Bắt đầu nhanh
 nav_theme: Giao diện
@@ -113,61 +112,40 @@ principles_5_title: Hack và sở hữu
 principles_titleAccent: engineering.
 principles_titlePrefix: Real
 
-# --- runbooks ---
-runbooks_audience: Audience
-runbooks_axisTags: Axis tags
-runbooks_backToIndex: Về danh sách runbooks
-runbooks_backToRunbook: Về runbook
-runbooks_cause: Cause
-runbooks_col_id: ID
-runbooks_col_issueId: Issue ID
-runbooks_col_match: Khớp
-runbooks_col_symptom: Symptom
-runbooks_col_tags: Tags
-runbooks_col_type: Loại
-runbooks_copied: Đã copy
-runbooks_copy: Copy
-runbooks_empty: Không có runbook khớp tìm kiếm.
-runbooks_fallback: 'Bản mirror trên GitHub:'
-runbooks_fix: Fix
-runbooks_greenfield: Greenfield checklist
-runbooks_issueNotFound: Không tìm thấy issue.
-runbooks_kicker: RUNBOOKS
-runbooks_knownIssues: Known issues
-runbooks_notFound: Không tìm thấy runbook.
-runbooks_relatedFiles: Related files
-runbooks_results: Kết quả
-runbooks_resultsCaption: Kết quả tìm runbook
-runbooks_searchLabel: Tìm runbook theo symptom
-runbooks_searchPlaceholder: No Output Directory named .output
-runbooks_stackProfile: Stack profile (correct state)
-runbooks_sub: Symptom → cause → fix → verify. Tìm theo thông báo lỗi hoặc trigger phrase.
-runbooks_symptom: Symptom
-runbooks_symptomIndex: Symptom index
-runbooks_title: Runbooks
-runbooks_verify: Verify
-runbooks_siblingGuide: Stack guide
-
-# --- guides ---
-guides_audience: Đối tượng
-guides_backToIndex: Về danh sách stack guides
-guides_col_id: ID
-guides_col_match: Khớp
-guides_col_tags: Axis tags
-guides_col_title: Tiêu đề
-guides_designChecklist: Design checklist
-guides_empty: Không có stack guide khớp tìm kiếm
-guides_kicker: STACK GUIDES
-guides_localNav: Trên trang này
-guides_notFound: Không tìm thấy stack guide
-guides_relatedRunbook: Runbook liên quan
-guides_results: Kết quả
-guides_resultsCaption: Kết quả tìm stack guide
-guides_searchLabel: Tìm stack guide
-guides_searchPlaceholder: tanstack router zustand monorepo
-guides_siblingRunbook: Runbook
-guides_sub: Design seams, routing, state. Tìm theo stack axis hoặc chủ đề.
-guides_title: Stack guides
+# --- knowledge ---
+knowledge_axisTags: Axis tags
+knowledge_backToIndex: Về danh sách knowledge
+knowledge_checklist: Checklist
+knowledge_cause: Cause
+knowledge_fix: Fix
+knowledge_verify: Verify
+knowledge_chunkType_checklist: Checklist
+knowledge_chunkType_config: Config
+knowledge_chunkType_incident: Incident
+knowledge_chunkType_prose: Prose
+knowledge_chunkType_seam: Seam
+knowledge_chunks: Chunks
+knowledge_chunkNav: Trên trang này
+knowledge_readingOrder: Thứ tự đọc
+knowledge_col_id: ID
+knowledge_col_match: Khớp
+knowledge_col_tags: Tags
+knowledge_col_title: Tiêu đề
+knowledge_col_type: Loại
+knowledge_empty: Không có knowledge article khớp tìm kiếm.
+knowledge_fallback: 'Bản mirror trên GitHub:'
+knowledge_intent: Intent
+knowledge_intent_design: Design
+knowledge_intent_incident: Incident
+knowledge_intent_toolchain: Toolchain
+knowledge_kicker: KNOWLEDGE
+knowledge_notFound: Không tìm thấy knowledge article.
+knowledge_results: Kết quả
+knowledge_resultsCaption: Kết quả tìm knowledge
+knowledge_searchLabel: Tìm knowledge theo topic hoặc symptom
+knowledge_searchPlaceholder: biome prettier setup
+knowledge_sub: Incident · design · toolchain — một retrieval model cho dev-agent, /dev, /devops, /arch.
+knowledge_title: Knowledge
 
 # --- ops ---
 ops_col_actions: Thao tác
@@ -176,31 +154,30 @@ ops_col_status: Trạng thái
 ops_col_tags: Axis tags
 ops_col_title: Tiêu đề
 ops_col_updated: Cập nhật
-ops_createRunbook: Runbook mới
-ops_createGuide: Stack guide mới
 ops_edit: Sửa
 ops_loginCta: Đăng nhập polyms.dev
 ops_loginDev: Dev sign-in
 ops_loginDevDisabled: Dev sign-in tắt. Đặt OPS_DEV_BYPASS=true trên server.
 ops_loginNetworkError: Lỗi mạng — thử lại.
 ops_loginOidcMissing: Chưa cấu hình OIDC. Đặt OIDC_CLIENT_ID và OIDC_CLIENT_SECRET.
-ops_loginSub: Đăng nhập Polyms để sửa runbook và stack guide.
+ops_loginSub: Đăng nhập Polyms để sửa Knowledge articles.
 ops_loginTitle: Ops CMS
 ops_matrixEmpty: Chưa có axis data — thêm tags vào nội dung
+ops_matrixIntentCoverage: Intent coverage
+ops_matrixKnowledge: Knowledge
+ops_intent_design: design
+ops_intent_incident: incident
+ops_intent_toolchain: toolchain
 ops_matrixLegendGap: thiếu
 ops_matrixLegendCovered: đủ
-ops_matrixRunbooks: Runbook
-ops_matrixGuides: Stack guide
 ops_matrixTitle: Coverage matrix
-ops_matrixSub: Hàng = tổ hợp axis từ tags. Thiếu theo loại nội dung.
-ops_nav_guides: Stack guides
+ops_matrixSub: Hàng = tổ hợp axis từ tags. Intent coverage theo Knowledge article.
+ops_nav_knowledge: Knowledge
 ops_nav_matrix: Matrix
-ops_nav_runbooks: Runbooks
 ops_nav_signOut: Đăng xuất
-ops_runbooksEmpty: Chưa có runbook
-ops_runbooksTitle: Runbooks
-ops_guidesEmpty: Chưa có stack guide
-ops_guidesTitle: Stack guides
+ops_knowledgeEmpty: Chưa có knowledge article
+ops_knowledgeTitle: Knowledge
+ops_createKnowledge: Article mới
 ops_sessionExpired: Phiên hết hạn. Đăng nhập lại để tiếp tục.
 ops_signInAgain: Đăng nhập lại
 ops_status_draft: nháp

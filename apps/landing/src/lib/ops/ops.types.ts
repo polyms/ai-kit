@@ -1,19 +1,22 @@
-export type OpsRunbookRow = {
+export type OpsKnowledgeRow = {
   id: string
   slug: string
   title: string
   status: string
+  intent: string
   axisTags: string[]
   updatedAt: string
 }
 
-export type OpsGuideRow = {
-  id: string
-  slug: string
-  title: string
-  status: string
-  axisTags: string[]
-  updatedAt: string
+export const KNOWLEDGE_INTENTS = ['incident', 'design', 'toolchain'] as const
+
+export function countByIntent(rows: Array<{ intent: string }>): Record<string, number> {
+  const counts: Record<string, number> = {}
+  for (const intent of KNOWLEDGE_INTENTS) counts[intent] = 0
+  for (const row of rows) {
+    counts[row.intent] = (counts[row.intent] ?? 0) + 1
+  }
+  return counts
 }
 
 export type MatrixAxisCombo = {

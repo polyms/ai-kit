@@ -44,7 +44,7 @@ export function getOidcConfig(requestUrl: URL): OidcConfig | null {
 
 export function sanitizeOpsReturnTo(value: string | null | undefined): string {
   if (!value?.startsWith('/ops') || value.startsWith('//')) {
-    return '/ops/runbooks'
+    return '/ops/knowledge'
   }
   return value
 }

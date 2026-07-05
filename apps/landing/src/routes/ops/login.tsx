@@ -13,7 +13,7 @@ type OpsLoginSearch = {
 
 export const Route = createFileRoute('/ops/login')({
   validateSearch: (search: Record<string, unknown>): OpsLoginSearch => ({
-    returnTo: typeof search.returnTo === 'string' ? search.returnTo : '/ops/runbooks',
+    returnTo: typeof search.returnTo === 'string' ? search.returnTo : '/ops/knowledge',
     error: typeof search.error === 'string' ? search.error : undefined,
   }),
   loader: () => ({
@@ -29,14 +29,14 @@ function OpsLoginPage() {
   const [error, setError] = useState<string | null>(callbackError ?? null)
   const [pending, setPending] = useState(false)
 
-  const loginHref = `/api/ops/auth/login?returnTo=${encodeURIComponent(returnTo || '/ops/runbooks')}`
+  const loginHref = `/api/ops/auth/login?returnTo=${encodeURIComponent(returnTo || '/ops/knowledge')}`
 
   async function devSignIn() {
     setPending(true)
     setError(null)
     try {
       await opsDevLoginFn()
-      window.location.assign(returnTo || '/ops/runbooks')
+      window.location.assign(returnTo || '/ops/knowledge')
     } catch {
       setError(m.ops_loginDevDisabled())
     } finally {

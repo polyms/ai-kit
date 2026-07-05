@@ -86,8 +86,7 @@ nav_github: GitHub
 nav_locale: Interface language
 nav_overview: Overview
 nav_pipeline: Pipeline
-nav_runbooks: Runbooks
-nav_guides: Stack guides
+nav_knowledge: Knowledge
 nav_skip: Skip navigation
 nav_start: Quick start
 nav_theme: Theme
@@ -113,61 +112,40 @@ principles_5_title: Hack and own them
 principles_titleAccent: engineering.
 principles_titlePrefix: Real
 
-# --- runbooks ---
-runbooks_audience: Audience
-runbooks_axisTags: Axis tags
-runbooks_backToIndex: Back to runbooks
-runbooks_backToRunbook: Back to runbook
-runbooks_cause: Cause
-runbooks_col_id: ID
-runbooks_col_issueId: Issue ID
-runbooks_col_match: Match
-runbooks_col_symptom: Symptom
-runbooks_col_tags: Tags
-runbooks_col_type: Type
-runbooks_copied: Copied
-runbooks_copy: Copy
-runbooks_empty: No runbooks match your search.
-runbooks_fallback: 'Mirror on GitHub:'
-runbooks_fix: Fix
-runbooks_greenfield: Greenfield checklist
-runbooks_issueNotFound: Issue not found.
-runbooks_kicker: RUNBOOKS
-runbooks_knownIssues: Known issues
-runbooks_notFound: Runbook not found.
-runbooks_relatedFiles: Related files
-runbooks_results: Results
-runbooks_resultsCaption: Runbook search results
-runbooks_searchLabel: Search runbooks by symptom
-runbooks_searchPlaceholder: No Output Directory named .output
-runbooks_stackProfile: Stack profile (correct state)
-runbooks_sub: Symptom → cause → fix → verify. Search by error message or trigger phrase.
-runbooks_symptom: Symptom
-runbooks_symptomIndex: Symptom index
-runbooks_title: Runbooks
-runbooks_verify: Verify
-runbooks_siblingGuide: Stack guide
-
-# --- guides ---
-guides_audience: Audience
-guides_backToIndex: Back to stack guides
-guides_col_id: ID
-guides_col_match: Match
-guides_col_tags: Axis tags
-guides_col_title: Title
-guides_designChecklist: Design checklist
-guides_empty: No stack guides match your search
-guides_kicker: STACK GUIDES
-guides_localNav: On this page
-guides_notFound: Stack guide not found
-guides_relatedRunbook: Related runbook
-guides_results: Results
-guides_resultsCaption: Stack guide search results
-guides_searchLabel: Search stack guides
-guides_searchPlaceholder: tanstack router zustand monorepo
-guides_siblingRunbook: Runbook
-guides_sub: Design seams, routing, state. Search by stack axis or topic.
-guides_title: Stack guides
+# --- knowledge ---
+knowledge_axisTags: Axis tags
+knowledge_backToIndex: Back to knowledge
+knowledge_checklist: Checklist
+knowledge_cause: Cause
+knowledge_fix: Fix
+knowledge_verify: Verify
+knowledge_chunkType_checklist: Checklist
+knowledge_chunkType_config: Config
+knowledge_chunkType_incident: Incident
+knowledge_chunkType_prose: Prose
+knowledge_chunkType_seam: Seam
+knowledge_chunks: Chunks
+knowledge_chunkNav: On this page
+knowledge_readingOrder: Reading order
+knowledge_col_id: ID
+knowledge_col_match: Match
+knowledge_col_tags: Tags
+knowledge_col_title: Title
+knowledge_col_type: Type
+knowledge_empty: No Knowledge articles match your search.
+knowledge_fallback: 'Mirror on GitHub:'
+knowledge_intent: Intent
+knowledge_intent_design: Design
+knowledge_intent_incident: Incident
+knowledge_intent_toolchain: Toolchain
+knowledge_kicker: KNOWLEDGE
+knowledge_notFound: Knowledge article not found.
+knowledge_results: Results
+knowledge_resultsCaption: Knowledge search results
+knowledge_searchLabel: Search Knowledge by topic or symptom
+knowledge_searchPlaceholder: biome prettier setup
+knowledge_sub: Incident · design · toolchain — one retrieval model for dev-agent, /dev, /devops, /arch.
+knowledge_title: Knowledge
 
 # --- ops ---
 ops_col_actions: Actions
@@ -176,31 +154,30 @@ ops_col_status: Status
 ops_col_tags: Axis tags
 ops_col_title: Title
 ops_col_updated: Updated
-ops_createRunbook: New runbook
-ops_createGuide: New stack guide
 ops_edit: Edit
 ops_loginCta: Sign in with polyms.dev
 ops_loginDev: Dev sign-in
 ops_loginDevDisabled: Dev sign-in is disabled. Set OPS_DEV_BYPASS=true on the server.
 ops_loginNetworkError: Network error — try again.
 ops_loginOidcMissing: OIDC is not configured. Set OIDC_CLIENT_ID and OIDC_CLIENT_SECRET.
-ops_loginSub: Sign in with your Polyms account to edit runbooks and stack guides.
+ops_loginSub: Sign in with your Polyms account to edit Knowledge articles.
 ops_loginTitle: Ops CMS
 ops_matrixEmpty: No axis data — add tags to content
+ops_matrixIntentCoverage: Intent coverage
+ops_matrixKnowledge: Knowledge
+ops_intent_design: design
+ops_intent_incident: incident
+ops_intent_toolchain: toolchain
 ops_matrixLegendGap: gap
 ops_matrixLegendCovered: covered
-ops_matrixRunbooks: Runbook
-ops_matrixGuides: Stack guide
 ops_matrixTitle: Coverage matrix
-ops_matrixSub: Rows = axis combinations from content tags. Gaps per content type.
-ops_nav_guides: Stack guides
+ops_matrixSub: Rows = axis combinations from content tags. Intent coverage per Knowledge article.
+ops_nav_knowledge: Knowledge
 ops_nav_matrix: Matrix
-ops_nav_runbooks: Runbooks
 ops_nav_signOut: Sign out
-ops_runbooksEmpty: No runbooks yet
-ops_runbooksTitle: Runbooks
-ops_guidesEmpty: No stack guides yet
-ops_guidesTitle: Stack guides
+ops_knowledgeEmpty: No knowledge articles yet
+ops_knowledgeTitle: Knowledge
+ops_createKnowledge: New article
 ops_sessionExpired: Session expired. Sign in again to continue.
 ops_signInAgain: Sign in again
 ops_status_draft: draft

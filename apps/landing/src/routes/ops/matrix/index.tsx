@@ -2,7 +2,7 @@ import { Tabs } from '@polyms/core-ui'
 import { createFileRoute } from '@tanstack/react-router'
 import { OpsShell } from '../../../components/ops'
 import { getOpsMatrixFn } from '../../../lib/ops/ops.cms.fns'
-import { axisComboMatches, type MatrixAxisCombo } from '../../../lib/ops/ops.types'
+import { axisComboMatches, KNOWLEDGE_INTENTS, type MatrixAxisCombo } from '../../../lib/ops/ops.types'
 import { m } from '../../../paraglide/messages.js'
 
 export const Route = createFileRoute('/ops/matrix/')({
@@ -11,7 +11,7 @@ export const Route = createFileRoute('/ops/matrix/')({
 })
 
 function OpsMatrixPage() {
-  const { runbooks, guides, runbookCombos, guideCombos } = Route.useLoaderData()
+  const { knowledge, knowledgeCombos, knowledgeIntentCoverage } = Route.useLoaderData()
 
   return (
     <OpsShell active='matrix'>
@@ -19,18 +19,19 @@ function OpsMatrixPage() {
         <h1 className='h1'>{m.ops_matrixTitle()}</h1>
         <p className='mt-2 text-muted'>{m.ops_matrixSub()}</p>
 
-        <Tabs className='mt-8' defaultValue='runbooks'>
+        <Tabs className='mt-8' defaultValue='knowledge'>
           <Tabs.List>
-            <Tabs.Tab value='runbooks'>{m.ops_matrixRunbooks()}</Tabs.Tab>
-            <Tabs.Tab value='guides'>{m.ops_matrixGuides()}</Tabs.Tab>
+            <Tabs.Tab value='knowledge'>{m.ops_matrixKnowledge()}</Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panel className='mt-6' value='runbooks'>
-            <MatrixGrid combos={runbookCombos} empty={runbookCombos.length === 0} items={runbooks} />
-          </Tabs.Panel>
-
-          <Tabs.Panel className='mt-6' value='guides'>
-            <MatrixGrid combos={guideCombos} empty={guideCombos.length === 0} items={guides} />
+          <Tabs.Panel className='mt-6' value='knowledge'>
+            <IntentCoverage coverage={knowledgeIntentCoverage} />
+            <MatrixGrid
+              className='mt-6'
+              combos={knowledgeCombos}
+              empty={knowledgeCombos.length === 0}
+              items={knowledge}
+            />
           </Tabs.Panel>
         </Tabs>
 
@@ -42,21 +43,53 @@ function OpsMatrixPage() {
   )
 }
 
+type IntentCoverageProps = {
+  coverage: Record<string, number>
+}
+
+function IntentCoverage({ coverage }: IntentCoverageProps) {
+  return (
+    <div>
+      <h2 className='h2'>{m.ops_matrixIntentCoverage()}</h2>
+      <ul className='mt-3 flex flex-wrap gap-3'>
+        {KNOWLEDGE_INTENTS.map(intent => (
+          <li className='rounded-md border border-line px-3 py-1.5 font-mono text-sm' key={intent}>
+            <span className='text-muted'>{intentLabel(intent)}</span>{' '}
+            <span className='font-semibold'>{coverage[intent] ?? 0}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function intentLabel(intent: (typeof KNOWLEDGE_INTENTS)[number]): string {
+  switch (intent) {
+    case 'incident':
+      return m.ops_intent_incident()
+    case 'design':
+      return m.ops_intent_design()
+    case 'toolchain':
+      return m.ops_intent_toolchain()
+  }
+}
+
 type MatrixItem = { id: string; axisTags: string[] }
 
 type MatrixGridProps = {
   combos: MatrixAxisCombo[]
   items: MatrixItem[]
   empty: boolean
+  className?: string
 }
 
-function MatrixGrid({ combos, items, empty }: MatrixGridProps) {
+function MatrixGrid({ combos, items, empty, className }: MatrixGridProps) {
   if (empty) {
-    return <p className='text-muted'>{m.ops_matrixEmpty()}</p>
+    return <p className={`text-muted ${className ?? ''}`}>{m.ops_matrixEmpty()}</p>
   }
 
   return (
-    <div className='overflow-x-auto'>
+    <div className={`overflow-x-auto ${className ?? ''}`}>
       <table className='table-bordered table w-full text-sm'>
         <thead className='thead-light'>
           <tr>

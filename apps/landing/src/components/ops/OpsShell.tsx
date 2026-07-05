@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { OpsSideNav } from './OpsSideNav'
 
 type OpsShellProps = {
-  active: 'runbooks' | 'guides' | 'matrix'
+  active: 'knowledge' | 'matrix'
   children: ReactNode
 }
 

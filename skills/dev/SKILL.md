@@ -23,8 +23,9 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 - Read PRD, user stories, `/design` spec at `docs/design/<feature>.md`, or `/align` decisions
 - Read `CONTEXT.md` — use glossary vocabulary in code and tests
-- **Deploy/CI slice:** read [runbook pointer](../../docs/agents/runbooks.md) — search `/runbooks/*` or API before changing infra config
+- **Deploy/CI slice:** read [runbook pointer](../../docs/agents/runbooks.md) — search `/runbooks/*` or MCP before changing infra config
 - **Design + stack slice:** read [stack guide pointer](../../docs/agents/stack-guides.md) and ADRs; timeless defaults in [stack-defaults.md](stack-defaults.md)
+- **Toolchain / formatter setup:** read [Knowledge pointer](../../docs/agents/knowledge.md) — retrieve **KN-001** via MCP (`search_knowledge` → `get_knowledge_chunk`) before inventing Biome/Prettier config in a target repo
 - Identify modules and **seams** (public interfaces to test at)
 - **Greenfield UI with routing:** confirm routing branch before seam work if the slice touches routes — default **TanStack Router**; **TanStack Start** when the user needs SSR or server routes (see [stack-defaults.md](stack-defaults.md))
 

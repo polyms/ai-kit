@@ -6,7 +6,7 @@ Operational playbooks for deploy, CI, and infra. **Symptom → cause → fix →
 
 Runbooks are **CMS-authored** in Ops CMS (Postgres). Agents and humans retrieve live content from:
 
-- Kit site: `/runbooks/*` — e.g. [RB-001 on ai-kit.polyms.dev](https://ai-kit.polyms.dev/runbooks/RB-001)
+- Kit site: `/knowledge/*` — e.g. [RB-001 on ai-kit.polyms.dev](https://ai-kit.polyms.dev/knowledge/RB-001)
 - MCP: [docs/agents/ops-cms-mcp.md](../agents/ops-cms-mcp.md) — `https://ai-kit.polyms.dev/mcp`
 - Agent pointer: [docs/agents/runbooks.md](../agents/runbooks.md)
 
@@ -31,7 +31,7 @@ App-specific quick start lives under `apps/*/DEPLOY.md` (**Deploy guide**). Runb
 
 ## Adding or updating a runbook
 
-**Production (Ops CMS — Phase 2+):** author at `/ops/runbooks` on the kit site; publish-on-save to Postgres.
+**Production (Ops CMS):** author at `/ops/knowledge` on the kit site; publish-on-save to Postgres.
 
 **Git snapshot (contributors):**
 

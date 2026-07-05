@@ -31,21 +31,11 @@ const AGENTS = [
   },
 ] as const
 
-function StageChip({
-  label,
-  invoke,
-  last,
-}: {
-  label: string
-  invoke?: string
-  last?: boolean
-}) {
+function StageChip({ label, invoke, last }: { label: string; invoke?: string; last?: boolean }) {
   return (
     <div className='flex shrink-0 items-center gap-2.5'>
       <div className='flex min-w-[108px] flex-col items-center gap-1 rounded-2xl border border-line bg-body px-[18px] py-3.5'>
-        {invoke ? (
-          <span className='font-bold font-mono text-[14px] text-primary-600'>{invoke}</span>
-        ) : null}
+        {invoke ? <span className='font-bold font-mono text-[14px] text-primary-600'>{invoke}</span> : null}
         <span className='whitespace-nowrap text-center font-semibold text-[12.5px] text-fg'>{label}</span>
       </div>
       {!last ? (

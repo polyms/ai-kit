@@ -28,19 +28,19 @@ function renderTerminalLine(text: string, isComment: boolean) {
 
   return (
     <>
-      {segments.map((seg, j) => {
+      {segments.map(seg => {
         if (typeof seg !== 'string') {
           return (
-            <span className='app-terminal__repo' key={`repo-${j}`}>
+            <span className='app-terminal__repo' key={`repo-${seg}`}>
               {REPO}
             </span>
           )
         }
         const parts = seg.split(PATH)
         return (
-          <Fragment key={`chunk-${j}`}>
+          <Fragment key={`chunk-${seg}`}>
             {parts.map((part, k) => (
-              <Fragment key={`part-${k}`}>
+              <Fragment key={part}>
                 <span className='app-terminal__prompt'>{part}</span>
                 {k < parts.length - 1 ? <span className='app-terminal__text'>{PATH}</span> : null}
               </Fragment>

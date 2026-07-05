@@ -1,11 +1,45 @@
-import type { Runbook } from '../src/lib/runbooks/runbook.types'
+import type { KnowledgeArticle, KnowledgeChunk } from '../src/lib/knowledge/knowledge.types'
+import { APP_ROOT, DEV_ORIGIN, PROJECT, ROUTE_SEGMENT } from './seed-placeholders'
 
-/** Nx app folder name — stored as `{project}` in CMS; substitute per repo (e.g. `landing`, `web`). */
-export const PROJECT = '{project}'
+const appRoot = APP_ROOT
 
-const appRoot = `apps/${PROJECT}`
+type IncidentSeed = {
+  id: string
+  slug: string
+  title: string
+  symptom: string
+  cause: string[]
+  fix: string[]
+  verify: string[]
+  triggerPhrases: string[]
+  relatedFiles: string[]
+  axisTags: string[]
+}
 
-export const RB001: Runbook = {
+function incidentChunk(issue: IncidentSeed, sortOrder: number): KnowledgeChunk {
+  return {
+    id: issue.id,
+    slug: issue.slug,
+    intent: 'incident',
+    chunkType: 'incident',
+    title: issue.title,
+    body: issue.symptom,
+    axisTags: issue.axisTags,
+    symptom: issue.symptom,
+    cause: issue.cause,
+    fix: issue.fix,
+    verify: issue.verify,
+    triggerPhrases: issue.triggerPhrases,
+    artifactFilename: null,
+    artifactType: null,
+    checklistItems: [],
+    parentChunkId: null,
+    partIndex: null,
+    sortOrder,
+  }
+}
+
+const RB001_DATA = {
   id: 'RB-001',
   slug: 'vercel-tanstack-start-monorepo',
   title: 'Vercel + TanStack Start + Nitro (pnpm Nx monorepo)',
@@ -77,7 +111,7 @@ Must contain a catch-all route to the server function:
     'Vercel env: GITHUB_TOKEN (PAT, read:packages) on Production + Preview',
     'Vercel env: DATABASE_URL (Postgres) when app reads CMS content at runtime',
     '.npmrc: @polyms:registry + registry.npmjs.org — no token in git',
-    '.vercelignore: /skills/, /docs/, /agents/ — leading / so apps/*/src/routes/skills/ is not excluded',
+    '.vercelignore: root-anchored patterns only (/docs/, /agents/) — bare segment/ matches nested app paths too',
     `${appRoot}/vite.config.ts: Nitro vercel preset + monorepo output.dir when VERCEL=1`,
     'Commit generated routeTree.gen.ts (or ensure route files are not stripped by ignore rules)',
     'Verify: rm -rf .vercel/output && vercel build → success; config.json has /__server',
@@ -158,21 +192,24 @@ Must contain a catch-all route to the server function:
       id: 'RB-001-04',
       slug: 'rb-001-04-vercelignore-excludes-app-routes',
       title: '.vercelignore excludes app routes',
-      symptom:
-        'TypeScript: "/skills/$slug" not in route union (only /, /quick-start). Or Vercel build passes but skill pages 404 / router tree missing routes.',
+      symptom: `TypeScript: "/${ROUTE_SEGMENT}/$id" not in route union. Or Vercel build passes but dynamic pages 404 / router tree missing routes.`,
       cause: [
-        `Pattern skills/ in .vercelignore matches any directory named skills, including ${appRoot}/src/routes/skills/. TanStack Router regenerates a reduced route tree without those files.`,
+        `Unanchored pattern (e.g. ${ROUTE_SEGMENT}/) in .vercelignore matches any directory with that name, including ${appRoot}/src/routes/${ROUTE_SEGMENT}/. TanStack Router regenerates a reduced route tree without those files.`,
       ],
       fix: [
-        'Anchor ignore patterns to repo root only: /skills/, /agents/, /docs/, /demo/',
-        'Not skills/ (matches everywhere).',
+        'Anchor ignore patterns to repo root only: /docs/, /agents/, /demo/',
+        `Not bare ${ROUTE_SEGMENT}/ (matches everywhere under the upload tree).`,
       ],
       verify: [
-        `${appRoot}/src/routes/skills/ present in deployment upload.`,
-        `${appRoot}/src/routeTree.gen.ts includes /skills/$slug.`,
+        `${appRoot}/src/routes/${ROUTE_SEGMENT}/ present in deployment upload.`,
+        `${appRoot}/src/routeTree.gen.ts includes /${ROUTE_SEGMENT}/$id.`,
         `pnpm exec tsc --noEmit in ${appRoot}/ passes.`,
       ],
-      triggerPhrases: ['vercelignore skills', 'TypeScript route /skills/$slug', 'routes missing on Vercel'],
+      triggerPhrases: [
+        'vercelignore route segment',
+        'TypeScript route union missing',
+        'routes missing on Vercel',
+      ],
       relatedFiles: ['.vercelignore', `${appRoot}/src/routeTree.gen.ts`],
       axisTags: ['vercel', 'tanstack-start', 'monorepo'],
     },
@@ -181,7 +218,7 @@ Must contain a catch-all route to the server function:
       slug: 'rb-001-05-database-url-missing',
       title: 'DATABASE_URL missing at runtime',
       symptom:
-        'CMS-backed routes (/runbooks/*, /guides/*, /ops/*) return 500 or empty; PrismaClientInitializationError in server logs.',
+        'CMS-backed routes (/knowledge/*, /ops/*) return 500 or empty; PrismaClientInitializationError in server logs.',
       cause: [
         'DATABASE_URL not set on Vercel or local .env for the Start app.',
         'Migrations or seed not applied to the Postgres instance.',
@@ -192,10 +229,10 @@ Must contain a catch-all route to the server function:
         'Use Supabase pooled URI for serverless; direct URL for migrations if provider requires it.',
       ],
       verify: [
-        'curl -s http://localhost:6300/runbooks/RB-001 | head   # HTML or JSON, not 500',
+        `curl -s ${DEV_ORIGIN}/knowledge/RB-001 | head   # HTML, not 500`,
         `pnpm db:seed in ${appRoot}/ completes without error`,
       ],
-      triggerPhrases: ['PrismaClientInitializationError', 'DATABASE_URL', 'runbooks 500', 'Invalid prisma'],
+      triggerPhrases: ['PrismaClientInitializationError', 'DATABASE_URL', 'knowledge 500', 'Invalid prisma'],
       relatedFiles: [`${appRoot}/.env.example`, `${appRoot}/prisma/schema.prisma`, 'vercel.json'],
       axisTags: ['vercel', 'tanstack-start', 'postgres', 'prisma'],
     },
@@ -243,6 +280,43 @@ Must contain a catch-all route to the server function:
       axisTags: ['tanstack-start', 'tanstack-router', 'ssr', 'nitro'],
     },
   ],
+} as const
+
+/** RB-001 — incident Knowledge article (Vercel + TanStack Start deploy). */
+export function buildRB001(): KnowledgeArticle {
+  const { knownIssues, stackProfileMarkdown, greenfieldChecklist, ...meta } = RB001_DATA
+  return {
+    id: meta.id,
+    slug: meta.slug,
+    title: meta.title,
+    summary: meta.summary,
+    intent: 'incident',
+    axisTags: [...meta.axisTags],
+    checklist: [...greenfieldChecklist],
+    chunks: [
+      {
+        id: `${meta.id}-stack-profile`,
+        slug: `${meta.slug}-stack-profile`,
+        intent: 'incident',
+        chunkType: 'prose',
+        title: 'Stack profile',
+        body: stackProfileMarkdown,
+        axisTags: [...meta.axisTags],
+        symptom: null,
+        cause: [],
+        fix: [],
+        verify: [],
+        triggerPhrases: [],
+        artifactFilename: null,
+        artifactType: null,
+        checklistItems: [],
+        parentChunkId: null,
+        partIndex: null,
+        sortOrder: 0,
+      },
+      ...knownIssues.map((issue, index) => incidentChunk(issue, index + 1)),
+    ],
+  }
 }
 
-export const RUNBOOK_SEED = [RB001] as const
+export { PROJECT } from './seed-placeholders'

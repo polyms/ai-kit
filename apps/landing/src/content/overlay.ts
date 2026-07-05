@@ -316,7 +316,7 @@ export const skillOverlays: SkillOverlay[] = [
     name: 'devops',
     invoke: '/devops',
     slug: 'devops',
-    description: 'Deploy, CI, and infra — symptom → fix via runbooks at `docs/runbooks/`.',
+    description: 'Deploy, CI, and infra — symptom → fix via Knowledge (`intent: incident`).',
     status: 'planned',
     invocation: 'user',
     domain: 'devops',
@@ -324,13 +324,13 @@ export const skillOverlays: SkillOverlay[] = [
     relatedAgents: ['devops-agent'],
     agentPanel: {
       role: 'PRINCIPAL DEVOPS',
-      owns: ['runbooks', 'stack profiles', 'deploy/CI fixes'],
+      owns: ['incident knowledge', 'stack profiles', 'deploy/CI fixes'],
       invokeHint: 'Use the devops-agent to [symptom]',
     },
     summary:
-      'Deploy, CI, and infra ownership — read runbooks first, apply symptom → cause → fix → verify before guessing config.',
+      'Deploy, CI, and infra ownership — retrieve Knowledge with `intent: incident`, apply symptom → cause → fix → verify before guessing config.',
     whenToUse:
-      'Vercel/build failures, monorepo deploy traps, CI infra changes — after checking `docs/runbooks/`.',
+      'Vercel/build failures, monorepo deploy traps, CI infra changes — search Knowledge (`intent: incident`) first.',
     pipeline: {
       upstream: 'App deploy docs (e.g. `apps/*/DEPLOY.md`)',
       downstream: 'Verified deploy/CI green state',

@@ -2,15 +2,14 @@ import { Link as RouterLink, useRouterState } from '@tanstack/react-router'
 import { m } from '../../paraglide/messages.js'
 
 type OpsSideNavProps = {
-  active: 'runbooks' | 'guides' | 'matrix'
+  active: 'knowledge' | 'matrix'
 }
 
 export function OpsSideNav({ active }: OpsSideNavProps) {
   const pathname = useRouterState({ select: s => s.location.pathname })
 
   const links = [
-    { id: 'runbooks' as const, href: '/ops/runbooks', label: m.ops_nav_runbooks },
-    { id: 'guides' as const, href: '/ops/guides', label: m.ops_nav_guides },
+    { id: 'knowledge' as const, href: '/ops/knowledge', label: m.ops_nav_knowledge },
     { id: 'matrix' as const, href: '/ops/matrix', label: m.ops_nav_matrix },
   ]
 

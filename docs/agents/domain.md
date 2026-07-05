@@ -6,8 +6,9 @@ How `/align`, `/pm`, and `/dev` consume domain documentation.
 
 - **`CONTEXT.md`** at repo root
 - **`docs/adr/`** — ADRs touching the work area
-- **`docs/agents/runbooks.md`** — how to retrieve **Runbooks** (Ops CMS / `/runbooks/*`, MCP); deploy/CI symptom → fix
-- **`docs/agents/stack-guides.md`** — how to retrieve **Stack guides** (`/guides/*`, MCP); stack-combo design knowledge for `/arch` and deploy-aware `/dev`
+- **`docs/agents/knowledge.md`** — how to retrieve **Knowledge** (`/knowledge/*`, MCP `search_knowledge`); unified incident · design · toolchain retrieval for `/dev`, `/devops`, `/arch`
+- **`docs/agents/runbooks.md`** — incident workflow pointer (`intent: incident`)
+- **`docs/agents/stack-guides.md`** — design workflow pointer (`intent: design`)
 - **`docs/agents/ops-cms-mcp.md`** — MCP endpoint, Cursor setup, catalog tool names
 - **`docs/runbooks/`** — git **snapshot** of runbooks for contributors — not live agent retrieval
 

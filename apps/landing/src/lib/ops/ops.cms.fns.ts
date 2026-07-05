@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
-import { buildAxisCombos, type OpsGuideRow, type OpsRunbookRow } from './ops.types'
+import { buildAxisCombos, countByIntent, type OpsKnowledgeRow } from './ops.types'
 import { getSessionFromRequest } from './session.server'
 
 function assertOpsSession(): void {
@@ -10,30 +10,21 @@ function assertOpsSession(): void {
   }
 }
 
-export const listOpsRunbooksFn = createServerFn({ method: 'GET' }).handler(
-  async (): Promise<{ rows: OpsRunbookRow[] }> => {
+export const listOpsKnowledgeFn = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<{ rows: OpsKnowledgeRow[] }> => {
     assertOpsSession()
-    const { listOpsRunbooks } = await import('./ops-repository.server')
-    return { rows: await listOpsRunbooks() }
-  }
-)
-
-export const listOpsGuidesFn = createServerFn({ method: 'GET' }).handler(
-  async (): Promise<{ rows: OpsGuideRow[] }> => {
-    assertOpsSession()
-    const { listOpsGuides } = await import('./ops-repository.server')
-    return { rows: await listOpsGuides() }
+    const { listOpsKnowledge } = await import('./ops-repository.server')
+    return { rows: await listOpsKnowledge() }
   }
 )
 
 export const getOpsMatrixFn = createServerFn({ method: 'GET' }).handler(async () => {
   assertOpsSession()
-  const { listOpsGuides, listOpsRunbooks } = await import('./ops-repository.server')
-  const [runbooks, guides] = await Promise.all([listOpsRunbooks(), listOpsGuides()])
+  const { listOpsKnowledge } = await import('./ops-repository.server')
+  const knowledge = await listOpsKnowledge()
   return {
-    runbooks,
-    guides,
-    runbookCombos: buildAxisCombos(runbooks),
-    guideCombos: buildAxisCombos(guides),
+    knowledge,
+    knowledgeCombos: buildAxisCombos(knowledge),
+    knowledgeIntentCoverage: countByIntent(knowledge),
   }
 })

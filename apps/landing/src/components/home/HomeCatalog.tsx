@@ -23,15 +23,20 @@ const HOME_CATALOG_SLUGS = [
 ] as const
 
 const homeCatalogSkills = HOME_CATALOG_SLUGS.map(slug => skillOverlays.find(s => s.slug === slug)).filter(
-  (s): s is NonNullable<typeof s> => s != null,
+  (s): s is NonNullable<typeof s> => s != null
 )
 
 export function HomeCatalog() {
   return (
-    <section className='app-home-section app-home-section--catalog app-shell mx-auto max-w-[1080px]' id='catalog'>
+    <section
+      className='app-home-section app-home-section--catalog app-shell mx-auto max-w-[1080px]'
+      id='catalog'
+    >
       <HomeSectionChip label='catalog' n='03' />
       <div className='mb-3 flex items-baseline gap-3.5'>
-        <h2 className='app-catalog__title m-0 font-bold font-sans tracking-tight'>{m.home_catalog_heading()}</h2>
+        <h2 className='app-catalog__title m-0 font-bold font-sans tracking-tight'>
+          {m.home_catalog_heading()}
+        </h2>
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
       <p className='mb-8 text-muted'>{m.home_catalog_intro()}</p>

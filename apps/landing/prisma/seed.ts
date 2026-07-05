@@ -1,44 +1,44 @@
 import { prisma } from '../src/lib/db.server.ts'
-import { RB001 } from './rb-001-data'
-import { SG001 } from './sg-001-data'
+import type { KnowledgeArticle } from '../src/lib/knowledge/knowledge.types'
+import { buildKN001 } from './kn-001-data'
+import { buildRB001 } from './rb-001-data'
+import { assertNoForbiddenSeedLiterals, collectAuthoringSeedText } from './seed-placeholders'
+import { buildSG001 } from './sg-001-data'
+
+function validateSeedArticles(articles: KnowledgeArticle[]) {
+  const blob = collectAuthoringSeedText(articles)
+  assertNoForbiddenSeedLiterals(blob, 'knowledge articles')
+}
+
+async function upsertKnowledgeArticle(article: KnowledgeArticle) {
+  const { chunks, ...articleFields } = article
+  await prisma.knowledgeArticle.upsert({
+    where: { id: articleFields.id },
+    create: {
+      ...articleFields,
+      status: 'published',
+      chunks: { create: chunks },
+    },
+    update: {
+      ...articleFields,
+      status: 'published',
+      chunks: { deleteMany: {}, create: chunks },
+    },
+  })
+  console.log(`Seeded knowledge article ${articleFields.id} with ${chunks.length} chunks`)
+}
 
 async function main() {
-  const { knownIssues, ...runbook } = RB001
+  const articles = [buildKN001(), buildRB001(), buildSG001()]
 
-  await prisma.runbook.upsert({
-    where: { id: runbook.id },
-    create: {
-      ...runbook,
-      status: 'published',
-      knownIssues: {
-        create: knownIssues,
-      },
-    },
-    update: {
-      ...runbook,
-      status: 'published',
-      knownIssues: {
-        deleteMany: {},
-        create: knownIssues,
-      },
-    },
-  })
+  validateSeedArticles(articles)
 
-  console.log(`Seeded runbook ${runbook.id} with ${knownIssues.length} known issues`)
+  for (const article of articles) {
+    await upsertKnowledgeArticle(article)
+  }
 
-  await prisma.stackGuide.upsert({
-    where: { id: SG001.id },
-    create: {
-      ...SG001,
-      seamSections: SG001.seamSections,
-    },
-    update: {
-      ...SG001,
-      seamSections: SG001.seamSections,
-    },
-  })
-
-  console.log(`Seeded stack guide ${SG001.id}`)
+  const { embedPublishedKnowledgeChunks } = await import('../src/lib/knowledge/knowledge.embed-chunks.server')
+  await embedPublishedKnowledgeChunks()
 }
 
 main()

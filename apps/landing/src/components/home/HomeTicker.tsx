@@ -15,10 +15,10 @@ export function HomeTicker() {
   return (
     <div aria-hidden className='app-ticker overflow-hidden py-4'>
       <div className='app-ticker__track flex w-max gap-7'>
-        {track.map((word, i) => (
+        {track.map(word => (
           <span
             className='app-ticker__word inline-flex items-center gap-7 whitespace-nowrap font-mono text-[12.5px] tracking-wide'
-            key={`${word}-${i}`}
+            key={`${word}`}
           >
             {word}
             <span className='app-ticker__dot'>◆</span>

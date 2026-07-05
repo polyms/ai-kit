@@ -14,17 +14,13 @@ import { Route as McpRouteImport } from './routes/mcp'
 import { Route as OpsRouteRouteImport } from './routes/ops/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SkillsIndexRouteImport } from './routes/skills/index'
-import { Route as RunbooksIndexRouteImport } from './routes/runbooks/index'
 import { Route as OpsIndexRouteImport } from './routes/ops/index'
-import { Route as GuidesIndexRouteImport } from './routes/guides/index'
+import { Route as KnowledgeIndexRouteImport } from './routes/knowledge/index'
 import { Route as SkillsSlugRouteImport } from './routes/skills/$slug'
-import { Route as RunbooksIdRouteImport } from './routes/runbooks/$id'
 import { Route as OpsLoginRouteImport } from './routes/ops/login'
-import { Route as GuidesIdRouteImport } from './routes/guides/$id'
-import { Route as OpsRunbooksIndexRouteImport } from './routes/ops/runbooks/index'
+import { Route as KnowledgeIdRouteImport } from './routes/knowledge/$id'
 import { Route as OpsMatrixIndexRouteImport } from './routes/ops/matrix/index'
-import { Route as OpsGuidesIndexRouteImport } from './routes/ops/guides/index'
-import { Route as RunbooksIssuesIssueIdRouteImport } from './routes/runbooks/issues/$issueId'
+import { Route as OpsKnowledgeIndexRouteImport } from './routes/ops/knowledge/index'
 import { Route as ApiOpsAuthLogoutRouteImport } from './routes/api/ops/auth/logout'
 import { Route as ApiOpsAuthLoginRouteImport } from './routes/api/ops/auth/login'
 import { Route as ApiOpsAuthCallbackRouteImport } from './routes/api/ops/auth/callback'
@@ -54,19 +50,14 @@ const SkillsIndexRoute = SkillsIndexRouteImport.update({
   path: '/skills/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RunbooksIndexRoute = RunbooksIndexRouteImport.update({
-  id: '/runbooks/',
-  path: '/runbooks/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const OpsIndexRoute = OpsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => OpsRouteRoute,
 } as any)
-const GuidesIndexRoute = GuidesIndexRouteImport.update({
-  id: '/guides/',
-  path: '/guides/',
+const KnowledgeIndexRoute = KnowledgeIndexRouteImport.update({
+  id: '/knowledge/',
+  path: '/knowledge/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SkillsSlugRoute = SkillsSlugRouteImport.update({
@@ -74,40 +65,25 @@ const SkillsSlugRoute = SkillsSlugRouteImport.update({
   path: '/skills/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RunbooksIdRoute = RunbooksIdRouteImport.update({
-  id: '/runbooks/$id',
-  path: '/runbooks/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const OpsLoginRoute = OpsLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => OpsRouteRoute,
 } as any)
-const GuidesIdRoute = GuidesIdRouteImport.update({
-  id: '/guides/$id',
-  path: '/guides/$id',
+const KnowledgeIdRoute = KnowledgeIdRouteImport.update({
+  id: '/knowledge/$id',
+  path: '/knowledge/$id',
   getParentRoute: () => rootRouteImport,
-} as any)
-const OpsRunbooksIndexRoute = OpsRunbooksIndexRouteImport.update({
-  id: '/runbooks/',
-  path: '/runbooks/',
-  getParentRoute: () => OpsRouteRoute,
 } as any)
 const OpsMatrixIndexRoute = OpsMatrixIndexRouteImport.update({
   id: '/matrix/',
   path: '/matrix/',
   getParentRoute: () => OpsRouteRoute,
 } as any)
-const OpsGuidesIndexRoute = OpsGuidesIndexRouteImport.update({
-  id: '/guides/',
-  path: '/guides/',
+const OpsKnowledgeIndexRoute = OpsKnowledgeIndexRouteImport.update({
+  id: '/knowledge/',
+  path: '/knowledge/',
   getParentRoute: () => OpsRouteRoute,
-} as any)
-const RunbooksIssuesIssueIdRoute = RunbooksIssuesIssueIdRouteImport.update({
-  id: '/runbooks/issues/$issueId',
-  path: '/runbooks/issues/$issueId',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiOpsAuthLogoutRoute = ApiOpsAuthLogoutRouteImport.update({
   id: '/api/ops/auth/logout',
@@ -130,18 +106,14 @@ export interface FileRoutesByFullPath {
   '/ops': typeof OpsRouteRouteWithChildren
   '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
-  '/guides/$id': typeof GuidesIdRoute
+  '/knowledge/$id': typeof KnowledgeIdRoute
   '/ops/login': typeof OpsLoginRoute
-  '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
-  '/guides/': typeof GuidesIndexRoute
+  '/knowledge/': typeof KnowledgeIndexRoute
   '/ops/': typeof OpsIndexRoute
-  '/runbooks/': typeof RunbooksIndexRoute
   '/skills/': typeof SkillsIndexRoute
-  '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
-  '/ops/guides/': typeof OpsGuidesIndexRoute
+  '/ops/knowledge/': typeof OpsKnowledgeIndexRoute
   '/ops/matrix/': typeof OpsMatrixIndexRoute
-  '/ops/runbooks/': typeof OpsRunbooksIndexRoute
   '/api/ops/auth/callback': typeof ApiOpsAuthCallbackRoute
   '/api/ops/auth/login': typeof ApiOpsAuthLoginRoute
   '/api/ops/auth/logout': typeof ApiOpsAuthLogoutRoute
@@ -150,18 +122,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
-  '/guides/$id': typeof GuidesIdRoute
+  '/knowledge/$id': typeof KnowledgeIdRoute
   '/ops/login': typeof OpsLoginRoute
-  '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
-  '/guides': typeof GuidesIndexRoute
+  '/knowledge': typeof KnowledgeIndexRoute
   '/ops': typeof OpsIndexRoute
-  '/runbooks': typeof RunbooksIndexRoute
   '/skills': typeof SkillsIndexRoute
-  '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
-  '/ops/guides': typeof OpsGuidesIndexRoute
+  '/ops/knowledge': typeof OpsKnowledgeIndexRoute
   '/ops/matrix': typeof OpsMatrixIndexRoute
-  '/ops/runbooks': typeof OpsRunbooksIndexRoute
   '/api/ops/auth/callback': typeof ApiOpsAuthCallbackRoute
   '/api/ops/auth/login': typeof ApiOpsAuthLoginRoute
   '/api/ops/auth/logout': typeof ApiOpsAuthLogoutRoute
@@ -172,18 +140,14 @@ export interface FileRoutesById {
   '/ops': typeof OpsRouteRouteWithChildren
   '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
-  '/guides/$id': typeof GuidesIdRoute
+  '/knowledge/$id': typeof KnowledgeIdRoute
   '/ops/login': typeof OpsLoginRoute
-  '/runbooks/$id': typeof RunbooksIdRoute
   '/skills/$slug': typeof SkillsSlugRoute
-  '/guides/': typeof GuidesIndexRoute
+  '/knowledge/': typeof KnowledgeIndexRoute
   '/ops/': typeof OpsIndexRoute
-  '/runbooks/': typeof RunbooksIndexRoute
   '/skills/': typeof SkillsIndexRoute
-  '/runbooks/issues/$issueId': typeof RunbooksIssuesIssueIdRoute
-  '/ops/guides/': typeof OpsGuidesIndexRoute
+  '/ops/knowledge/': typeof OpsKnowledgeIndexRoute
   '/ops/matrix/': typeof OpsMatrixIndexRoute
-  '/ops/runbooks/': typeof OpsRunbooksIndexRoute
   '/api/ops/auth/callback': typeof ApiOpsAuthCallbackRoute
   '/api/ops/auth/login': typeof ApiOpsAuthLoginRoute
   '/api/ops/auth/logout': typeof ApiOpsAuthLogoutRoute
@@ -195,18 +159,14 @@ export interface FileRouteTypes {
     | '/ops'
     | '/mcp'
     | '/quick-start'
-    | '/guides/$id'
+    | '/knowledge/$id'
     | '/ops/login'
-    | '/runbooks/$id'
     | '/skills/$slug'
-    | '/guides/'
+    | '/knowledge/'
     | '/ops/'
-    | '/runbooks/'
     | '/skills/'
-    | '/runbooks/issues/$issueId'
-    | '/ops/guides/'
+    | '/ops/knowledge/'
     | '/ops/matrix/'
-    | '/ops/runbooks/'
     | '/api/ops/auth/callback'
     | '/api/ops/auth/login'
     | '/api/ops/auth/logout'
@@ -215,18 +175,14 @@ export interface FileRouteTypes {
     | '/'
     | '/mcp'
     | '/quick-start'
-    | '/guides/$id'
+    | '/knowledge/$id'
     | '/ops/login'
-    | '/runbooks/$id'
     | '/skills/$slug'
-    | '/guides'
+    | '/knowledge'
     | '/ops'
-    | '/runbooks'
     | '/skills'
-    | '/runbooks/issues/$issueId'
-    | '/ops/guides'
+    | '/ops/knowledge'
     | '/ops/matrix'
-    | '/ops/runbooks'
     | '/api/ops/auth/callback'
     | '/api/ops/auth/login'
     | '/api/ops/auth/logout'
@@ -236,18 +192,14 @@ export interface FileRouteTypes {
     | '/ops'
     | '/mcp'
     | '/quick-start'
-    | '/guides/$id'
+    | '/knowledge/$id'
     | '/ops/login'
-    | '/runbooks/$id'
     | '/skills/$slug'
-    | '/guides/'
+    | '/knowledge/'
     | '/ops/'
-    | '/runbooks/'
     | '/skills/'
-    | '/runbooks/issues/$issueId'
-    | '/ops/guides/'
+    | '/ops/knowledge/'
     | '/ops/matrix/'
-    | '/ops/runbooks/'
     | '/api/ops/auth/callback'
     | '/api/ops/auth/login'
     | '/api/ops/auth/logout'
@@ -258,13 +210,10 @@ export interface RootRouteChildren {
   OpsRouteRoute: typeof OpsRouteRouteWithChildren
   McpRoute: typeof McpRoute
   QuickStartRoute: typeof QuickStartRoute
-  GuidesIdRoute: typeof GuidesIdRoute
-  RunbooksIdRoute: typeof RunbooksIdRoute
+  KnowledgeIdRoute: typeof KnowledgeIdRoute
   SkillsSlugRoute: typeof SkillsSlugRoute
-  GuidesIndexRoute: typeof GuidesIndexRoute
-  RunbooksIndexRoute: typeof RunbooksIndexRoute
+  KnowledgeIndexRoute: typeof KnowledgeIndexRoute
   SkillsIndexRoute: typeof SkillsIndexRoute
-  RunbooksIssuesIssueIdRoute: typeof RunbooksIssuesIssueIdRoute
   ApiOpsAuthCallbackRoute: typeof ApiOpsAuthCallbackRoute
   ApiOpsAuthLoginRoute: typeof ApiOpsAuthLoginRoute
   ApiOpsAuthLogoutRoute: typeof ApiOpsAuthLogoutRoute
@@ -307,13 +256,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/runbooks/': {
-      id: '/runbooks/'
-      path: '/runbooks'
-      fullPath: '/runbooks/'
-      preLoaderRoute: typeof RunbooksIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/ops/': {
       id: '/ops/'
       path: '/'
@@ -321,11 +263,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpsIndexRouteImport
       parentRoute: typeof OpsRouteRoute
     }
-    '/guides/': {
-      id: '/guides/'
-      path: '/guides'
-      fullPath: '/guides/'
-      preLoaderRoute: typeof GuidesIndexRouteImport
+    '/knowledge/': {
+      id: '/knowledge/'
+      path: '/knowledge'
+      fullPath: '/knowledge/'
+      preLoaderRoute: typeof KnowledgeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/skills/$slug': {
@@ -335,13 +277,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/runbooks/$id': {
-      id: '/runbooks/$id'
-      path: '/runbooks/$id'
-      fullPath: '/runbooks/$id'
-      preLoaderRoute: typeof RunbooksIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/ops/login': {
       id: '/ops/login'
       path: '/login'
@@ -349,19 +284,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpsLoginRouteImport
       parentRoute: typeof OpsRouteRoute
     }
-    '/guides/$id': {
-      id: '/guides/$id'
-      path: '/guides/$id'
-      fullPath: '/guides/$id'
-      preLoaderRoute: typeof GuidesIdRouteImport
+    '/knowledge/$id': {
+      id: '/knowledge/$id'
+      path: '/knowledge/$id'
+      fullPath: '/knowledge/$id'
+      preLoaderRoute: typeof KnowledgeIdRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/ops/runbooks/': {
-      id: '/ops/runbooks/'
-      path: '/runbooks'
-      fullPath: '/ops/runbooks/'
-      preLoaderRoute: typeof OpsRunbooksIndexRouteImport
-      parentRoute: typeof OpsRouteRoute
     }
     '/ops/matrix/': {
       id: '/ops/matrix/'
@@ -370,19 +298,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpsMatrixIndexRouteImport
       parentRoute: typeof OpsRouteRoute
     }
-    '/ops/guides/': {
-      id: '/ops/guides/'
-      path: '/guides'
-      fullPath: '/ops/guides/'
-      preLoaderRoute: typeof OpsGuidesIndexRouteImport
+    '/ops/knowledge/': {
+      id: '/ops/knowledge/'
+      path: '/knowledge'
+      fullPath: '/ops/knowledge/'
+      preLoaderRoute: typeof OpsKnowledgeIndexRouteImport
       parentRoute: typeof OpsRouteRoute
-    }
-    '/runbooks/issues/$issueId': {
-      id: '/runbooks/issues/$issueId'
-      path: '/runbooks/issues/$issueId'
-      fullPath: '/runbooks/issues/$issueId'
-      preLoaderRoute: typeof RunbooksIssuesIssueIdRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/api/ops/auth/logout': {
       id: '/api/ops/auth/logout'
@@ -411,17 +332,15 @@ declare module '@tanstack/react-router' {
 interface OpsRouteRouteChildren {
   OpsLoginRoute: typeof OpsLoginRoute
   OpsIndexRoute: typeof OpsIndexRoute
-  OpsGuidesIndexRoute: typeof OpsGuidesIndexRoute
+  OpsKnowledgeIndexRoute: typeof OpsKnowledgeIndexRoute
   OpsMatrixIndexRoute: typeof OpsMatrixIndexRoute
-  OpsRunbooksIndexRoute: typeof OpsRunbooksIndexRoute
 }
 
 const OpsRouteRouteChildren: OpsRouteRouteChildren = {
   OpsLoginRoute: OpsLoginRoute,
   OpsIndexRoute: OpsIndexRoute,
-  OpsGuidesIndexRoute: OpsGuidesIndexRoute,
+  OpsKnowledgeIndexRoute: OpsKnowledgeIndexRoute,
   OpsMatrixIndexRoute: OpsMatrixIndexRoute,
-  OpsRunbooksIndexRoute: OpsRunbooksIndexRoute,
 }
 
 const OpsRouteRouteWithChildren = OpsRouteRoute._addFileChildren(
@@ -433,13 +352,10 @@ const rootRouteChildren: RootRouteChildren = {
   OpsRouteRoute: OpsRouteRouteWithChildren,
   McpRoute: McpRoute,
   QuickStartRoute: QuickStartRoute,
-  GuidesIdRoute: GuidesIdRoute,
-  RunbooksIdRoute: RunbooksIdRoute,
+  KnowledgeIdRoute: KnowledgeIdRoute,
   SkillsSlugRoute: SkillsSlugRoute,
-  GuidesIndexRoute: GuidesIndexRoute,
-  RunbooksIndexRoute: RunbooksIndexRoute,
+  KnowledgeIndexRoute: KnowledgeIndexRoute,
   SkillsIndexRoute: SkillsIndexRoute,
-  RunbooksIssuesIssueIdRoute: RunbooksIssuesIssueIdRoute,
   ApiOpsAuthCallbackRoute: ApiOpsAuthCallbackRoute,
   ApiOpsAuthLoginRoute: ApiOpsAuthLoginRoute,
   ApiOpsAuthLogoutRoute: ApiOpsAuthLogoutRoute,

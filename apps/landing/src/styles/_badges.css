@@ -1,0 +1,7 @@
+.badge-status-available {
+  @apply rounded-md bg-success-500/10 px-2 py-0.5 text-success-600 text-xs;
+}
+
+.badge-status-planned {
+  @apply rounded-md border border-line bg-surface-2/50 px-2 py-0.5 text-muted text-xs;
+}

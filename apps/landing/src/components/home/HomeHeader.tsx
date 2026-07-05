@@ -14,10 +14,9 @@ const HOME_NAV: { id: NavId; href: string }[] = [
   { id: 'start', href: '/#start' },
 ]
 
-const SITE_NAV: { id: NavId | 'runbooks' | 'guides'; href: string }[] = [
+const SITE_NAV: { id: NavId | 'knowledge'; href: string }[] = [
   ...HOME_NAV,
-  { id: 'runbooks', href: '/runbooks' },
-  { id: 'guides', href: '/guides' },
+  { id: 'knowledge', href: '/knowledge' },
 ]
 
 const NAV_LABELS: Record<(typeof SITE_NAV)[number]['id'], () => string> = {
@@ -25,8 +24,7 @@ const NAV_LABELS: Record<(typeof SITE_NAV)[number]['id'], () => string> = {
   catalog: m.nav_catalog,
   start: m.nav_start,
   pipeline: m.nav_pipeline,
-  runbooks: m.nav_runbooks,
-  guides: m.nav_guides,
+  knowledge: m.nav_knowledge,
 }
 
 export function HomeHeader() {
@@ -56,11 +54,7 @@ export function HomeHeader() {
             <NavigationMenu.Item key={item.id}>
               <NavigationMenu.Link
                 active={
-                  item.id === 'runbooks'
-                    ? pathname.startsWith('/runbooks')
-                    : item.id === 'guides'
-                      ? pathname.startsWith('/guides')
-                      : isActive(item.id as NavId)
+                  item.id === 'knowledge' ? pathname.startsWith('/knowledge') : isActive(item.id as NavId)
                 }
                 className='font-bold'
                 href={item.href}

@@ -7,17 +7,18 @@ const globalForPrisma = globalThis as unknown as {
   pgPool?: Pool
 }
 
-function createPrismaClient() {
-  const pool =
-    globalForPrisma.pgPool ??
-    new Pool({
+function getOrCreatePool(): Pool {
+  if (!globalForPrisma.pgPool) {
+    globalForPrisma.pgPool = new Pool({
       connectionString: process.env.DATABASE_URL,
       max: process.env.VERCEL ? 1 : 10,
     })
-
-  if (process.env.NODE_ENV !== 'production') {
-    globalForPrisma.pgPool = pool
   }
+  return globalForPrisma.pgPool
+}
+
+function createPrismaClient() {
+  const pool = getOrCreatePool()
 
   return new PrismaClient({
     adapter: new PrismaPg(pool),
@@ -26,6 +27,10 @@ function createPrismaClient() {
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient()
+
+export function getPgPool(): Pool {
+  return getOrCreatePool()
+}
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma

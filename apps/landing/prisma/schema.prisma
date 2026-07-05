@@ -1,72 +1,79 @@
 generator client {
-  provider   = "prisma-client"
-  output     = "./schema"
-  engineType = "client"
+  provider        = "prisma-client"
+  output          = "./schema"
+  engineType      = "client"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
 }
 
-model Runbook {
-  id                   String       @id
-  slug                 String       @unique
-  title                String
-  summary              String       @db.Text
-  audience             String
-  axisTags             String[]
-  relatedFiles         String[]
-  stackProfileMarkdown String       @db.Text
-  greenfieldChecklist  String[]
-  status               String       @default("published")
-  createdAt            DateTime     @default(now()) @db.Timestamptz(3)
-  updatedAt            DateTime     @updatedAt @db.Timestamptz(3)
-  knownIssues          KnownIssue[]
-  stackGuide           StackGuide?
+model KnowledgeArticle {
+  id        String           @id
+  slug      String           @unique
+  title     String
+  summary   String           @db.Text
+  intent    String
+  axisTags  String[]
+  checklist String[]
+  status    String           @default("published")
+  createdAt DateTime         @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime         @updatedAt @db.Timestamptz(3)
+  chunks    KnowledgeChunk[]
 
   @@index([status])
-  @@map("runbooks")
+  @@index([intent])
+  @@map("knowledge_articles")
 }
 
-model KnownIssue {
-  id             String   @id
-  slug           String   @unique
-  runbookId      String
-  runbook        Runbook  @relation(fields: [runbookId], references: [id], onDelete: Cascade)
-  title          String
-  symptom        String   @db.Text
+/// Knowledge chunk — atomic retrieval unit (embed + rank target) for hybrid search.
+model KnowledgeChunk {
+  id        String           @id
+  slug      String           @unique
+  articleId String
+  article   KnowledgeArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  intent    String
+  chunkType String
+  title     String
+  body      String           @db.Text
+  axisTags  String[]
+
+  // incident-specific structured fields
+  symptom        String?  @db.Text
   cause          String[]
   fix            String[]
   verify         String[]
   triggerPhrases String[]
-  relatedFiles   String[]
-  axisTags       String[]
-  createdAt      DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt      DateTime @updatedAt @db.Timestamptz(3)
 
-  @@index([runbookId])
-  @@map("known_issues")
-}
+  // config-specific metadata
+  artifactFilename String?
+  artifactType     String?
 
-/// Stack guide — wiki content type for stack-combo design knowledge (Ops CMS Phase 3).
-model StackGuide {
-  id               String   @id
-  slug             String   @unique
-  title            String
-  summary          String   @db.Text
-  audience         String   @default("arch")
-  axisTags         String[]
-  designChecklist  String[]
-  seamSections     Json     @default("[]")
-  relatedRunbookId String?  @unique
-  relatedRunbook   Runbook? @relation(fields: [relatedRunbookId], references: [id], onDelete: SetNull)
-  status           String   @default("published")
-  createdAt        DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt        DateTime @updatedAt @db.Timestamptz(3)
+  // checklist-specific
+  checklistItems String[]
 
-  @@index([status])
-  @@index([relatedRunbookId])
-  @@map("stack_guides")
+  // auto-sub-chunking (prose over threshold at publish)
+  parentChunkId String?
+  parentChunk   KnowledgeChunk?  @relation("KnowledgeChunkParts", fields: [parentChunkId], references: [id], onDelete: Cascade)
+  subChunks     KnowledgeChunk[] @relation("KnowledgeChunkParts")
+  partIndex     Int?
+
+  /// Display + agent reading order within the parent article (lower = earlier).
+  sortOrder Int @default(0)
+
+  /// pgvector column — populated via raw SQL (Unsupported type is not writable through Prisma Client).
+  embedding Unsupported("vector(1536)")?
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([articleId])
+  @@index([articleId, sortOrder])
+  @@index([intent])
+  @@index([parentChunkId])
+  @@map("knowledge_chunks")
 }

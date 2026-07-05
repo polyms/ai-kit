@@ -1,12 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js'
-import { registerGuideMcpTools } from './guides/guide.mcp'
-import { registerRunbookMcpTools } from './runbooks/runbook.mcp'
+import { registerKnowledgeMcpTools } from './knowledge/knowledge.mcp'
 
 function createOpsCmsMcpServer(): McpServer {
-  const server = new McpServer({ name: 'ai-kit-ops-cms', version: '1.0.0' })
-  registerRunbookMcpTools(server)
-  registerGuideMcpTools(server)
+  const server = new McpServer({ name: 'ai-kit-ops-cms', version: __VERSION__ })
+  registerKnowledgeMcpTools(server)
   return server
 }
 

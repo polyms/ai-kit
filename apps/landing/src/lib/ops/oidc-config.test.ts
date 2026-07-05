@@ -32,8 +32,9 @@ describe('oidc-config', () => {
   })
 
   it('sanitizes returnTo to ops routes only', () => {
-    expect(sanitizeOpsReturnTo('/ops/runbooks')).toBe('/ops/runbooks')
-    expect(sanitizeOpsReturnTo('https://evil.test/ops/runbooks')).toBe('/ops/runbooks')
-    expect(sanitizeOpsReturnTo('/runbooks')).toBe('/ops/runbooks')
+    expect(sanitizeOpsReturnTo('/ops/knowledge')).toBe('/ops/knowledge')
+    expect(sanitizeOpsReturnTo('https://evil.test/ops/knowledge')).toBe('/ops/knowledge')
+    expect(sanitizeOpsReturnTo('/knowledge')).toBe('/ops/knowledge')
+    expect(sanitizeOpsReturnTo(undefined)).toBe('/ops/knowledge')
   })
 })
