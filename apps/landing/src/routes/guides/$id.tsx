@@ -6,7 +6,6 @@ import {
   SeamSectionBlock,
   SiblingLink,
 } from '../../components/guides'
-import { HomeSiteChrome } from '../../components/home/HomeSiteChrome'
 import { AxisTagRow } from '../../components/runbooks'
 import { defaultGuidesSearch, getGuideFn } from '../../lib/guides/guide.fns'
 import { m } from '../../paraglide/messages.js'
@@ -53,8 +52,7 @@ function GuideDetailPage() {
   ]
 
   return (
-    <>
-      <div className='guide-page page-x section-y mx-auto max-w-4xl'>
+    <div className='guide-page page-x section-y mx-auto max-w-4xl'>
         <GuideBreadcrumb items={[{ label: m.guides_title(), href: '/guides' }, { label: guide.id }]} />
 
         <GuideLocalNav sections={localSections} />
@@ -90,7 +88,5 @@ function GuideDetailPage() {
           </section>
         ) : null}
       </div>
-      <HomeSiteChrome />
-    </>
   )
 }

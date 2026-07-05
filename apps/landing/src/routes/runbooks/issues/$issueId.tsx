@@ -1,6 +1,5 @@
 import { Button, Toast } from '@polyms/core-ui'
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
-import { HomeSiteChrome } from '../../../components/home/HomeSiteChrome'
 import { AxisTagRow, RunbookBreadcrumb } from '../../../components/runbooks'
 import { copyText } from '../../../lib/copy'
 import { defaultRunbooksSearch, getRunbookIssueFn } from '../../../lib/runbooks/runbook.fns'
@@ -43,8 +42,7 @@ function IssueDetailPage() {
   }
 
   return (
-    <>
-      <div className='runbook-page page-x section-y mx-auto max-w-4xl'>
+    <div className='runbook-page page-x section-y mx-auto max-w-4xl'>
         <RunbookBreadcrumb
           items={[
             { label: m.runbooks_title(), href: '/runbooks' },
@@ -127,7 +125,5 @@ function IssueDetailPage() {
           ← {m.runbooks_backToRunbook()} {runbook.id}
         </RouterLink>
       </div>
-      <HomeSiteChrome />
-    </>
   )
 }

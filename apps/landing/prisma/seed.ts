@@ -1,8 +1,6 @@
+import { prisma } from '../src/lib/db.server.ts'
 import { RB001 } from './rb-001-data'
-import { PrismaClient } from './schema/client.ts'
 import { SG001 } from './sg-001-data'
-
-const prisma = new PrismaClient()
 
 async function main() {
   const { knownIssues, ...runbook } = RB001

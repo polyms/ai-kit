@@ -1,7 +1,8 @@
 import { Modal, Toast } from '@polyms/core-ui'
-import { createRootRoute, HeadContent, Outlet, Scripts, useRouterState } from '@tanstack/react-router'
-import { useEffect } from 'react'
+import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
+import { getLocale } from '~/paraglide/runtime'
 import { CommandPalette } from '../components/CommandPalette'
+import { GlobalActionFlyout } from '../components/GlobalActionFlyout'
 import homeCss from '../components/home/home.css?url'
 import type { Locale } from '../stores/useAppStore'
 import { useAppStore } from '../stores/useAppStore'
@@ -35,40 +36,19 @@ export const Route = createRootRoute({
 })
 
 function RootLayout() {
-  const hydrate = useAppStore(s => s.hydrate)
   const locale = useAppStore(s => s.locale)
-  const togglePalette = useAppStore(s => s.togglePalette)
-  const setPaletteOpen = useAppStore(s => s.setPaletteOpen)
-  const pathname = useRouterState({ select: s => s.location.pathname })
-  const hideCommandPalette =
-    pathname.startsWith('/runbooks') || pathname.startsWith('/guides') || pathname.startsWith('/ops')
-  useEffect(() => {
-    hydrate()
-  }, [hydrate])
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (hideCommandPalette) return
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault()
-        togglePalette()
-      }
-      if (e.key === 'Escape') setPaletteOpen(false)
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [togglePalette, setPaletteOpen, hideCommandPalette])
+  const theme = useAppStore(s => s.theme)
+  const hydrated = useAppStore(s => s.hydrated)
 
   return (
-    <html lang={locale satisfies Locale} suppressHydrationWarning>
+    <html className={theme === 'dark' ? 'dark' : ''} key={locale} lang={getLocale() satisfies Locale}>
       <head>
         <HeadContent />
         <script
           dangerouslySetInnerHTML={{
             __html: `;(() => {
-            var t = localStorage.getItem('ai-kit-theme')
-            var dark = t ? t === 'dark' : false
-            if (dark) document.documentElement.classList.add('dark')
+            var t = JSON.parse(localStorage.getItem('ai-kit:app-store') || '{"state":{}}').state
+            if (t && t.theme === 'dark') document.documentElement.classList.add('dark')
           })()`,
           }}
         />
@@ -76,9 +56,14 @@ function RootLayout() {
       <body>
         <Toast>
           <Outlet />
-          {!hideCommandPalette ? <CommandPalette /> : null}
-          <Modal.Container />
-          <Toast.Container />
+          <CommandPalette />
+          {hydrated ? (
+            <>
+              <GlobalActionFlyout />
+              <Modal.Container />
+              <Toast.Container />
+            </>
+          ) : null}
         </Toast>
         <Scripts />
       </body>

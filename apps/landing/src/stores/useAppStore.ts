@@ -6,17 +6,16 @@ import { getLocale, type Locale, setLocale as setParaglideLocale } from '../para
 export type Theme = 'dark' | 'light'
 export type { Locale }
 
-function applyTheme(theme: Theme) {
-  document.documentElement.classList.toggle('dark', theme === 'dark')
-}
-
-function applyLocale(locale: Locale) {
-  document.documentElement.lang = locale
-}
+export const APP_STORE_KEY = 'ai-kit:app-store'
 
 function readStoredTheme(): Theme {
-  const stored = localStorage.getItem('ai-kit-theme')
-  if (stored === 'dark' || stored === 'light') return stored
+  if (import.meta.env.SSR) return 'light'
+
+  const raw = localStorage.getItem(APP_STORE_KEY) || '{"state":{}}'
+  const parsed = JSON.parse(raw) as { state?: { theme?: unknown } }
+  const theme = parsed.state?.theme as Theme
+  if (theme === 'dark') return theme
+
   return 'light'
 }
 
@@ -24,32 +23,21 @@ type AppState = {
   theme: Theme
   locale: Locale
   paletteOpen: boolean
-  hydrated: boolean
   setTheme: (theme: Theme) => void
   toggleTheme: () => void
   setLocale: (locale: Locale) => Promise<void>
   setPaletteOpen: (open: boolean) => void
   togglePalette: () => void
-  hydrate: () => void
+  hydrated: boolean
 }
-
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      theme: 'light',
-      locale: 'vi',
+      theme: readStoredTheme(),
+      locale: getLocale(),
       paletteOpen: false,
       hydrated: false,
-      hydrate: () => {
-        const theme = readStoredTheme()
-        const locale = getLocale()
-        applyTheme(theme)
-        applyLocale(locale)
-        set({ theme, locale, hydrated: true })
-      },
       setTheme: theme => {
-        applyTheme(theme)
-        localStorage.setItem('ai-kit-theme', theme)
         trackEvent('theme_toggle', { theme })
         set({ theme })
       },
@@ -59,7 +47,6 @@ export const useAppStore = create<AppState>()(
       },
       setLocale: async locale => {
         await setParaglideLocale(locale, { reload: false })
-        applyLocale(locale)
         set({ locale })
       },
       setPaletteOpen: paletteOpen => set({ paletteOpen }),
@@ -70,16 +57,10 @@ export const useAppStore = create<AppState>()(
       },
     }),
     {
-      name: 'ai-kit-app-store',
+      name: APP_STORE_KEY,
       partialize: state => ({ theme: state.theme }),
       onRehydrateStorage: () => state => {
-        const theme = readStoredTheme()
-        const locale = getLocale()
-        applyTheme(theme)
-        applyLocale(locale)
         if (state) {
-          state.theme = theme
-          state.locale = locale
           state.hydrated = true
         }
       },

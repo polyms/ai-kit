@@ -1,6 +1,5 @@
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
 import { SiblingLink } from '../../components/guides'
-import { HomeSiteChrome } from '../../components/home/HomeSiteChrome'
 import { AxisTagRow, RunbookBreadcrumb } from '../../components/runbooks'
 import { defaultRunbooksSearch, getRunbookFn } from '../../lib/runbooks/runbook.fns'
 import { m } from '../../paraglide/messages.js'
@@ -36,8 +35,7 @@ function RunbookDetailPage() {
   const { runbook } = Route.useLoaderData()
 
   return (
-    <>
-      <div className='runbook-page page-x section-y mx-auto max-w-4xl'>
+    <div className='runbook-page page-x section-y mx-auto max-w-4xl'>
         <RunbookBreadcrumb
           items={[{ label: m.runbooks_title(), href: '/runbooks' }, { label: runbook.id }]}
         />
@@ -130,7 +128,5 @@ function RunbookDetailPage() {
           </ul>
         </section>
       </div>
-      <HomeSiteChrome />
-    </>
   )
 }

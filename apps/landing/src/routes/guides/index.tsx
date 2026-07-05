@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { GuideResultsTable, GuideSearch } from '../../components/guides'
-import { HomeSiteChrome } from '../../components/home/HomeSiteChrome'
 import { searchGuidesFn } from '../../lib/guides/guide.fns'
 import { m } from '../../paraglide/messages.js'
 
@@ -25,8 +24,7 @@ function GuidesIndexPage() {
   const { results } = Route.useLoaderData()
 
   return (
-    <>
-      <div className='guide-page page-x section-y mx-auto max-w-4xl border-line border-b'>
+    <div className='guide-page page-x section-y mx-auto max-w-4xl border-line border-b'>
         <p className='label-mono'>{m.guides_kicker()}</p>
         <h1 className='h1 mt-2'>{m.guides_title()}</h1>
         <p className='mt-2 text-muted'>{m.guides_sub()}</p>
@@ -47,7 +45,5 @@ function GuidesIndexPage() {
           <GuideResultsTable empty={results.length === 0} results={results} />
         </div>
       </div>
-      <HomeSiteChrome />
-    </>
   )
 }

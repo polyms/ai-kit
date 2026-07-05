@@ -91,6 +91,8 @@ nav_guides: Stack guides
 nav_skip: Skip navigation
 nav_start: Quick start
 nav_theme: Theme
+nav_actions: Quick actions
+nav_to_top: Back to top
 
 # --- palette ---
 palette_hint: ↑↓ select · Enter open · Esc close

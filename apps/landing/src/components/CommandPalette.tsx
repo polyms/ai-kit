@@ -8,10 +8,16 @@ import { m } from '../paraglide/messages.js'
 import { useAppStore } from '../stores/useAppStore'
 import { SkillCommandRow } from './SkillCommandRow'
 
+function isPaletteHidden(pathname: string) {
+  return pathname.startsWith('/runbooks') || pathname.startsWith('/ops')
+}
+
 export function CommandPalette() {
   const pathname = useRouterState({ select: s => s.location.pathname })
+  const hidden = isPaletteHidden(pathname)
   const open = useAppStore(s => s.paletteOpen)
   const setPaletteOpen = useAppStore(s => s.setPaletteOpen)
+  const togglePalette = useAppStore(s => s.togglePalette)
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -23,6 +29,25 @@ export function CommandPalette() {
     if (!q) return skills
     return skills.filter(s => [s.invoke, s.name, s.description].join(' ').toLowerCase().includes(q))
   }, [query, skills])
+
+  useEffect(() => {
+    if (hidden) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey) || e.code !== 'KeyK') return
+
+      e.preventDefault()
+      e.stopPropagation()
+      togglePalette()
+    }
+
+    document.addEventListener('keydown', onKeyDown, { capture: true })
+    return () => document.removeEventListener('keydown', onKeyDown, { capture: true })
+  }, [hidden, togglePalette])
+
+  useEffect(() => {
+    if (hidden && open) setPaletteOpen(false)
+  }, [hidden, open, setPaletteOpen])
 
   useEffect(() => {
     if (open) {
@@ -53,21 +78,22 @@ export function CommandPalette() {
     ? `command-palette-option-${filtered[activeIndex].slug}`
     : undefined
 
-  if (pathname.startsWith('/runbooks') || pathname.startsWith('/ops')) {
+  if (hidden) {
     return null
   }
 
   return (
     <Modal onOpenChange={handleOpenChange} open={open}>
-      <Modal.Content className='max-w-2xl overflow-hidden p-0' size='lg'>
+      <Modal.Content size='lg'>
         <div className='relative border-line border-b'>
-          <Field>
+          <Field size='2xl'>
+            <IconMagnifier aria-hidden className='icon-start' />
             <Field.Control
               aria-activedescendant={activeOptionId}
               aria-autocomplete='list'
               aria-controls={listboxId}
               aria-label={m.palette_title()}
-              className='rounded-none border-0 bg-transparent py-3 ps-10 pe-4 font-invoke text-sm shadow-none'
+              className='rounded-none border-0 bg-transparent text-sm shadow-none outline-0 ring-0'
               onChange={e => setQuery(e.target.value)}
               onKeyDown={e => {
                 if (e.key === 'ArrowDown') {
@@ -88,11 +114,6 @@ export function CommandPalette() {
               value={query}
             />
           </Field>
-          <IconMagnifier
-            aria-hidden
-            className='pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-muted'
-            size={18}
-          />
         </div>
         <div
           aria-label={m.palette_title()}

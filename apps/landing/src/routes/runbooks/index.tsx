@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { HomeSiteChrome } from '../../components/home/HomeSiteChrome'
 import { RunbookResultsTable, RunbookSearch } from '../../components/runbooks'
 import { searchRunbooksFn } from '../../lib/runbooks/runbook.fns'
 import { m } from '../../paraglide/messages.js'
@@ -25,8 +24,7 @@ function RunbooksIndexPage() {
   const { results } = Route.useLoaderData()
 
   return (
-    <>
-      <div className='runbook-page page-x section-y mx-auto max-w-4xl border-line border-b'>
+    <div className='runbook-page page-x section-y mx-auto max-w-4xl border-line border-b'>
         <p className='label-mono'>{m.runbooks_kicker()}</p>
         <h1 className='h1 mt-2'>{m.runbooks_title()}</h1>
         <p className='mt-2 text-muted'>{m.runbooks_sub()}</p>
@@ -59,7 +57,5 @@ function RunbooksIndexPage() {
           </a>
         </p>
       </div>
-      <HomeSiteChrome />
-    </>
   )
 }
