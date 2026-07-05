@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto'
 
-const SESSION_COOKIE = 'ops_session'
+const SESSION_COOKIE = 'ai-kit:session'
 const SESSION_TTL_MS = 24 * 60 * 60 * 1000
 
 function sessionSecret(): string {

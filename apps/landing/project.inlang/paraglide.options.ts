@@ -6,6 +6,6 @@ export const paraglideCompilerOptions: CompilerOptions = {
   project: './project.inlang',
   outdir: './src/paraglide',
   strategy: ['cookie', 'globalVariable', 'baseLocale'],
-  cookieName: 'ai-kit.locale',
+  cookieName: 'po.locale',
   isServer: 'import.meta.env.SSR',
 }

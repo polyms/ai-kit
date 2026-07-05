@@ -12,4 +12,7 @@ export GITHUB_TOKEN="$token"
 # pnpm ignores ${GITHUB_TOKEN} in committed .npmrc — inject auth via user config instead.
 pnpm config set "//npm.pkg.github.com/:_authToken" "$GITHUB_TOKEN" --location user
 
-exec pnpm install --frozen-lockfile
+pnpm install --frozen-lockfile
+
+# Prisma client/types are generated — not committed. Must exist before nx build.
+pnpm nx run landing:run -- db:generate
