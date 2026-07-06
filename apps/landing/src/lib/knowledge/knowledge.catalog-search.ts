@@ -53,8 +53,13 @@ function chunkToResult(chunk: KnowledgeChunk, articleId: string, match: string):
   }
 }
 
-function stripScores<T extends { score: number }>(results: T[]): Omit<T, 'score'>[] {
-  return results.map(({ score: _score, ...item }) => item)
+function stripScores(
+  results: Array<KnowledgeSearchResultItem & { score: number }>
+): KnowledgeSearchResultItem[] {
+  return results.map((result): KnowledgeSearchResultItem => {
+    const { score: _score, ...item } = result
+    return item
+  })
 }
 
 export function scoreKnowledgeFromCatalog(

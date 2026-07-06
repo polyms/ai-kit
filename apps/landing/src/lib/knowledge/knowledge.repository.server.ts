@@ -4,7 +4,7 @@ import type { KnowledgeArticle, KnowledgeChunk } from './knowledge.types'
 
 const publishedArticleInclude = {
   chunks: { orderBy: [{ sortOrder: 'asc' as const }, { id: 'asc' as const }] },
-} as const
+} satisfies Prisma.KnowledgeArticleInclude
 
 type KnowledgeArticleRow = Prisma.KnowledgeArticleGetPayload<{
   include: typeof publishedArticleInclude

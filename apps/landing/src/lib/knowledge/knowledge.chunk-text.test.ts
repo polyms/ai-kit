@@ -20,6 +20,7 @@ const chunk: KnowledgeChunk = {
   checklistItems: [],
   parentChunkId: null,
   partIndex: null,
+  sortOrder: 0,
 }
 
 describe('knowledge.chunk-text', () => {

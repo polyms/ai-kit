@@ -8,12 +8,12 @@ type IncidentSeed = {
   slug: string
   title: string
   symptom: string
-  cause: string[]
-  fix: string[]
-  verify: string[]
-  triggerPhrases: string[]
-  relatedFiles: string[]
-  axisTags: string[]
+  cause: readonly string[]
+  fix: readonly string[]
+  verify: readonly string[]
+  triggerPhrases: readonly string[]
+  relatedFiles: readonly string[]
+  axisTags: readonly string[]
 }
 
 function incidentChunk(issue: IncidentSeed, sortOrder: number): KnowledgeChunk {
@@ -24,12 +24,12 @@ function incidentChunk(issue: IncidentSeed, sortOrder: number): KnowledgeChunk {
     chunkType: 'incident',
     title: issue.title,
     body: issue.symptom,
-    axisTags: issue.axisTags,
+    axisTags: [...issue.axisTags],
     symptom: issue.symptom,
-    cause: issue.cause,
-    fix: issue.fix,
-    verify: issue.verify,
-    triggerPhrases: issue.triggerPhrases,
+    cause: [...issue.cause],
+    fix: [...issue.fix],
+    verify: [...issue.verify],
+    triggerPhrases: [...issue.triggerPhrases],
     artifactFilename: null,
     artifactType: null,
     checklistItems: [],
