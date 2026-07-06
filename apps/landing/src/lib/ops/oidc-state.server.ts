@@ -1,4 +1,4 @@
-import { createHmac, timingSafeEqual } from 'node:crypto'
+import { encodeSignedOpsCookie, splitSignedOpsCookie } from './ops-signing.server'
 
 const OAUTH_STATE_COOKIE = 'ops_oauth_state'
 const OAUTH_STATE_TTL_MS = 10 * 60 * 1000
@@ -10,35 +10,17 @@ export type OAuthStatePayload = {
   exp: number
 }
 
-function oauthStateSecret(): string {
-  return process.env.OPS_SESSION_SECRET ?? 'dev-insecure-ops-secret-change-me'
-}
-
-function sign(payload: string): string {
-  return createHmac('sha256', oauthStateSecret()).update(payload).digest('base64url')
-}
-
 export function encodeOAuthState(payload: OAuthStatePayload): string {
-  const body = Buffer.from(JSON.stringify(payload), 'utf8').toString('base64url')
-  return `${body}.${sign(body)}`
+  return encodeSignedOpsCookie(payload)
 }
 
 export function decodeOAuthState(token: string | null | undefined): OAuthStatePayload | null {
   if (!token) return null
-  const [body, signature] = token.split('.')
-  if (!body || !signature) return null
-
-  const expected = sign(body)
-  try {
-    const a = Buffer.from(signature)
-    const b = Buffer.from(expected)
-    if (a.length !== b.length || !timingSafeEqual(a, b)) return null
-  } catch {
-    return null
-  }
+  const parts = splitSignedOpsCookie(token)
+  if (!parts) return null
 
   try {
-    const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8')) as OAuthStatePayload
+    const payload = JSON.parse(Buffer.from(parts.body, 'base64url').toString('utf8')) as OAuthStatePayload
     if (
       typeof payload.state !== 'string' ||
       typeof payload.codeVerifier !== 'string' ||
@@ -79,5 +61,3 @@ export function createOAuthStatePayload(input: {
     exp: Date.now() + OAUTH_STATE_TTL_MS,
   }
 }
-
-export { OAUTH_STATE_COOKIE }

@@ -3,7 +3,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { isOidcConfigured } from '../../lib/ops/oidc-config'
 import { opsDevLoginFn } from '../../lib/ops/ops.auth.fns'
-import { isOpsDevBypassEnabled } from '../../lib/ops/ops-env'
 import { m } from '../../paraglide/messages.js'
 
 type OpsLoginSearch = {
@@ -18,7 +17,7 @@ export const Route = createFileRoute('/ops/login')({
   }),
   loader: () => ({
     oidcConfigured: isOidcConfigured(),
-    devBypass: isOpsDevBypassEnabled(),
+    devBypass: import.meta.env.DEV,
   }),
   component: OpsLoginPage,
 })

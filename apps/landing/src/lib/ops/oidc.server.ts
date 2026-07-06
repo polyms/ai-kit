@@ -61,7 +61,6 @@ export async function exchangeAuthorizationCode(
     code,
     redirect_uri: config.redirectUri,
     client_id: config.clientId,
-    client_secret: config.clientSecret,
     code_verifier: codeVerifier,
   })
 

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { getOidcConfig, isOidcConfigured, sanitizeOpsReturnTo } from './oidc-config'
+import { getOidcConfig, getOidcIssuer, isOidcConfigured, sanitizeOpsReturnTo } from './oidc-config'
 
 describe('oidc-config', () => {
   const envSnapshot = { ...process.env }
@@ -8,21 +8,26 @@ describe('oidc-config', () => {
     process.env = { ...envSnapshot }
   })
 
-  it('isOidcConfigured requires client id and secret', () => {
+  it('isOidcConfigured requires client id only', () => {
     delete process.env.OIDC_CLIENT_ID
-    delete process.env.OIDC_CLIENT_SECRET
     expect(isOidcConfigured()).toBe(false)
 
     process.env.OIDC_CLIENT_ID = 'ai-kit-ops'
-    expect(isOidcConfigured()).toBe(false)
-
-    process.env.OIDC_CLIENT_SECRET = 'secret'
     expect(isOidcConfigured()).toBe(true)
+  })
+
+  it('defaults issuer to polyms.dev when OIDC_ISSUER unset', () => {
+    delete process.env.OIDC_ISSUER
+    expect(getOidcIssuer()).toBe('https://polyms.dev')
+  })
+
+  it('uses OIDC_ISSUER when set', () => {
+    process.env.OIDC_ISSUER = 'http://localhost:6200'
+    expect(getOidcIssuer()).toBe('http://localhost:6200')
   })
 
   it('builds polyms.dev authorize endpoints from OIDC_CLIENT_ID', () => {
     process.env.OIDC_CLIENT_ID = 'ai-kit-ops'
-    process.env.OIDC_CLIENT_SECRET = 'secret'
 
     const config = getOidcConfig(new URL('http://localhost:6300/ops/login'))
     expect(config).not.toBeNull()

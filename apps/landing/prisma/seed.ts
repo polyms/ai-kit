@@ -1,4 +1,5 @@
 import { prisma } from '../src/lib/db.server.ts'
+import { upsertKnowledgeArticle } from '../src/lib/knowledge/knowledge.mutation.server.ts'
 import type { KnowledgeArticle } from '../src/lib/knowledge/knowledge.types'
 import { buildKN001 } from './kn-001-data'
 import { buildRB001 } from './rb-001-data'
@@ -10,24 +11,6 @@ function validateSeedArticles(articles: KnowledgeArticle[]) {
   assertNoForbiddenSeedLiterals(blob, 'knowledge articles')
 }
 
-async function upsertKnowledgeArticle(article: KnowledgeArticle) {
-  const { chunks, ...articleFields } = article
-  await prisma.knowledgeArticle.upsert({
-    where: { id: articleFields.id },
-    create: {
-      ...articleFields,
-      status: 'published',
-      chunks: { create: chunks },
-    },
-    update: {
-      ...articleFields,
-      status: 'published',
-      chunks: { deleteMany: {}, create: chunks },
-    },
-  })
-  console.log(`Seeded knowledge article ${articleFields.id} with ${chunks.length} chunks`)
-}
-
 async function main() {
   const articles = [buildKN001(), buildRB001(), buildSG001()]
 
@@ -35,10 +18,8 @@ async function main() {
 
   for (const article of articles) {
     await upsertKnowledgeArticle(article)
+    console.log(`Seeded knowledge article ${article.id} with ${article.chunks.length} chunks`)
   }
-
-  const { embedPublishedKnowledgeChunks } = await import('../src/lib/knowledge/knowledge.embed-chunks.server')
-  await embedPublishedKnowledgeChunks()
 }
 
 main()

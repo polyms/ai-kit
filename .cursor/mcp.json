@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "polyms-ai-kit-dev": {
+    "ai-kit": {
       "url": "http://localhost:6300/mcp"
     }
   }

@@ -1,6 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
 import { getRequest, setCookie } from '@tanstack/react-start/server'
-import { isOpsDevBypassEnabled } from './ops-env'
 import {
   createSessionToken,
   getSessionFromRequest,
@@ -20,7 +19,7 @@ export const getOpsSessionFn = createServerFn({ method: 'GET' }).handler(async (
 })
 
 export const opsDevLoginFn = createServerFn({ method: 'POST' }).handler(async () => {
-  if (!isOpsDevBypassEnabled()) {
+  if (!import.meta.env.DEV) {
     throw new Error('FORBIDDEN')
   }
   const token = createSessionToken('ops-dev')

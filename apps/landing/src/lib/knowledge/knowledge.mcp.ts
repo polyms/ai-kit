@@ -1,5 +1,15 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
+import { isMcpAdmin, type McpAuthSession } from '../mcp-auth.server'
+import {
+  DELETE_KNOWLEDGE_TOOL_DESCRIPTION,
+  UPSERT_KNOWLEDGE_TOOL_DESCRIPTION,
+} from './knowledge.mcp-authoring'
+import {
+  deleteKnowledgeArticle,
+  KnowledgeMutationValidationError,
+  upsertKnowledgeArticle,
+} from './knowledge.mutation.server'
 
 const searchInputSchema = {
   q: z.string().optional().describe('Symptom, seam keyword, or toolchain topic'),
@@ -19,7 +29,120 @@ const chunkIdInputSchema = {
   chunkId: z.string().describe('Knowledge chunk id or slug'),
 }
 
-export function registerKnowledgeMcpTools(server: McpServer): void {
+const upsertChunkFieldDescriptions = {
+  id: z.string().describe('Unique chunk id (e.g. KN-001-checklist)'),
+  slug: z.string().describe('URL slug — lowercase kebab-case'),
+  intent: z.enum(['incident', 'design', 'toolchain']).describe('Audience intent for this chunk'),
+  chunkType: z
+    .enum(['incident', 'seam', 'config', 'checklist', 'prose'])
+    .describe('Chunk shape — config chunks hold verbatim artifacts'),
+  title: z.string().describe('Chunk title'),
+  body: z.string().describe('Main content — generic, no project-specific paths'),
+  axisTags: z.array(z.string()).describe('Stack manifest tags, not repo names'),
+  sortOrder: z.number().int().describe('Reading order — checklist/overview first (0)'),
+}
+
+const upsertInputSchema = {
+  id: z.string().describe('Article id (e.g. KN-001)'),
+  slug: z.string().describe('Article slug — lowercase kebab-case'),
+  title: z.string().describe('Article title'),
+  summary: z.string().describe('Short summary for search results'),
+  intent: z
+    .enum(['incident', 'design', 'toolchain'])
+    .describe('Primary audience: incident=/devops, design=/arch, toolchain=/dev'),
+  axisTags: z.array(z.string()).describe('Stack manifest tags for filtering'),
+  checklist: z.array(z.string()).describe('Top-level checklist items shown on article index'),
+  chunks: z
+    .array(
+      z.object({
+        ...upsertChunkFieldDescriptions,
+        symptom: z.string().nullable().optional(),
+        cause: z.array(z.string()).optional(),
+        fix: z.array(z.string()).optional(),
+        verify: z.array(z.string()).optional(),
+        triggerPhrases: z.array(z.string()).optional(),
+        artifactFilename: z.string().nullable().optional(),
+        artifactType: z.string().nullable().optional(),
+        checklistItems: z.array(z.string()).optional(),
+        parentChunkId: z.string().nullable().optional(),
+        partIndex: z.number().int().nullable().optional(),
+      })
+    )
+    .describe('Ordered chunks — replace all on upsert'),
+}
+
+const deleteInputSchema = {
+  id: z.string().describe('Knowledge article id to delete'),
+}
+
+export type KnowledgeMcpToolContext = {
+  session: McpAuthSession
+}
+
+type McpTextResult = {
+  content: [{ type: 'text'; text: string }]
+  isError?: boolean
+}
+
+function mcpAdminRequiredResult(): McpTextResult {
+  return {
+    content: [{ type: 'text', text: JSON.stringify({ error: 'ADMIN_REQUIRED' }) }],
+    isError: true,
+  }
+}
+
+export async function executeUpsertKnowledge(
+  session: McpAuthSession,
+  input: unknown
+): Promise<McpTextResult> {
+  if (!isMcpAdmin(session)) {
+    return mcpAdminRequiredResult()
+  }
+
+  try {
+    const article = await upsertKnowledgeArticle(input)
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ article }, null, 2) }],
+    }
+  } catch (error) {
+    if (error instanceof KnowledgeMutationValidationError) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify({ error: 'VALIDATION_ERROR', details: error.details }),
+          },
+        ],
+        isError: true,
+      }
+    }
+    throw error
+  }
+}
+
+export async function executeDeleteKnowledge(
+  session: McpAuthSession,
+  input: { id: string }
+): Promise<McpTextResult> {
+  if (!isMcpAdmin(session)) {
+    return mcpAdminRequiredResult()
+  }
+
+  const result = await deleteKnowledgeArticle(input.id)
+  if (!result.deleted) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: 'NOT_FOUND', id: input.id }) }],
+      isError: true,
+    }
+  }
+  return {
+    content: [{ type: 'text', text: JSON.stringify({ deleted: true, id: input.id }) }],
+  }
+}
+
+export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeMcpToolContext): void {
+  const { session } = context
+
   server.registerTool(
     'search_knowledge',
     {
@@ -76,5 +199,23 @@ export function registerKnowledgeMcpTools(server: McpServer): void {
         content: [{ type: 'text' as const, text: JSON.stringify(found, null, 2) }],
       }
     }
+  )
+
+  server.registerTool(
+    'upsert_knowledge',
+    {
+      description: UPSERT_KNOWLEDGE_TOOL_DESCRIPTION,
+      inputSchema: upsertInputSchema,
+    },
+    async input => executeUpsertKnowledge(session, input)
+  )
+
+  server.registerTool(
+    'delete_knowledge',
+    {
+      description: DELETE_KNOWLEDGE_TOOL_DESCRIPTION,
+      inputSchema: deleteInputSchema,
+    },
+    async input => executeDeleteKnowledge(session, input)
   )
 }

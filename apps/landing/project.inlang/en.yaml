@@ -157,9 +157,9 @@ ops_col_updated: Updated
 ops_edit: Edit
 ops_loginCta: Sign in with polyms.dev
 ops_loginDev: Dev sign-in
-ops_loginDevDisabled: Dev sign-in is disabled. Set OPS_DEV_BYPASS=true on the server.
+ops_loginDevDisabled: Dev sign-in is only available when running the local dev server.
 ops_loginNetworkError: Network error — try again.
-ops_loginOidcMissing: OIDC is not configured. Set OIDC_CLIENT_ID and OIDC_CLIENT_SECRET.
+ops_loginOidcMissing: OIDC is not configured. Set OIDC_CLIENT_ID.
 ops_loginSub: Sign in with your Polyms account to edit Knowledge articles.
 ops_loginTitle: Ops CMS
 ops_matrixEmpty: No axis data — add tags to content

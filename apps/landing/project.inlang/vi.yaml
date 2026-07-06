@@ -157,9 +157,9 @@ ops_col_updated: Cập nhật
 ops_edit: Sửa
 ops_loginCta: Đăng nhập polyms.dev
 ops_loginDev: Dev sign-in
-ops_loginDevDisabled: Dev sign-in tắt. Đặt OPS_DEV_BYPASS=true trên server.
+ops_loginDevDisabled: Dev sign-in chỉ có khi chạy local dev server.
 ops_loginNetworkError: Lỗi mạng — thử lại.
-ops_loginOidcMissing: Chưa cấu hình OIDC. Đặt OIDC_CLIENT_ID và OIDC_CLIENT_SECRET.
+ops_loginOidcMissing: Chưa cấu hình OIDC. Đặt OIDC_CLIENT_ID.
 ops_loginSub: Đăng nhập Polyms để sửa Knowledge articles.
 ops_loginTitle: Ops CMS
 ops_matrixEmpty: Chưa có axis data — thêm tags vào nội dung

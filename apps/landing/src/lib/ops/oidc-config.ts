@@ -2,7 +2,6 @@ const DEFAULT_ISSUER = 'https://polyms.dev'
 
 export type OidcConfig = {
   clientId: string
-  clientSecret: string
   issuer: string
   authorizationEndpoint: string
   tokenEndpoint: string
@@ -21,19 +20,17 @@ export function getOidcRedirectUri(requestUrl: URL): string {
 }
 
 export function isOidcConfigured(): boolean {
-  return Boolean(process.env.OIDC_CLIENT_ID?.trim() && process.env.OIDC_CLIENT_SECRET?.trim())
+  return Boolean(process.env.OIDC_CLIENT_ID?.trim())
 }
 
 export function getOidcConfig(requestUrl: URL): OidcConfig | null {
   const clientId = process.env.OIDC_CLIENT_ID?.trim()
-  const clientSecret = process.env.OIDC_CLIENT_SECRET?.trim()
-  if (!clientId || !clientSecret) return null
+  if (!clientId) return null
 
   const issuer = getOidcIssuer().replace(/\/$/, '')
 
   return {
     clientId,
-    clientSecret,
     issuer,
     authorizationEndpoint: `${issuer}/api/auth/oauth2/authorize`,
     tokenEndpoint: `${issuer}/api/auth/oauth2/token`,

@@ -1,56 +1,37 @@
-import { createHmac, timingSafeEqual } from 'node:crypto'
+import { encodeSignedOpsCookie, splitSignedOpsCookie } from './ops-signing.server'
 
 const SESSION_COOKIE = 'ai-kit:session'
 const SESSION_TTL_MS = 24 * 60 * 60 * 1000
 
-function sessionSecret(): string {
-  return process.env.OPS_SESSION_SECRET ?? 'dev-insecure-ops-secret-change-me'
-}
-
-function sign(payload: string): string {
-  return createHmac('sha256', sessionSecret()).update(payload).digest('base64url')
-}
-
 export function createSessionToken(sub = 'ops-user'): string {
-  const payload = Buffer.from(JSON.stringify({ exp: Date.now() + SESSION_TTL_MS, sub }), 'utf8').toString(
-    'base64url'
-  )
-  return `${payload}.${sign(payload)}`
+  return encodeSignedOpsCookie({ exp: Date.now() + SESSION_TTL_MS, sub })
 }
 
 export function getSessionSubFromRequest(request: Request): string | null {
   const cookie = request.headers.get('cookie') ?? ''
   const match = cookie.match(new RegExp(`${SESSION_COOKIE}=([^;]+)`))
-  const token = match?.[1]
-  if (!token || !verifySessionToken(token)) return null
-
-  const [payload] = token.split('.')
-  if (!payload) return null
+  const parts = splitSignedOpsCookie(match?.[1] ?? '')
+  if (!parts) return null
 
   try {
-    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as { sub?: string }
+    const data = JSON.parse(Buffer.from(parts.body, 'base64url').toString('utf8')) as {
+      exp?: number
+      sub?: string
+    }
+    if (typeof data.exp !== 'number' || data.exp <= Date.now()) return null
     return typeof data.sub === 'string' ? data.sub : null
   } catch {
     return null
   }
 }
 
-export function verifySessionToken(token: string | null | undefined): boolean {
+function verifySessionToken(token: string | null | undefined): boolean {
   if (!token) return false
-  const [payload, signature] = token.split('.')
-  if (!payload || !signature) return false
-
-  const expected = sign(payload)
-  try {
-    const a = Buffer.from(signature)
-    const b = Buffer.from(expected)
-    if (a.length !== b.length || !timingSafeEqual(a, b)) return false
-  } catch {
-    return false
-  }
+  const parts = splitSignedOpsCookie(token)
+  if (!parts) return false
 
   try {
-    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as {
+    const data = JSON.parse(Buffer.from(parts.body, 'base64url').toString('utf8')) as {
       exp?: number
     }
     return typeof data.exp === 'number' && data.exp > Date.now()
