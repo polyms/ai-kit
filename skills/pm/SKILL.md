@@ -7,6 +7,8 @@ description: Product management and requirements — PRDs, user stories, accepta
 
 Turn ideas into engineering-ready artifacts. Read this skill fully before producing output.
 
+Read `docs/agents/language.md` when present — write PRDs and stories in that language. No file: match the issue tracker's existing language.
+
 ## Quick Router
 
 | User intent                                 | Workflow                                            | Reference                                  |
@@ -38,10 +40,11 @@ Turn ideas into engineering-ready artifacts. Read this skill fully before produc
 **Boundary:** Aligned-chat synthesize/publish → `/to-prd` (Quick Router). Plan still fuzzy or needs design-tree grill → `/align`. Below is discovery + enterprise PRD only — not align-loop.
 
 1. Run discovery if problem statement is missing
-2. Fill [prd-template.md](prd-template.md) — every section, no empty headers
-3. Include wireframe notes or flow description where UI is involved
-4. Add **non-functional requirements** (performance, security, accessibility, i18n)
-5. End with open questions and next steps
+2. Fill [prd-template.md](prd-template.md) — no empty headers: fill a section with real thinking or delete it and note the deletion in Appendix
+3. Mark unresolved details inline with `[NEEDS CLARIFICATION: …]` — never invent a threshold, method, or behavior the user didn't settle
+4. Include wireframe notes or flow description where UI is involved
+5. Add **non-functional requirements** (performance, security, accessibility, i18n) — only rows that apply
+6. End with open questions (collected markers) and next steps
 
 **Completion criterion:** PRD passes the [quality checklist](#quality-checklist).
 
@@ -98,11 +101,12 @@ Before delivering any artifact, verify:
 - [ ] Problem statement answers "why" before "what"
 - [ ] Success metrics are measurable (number, threshold, or binary outcome)
 - [ ] Scope has explicit out-of-scope section
+- [ ] Stories are prioritized (P0/P1/P2) and each is independently testable — P0 set alone is a shippable slice
 - [ ] Acceptance criteria are testable (no "user-friendly", "fast", "easy" without definition)
 - [ ] Edge cases and error states addressed
 - [ ] Accessibility and security considered where applicable
 - [ ] Assumptions listed separately from facts
-- [ ] Open questions collected at the end
+- [ ] No silent guesses — unresolved details carry `[NEEDS CLARIFICATION]` markers, collected under open questions
 
 ## Anti-Patterns
 

@@ -10,7 +10,7 @@ Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tr
 
 **Upstream:** `/pm` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
 
-**Prerequisites:** Issue tracker and domain docs should already be configured — run `/setup` if `docs/agents/issue-tracker.md` is missing.
+**Prerequisites:** Issue tracker and domain docs should already be configured — run `/setup` if `docs/agents/issue-tracker.md` is missing. Read `docs/agents/language.md` when present — write issue bodies in that language.
 
 ## References
 
@@ -51,6 +51,7 @@ Break the plan into **tracer bullet** issues. Each issue is a thin vertical slic
 - Each slice delivers a narrow but **complete** path through every layer (schema, API, UI, tests)
 - A completed slice is demoable or verifiable on its own
 - Any prefactoring should come first
+- When the source PRD prioritizes stories (P0/P1/P2), order slices so the P0 set completes first — P0 slices alone should be a shippable MVP; a `[NEEDS CLARIFICATION]` marker inside a slice's stories blocks that slice until resolved
 
 Do not re-run `/pm` user-story workflows here. Map slices to existing user stories from the source material when present; do not invent new stories unless the source has gaps the user confirms.
 

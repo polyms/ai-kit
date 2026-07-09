@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Configure a repo for the ai-kit pipeline — issue tracker, domain docs, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
+description: Configure a repo for the ai-kit pipeline — documentation language, issue tracker, domain docs, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
 disable-model-invocation: true
 ---
 
@@ -15,7 +15,7 @@ Scaffold per-repo configuration that `/pm`, `/to-prd`, `/align`, `/design`, `/tr
 Read what exists; don't assume:
 
 - `git remote -v` — GitHub, GitLab, or local-only?
-- `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/`
+- `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` — presence, layout, and written language
 - `docs/agents/` — prior setup output?
 - `.scratch/` — local markdown issue convention?
 - `AGENTS.md`, `CLAUDE.md` — existing agent config?
@@ -26,7 +26,20 @@ Read what exists; don't assume:
 
 Present each section, get answer, then move on. Explain terms briefly before choices.
 
-**A — Issue tracker**
+**A — Documentation language**
+
+The language skills write into persistent repo docs — `CONTEXT.md`, `docs/adr/`, PRDs, `docs/design/`, and `docs/agents/*.md` itself. Separate from chat tone (`docs/agents/voice.md` already matches whichever language the user types in per session) — this fixes the language of files that outlive the conversation, so a repo's rules stay in one language even when different people chat with agents in different languages.
+
+| Choice                                                                        | When                                          |
+| ----------------------------------------------------------------------------- | --------------------------------------------- |
+| **Match existing docs** (default when `CONTEXT.md`/`docs/adr/` already exist) | Detected from Explore step                    |
+| **Vietnamese**                                                                | Internal team writes/reads docs in Vietnamese |
+| **English**                                                                   | Internal team writes/reads docs in English    |
+| **Other**                                                                     | User names the language                       |
+
+Code, identifiers, file paths, and technical terms (seam, ADR, PRD, …) stay in English regardless of choice.
+
+**B — Issue tracker**
 
 Where issues and PRDs live. Skills read/write here.
 
@@ -39,7 +52,7 @@ Where issues and PRDs live. Skills read/write here.
 
 If GitHub or GitLab: ask whether **external PRs/MRs are a request surface** (default: no).
 
-**B — Domain docs**
+**C — Domain docs**
 
 | Layout                       | Structure                                                 |
 | ---------------------------- | --------------------------------------------------------- |
@@ -48,7 +61,7 @@ If GitHub or GitLab: ask whether **external PRs/MRs are a request surface** (def
 
 See [context-format.md](context-format.md) and [adr-format.md](adr-format.md).
 
-**C — Pipeline artifacts**
+**D — Pipeline artifacts**
 
 Where specs land after `/pm`, `/to-prd`, and `/align`:
 
@@ -60,7 +73,7 @@ Where specs land after `/pm`, `/to-prd`, and `/align`:
 
 Confirm or override paths.
 
-**D — Triage labels**
+**E — Triage labels**
 
 Map canonical triage roles to label strings on the issue tracker. Required for `/triage` and `/to-issues`.
 
@@ -73,7 +86,7 @@ Default: label strings equal canonical names unless the user overrides. Show the
 
 Remind user to create matching labels on the remote tracker after setup (see [triage-labels.md](triage-labels.md) for `gh label create` examples).
 
-**E — Design**
+**F — Design**
 
 | Item          | Default                                                      |
 | ------------- | ------------------------------------------------------------ |
@@ -82,13 +95,14 @@ Remind user to create matching labels on the remote tracker after setup (see [tr
 
 Confirm paths. Note: `/design` writes specs; `/core-ui` skill documents component API — not duplicated in ai-kit.
 
-**Completion criterion:** All seven triage role mappings confirmed; issue tracker, domain layout, artifact paths, triage labels, and design paths confirmed by user.
+**Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed; issue tracker, domain layout, artifact paths, triage labels, and design paths confirmed by user.
 
 ### 3. Confirm draft
 
 Show before writing:
 
 - `## Agent skills` block for `CLAUDE.md` or `AGENTS.md`
+- `docs/agents/language.md`
 - `docs/agents/issue-tracker.md`
 - `docs/agents/domain.md`
 - `docs/agents/triage-labels.md`
@@ -106,6 +120,10 @@ If `## Agent skills` exists, update in-place — don't duplicate.
 
 ```markdown
 ## Agent skills
+
+### Documentation language
+
+Written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`) are in [language]. Chat tone still matches whichever language the user writes in — see `docs/agents/voice.md`.
 
 ### Issue tracker
 
@@ -130,6 +148,7 @@ Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/de
 
 Write docs using templates:
 
+- Language → [language.md](language.md)
 - GitHub → [issue-tracker-github.md](issue-tracker-github.md)
 - GitLab → [issue-tracker-gitlab.md](issue-tracker-gitlab.md)
 - Local → [issue-tracker-local.md](issue-tracker-local.md)
@@ -137,10 +156,14 @@ Write docs using templates:
 - Triage labels → [triage-labels.md](triage-labels.md)
 - Design → [design.md](design.md)
 
-**Completion criterion:** `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`, and agent config file written to disk.
+**Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`, and agent config file written to disk.
 
 ### 5. Done
 
 Tell user setup is complete. Mention `/align` before building, `/pm` or `/to-prd` for specs, `/design` for UI specs, `/triage` for backlog issues. Remind them to create GitHub labels matching `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later.
 
 **Completion criterion:** User notified setup is complete; `/align`, `/pm` or `/to-prd`, `/design`, and `/triage` mentioned; label creation reminder given.
+
+## Language
+
+Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `pm`, `to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Code, identifiers, and technical vocabulary stay in English. Chat tone is unaffected — that's `docs/agents/voice.md`, which already matches the language the user is typing in for that session.

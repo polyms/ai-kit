@@ -17,10 +17,10 @@ Example: [SG-001](https://ai-kit.polyms.dev/knowledge/SG-001) — TanStack Start
 
 ## Boundaries
 
-| Owns                     | Does not own                                       |
-| ------------------------ | -------------------------------------------------- |
-| Stack-combo design seams | Deploy incidents → [runbooks.md](./runbooks.md)    |
-| Seam chunks + checklist  | Timeless defaults → `skills/dev/stack-defaults.md` |
+| Owns                     | Does not own                                                                       |
+| ------------------------ | ----------------------------------------------------------------------------------- |
+| Stack-combo design seams | Deploy incidents → [runbooks.md](./runbooks.md)                                    |
+| Seam chunks + checklist  | Timeless defaults → `skills/dev/stack-defaults.md` — fallback only, search here first |
 
 ## Related
 

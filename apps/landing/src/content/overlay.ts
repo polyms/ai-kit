@@ -317,9 +317,11 @@ export const skillOverlays: SkillOverlay[] = [
     invoke: '/devops',
     slug: 'devops',
     description: 'Deploy, CI, and infra — symptom → fix via Knowledge (`intent: incident`).',
-    status: 'planned',
+    status: 'available',
     invocation: 'user',
     domain: 'devops',
+    samplePrompt:
+      '/devops\n\nVercel deploy failed on TanStack Start monorepo — search Knowledge (intent: incident) before changing config.',
     githubPath: 'skills/devops/',
     relatedAgents: ['devops-agent'],
     agentPanel: {
@@ -336,6 +338,6 @@ export const skillOverlays: SkillOverlay[] = [
       downstream: 'Verified deploy/CI green state',
     },
     boundaries:
-      'Not application feature code — operational playbooks and infra config. Skill file not shipped yet (planned).',
+      'Not application feature code — operational playbooks and infra config. Design seams → `/arch`; feature work → `/dev`.',
   },
 ]

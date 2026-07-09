@@ -29,7 +29,7 @@ export const Route = createRootRoute({
       { rel: 'icon', href: `${origin}/favicon.svg`, type: 'image/svg+xml' },
       { rel: 'icon', href: `${origin}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
       { rel: 'apple-touch-icon', href: `${origin}/favicon-180x180.png`, sizes: '180x180' },
-      { rel: 'manifest', href: '/site.webmanifest' },
+      { rel: 'manifest', href: '/manifest.json' },
     ],
   }),
   component: RootLayout,

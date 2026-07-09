@@ -35,16 +35,17 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 | `dev`             | Read `CONTEXT.md` + `docs/adr/` if present                                        |
 | `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch                     |
 | `align-loop`      | Same when exploring codebase                                                      |
-| `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve                                    |
-| `pm`              | Glossary vocabulary in specs when `CONTEXT.md` exists                             |
-| `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/core-ui` before component map |
-| `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces                       |
+| `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve; writes in `docs/agents/language.md` if present |
+| `pm`, `to-prd`    | Glossary vocabulary in specs when `CONTEXT.md` exists; writes in `docs/agents/language.md` if present |
+| `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/core-ui` before component map; writes in `docs/agents/language.md` if present |
+| `devops`          | [runbooks.md](../agents/runbooks.md) + MCP Knowledge retrieval; `stack-profile.md` when present |
+| `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces; writes in `docs/agents/language.md` if present |
 | `arch-refactor`   | Same; reaches `arch`, `align-loop`, `domain-modeling`                             |
 
-Do **not** cargo-cult the `/setup` pointer into soft-dependency skills.
+Do **not** cargo-cult the `/setup` pointer into soft-dependency skills. No `docs/agents/language.md`: match the language of whatever doc is being edited, or ask once if creating fresh.
 
 ## Consequences
 
 - Hard-dependency skills stay token-light on setup prose — one prerequisite line, not repeated setup docs inline.
 - Authors adding skills must classify hard vs soft before writing prerequisites.
-- `/setup` remains the single place that writes `docs/agents/issue-tracker.md`, `domain.md`, `triage-labels.md`, and `design.md`.
+- `/setup` remains the single place that writes `docs/agents/language.md`, `issue-tracker.md`, `domain.md`, `triage-labels.md`, and `design.md`.

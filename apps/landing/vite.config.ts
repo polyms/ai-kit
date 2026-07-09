@@ -11,7 +11,7 @@ import pkg from './package.json' with { type: 'json' }
 import { paraglideCompilerOptions } from './project.inlang/paraglide.options'
 
 const siteManifest = JSON.parse(
-  readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'public/site.webmanifest'), 'utf8')
+  readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'public/manifest.json'), 'utf8')
 ) as { theme_color: string }
 
 export default defineConfig(() => ({

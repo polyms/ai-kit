@@ -15,6 +15,8 @@ Per-repo layout: `docs/agents/domain.md`. Scaffold template: [domain.md](../setu
 
 Create files lazily. If no `CONTEXT.md` exists, create it when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
 
+Read `docs/agents/language.md` when present — write glossary entries and ADRs in that language. No file: match `CONTEXT.md`'s existing language, or ask once when creating it fresh.
+
 ## During The Session
 
 ### Challenge glossary

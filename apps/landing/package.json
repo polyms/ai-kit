@@ -19,7 +19,7 @@
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@hugeicons/core-free-icons": "^4.2.2",
     "@hugeicons/react": "^1.1.9",
-    "@polyms/core-ui": "0.4.35",
+    "@polyms/core-ui": "0.4.36",
     "@prisma/adapter-pg": "^6.19.0",
     "@prisma/client": "^6.19.0",
     "pg": "^8.16.3",

@@ -19,7 +19,7 @@ A user-invoked skill has no model-facing description — **no other skill can fi
 
 | User-invoked                                                                                  | Model-invoked                                                       |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `pm`, `dev`, `code-review` |
+| `/align`, `/setup`, `/craft`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/devops`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `pm`, `dev`, `code-review` |
 
 Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing); `/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch` when deepening. `/design` is user-invoked — ask the user to run `/core-ui` (external lib skill) before component mapping; `dev` uses `core-ui` when implementing UI.
 

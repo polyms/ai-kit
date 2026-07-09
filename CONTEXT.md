@@ -43,7 +43,7 @@ The stage chain that turns ideas into shipped code: `/align` → `/pm` or `/to-p
 _Avoid_: workflow, process, flow
 
 **Setup**:
-One-time repo configuration for the pipeline — issue tracker, domain docs layout, artifact paths. Invoke with `/setup`.
+One-time repo configuration for the pipeline — documentation language, issue tracker, domain docs layout, artifact paths. Invoke with `/setup`.
 _Avoid_: bootstrap (when meaning repo config, not symlink install)
 
 **Align**:
@@ -75,7 +75,7 @@ Two-axis review skill (Standards + Spec) since a pinned git fixed point — para
 _Avoid_: PR review (generic), lint check
 
 **DevOps**:
-Deploy, CI, and infra ownership — **symptom → fix** via **Runbook** retrieval (CMS/MCP), filtered by **stack manifest**. Invoke with `/devops` (planned). Long sessions: `devops-agent` (planned). Does **not** own architecture _why_ (ADR) or seam vocabulary (`arch`) or stack design guides (**Stack guide**).
+Deploy, CI, and infra ownership — **symptom → fix** via **Runbook** retrieval (CMS/MCP), filtered by **stack manifest**. Invoke with `/devops`. Long sessions: `devops-agent`. Does **not** own architecture _why_ (ADR) or seam vocabulary (`arch`) or stack design guides (**Stack guide**).
 _Avoid_: SRE (generic), ops runbook (when meaning the skill specifically), arch (when meaning module design)
 
 **Handoff**:
@@ -131,6 +131,10 @@ _Avoid_: content type (when meaning separate CMS tables), tag (generic)
 **Knowledge pointer**:
 Setup/agent doc at `docs/agents/knowledge.md` — how agents retrieve **Knowledge** (MCP tools, **Stack manifest** filter, confirm chunk before apply). Pointer only; no knowledge body in git. Replaces **Runbook pointer** + **Stack guide pointer** when migrated.
 _Avoid_: knowledge index in git (when meaning live CMS content)
+
+**Language pointer**:
+Setup output at `docs/agents/language.md` — the fixed language for persistent written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft dependency for `domain-modeling`, `pm`/`to-prd`, `design`, `arch` — they match this language or, absent the file, whatever doc they're already editing. Chat tone is unaffected — that's `docs/agents/voice.md`, which matches whichever language the user is typing in per session.
+_Avoid_: **Locale toggle** (kit-site UI language, not repo docs), i18n (generic)
 
 **Runbook**:
 Legacy **Knowledge intent** `incident` — **symptom → cause → fix → verify** for deploy/CI/infra; stack profile + deploy greenfield checklist. Migrating into **Knowledge**; public `/runbooks/*` may alias. `docs/runbooks/*.md` = import snapshot only.

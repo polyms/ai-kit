@@ -7,17 +7,18 @@ description: >-
 
 The most-used primitive. `Button` wraps a native `<button>` through `useRender`, so it accepts all native button attributes (`disabled`, `type`, `onClick`, …) plus the `render` prop for polymorphism. With no `variant`, it renders the ghost style (`btn-ghost`).
 
-| Prop       | Type                                                                             | Default   | Notes                                                                                                                                                      |
-| ---------- | -------------------------------------------------------------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`  | `'primary' \| 'success' \| 'info' \| 'warning' \| 'danger' \| 'dark' \| 'light'` | — (ghost) | Maps to `btn-*` classes; omit for the transparent ghost button.                                                                                            |
-| `size`     | `'xs' \| 'sm' \| 'lg' \| 'xl' \| '2xl' \| '3xl'`                                 | — (base)  | Adds `btn-<size>`; omit for the default medium size.                                                                                                       |
-| `rounded`  | `boolean`                                                                        | `false`   | Pill shape (`rounded-full`).                                                                                                                               |
-| `icon`     | `boolean`                                                                        | `false`   | Square icon-only button (`btn-icon`); pair with an `aria-label`. Prefer **`size='lg'`** or **`xl`** when the hit area would otherwise fall below ~44×44px. |
-| `outlined` | `boolean`                                                                        | `false`   | Outline style for the chosen variant.                                                                                                                      |
-| `active`   | `boolean`                                                                        | `false`   | Forces the active/pressed visual state.                                                                                                                    |
-| `tooltip`  | `string`                                                                         | —         | Rich tooltip; falls back to the native `title` before hydration.                                                                                           |
-| `disabled` | `boolean`                                                                        | `false`   | Native attribute; disables interaction and applies disabled styling.                                                                                       |
-| `render`   | `useRender` render prop                                                          | —         | Render as another element (e.g. an `<a>` or router link) while keeping button styling.                                                                     |
+| Prop       | Type                                                                             | Default    | Notes                                                                                                                                                      |
+| ---------- | -------------------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`  | `'primary' \| 'success' \| 'info' \| 'warning' \| 'danger' \| 'dark' \| 'light'` | — (ghost)  | Maps to `btn-*` classes; omit for the transparent ghost button.                                                                                            |
+| `size`     | `'xs' \| 'sm' \| 'lg' \| 'xl' \| '2xl' \| '3xl'`                                 | — (base)   | Adds `btn-<size>`; omit for the default medium size.                                                                                                       |
+| `rounded`  | `boolean`                                                                        | `false`    | Pill shape (`rounded-full`).                                                                                                                               |
+| `icon`     | `boolean`                                                                        | `false`    | Square icon-only button (`btn-icon`); pair with an `aria-label`. Prefer **`size='lg'`** or **`xl`** when the hit area would otherwise fall below ~44×44px. |
+| `outlined` | `boolean`                                                                        | `false`    | Outline style for the chosen variant.                                                                                                                      |
+| `active`   | `boolean`                                                                        | `false`    | Forces the active/pressed visual state.                                                                                                                    |
+| `tooltip`  | `string`                                                                         | —          | Rich tooltip; falls back to the native `title` before hydration.                                                                                           |
+| `disabled` | `boolean`                                                                        | `false`    | Native attribute; disables interaction and applies disabled styling.                                                                                       |
+| `type`     | `'button' \| 'submit' \| 'reset'`                                                | `'button'` | Injected when not using `render`. **Omit in generated code** — only set for `submit` / `reset`.                                                            |
+| `render`   | `useRender` render prop                                                          | —          | Render as another element (e.g. an `<a>` or router link) while keeping button styling.                                                                     |
 
 **There is no `content` prop.** Do not pass `content='center'` or similar invented props.
 
@@ -45,6 +46,21 @@ Prefer **`<Button>` props** over hand-written `btn-*` classes. The component map
 ```
 
 Use raw `className='btn …'` only on **native** `<button>` / `<a>` when `Button` truly cannot be used (rare). Even then, copy the exact mapping above (`btn-xl`, not `size-xl`).
+
+### `type` — omit the default
+
+`Button` sets `type='button'` automatically (unless `render` is set). Do **not** pass `type='button'` in generated code — omit `type` entirely for the common case. Only set `type` when you need `submit` or `reset` (e.g. form submit CTA).
+
+```tsx
+// ✅ Correct — omit redundant type
+<Button variant='primary' onClick={save}>Save</Button>
+
+// ✅ Correct — non-default type
+<Button type='submit' variant='primary'>Submit</Button>
+
+// ❌ Noisy — redundant default
+<Button type='button' variant='primary'>Save</Button>
+```
 
 ### Touch targets
 

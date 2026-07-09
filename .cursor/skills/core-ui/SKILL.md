@@ -53,7 +53,7 @@ Load **every** matched file before generating code.
 5. `@hugeicons/react` for icons — no hand-rolled SVG paths.
 6. Ship complete UI — [quality.md](quality.md) (copy tells, output completeness, pre-flight).
 
-**Frequent mistakes:** conversational `Field.Label` ([quality.md#field-label-copy](quality.md#field-label-copy)); `Modal.Trigger` / footer `Modal.Close` / `Offcanvas.Trigger` / body `Offcanvas.Close` via `render={<Button … />}` ([button.md](button.md#compose-button-through-render), [modal.md](modal.md)); footer `Modal.Close` without `variant` (ghost); `autoFocus` on footer CTA when modal has form inputs — use first input instead ([modal.md#modal](modal.md#modal)); no invented `content` prop on `Button`.
+**Frequent mistakes:** conversational `Field.Label` ([quality.md#field-label-copy](quality.md#field-label-copy)); `Modal.Trigger` / footer `Modal.Close` / `Offcanvas.Trigger` / body `Offcanvas.Close` via `render={<Button … />}` ([button.md](button.md#compose-button-through-render), [modal.md](modal.md)); footer `Modal.Close` without `variant` (ghost); `autoFocus` on footer CTA when modal has form inputs — use first input instead ([modal.md#modal](modal.md#modal)); no invented `content` prop on `Button`; redundant `type='button'` on `<Button>` ([button.md](button.md#type--omit-the-default)).
 
 ## Workflow
 

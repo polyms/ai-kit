@@ -25,7 +25,7 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 
 **Downstream:** `/dev` implements from `docs/design/<feature>.md`; `dev` uses `core-ui` when writing UI code.
 
-**Prerequisites:** Soft — read `CONTEXT.md` + ADRs when present. Recommend `@polyms/core-ui` installed and user runs `/core-ui` before component mapping.
+**Prerequisites:** Soft — read `CONTEXT.md` + ADRs when present. Recommend `@polyms/core-ui` installed and user runs `/core-ui` before component mapping. Read `docs/agents/language.md` when present — write the spec in that language.
 
 ## References
 

@@ -7,7 +7,7 @@ description: Architecture vocabulary for deep modules — seam, depth, leverage,
 
 Architecture vocabulary for **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.
 
-Read `CONTEXT.md` and ADRs in `docs/adr/` when present for domain vocabulary — soft dependency; output is less sharp without them.
+Read `CONTEXT.md` and ADRs in `docs/adr/` when present for domain vocabulary — soft dependency; output is less sharp without them. Read `docs/agents/language.md` when present — write ADRs in that language.
 
 ## Glossary
 
@@ -112,5 +112,6 @@ Good interfaces make testing natural:
 
 ## Going deeper
 
+- **Stack-combo design seams** (routing, state, modules) — [stack guide pointer](../../docs/agents/stack-guides.md); MCP `search_knowledge` with `intent: design`. ADRs hold irreversible **why**; Ops CMS holds retrievable seam recipes.
 - **Deepening a cluster given its dependencies** — see [DEEPENING.md](DEEPENING.md): dependency categories, seam discipline, and replace-don't-layer testing.
 - **Exploring alternative interfaces** — see [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.

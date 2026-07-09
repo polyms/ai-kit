@@ -124,10 +124,10 @@ Set semantic **`type`** on `Field.Control` so mobile picks the right keyboard:
 
 Wrap in `<form onSubmit={…}>`. Set `name` on `Field` root (defaults from `id`). Submit with `Button type='submit' variant='primary'`.
 
-Type the handler as **`React.FormEvent<HTMLFormElement>`** (not `React.SubmitEvent` — does not exist in `@types/react` 19). Inline handlers infer the event type.
+Type **`onSubmit`** handlers as **`React.SubmitEvent<HTMLFormElement>`** — React 19 / `@types/react` 19; `FormEvent` on submit is deprecated. Inline handlers can infer the type.
 
 ```tsx
-const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
   event.preventDefault()
   const data = new FormData(event.currentTarget)
 }

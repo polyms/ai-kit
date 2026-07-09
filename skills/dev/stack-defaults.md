@@ -1,6 +1,6 @@
 # Stack Defaults — Routing & State
 
-Polyms `/dev` fallbacks when the repo or spec does not already choose a stack. **Match existing project conventions first** — these apply on greenfield or when the user asks for defaults.
+Polyms `/dev` fallbacks when the repo or spec does not already choose a stack. **Match existing project conventions first.** Before using these, search Knowledge — MCP `search_knowledge` with `intent: design` — for a stack-combo seam recipe; these tables apply only when that search returns no match.
 
 ## Routing
 

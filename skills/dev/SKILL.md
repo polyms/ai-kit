@@ -1,6 +1,8 @@
 ---
 name: dev
-description: Fullstack implementation with TDD and disciplined debugging. Use when user mentions /dev, implement, build feature, fix bug, sửa lỗi, red-green-refactor, test-first, triển khai, or ship from spec.
+description: Fullstack implementation with TDD and disciplined debugging. Use when user mentions /dev,
+  implement, build feature, fix bug, sửa lỗi, red-green-refactor, test-first, triển khai, or ship
+  from spec.
 ---
 
 # Dev — Fullstack Implementation
@@ -9,11 +11,11 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 ## Quick Router
 
-| Intent                | Workflow                                               | Reference                      |
-| --------------------- | ------------------------------------------------------ | ------------------------------ |
-| New feature from spec | [Implement workflow](#implement-workflow)              | [tdd-guide.md](tdd-guide.md)   |
-| Bug / regression      | [Debug workflow](#debug-workflow)                      | [debug-loop.md](debug-loop.md) |
-| Branch / PR review    | **`code-review`** — pre-merge gate, not red-green loop | —                              |
+- New feature from spec → [Implement workflow](#implement-workflow);
+  reference: [tdd-guide.md](tdd-guide.md)
+- Bug / regression → [Debug workflow](#debug-workflow);
+  reference: [debug-loop.md](debug-loop.md)
+- Branch / PR review → **`code-review`** (pre-merge gate, not red-green loop)
 
 ## Implement Workflow
 
@@ -23,23 +25,35 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 - Read PRD, user stories, `/design` spec at `docs/design/<feature>.md`, or `/align` decisions
 - Read `CONTEXT.md` — use glossary vocabulary in code and tests
-- **Deploy/CI slice:** read [runbook pointer](../../docs/agents/runbooks.md) — search `/runbooks/*` or MCP before changing infra config
-- **Design + stack slice:** read [stack guide pointer](../../docs/agents/stack-guides.md) and ADRs; timeless defaults in [stack-defaults.md](stack-defaults.md)
-- **Toolchain / formatter setup:** read [Knowledge pointer](../../docs/agents/knowledge.md) — retrieve **KN-001** via MCP (`search_knowledge` → `get_knowledge_chunk`) before inventing Biome/Prettier config in a target repo
+- **Deploy/CI slice:** [runbook pointer](../../docs/agents/runbooks.md) — MCP `search_knowledge`
+  with `intent: incident` before changing infra config
+- **Design + stack slice:** MCP `search_knowledge` with `intent: design` first — see
+  [stack guide pointer](../../docs/agents/stack-guides.md) and ADRs. No match: fall back to
+  [stack-defaults.md](stack-defaults.md)
+- **Toolchain / formatter setup:** [Knowledge pointer](../../docs/agents/knowledge.md) — retrieve
+  **KN-001** via MCP (`search_knowledge` → `get_knowledge_chunk`) before inventing Biome/Prettier
+  config in a target repo
 - Identify modules and **seams** (public interfaces to test at)
-- **Greenfield UI with routing:** confirm routing branch before seam work if the slice touches routes — default **TanStack Router**; **TanStack Start** when the user needs SSR or server routes (see [stack-defaults.md](stack-defaults.md))
+- **Greenfield UI with routing:** confirm routing branch before seam work if the slice touches routes
+  — default **TanStack Router**; **TanStack Start** when the user needs SSR or server routes
+  (see [stack-defaults.md](stack-defaults.md))
 
-**Completion criterion:** Spec source and relevant glossary terms identified; candidate seams listed; routing branch noted when applicable.
+**Completion criterion:** Spec source and relevant glossary terms identified; candidate seams listed;
+routing branch noted when applicable.
 
 ### 2. Confirm seams
 
-Before any test, list seams under test. Get user confirmation. Prefer existing seams; propose new ones at the highest level possible. For full module/seam vocabulary and deepening principles, use **`arch`**.
+Before any test, list seams under test. Get user confirmation. Prefer existing seams; propose new
+ones at the highest level possible. For full module/seam vocabulary and deepening principles, use
+**`arch`**.
 
 > "What's the public interface, and which seams should we test?"
 
 **Completion criterion:** User confirms seams under test before any failing test is written.
 
-When implementing UI, use **`core-ui`** for primitives. Read design spec **§4 CSS** and **§8 visual acceptance** first — run [visual-ship.md](visual-ship.md) (CSS before wiring). If `core-ui` is not in context, ask the user to attach or invoke `/core-ui`.
+When implementing UI, use **`core-ui`** for primitives. Read design spec **§4 CSS** and
+**§8 visual acceptance** first — run [visual-ship.md](visual-ship.md) (CSS before wiring).
+If `core-ui` is not in context, ask the user to attach or invoke `/core-ui`.
 
 ### 3. Red-green loop
 
@@ -59,7 +73,8 @@ One vertical slice at a time — see [tdd-guide.md](tdd-guide.md):
 - [ ] Accessibility considered (labels, focus, contrast)
 - [ ] No secrets or credentials in code
 - [ ] Conventional commit ready
-- [ ] **UI from `docs/design/`:** [visual-ship.md](visual-ship.md) passed — CSS layer + dark acceptance vs visual reference
+- [ ] **UI from `docs/design/`:** [visual-ship.md](visual-ship.md) passed — CSS layer + dark
+      acceptance vs visual reference
 
 **Completion criterion:** Every ship checklist item verified.
 
@@ -78,7 +93,9 @@ One vertical slice at a time — see [tdd-guide.md](tdd-guide.md):
 
 ## Stack Defaults
 
-When stack is unspecified, prefer [stack-defaults.md](stack-defaults.md):
+When stack is unspecified, search Knowledge first — MCP `search_knowledge` with `intent: design`
+(stack-combo seam recipes, e.g. **SG-001**). Fall back to [stack-defaults.md](stack-defaults.md)
+only when that search returns no match:
 
 **Routing**
 

@@ -21,7 +21,7 @@ Synthesize the **current conversation** and codebase understanding into a PRD an
 
 **Downstream:** `/to-issues` breaks the published PRD into vertical-slice issues.
 
-**Prerequisites:** Run `/setup` if `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is missing.
+**Prerequisites:** Run `/setup` if `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is missing. Read `docs/agents/language.md` when present — publish the PRD in that language.
 
 ## References
 
@@ -58,9 +58,11 @@ Present the proposed seams to the user and **check that they match expectations*
 
 Fill every section of [prd-template.md](prd-template.md) from conversation context and codebase understanding. No empty headers.
 
-**User Stories** must be an extensive numbered list (per template). Include test seams from step 2 under **Testing Decisions** and relevant ADRs under **Implementation Decisions**.
+**User Stories** must be an extensive, **prioritized** numbered list (per template) — P0 stories independently testable, with Given/When/Then acceptance scenarios. Include test seams from step 2 under **Testing Decisions** and relevant ADRs under **Implementation Decisions**.
 
-**Completion criterion:** PRD draft complete; every template section filled.
+**Synthesize, don't invent:** this skill has no interview step — when the conversation didn't settle a detail, mark it `[NEEDS CLARIFICATION: …]` inline and collect markers under **Open Questions**. Inventing an answer here ships it straight to `/dev` unreviewed.
+
+**Completion criterion:** PRD draft complete; every template section filled; every unsettled detail carries a marker instead of a guess.
 
 ### 4. Publish to issue tracker
 

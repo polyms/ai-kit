@@ -6,6 +6,11 @@ import {
   UPSERT_KNOWLEDGE_TOOL_DESCRIPTION,
 } from './knowledge.mcp-authoring'
 import {
+  GET_KNOWLEDGE_CHUNK_TOOL_DESCRIPTION,
+  GET_KNOWLEDGE_TOOL_DESCRIPTION,
+  SEARCH_KNOWLEDGE_TOOL_DESCRIPTION,
+} from './knowledge.mcp-retrieval'
+import {
   deleteKnowledgeArticle,
   KnowledgeMutationValidationError,
   upsertKnowledgeArticle,
@@ -146,8 +151,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
   server.registerTool(
     'search_knowledge',
     {
-      description:
-        'Search published Knowledge articles and chunks (incident, design, toolchain) by keyword, filtered by intent and stack manifest axes',
+      description: SEARCH_KNOWLEDGE_TOOL_DESCRIPTION,
       inputSchema: searchInputSchema,
     },
     async ({ q, intent, axes, limit }) => {
@@ -162,7 +166,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
   server.registerTool(
     'get_knowledge',
     {
-      description: 'Get a published Knowledge article (with all chunks in sortOrder) by id or slug',
+      description: GET_KNOWLEDGE_TOOL_DESCRIPTION,
       inputSchema: idInputSchema,
     },
     async ({ id }) => {
@@ -183,7 +187,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
   server.registerTool(
     'get_knowledge_chunk',
     {
-      description: 'Get a single Knowledge chunk and its parent article by chunk id or slug',
+      description: GET_KNOWLEDGE_CHUNK_TOOL_DESCRIPTION,
       inputSchema: chunkIdInputSchema,
     },
     async ({ chunkId }) => {
