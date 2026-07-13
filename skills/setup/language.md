@@ -6,7 +6,9 @@ The language skills write into persistent repo docs.
 
 **Applies to:** `CONTEXT.md`, `docs/adr/`, PRDs, `docs/design/*.md`, `docs/agents/*.md`, and other files that outlive the conversation.
 
-**Does not apply to:** chat replies — those match whichever language the user is typing in for that session (see `docs/agents/voice.md`). Code, identifiers, file paths, commit messages, and technical vocabulary (seam, ADR, PRD, sortOrder, …) stay in English regardless of this setting.
+**Does not apply to:** chat replies — match the user's session language and IDE/user rules (or
+`.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in). Code, identifiers, file paths, commit
+messages, and technical vocabulary (seam, ADR, PRD, sortOrder, …) stay in English regardless of this setting.
 
 ## Language
 

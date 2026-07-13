@@ -10,6 +10,9 @@ Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tr
 
 **Upstream:** `/pm` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
 
+**Audience:** Follow [issue-template.md](issue-template.md). Do **not** pass a parent PRD executive summary
+into slices or ship agent-only shorthand (e.g. `"US#1–9: tenancy..."`) — expand enough context per wave.
+
 **Prerequisites:** Issue tracker and domain docs should already be configured — run `/setup` if `docs/agents/issue-tracker.md` is missing. Read `docs/agents/language.md` when present — write issue bodies in that language.
 
 ## References
@@ -77,7 +80,11 @@ Iterate until the user approves the breakdown.
 
 ### 5. Publish issues
 
-For each approved slice, create a GitHub issue using [issue-template.md](issue-template.md). Publish in dependency order (blockers first) so you can reference real issue numbers in **Blocked by**.
+For each approved slice, create a GitHub issue using [issue-template.md](issue-template.md). Publish in
+dependency order (blockers first) so you can reference real issue numbers in **Blocked by**.
+
+**Human-readable check (before each create):** body stands alone without the parent PRD; acceptance is
+Given/When/Then or a specific checklist (not a wave rollup); prose is clear to a human reading the tracker.
 
 ```bash
 gh issue create --title "..." --body "$(cat <<'EOF'
@@ -88,17 +95,20 @@ EOF
 
 After each create, capture the issue number for cross-references in later issues.
 
-**Labels:** If `docs/agents/triage-labels.md` exists, apply the `ready-for-agent` state label from that file's mapping (Matt behavior — slices are AFK-ready on publish):
+**Labels:** If `docs/agents/triage-labels.md` exists, apply the `ready-for-agent` state label from that file's
+mapping (Matt behavior — slices are AFK-ready on publish):
 
 ```bash
 gh issue edit <number> --add-label "ready-for-agent"
 ```
 
-Use the actual label string from the mapping table, not the canonical role name, when they differ. If `triage-labels.md` is missing, publish without labels — do not block.
+Use the actual label string from the mapping table, not the canonical role name, when they differ. If
+`triage-labels.md` is missing, publish without labels — do not block.
 
 Do **not** close or modify any parent issue.
 
-**Completion criterion:** Every approved slice exists as a GitHub issue with filled template sections; blocker references use real issue numbers.
+**Completion criterion:** Every approved slice exists as a GitHub issue with filled template sections;
+human-readable check passed per issue; blocker references use real issue numbers.
 
 ### 6. Handoff
 

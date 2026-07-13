@@ -3,7 +3,8 @@ import { getOidcIssuer } from './ops/oidc-config'
 
 const DEFAULT_APP_URL = 'https://ai-kit.polyms.dev'
 const MCP_RESOURCE_PATH = '/mcp'
-const MCP_OIDC_SCOPES = ['openid', 'profile', 'email'] as const
+/** offline_access — refresh tokens so MCP clients (Cursor) avoid re-auth on access-token expiry. */
+const MCP_OIDC_SCOPES = ['openid', 'profile', 'email', 'offline_access'] as const
 const MCP_ADMIN_ROLE = 'admin'
 
 export class McpAuthError extends Error {

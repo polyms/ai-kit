@@ -6,7 +6,9 @@ The language skills write into persistent repo docs for **this** repo (ai-kit).
 
 **Applies to:** `CONTEXT.md`, `docs/adr/`, PRDs, `docs/design/*.md`, `docs/agents/*.md`.
 
-**Does not apply to:** chat replies — those match whichever language the user is typing in for that session (see `docs/agents/voice.md`). Code, identifiers, file paths, commit messages, and technical vocabulary stay in English regardless of this setting.
+**Does not apply to:** chat replies — match the user's session language and IDE/user rules (or
+`.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in). Code, identifiers, file paths, commit
+messages, and technical vocabulary stay in English regardless of this setting.
 
 ## Language
 

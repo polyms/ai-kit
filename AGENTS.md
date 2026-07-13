@@ -6,7 +6,8 @@ Polyms agent skills for real engineering — align, spec, ship.
 
 ### Documentation language
 
-English. See `docs/agents/language.md`. Chat tone still matches whichever language the user writes in — see `docs/agents/voice.md`.
+English. See `docs/agents/language.md`. Chat tone: IDE/user rules (kit does not set persona unless `/setup`
+opted in chat voice → `.cursor/rules/agent-voice.mdc`).
 
 ### Issue tracker
 
@@ -45,10 +46,6 @@ Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/de
 ### Invocation
 
 User-invoked vs model-invoked skills; hard vs soft `/setup` dependencies. See `docs/agents/invocation.md` and `docs/adr/0001-skill-setup-dependencies.md`.
-
-### Voice
-
-Chat tone for grill and agents — plain language, natural assistant. See `docs/agents/voice.md`.
 
 ### Principal agents
 

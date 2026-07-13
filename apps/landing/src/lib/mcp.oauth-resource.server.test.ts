@@ -12,7 +12,7 @@ describe('mcp.oauth-resource.server', () => {
     expect(buildMcpProtectedResourceMetadata(request)).toMatchObject({
       resource: 'http://localhost:6300/mcp',
       authorization_servers: ['http://localhost:6200'],
-      scopes_supported: ['openid', 'profile', 'email'],
+      scopes_supported: ['openid', 'profile', 'email', 'offline_access'],
     })
   })
 

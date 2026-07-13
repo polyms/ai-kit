@@ -78,7 +78,7 @@ describe('mcp-auth.server', () => {
   })
 
   it('OIDC scopes for protected resource metadata', () => {
-    expect([...getMcpOidcScopes()]).toEqual(['openid', 'profile', 'email'])
+    expect([...getMcpOidcScopes()]).toEqual(['openid', 'profile', 'email', 'offline_access'])
   })
 
   it('WWW-Authenticate for 401 is minimal', () => {

@@ -1,6 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { KnowledgeResultsTable, KnowledgeSearch as KnowledgeSearchForm } from '../../components/knowledge'
-import { type KnowledgeSearch, searchKnowledgeFn } from '../../lib/knowledge/knowledge.fns'
+import {
+  KnowledgeIntentTabs,
+  KnowledgeResultsSkeleton,
+  KnowledgeResultsTable,
+  KnowledgeSearch as KnowledgeSearchForm,
+} from '../../components/knowledge'
+import {
+  defaultKnowledgeSearch,
+  type KnowledgeSearch,
+  searchKnowledgeFn,
+} from '../../lib/knowledge/knowledge.fns'
 import type { KnowledgeIntent } from '../../lib/knowledge/knowledge.types'
 import { m } from '../../paraglide/messages.js'
 
@@ -22,17 +31,20 @@ export const Route = createFileRoute('/knowledge/')({
     results: await searchKnowledgeFn({ data: { q, intent } }),
   }),
   component: KnowledgeIndexPage,
+  pendingComponent: KnowledgeIndexPending,
 })
 
-function intentLabel(intent: KnowledgeIntent): string {
-  switch (intent) {
-    case 'incident':
-      return m.knowledge_intent_incident()
-    case 'design':
-      return m.knowledge_intent_design()
-    case 'toolchain':
-      return m.knowledge_intent_toolchain()
-  }
+function KnowledgeIndexPending() {
+  return (
+    <div className='knowledge-page page-x section-y mx-auto max-w-4xl'>
+      <p className='label-mono'>{m.knowledge_kicker()}</p>
+      <h1 className='h1 mt-2'>{m.knowledge_title()}</h1>
+      <p className='mt-2 text-muted'>{m.knowledge_sub()}</p>
+      <div className='mt-8'>
+        <KnowledgeResultsSkeleton />
+      </div>
+    </div>
+  )
 }
 
 function KnowledgeIndexPage() {
@@ -41,32 +53,38 @@ function KnowledgeIndexPage() {
   const { results } = Route.useLoaderData()
 
   return (
-    <div className='knowledge-page page-x section-y mx-auto max-w-4xl border-line border-b'>
+    <div className='knowledge-page page-x section-y mx-auto max-w-4xl'>
       <p className='label-mono'>{m.knowledge_kicker()}</p>
       <h1 className='h1 mt-2'>{m.knowledge_title()}</h1>
       <p className='mt-2 text-muted'>{m.knowledge_sub()}</p>
 
-      {intent ? (
-        <p className='mt-4 text-sm'>
-          <span className='label-mono'>{m.knowledge_intent()}:</span>{' '}
-          <span className='font-medium'>{intentLabel(intent)}</span>
-        </p>
-      ) : null}
-
-      <div className='mt-8'>
+      <div className='mt-8 space-y-5'>
         <KnowledgeSearchForm
           onQueryChange={next => {
             navigate({ search: (prev: KnowledgeSearch) => ({ ...prev, q: next }) })
           }}
           query={q}
         />
+        <KnowledgeIntentTabs
+          intent={intent}
+          onIntentChange={next => {
+            navigate({ search: (prev: KnowledgeSearch) => ({ ...prev, intent: next }) })
+          }}
+        />
       </div>
 
-      <h2 className='h2 mt-10'>
-        {m.knowledge_results()} ({results.length})
-      </h2>
+      <div className='mt-10 flex items-baseline gap-2'>
+        <h2 className='h2'>{m.knowledge_results()}</h2>
+        <span className='badge badge-light font-mono'>{results.length}</span>
+      </div>
       <div className='mt-4'>
-        <KnowledgeResultsTable empty={results.length === 0} results={results} />
+        <KnowledgeResultsTable
+          empty={results.length === 0}
+          onClear={() => {
+            navigate({ search: () => defaultKnowledgeSearch })
+          }}
+          results={results}
+        />
       </div>
 
       <p className='mt-8 text-muted text-sm'>
