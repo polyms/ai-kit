@@ -99,7 +99,7 @@ palette_placeholder: Type to filter skills…
 palette_title: Command palette
 
 # --- principles ---
-principles_1_body: /pm closes the communication gap — discovery, PRD, testable acceptance criteria.
+principles_1_body: /align closes the communication gap — grill decisions before /pm or /to-prd.
 principles_1_title: Align before you build
 principles_2_body: Short-named skills (/pm, /design, /dev) you combine per task — no heavyweight process.
 principles_2_title: Small and composable

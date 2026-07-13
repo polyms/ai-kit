@@ -72,7 +72,7 @@ export const skillOverlays: SkillOverlay[] = [
     invoke: '/align',
     slug: 'align',
     description:
-      'Align on a plan before building — relentless grill (design tree, A–D options), sharpen domain language, update CONTEXT.md and ADRs as you go.',
+      'Align on a plan before building — relentless grill (design tree, lettered options), sharpen domain language, update CONTEXT.md and ADRs as you go.',
     status: 'available',
     invocation: 'user',
     domain: 'alignment',
@@ -87,19 +87,19 @@ export const skillOverlays: SkillOverlay[] = [
       upstream: 'Idea or rough plan',
       downstream: '/pm or /to-prd → /design → /dev',
     },
-    boundaries: 'Not a PRD draft or user-story list — that is `/pm`. Not implementation.',
+    boundaries: 'Not a PRD draft — that is `/pm` (enterprise) or `/to-prd` (lean publish). Not implementation.',
   },
   {
     name: 'pm',
     invoke: '/pm',
     slug: 'pm',
     description:
-      'Product management and requirements — PRDs, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE.',
+      'Product management — discovery, enterprise PRD, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Does not publish — after align use `/to-prd`.',
     status: 'available',
-    invocation: 'model',
+    invocation: 'user',
     domain: 'requirements',
     samplePrompt:
-      '/pm\n\nWrite a PRD for [feature].\nUsers: [who]. Success metric: [what]. Deadline: [when].',
+      '/pm\n\nWrite an enterprise PRD for [feature].\nUsers: [who]. Success metric: [what]. Deadline: [when].',
     githubPath: 'skills/pm/',
     relatedAgents: ['pm-agent'],
     agentPanel: {
@@ -108,12 +108,12 @@ export const skillOverlays: SkillOverlay[] = [
       invokeHint: 'Use the pm-agent to write a PRD for [feature]',
     },
     summary:
-      'Turn ideas into engineering-ready specs — PRD, stories, and acceptance criteria the team can build and review against.',
+      'Turn ideas into engineering-ready specs — enterprise PRD and stories in chat. Does not publish to the tracker.',
     whenToUse:
-      'After `/align` when you need discovery, formal PRD, prioritization, or stakeholder-ready requirements.',
+      'When you need discovery, enterprise PRD, prioritization, or stakeholder-ready requirements — not the post-align publish path.',
     pipeline: {
       upstream: '/align (recommended)',
-      downstream: '/to-issues, /design, /dev',
+      downstream: '/to-prd (to publish), /to-issues, /design, /dev',
     },
     boundaries:
       'Not a lean publish-from-chat PRD — use `/to-prd` for that. Not UI layout — that is `/design`.',

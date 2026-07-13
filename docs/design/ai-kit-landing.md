@@ -944,7 +944,7 @@ ul.divide-y — rows: > /setup  setup  desc  [badges incl. status]
 | ---------------- | ------------- | ----------- | ---------- | -------------- |
 | `/setup`         | setup         | available   | user       | repo-config    |
 | `/align`         | align         | available   | user       | alignment      |
-| `/pm`            | pm            | available   | model      | requirements   |
+| `/pm`            | pm            | available   | user       | requirements   |
 | `/to-prd`        | to-prd        | available   | user       | requirements   |
 | `/to-issues`     | to-issues     | available   | user       | requirements   |
 | `/triage`        | triage        | available   | user       | triage         |

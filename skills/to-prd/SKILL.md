@@ -10,12 +10,28 @@ Synthesize the **current conversation** and codebase understanding into a PRD an
 
 **Do NOT interview** — synthesize from conversation + codebase context already in session.
 
+## When `/pm` vs `/to-prd` vs `/align`
+
+Same decision tree in `/align` handoff and `/pm` — keep in sync:
+
+```
+Decisions / problem statement clear?
+├─ Yes, aligned chat ready to ship a PRD → `/to-prd` (this skill)
+│     (lean template, publish to tracker)
+├─ No — need design-tree grill (tech forks, domain terms) → user invokes `/align`
+└─ No — need PM discovery, enterprise PRD, stories, or prioritization → user invokes `/pm`
+      (enterprise template in chat; `/pm` does NOT publish)
+```
+
+**Audience:** Follow [lean-prd-template.md](lean-prd-template.md). Do **not** ship executive-summary
+rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
+
 **Boundary vs `/pm`:**
 
-| Skill     | When                                             | Behavior                                                                                         |
-| --------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `/pm`     | Discovery, formal PRD writing, stories, priority | May interview; enterprise template via `/pm`                                                     |
-| `/to-prd` | "We've talked enough — ship the PRD"             | **Synthesize only** — no discovery interview; [prd-template.md](prd-template.md) (lean template) |
+| Skill     | When                                             | Behavior                                                                                                 |
+| --------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `/pm`     | Discovery, formal PRD, stories, priority         | May interview; [enterprise-prd-template.md](../pm/enterprise-prd-template.md); **does not publish**     |
+| `/to-prd` | "We've talked enough — ship the PRD"             | **Synthesize only** — no discovery interview; [lean-prd-template.md](lean-prd-template.md); **publishes** |
 
 **Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain language before synthesis.
 
@@ -29,7 +45,7 @@ Synthesize the **current conversation** and codebase understanding into a PRD an
 | --------------- | ---------------------------------------------------------------------------------------------- |
 | Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands      |
 | Triage labels   | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping |
-| PRD body        | [prd-template.md](prd-template.md)                                                             |
+| PRD body        | [lean-prd-template.md](lean-prd-template.md)                                                   |
 | Domain glossary | `CONTEXT.md` at repo root                                                                      |
 | ADRs            | `docs/adr/` — decisions in the area you are touching                                           |
 
@@ -54,34 +70,58 @@ Present the proposed seams to the user and **check that they match expectations*
 
 **Completion criterion:** User confirmed seams (or explicitly deferred).
 
-### 3. Write the PRD
+### 3. Open-questions gate (before write)
 
-Fill every section of [prd-template.md](prd-template.md) from conversation context and codebase understanding. No empty headers.
+Scan conversation, align handoff, and codebase for details an implementer still needs — same bar as
+`[NEEDS CLARIFICATION]` in [lean-prd-template.md](lean-prd-template.md).
+
+If any would appear in **Open Questions**: list them, **do not draft or publish yet**, and ask the
+**open-questions confirmation** turn ([GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md)) — **A** here means
+run `/align` on the listed items; **B** proceeds to step 4 with confirmed markers. If `/align` already
+deferred the same items with **B**, restate the list and proceed only after explicit yes.
+
+**Completion criterion:** Zero unsettled markers, or user explicitly chose **B** and confirmed the deferred list.
+
+### 4. Write the PRD
+
+Fill every section of [lean-prd-template.md](lean-prd-template.md) from conversation context and codebase understanding. No empty headers.
 
 **User Stories** must be an extensive, **prioritized** numbered list (per template) — P0 stories independently testable, with Given/When/Then acceptance scenarios. Include test seams from step 2 under **Testing Decisions** and relevant ADRs under **Implementation Decisions**.
 
-**Synthesize, don't invent:** this skill has no interview step — when the conversation didn't settle a detail, mark it `[NEEDS CLARIFICATION: …]` inline and collect markers under **Open Questions**. Inventing an answer here ships it straight to `/dev` unreviewed.
+**Synthesize, don't invent:** this skill has no interview step — when the conversation didn't settle a detail, mark it `[NEEDS CLARIFICATION: …]` inline and collect markers under **Open Questions**. Inventing an answer here ships it straight to `/dev` unreviewed. Markers may appear only after step 3 **B** confirmation.
 
-**Completion criterion:** PRD draft complete; every template section filled; every unsettled detail carries a marker instead of a guess.
+**Human-readable check (before publish):** re-read the draft as a PM unfamiliar with the codebase — every
+template section filled; no one-line wave summaries; Given/When/Then per P0 story; body stands alone without
+opening the repo.
 
-### 4. Publish to issue tracker
+**Completion criterion:** PRD draft complete; every template section filled; every unsettled detail carries a
+marker instead of a guess; markers match the step 3 confirmed deferral list when any exist; human-readable check
+passed.
 
-Create an issue titled `PRD: <feature>` per [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md). Apply the mapped `ready-for-agent` label string from [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md):
+### 5. Publish
+
+Create an issue titled `PRD: <feature>` per
+[docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md). Apply the mapped `ready-for-agent` label
+string from [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md). Also write the same body to
+`docs/prd/<feature-slug>.md` (create `docs/prd/` if missing). Tracker issue is canonical; the repo file is the
+mirror (header/links may differ; prose and stories must match).
 
 ```bash
 gh issue create --title "PRD: <feature>" --body "$(cat <<'EOF'
-<body from prd-template.md>
+<body from lean-prd-template.md>
 EOF
 )" --label "<mapped label string>"
 ```
 
 (`gh` example — follow `issue-tracker.md` when the tracker is not GitHub.)
 
-Skip `/triage` — this skill publishes a pre-aligned spec from conversation (`/align` upstream), not a raw inbound issue. No agent brief needed; the PRD body is the AFK contract.
+Skip `/triage` — this skill publishes a pre-aligned spec from conversation (`/align` upstream), not a raw
+inbound issue. No agent brief needed; the PRD body is the AFK contract.
 
-**Completion criterion:** Issue created on tracker with full PRD body and mapped `ready-for-agent` label applied.
+**Completion criterion:** Issue created on tracker with full PRD body and mapped `ready-for-agent` label;
+matching `docs/prd/<feature-slug>.md` written.
 
-### 5. Handoff
+### 6. Handoff
 
 Summarize what was published (issue number + title). End with `## Next Step` pointing to exactly one skill — typically `/to-issues` on the published PRD issue.
 

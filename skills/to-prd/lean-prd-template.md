@@ -1,6 +1,11 @@
-# PRD Template (lean)
+# Lean PRD Template
 
-Lean template for `/to-prd` — synthesize from conversation, publish to the issue tracker. Enterprise discovery PRD uses `/pm`'s template instead.
+Lean template for `/to-prd` — synthesize from conversation, publish to the issue tracker. Enterprise discovery
+PRD (chat only, no publish) uses `/pm`'s [enterprise-prd-template.md](../pm/enterprise-prd-template.md).
+
+**Audience:** PRD must be **human + AI readable** — clear prose for PM/stakeholder; structure sufficient for
+the agent. Avoid shorthand only an AI can parse (wave rollup, code-only bullets, missing Given/When/Then).
+Tracker issue body is canonical; `docs/prd/` mirrors the same content — both must stand alone when read.
 
 Copy this structure when writing a PRD. Replace bracketed placeholders.
 
@@ -74,6 +79,8 @@ A description of the things that are out of scope for this PRD.
 ## Open Questions
 
 Collect every `[NEEDS CLARIFICATION]` marker from the sections above here, as a checklist. Empty section = no markers = the conversation settled everything.
+
+`/align` and `/to-prd` both gate on this section — markers appear only after the user confirms deferral in the open-questions audit (align handoff or `/to-prd` step 3).
 
 - [ ] [question — where it blocks]
 

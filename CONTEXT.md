@@ -23,7 +23,7 @@ Human types `/name` (e.g. `/align`, `/craft`). Skill has `disable-model-invocati
 _Avoid_: manual, human-only skill
 
 **Model-invoked**:
-Agent reaches the skill via `description` (e.g. `align-loop`, `domain-modeling`, `pm`). No `disable-model-invocation` flag.
+Agent reaches the skill via `description` (e.g. `align-loop`, `domain-modeling`, `dev`). No `disable-model-invocation` flag.
 _Avoid_: auto, automatic, agent-discovered
 
 ## Skills & Agents
@@ -51,12 +51,14 @@ Align before you build — grill decisions, sharpen domain language, update `CON
 _Avoid_: discovery, planning session
 
 **PM**:
-Turn ideas into engineering-ready specs — PRD, user stories, acceptance criteria. Invoke with `/pm`. May interview; uses full enterprise PRD template.
-_Avoid_: product management (when meaning the `/pm` skill)
+Discovery, enterprise PRD, user stories, acceptance criteria — draft in chat; does not publish. Invoke with `/pm`
+(user-invoked). Template: `skills/pm/enterprise-prd-template.md`. After align to ship lean PRD → `/to-prd`.
+_Avoid_: product management (generic), write PRD (when meaning `/to-prd` publish)
 
 **To PRD**:
-Synthesize the current conversation into a lean PRD and publish to the issue tracker — no interview. Invoke with `/to-prd`.
-_Avoid_: publish PRD (generic), write PRD (when meaning `/pm` discovery workflow)
+Synthesize the current conversation into a lean PRD and publish to the issue tracker — no interview. Invoke with
+`/to-prd` (user-invoked). Template: `skills/to-prd/lean-prd-template.md`.
+_Avoid_: publish PRD (generic), enterprise discovery (when meaning `/pm`)
 
 **Design**:
 Turn a PRD into an engineering-ready UI spec at `docs/design/<feature>.md`, mapped to `@polyms/core-ui`. Invoke with `/design`. Long sessions: `design-agent`.
@@ -133,8 +135,13 @@ Setup/agent doc at `docs/agents/knowledge.md` — how agents retrieve **Knowledg
 _Avoid_: knowledge index in git (when meaning live CMS content)
 
 **Language pointer**:
-Setup output at `docs/agents/language.md` — the fixed language for persistent written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft dependency for `domain-modeling`, `pm`/`to-prd`, `design`, `arch` — they match this language or, absent the file, whatever doc they're already editing. Chat tone is unaffected — that's `docs/agents/voice.md`, which matches whichever language the user is typing in per session.
-_Avoid_: **Locale toggle** (kit-site UI language, not repo docs), i18n (generic)
+Setup output at `docs/agents/language.md` — the fixed language for persistent written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft dependency for `domain-modeling`, `pm`/`to-prd`, `design`, `arch` — they match this language or, absent the file, whatever doc they're already editing. Chat tone is unaffected — IDE/user rules, or opt-in `.cursor/rules/agent-voice.mdc` from `/setup`.
+_Avoid_: **Locale toggle** (kit-site UI language, not repo docs), i18n (generic), shipping a always-on kit persona
+
+**Voice rule**:
+Optional `/setup` output — `.cursor/rules/agent-voice.mdc` (`alwaysApply`); Claude Code uses
+`.claude/rules/agent-voice.mdc` → symlink to that file. Default offline (no kit persona).
+_Avoid_: `docs/agents/voice.md` (removed — was always-on dup with user rules)
 
 **Runbook**:
 Legacy **Knowledge intent** `incident` — **symptom → cause → fix → verify** for deploy/CI/infra; stack profile + deploy greenfield checklist. Migrating into **Knowledge**; public `/runbooks/*` may alias. `docs/runbooks/*.md` = import snapshot only.

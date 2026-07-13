@@ -6,7 +6,8 @@ disable-model-invocation: true
 
 # Setup — Configure Repo for ai-kit
 
-Scaffold per-repo configuration that `/pm`, `/to-prd`, `/align`, `/design`, `/triage`, `/to-issues`, and `/dev` assume. Prompt-driven — explore, confirm with user, then write.
+Scaffold per-repo configuration that `/pm`, `/to-prd`, `/align`, `/design`, `/triage`, `/to-issues`, and
+`/dev` assume. Prompt-driven — explore, confirm with user, then write.
 
 ## Process
 
@@ -19,6 +20,7 @@ Read what exists; don't assume:
 - `docs/agents/` — prior setup output?
 - `.scratch/` — local markdown issue convention?
 - `AGENTS.md`, `CLAUDE.md` — existing agent config?
+- `.cursor/rules/agent-voice.mdc`, `.claude/rules/` — prior opt-in chat voice?
 
 **Completion criterion:** Current repo state documented; no assumptions about missing config.
 
@@ -28,7 +30,10 @@ Present each section, get answer, then move on. Explain terms briefly before cho
 
 **A — Documentation language**
 
-The language skills write into persistent repo docs — `CONTEXT.md`, `docs/adr/`, PRDs, `docs/design/`, and `docs/agents/*.md` itself. Separate from chat tone (`docs/agents/voice.md` already matches whichever language the user types in per session) — this fixes the language of files that outlive the conversation, so a repo's rules stay in one language even when different people chat with agents in different languages.
+The language skills write into persistent repo docs — `CONTEXT.md`, `docs/adr/`, PRDs, `docs/design/`, and
+`docs/agents/*.md` itself. Separate from chat tone (IDE/user rules, or opt-in voice in step **G**) — this
+fixes the language of files that outlive the conversation, so a repo's rules stay in one language even when
+different people chat with agents in different languages.
 
 | Choice                                                                        | When                                          |
 | ----------------------------------------------------------------------------- | --------------------------------------------- |
@@ -65,13 +70,15 @@ See [context-format.md](context-format.md) and [adr-format.md](adr-format.md).
 
 Where specs land after `/pm`, `/to-prd`, and `/align`:
 
-| Artifact | Default path                 |
-| -------- | ---------------------------- |
-| PRDs     | `docs/prd/` or issue tracker |
-| ADRs     | `docs/adr/`                  |
-| Glossary | `CONTEXT.md`                 |
+| Artifact | Default path                                                                 |
+| -------- | ---------------------------------------------------------------------------- |
+| PRDs     | Issue tracker canonical; `/to-prd` also mirrors to `docs/prd/<slug>.md`      |
+| ADRs     | `docs/adr/`                                                                  |
+| Glossary | `CONTEXT.md`                                                                 |
 
-Confirm or override paths.
+Confirm or override paths. `/pm` drafts enterprise PRDs in chat or `docs/prd/` and does **not** publish;
+`/to-prd` publishes to the tracker (and mirrors to `docs/prd/`). Once published, keep tracker and repo mirror
+in sync when both exist.
 
 **E — Triage labels**
 
@@ -82,9 +89,11 @@ Map canonical triage roles to label strings on the issue tracker. Required for `
 | **State**    | `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix` |
 | **Category** | `bug`, `enhancement`                                                          |
 
-Default: label strings equal canonical names unless the user overrides. Show the mapping table; confirm or edit the right-hand column.
+Default: label strings equal canonical names unless the user overrides. Show the mapping table; confirm or
+edit the right-hand column.
 
-Remind user to create matching labels on the remote tracker after setup (see [triage-labels.md](triage-labels.md) for `gh label create` examples).
+Remind user to create matching labels on the remote tracker after setup (see [triage-labels.md](triage-labels.md)
+for `gh label create` examples).
 
 **F — Design**
 
@@ -93,9 +102,28 @@ Remind user to create matching labels on the remote tracker after setup (see [tr
 | Design specs  | `docs/design/<feature>.md`                                   |
 | Design system | `@polyms/core-ui` + `/core-ui` skill (symlink from lib repo) |
 
-Confirm paths. Note: `/design` writes specs; `/core-ui` skill documents component API — not duplicated in ai-kit.
+Confirm paths. Note: `/design` writes specs; `/core-ui` skill documents component API — not duplicated in
+ai-kit.
 
-**Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed; issue tracker, domain layout, artifact paths, triage labels, and design paths confirmed by user.
+**G — Chat voice** (optional)
+
+Repo-level chat **persona** for agents. Distinct from documentation language (step A) and from grill
+question shape (`align-loop` / GRILL-FORMAT). Default: **do not** install — use the user's IDE/user rules.
+
+Ask: _Do you want a kit-written chat voice for this repo?_ If Explore found an existing
+`.cursor/rules/agent-voice.mdc`, say so and ask skip / replace / keep.
+
+| Choice                       | When                                                         |
+| ---------------------------- | ------------------------------------------------------------ |
+| **No** (default)             | User already has Cursor/Claude user rules, or wants defaults |
+| **Yes — kit voice template** | Team wants a shared repo persona (edit the rule after write) |
+
+If **Yes**, collect any one-line overrides (e.g. keep EN peer tone only; drop em/anh). Otherwise use
+[voice-rule.mdc](voice-rule.mdc) as-is.
+
+**Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed; issue
+tracker, domain layout, artifact paths, triage labels, design paths, and voice choice (No or Yes + any
+overrides) confirmed by user.
 
 ### 3. Confirm draft
 
@@ -107,6 +135,7 @@ Show before writing:
 - `docs/agents/domain.md`
 - `docs/agents/triage-labels.md`
 - `docs/agents/design.md`
+- If voice **Yes**: `.cursor/rules/agent-voice.mdc` and `.claude/rules/agent-voice.mdc` → symlink
 
 Let user edit.
 
@@ -114,7 +143,8 @@ Let user edit.
 
 ### 4. Write
 
-**Pick config file:** edit existing `CLAUDE.md` or `AGENTS.md`; if neither exists, ask which to create. Never create both.
+**Pick config file:** edit existing `CLAUDE.md` or `AGENTS.md`; if neither exists, ask which to create. Never
+create both.
 
 If `## Agent skills` exists, update in-place — don't duplicate.
 
@@ -123,7 +153,8 @@ If `## Agent skills` exists, update in-place — don't duplicate.
 
 ### Documentation language
 
-Written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`) are in [language]. Chat tone still matches whichever language the user writes in — see `docs/agents/voice.md`.
+Written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`) are in [language]. Chat tone is not
+set by the kit unless Chat voice was opted in — see Voice below or the user's IDE rules.
 
 ### Issue tracker
 
@@ -141,9 +172,16 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 UI specs and `@polyms/core-ui` pointers. See `docs/agents/design.md`.
 
+### Voice
+
+[Omit this subsection when voice was **No**.]
+Opt-in chat persona: `.cursor/rules/agent-voice.mdc` (Cursor). Claude Code:
+`.claude/rules/agent-voice.mdc` → symlink to that rule.
+
 ### Pipeline
 
-Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/dev`; raw issues via `/triage`. Specs in [path]; glossary in `CONTEXT.md`.
+Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/dev`; raw issues via `/triage`. Specs in
+[path]; glossary in `CONTEXT.md`.
 ```
 
 Write docs using templates:
@@ -156,14 +194,37 @@ Write docs using templates:
 - Triage labels → [triage-labels.md](triage-labels.md)
 - Design → [design.md](design.md)
 
-**Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`, and agent config file written to disk.
+**If voice Yes:**
+
+1. Write `.cursor/rules/agent-voice.mdc` from [voice-rule.mdc](voice-rule.mdc) (apply user overrides).
+2. `mkdir -p .claude/rules`
+3. Symlink Claude → Cursor rule (relative path so clones stay portable):
+
+```bash
+ln -sfn ../../.cursor/rules/agent-voice.mdc .claude/rules/agent-voice.mdc
+```
+
+Do **not** duplicate the persona body under `.claude/` — one SoT, one link.
+
+**If voice No:** do not write or remove an existing rule unless the user confirmed replace/remove in step G.
+
+**Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
+`docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`, and agent config file
+written; if voice Yes, Cursor rule + Claude symlink present.
 
 ### 5. Done
 
-Tell user setup is complete. Mention `/align` before building, `/pm` or `/to-prd` for specs, `/design` for UI specs, `/triage` for backlog issues. Remind them to create GitHub labels matching `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later.
+Tell user setup is complete. Mention `/align` before building, `/pm` or `/to-prd` for specs, `/design` for UI
+specs, `/triage` for backlog issues. Remind them to create GitHub labels matching
+`docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was installed, point
+at `.cursor/rules/agent-voice.mdc` to edit persona.
 
-**Completion criterion:** User notified setup is complete; `/align`, `/pm` or `/to-prd`, `/design`, and `/triage` mentioned; label creation reminder given.
+**Completion criterion:** User notified setup is complete; `/align`, `/pm` or `/to-prd`, `/design`, and
+`/triage` mentioned; label creation reminder given; voice path mentioned only when opted in.
 
 ## Language
 
-Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `pm`, `to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Code, identifiers, and technical vocabulary stay in English. Chat tone is unaffected — that's `docs/agents/voice.md`, which already matches the language the user is typing in for that session.
+Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `pm`,
+`to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Code, identifiers, and
+technical vocabulary stay in English. Chat tone is unaffected by this file — IDE/user rules, or
+`.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in.

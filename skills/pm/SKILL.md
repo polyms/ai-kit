@@ -1,6 +1,7 @@
 ---
 name: pm
-description: Product management and requirements — PRDs, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Use when user mentions /pm, requirements, PRD, viết PRD, user stories, ưu tiên backlog, or stakeholder alignment. Plan grill or design-tree alignment → `/align`, not this skill.
+description: Product management — discovery, enterprise PRD, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Invoke with /pm, requirements, user stories, ưu tiên backlog, or stakeholder alignment. After align to publish lean PRD → /to-prd. Plan grill → /align.
+disable-model-invocation: true
 ---
 
 # PM — Product Management & Requirements
@@ -9,17 +10,32 @@ Turn ideas into engineering-ready artifacts. Read this skill fully before produc
 
 Read `docs/agents/language.md` when present — write PRDs and stories in that language. No file: match the issue tracker's existing language.
 
+## When `/pm` vs `/to-prd` vs `/align`
+
+Same decision tree in `/align` handoff and `/to-prd` — keep in sync:
+
+```
+Decisions / problem statement clear?
+├─ Yes, aligned chat ready to ship a PRD → user invokes `/to-prd`
+│     (lean template, publish to tracker — this skill does NOT publish)
+├─ No — need design-tree grill (tech forks, domain terms) → user invokes `/align`
+└─ No — need PM discovery, enterprise PRD, stories, or prioritization → `/pm` (this skill)
+      (draft in chat or docs/prd/; does NOT create tracker issues)
+```
+
+Do **not** treat "viết PRD" / "write a PRD" after `/align` as this skill — that path is `/to-prd`.
+
 ## Quick Router
 
-| User intent                                 | Workflow                                            | Reference                                  |
-| ------------------------------------------- | --------------------------------------------------- | ------------------------------------------ |
-| Chốt PRD / publish from aligned chat        | User invokes `/to-prd` — not this skill             | —                                          |
-| Plan still fuzzy / stress-test before spec  | User invokes `/align` — not this skill              | —                                          |
-| "Viết PRD" / write PRD (discovery + formal) | [PRD workflow](#prd-workflow)                       | [prd-template.md](prd-template.md)         |
-| User stories / backlog                      | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md) |
-| Làm rõ req / clarify                        | [Discovery workflow](#discovery-workflow)           | —                                          |
-| Ưu tiên / prioritize                        | [Prioritization workflow](#prioritization-workflow) | —                                          |
-| Review req hiện có                          | [Refinement workflow](#refinement-workflow)         | —                                          |
+| User intent                                 | Workflow                                            | Reference                                                    |
+| ------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
+| Chốt / publish PRD from aligned chat        | User invokes `/to-prd` — not this skill             | —                                                            |
+| Plan still fuzzy / stress-test before spec  | User invokes `/align` — not this skill              | —                                                            |
+| Discovery + formal enterprise PRD           | [PRD workflow](#prd-workflow)                       | [enterprise-prd-template.md](enterprise-prd-template.md)     |
+| User stories / backlog                      | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md)                   |
+| Làm rõ req / clarify                        | [Discovery workflow](#discovery-workflow)           | —                                                            |
+| Ưu tiên / prioritize                        | [Prioritization workflow](#prioritization-workflow) | —                                                            |
+| Review req hiện có                          | [Refinement workflow](#refinement-workflow)         | —                                                            |
 
 ## Discovery Workflow
 
@@ -35,18 +51,31 @@ Read `docs/agents/language.md` when present — write PRDs and stories in that l
 
 ## PRD Workflow
 
-**Goal:** Complete PRD ready for engineering + design review.
+**Goal:** Complete enterprise PRD ready for engineering + design review — delivered in chat (and optionally
+`docs/prd/`), **not** published to the issue tracker.
 
-**Boundary:** Aligned-chat synthesize/publish → `/to-prd` (Quick Router). Plan still fuzzy or needs design-tree grill → `/align`. Below is discovery + enterprise PRD only — not align-loop.
+**Does not publish.** Creating a tracker issue with a lean PRD body is `/to-prd` only. After `/align` when
+the conversation is ready to ship, tell the user to invoke `/to-prd`.
+
+**Boundary:** Aligned-chat synthesize/publish → `/to-prd`. Plan still fuzzy or needs design-tree grill →
+`/align`. Below is discovery + enterprise PRD only — not align-loop.
+
+**Audience:** Follow [enterprise-prd-template.md](enterprise-prd-template.md). Do **not** ship
+executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
 
 1. Run discovery if problem statement is missing
-2. Fill [prd-template.md](prd-template.md) — no empty headers: fill a section with real thinking or delete it and note the deletion in Appendix
-3. Mark unresolved details inline with `[NEEDS CLARIFICATION: …]` — never invent a threshold, method, or behavior the user didn't settle
+2. Fill [enterprise-prd-template.md](enterprise-prd-template.md) — no empty headers: fill a section with
+   real thinking or delete it and note the deletion in Appendix
+3. Mark unresolved details inline with `[NEEDS CLARIFICATION: …]` — never invent a threshold, method, or
+   behavior the user didn't settle
 4. Include wireframe notes or flow description where UI is involved
 5. Add **non-functional requirements** (performance, security, accessibility, i18n) — only rows that apply
 6. End with open questions (collected markers) and next steps
+7. **Human-readable check:** re-read as a PM unfamiliar with the codebase — every kept section filled; no
+   one-line wave summaries; Given/When/Then per P0 story; body stands alone without opening the repo
 
-**Completion criterion:** PRD passes the [quality checklist](#quality-checklist).
+**Completion criterion:** PRD passes the [quality checklist](#quality-checklist); human-readable check
+passed; no tracker issue created by this skill.
 
 ## User Story Workflow
 
@@ -107,6 +136,9 @@ Before delivering any artifact, verify:
 - [ ] Accessibility and security considered where applicable
 - [ ] Assumptions listed separately from facts
 - [ ] No silent guesses — unresolved details carry `[NEEDS CLARIFICATION]` markers, collected under open questions
+- [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; a human can understand scope from the
+      body alone (see Audience on [enterprise-prd-template.md](enterprise-prd-template.md))
+- [ ] **No publish** — this skill did not create a tracker issue; publish path is `/to-prd`
 
 ## Anti-Patterns
 
@@ -117,6 +149,7 @@ Before delivering any artifact, verify:
 | One giant story                   | Split by user goal (INVEST)                        |
 | Solution in req before validation | Problem + options + recommendation                 |
 | Missing error flows               | Include failure/empty/loading states               |
+| Publishing PRD via `gh` here      | Tell user to invoke `/to-prd`                      |
 
 ## Agent
 

@@ -28,7 +28,7 @@ Every comment or issue posted to the issue tracker during triage **must** start 
 | ADRs            | `docs/adr/` — decisions in the area you are touching                                      |
 | Agent brief     | [agent-brief.md](agent-brief.md) — contract for `ready-for-agent`                         |
 | Out of scope    | [out-of-scope.md](out-of-scope.md) — `.out-of-scope/` knowledge base                      |
-| Grill           | `align-loop` skill — one question, options A–D + `(Recommended)` (model-invoked)          |
+| Grill           | `align-loop` skill — one question, lettered options + `(Recommended)` (model-invoked)          |
 | Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline (model-invoked)                      |
 
 ## Roles
@@ -116,7 +116,7 @@ Before any grilling, check that the claim holds up. For a bug, reproduce from th
 
 ### 4. Grill (if needed)
 
-If the request needs fleshing out, reach **`align-loop`** and **`domain-modeling`** together — design tree, one question, A–D + `(Recommended)`, codebase-first; sharpen domain terms and update `CONTEXT.md` inline as decisions land. Question shape: [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md). Do not duplicate those skill bodies here; follow them in-process.
+If the request needs fleshing out, reach **`align-loop`** and **`domain-modeling`** together — design tree, one question, lettered options + `(Recommended)`, codebase-first; sharpen domain terms and update `CONTEXT.md` inline as decisions land. Question shape: [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md). Do not duplicate those skill bodies here; follow them in-process.
 
 **Completion criterion:** Request is specific enough for an agent brief, or maintainer chooses to stop at `needs-info`.
 

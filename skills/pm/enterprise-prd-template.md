@@ -1,6 +1,14 @@
-# PRD Template
+# Enterprise PRD Template
+
+Enterprise template for `/pm` — discovery + formal PRD in chat (optional `docs/prd/`). Does **not** publish
+to the issue tracker; use `/to-prd` + [lean-prd-template.md](../to-prd/lean-prd-template.md) to publish from
+an aligned conversation.
 
 Copy this structure when writing a PRD. Replace bracketed placeholders. Delete instructional comments.
+
+**Audience:** PRD must be **human + AI readable** — clear prose for PM/stakeholder; structure for agents.
+Avoid shorthand only an AI can parse (wave rollup, code-only bullets, missing Given/When/Then). Issue body
+stands alone.
 
 Two rules that keep this template honest:
 

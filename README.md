@@ -14,7 +14,7 @@ Inspired by [Matt Pocock's skills](https://github.com/mattpocock/skills) — bui
 
 | Principle                  | What it means in `ai-kit`                                                                                           |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **Align before you build** | `/pm` closes the communication gap — discovery, PRD, testable acceptance criteria                                   |
+| **Align before you build** | `/align` closes the communication gap — grill decisions before `/pm` or `/to-prd`                              |
 | **Small and composable**   | Short-named skills (`/pm`, `/design`, `/dev`) you combine per task — no heavyweight process that takes away control |
 | **Feedback loops**         | `/dev` (planned) encodes TDD, types, and debugging discipline — agents need fast signal, not blind codegen          |
 | **Design every day**       | Specs name modules and seams; code skills resist the ball of mud agents accelerate                                  |
@@ -29,7 +29,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 ```
 /setup         → configure repo for ai-kit pipeline (run once)
 /align         → align before you build (grill + domain language)
-/pm            → requirements, PRD, user stories (discovery + enterprise template)
+/pm            → discovery, enterprise PRD, stories (chat — does not publish)
 /to-prd        → synthesize conversation into lean PRD, publish to GitHub
 /to-issues     → break spec into vertical-slice GitHub issues
 /triage        → move raw issues through triage state machine
@@ -57,8 +57,8 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | ---------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------- |
 | `/setup`         | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
 | `/align`         | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md  |
-| `/pm`            | [`pm`](skills/pm/)                                                                                           | **Available** | Requirements, PRD, user stories, prioritization                 |
-| `/to-prd`        | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Synthesize conversation into lean PRD, publish to GitHub Issues |
+| `/pm`            | [`pm`](skills/pm/)                                                                                           | **Available** | Discovery, enterprise PRD, stories (user-invoked; does not publish) |
+| `/to-prd`        | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)        |
 | `/to-issues`     | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
 | `/triage`        | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
 | `/design`        | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, core-ui component map, a11y  |
@@ -70,7 +70,7 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 Each skill ships with an optional matching agent for work that needs a separate context (long PRDs, multi-step design, large refactors). Use `/craft` when writing or editing any skill.
 
-**Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `pm`, `dev`, `code-review`).
+**Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`).
 
 ## Quick start
 
@@ -101,22 +101,22 @@ ln -sfn ~/src/ai-kit/agents/design-agent.md ~/.cursor/agents/design-agent.md
 
 ### `/pm` — Product Management
 
-**Skill** (recommended for daily work — same chat, interactive):
+**Skill** (user-invoked — discovery + enterprise PRD in chat; does **not** publish):
 
 ```
 /pm
 
-Write a PRD for [feature].
+Write an enterprise PRD for [feature].
 Users: [who]. Success metric: [what]. Deadline: [when].
 ```
 
 Includes:
 
 - Discovery, PRD, user story, prioritization, and refinement workflows
-- [PRD template](skills/pm/prd-template.md) (14 sections)
+- [Enterprise PRD template](skills/pm/enterprise-prd-template.md)
 - [User story guide](skills/pm/user-story-guide.md) (INVEST, Gherkin AC, DoR/DoD)
 
-For synthesizing an aligned conversation without interview, use `/to-prd` instead (lean template, publishes to issue tracker).
+After `/align`, to synthesize and **publish** a lean PRD, invoke `/to-prd` — not `/pm`.
 
 **Agent** (optional — isolated context for long PM sessions):
 
@@ -134,7 +134,10 @@ When the conversation is aligned and you want the PRD on GitHub — no interview
 Chốt PRD từ cuộc chat này — publish lên GitHub.
 ```
 
-Synthesizes from current conversation + codebase context using [prd-template.md](skills/to-prd/prd-template.md) (lean template — not `/pm`'s enterprise template). Sketches test seams (user confirms), publishes via `gh issue create` with mapped `ready-for-agent` label from `triage-labels.md`. Hands off to `/to-issues`.
+Synthesizes from current conversation + codebase context using
+[lean-prd-template.md](skills/to-prd/lean-prd-template.md) (not `/pm`'s enterprise template). Sketches test
+seams (user confirms), publishes via `gh issue create` with mapped `ready-for-agent` label from
+`triage-labels.md`. Hands off to `/to-issues`.
 
 ### `/setup` — One-Time Repo Configuration
 
@@ -156,7 +159,7 @@ Clarify plans and sharpen domain language before specs or code:
 Grill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.
 ```
 
-`/align` (user-invoked) runs **align-loop** + **domain-modeling** together (Matt `grill-with-docs` pairing): design tree, **one question**, **options A–D** with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/pm`, `/to-prd`, `/design`, or `/dev`.
+`/align` (user-invoked) runs **align-loop** + **domain-modeling** together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/pm`, `/to-prd`, `/design`, or `/dev`.
 
 ### `/design` — UI Spec from PRD
 
@@ -305,11 +308,11 @@ ai-kit/
     │   └── REDESIGN.md
     ├── pm/
     │   ├── SKILL.md
-    │   ├── prd-template.md
+    │   ├── enterprise-prd-template.md
     │   └── user-story-guide.md
     ├── to-prd/
     │   ├── SKILL.md
-    │   └── prd-template.md
+    │   └── lean-prd-template.md
     ├── to-issues/
     │   ├── SKILL.md
     │   └── issue-template.md
@@ -353,9 +356,9 @@ Run `/craft` before authoring or editing skills. Then:
 | Short invoke name                  | `/pm`, not `/product-management`               |
 | Skill folder = skill name          | `skills/pm/SKILL.md` → `name: pm`              |
 | Agent file = agent name            | `agents/pm-agent.md` → `name: pm-agent`        |
-| Description includes trigger terms | `/pm`, viết PRD, user stories (EN + VI)        |
+| Description includes trigger terms | `/pm`, user stories, ưu tiên backlog (EN + VI) |
 | Bilingual triggers                 | English WHAT + EN/VI WHEN in every description |
-| Templates in separate files        | `prd-template.md`, linked from `SKILL.md`      |
+| Templates in separate files        | `enterprise-prd-template.md`, linked from `SKILL.md` |
 | No built-in tool skills            | Do not copy Cursor `skills-cursor/` content    |
 | Invocation rules                   | `docs/agents/invocation.md`, ADR-0001          |
 | Cursor rule when editing skills    | `.cursor/rules/skill-invocation.mdc`           |
@@ -369,7 +372,11 @@ Raw issues → /triage → ready-for-agent → /dev → /code-review
 
 Run `/setup` once per repo first (includes triage label mapping).
 
-Each stage produces artifacts the next agent can consume. `/pm` or `/to-prd` writes PRD and stories; `/to-issues` publishes vertical-slice GitHub issues; `/triage` processes inbound backlog into `ready-for-agent` issues with agent briefs; `/design` adds `docs/design/` specs mapped to `@polyms/core-ui`; Dev implements against briefs and design specs (`dev` uses `core-ui` for UI code); `/code-review` gates merge on Standards + Spec before ship.
+Each stage produces artifacts the next agent can consume. `/pm` drafts enterprise PRD/stories in chat;
+`/to-prd` publishes a lean PRD to the tracker; `/to-issues` publishes vertical-slice GitHub issues; `/triage`
+processes inbound backlog into `ready-for-agent` issues with agent briefs; `/design` adds `docs/design/` specs
+mapped to `@polyms/core-ui`; Dev implements against briefs and design specs (`dev` uses `core-ui` for UI
+code); `/code-review` gates merge on Standards + Spec before ship.
 
 ## Daily workflow
 
@@ -383,7 +390,7 @@ Each stage produces artifacts the next agent can consume. `/pm` or `/to-prd` wri
 
 - [x] `/setup` — repo configuration for ai-kit pipeline
 - [x] `/align` + `align-loop` + `domain-modeling` — alignment and domain docs with auto-discovery (EN/VI)
-- [x] `/pm` — requirements, PRD, user stories
+- [x] `/pm` — discovery, enterprise PRD, user stories (user-invoked; does not publish)
 - [x] `/to-prd` — synthesize conversation into lean PRD, publish to GitHub (from Matt's to-prd)
 - [x] `/to-issues` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
 - [x] `/triage` — issue backlog triage, agent briefs, `ready-for-agent` (from Matt's triage)

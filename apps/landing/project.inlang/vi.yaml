@@ -99,7 +99,7 @@ palette_placeholder: Gõ để lọc skill…
 palette_title: Command palette
 
 # --- principles ---
-principles_1_body: /pm thu hẹp khoảng cách giao tiếp — discovery, PRD, acceptance criteria kiểm chứng được.
+principles_1_body: /align thu hẹp khoảng cách giao tiếp — grill quyết định trước /pm hoặc /to-prd.
 principles_1_title: Align trước khi build
 principles_2_body: Skill tên ngắn (/pm, /design, /dev) ghép theo task — không quy trình nặng.
 principles_2_title: Nhỏ và ghép được

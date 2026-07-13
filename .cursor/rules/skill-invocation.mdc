@@ -13,7 +13,7 @@ When creating or editing files under `skills/` or `agents/`:
 - **User-invoked** (default): `disable-model-invocation: true` — human types `/name`; description is human-facing (WHAT + EN/VI invoke hints).
 - **Model-invoked**: omit flag — agent auto-discovers via description (WHAT + EN/VI triggers). Use only when another skill or ambient context must reach it.
 
-User-invoked skills cannot be fired by other skills. Delegate to model-invoked skills (`align-loop`, `domain-modeling`, `pm`, `dev`, `arch`).
+User-invoked skills cannot be fired by other skills. Delegate to model-invoked skills (`align-loop`, `domain-modeling`, `dev`, `arch`).
 
 Subagent files: `agents/<name>-agent.md` with frontmatter `name: <name>-agent` — suffix distinguishes from the skill (`pm` vs `pm-agent`).
 
@@ -24,6 +24,6 @@ Reading `CONTEXT.md` ≠ `domain-modeling`. Active glossary/ADR updates = `domai
 ## Setup dependencies (ADR-0001)
 
 - **Hard** (`/to-prd`, `/to-issues`, `/triage`): prerequisite → `/setup` if `docs/agents/*.md` missing.
-- **Soft** (`dev`, `pm`, `align-loop`, `arch`): mention glossary/ADRs optionally; no `/setup` gate.
+- **Soft** (`dev`, `/pm`, `align-loop`, `arch`): mention glossary/ADRs optionally; no `/setup` gate.
 
 Full reference: `docs/agents/invocation.md`, `docs/adr/0001-skill-setup-dependencies.md`.
