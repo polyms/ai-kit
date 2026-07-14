@@ -1,13 +1,14 @@
 ---
 name: setup
-description: Configure a repo for the ai-kit pipeline — documentation language, issue tracker, domain docs, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
+description: Configure a repo for the ai-kit pipeline — documentation language, issue tracker, domain docs, stack profile, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
 disable-model-invocation: true
 ---
 
 # Setup — Configure Repo for ai-kit
 
-Scaffold per-repo configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`, `/to-issues`, and
-`/dev` assume. Prompt-driven — explore, confirm with user, then write.
+Scaffold per-repo configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`,
+`/to-issues`, `/dev`, `/devops`, and `/arch` assume. Prompt-driven — explore, confirm with user,
+then write.
 
 ## Process
 
@@ -17,12 +18,15 @@ Read what exists; don't assume:
 
 - `git remote -v` — GitHub, GitLab, or local-only?
 - `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` — presence, layout, and written language
-- `docs/agents/` — prior setup output?
+- `docs/agents/` — prior setup output? especially `stack-profile.md`
+- Stack signals — `package.json` / lockfile (router, start, zustand, vercel, pnpm, nx);
+  `vercel.json`; workspace / monorepo layout
 - `.scratch/` — local markdown issue convention?
 - `AGENTS.md`, `CLAUDE.md` — existing agent config?
 - `.cursor/rules/agent-voice.mdc`, `.claude/rules/` — prior opt-in chat voice?
 
-**Completion criterion:** Current repo state documented; no assumptions about missing config.
+**Completion criterion:** Current repo state documented; no assumptions about missing config;
+candidate stack axes listed from signals when detectable.
 
 ### 2. Walk decisions one at a time
 
@@ -121,9 +125,19 @@ Ask: _Do you want a kit-written chat voice for this repo?_ If Explore found an e
 If **Yes**, collect any one-line overrides (e.g. keep EN peer tone only; drop em/anh). Otherwise use
 [voice-rule.mdc](voice-rule.mdc) as-is.
 
-**Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed; issue
-tracker, domain layout, artifact paths, triage labels, design paths, and voice choice (No or Yes + any
-overrides) confirmed by user.
+**H — Stack profile** (Knowledge filter)
+
+Per-repo **Stack manifest** axes for Knowledge search — see [stack-profile.md](stack-profile.md) and
+[knowledge.md](../../docs/agents/knowledge.md). Filters `search_knowledge` for all intents.
+
+1. Propose axes from Explore signals (lowercase CMS tags: `tanstack-start`, `vercel`, `pnpm`, …).
+2. Show the candidate list; let the user add/remove/confirm.
+3. Greenfield / unclear stack: ask once, or use `polyms-default` only when the user confirms org
+   defaults.
+
+**Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed;
+issue tracker, domain layout, artifact paths, triage labels, design paths, voice choice (No or Yes +
+any overrides), and **stack axes** confirmed by user.
 
 ### 3. Confirm draft
 
@@ -135,6 +149,7 @@ Show before writing:
 - `docs/agents/domain.md`
 - `docs/agents/triage-labels.md`
 - `docs/agents/design.md`
+- `docs/agents/stack-profile.md` (axes list + detected-from notes)
 - If voice **Yes**: `.cursor/rules/agent-voice.mdc` and `.claude/rules/agent-voice.mdc` → symlink
 
 Let user edit.
@@ -172,6 +187,11 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 UI specs and `@polyms/core-ui` pointers. See `docs/agents/design.md`.
 
+### Knowledge
+
+Stack axes for Knowledge retrieval. See `docs/agents/stack-profile.md` and
+`docs/agents/knowledge.md`.
+
 ### Voice
 
 [Omit this subsection when voice was **No**.]
@@ -193,6 +213,7 @@ Write docs using templates:
 - Domain → [domain.md](domain.md)
 - Triage labels → [triage-labels.md](triage-labels.md)
 - Design → [design.md](design.md)
+- Stack profile → [stack-profile.md](stack-profile.md) (fill confirmed axes + detected-from)
 
 **If voice Yes:**
 
@@ -209,18 +230,21 @@ Do **not** duplicate the persona body under `.claude/` — one SoT, one link.
 **If voice No:** do not write or remove an existing rule unless the user confirmed replace/remove in step G.
 
 **Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
-`docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`, and agent config file
-written; if voice Yes, Cursor rule + Claude symlink present.
+`docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`,
+`docs/agents/stack-profile.md`, and agent config file written; if voice Yes, Cursor rule + Claude
+symlink present.
 
 ### 5. Done
 
 Tell user setup is complete. Mention `/align` before building, `/reqs` or `/to-prd` for specs, `/design` for UI
-specs, `/triage` for backlog issues. Remind them to create GitHub labels matching
+specs, `/triage` for backlog issues, and that `/dev` / `/devops` / `/arch` will filter Knowledge with
+`docs/agents/stack-profile.md`. Remind them to create GitHub labels matching
 `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was installed, point
 at `.cursor/rules/agent-voice.mdc` to edit persona.
 
 **Completion criterion:** User notified setup is complete; `/align`, `/reqs` or `/to-prd`, `/design`, and
-`/triage` mentioned; label creation reminder given; voice path mentioned only when opted in.
+`/triage` mentioned; stack-profile / Knowledge mentioned; label creation reminder given; voice path
+mentioned only when opted in.
 
 ## Language
 

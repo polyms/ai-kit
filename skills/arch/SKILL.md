@@ -5,9 +5,33 @@ description: Architecture vocabulary for deep modules — seam, depth, leverage,
 
 # Arch
 
-Architecture vocabulary for **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.
+Architecture vocabulary for **deep modules**: a lot of behaviour behind a small interface, placed at
+a clean seam, testable through that interface. Use this language and these principles wherever code
+is being designed or restructured. The aim is leverage for callers, locality for maintainers, and
+testability for everyone.
 
-Read `CONTEXT.md` and ADRs in `docs/adr/` when present for domain vocabulary — soft dependency; output is less sharp without them. Read `docs/agents/language.md` when present — write ADRs in that language.
+Read `CONTEXT.md` and ADRs in `docs/adr/` when present for domain vocabulary — soft dependency;
+output is less sharp without them. Read `docs/agents/language.md` when present — write ADRs in that
+language.
+
+## Stack-combo seams
+
+When the task touches **routing, state, or stack module shape** (not pure vocabulary), **search**
+Knowledge before inventing conventions — [Knowledge pointer](../../docs/agents/knowledge.md).
+
+1. Read **`docs/agents/stack-profile.md`** when present — pass `axes` to search
+2. Call **`search_knowledge`** with `q` (seam topic) and `intent: "design"` — no MCP: browse
+   `/knowledge?q=…&intent=design` on the kit site
+3. Open **`get_knowledge`** on the **best search hit** — read chunks in **`sortOrder`** (ids from
+   results, not memorized)
+4. No match: fall back to [stack-defaults.md](../dev/stack-defaults.md); irreversible **why** stays
+   in `docs/adr/`
+
+**Completion criterion:** At least one design article opened in sortOrder, or explicit no-match with
+search terms documented before applying stack-defaults / ADR.
+
+Skip this section when the session is vocabulary-only (defining seam/depth with no stack-combo
+choice).
 
 ## Glossary
 
@@ -112,7 +136,7 @@ Good interfaces make testing natural:
 
 ## Going deeper
 
-- **Stack-combo design seams** (routing, state, modules) — [stack guide pointer](../../docs/agents/stack-guides.md); MCP `search_knowledge` with `intent: design`. ADRs hold irreversible **why**; Ops CMS holds retrievable seam recipes.
+- **Stack-combo design seams** — run [Stack-combo seams](#stack-combo-seams) first; then deepen
 - **Deepening a cluster given its dependencies** — see [DEEPENING.md](DEEPENING.md): dependency categories, seam discipline, and replace-don't-layer testing.
 - **Exploring alternative interfaces** — see [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.
 

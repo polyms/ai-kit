@@ -35,12 +35,17 @@ Route by intent, then read the matching skill:
 
 1. Route via **Quick Router** — read the chosen skill and follow its workflows.
 2. Read `CONTEXT.md` for vocabulary; do not actively expand the glossary (that is `domain-modeling`).
+   Read **`docs/agents/stack-profile.md`** when present — pass `axes` to Knowledge search.
 3. Prefer `docs/agents/language.md` when present for documentation language.
 4. For `/docs`: verify examples against current code before declaring done.
-5. For `/devops`: retrieve MCP **`search_knowledge`** (`intent: incident`) before changing infra;
-   close with incident templates when SEV1/SEV2.
-6. Meet each workflow's **completion criterion** before declaring done.
-7. End with `## Next Step` → one of `/dev` | `/reqs` | `/e2e` | `/docs` | ship / link the artifact path.
+5. For `arch` when the task touches routing, state, or stack module shape: MCP
+   **`search_knowledge`** with `intent: design` and `q` = seam topic — see
+   [knowledge.md](../docs/agents/knowledge.md). Open best match; never hardcode article ids. No
+   match → stack-defaults / ADR.
+6. For `/devops`: MCP **`search_knowledge`** with `intent: incident` and `q` = symptom before
+   changing infra; confirm symptom + cause; verify; close with incident templates when SEV1/SEV2.
+7. Meet each workflow's **completion criterion** before declaring done.
+8. End with `## Next Step` → one of `/dev` | `/reqs` | `/e2e` | `/docs` | ship / link the artifact path.
 
 ## Constraints
 
@@ -49,6 +54,7 @@ Route by intent, then read the matching skill:
 - Do not invent APIs or env vars that do not exist
 - Do not treat marketing/landing copy as `/docs` work
 - Do not own E2E harness / flake — hand off to `/e2e` (`tester`)
-- Do not guess deploy/CI config when Knowledge search returns no match — report gap and search terms tried
+- Do not guess deploy/CI or stack-seam config when Knowledge search returns no match — report gap
+  and search terms tried; never hardcode article ids
 - Do not commit unless user asks
 - Escalate undecided product to `/reqs`; broken feature code to `/dev`

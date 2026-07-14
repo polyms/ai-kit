@@ -143,32 +143,51 @@ Product Requirements Document — full spec for engineering and design review. I
 _Avoid_: spec, requirements doc
 
 **ADR**:
-Architecture Decision Record — a hard-to-reverse **why** decision that needs context to understand. Stored in `docs/adr/`. `/arch` and `/dev` read ADRs for constraints; **does not** host symptom→fix — that is **Runbook** territory.
+Architecture Decision Record — a hard-to-reverse **why** decision that needs context to understand.
+Stored in `docs/adr/`. `/arch` and `/dev` read ADRs for constraints; **does not** host
+symptom→fix — that is **Knowledge** (`intent: incident`).
 _Avoid_: decision doc, RFC, runbook (when meaning deploy/CI incident fixes)
 
 **Knowledge**:
-Unified Ops CMS content store for agent retrieval — **Knowledge article** + **Knowledge chunk** (`sortOrder` for display/agent reading order) + hybrid search (keyword + pgvector when `OPENROUTER_API_KEY` is set). Intents: `incident`, `design`, `toolchain`. Postgres canonical; public `/knowledge/*` (`/runbooks/*`, `/guides/*` redirect); MCP `search_knowledge` / `get_knowledge` / `get_knowledge_chunk`. Audience: **`/dev`**, **`developer`**, **`/devops`**, **`/arch`**, **`techlead`**. `docs/runbooks/*.md` = import snapshot only.
+Unified Ops CMS content store for agent retrieval — **Knowledge article** + **Knowledge chunk**
+(`sortOrder` for display/agent reading order) + hybrid search (keyword + pgvector when
+`OPENROUTER_API_KEY` is set). Intents: `incident`, `design`, `toolchain`. Postgres canonical;
+public `/knowledge/*` (`/runbooks/*`, `/guides/*` redirect); MCP `search_knowledge` /
+`get_knowledge` / `get_knowledge_chunk`. Audience: **`/dev`**, **`developer`**, **`/devops`**,
+**`/arch`**, **`techlead`**.
 _Avoid_: stack guide (when meaning the unified store), generic wiki, Notion
 
 **Knowledge article**:
-Container in **Knowledge** — id (e.g. `KN-001`, `RB-001`, `SG-001`), title, summary, `axisTags`, primary **Knowledge intent**, optional checklist. Groups related chunks; not the embed unit.
+Container in **Knowledge** — id (e.g. `KN-001`, `RB-001`, `SG-001`), title, summary, `axisTags`,
+primary **Knowledge intent**, optional checklist. Groups related chunks; not the embed unit.
 _Avoid_: runbook (when meaning CMS container), stack guide (when meaning article)
 
 **Knowledge chunk**:
-Atomic retrieval unit for hybrid search — embed + rank target when embeddings configured. Author-defined for config artifacts (verbatim), incidents (symptom/cause/fix/verify/`triggerPhrases`), checklists; long prose sections may auto-sub-chunk at publish (paragraph boundary + overlap). Filter by intent + **Stack manifest** axes before rank.
+Atomic retrieval unit for hybrid search — embed + rank target when embeddings configured.
+Author-defined for config artifacts (verbatim), incidents (symptom/cause/fix/verify/
+`triggerPhrases`), checklists; long prose sections may auto-sub-chunk at publish (paragraph
+boundary + overlap). Filter by intent + **Stack manifest** axes before rank.
 _Avoid_: drawer (generic), markdown blob, 800-char window on config files
 
 **Knowledge intent**:
-Classifier on article/chunk — e.g. `incident`, `design`, `toolchain`. Scopes retrieval before vector search. Workflow pointers: [runbooks.md](docs/agents/runbooks.md) (`incident`), [stack-guides.md](docs/agents/stack-guides.md) (`design`).
+Classifier on article/chunk — e.g. `incident`, `design`, `toolchain`. Scopes retrieval before
+vector search. Agent retrieval: [knowledge.md](docs/agents/knowledge.md).
 _Avoid_: content type (when meaning separate CMS tables), tag (generic)
 
 **Knowledge pointer**:
-Setup/agent doc at `docs/agents/knowledge.md` — how agents retrieve **Knowledge** (MCP tools, **Stack manifest** filter, confirm chunk before apply). Pointer only; no knowledge body in git. Replaces **Runbook pointer** + **Stack guide pointer** when migrated.
+Setup/agent doc at `docs/agents/knowledge.md` — how agents retrieve **Knowledge** (MCP tools,
+**Stack manifest** filter, confirm chunk before apply). Pointer only; no knowledge body in git.
+Single agent SSOT for all intents (replaces former Runbook pointer + Stack guide pointer).
 _Avoid_: knowledge index in git (when meaning live CMS content)
 
 **Language pointer**:
-Setup output at `docs/agents/language.md` — the fixed language for persistent written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft dependency for `domain-modeling`, `reqs`/`to-prd`, `design`, `arch` — they match this language or, absent the file, whatever doc they're already editing. Chat tone is unaffected — IDE/user rules, or opt-in `.cursor/rules/agent-voice.mdc` from `/setup`.
-_Avoid_: **Locale toggle** (kit-site UI language, not repo docs), i18n (generic), shipping a always-on kit persona
+Setup output at `docs/agents/language.md` — the fixed language for persistent written docs
+(`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft
+dependency for `domain-modeling`, `reqs`/`to-prd`, `design`, `arch` — they match this language
+or, absent the file, whatever doc they're already editing. Chat tone is unaffected — IDE/user
+rules, or opt-in `.cursor/rules/agent-voice.mdc` from `/setup`.
+_Avoid_: **Locale toggle** (kit-site UI language, not repo docs), i18n (generic), shipping a
+always-on kit persona
 
 **Voice rule**:
 Optional `/setup` output — `.cursor/rules/agent-voice.mdc` (`alwaysApply`); Claude Code uses
@@ -176,40 +195,55 @@ Optional `/setup` output — `.cursor/rules/agent-voice.mdc` (`alwaysApply`); Cl
 _Avoid_: `docs/agents/voice.md` (removed — was always-on dup with user rules)
 
 **Runbook**:
-Legacy **Knowledge intent** `incident` — **symptom → cause → fix → verify** for deploy/CI/infra; stack profile + deploy greenfield checklist. Migrating into **Knowledge**; public `/runbooks/*` may alias. `docs/runbooks/*.md` = import snapshot only.
-_Avoid_: deploy doc (generic), design seams (→ **Knowledge intent** `design`), ADR, git markdown as source of truth
+Legacy label for **Knowledge** articles with `intent: incident` — **symptom → cause → fix →
+verify** for deploy/CI/infra (ids often `RB-*`). Public `/runbooks/*` may alias `/knowledge/*`.
+Canonical store is **Knowledge**; agents use **Knowledge pointer**, not git markdown.
+_Avoid_: deploy doc (generic), design seams (→ **Knowledge intent** `design`), ADR, git markdown
+as source of truth
 
 **Deploy guide**:
-Per-app quick start under `apps/*/DEPLOY.md` — env vars, local commands, project-specific paths. Complements runbooks; **does not** replace cross-cutting known issues (those live in **Runbook**). Runbooks may link here; agents read deploy guide for app context, **Runbook** for symptom match.
+Per-app quick start under `apps/*/DEPLOY.md` — env vars, local commands, project-specific paths.
+Complements **Knowledge** incident articles; **does not** replace cross-cutting known issues.
+Agents read deploy guide for app context, Knowledge for symptom match.
 _Avoid_: runbook (when meaning cross-cutting traps), README deploy section (generic)
 
-**Runbook pointer**:
-Setup/agent doc at `docs/agents/runbooks.md` — tells agents **how to retrieve** runbooks (search API, stack manifest filter, confirm symptom before fix). Pointer only; no duplicate runbook body. Written/updated by `/setup`; consumed by `/devops` and deploy-aware `/dev`.
-_Avoid_: runbook index in git (when meaning live content), docs/runbooks README (when meaning authoring workflow)
-
-**Stack guide pointer**:
-Setup/agent doc at `docs/agents/stack-guides.md` — tells agents **how to retrieve** stack guides (MCP/search filtered by **stack manifest**). Pointer only; no guide body in git. Consumed by `/arch` and deploy-aware `/dev`; `/devops` uses **Runbook pointer** instead.
-_Avoid_: stack guide index in git (when meaning live content), duplicating runbook symptom→fix
-
 **Stack guide**:
-Legacy **Knowledge intent** `design` — stack-combo design knowledge (checklist + seam sections as **Knowledge chunk**s). Migrating into **Knowledge**; public `/guides/*` may alias. Timeless Polyms defaults stay in `skills/dev/stack-defaults.md`.
-_Avoid_: symptom→fix (→ **Knowledge intent** `incident`), separate CMS content type (post-migration), irreversible why (→ ADR)
+Legacy label for **Knowledge** articles with `intent: design` — stack-combo design knowledge
+(checklist + seam sections as **Knowledge chunk**s; ids often `SG-*`). Public `/guides/*` may
+alias `/knowledge/*`. Timeless Polyms defaults stay in `skills/dev/stack-defaults.md`.
+_Avoid_: symptom→fix (→ **Knowledge intent** `incident`), separate CMS content type
+(post-migration), irreversible why (→ ADR)
 
 **Stack profile**:
-Declared tooling/deploy combination — e.g. TanStack Start + Vercel + pnpm Nx. **Runbook** stack profile section = deploy-correct config; **Stack guide** = design-correct seams for the same axes. Matrix tracks coverage per content type.
-_Avoid_: stack doc (generic), single checklist duplicated across both types (author one intent per item)
+Declared tooling/deploy combination — e.g. TanStack Start + Vercel + pnpm Nx. Incident articles
+cover deploy-correct config; design articles cover seams for the same axes. Matrix tracks
+coverage per **Knowledge intent**.
+_Avoid_: stack doc (generic), single checklist duplicated across intents (author one intent per
+item)
 
 **Stack manifest**:
-Per-repo record of stack axes for the dimension matrix — detected from repo files during `/setup`, user-confirmed, written to `docs/agents/stack-profile.md`. Filters **Knowledge** search (all intents); matrix shows coverage gaps per intent.
+Per-repo record of stack axes for the dimension matrix — detected from repo files during
+`/setup`, user-confirmed, written to `docs/agents/stack-profile.md`. Filters **Knowledge**
+search (all intents); matrix shows coverage gaps per intent.
 _Avoid_: stack.yaml (generic), tech stack file (when meaning setup output specifically)
 
 **Ops CMS**:
-Kit-site ops knowledge admin at `/ops/*` — canonical store is **Knowledge** (articles + chunks + embeddings). Dimension matrix, axis tags, intent coverage. **Prisma + Postgres (Supabase)**. OIDC resource server trusting [polyms.dev](https://polyms.dev/) SSO for write/admin; **public read** at `/knowledge/*` and **MCP** at `/mcp` (rate-limited at edge). Content shape optimized for **agent retrieval** — see **Ops CMS content shape**.
-_Avoid_: admin panel (generic), Notion wiki (when meaning external tool), separate arch wiki product
+Kit-site ops knowledge admin at `/ops/*` — canonical store is **Knowledge** (articles + chunks +
+embeddings). Dimension matrix, axis tags, intent coverage. **Prisma + Postgres (Supabase)**.
+OIDC resource server trusting [polyms.dev](https://polyms.dev/) SSO for write/admin; **public
+read** at `/knowledge/*` and **MCP** at `/mcp` (rate-limited at edge). Content shape optimized
+for **agent retrieval** — see **Ops CMS content shape**.
+_Avoid_: admin panel (generic), Notion wiki (when meaning external tool), separate arch wiki
+product
 
 **Ops CMS content shape**:
-Agent-first storage in Postgres — **Knowledge chunk** as embed unit; structured fields at retrieval seams. Incident chunks: symptom/cause/fix/verify/`triggerPhrases`. Config chunks: verbatim artifact + `artifactType`. Prose: author sections; auto-sub-chunk only when over publish threshold. Hybrid search: filter `intent` + `axisTags` then vector rank. Git `docs/runbooks/*.md` = import snapshot — not agent canonical.
-_Avoid_: single bodyMarkdown for all content, parsing markdown for symptom match, fixed-size split on config files
+Agent-first storage in Postgres — **Knowledge chunk** as embed unit; structured fields at
+retrieval seams. Incident chunks: symptom/cause/fix/verify/`triggerPhrases`. Config chunks:
+verbatim artifact + `artifactType`. Prose: author sections; auto-sub-chunk only when over publish
+threshold. Hybrid search: filter `intent` + `axisTags` then vector rank. Seed data lives under
+`apps/landing/prisma/` — not agent retrieval.
+_Avoid_: single bodyMarkdown for all content, parsing markdown for symptom match, fixed-size
+split on config files
 
 **Catalog feature module**:
 Vertical slice in `apps/landing/src/lib/<feature>/` — **Knowledge** module owns types, repository adapter, **service** (canonical read seam), **server functions** (web transport), and MCP tool definitions. Web routes import server functions; kit-site MCP handler at `/mcp` imports **service** in-process (same deploy boundary). No public REST catalog API. Agents retrieve via MCP at `ai-kit.polyms.dev/mcp`, not REST. _Avoid_: cross-cutting loaders, dual SSR/fetch paths, service logic in route handlers or MCP tool bodies.

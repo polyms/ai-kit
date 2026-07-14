@@ -269,7 +269,7 @@ classify, status updates, and SEV1/SEV2 post-mortem via
 Vercel build failed — No Output Directory named dist.
 ```
 
-See [SKILL.md](skills/devops/SKILL.md) and [runbooks.md](docs/agents/runbooks.md).
+See [SKILL.md](skills/devops/SKILL.md) and [knowledge.md](docs/agents/knowledge.md).
 
 ### `/to-issues` — Spec to GitHub Issues
 

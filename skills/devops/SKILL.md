@@ -19,7 +19,7 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 | Intent                        | Workflow                                                                                      |
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
 | Deploy/build/CI failure       | [Incident workflow](#incident-workflow)                                                       |
-| Proactive infra or CI change  | [Incident workflow](#incident-workflow) — search first                                        |
+| Proactive infra or CI change  | [Incident workflow](#incident-workflow) — retrieve via search                                 |
 | Post-fix confirmation         | Re-run **verify** steps from matched Knowledge chunk                                          |
 | SEV classify / status / close | [Close & communicate](#5-close--communicate) + [incident-templates.md](incident-templates.md) |
 | Flaky Playwright / E2E job    | User invokes `/e2e` — not this skill                                                          |
@@ -34,7 +34,8 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 - Classify **severity** when user impact is unclear — [incident-templates.md](incident-templates.md)
 - Read **`docs/agents/stack-profile.md`** when present — pass manifest `axes` to search
 - Read per-app **`apps/*/DEPLOY.md`** when the incident is app-scoped — env vars, project paths, local repro commands
-- Read [runbook pointer](../../docs/agents/runbooks.md) and [Knowledge pointer](../../docs/agents/knowledge.md) — MCP setup at [ops-cms-mcp.md](../../docs/agents/ops-cms-mcp.md)
+- Read [Knowledge pointer](../../docs/agents/knowledge.md) (`intent: incident`) — MCP setup at
+  [ops-cms-mcp.md](../../docs/agents/ops-cms-mcp.md)
 
 **Completion criterion:** Symptom stated; severity noted when impact unclear; stack axes noted when
 manifest exists; app deploy guide located when applicable.
@@ -84,12 +85,11 @@ After verify is green (or when the incident is SEV1/SEV2 even mid-flight):
 
 | Topic             | Read when                                                                                          |
 | ----------------- | -------------------------------------------------------------------------------------------------- |
-| Retrieval policy  | [runbooks.md](../../docs/agents/runbooks.md)                                                       |
+| Retrieval policy  | [knowledge.md](../../docs/agents/knowledge.md) — `intent: incident`                                |
 | MCP tools + OAuth | [knowledge.md](../../docs/agents/knowledge.md), [ops-cms-mcp.md](../../docs/agents/ops-cms-mcp.md) |
 | SEV / post-mortem | [incident-templates.md](incident-templates.md)                                                     |
-| Example article   | [RB-001](https://ai-kit.polyms.dev/knowledge/RB-001) — Vercel + TanStack Start monorepo            |
 | App context       | `apps/*/DEPLOY.md`                                                                                 |
-| Design seams      | **`arch`** + [stack-guides.md](../../docs/agents/stack-guides.md) — not this skill                 |
+| Design seams      | **`arch`** + [knowledge.md](../../docs/agents/knowledge.md) (`intent: design`) — not this skill    |
 
 ## Agent
 

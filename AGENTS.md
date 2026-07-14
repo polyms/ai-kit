@@ -17,15 +17,17 @@ GitHub issues via `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 Single-context: `CONTEXT.md` + `docs/adr/` at repo root. See `docs/agents/domain.md`.
 
-### Runbooks & stack guides
+### Knowledge
 
-Deploy/CI/infra **Runbooks** and stack-combo **Stack guides** live in Ops CMS (Postgres). Agents retrieve via MCP or kit site — not git markdown body:
+Deploy/CI/infra **incident**, stack-combo **design**, and **toolchain** recipes live in Ops CMS
+(Postgres). Agents retrieve via MCP or kit site — not git markdown body:
 
-- [docs/agents/knowledge.md](docs/agents/knowledge.md) — unified retrieval (`search_knowledge`, `get_knowledge`, `get_knowledge_chunk`)
-- [docs/agents/ops-cms-mcp.md](docs/agents/ops-cms-mcp.md) — MCP at `ai-kit.polyms.dev/mcp`, Cursor setup
-- [docs/agents/runbooks.md](docs/agents/runbooks.md) — incident workflow (`intent: incident`); `/devops`, deploy-aware `/dev`
-- [docs/agents/stack-guides.md](docs/agents/stack-guides.md) — design workflow (`intent: design`); `/arch`, deploy-aware `/dev`
-- [docs/runbooks/](docs/runbooks/) — contributor snapshot only
+- [docs/agents/knowledge.md](docs/agents/knowledge.md) — unified retrieval (`search_knowledge`,
+  `get_knowledge`, `get_knowledge_chunk`); intents `incident` · `design` · `toolchain`
+- [docs/agents/stack-profile.md](docs/agents/stack-profile.md) — per-repo stack axes (from
+  `/setup`) for Knowledge search filters
+- [docs/agents/ops-cms-mcp.md](docs/agents/ops-cms-mcp.md) — MCP at `ai-kit.polyms.dev/mcp`, Cursor
+  setup
 
 ### Triage labels
 

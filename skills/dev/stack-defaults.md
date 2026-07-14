@@ -1,6 +1,9 @@
 # Stack Defaults — Routing & State
 
-Polyms `/dev` fallbacks when the repo or spec does not already choose a stack. **Match existing project conventions first.** Before using these, search Knowledge — MCP `search_knowledge` with `intent: design` — for a stack-combo seam recipe; these tables apply only when that search returns no match.
+Polyms `/dev` fallbacks when the repo or spec does not already choose a stack. **Match existing
+project conventions when present.** Otherwise run MCP `search_knowledge` with `intent: design` and
+`q` for the seam topic; use these tables **only when that search returns no match**. Do not hardcode
+article ids — catalog content can change.
 
 ## Routing
 

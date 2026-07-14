@@ -1,6 +1,6 @@
 # Vercel deploy — TanStack Start + Nitro
 
-**Incident article (RB-001):** [RB-001 on kit site](https://ai-kit.polyms.dev/knowledge/RB-001) — live CMS; git snapshot: [docs/runbooks/vercel-tanstack-start-monorepo.md](../../docs/runbooks/vercel-tanstack-start-monorepo.md)
+**Incident article (RB-001):** [RB-001 on kit site](https://ai-kit.polyms.dev/knowledge/RB-001) — live Knowledge in Ops CMS.
 
 ## Quick deploy
 
@@ -47,7 +47,7 @@ Knowledge articles read from Postgres at runtime — `DATABASE_URL` must be set 
 
 ## Vercel install failures
 
-See [RB-001-01](https://ai-kit.polyms.dev/knowledge/RB-001#rb-001-01-github-packages-auth) on the kit site (git snapshot: [RB-001-01](../../docs/runbooks/vercel-tanstack-start-monorepo.md#rb-001-01-github-packages-auth)).
+See [RB-001-01](https://ai-kit.polyms.dev/knowledge/RB-001#rb-001-01-github-packages-auth) on the kit site.
 
 Vercel does **not** expand `${GITHUB_TOKEN}` in committed `.npmrc`. `vercel.json` runs `scripts/vercel-install.sh`, which exports `GITHUB_TOKEN` (or `NPM_TOKEN`) and sets GitHub Packages auth in the ephemeral user `.npmrc` before `pnpm install`.
 

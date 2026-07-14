@@ -2,7 +2,14 @@
 
 Output path: `docs/design/ops-cms-runbooks.md`
 
-**Related:** [GitHub PRD #1](https://github.com/polyms/ai-kit/issues/1) · [CONTEXT.md](../../CONTEXT.md) · [Kit site spec](./ai-kit-landing.md) · [RB-001 reference](../runbooks/vercel-tanstack-start-monorepo.md)
+**Related:** [GitHub PRD #1](https://github.com/polyms/ai-kit/issues/1) · [CONTEXT.md](../../CONTEXT.md) ·
+[Kit site spec](./ai-kit-landing.md) · [RB-001](https://ai-kit.polyms.dev/knowledge/RB-001) · seed
+[`rb-001-data.ts`](../../apps/landing/prisma/rb-001-data.ts)
+
+> **Post-ship note:** Agent retrieval SSOT is [knowledge.md](../agents/knowledge.md). Former
+> `docs/agents/runbooks.md`, `docs/agents/stack-guides.md`, and git `docs/runbooks/*.md` were
+> removed — live body is Ops CMS / Postgres only. Sections below describing those paths are
+> historical design record.
 
 > **Scope:** **Ops CMS** — two content types on Postgres (Supabase): **Runbook** (symptom → fix, audience `developer`) and **Stack guide** (design knowledge, audience `arch` / `/dev`). Phase **1a** public `/runbooks/*` (shipped) + Phase **1b** Runbook pointer alignment; Phase **2** Ops CMS `/ops/*` (OIDC write, runbook editors); Phase **3** Stack guide schema + `/guides/*` public + guide editors + dual-type matrix. Extends `apps/landing` router and chrome — **does not** redesign global kit site shell. Runbook and Stack guide **content** English-only v1; chrome follows existing locale toggle (VI/EN labels only). `docs/runbooks/*.md` = import snapshot only — **not** live sync, **not** agent retrieval target.
 

@@ -77,5 +77,3 @@ Dev sign-in on `/ops/login` is available automatically when running `pnpm dev` (
 ## Related
 
 - [knowledge.md](./knowledge.md)
-- [runbooks.md](./runbooks.md)
-- [stack-guides.md](./stack-guides.md)

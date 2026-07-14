@@ -6,11 +6,12 @@ How `/align`, `/reqs`, and `/dev` consume domain documentation.
 
 - **`CONTEXT.md`** at repo root
 - **`docs/adr/`** — ADRs touching the work area
-- **`docs/agents/knowledge.md`** — how to retrieve **Knowledge** (`/knowledge/*`, MCP `search_knowledge`); unified incident · design · toolchain retrieval for `/dev`, `/devops`, `/arch`
-- **`docs/agents/runbooks.md`** — incident workflow pointer (`intent: incident`)
-- **`docs/agents/stack-guides.md`** — design workflow pointer (`intent: design`)
+- **`docs/agents/knowledge.md`** — how to retrieve **Knowledge** (`/knowledge/*`, MCP
+  `search_knowledge`); unified incident · design · toolchain retrieval for `/dev`, `/devops`,
+  `/arch`
+- **`docs/agents/stack-profile.md`** — per-repo stack axes for Knowledge search (written by
+  `/setup`)
 - **`docs/agents/ops-cms-mcp.md`** — MCP endpoint, Cursor setup, catalog tool names
-- **`docs/runbooks/`** — git **snapshot** of runbooks for contributors — not live agent retrieval
 
 If files don't exist, proceed silently. `/align` creates them lazily when terms resolve.
 

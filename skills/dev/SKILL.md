@@ -25,22 +25,28 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 - Read PRD, user stories, `/design` spec at `docs/design/<feature>.md`, or `/align` decisions
 - Read `CONTEXT.md` — use glossary vocabulary in code and tests
-- **Deploy/CI slice (only when it surfaces mid-implementation):** [runbook pointer](../../docs/agents/runbooks.md) —
-  MCP `search_knowledge` with `intent: incident` before changing infra config. A deploy/CI symptom
-  reported cold, opening the session with no slice already in progress, hands off to `/devops` instead.
-- **Design + stack slice:** MCP `search_knowledge` with `intent: design` first — see
-  [stack guide pointer](../../docs/agents/stack-guides.md) and ADRs. No match: fall back to
-  [stack-defaults.md](stack-defaults.md)
-- **Toolchain / formatter setup:** [Knowledge pointer](../../docs/agents/knowledge.md) — retrieve
-  **KN-001** via MCP (`search_knowledge` → `get_knowledge_chunk`) before inventing Biome/Prettier
-  config in a target repo
+- Read **`docs/agents/stack-profile.md`** when present — pass `axes` on Knowledge searches below
+- **Deploy/CI slice (only when it surfaces mid-implementation):** [Knowledge pointer](../../docs/agents/knowledge.md)
+  — MCP `search_knowledge` with `intent: incident` and `q` = symptom (no MCP: browse
+  `/knowledge?q=…&intent=incident`). Confirm symptom + cause before fix. A deploy/CI symptom
+  reported cold, opening the session with no slice already in progress, hands off to `/devops`
+  instead.
+- **Design + stack slice:** MCP `search_knowledge` with `intent: design` and `q` = seam topic —
+  see [Knowledge pointer](../../docs/agents/knowledge.md). No MCP: `/knowledge?q=…&intent=design`.
+  Open best match in `sortOrder`. No match → [stack-defaults.md](stack-defaults.md) and ADRs
+- **Toolchain / formatter setup:** MCP `search_knowledge` with `intent: toolchain` and `q` =
+  tool/config need (e.g. biome, prettier) — see [Knowledge pointer](../../docs/agents/knowledge.md).
+  Open best match; use `get_knowledge_chunk` before copying config. No MCP: browse
+  `/knowledge?q=…&intent=toolchain`. No match → report search terms; do not invent formatter config
 - Identify modules and **seams** (public interfaces to test at)
-- **Greenfield UI with routing:** confirm routing branch before seam work if the slice touches routes
-  — default **TanStack Router**; **TanStack Start** when the user needs SSR or server routes
-  (see [stack-defaults.md](stack-defaults.md))
+- **Greenfield UI with routing:** only after the design Knowledge search above (or confirmed
+  stack-defaults fallback) — **TanStack Router** default; **TanStack Start** when the user needs
+  SSR or server routes ([stack-defaults.md](stack-defaults.md))
 
-**Completion criterion:** Spec source and relevant glossary terms identified; candidate seams listed;
-routing branch noted when applicable.
+**Completion criterion:** Spec source and relevant glossary terms identified; candidate seams
+listed; for any design/toolchain/deploy Knowledge path that fired — article opened or no-match
+search terms documented; routing branch noted when applicable (only after Knowledge or explicit
+stack-defaults fallback).
 
 ### 2. Confirm seams
 
@@ -124,9 +130,8 @@ scope self-check filled.
 
 ## Stack Defaults
 
-When stack is unspecified, search Knowledge first — MCP `search_knowledge` with `intent: design`
-(stack-combo seam recipes, e.g. **SG-001**). Fall back to [stack-defaults.md](stack-defaults.md)
-only when that search returns no match:
+Fallback tables only — when design Knowledge **search returns no match** (or the repo already chose
+a stack). Do not skip search. Details: [stack-defaults.md](stack-defaults.md).
 
 **Routing**
 
