@@ -12,6 +12,8 @@ const CATEGORY_BY_SLUG: Record<string, string> = {
   'arch-refactor': 'MAINT',
   arch: 'ARCH',
   devops: 'OPS',
+  docs: 'DOCS',
+  e2e: 'E2E',
 }
 
 export function catalogCategory(slug: string): string {
@@ -30,6 +32,8 @@ export function catalogDisplayName(slug: string, name: string): string {
     design: 'Design',
     dev: 'Develop',
     'code-review': 'Code review',
+    docs: 'Docs',
+    e2e: 'E2E',
     craft: 'Craft',
     'arch-refactor': 'Arch refactor',
     arch: 'Arch',

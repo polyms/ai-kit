@@ -35,7 +35,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 /triage        → move raw issues through triage state machine
 /design        → UI spec from PRD at docs/design/ (maps to @polyms/core-ui)
 /dev           → fullstack implementation, TDD, debugging
-/code-review   → two-axis review (Standards + Spec) before merge
+/code-review   → three-axis review (Standards + Spec + Simplify) before merge
 /arch-refactor → scan codebase for deepening opportunities (maintenance)
 ```
 
@@ -62,8 +62,11 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | `/to-issues`     | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
 | `/triage`        | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
 | `/design`        | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, core-ui component map, a11y  |
-| `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack implementation, TDD, debugging                        |
-| `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Two-axis review — Standards + Spec, parallel sub-agents         |
+| `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging  |
+| `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes      |
+| `/docs`          | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`docs-agent`)             |
+| `/e2e`           | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester-agent`)                     |
+| `/devops`        | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem    |
 | `/craft`         | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning          |
 | `/arch-refactor` | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates |
 | `/arch`          | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)   |
@@ -189,11 +192,19 @@ Use the design-agent to spec UI from PRD #42
 Implement [feature] from PRD at docs/prd/feature-x.md
 ```
 
-TDD vertical slices, disciplined debugging. Stack defaults: **TanStack Router** (**TanStack Start** if SSR), **Zustand** for client state. UI from design spec: [visual-ship.md](skills/dev/visual-ship.md). See [tdd-guide.md](skills/dev/tdd-guide.md), [debug-loop.md](skills/dev/debug-loop.md), and [stack-defaults.md](skills/dev/stack-defaults.md).
+TDD vertical slices, **solution ladder** before red-green, **scope self-check** before
+declaring done, **status report** on multi-slice sessions, disciplined debugging. Stack
+defaults: **TanStack Router** (**TanStack Start** if SSR), **Zustand** for client state. UI
+from design spec: [visual-ship.md](skills/dev/visual-ship.md) (evidence log required). See
+[tdd-guide.md](skills/dev/tdd-guide.md), [solution-ladder.md](skills/dev/solution-ladder.md),
+[scope-self-check.md](skills/dev/scope-self-check.md), [status-report.md](skills/dev/status-report.md),
+[debug-loop.md](skills/dev/debug-loop.md), and [stack-defaults.md](skills/dev/stack-defaults.md).
 
-### `/code-review` — Two-Axis Code Review
+Pipeline walkthrough: [examples/pipeline-feature-walkthrough.md](examples/pipeline-feature-walkthrough.md).
 
-Review branch or PR work since a pinned git fixed point — Standards and Spec in parallel:
+### `/code-review` — Three-Axis Code Review
+
+Review branch or PR work since a pinned git fixed point — Standards, Spec, and Simplify in parallel:
 
 ```
 /code-review
@@ -202,9 +213,55 @@ Review diff since main.
 Rà soát code trên branch này so với main.
 ```
 
-Fetches spec from issue refs in commits (`gh issue view`), `docs/design/`, user paths, or `docs/` / `.scratch/`. Reports findings under separate `## Standards` and `## Spec` headings. Model-invoked — also auto-fires on "review PR", "review diff", "xem diff". See [standards-baseline.md](skills/code-review/standards-baseline.md).
+Fetches spec from issue refs in commits (`gh issue view`), `docs/design/`, user paths, or
+`docs/` / `.scratch/`. Reports findings under separate `## Standards`, `## Spec`, and
+`## Simplify` headings — each finding tagged 🔴 blocker / 🟡 suggestion / 💭 nit. Model-invoked
+— also auto-fires on "review PR", "review diff", "xem diff", "over-engineered", "cắt bớt". See
+[standards-baseline.md](skills/code-review/standards-baseline.md) and
+[simplify-baseline.md](skills/code-review/simplify-baseline.md).
 
 _Future:_ dedicated `prd-view` skill for presenting PRDs from issues — not in scope yet; Spec axis uses `gh` + paths for now.
+
+### `/docs` — Technical Writing
+
+Developer-facing docs for shipped surfaces — API/MCP/CLI reference, tutorials, migrations.
+Not PRDs (`/pm`), not feature code (`/dev`). Long sessions: `docs-agent`.
+
+```
+/docs
+
+Write a tutorial: connect Cursor to kit MCP and search Knowledge intent: incident.
+```
+
+See [SKILL.md](skills/docs/SKILL.md).
+
+### `/e2e` — Test Automation
+
+Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Skill
+id **`e2e`**; principal agent **`tester-agent`**. Not seam TDD (`/dev`); not deploy Knowledge
+(`/devops`).
+
+```
+/e2e
+
+Stabilize flaky Playwright checkout journey — signal waits, quarantine with owner.
+```
+
+See [SKILL.md](skills/e2e/SKILL.md).
+
+### `/devops` — Deploy, CI & Infra
+
+Symptom → cause → fix → verify via Knowledge MCP (`intent: incident`). After green verify:
+classify, status updates, and SEV1/SEV2 post-mortem via
+[incident-templates.md](skills/devops/incident-templates.md).
+
+```
+/devops
+
+Vercel build failed — No Output Directory named dist.
+```
+
+See [SKILL.md](skills/devops/SKILL.md) and [runbooks.md](docs/agents/runbooks.md).
 
 ### `/to-issues` — Spec to GitHub Issues
 
@@ -266,10 +323,16 @@ ai-kit/
 ├── README.md
 ├── LICENSE
 ├── bootstrap.sh
+├── examples/
+│   ├── README.md
+│   └── pipeline-feature-walkthrough.md
 ├── agents/
 │   ├── design-agent.md
+│   ├── devops-agent.md
+│   ├── docs-agent.md
 │   ├── dev-agent.md
-│   └── pm-agent.md
+│   ├── pm-agent.md
+│   └── tester-agent.md
 └── skills/
     ├── align/
     │   └── SKILL.md
@@ -287,14 +350,25 @@ ai-kit/
     │   └── glossary.md
     ├── code-review/
     │   ├── SKILL.md
-    │   └── standards-baseline.md
+    │   ├── standards-baseline.md
+    │   └── simplify-baseline.md
+    ├── docs/
+    │   └── SKILL.md
     ├── domain-modeling/
+    │   └── SKILL.md
+    ├── devops/
+    │   ├── SKILL.md
+    │   └── incident-templates.md
+    ├── e2e/
     │   └── SKILL.md
     ├── dev/
     │   ├── SKILL.md
     │   ├── visual-ship.md
     │   ├── stack-defaults.md
     │   ├── tdd-guide.md
+    │   ├── solution-ladder.md
+    │   ├── scope-self-check.md
+    │   ├── status-report.md
     │   └── debug-loop.md
     ├── design/
     │   ├── SKILL.md
@@ -376,7 +450,7 @@ Each stage produces artifacts the next agent can consume. `/pm` drafts enterpris
 `/to-prd` publishes a lean PRD to the tracker; `/to-issues` publishes vertical-slice GitHub issues; `/triage`
 processes inbound backlog into `ready-for-agent` issues with agent briefs; `/design` adds `docs/design/` specs
 mapped to `@polyms/core-ui`; Dev implements against briefs and design specs (`dev` uses `core-ui` for UI
-code); `/code-review` gates merge on Standards + Spec before ship.
+code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 
 ## Daily workflow
 
@@ -394,11 +468,15 @@ code); `/code-review` gates merge on Standards + Spec before ship.
 - [x] `/to-prd` — synthesize conversation into lean PRD, publish to GitHub (from Matt's to-prd)
 - [x] `/to-issues` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
 - [x] `/triage` — issue backlog triage, agent briefs, `ready-for-agent` (from Matt's triage)
-- [x] `/dev` — fullstack implementation, TDD, debugging
-- [x] `/code-review` — two-axis review, parallel sub-agents (from Matt's code-review)
+- [x] `/dev` — fullstack implementation, TDD, solution ladder, scope self-check, status report
+- [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
+- [x] `/docs` — developer-facing docs (`docs-agent`)
+- [x] `/e2e` — E2E automation (`tester-agent`)
+- [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
 - [x] `/arch-refactor` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)
 - [x] `/design` — UI spec from PRD at `docs/design/`, `@polyms/core-ui` + `/core-ui` boundary
+- [x] `examples/` — pipeline feature walkthrough for onboarding
 - [ ] Frontmatter validation script
 - [ ] Claude agent support
 

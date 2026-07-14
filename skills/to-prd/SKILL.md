@@ -20,7 +20,7 @@ Decisions / problem statement clear?
 │     (lean template, publish to tracker)
 ├─ No — need design-tree grill (tech forks, domain terms) → user invokes `/align`
 └─ No — need PM discovery, enterprise PRD, stories, or prioritization → user invokes `/pm`
-      (enterprise template in chat; `/pm` does NOT publish)
+      (draft in chat or docs/prd/; `/pm` does NOT create tracker issues)
 ```
 
 **Audience:** Follow [lean-prd-template.md](lean-prd-template.md). Do **not** ship executive-summary
@@ -30,7 +30,7 @@ rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
 
 | Skill     | When                                             | Behavior                                                                                                 |
 | --------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| `/pm`     | Discovery, formal PRD, stories, priority         | May interview; [enterprise-prd-template.md](../pm/enterprise-prd-template.md); **does not publish**     |
+| `/pm`     | Discovery, formal PRD, stories, priority         | May interview; enterprise-prd-template in `/pm`; **does not publish**     |
 | `/to-prd` | "We've talked enough — ship the PRD"             | **Synthesize only** — no discovery interview; [lean-prd-template.md](lean-prd-template.md); **publishes** |
 
 **Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain language before synthesis.

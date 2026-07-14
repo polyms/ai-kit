@@ -41,7 +41,7 @@ Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/de
 
 ### Maintenance
 
-`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `/devops` — deploy/CI incidents via Knowledge MCP; long sessions: `devops-agent` in `agents/devops-agent.md`.
+`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; long sessions: `devops-agent` in `agents/devops-agent.md`. `/docs` — developer-facing docs; `docs-agent`. `/e2e` — E2E automation; principal agent `tester-agent` (skill/agent id mismatch by design). Pipeline walkthrough: `examples/pipeline-feature-walkthrough.md`.
 
 ### Invocation
 
@@ -49,13 +49,15 @@ User-invoked vs model-invoked skills; hard vs soft `/setup` dependencies. See `d
 
 ### Principal agents
 
-Isolated subagents for deep artifact work — one **principal** owner per downstream pipeline stage. **`/align`** is skill-only (interactive grill in the main chat; no subagent — subagents cannot pause for one-question-at-a-time dialogue):
+Isolated subagents for deep artifact work — one **principal** owner per lane. **`/align`** is skill-only (interactive grill in the main chat; no subagent — subagents cannot pause for one-question-at-a-time dialogue):
 
-| Agent          | Role                        | Owns                                              |
-| -------------- | --------------------------- | ------------------------------------------------- |
-| `pm-agent`     | Principal product manager   | PRD, stories, acceptance criteria, scope          |
-| `design-agent` | Principal product designer  | `docs/design/` UI specs, `@polyms/core-ui` maps   |
-| `dev-agent`    | Principal software engineer | Implementation, TDD, production code              |
-| `devops-agent` | Principal DevOps engineer   | Deploy/CI incidents, Knowledge `intent: incident` |
+| Agent           | Role                          | Owns                                                              |
+| --------------- | ----------------------------- | ----------------------------------------------------------------- |
+| `pm-agent`      | Principal product manager     | PRD, stories, acceptance criteria, scope                          |
+| `design-agent`  | Principal product designer    | `docs/design/` UI specs, `@polyms/core-ui` maps                   |
+| `dev-agent`     | Principal software engineer   | Implementation, TDD, scope self-check, multi-slice status         |
+| `devops-agent`  | Principal DevOps engineer     | Deploy/CI incidents, Knowledge `intent: incident`, SEV close-out  |
+| `docs-agent`    | Principal technical writer    | API reference, tutorials, integration/migration guides            |
+| `tester-agent`  | Principal tester              | E2E harness, flake, CI sharding, journeys (`/e2e` skill)          |
 
-Handoffs: `/align` → pm/to-prd → design → dev; deploy/CI incidents → `/devops`. Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.
+Handoffs: `/align` → pm/to-prd → design → dev → code-review; public surface → `/docs`; E2E flake → `/e2e` (`tester-agent`); deploy/CI infra → `/devops`. Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.

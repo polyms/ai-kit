@@ -19,7 +19,7 @@ A user-invoked skill has no model-facing description — **no other skill can fi
 
 | User-invoked                                                                                          | Model-invoked                                              |
 | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/pm`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/devops`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review` |
+| `/align`, `/setup`, `/craft`, `/pm`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops` |
 
 Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing); `/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch` when deepening. `/design` is user-invoked — ask the user to run `/core-ui` (external lib skill) before component mapping; `dev` uses `core-ui` when implementing UI.
 
@@ -29,11 +29,13 @@ Two contexts — don't mix them:
 
 | Context                                                                      | Form                    | Examples                                                 |
 | ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------- |
-| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/pm`, `/dev`, `/arch`, `/arch-refactor`                 |
+| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/pm`, `/dev`, `/arch`, `/arch-refactor`, `/docs`, `/e2e` |
 | **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`              |
 | **Agent name** — isolated subagent for deep work                             | `<skill>-agent` suffix  | `Use pm-agent`, `Use design-agent`, `agents/pm-agent.md` |
 
-User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type `/dev`; agents delegate to `dev`). Subagent files use the `-agent` suffix to distinguish from their matching skill (`pm` vs `pm-agent`).
+**Exception:** skill `e2e` pairs with agent **`tester-agent`** (not `e2e-agent`). Invoke `/e2e` or `Use the tester-agent to …`.
+
+User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type `/dev`; agents delegate to `dev`). Subagent files usually use the `-agent` suffix matching the skill (`pm` vs `pm-agent`); see `e2e` / `tester-agent` above.
 
 ## Dependencies between skills
 

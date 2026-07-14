@@ -50,7 +50,7 @@ Decisions / problem statement clear?
 │     (lean template, publish to tracker — `/pm` does NOT publish)
 ├─ No — need more design-tree grill → continue `/align` (or restart)
 └─ No — need PM discovery, enterprise PRD, stories, or prioritization → tell user to invoke `/pm`
-      (enterprise template in chat; does not publish)
+      (draft in chat or docs/prd/; does NOT create tracker issues)
 ```
 
 When suggesting `/to-prd`, say so explicitly (e.g. gõ `/to-prd`) — do not say only "viết PRD" (easy to

@@ -16,7 +16,7 @@ catalog_samplePrompt: Sample prompt
 catalog_search: Tìm skill…
 catalog_status_available: Available
 catalog_status_planned: Planned
-catalog_sub: 13 skill — invoke, mô tả, trạng thái, domain
+catalog_sub: 15 skill — invoke, mô tả, trạng thái, domain
 catalog_title: Danh mục kỹ năng
 catalog_viewAll: Xem toàn bộ danh mục
 catalog_viewSource: Mở trên GitHub
@@ -27,6 +27,8 @@ domain_architecture: Architecture
 domain_authoring: Authoring
 domain_design: Design
 domain_devops: DevOps
+domain_docs: Docs
+domain_e2e: E2E
 domain_implementation: Implementation
 domain_repoConfig: Cấu hình repo
 domain_requirements: Requirements

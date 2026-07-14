@@ -69,5 +69,9 @@ export function domainLabel(domain: SkillDomain): string {
       return m.domain_architecture()
     case 'devops':
       return m.domain_devops()
+    case 'docs':
+      return m.domain_docs()
+    case 'e2e':
+      return m.domain_e2e()
   }
 }

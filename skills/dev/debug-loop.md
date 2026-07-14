@@ -68,8 +68,13 @@ Tag debug logs: `[DEBUG-a4f2]` — cleanup is one grep.
 
 Only if a **correct seam** exists — test exercises real bug pattern at call site.
 
+**Root cause, not symptom:** a report names a symptom. Before editing, grep every caller
+of the function you touch. Prefer one guard in the shared function over one patch per
+caller — fixing only the ticket path leaves sibling callers broken. See
+[solution-ladder.md](solution-ladder.md) (bug-fix note).
+
 1. Failing test from minimised repro
-2. Fix
+2. Fix at the shared root cause when that is the smaller correct diff
 3. Pass
 4. Re-run original (un-minimised) loop
 

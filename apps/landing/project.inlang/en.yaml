@@ -16,7 +16,7 @@ catalog_samplePrompt: Sample prompt
 catalog_search: Find skill…
 catalog_status_available: Available
 catalog_status_planned: Planned
-catalog_sub: 13 skills — invoke, description, status, domain
+catalog_sub: 15 skills — invoke, description, status, domain
 catalog_title: Skill catalog
 catalog_viewAll: View full catalog
 catalog_viewSource: View on GitHub
@@ -27,6 +27,8 @@ domain_architecture: Architecture
 domain_authoring: Authoring
 domain_design: Design
 domain_devops: DevOps
+domain_docs: Docs
+domain_e2e: E2E
 domain_implementation: Implementation
 domain_repoConfig: Repo config
 domain_requirements: Requirements

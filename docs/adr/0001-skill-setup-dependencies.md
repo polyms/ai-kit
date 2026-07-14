@@ -39,6 +39,8 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 | `pm`, `to-prd`    | Glossary vocabulary in specs when `CONTEXT.md` exists; writes in `docs/agents/language.md` if present (`/pm` does not publish; `/to-prd` does) |
 | `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/core-ui` before component map; writes in `docs/agents/language.md` if present |
 | `devops`          | [runbooks.md](../agents/runbooks.md) + MCP Knowledge retrieval; `stack-profile.md` when present |
+| `docs`            | `docs/agents/language.md` when present; `CONTEXT.md` vocabulary only (no glossary expansion) |
+| `e2e`             | Repo Playwright/Cypress + CI workflows as source of truth; no docs/agents gate |
 | `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces; writes in `docs/agents/language.md` if present |
 | `arch-refactor`   | Same; reaches `arch`, `align-loop`, `domain-modeling`                             |
 

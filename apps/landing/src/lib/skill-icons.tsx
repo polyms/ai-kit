@@ -32,6 +32,8 @@ export const skillIconBySlug: Record<string, IconComponent> = {
   'arch-refactor': p => <Structure {...iconProps} {...p} />,
   arch: p => <Structure {...iconProps} {...p} />,
   devops: p => <ServerSquare {...iconProps} {...p} />,
+  docs: p => <DocumentText {...iconProps} {...p} />,
+  e2e: p => <ChecklistMinimalistic {...iconProps} {...p} />,
 }
 
 export function SkillIcon({ slug }: { slug: string }) {

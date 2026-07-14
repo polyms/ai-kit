@@ -22,6 +22,12 @@ Example: [RB-001](https://ai-kit.polyms.dev/knowledge/RB-001) — Vercel + TanSt
 | Symptom → fix for deploy/CI | Architecture **why** → `docs/adr/`                                      |
 | Incident chunks + checklist | Design seams → `intent: design` in [stack-guides.md](./stack-guides.md) |
 
+## Process templates (not CMS body)
+
+Severity, status updates, and post-mortems live with the skill — not in Ops CMS articles:
+
+- [incident-templates.md](../../skills/devops/incident-templates.md) — used by `/devops` after verify
+
 ## Related
 
 - **Knowledge:** [knowledge.md](./knowledge.md)

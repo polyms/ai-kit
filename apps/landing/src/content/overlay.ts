@@ -11,6 +11,8 @@ export type SkillDomain =
   | 'authoring'
   | 'architecture'
   | 'devops'
+  | 'docs'
+  | 'e2e'
 
 export type AgentPanel = {
   role: string
@@ -212,7 +214,7 @@ export const skillOverlays: SkillOverlay[] = [
     name: 'dev',
     invoke: '/dev',
     slug: 'dev',
-    description: 'Fullstack implementation with TDD and disciplined debugging.',
+    description: 'Fullstack implementation with TDD, solution ladder, scope self-check, and debugging.',
     status: 'available',
     invocation: 'model',
     domain: 'implementation',
@@ -221,11 +223,11 @@ export const skillOverlays: SkillOverlay[] = [
     relatedAgents: ['dev-agent'],
     agentPanel: {
       role: 'PRINCIPAL ENGINEER',
-      owns: ['production code', 'TDD', 'debugging'],
+      owns: ['production code', 'TDD', 'solution ladder', 'scope self-check', 'status report', 'debugging'],
       invokeHint: 'Use the dev-agent to implement [feature] from spec',
     },
     summary:
-      'Ship production code from PRD, design spec, or agent brief — TDD at confirmed seams, tight debug loops.',
+      'Ship production code from PRD, design spec, or agent brief — solution ladder then TDD at confirmed seams, scope self-check before done, status report on multi-slice work, tight debug loops.',
     whenToUse: 'Spec is ready (`ready-for-agent` issue, PRD, or `docs/design/`). Pick up vertical slices.',
     pipeline: {
       upstream: '/design or agent brief from `/triage`',
@@ -238,20 +240,75 @@ export const skillOverlays: SkillOverlay[] = [
     name: 'code-review',
     invoke: '/code-review',
     slug: 'code-review',
-    description: 'Review code changes since a pinned git fixed point — Standards and Spec axes.',
+    description: 'Review code changes since a pinned git fixed point — Standards, Spec, and Simplify axes.',
     status: 'available',
     invocation: 'model',
     domain: 'review',
     samplePrompt: '/code-review\n\nReview diff since main.\nRà soát code trên branch này so với main.',
     githubPath: 'skills/code-review/',
     summary:
-      'Two-axis review (Standards + Spec) since a pinned git point — parallel sub-agents, side-by-side findings.',
-    whenToUse: 'Before merge or when asked to review a branch, PR, or diff.',
+      'Three-axis review (Standards + Spec + Simplify) since a pinned git point — parallel sub-agents, findings tagged 🔴 blocker / 🟡 suggestion / 💭 nit.',
+    whenToUse: 'Before merge or when asked to review a branch, PR, or diff — including over-engineering cuts.',
     pipeline: {
       upstream: '/dev',
       downstream: 'Ship',
     },
-    boundaries: 'Not lint-only or generic PR comment — pinned baseline and spec axis required.',
+    boundaries: 'Not lint-only or generic PR comment — pinned baseline; Spec optional; Simplify always runs.',
+  },
+  {
+    name: 'docs',
+    invoke: '/docs',
+    slug: 'docs',
+    description:
+      'Developer-facing documentation — API reference, tutorials, integration guides, migration notes.',
+    status: 'available',
+    invocation: 'user',
+    domain: 'docs',
+    samplePrompt:
+      '/docs\n\nWrite a tutorial: wire Cursor to the kit MCP and search Knowledge with intent: incident.',
+    githubPath: 'skills/docs/',
+    relatedAgents: ['docs-agent'],
+    agentPanel: {
+      role: 'PRINCIPAL TECH WRITER',
+      owns: ['API reference', 'tutorials', 'integration guides', 'migration notes'],
+      invokeHint: 'Use the docs-agent to [task]',
+    },
+    summary:
+      'Developer-facing docs for shipped surfaces — verify examples against code; not PRDs or feature implementation.',
+    whenToUse: 'Public/integrator docs after a surface ships, or when API/tutorial drift is found.',
+    pipeline: {
+      upstream: '/dev (shipped seam) or existing schema/MCP',
+      downstream: 'Published docs path / optional `/e2e` how-to',
+    },
+    boundaries: 'Not `/pm` requirements. Not `/dev` feature code. Not marketing copy.',
+  },
+  {
+    name: 'e2e',
+    invoke: '/e2e',
+    slug: 'e2e',
+    description:
+      'End-to-end test automation — Playwright flake, CI parallelization, journey suites, traces.',
+    status: 'available',
+    invocation: 'user',
+    domain: 'e2e',
+    samplePrompt:
+      '/e2e\n\nPlaywright CI flakes on checkout journey — stabilize waits and quarantine with owner.',
+    githubPath: 'skills/e2e/',
+    relatedAgents: ['tester-agent'],
+    agentPanel: {
+      role: 'PRINCIPAL TESTER',
+      owns: ['Playwright suite', 'flake elimination', 'CI sharding', 'traces'],
+      invokeHint: 'Use the tester-agent to [task]',
+    },
+    summary:
+      'E2E harness and CI test-job health — flakes, shards, journeys. Skill id `e2e`; agent id `tester-agent`.',
+    whenToUse: 'Flaky or slow E2E CI, new critical journey coverage, trace-driven triage of test jobs.',
+    pipeline: {
+      upstream: 'CI test failure or suite map',
+      downstream: '/dev (product bug) · `/devops` (deploy) · `/code-review`',
+    },
+    boundaries:
+      'Not seam TDD (`/dev`). Not deploy/build Knowledge fixes (`/devops`). Not pre-merge three-axis review.',
   },
   {
     name: 'craft',
@@ -316,9 +373,9 @@ export const skillOverlays: SkillOverlay[] = [
     name: 'devops',
     invoke: '/devops',
     slug: 'devops',
-    description: 'Deploy, CI, and infra — symptom → fix via Knowledge (`intent: incident`).',
+    description: 'Deploy, CI, and infra — symptom → fix via Knowledge (`intent: incident`); SEV/post-mortem templates.',
     status: 'available',
-    invocation: 'user',
+    invocation: 'model',
     domain: 'devops',
     samplePrompt:
       '/devops\n\nVercel deploy failed on TanStack Start monorepo — search Knowledge (intent: incident) before changing config.',
@@ -326,16 +383,16 @@ export const skillOverlays: SkillOverlay[] = [
     relatedAgents: ['devops-agent'],
     agentPanel: {
       role: 'PRINCIPAL DEVOPS',
-      owns: ['incident knowledge', 'stack profiles', 'deploy/CI fixes'],
+      owns: ['incident knowledge', 'stack profiles', 'deploy/CI fixes', 'SEV/post-mortem'],
       invokeHint: 'Use the devops-agent to [symptom]',
     },
     summary:
-      'Deploy, CI, and infra ownership — retrieve Knowledge with `intent: incident`, apply symptom → cause → fix → verify before guessing config.',
+      'Deploy, CI, and infra — retrieve Knowledge with `intent: incident`, apply symptom → cause → fix → verify, then close with SEV/status/post-mortem templates.',
     whenToUse:
       'Vercel/build failures, monorepo deploy traps, CI infra changes — search Knowledge (`intent: incident`) first.',
     pipeline: {
       upstream: 'App deploy docs (e.g. `apps/*/DEPLOY.md`)',
-      downstream: 'Verified deploy/CI green state',
+      downstream: 'Verified deploy/CI green state (+ post-mortem when SEV1/SEV2)',
     },
     boundaries:
       'Not application feature code — operational playbooks and infra config. Design seams → `/arch`; feature work → `/dev`.',

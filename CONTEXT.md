@@ -33,7 +33,11 @@ Workflow file at `skills/<name>/SKILL.md` — the agent reads and follows it in 
 _Avoid_: prompt, instruction, rule
 
 **Agent**:
-Subagent at `agents/<name>-agent.md` — isolated context for long artifact work. **Principal** tier: `pm-agent`, `design-agent`, `dev-agent`. **`/align`** has no agent — grill is interactive in the main chat. Reads the matching skill, then executes. Suffix `-agent` distinguishes from the skill (`pm` vs `pm-agent`).
+Subagent at `agents/<name>-agent.md` — isolated context for long artifact work. **Principal**
+tier: `pm-agent`, `design-agent`, `dev-agent`, `devops-agent`, `docs-agent`, `tester-agent`.
+**`/align`** has no agent — grill is interactive in the main chat. Usually reads the matching
+skill (`pm` → `pm-agent`). **Exception:** skill `e2e` pairs with agent `tester-agent` (not
+`e2e-agent`). Suffix `-agent` distinguishes from the skill.
 _Avoid_: subagent, bot, assistant (when referring to `agents/*-agent.md` files)
 
 ## Pipeline
@@ -69,16 +73,36 @@ Design system library (`@polyms/core-ui`, Tailwind CSS 4) and matching `/core-ui
 _Avoid_: component library (generic), shadcn
 
 **Dev**:
-Ship production code from spec — TDD, debugging. Pre-merge review via `code-review`. Invoke with `/dev`.
+Ship production code from spec — TDD, solution ladder, scope self-check, multi-slice status report, debugging. Pre-merge review via `code-review`. Invoke with `/dev`.
 _Avoid_: implementation, coding phase
 
 **Code review**:
-Two-axis review skill (Standards + Spec) since a pinned git fixed point — parallel sub-agents, side-by-side findings. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code". Invoke with `/code-review`.
+Three-axis review skill (Standards + Spec + Simplify) since a pinned git fixed point — parallel sub-agents, severity-tagged findings (🔴 blocker / 🟡 suggestion / 💭 nit). Diffs under 10 changed lines skip sub-agent spawn and review inline instead. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code", "over-engineered", "cắt bớt". Invoke with `/code-review`.
 _Avoid_: PR review (generic), lint check
 
+**Docs**:
+Developer-facing documentation — API reference, tutorials, integration/migration guides for shipped surfaces. Invoke with `/docs`. Long sessions: `docs-agent`. Does **not** own PRDs (`/pm`) or feature code (`/dev`).
+_Avoid_: technical writer (generic), README dump, /pm (when meaning requirements)
+
+**E2E**:
+End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/e2e`. Long sessions: **`tester-agent`** (skill id `e2e`, agent id `tester-agent`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
+_Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when meaning seam TDD)
+
+**Scope self-check**:
+Pre-ship audit that every changed line is required by the stated task — surface temptations as follow-ups, do not expand the diff. Part of `/dev` ship checklist; see `skills/dev/scope-self-check.md`.
+_Avoid_: YAGNI checklist (use solution ladder for build choices), minimal change engineer
+
+**Status report**:
+Multi-slice `/dev` progress template — phase, slice table, quality gates, one Next. See `skills/dev/status-report.md`. Skip for single-slice one-liners.
+_Avoid_: standup notes (generic), orchestrator pipeline (agency-style autonomous spawn)
+
 **DevOps**:
-Deploy, CI, and infra ownership — **symptom → fix** via **Runbook** retrieval (CMS/MCP), filtered by **stack manifest**. Invoke with `/devops`. Long sessions: `devops-agent`. Does **not** own architecture _why_ (ADR) or seam vocabulary (`arch`) or stack design guides (**Stack guide**).
+Deploy, CI, and infra ownership — **symptom → fix** via **Runbook** retrieval (CMS/MCP), filtered by **stack manifest**; SEV/status/post-mortem via skill templates. Model-invoked; auto-fires on a deploy/CI symptom reported cold (no `/dev` slice already in progress) — one surfacing mid-slice stays in deploy-aware `/dev`. Invoke with `/devops`. Long sessions: `devops-agent`. Does **not** own architecture _why_ (ADR) or seam vocabulary (`arch`) or stack design guides (**Stack guide**).
 _Avoid_: SRE (generic), ops runbook (when meaning the skill specifically), arch (when meaning module design)
+
+**Incident templates**:
+SEV matrix, stakeholder status update, blameless post-mortem, close checklist for `/devops`. Process artifacts — not live Knowledge fix recipes. See `skills/devops/incident-templates.md`.
+_Avoid_: runbook (when meaning CMS symptom→fix), PagerDuty playbook (vendor-specific)
 
 **Handoff**:
 Transfer between pipeline stages — summary plus `## Next Step` pointing to exactly one next skill.

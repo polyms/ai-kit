@@ -41,7 +41,7 @@ When the user states how something works, check whether code agrees. If code con
 
 ## Update CONTEXT.md Inline
 
-When a term resolves, update `CONTEXT.md` immediately — don't batch. Use [context-format.md](../setup/context-format.md).
+When a term resolves, update `CONTEXT.md` immediately — don't batch. Use the context-format guide in `setup`.
 
 `CONTEXT.md` is glossary only: no implementation details, no specs, no scratch notes.
 
@@ -53,7 +53,7 @@ Offer an ADR only when all three are true:
 2. **Surprising without context** — future readers will ask "why?"
 3. **Real trade-off** — genuine alternatives existed
 
-If any condition is missing, skip the ADR. Use [adr-format.md](../setup/adr-format.md).
+If any condition is missing, skip the ADR. Use the adr-format guide in `setup`.
 
 ## During align-loop
 

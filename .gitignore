@@ -152,3 +152,5 @@ vite.config.ts.timestamp-*
 
 .claude/worktrees
 /apps/landing/prisma/schema
+# Personal chat persona (symlink → ~/.claude/rules/agent-persona.md)
+.cursor/rules/agent-persona.mdc

@@ -35,7 +35,7 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 | Anti-slop       | [ANTI-SLOP.md](ANTI-SLOP.md) — big bans + composition; cite in spec                                            |
 | Quality bar     | [QUALITY-BAR.md](QUALITY-BAR.md) — visual reference + measurable craft intent                                  |
 | CSS intent      | [CSS-INTENT.md](CSS-INTENT.md) — **required** §4 in spec; `/dev` implements before wiring                      |
-| Visual accept   | [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — criteria `/dev` proves via [visual-ship](../dev/visual-ship.md) |
+| Visual accept   | [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — criteria `/dev` proves via visual-ship in `/dev` |
 | Spec template   | [design-spec-template.md](design-spec-template.md)                                                             |
 | Pre-flight      | [PREFLIGHT.md](PREFLIGHT.md) — must pass before handoff                                                        |
 | Redesign        | [REDESIGN.md](REDESIGN.md) — audit-first when modernizing existing UI                                          |
@@ -104,7 +104,7 @@ Run [PREFLIGHT.md](PREFLIGHT.md) honestly. Fix failures before handoff.
 
 Summarize what was written (path + feature name). End with `## Next Step` → `/dev` (default) or `/to-issues` if P0 CSS/visual slices should ship separately.
 
-**Completion criterion:** Summary delivered; one next skill named; `/dev` has §4 CSS + §8 visual acceptance to run [visual-ship.md](../dev/visual-ship.md).
+**Completion criterion:** Summary delivered; one next skill named; `/dev` has §4 CSS + §8 visual acceptance to run visual-ship in `/dev`.
 
 ## Screen drill-down
 
