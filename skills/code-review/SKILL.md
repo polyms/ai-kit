@@ -164,13 +164,18 @@ Reporting them separately stops one axis from masking the other.
 
 ## Handoff
 
-- **🔴 blocker** (any axis) → fix before merge; use `/dev` if implementation help is
-  needed. Spec wrong (not code) → `/reqs` / update the issue before coding further.
-- **🟡 suggestion** → take in the same PR when cheap; otherwise schedule as follow-up.
-- **💭 nit** → optional; do not block merge.
-- **Simplify cuts worth taking** → `/dev` with the delete-list; do not open a product
-  debate unless a cut would drop an explicit acceptance criterion.
-- **Ready to merge** → no open 🔴; proceed to ship checklist + scope self-check in `/dev`.
+Severity cues are when/why (not a pasteable menu). End the report with `## Next Step` (CONTEXT.md
+**Handoff**) — prefer **exactly one**:
+
+- **🔴 blocker** (any axis) → `→ /dev` to fix before merge. Spec wrong (not code) → `→ /reqs` /
+  update the issue before coding further (pick one).
+- **Ready to merge** (no open 🔴) → ship / merge (optionally note `/dev` ship checklist).
+- **Simplify cuts worth taking** → `→ /dev` with the delete-list.
+
+🟡 suggestions and 💭 nits stay in the report body — do not expand `## Next Step` into a menu.
+
+**Completion criterion:** Report includes `## Next Step` with one preferred action (two max with
+when/why when fix vs product-gap fork is real).
 
 ## Agent
 

@@ -50,6 +50,11 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
    changing infra — see [knowledge.md](../docs/agents/knowledge.md). Confirm symptom + cause;
    verify; close with SEV templates when required.
 10. Meet each workflow's **completion criterion** before declaring done.
+11. End every session with `## Next Step` per the skill handoff / CONTEXT.md **Handoff** —
+    prefer one next action. After `/dev` ship: follow **`dev`** handoff — name the
+    higher-priority of `/docs` vs `/e2e` when both could apply; two only if both surfaces
+    genuinely apply. When blocked: single escalate to `/reqs` or `/design`. After `/devops`
+    close: typically done, or `/dev` if feature work remains.
 
 ## Constraints
 

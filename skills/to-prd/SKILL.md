@@ -123,8 +123,12 @@ matching `docs/prd/<feature-slug>.md` written.
 
 ### 6. Handoff
 
-Summarize what was published (issue number + title). End with `## Next Step` pointing to exactly one skill — typically `/to-issues` on the published PRD issue.
+Summarize what was published (issue number + title). End with `## Next Step` — prefer **exactly
+one** next skill (typically `/to-issues` on the published PRD). Second option only when UI-heavy
+and design should land before slicing (`→ /design` with when). Never a 3+ menu.
 
-_Future:_ a dedicated `prd-view` skill for reading and presenting PRDs from issues is planned — for now, fetch via `issue-tracker.md` read commands.
+**Completion criterion:** Summary delivered; `## Next Step` names one preferred skill (two max with
+when/why).
 
-**Completion criterion:** Summary delivered; `## Next Step` names one next skill.
+_Future:_ a dedicated `prd-view` skill for reading and presenting PRDs from issues is planned — for
+now, fetch via `issue-tracker.md` read commands.

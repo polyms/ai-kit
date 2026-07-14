@@ -61,4 +61,8 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | `tester`    | Principal tester            | E2E harness, flake, CI sharding, journeys (`/e2e`)                                 |
 | `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |
 
-Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public surface → `/docs` (`techlead`); E2E flake → `/e2e` (`tester`); deploy/CI infra → `/devops` (`developer` executes, `techlead` owns SEV). Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.
+Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public surface → `/docs`
+(`techlead`); E2E flake → `/e2e` (`tester`); deploy/CI infra → `/devops` (`developer` executes,
+`techlead` owns SEV). Each stage ends with `## Next Step` — one preferred skill (two max with
+when/why; see CONTEXT.md **Handoff**). Each agent stays in lane; escalates gaps upstream, does not
+relitigate downstream artifacts.

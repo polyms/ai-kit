@@ -44,6 +44,7 @@ Every checkbox must honestly pass before handing a design spec to `/dev`. **Desi
 ## Handoff
 
 - [ ] Spec saved at `docs/design/<feature-slug>.md`
-- [ ] `## Next Step` points to exactly one skill (`/dev` or `/to-issues`)
+- [ ] `## Next Step` names one preferred skill (`/dev` default; `/to-issues` only when P0
+      visual slices ship first — optional second with when)
 
 Design pre-flight ends here. **`/dev`** runs [visual-ship.md](../dev/visual-ship.md) before declaring UI done — functional tests alone are insufficient.

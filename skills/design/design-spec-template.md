@@ -118,6 +118,7 @@ Run [PREFLIGHT.md](PREFLIGHT.md) — every item must pass before handoff.
 
 ## Next Step
 
-→ `/dev` | `/to-issues`
+→ `/dev`
 
-[One line: which skill and why. P0 visual slices → prefer `/to-issues` if CSS layer is a separate slice.]
+[One line: which skill and why. Prefer `/dev`. Second option only when P0 visual slices need
+`/to-issues` first — then list that as an alternative with when, not a `|`-joined menu.]

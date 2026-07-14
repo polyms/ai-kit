@@ -122,11 +122,18 @@ Use the techlead to [task]
 
 The agent reads this skill when invoked.
 
-## Handoffs
+## Handoff
 
-- Undecided product → `/reqs` or `/align`
-- Wrong/missing implementation → `/dev`
-- Deploy/CI setup docs that need Knowledge fix recipes → cite `/devops` / Knowledge; do not
-  invent infra config
-- Inbound cue from `/dev`: public surface just shipped — start Reference or Tutorial workflow
-- Tester/contributor how-to for a stabilized journey → may pair with `/e2e` outbound
+When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after docs
+ship — prefer **exactly one**:
+
+- Ship / link the doc path — docs done
+- `/dev` — drift found that needs code fixes
+- `/reqs` — undecided product needs discovery, stories, or enterprise PRD
+- `/align` — plan or domain still fuzzy; need design-tree grill before more docs
+
+Pick one preferred next action (two max only when the fork is genuine — each with when).
+Escalation cues (cite `/devops` for infra Knowledge; pair with `/e2e` for tester how-to) may appear
+in body prose; `## Next Step` still names one preferred.
+
+**Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).

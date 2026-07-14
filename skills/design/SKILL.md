@@ -102,9 +102,12 @@ Run [PREFLIGHT.md](PREFLIGHT.md) honestly. Fix failures before handoff.
 
 ### 5. Handoff
 
-Summarize what was written (path + feature name). End with `## Next Step` → `/dev` (default) or `/to-issues` if P0 CSS/visual slices should ship separately.
+Summarize what was written (path + feature name). End with `## Next Step` — preferred `→ /dev`.
+Second option only when P0 CSS/visual slices should ship separately via `/to-issues` (one-line
+when). Not a flat pipe menu.
 
-**Completion criterion:** Summary delivered; one next skill named; `/dev` has §4 CSS + §8 visual acceptance to run visual-ship in `/dev`.
+**Completion criterion:** Summary delivered; one preferred next skill named (optional second with
+when); `/dev` has §4 CSS + §8 visual acceptance to run visual-ship in `/dev`.
 
 ## Screen drill-down
 

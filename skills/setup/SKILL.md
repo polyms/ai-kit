@@ -236,15 +236,31 @@ symlink present.
 
 ### 5. Done
 
-Tell user setup is complete. Mention `/align` before building, `/reqs` or `/to-prd` for specs, `/design` for UI
-specs, `/triage` for backlog issues, and that `/dev` / `/devops` / `/arch` will filter Knowledge with
-`docs/agents/stack-profile.md`. Remind them to create GitHub labels matching
-`docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was installed, point
-at `.cursor/rules/agent-voice.mdc` to edit persona.
+Tell user setup is complete. Deliver the **orientation tour** in body prose — overview of
+pipeline entry points (`/align` before building; `/reqs` or `/to-prd` for specs; `/design` for
+UI specs; `/triage` for backlog issues; `/dev` / `/devops` / `/arch` filter Knowledge via
+`docs/agents/stack-profile.md`). Remind them to create GitHub labels matching
+`docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was
+installed, point at `.cursor/rules/agent-voice.mdc` to edit persona.
 
-**Completion criterion:** User notified setup is complete; `/align`, `/reqs` or `/to-prd`, `/design`, and
-`/triage` mentioned; stack-profile / Knowledge mentioned; label creation reminder given; voice path
-mentioned only when opted in.
+Orientation is **not** `## Next Step` — see [Handoff](#handoff).
+
+**Completion criterion:** User notified setup is complete; orientation tour mentions pipeline
+entry points; stack-profile / Knowledge mentioned; label creation reminder given; voice path
+mentioned only when opted in; Handoff block delivered.
+
+## Handoff
+
+When/why cues (CONTEXT.md **Handoff**) — not a pasteable menu. After Done's orientation tour,
+end with `## Next Step` — preferred `→ /align` (default after setup). Optional second only when
+they have a raw backlog ready: `→ /triage` with when.
+
+```
+## Next Step
+→ /align
+```
+
+**Completion criterion:** `## Next Step` names `/align` (optional second `/triage` with when).
 
 ## Language
 

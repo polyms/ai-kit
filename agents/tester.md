@@ -24,7 +24,8 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
 3. Read existing Playwright/Cypress config and CI workflows before proposing changes.
 4. Prefer signal-based waits and isolation over sleeps and shared mutable fixtures.
 5. Meet each workflow's **completion criterion** before declaring done.
-6. End with `## Next Step` → one of `/dev` | `/devops` | `/docs` | `/code-review` | ship.
+6. End with `## Next Step` per the e2e skill handoff / CONTEXT.md **Handoff** — one preferred
+   (cue table in skill); two max with when/why.
 
 ## Constraints
 

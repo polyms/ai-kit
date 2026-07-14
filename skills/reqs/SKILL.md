@@ -73,7 +73,7 @@ executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy.
    behavior the user didn't settle
 4. Include wireframe notes or flow description where UI is involved
 5. Add **non-functional requirements** (performance, security, accessibility, i18n) — only rows that apply
-6. End with open questions (collected markers) and next steps
+6. End with open questions (collected markers) and `## Next Step` (see [Handoff](#handoff))
 7. **Human-readable check:** re-read as a PM unfamiliar with the codebase — every kept section filled; no
    one-line wave summaries; Given/When/Then per P0 story; body stands alone without opening the repo
 
@@ -142,6 +142,26 @@ Before delivering any artifact, verify:
 - [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; a human can understand scope from the
       body alone (see Audience on [enterprise-prd-template.md](enterprise-prd-template.md))
 - [ ] **No publish** — this skill did not create a tracker issue; publish path is `/to-prd`
+
+## Handoff
+
+End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue defaults:
+
+| Next step | When                                                              |
+| --------- | ----------------------------------------------------------------- |
+| `/to-prd` | Enterprise draft ready to publish as a lean tracker PRD (default) |
+| `/design` | UI flows / design specs are the clear next work                   |
+| `/align`  | Plan or domain still fuzzy — need grill before publish            |
+
+```
+## Open Questions
+- [list unresolved items]
+
+## Next Step
+→ /to-prd
+```
+
+**Completion criterion:** `## Next Step` names one preferred skill (two max with when/why).
 
 ## Anti-Patterns
 

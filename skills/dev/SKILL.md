@@ -108,9 +108,19 @@ name an upstream skill when blocked.
 **Completion criterion:** Every ship checklist item verified; scope self-check filled;
 diff passes the line-by-line pass rule.
 
-**Optional handoff:** Public integrator surface (API, MCP, CLI) shipped → tell the user to
-invoke `/docs`. Critical browser journey needs CI coverage → `/e2e` (not a substitute for
-seam TDD).
+### 6. Handoff
+
+When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after the
+ship checklist — prefer **exactly one**:
+
+- Ship / done — feature closed, nothing queued
+- `/docs` — public integrator surface (API, MCP, CLI) just shipped
+- `/e2e` — critical browser journey needs CI coverage (not a substitute for seam TDD)
+
+Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces
+genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/design`.
+
+**Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
 
 ## Debug Workflow
 

@@ -33,9 +33,12 @@ Two contexts — don't mix them:
 | **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`                    |
 | **Agent name** — isolated subagent for deep work (org role, not skill twin)  | role id                 | `Use pm`, `Use designer`, `agents/pm.md`, `agents/techlead.md` |
 
-**Agents map to org roles**, not 1:1 skills. Skills stay playbooks; multiple skills per agent OK; multiple agents may
-use one skill (e.g. `/devops` → `developer` + `techlead`). **Ownership table (SSOT):**
-[AGENTS.md — Principal agents](../../AGENTS.md).
+**Handoffs** use `## Next Step` (singular) — prefer one `→ /skill`; at most two with when/why.
+SSOT: CONTEXT.md **Handoff**. Agents follow the skill's handoff; do not invent 3+ option menus.
+
+**Agents map to org roles**, not 1:1 skills. Skills stay playbooks; multiple skills per agent OK;
+multiple agents may use one skill (e.g. `/devops` → `developer` + `techlead`). **Ownership table
+(SSOT):** [AGENTS.md — Principal agents](../../AGENTS.md).
 
 User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type
 `/dev`; agents delegate to `dev`). Agent files live at `agents/<role>.md` with frontmatter `name: <role>` — no

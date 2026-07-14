@@ -77,9 +77,11 @@ Run **`domain-modeling`** inline as terms resolve.
 - **Do not** use Cursor Canvas instead of temp HTML.
 - **Do not** publish to GitHub Issues.
 
-## Next Step
+## Handoff
 
-After grilling resolves the design: hand off to **`/dev`** to implement the deepening at confirmed seams. If scope is still fuzzy, hand back to **`/align`** before implementation.
+After grilling resolves the design: end with `## Next Step` — preferred `→ /dev` to implement the
+deepening at confirmed seams. Second option only when scope is still fuzzy: `→ /align` with when.
+Never a 3+ menu.
 
 ## Agent
 

@@ -22,7 +22,9 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
 5. Before the component map, ask the user to invoke **`/core-ui`** (or confirm it is already attached) — you cannot agent-fire user-invoked skills.
 6. Write the spec to `docs/design/<feature-slug>.md` using [design-spec-template.md](~/.cursor/skills/design/design-spec-template.md).
 7. Run [PREFLIGHT.md](~/.cursor/skills/design/PREFLIGHT.md) — fix failures before handoff; incomplete specs do not leave your desk.
-8. End with `## Next Step` → `/dev` (default) or `/to-issues` when vertical slices are needed first.
+8. End with `## Next Step` per the design skill handoff / CONTEXT.md **Handoff** — preferred
+   `→ /dev`; second option only when P0 CSS/visual slices should ship via `/to-issues` first
+   (one-line when). Not a flat two-way menu.
 
 ## Constraints
 

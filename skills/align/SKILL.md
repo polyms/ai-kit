@@ -63,6 +63,9 @@ confuse with `/reqs`).
 | `/dev`    | Small, well-bounded change with clear seams                                        |
 | `/design` | UI flows or design specs needed before implementation                              |
 
+Pick **one** preferred next skill from the table (at most two if the fork is genuinely
+ambiguous — each line with when/why). Do **not** paste a `|`-joined menu.
+
 End with:
 
 ```
@@ -73,10 +76,21 @@ End with:
 - [each item — or "none" only after audit confirms zero unsettled implementer-facing details]
 
 ## Next Step
-→ /to-prd | /reqs | /design | /dev
+→ /to-prd
 ```
 
-**Completion criterion:** Handoff block delivered; `## Open Questions` matches the audit (not silently empty); user confirmed
-deferral before `## Next Step` → `/to-prd` when any item remains; `## Next Step` points to exactly one skill.
+(Example above assumes lean publish is ready. Other picks: see when-table above.)
+
+Two-option example only when the fork is real:
+
+```
+## Next Step
+→ /to-prd — decisions confirmed; ready to publish lean PRD
+→ /design — UI-heavy; flows must land before tracker publish
+```
+
+**Completion criterion:** Handoff block delivered; `## Open Questions` matches the audit (not silently
+empty); user confirmed deferral before `## Next Step` → `/to-prd` when any item remains;
+`## Next Step` names one preferred skill (two max with when/why).
 
 Alignment is **interactive** — stay in this chat for the whole grill. There is no `align-agent` subagent; subagents run autonomously and cannot wait for one answer per turn.

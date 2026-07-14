@@ -95,9 +95,17 @@ Use the tester to [task]
 
 The agent reads this skill when invoked.
 
-## Handoffs
+## Handoff
 
-- Feature AC / seam tests → `/dev`
-- Deploy/CI infra (non-test) → `/devops`
-- After public flows stabilize → optional `/docs` for tester/contributor how-to
-- Ready for merge of harness changes → `/code-review` when on a feature branch
+When/why cues for escalation (not a pasteable menu). End the session with `## Next Step`
+(CONTEXT.md **Handoff**) — prefer **exactly one**; two max with when/why:
+
+| Cue                         | Typical next                                      |
+| --------------------------- | ------------------------------------------------- |
+| Feature AC / seam tests     | `/dev`                                            |
+| Deploy/CI infra (non-test)  | `/devops`                                         |
+| Public flows stabilized     | optional `/docs` for tester/contributor how-to    |
+| Harness changes on a branch | `/code-review` when ready for merge               |
+| Suite green; nothing queued | ship / done                                       |
+
+**Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).

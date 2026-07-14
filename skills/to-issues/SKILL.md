@@ -112,6 +112,9 @@ human-readable check passed per issue; blocker references use real issue numbers
 
 ### 6. Handoff
 
-Summarize what was published (issue numbers + titles). End with `## Next Step` pointing to exactly one skill — typically `/dev` for the first unblocked slice.
+Summarize what was published (issue numbers + titles). End with `## Next Step` pointing to
+exactly one skill — typically `/dev` for the first unblocked slice. Two max only if a real fork
+exists (each with when/why).
 
-**Completion criterion:** Summary table delivered; `## Next Step` names one next skill.
+**Completion criterion:** Summary table delivered; `## Next Step` names one preferred next skill
+(two max with when/why).

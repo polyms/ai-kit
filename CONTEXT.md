@@ -113,8 +113,11 @@ SEV matrix, stakeholder status update, blameless post-mortem, close checklist fo
 _Avoid_: runbook (when meaning CMS symptom→fix), PagerDuty playbook (vendor-specific)
 
 **Handoff**:
-Transfer between pipeline stages — summary plus `## Next Step` pointing to exactly one next skill.
-_Avoid_: handover, transition
+Transfer between pipeline stages — summary plus `## Next Step` (singular) pointing to the next
+skill(s). Prefer **exactly one** `→ /skill`. When the fork is genuinely ambiguous or unavoidable,
+allow **at most two** alternatives, each with a one-line when/why. Never a menu of 3+ or a
+`|`-joined option list.
+_Avoid_: handover, transition, Next Steps (plural heading), multi-skill pipe menus
 
 **Triage**:
 Move raw GitHub issues through a state machine — categorise, verify, grill, write agent briefs. Invoke with `/triage`.

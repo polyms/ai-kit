@@ -31,17 +31,19 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 
 Structure responses with clear headings. For large artifacts (PRD, epic breakdown), deliver the full document in one response — do not truncate.
 
-End every deliverable with:
+End with `## Next Step` per the skill handoff / CONTEXT.md **Handoff** (one preferred; two max).
 
 ```
 ## Open Questions
 - [list unresolved items]
 
-## Next Steps
-→ /to-prd | /design | /to-issues | /dev
+## Next Step
+→ /to-prd
 ```
 
-Prefer `→ /to-prd` when the enterprise draft is ready to publish as a lean tracker PRD.
+Default: `→ /to-prd`. Cue alternatives (skill table): `/design` when UI is next; `/align` when
+still fuzzy. Do not list `/to-issues` or `/dev` unless a published PRD already exists and lean
+publish is skipped.
 
 ## Constraints
 

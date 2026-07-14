@@ -45,7 +45,8 @@ Route by intent, then read the matching skill:
 6. For `/devops`: MCP **`search_knowledge`** with `intent: incident` and `q` = symptom before
    changing infra; confirm symptom + cause; verify; close with incident templates when SEV1/SEV2.
 7. Meet each workflow's **completion criterion** before declaring done.
-8. End with `## Next Step` → one of `/dev` | `/reqs` | `/e2e` | `/docs` | ship / link the artifact path.
+8. End with `## Next Step` per the skill handoff / CONTEXT.md **Handoff** — one preferred (ship /
+   link artifact, or escalate with when); two max only when the fork is real.
 
 ## Constraints
 

@@ -81,6 +81,19 @@ After verify is green (or when the incident is SEV1/SEV2 even mid-flight):
 
 **Completion criterion:** Close checklist done; post-mortem drafted when required.
 
+### 6. Handoff
+
+When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) — prefer
+**exactly one**:
+
+- Ship / done — incident closed; no feature work queued
+- `/dev` — feature application work remains after infra is green
+- `/docs` — only when process/close-out docs are needed after SEV (not default)
+
+Two max only when feature work and process docs both genuinely apply.
+
+**Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
+
 ## References
 
 | Topic             | Read when                                                                                          |
