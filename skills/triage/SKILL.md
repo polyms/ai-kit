@@ -28,7 +28,7 @@ Every comment or issue posted to the issue tracker during triage **must** start 
 | ADRs            | `docs/adr/` — decisions in the area you are touching                                      |
 | Agent brief     | [agent-brief.md](agent-brief.md) — contract for `ready-for-agent`                         |
 | Out of scope    | [out-of-scope.md](out-of-scope.md) — `.out-of-scope/` knowledge base                      |
-| Grill           | `align-loop` skill — one question, lettered options + `(Recommended)` (model-invoked)          |
+| Grill           | `align-loop` skill — one question, lettered options + `(Recommended)` (model-invoked)     |
 | Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline (model-invoked)                      |
 
 ## Roles

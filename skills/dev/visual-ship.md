@@ -26,17 +26,18 @@ Capture proof for the primary journey the slice ships. Prefer tools already in t
 session (browser MCP snapshot/screenshot, existing Playwright, or design-spec visual
 reference). Do not invent a new E2E harness for a one-slice change.
 
-| Surface | What to capture |
-| ------- | --------------- |
-| Default view | Dark theme, type scale visible — desktop |
-| Responsive | One mobile width when layout is non-trivial |
-| Interaction | Before/after for the main control (chip, form submit, modal open) |
-| Spec rows | Each **Visual acceptance** row: pass / fail + evidence ref |
+| Surface      | What to capture                                                   |
+| ------------ | ----------------------------------------------------------------- |
+| Default view | Dark theme, type scale visible — desktop                          |
+| Responsive   | One mobile width when layout is non-trivial                       |
+| Interaction  | Before/after for the main control (chip, form submit, modal open) |
+| Spec rows    | Each **Visual acceptance** row: pass / fail + evidence ref        |
 
 **Evidence log** (paste into ship handoff):
 
 ```markdown
 ## Visual evidence
+
 - Desktop dark: [path or "browser snapshot — HH:MM"]
 - Mobile: [n/a | path]
 - Interaction: [what changed — before/after]

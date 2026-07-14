@@ -40,6 +40,8 @@ export const domainOptions = [
   'design',
   'implementation',
   'review',
+  'docs',
+  'e2e',
   'authoring',
   'architecture',
   'devops',

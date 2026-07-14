@@ -16,7 +16,7 @@ English — matches this repo's existing `CONTEXT.md` and `docs/adr/`.
 
 ## Consumers
 
-`domain-modeling`, `pm`, `to-prd`, `design`, `arch`, `to-issues` read this file and write in English.
+`domain-modeling`, `reqs`, `to-prd`, `design`, `arch`, `to-issues` read this file and write in English.
 
 ## Rules
 

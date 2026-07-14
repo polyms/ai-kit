@@ -1,16 +1,19 @@
 ---
-name: pm
-description: Product management — discovery, enterprise PRD, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Invoke with /pm, requirements, user stories, ưu tiên backlog, or stakeholder alignment. After align to publish lean PRD → /to-prd. Plan grill → /align.
+name: reqs
+description: Requirements — discovery, enterprise PRD, user stories, acceptance criteria, scope, MVP,
+  MoSCoW, RICE. Invoke with /reqs, requirements, user stories, ưu tiên backlog, or stakeholder alignment.
+  After align to publish lean PRD → /to-prd. Plan grill → /align.
 disable-model-invocation: true
 ---
 
-# PM — Product Management & Requirements
+# Reqs — Requirements
 
 Turn ideas into engineering-ready artifacts. Read this skill fully before producing output.
 
-Read `docs/agents/language.md` when present — write PRDs and stories in that language. No file: match the issue tracker's existing language.
+Read `docs/agents/language.md` when present — write PRDs and stories in that language. No file: match the issue
+tracker's existing language.
 
-## When `/pm` vs `/to-prd` vs `/align`
+## When `/reqs` vs `/to-prd` vs `/align`
 
 Same decision tree in `/align` handoff and `/to-prd` — keep in sync:
 
@@ -19,7 +22,7 @@ Decisions / problem statement clear?
 ├─ Yes, aligned chat ready to ship a PRD → user invokes `/to-prd`
 │     (lean template, publish to tracker — this skill does NOT publish)
 ├─ No — need design-tree grill (tech forks, domain terms) → user invokes `/align`
-└─ No — need PM discovery, enterprise PRD, stories, or prioritization → `/pm` (this skill)
+└─ No — need requirements discovery, enterprise PRD, stories, or prioritization → `/reqs` (this skill)
       (draft in chat or docs/prd/; does NOT create tracker issues)
 ```
 
@@ -27,15 +30,15 @@ Do **not** treat "viết PRD" / "write a PRD" after `/align` as this skill — t
 
 ## Quick Router
 
-| User intent                                 | Workflow                                            | Reference                                                    |
-| ------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
-| Chốt / publish PRD from aligned chat        | User invokes `/to-prd` — not this skill             | —                                                            |
-| Plan still fuzzy / stress-test before spec  | User invokes `/align` — not this skill              | —                                                            |
-| Discovery + formal enterprise PRD           | [PRD workflow](#prd-workflow)                       | [enterprise-prd-template.md](enterprise-prd-template.md)     |
-| User stories / backlog                      | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md)                   |
-| Làm rõ req / clarify                        | [Discovery workflow](#discovery-workflow)           | —                                                            |
-| Ưu tiên / prioritize                        | [Prioritization workflow](#prioritization-workflow) | —                                                            |
-| Review req hiện có                          | [Refinement workflow](#refinement-workflow)         | —                                                            |
+| User intent                                | Workflow                                            | Reference                                                |
+| ------------------------------------------ | --------------------------------------------------- | -------------------------------------------------------- |
+| Chốt / publish PRD from aligned chat       | User invokes `/to-prd` — not this skill             | —                                                        |
+| Plan still fuzzy / stress-test before spec | User invokes `/align` — not this skill              | —                                                        |
+| Discovery + formal enterprise PRD          | [PRD workflow](#prd-workflow)                       | [enterprise-prd-template.md](enterprise-prd-template.md) |
+| User stories / backlog                     | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md)               |
+| Làm rõ req / clarify                       | [Discovery workflow](#discovery-workflow)           | —                                                        |
+| Ưu tiên / prioritize                       | [Prioritization workflow](#prioritization-workflow) | —                                                        |
+| Review req hiện có                         | [Refinement workflow](#refinement-workflow)         | —                                                        |
 
 ## Discovery Workflow
 
@@ -153,10 +156,10 @@ Before delivering any artifact, verify:
 
 ## Agent
 
-For deep PM work in an isolated context, delegate to the **pm-agent**:
+For deep PM work in an isolated context, delegate to the **pm**:
 
 ```
-Use the pm-agent to [task]
+Use the pm to [task]
 ```
 
-The agent reads this skill when invoked.
+The agent reads this skill when invoked (`skills/reqs/`).

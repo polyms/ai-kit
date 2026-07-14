@@ -17,9 +17,9 @@ A user-invoked skill has no model-facing description — **no other skill can fi
 
 ## ai-kit examples
 
-| User-invoked                                                                                          | Model-invoked                                              |
-| ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/pm`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops` |
+| User-invoked                                                                                                            | Model-invoked                                                           |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops` |
 
 Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing); `/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch` when deepening. `/design` is user-invoked — ask the user to run `/core-ui` (external lib skill) before component mapping; `dev` uses `core-ui` when implementing UI.
 
@@ -27,15 +27,19 @@ Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together 
 
 Two contexts — don't mix them:
 
-| Context                                                                      | Form                    | Examples                                                 |
-| ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------- |
-| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/pm`, `/dev`, `/arch`, `/arch-refactor`, `/docs`, `/e2e` |
-| **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`              |
-| **Agent name** — isolated subagent for deep work                             | `<skill>-agent` suffix  | `Use pm-agent`, `Use design-agent`, `agents/pm-agent.md` |
+| Context                                                                      | Form                    | Examples                                                       |
+| ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------------- |
+| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/arch-refactor`, `/docs`, `/e2e`    |
+| **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`                    |
+| **Agent name** — isolated subagent for deep work (org role, not skill twin)  | role id                 | `Use pm`, `Use designer`, `agents/pm.md`, `agents/techlead.md` |
 
-**Exception:** skill `e2e` pairs with agent **`tester-agent`** (not `e2e-agent`). Invoke `/e2e` or `Use the tester-agent to …`.
+**Agents map to org roles**, not 1:1 skills. Skills stay playbooks; multiple skills per agent OK; multiple agents may
+use one skill (e.g. `/devops` → `developer` + `techlead`). **Ownership table (SSOT):**
+[AGENTS.md — Principal agents](../../AGENTS.md).
 
-User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type `/dev`; agents delegate to `dev`). Subagent files usually use the `-agent` suffix matching the skill (`pm` vs `pm-agent`); see `e2e` / `tester-agent` above.
+User-invoked skills only appear in the invoke-name column. Model-invoked skills appear in both (humans can still type
+`/dev`; agents delegate to `dev`). Agent files live at `agents/<role>.md` with frontmatter `name: <role>` — no
+`-agent` suffix.
 
 ## Dependencies between skills
 

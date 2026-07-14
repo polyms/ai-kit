@@ -8,7 +8,7 @@ Issues live as files under `.scratch/<feature>/` in this repo.
 .scratch/
 └── <feature-slug>/
     ├── issue.md          # problem + context
-    ├── prd.md            # optional, from /pm
+    ├── prd.md            # optional, from /reqs
     └── notes.md          # running log
 ```
 

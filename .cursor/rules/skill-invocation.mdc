@@ -15,7 +15,9 @@ When creating or editing files under `skills/` or `agents/`:
 
 User-invoked skills cannot be fired by other skills. Delegate to model-invoked skills (`align-loop`, `domain-modeling`, `dev`, `arch`, `devops`).
 
-Subagent files: `agents/<name>-agent.md` with frontmatter `name: <name>-agent` — suffix distinguishes from the skill (`pm` vs `pm-agent`). Exception: skill `e2e` → agent `tester-agent`.
+Subagent files: `agents/<role>.md` with frontmatter `name: <role>` — org role, not skill twin (no `-agent`
+suffix). Agents: `pm`, `designer`, `developer`, `tester`, `techlead`. Multiple skills per agent OK (e.g.
+`developer` → `/dev` + `/devops`; `techlead` → `/docs`, `arch`, `/code-review`, `/arch-refactor`, `/devops`).
 
 Cross-skill deps: prose (`Run align-loop`, `Use arch`), not deep links into another skill's body.
 
@@ -24,6 +26,6 @@ Reading `CONTEXT.md` ≠ `domain-modeling`. Active glossary/ADR updates = `domai
 ## Setup dependencies (ADR-0001)
 
 - **Hard** (`/to-prd`, `/to-issues`, `/triage`): prerequisite → `/setup` if `docs/agents/*.md` missing.
-- **Soft** (`dev`, `/pm`, `align-loop`, `arch`): mention glossary/ADRs optionally; no `/setup` gate.
+- **Soft** (`dev`, `/reqs`, `align-loop`, `arch`): mention glossary/ADRs optionally; no `/setup` gate.
 
 Full reference: `docs/agents/invocation.md`, `docs/adr/0001-skill-setup-dependencies.md`.

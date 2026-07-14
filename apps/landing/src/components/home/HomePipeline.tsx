@@ -5,7 +5,7 @@ import { HomeSectionChip } from './HomeSectionChip'
 const STAGES = [
   { label: m.pipeline_stage_idea },
   { label: m.pipeline_stage_align, invoke: '/align' },
-  { label: m.pipeline_stage_pm, invoke: '/pm' },
+  { label: m.pipeline_stage_reqs, invoke: '/reqs | /to-prd' },
   { label: m.pipeline_stage_issues, invoke: '/to-issues' },
   { label: m.pipeline_stage_design, invoke: '/design' },
   { label: m.pipeline_stage_dev, invoke: '/dev' },
@@ -15,19 +15,29 @@ const STAGES = [
 
 const AGENTS = [
   {
-    name: 'pm-agent',
+    name: 'pm',
     role: m.pipeline_agent_pm_role,
     owns: m.pipeline_agent_pm_owns,
   },
   {
-    name: 'design-agent',
+    name: 'designer',
     role: m.pipeline_agent_design_role,
     owns: m.pipeline_agent_design_owns,
   },
   {
-    name: 'dev-agent',
+    name: 'developer',
     role: m.pipeline_agent_dev_role,
     owns: m.pipeline_agent_dev_owns,
+  },
+  {
+    name: 'tester',
+    role: m.pipeline_agent_tester_role,
+    owns: m.pipeline_agent_tester_owns,
+  },
+  {
+    name: 'techlead',
+    role: m.pipeline_agent_techlead_role,
+    owns: m.pipeline_agent_techlead_owns,
   },
 ] as const
 
@@ -35,7 +45,9 @@ function StageChip({ label, invoke, last }: { label: string; invoke?: string; la
   return (
     <div className='flex shrink-0 items-center gap-2.5'>
       <div className='flex min-w-[108px] flex-col items-center gap-1 rounded-2xl border border-line bg-body px-[18px] py-3.5'>
-        {invoke ? <span className='font-bold font-mono text-[14px] text-primary-600'>{invoke}</span> : null}
+        {invoke ? (
+          <span className='whitespace-nowrap font-bold font-mono text-[14px] text-primary-600'>{invoke}</span>
+        ) : null}
         <span className='whitespace-nowrap text-center font-semibold text-[12.5px] text-fg'>{label}</span>
       </div>
       {!last ? (

@@ -79,7 +79,7 @@ One vertical slice at a time — see [tdd-guide.md](tdd-guide.md):
 
 ### 4b. Status (multi-slice only)
 
-When the feature has **more than one** seam slice, or the session uses `dev-agent` for a long
+When the feature has **more than one** seam slice, or the session uses `developer` for a long
 implement: refresh [status-report.md](status-report.md) after each green slice and when
 blocked. Skip for single-slice one-liners.
 
@@ -152,7 +152,7 @@ Match project conventions when they exist — these are fallbacks only.
 For large refactors or multi-file implementation in isolated context:
 
 ```
-Use the dev-agent to [task]
+Use the developer to [task]
 ```
 
 The agent reads this skill when invoked.

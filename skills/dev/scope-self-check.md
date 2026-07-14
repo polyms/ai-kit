@@ -1,8 +1,8 @@
 # Scope self-check
 
 Run **before** declaring a slice shipped (Implement ship checklist or Debug after green).
-Pairs with [solution-ladder.md](solution-ladder.md) — ladder chooses *how little to build*;
-this checklist catches *what crept in after*.
+Pairs with [solution-ladder.md](solution-ladder.md) — ladder chooses _how little to build_;
+this checklist catches _what crept in after_.
 
 ## Template
 
@@ -15,15 +15,19 @@ surface them as out-of-scope notes only.
 **Task as stated:** [exact ask / AC quote]
 
 **Files touched** (each requires a reason):
+
 - path — required because: …
 
 **Tempted, not done** (follow-ups only — not in this diff):
+
 - …
 
 **Hypotheticals not defended** (impossible / out of task):
+
 - …
 
 **Abstractions rejected** (kept duplicated / inline because < 4 call sites):
+
 - …
 
 **Diff size:** +N / −M · **Could it be smaller?** yes/no — if yes, shrink first
@@ -31,7 +35,7 @@ surface them as out-of-scope notes only.
 
 ## Pass rule
 
-Every changed line must answer: *"Does the stated task require this exact line?"*
+Every changed line must answer: _"Does the stated task require this exact line?"_
 If no → delete it or move it to **Tempted, not done**.
 
 Bug fixes: touch only the buggy surface (+ regression test). Refactors and cleanup

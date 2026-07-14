@@ -4,7 +4,7 @@ Output path: `docs/design/ops-cms-runbooks.md`
 
 **Related:** [GitHub PRD #1](https://github.com/polyms/ai-kit/issues/1) · [CONTEXT.md](../../CONTEXT.md) · [Kit site spec](./ai-kit-landing.md) · [RB-001 reference](../runbooks/vercel-tanstack-start-monorepo.md)
 
-> **Scope:** **Ops CMS** — two content types on Postgres (Supabase): **Runbook** (symptom → fix, audience `devops-agent`) and **Stack guide** (design knowledge, audience `arch` / `/dev`). Phase **1a** public `/runbooks/*` (shipped) + Phase **1b** Runbook pointer alignment; Phase **2** Ops CMS `/ops/*` (OIDC write, runbook editors); Phase **3** Stack guide schema + `/guides/*` public + guide editors + dual-type matrix. Extends `apps/landing` router and chrome — **does not** redesign global kit site shell. Runbook and Stack guide **content** English-only v1; chrome follows existing locale toggle (VI/EN labels only). `docs/runbooks/*.md` = import snapshot only — **not** live sync, **not** agent retrieval target.
+> **Scope:** **Ops CMS** — two content types on Postgres (Supabase): **Runbook** (symptom → fix, audience `developer`) and **Stack guide** (design knowledge, audience `arch` / `/dev`). Phase **1a** public `/runbooks/*` (shipped) + Phase **1b** Runbook pointer alignment; Phase **2** Ops CMS `/ops/*` (OIDC write, runbook editors); Phase **3** Stack guide schema + `/guides/*` public + guide editors + dual-type matrix. Extends `apps/landing` router and chrome — **does not** redesign global kit site shell. Runbook and Stack guide **content** English-only v1; chrome follows existing locale toggle (VI/EN labels only). `docs/runbooks/*.md` = import snapshot only — **not** live sync, **not** agent retrieval target.
 
 ---
 
@@ -34,7 +34,7 @@ Canonical vocabulary from [CONTEXT.md](../../CONTEXT.md) — **Artifacts** + **P
 
 | Artifact / store                   | What it holds                                                                                                                          | Audience / retriever                        | Live source of truth                              | Agent retrieval?                             |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------- | -------------------------------------------- |
-| **Runbook**                        | Symptom → cause → fix → verify; **Stack profile** + greenfield checklist for _deploy/build correctness_ (outputs, env, CI)             | **`devops-agent`** via `/devops`            | **Ops CMS** Postgres → `/runbooks/*`, MCP         | **Yes** — filtered by **Stack manifest**     |
+| **Runbook**                        | Symptom → cause → fix → verify; **Stack profile** + greenfield checklist for _deploy/build correctness_ (outputs, env, CI)             | **`developer`** via `/devops`               | **Ops CMS** Postgres → `/runbooks/*`, MCP         | **Yes** — filtered by **Stack manifest**     |
 | **Stack guide**                    | Stack-combo **design knowledge**: greenfield checklist + seam conventions (routing, state, module boundaries) for _design correctness_ | **`arch`**, **`/dev`** (deploy-aware slice) | **Ops CMS** Postgres → `/guides/*` (planned), MCP | **Yes** — filtered by **Stack manifest**     |
 | **ADR**                            | Irreversible **why** decisions                                                                                                         | `/arch`, `/dev`                             | `docs/adr/` git                                   | Read ADRs — **not** symptom→fix              |
 | **Deploy guide**                   | Per-app quick start — env vars, local commands, app paths                                                                              | Humans, `/dev`                              | `apps/*/DEPLOY.md` git                            | App context only — not cross-cutting traps   |
@@ -307,7 +307,7 @@ Add links: **Runbooks** → `/runbooks` · **Guides** → `/guides` beside GitHu
 │ Breadcrumb: Runbooks / RB-001                                                    │
 │ .h1 RB-001: Vercel + TanStack Start + Nitro (pnpm Nx monorepo)                   │
 │ Badge row: vercel · tanstack-start · nitro · pnpm · nx · monorepo                │
-│ text-muted — audience: devops-agent · Reference: ai-kit apps/landing             │
+│ text-muted — audience: developer · Reference: ai-kit apps/landing             │
 │ SiblingLink — «Stack guide SG-001 ↗» (if relatedRunbookId reverse link exists)   │
 │                                                                                  │
 │ ┌─ LOCAL NAV — sticky top-24 hidden md:block, w-[180px] float-right ──────────┐  │

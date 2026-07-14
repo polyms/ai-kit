@@ -8,22 +8,22 @@ come from MCP `search_knowledge` (`intent: incident`).
 
 ## When to use
 
-| Situation | Template |
-| --------- | -------- |
+| Situation                            | Template                                                       |
+| ------------------------------------ | -------------------------------------------------------------- |
 | Active outage / deploy red for users | [Severity](#severity-matrix) + [Status update](#status-update) |
-| Fix verified, need formal close | [Post-mortem](#post-mortem) |
-| SEV1/SEV2 or repeated same class | Post-mortem required within 48h |
+| Fix verified, need formal close      | [Post-mortem](#post-mortem)                                    |
+| SEV1/SEV2 or repeated same class     | Post-mortem required within 48h                                |
 
 ## Severity matrix
 
 Classify before deep troubleshooting when user impact is unclear:
 
-| Level | Criteria | Response | Update cadence |
-| ----- | -------- | -------- | -------------- |
-| **SEV1** | Full outage, data loss risk, security breach | Immediate | Every 15 min |
-| **SEV2** | Degraded for >25% users, key feature down | < 15 min | Every 30 min |
-| **SEV3** | Minor feature broken, workaround exists | < 1 hour | Every 2 hours |
-| **SEV4** | Cosmetic / no user impact | Next business day | Daily / backlog |
+| Level    | Criteria                                     | Response          | Update cadence  |
+| -------- | -------------------------------------------- | ----------------- | --------------- |
+| **SEV1** | Full outage, data loss risk, security breach | Immediate         | Every 15 min    |
+| **SEV2** | Degraded for >25% users, key feature down    | < 15 min          | Every 30 min    |
+| **SEV3** | Minor feature broken, workaround exists      | < 1 hour          | Every 2 hours   |
+| **SEV4** | Cosmetic / no user impact                    | Next business day | Daily / backlog |
 
 **Auto-upgrade:** impact doubles; SEV1 no root cause in 30 min; data integrity concern →
 SEV1; paying customers blocked → minimum SEV2.
@@ -46,7 +46,7 @@ Fill in chat (or incident channel). Honest unknowns beat false confidence.
 
 ## Post-mortem
 
-Default after SEV1/SEV2. Blameless: frame *system* gaps, not people.
+Default after SEV1/SEV2. Blameless: frame _system_ gaps, not people.
 
 ```markdown
 # Post-mortem: [title]
@@ -55,23 +55,28 @@ Default after SEV1/SEV2. Blameless: frame *system* gaps, not people.
 **Status:** Draft | Review | Final
 
 ## Executive summary
+
 [2–3 sentences: what happened, who was affected, how resolved]
 
 ## Impact
+
 - Users / revenue / SLO budget: […]
 - Support tickets: […]
 
 ## Timeline (UTC)
-| Time | Event |
-| ---- | ----- |
-| HH:MM | … |
+
+| Time  | Event |
+| ----- | ----- |
+| HH:MM | …     |
 
 ## Root cause
+
 **Immediate:** […]
 **Underlying:** […]
 **Systemic:** […]
 
 ### 5 Whys
+
 1. … →
 2. … →
 3. … →
@@ -79,17 +84,21 @@ Default after SEV1/SEV2. Blameless: frame *system* gaps, not people.
 5. → [systemic issue]
 
 ## What went well
+
 - …
 
 ## What went poorly
+
 - …
 
 ## Action items
-| ID | Action | Owner | Priority | Due | Status |
-| -- | ------ | ----- | -------- | --- | ------ |
-| 1  | …      | @…    | P1       | …   | Open   |
+
+| ID  | Action | Owner | Priority | Due | Status |
+| --- | ------ | ----- | -------- | --- | ------ |
+| 1   | …      | @…    | P1       | …   | Open   |
 
 ## Lessons
+
 [Architectural / process changes this incident demands]
 ```
 

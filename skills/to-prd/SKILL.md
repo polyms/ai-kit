@@ -10,28 +10,28 @@ Synthesize the **current conversation** and codebase understanding into a PRD an
 
 **Do NOT interview** — synthesize from conversation + codebase context already in session.
 
-## When `/pm` vs `/to-prd` vs `/align`
+## When `/reqs` vs `/to-prd` vs `/align`
 
-Same decision tree in `/align` handoff and `/pm` — keep in sync:
+Same decision tree in `/align` handoff and `/reqs` — keep in sync:
 
 ```
 Decisions / problem statement clear?
 ├─ Yes, aligned chat ready to ship a PRD → `/to-prd` (this skill)
 │     (lean template, publish to tracker)
 ├─ No — need design-tree grill (tech forks, domain terms) → user invokes `/align`
-└─ No — need PM discovery, enterprise PRD, stories, or prioritization → user invokes `/pm`
-      (draft in chat or docs/prd/; `/pm` does NOT create tracker issues)
+└─ No — need requirements discovery, enterprise PRD, stories, or prioritization → user invokes `/reqs`
+      (draft in chat or docs/prd/; `/reqs` does NOT create tracker issues)
 ```
 
 **Audience:** Follow [lean-prd-template.md](lean-prd-template.md). Do **not** ship executive-summary
 rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
 
-**Boundary vs `/pm`:**
+**Boundary vs `/reqs`:**
 
-| Skill     | When                                             | Behavior                                                                                                 |
-| --------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| `/pm`     | Discovery, formal PRD, stories, priority         | May interview; enterprise-prd-template in `/pm`; **does not publish**     |
-| `/to-prd` | "We've talked enough — ship the PRD"             | **Synthesize only** — no discovery interview; [lean-prd-template.md](lean-prd-template.md); **publishes** |
+| Skill     | When                                     | Behavior                                                                                                  |
+| --------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `/reqs`   | Discovery, formal PRD, stories, priority | May interview; enterprise-prd-template in `/reqs`; **does not publish**                                   |
+| `/to-prd` | "We've talked enough — ship the PRD"     | **Synthesize only** — no discovery interview; [lean-prd-template.md](lean-prd-template.md); **publishes** |
 
 **Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain language before synthesis.
 

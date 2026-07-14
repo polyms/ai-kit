@@ -1,8 +1,8 @@
 const CATEGORY_BY_SLUG: Record<string, string> = {
   setup: 'SETUP',
   align: 'ALIGN',
-  pm: 'DOCS',
-  'to-prd': 'DOCS',
+  reqs: 'REQS',
+  'to-prd': 'PRD',
   'to-issues': 'PLAN',
   triage: 'TRIAGE',
   design: 'DESIGN',
@@ -25,7 +25,7 @@ export function catalogDisplayName(slug: string, name: string): string {
   const labels: Record<string, string> = {
     setup: 'Setup',
     align: 'Align',
-    pm: 'PM',
+    reqs: 'Reqs',
     'to-prd': 'To PRD',
     'to-issues': 'To issues',
     triage: 'Triage',

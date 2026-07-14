@@ -115,3 +115,13 @@ Good interfaces make testing natural:
 - **Stack-combo design seams** (routing, state, modules) — [stack guide pointer](../../docs/agents/stack-guides.md); MCP `search_knowledge` with `intent: design`. ADRs hold irreversible **why**; Ops CMS holds retrievable seam recipes.
 - **Deepening a cluster given its dependencies** — see [DEEPENING.md](DEEPENING.md): dependency categories, seam discipline, and replace-don't-layer testing.
 - **Exploring alternative interfaces** — see [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.
+
+## Agent
+
+For deep architecture sessions (seam placement, deepening, design-it-twice):
+
+```
+Use the techlead to [architecture task]
+```
+
+The agent reads this skill when invoked.

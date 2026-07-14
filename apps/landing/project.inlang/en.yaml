@@ -55,24 +55,28 @@ hero_line2: real engineering
 hero_sub: ai-kit is Polyms' shared brain for agentic fullstack dev — short-named skills you invoke with a slash command, from product requirements to shipped, reviewed code.
 
 # --- home ---
-home_catalog_heading: Twelve skills. Zero ceremony.
+home_catalog_heading: Fifteen skills. Zero ceremony.
 home_catalog_intro: Each capability is a short-named skill or agent, invoked with a slash command.
 
 # --- pipeline ---
 pipeline_agentsLabel: Principal agents
 pipeline_agent_design_owns: docs/design/ UI specs, @polyms/core-ui maps
 pipeline_agent_design_role: Principal product designer
-pipeline_agent_dev_owns: Implementation, TDD, production code
+pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
 pipeline_agent_dev_role: Principal software engineer
 pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
 pipeline_agent_pm_role: Principal product manager
+pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys
+pipeline_agent_tester_role: Principal tester
+pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; /devops SEV
+pipeline_agent_techlead_role: Principal tech lead
 pipeline_intro: Each stage produces artifacts the next agent consumes. Raw issues route in separately via /triage — verified and briefed before they reach /dev.
 pipeline_stage_align: Align
 pipeline_stage_design: Design
 pipeline_stage_dev: Dev
 pipeline_stage_idea: Idea
 pipeline_stage_issues: To issues
-pipeline_stage_pm: PM / To PRD
+pipeline_stage_reqs: Reqs / To PRD
 pipeline_stage_review: Code review
 pipeline_stage_ship: Ship
 pipeline_title: One pipeline, start to ship.
@@ -101,9 +105,9 @@ palette_placeholder: Type to filter skills…
 palette_title: Command palette
 
 # --- principles ---
-principles_1_body: /align closes the communication gap — grill decisions before /pm or /to-prd.
+principles_1_body: /align closes the communication gap — grill decisions before /reqs or /to-prd.
 principles_1_title: Align before you build
-principles_2_body: Short-named skills (/pm, /design, /dev) you combine per task — no heavyweight process.
+principles_2_body: Short-named skills (/reqs, /design, /dev) you combine per task — no heavyweight process.
 principles_2_title: Small and composable
 principles_3_body: /dev encodes TDD, types, and debugging discipline — fast signal, not blind codegen.
 principles_3_title: Feedback loops
@@ -146,7 +150,7 @@ knowledge_results: Results
 knowledge_resultsCaption: Knowledge search results
 knowledge_searchLabel: Search Knowledge by topic or symptom
 knowledge_searchPlaceholder: biome prettier setup
-knowledge_sub: Incident · design · toolchain — one retrieval model for dev-agent, /dev, /devops, /arch.
+knowledge_sub: Incident · design · toolchain — one retrieval model for developer, /dev, /devops, /arch.
 knowledge_title: Knowledge
 
 # --- ops ---

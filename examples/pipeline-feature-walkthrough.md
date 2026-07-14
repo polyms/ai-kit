@@ -13,15 +13,16 @@ Use when onboarding contributors or checking that handoffs stay in lane.
 
 ## Stage map
 
-| Stage | Invoke | Principal | Artifact out |
-| ----- | ------ | --------- | ------------ |
-| Align | `/align` | (main chat — no subagent) | Decision summary: filter is MVP; search URL param; no new CMS schema |
-| Product | `/pm` then `/to-prd` | `pm-agent` | Lean tracker PRD + ready-for-agent |
-| Issues | `/to-issues` | — | Slice issues (UI filter, URL sync, empty state) |
-| Design | `/design` | `design-agent` | `docs/design/knowledge-intent-filter.md` |
-| Implement | `/dev` | `dev-agent` | Code + tests at confirmed seams |
-| Review | `/code-review` | — | Severity-tagged Standards / Spec / Simplify |
-| Ops (if deploy red) | `/devops` | `devops-agent` | Knowledge match → fix → verify |
+| Stage               | Invoke         | Principal                             | Artifact out                                                         |
+| ------------------- | -------------- | ------------------------------------- | -------------------------------------------------------------------- |
+| Align               | `/align`       | (main chat — no subagent)             | Decision summary: filter is MVP; search URL param; no new CMS schema |
+| Product             | `/reqs`        | `pm`                                  | Enterprise PRD draft (chat; does not publish)                        |
+| Publish             | `/to-prd`      | — (skill, main chat)                  | Lean tracker PRD + ready-for-agent                                   |
+| Issues              | `/to-issues`   | —                                     | Slice issues (UI filter, URL sync, empty state)                      |
+| Design              | `/design`      | `designer`                            | `docs/design/knowledge-intent-filter.md`                             |
+| Implement           | `/dev`         | `developer`                           | Code + tests at confirmed seams                                      |
+| Review              | `/code-review` | `techlead`                            | Severity-tagged Standards / Spec / Simplify                          |
+| Ops (if deploy red) | `/devops`      | `developer` (exec) / `techlead` (SEV) | Knowledge match → fix → verify                                       |
 
 ## Align (grill)
 
@@ -29,7 +30,7 @@ Use when onboarding contributors or checking that handoffs stay in lane.
 **Deferred:** Saved user prefs, analytics events.
 **Not in scope:** New Knowledge authoring UI.
 
-Handoff → `/pm` (or `/to-prd` if already aligned enough).
+Handoff → `/reqs` (or `/to-prd` if already aligned enough).
 
 ## Product
 
@@ -58,6 +59,7 @@ Example status mid-flight:
 
 ```markdown
 ## /dev status
+
 **Phase:** Red-green
 **Current:** slice 2 of 3 — URL ↔ chip sync
 **Blockers:** none
@@ -66,8 +68,8 @@ Example status mid-flight:
 
 Handoff → `/code-review`.
 
-Public surface (MCP/API) after ship → optional `/docs` (`docs-agent`).
-Browser journey flake in CI → `/e2e` (`tester-agent`), not seam TDD.
+Public surface (MCP/API) after ship → optional `/docs` (`techlead`).
+Browser journey flake in CI → `/e2e` (`tester`), not seam TDD.
 
 ## Code review
 
@@ -82,8 +84,9 @@ If Vercel preview fails "No Output Directory": `/devops` → `search_knowledge` 
 
 ## Lane discipline (what not to do)
 
-- `dev-agent` does not rewrite PRDs or restyle past design acceptance without `/design`.
-- `pm-agent` does not publish tracker issues (`/to-prd` / `/to-issues` only).
+- `developer` does not rewrite PRDs or restyle past design acceptance without `/design`.
+- `pm` does not publish tracker issues (`/to-prd` / `/to-issues` only).
+- `techlead` does not implement product features (`/dev`).
 - `/align` stays in main chat — no subagent grill.
 - Marketing / "whimsy" specialists are **out of kit** — keep principals thin.
 

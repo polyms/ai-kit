@@ -7,7 +7,16 @@ import { injectUmami } from '../../lib/umami'
 import { m } from '../../paraglide/messages.js'
 import { PolymsWordmark } from '../PolymsWordmark'
 
-const PIPELINE_LINKS = ['/align', '/pm', '/to-prd', '/to-issues', '/dev', '/code-review'] as const
+/** Main-path skills — href → `/skills/:slug` (no `/agents/*`; design §3 deep links). */
+const PIPELINE_LINKS = [
+  { invoke: '/align', slug: 'align' },
+  { invoke: '/reqs', slug: 'reqs' },
+  { invoke: '/to-prd', slug: 'to-prd' },
+  { invoke: '/to-issues', slug: 'to-issues' },
+  { invoke: '/design', slug: 'design' },
+  { invoke: '/dev', slug: 'dev' },
+  { invoke: '/code-review', slug: 'code-review' },
+] as const
 
 export function HomeFooter() {
   useEffect(() => {
@@ -39,9 +48,9 @@ export function HomeFooter() {
             {m.footer_col_pipeline()}
           </div>
           <div className='flex flex-col gap-1'>
-            {PIPELINE_LINKS.map(slug => (
-              <a className='link font-medium no-underline' href={`#${slug}`} key={slug}>
-                {slug}
+            {PIPELINE_LINKS.map(link => (
+              <a className='link font-medium no-underline' href={`/skills/${link.slug}`} key={link.slug}>
+                {link.invoke}
               </a>
             ))}
           </div>
@@ -52,13 +61,18 @@ export function HomeFooter() {
             {m.footer_col_resources()}
           </div>
           <div className='flex flex-col gap-2.5'>
-            <a className='link font-medium no-underline' href='#docs'>
+            <a
+              className='link font-medium no-underline'
+              href={`${GITHUB_REPO}#readme`}
+              rel='noopener noreferrer'
+              target='_blank'
+            >
               {m.nav_docs()}
             </a>
             <a className='link font-medium no-underline' href='/knowledge'>
               {m.nav_knowledge()}
             </a>
-            <a className='link font-medium no-underline' href='#catalog'>
+            <a className='link font-medium no-underline' href='/#catalog'>
               {m.footer_link_catalog()}
             </a>
             <a className='link font-medium no-underline' href='https://ui.polyms.dev'>

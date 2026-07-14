@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Setup — Configure Repo for ai-kit
 
-Scaffold per-repo configuration that `/pm`, `/to-prd`, `/align`, `/design`, `/triage`, `/to-issues`, and
+Scaffold per-repo configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`, `/to-issues`, and
 `/dev` assume. Prompt-driven — explore, confirm with user, then write.
 
 ## Process
@@ -68,15 +68,15 @@ See [context-format.md](context-format.md) and [adr-format.md](adr-format.md).
 
 **D — Pipeline artifacts**
 
-Where specs land after `/pm`, `/to-prd`, and `/align`:
+Where specs land after `/reqs`, `/to-prd`, and `/align`:
 
-| Artifact | Default path                                                                 |
-| -------- | ---------------------------------------------------------------------------- |
-| PRDs     | Issue tracker canonical; `/to-prd` also mirrors to `docs/prd/<slug>.md`      |
-| ADRs     | `docs/adr/`                                                                  |
-| Glossary | `CONTEXT.md`                                                                 |
+| Artifact | Default path                                                            |
+| -------- | ----------------------------------------------------------------------- |
+| PRDs     | Issue tracker canonical; `/to-prd` also mirrors to `docs/prd/<slug>.md` |
+| ADRs     | `docs/adr/`                                                             |
+| Glossary | `CONTEXT.md`                                                            |
 
-Confirm or override paths. `/pm` drafts enterprise PRDs in chat or `docs/prd/` and does **not** publish;
+Confirm or override paths. `/reqs` drafts enterprise PRDs in chat or `docs/prd/` and does **not** publish;
 `/to-prd` publishes to the tracker (and mirrors to `docs/prd/`). Once published, keep tracker and repo mirror
 in sync when both exist.
 
@@ -180,7 +180,7 @@ Opt-in chat persona: `.cursor/rules/agent-voice.mdc` (Cursor). Claude Code:
 
 ### Pipeline
 
-Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/dev`; raw issues via `/triage`. Specs in
+Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev`; raw issues via `/triage`. Specs in
 [path]; glossary in `CONTEXT.md`.
 ```
 
@@ -214,17 +214,17 @@ written; if voice Yes, Cursor rule + Claude symlink present.
 
 ### 5. Done
 
-Tell user setup is complete. Mention `/align` before building, `/pm` or `/to-prd` for specs, `/design` for UI
+Tell user setup is complete. Mention `/align` before building, `/reqs` or `/to-prd` for specs, `/design` for UI
 specs, `/triage` for backlog issues. Remind them to create GitHub labels matching
 `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was installed, point
 at `.cursor/rules/agent-voice.mdc` to edit persona.
 
-**Completion criterion:** User notified setup is complete; `/align`, `/pm` or `/to-prd`, `/design`, and
+**Completion criterion:** User notified setup is complete; `/align`, `/reqs` or `/to-prd`, `/design`, and
 `/triage` mentioned; label creation reminder given; voice path mentioned only when opted in.
 
 ## Language
 
-Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `pm`,
+Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `reqs`,
 `to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Code, identifiers, and
 technical vocabulary stay in English. Chat tone is unaffected by this file — IDE/user rules, or
 `.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in.

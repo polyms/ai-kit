@@ -1,12 +1,12 @@
 # PRD: Kit site — Landing page
 
-| Field        | Value                                       |
-| ------------ | ------------------------------------------- |
-| Author       | pm-agent                                    |
-| Status       | Draft — Creative Direction addendum v1.1    |
-| Version      | 1.1                                         |
-| Last updated | 2026-07-03                                  |
-| Stakeholders | Polyms engineering, design-agent, dev-agent |
+| Field        | Value                                    |
+| ------------ | ---------------------------------------- |
+| Author       | pm                                       |
+| Status       | Draft — Creative Direction addendum v1.1 |
+| Version      | 1.1                                      |
+| Last updated | 2026-07-03                               |
+| Stakeholders | Polyms engineering, designer, developer  |
 
 **Related artifacts:** [ADR-0002](../adr/0002-kit-site-static-vite-core-ui.md) · [Design spec (baseline)](../design/ai-kit-landing.md) · [CONTEXT.md](../../CONTEXT.md)
 
@@ -14,11 +14,12 @@
 
 ## 1. Executive Summary
 
-**Kit site** (`ai-kit.polyms.dev`) là lớp end-user cho ai-kit — giúp kỹ sư fullstack / tech lead hiểu pipeline, browse 12 skill, copy sample prompt, và chạy bootstrap trong vài phút, không cần đọc README.
+**Kit site** (`ai-kit.polyms.dev`) là lớp end-user cho ai-kit — giúp kỹ sư fullstack / tech lead hiểu pipeline, browse
+15 skill, copy sample prompt, và chạy bootstrap trong vài phút, không cần đọc README.
 
-PRD v1.0 (pm-agent) đã chốt scope chức năng và content completeness. **Addendum này (v1.1)** định hình **creative product direction**: landing hiện đại, phá cách, cảm giác **engineering artifact** — không phải template SaaS marketing.
+PRD v1.0 (pm) đã chốt scope chức năng và content completeness. **Addendum này (v1.1)** định hình **creative product direction**: landing hiện đại, phá cách, cảm giác **engineering artifact** — không phải template SaaS marketing.
 
-Design spec hiện tại (`docs/design/ai-kit-landing.md`) quá **calm editorial** so với intent stakeholder. Design-agent cần revise spec theo addendum này; không được drop content để đổi aesthetic.
+Design spec hiện tại (`docs/design/ai-kit-landing.md`) quá **calm editorial** so với intent stakeholder. Designer cần revise spec theo addendum này; không được drop content để đổi aesthetic.
 
 ---
 
@@ -91,7 +92,7 @@ Tham chiếu đầy đủ: `docs/design/ai-kit-landing.md`. Tóm tắt bắt bu�
 
 ## 6. Creative Direction Addendum
 
-> **Mục đích:** Hướng sáng tạo cho design-agent revise `docs/design/ai-kit-landing.md`. Giữ **100% content checklist** (§6.3); thay **mood, layout, motion, metaphor** — không thay scope chức năng.
+> **Mục đích:** Hướng sáng tạo cho designer revise `docs/design/ai-kit-landing.md`. Giữ **100% content checklist** (§6.3); thay **mood, layout, motion, metaphor** — không thay scope chức năng.
 
 ### 6.1 Brand Personality — «Terminal của pipeline»
 
@@ -122,9 +123,9 @@ Tham chiếu đầy đủ: `docs/design/ai-kit-landing.md`. Tóm tắt bắt bu�
 
 | Pillar                   | Manifest trên landing                                                                                                                 | Liên kết «real engineering»                     |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| **Slash commands là UI** | Invoke `/pm`, `/align` hiển thị như lệnh thật — monospace, prefix `/`, copy one-click                                                 | Skill nhỏ, composable — user ở quyền điều khiển |
+| **Slash commands là UI** | Invoke `/reqs`, `/align` hiển thị như lệnh thật — monospace, prefix `/`, copy one-click                                               | Skill nhỏ, composable — user ở quyền điều khiển |
 | **Pipeline là hệ thống** | Main path + triage branch như **living diagram** — stage highlight, artifact output labels (`PRD`, `docs/design/`, `ready-for-agent`) | Mỗi stage produce artifact next stage consume   |
-| **Agents là principals** | 3 agent cards như «process owner» — owns field cụ thể; `/align` skill-only (grill tương tác)                                          | Handoff có lane; không relitigate downstream    |
+| **Agents là principals** | 5 agent cards như «process owner» — owns field cụ thể; `/align` skill-only (grill tương tác)                                          | Handoff có lane; không relitigate downstream    |
 | **Prompts là contract**  | Sample prompt blocks giống snippet trong terminal/chat — bilingual, không marketing rewrite                                           | Copy-paste = invoke thật trong Cursor           |
 | **Dogfood core-ui**      | Component map từ `@polyms/core-ui` — site chứng minh design system                                                                    | Design every day — spec map tới primitives      |
 
@@ -138,31 +139,34 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 - [ ] Hero: value prop, 2 CTA (catalog + quick start)
 - [ ] **5 Real engineering principles** (full list từ README — có thể layout bento, không được rút còn 3)
-- [ ] **Pipeline — main path:** `Idea → /align → /pm | /to-prd → /to-issues → /design → /dev → /code-review → ship`
+- [ ] **Pipeline — main path:** `Idea → /align → /reqs | /to-prd → /to-issues → /design → /dev → /code-review → ship`
 - [ ] **Pipeline — triage branch:** `Raw issues → /triage → ready-for-agent → /dev → /code-review` (visual parallel, dashed)
 - [ ] Pipeline nodes clickable → skill detail (trừ Idea, ship)
 - [ ] Caption `/setup` một lần mỗi repo
-- [ ] **3 principal agent cards:** pm-agent, design-agent, dev-agent — vai trò, owns, link skill (`/align` = skill-only, no agent card)
+- [ ] **5 principal agent cards:** pm, designer, developer, tester, techlead — vai trò, owns, link skill (`/align` = skill-only, no agent card)
 - [ ] CTA band: catalog + quick start anchor
 
 #### Skill catalog (`/skills`)
 
-- [ ] **12 skills** đầy đủ (bảng invoke, name, status, invocation, domain):
+- [ ] **15 skills** đầy đủ (bảng invoke, name, status, invocation, domain):
 
   | Invoke           | Name                                           |
   | ---------------- | ---------------------------------------------- |
   | `/setup`         | setup                                          |
   | `/align`         | align (+ footnote align-loop, domain-modeling) |
-  | `/pm`            | pm                                             |
+  | `/reqs`          | reqs (`pm`)                                    |
   | `/to-prd`        | to-prd                                         |
   | `/to-issues`     | to-issues                                      |
   | `/triage`        | triage                                         |
-  | `/design`        | design                                         |
-  | `/dev`           | dev                                            |
-  | `/code-review`   | code-review                                    |
+  | `/design`        | design (`designer`)                            |
+  | `/dev`           | dev (`developer`)                              |
+  | `/code-review`   | code-review (`techlead`)                       |
+  | `/docs`          | docs (`techlead`)                              |
+  | `/e2e`           | e2e (`tester`)                                 |
   | `/craft`         | craft                                          |
-  | `/arch-refactor` | arch-refactor                                  |
-  | `/arch`          | arch                                           |
+  | `/arch-refactor` | arch-refactor (`techlead`)                     |
+  | `/arch`          | arch (`techlead`)                              |
+  | `/devops`        | devops (`developer` + `techlead`)              |
 
 - [ ] Filters: search, domain single-select, invocation tabs (Tất cả | User-invoked | Model-invoked)
 - [ ] URL query sync optional: `?domain=&invocation=`
@@ -188,7 +192,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 - [ ] SEO meta per route (VI titles)
 - [ ] a11y: skip link, focus order, WCAG AA, `prefers-reduced-motion`
 
-### 6.4 Experience Principles (cho design-agent)
+### 6.4 Experience Principles (cho designer)
 
 1. **Pipeline là hệ thống sống, không phải diagram tĩnh**
    - Scroll hoặc hover-driven stage activation; artifact labels xuất hiện tại mỗi node (`CONTEXT.md`, `PRD`, `docs/design/`, agent brief).
@@ -212,14 +216,14 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
    - Default theme: dark hoặc high-contrast (core-ui tokens); light toggle optional nếu core-ui hỗ trợ không tốn scope.
    - Contrast AA bắt buộc; không sacrifice readability cho «cool».
 
-### 6.5 Creative Layout Direction (gợi ý — design-agent chốt chi tiết)
+### 6.5 Creative Layout Direction (gợi ý — designer chốt chi tiết)
 
 | Section     | Editorial v0 (deprecated)             | Creative v1 direction                                                                                                                    |
 | ----------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | Hero        | Centered H1 + 2 CTA, light whitespace | Asymmetric: H1 bold left + «terminal strip» right previewing `/align` hoặc mini pipeline; hoặc full-bleed dark với typographic scale lớn |
 | Principles  | 3-col equal card grid                 | Bento — 1 principle hero-size + 4 smaller; hoặc vertical «manifest» list với invoke tags                                                 |
 | Pipeline    | Static Mermaid/SVG in Card            | Scroll-scrubbed stage rail HOẶC interactive hover path; SVG build-time OK                                                                |
-| Agents      | 4 equal cards                         | 2×2 bento với monospace «owns:» field nổi; hoặc horizontal «process strip»                                                               |
+| Agents      | 5 equal cards                         | Flex wrap / bento với monospace «owns:» field nổi — pm, designer, developer, tester, techlead                                            |
 | Catalog     | Standard card grid                    | Command-palette header + dense grid; invoke as primary visual                                                                            |
 | Quick start | Linear steps                          | Step rail giống CI log hoặc numbered terminal blocks                                                                                     |
 
@@ -239,7 +243,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | 8   | Testimonial carousel                              | Không                                                                   |
 | 9   | FAQ accordion 10 câu generic                      | Quick start + catalog đủ; FAQ defer                                     |
 | 10  | Mermaid runtime client bundle cho decorative      | SVG build-time hoặc hand-coded `PipelineDiagram`                        |
-| 11  | Giảm 12 skills xuống «top 6» trên landing         | Full catalog route; landing có thể teaser 4–6 + CTA «xem tất cả»        |
+| 11  | Giảm 15 skills xuống «top 6» trên landing         | Full catalog route; landing có thể teaser 4–6 + CTA «xem tất cả»        |
 | 12  | Light editorial làm sole theme khi không có lý do | Dark-first hoặc high-contrast — phù hợp Cursor audience                 |
 
 ### 6.7 MoSCoW — Creative v1 vs defer
@@ -258,7 +262,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | Locale toggle VI/EN                                              |                                                                                       |
 | Umami pageviews                                                  |                                                                                       |
 | `prefers-reduced-motion` fallbacks                               |                                                                                       |
-| Revise design spec mood từ «calm editorial» → creative brief này | design-agent deliverable                                                              |
+| Revise design spec mood từ «calm editorial» → creative brief này | designer deliverable                                                                  |
 
 #### Should Have (v1 nếu không blow timeline)
 
@@ -296,7 +300,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | ID    | Requirement                                                            | Priority |
 | ----- | ---------------------------------------------------------------------- | -------- |
 | FR-01 | Landing hiển thị hero, 5 principles, pipeline (2 nhánh), 4 agents, CTA | P0       |
-| FR-02 | Catalog 12 skills với filter search/domain/invocation                  | P0       |
+| FR-02 | Catalog 15 skills với filter search/domain/invocation                  | P0       |
 | FR-03 | Skill detail với 11 prompts + arch hint, copy clipboard                | P0       |
 | FR-04 | Quick start: clone, bootstrap, table, manual accordion                 | P0       |
 | FR-05 | Locale toggle VI default, EN optional, prompts bilingual               | P0       |
@@ -324,7 +328,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 - `@polyms/core-ui` hỗ trợ dark theme hoặc semantic tokens đủ cho dark-first mà không fork lib
 - Creative layout vẫn map được tới core-ui primitives (ADR dogfood)
-- Design-agent revise `docs/design/ai-kit-landing.md` trước `/dev` — không code trước spec
+- Designer revise `docs/design/ai-kit-landing.md` trước `/dev` — không code trước spec
 - Content overlay maintain thủ công khi thêm skill (ADR-0002)
 
 ---
@@ -341,7 +345,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 ---
 
-## 11. Handoff Notes cho design-agent
+## 11. Handoff Notes cho designer
 
 1. Đọc **toàn bộ** addendum §6 trước khi sửa `docs/design/ai-kit-landing.md`.
 2. **Replace** mood row «Calm editorial» → «Terminal/pipeline — dark-first, asymmetric, command-palette catalog».
@@ -364,14 +368,14 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 ## Resolved decisions (stakeholder 2026-07-03)
 
-| #   | Question        | Decision                                                          |
-| --- | --------------- | ----------------------------------------------------------------- |
-| 1   | Theme           | **Dark default + light toggle**                                   |
-| 2   | Pipeline        | **Full scroll-scrub**                                             |
-| 3   | Hero animation  | **Typewriter** `align → pm → design → dev`                        |
-| 4   | Umami events    | **Ship v1**                                                       |
-| 5   | Font stack      | **Quicksand** (core-ui `_fonts.css`) + **JetBrains Mono** (app)   |
-| 6   | Featured teaser | **Confirmed** — strip `setup` / `align` / `pm` / `dev` below hero |
+| #   | Question        | Decision                                                            |
+| --- | --------------- | ------------------------------------------------------------------- |
+| 1   | Theme           | **Dark default + light toggle**                                     |
+| 2   | Pipeline        | **Full scroll-scrub**                                               |
+| 3   | Hero animation  | **Typewriter** `align → reqs → design → dev`                        |
+| 4   | Umami events    | **Ship v1**                                                         |
+| 5   | Font stack      | **Quicksand** (core-ui `_fonts.css`) + **JetBrains Mono** (app)     |
+| 6   | Featured teaser | **Confirmed** — strip `setup` / `align` / `reqs` / `dev` below hero |
 
 ## Open Questions
 

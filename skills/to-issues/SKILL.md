@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tracer bullet** vertical slices.
 
-**Upstream:** `/pm` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
+**Upstream:** `/reqs` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
 
 **Audience:** Follow [issue-template.md](issue-template.md). Do **not** pass a parent PRD executive summary
 into slices or ship agent-only shorthand (e.g. `"US#1–9: tenancy..."`) — expand enough context per wave.
@@ -56,7 +56,7 @@ Break the plan into **tracer bullet** issues. Each issue is a thin vertical slic
 - Any prefactoring should come first
 - When the source PRD prioritizes stories (P0/P1/P2), order slices so the P0 set completes first — P0 slices alone should be a shippable MVP; a `[NEEDS CLARIFICATION]` marker inside a slice's stories blocks that slice until resolved
 
-Do not re-run `/pm` user-story workflows here. Map slices to existing user stories from the source material when present; do not invent new stories unless the source has gaps the user confirms.
+Do not re-run `/reqs` user-story workflows here. Map slices to existing user stories from the source material when present; do not invent new stories unless the source has gaps the user confirms.
 
 **Completion criterion:** Numbered slice list drafted; each slice has title, blocked-by, and user stories covered (if applicable).
 

@@ -131,11 +131,11 @@ skipped). Do **not** merge or rerank findings across axes.
 **Severity tags** (presentation only — apply when cleaning each axis; do not invent new
 findings):
 
-| Tag | Meaning | Typical sources |
-| --- | --- | --- |
-| 🔴 **blocker** | Must fix before merge | Hard Standards violations; Spec missing/wrong AC; data-loss / security / broken contract |
-| 🟡 **suggestion** | Should fix soon | Soft Standards judgement; Spec scope creep; Simplify `yagni:` / `shrink:` with clear win |
-| 💭 **nit** | Nice to have | Style outside linter; optional Simplify `delete:` / naming polish |
+| Tag               | Meaning               | Typical sources                                                                          |
+| ----------------- | --------------------- | ---------------------------------------------------------------------------------------- |
+| 🔴 **blocker**    | Must fix before merge | Hard Standards violations; Spec missing/wrong AC; data-loss / security / broken contract |
+| 🟡 **suggestion** | Should fix soon       | Soft Standards judgement; Spec scope creep; Simplify `yagni:` / `shrink:` with clear win |
+| 💭 **nit**        | Nice to have          | Style outside linter; optional Simplify `delete:` / naming polish                        |
 
 Prefix each finding line with one tag. When an axis returns unstructured prose, assign the
 strongest justified tag per discrete issue — prefer under-tagging over inflating blockers.
@@ -165,12 +165,22 @@ Reporting them separately stops one axis from masking the other.
 ## Handoff
 
 - **🔴 blocker** (any axis) → fix before merge; use `/dev` if implementation help is
-  needed. Spec wrong (not code) → `/pm` / update the issue before coding further.
+  needed. Spec wrong (not code) → `/reqs` / update the issue before coding further.
 - **🟡 suggestion** → take in the same PR when cheap; otherwise schedule as follow-up.
 - **💭 nit** → optional; do not block merge.
 - **Simplify cuts worth taking** → `/dev` with the delete-list; do not open a product
   debate unless a cut would drop an explicit acceptance criterion.
 - **Ready to merge** → no open 🔴; proceed to ship checklist + scope self-check in `/dev`.
+
+## Agent
+
+For long review sessions or multi-PR review batches:
+
+```
+Use the techlead to review diff since main
+```
+
+The agent reads this skill when invoked.
 
 _Future:_ a dedicated `prd-view` skill for reading and presenting PRDs from issues is
 planned — for now, Spec axis fetches via `gh` and file paths above.

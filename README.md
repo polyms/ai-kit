@@ -12,13 +12,13 @@ Cursor-first today, tool-agnostic by design.
 
 Inspired by [Matt Pocock's skills](https://github.com/mattpocock/skills) — built for work you ship, not demos you discard.
 
-| Principle                  | What it means in `ai-kit`                                                                                           |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **Align before you build** | `/align` closes the communication gap — grill decisions before `/pm` or `/to-prd`                              |
-| **Small and composable**   | Short-named skills (`/pm`, `/design`, `/dev`) you combine per task — no heavyweight process that takes away control |
-| **Feedback loops**         | `/dev` (planned) encodes TDD, types, and debugging discipline — agents need fast signal, not blind codegen          |
-| **Design every day**       | Specs name modules and seams; code skills resist the ball of mud agents accelerate                                  |
-| **Hack and own them**      | Fork, adapt, commit back — skills are yours, not black-box prompts                                                  |
+| Principle                  | What it means in `ai-kit`                                                                                             |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Align before you build** | `/align` closes the communication gap — grill decisions before `/reqs` or `/to-prd`                                   |
+| **Small and composable**   | Short-named skills (`/reqs`, `/design`, `/dev`) you combine per task — no heavyweight process that takes away control |
+| **Feedback loops**         | `/dev` encodes TDD, types, and debugging discipline — agents need fast signal, not blind codegen                      |
+| **Design every day**       | Specs name modules and seams; code skills resist the ball of mud agents accelerate                                    |
+| **Hack and own them**      | Fork, adapt, commit back — skills are yours, not black-box prompts                                                    |
 
 Heavy frameworks that own the whole process can hide bugs in the process itself. These skills stay **small, explicit, and composable** — you stay in control.
 
@@ -29,7 +29,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 ```
 /setup         → configure repo for ai-kit pipeline (run once)
 /align         → align before you build (grill + domain language)
-/pm            → discovery, enterprise PRD, stories (chat — does not publish)
+/reqs            → discovery, enterprise PRD, stories (chat — does not publish)
 /to-prd        → synthesize conversation into lean PRD, publish to GitHub
 /to-issues     → break spec into vertical-slice GitHub issues
 /triage        → move raw issues through triage state machine
@@ -45,35 +45,37 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ## What's inside
 
-| Type          | Path                     | Purpose                                                    |
-| ------------- | ------------------------ | ---------------------------------------------------------- |
-| **Skills**    | `skills/<name>/`         | Workflows, templates, and checklists (`/pm`, `/design`, …) |
-| **Agents**    | `agents/<name>-agent.md` | Specialized subagents for isolated deep work               |
-| **Bootstrap** | `bootstrap.sh`           | Symlink into local AI tool directories                     |
+| Type          | Path               | Purpose                                                      |
+| ------------- | ------------------ | ------------------------------------------------------------ |
+| **Skills**    | `skills/<name>/`   | Workflows, templates, and checklists (`/reqs`, `/design`, …) |
+| **Agents**    | `agents/<role>.md` | Principal subagents for org roles (not 1:1 skills)           |
+| **Bootstrap** | `bootstrap.sh`     | Symlink into local AI tool directories                       |
 
 ### Catalog
 
-| Invoke           | Name                                                                                                         | Status        | Domain                                                          |
-| ---------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------- |
-| `/setup`         | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
-| `/align`         | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md  |
-| `/pm`            | [`pm`](skills/pm/)                                                                                           | **Available** | Discovery, enterprise PRD, stories (user-invoked; does not publish) |
+| Invoke           | Name                                                                                                         | Status        | Domain                                                              |
+| ---------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------------------------- |
+| `/setup`         | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline                  |
+| `/align`         | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md      |
+| `/reqs`          | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, enterprise PRD, stories (user-invoked; does not publish) |
 | `/to-prd`        | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)        |
-| `/to-issues`     | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
-| `/triage`        | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
-| `/design`        | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, core-ui component map, a11y  |
-| `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging  |
-| `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes      |
-| `/docs`          | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`docs-agent`)             |
-| `/e2e`           | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester-agent`)                     |
-| `/devops`        | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem    |
-| `/craft`         | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning          |
-| `/arch-refactor` | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates |
-| `/arch`          | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)   |
+| `/to-issues`     | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                    |
+| `/triage`        | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent`     |
+| `/design`        | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, core-ui component map, a11y      |
+| `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging       |
+| `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes           |
+| `/docs`          | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`techlead`)                    |
+| `/e2e`           | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester`)                                |
+| `/devops`        | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem         |
+| `/craft`         | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning              |
+| `/arch-refactor` | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates     |
+| `/arch`          | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)       |
 
-Each skill ships with an optional matching agent for work that needs a separate context (long PRDs, multi-step design, large refactors). Use `/craft` when writing or editing any skill.
+Principal agents (`pm`, `designer`, `developer`, `tester`, `techlead`) map to **org roles** — multiple
+skills per agent OK. Use `/craft` when writing or editing any skill.
 
-**Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`).
+**Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery
+for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`).
 
 ## Quick start
 
@@ -85,29 +87,35 @@ pnpm bootstrap
 
 `bootstrap.sh` symlinks this repo into:
 
-| Tool            | Agents             | Skills                                  |
-| --------------- | ------------------ | --------------------------------------- |
-| **Cursor**      | `~/.cursor/agents` | `~/.cursor/skills`                      |
-| **Claude Code** | —                  | `~/.claude/skills` (per-skill symlinks) |
+| Tool            | Agents                          | Skills                                  |
+| --------------- | ------------------------------- | --------------------------------------- |
+| **Cursor**      | `~/.cursor/agents` (dir → repo) | `~/.cursor/skills` (dir → repo)         |
+| **Claude Code** | `~/.claude/agents` (per-file)   | `~/.claude/skills` (per-skill symlinks) |
 
 Restart your editor or start a new chat session after bootstrap.
 
 ### Manual setup
 
 ```bash
-ln -sfn ~/src/ai-kit/skills/pm ~/.cursor/skills/pm
-ln -sfn ~/src/ai-kit/agents/pm-agent.md ~/.cursor/agents/pm-agent.md
-ln -sfn ~/src/ai-kit/agents/design-agent.md ~/.cursor/agents/design-agent.md
+ln -sfn ~/src/ai-kit/skills/reqs ~/.cursor/skills/reqs
+ln -sfn ~/src/ai-kit/agents/pm.md ~/.cursor/agents/pm.md
+ln -sfn ~/src/ai-kit/agents/designer.md ~/.cursor/agents/designer.md
+ln -sfn ~/src/ai-kit/agents/developer.md ~/.cursor/agents/developer.md
+ln -sfn ~/src/ai-kit/agents/tester.md ~/.cursor/agents/tester.md
+ln -sfn ~/src/ai-kit/agents/techlead.md ~/.cursor/agents/techlead.md
+# Claude Code (if ~/.claude/agents exists):
+ln -sfn ~/src/ai-kit/agents/pm.md ~/.claude/agents/pm.md
+# …same pattern for designer, developer, tester, techlead
 ```
 
 ## Usage
 
-### `/pm` — Product Management
+### `/reqs` — Requirements
 
 **Skill** (user-invoked — discovery + enterprise PRD in chat; does **not** publish):
 
 ```
-/pm
+/reqs
 
 Write an enterprise PRD for [feature].
 Users: [who]. Success metric: [what]. Deadline: [when].
@@ -116,15 +124,15 @@ Users: [who]. Success metric: [what]. Deadline: [when].
 Includes:
 
 - Discovery, PRD, user story, prioritization, and refinement workflows
-- [Enterprise PRD template](skills/pm/enterprise-prd-template.md)
-- [User story guide](skills/pm/user-story-guide.md) (INVEST, Gherkin AC, DoR/DoD)
+- [Enterprise PRD template](skills/reqs/enterprise-prd-template.md)
+- [User story guide](skills/reqs/user-story-guide.md) (INVEST, Gherkin AC, DoR/DoD)
 
-After `/align`, to synthesize and **publish** a lean PRD, invoke `/to-prd` — not `/pm`.
+After `/align`, to synthesize and **publish** a lean PRD, invoke `/to-prd` — not `/reqs`.
 
 **Agent** (optional — isolated context for long PM sessions):
 
 ```
-Use the pm-agent to write a PRD for [feature]
+Use the pm to write a PRD for [feature]
 ```
 
 ### `/to-prd` — Synthesize & Publish PRD
@@ -138,7 +146,7 @@ Chốt PRD từ cuộc chat này — publish lên GitHub.
 ```
 
 Synthesizes from current conversation + codebase context using
-[lean-prd-template.md](skills/to-prd/lean-prd-template.md) (not `/pm`'s enterprise template). Sketches test
+[lean-prd-template.md](skills/to-prd/lean-prd-template.md) (not `/reqs`'s enterprise template). Sketches test
 seams (user confirms), publishes via `gh issue create` with mapped `ready-for-agent` label from
 `triage-labels.md`. Hands off to `/to-issues`.
 
@@ -162,7 +170,7 @@ Clarify plans and sharpen domain language before specs or code:
 Grill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.
 ```
 
-`/align` (user-invoked) runs **align-loop** + **domain-modeling** together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/pm`, `/to-prd`, `/design`, or `/dev`.
+`/align` (user-invoked) runs **align-loop** + **domain-modeling** together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/to-prd`, `/design`, or `/dev`.
 
 ### `/design` — UI Spec from PRD
 
@@ -179,7 +187,7 @@ Flows, screen inventory (four states each), **§4 CSS intent**, **§8 visual acc
 **Agent** (optional — isolated context for long design sessions):
 
 ```
-Use the design-agent to spec UI from PRD #42
+Use the designer to spec UI from PRD #42
 ```
 
 **External:** Install `@polyms/core-ui` and symlink its `/core-ui` skill (bootstrap or `npx skills add` from the core-ui repo).
@@ -225,7 +233,7 @@ _Future:_ dedicated `prd-view` skill for presenting PRDs from issues — not in 
 ### `/docs` — Technical Writing
 
 Developer-facing docs for shipped surfaces — API/MCP/CLI reference, tutorials, migrations.
-Not PRDs (`/pm`), not feature code (`/dev`). Long sessions: `docs-agent`.
+Not PRDs (`/reqs`), not feature code (`/dev`). Long sessions: `techlead`.
 
 ```
 /docs
@@ -238,7 +246,7 @@ See [SKILL.md](skills/docs/SKILL.md).
 ### `/e2e` — Test Automation
 
 Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Skill
-id **`e2e`**; principal agent **`tester-agent`**. Not seam TDD (`/dev`); not deploy Knowledge
+id **`e2e`**; principal agent **`tester`**. Not seam TDD (`/dev`); not deploy Knowledge
 (`/devops`).
 
 ```
@@ -273,7 +281,7 @@ Break an approved PRD or plan into independently-grabbable vertical-slice issues
 Bẻ PRD #42 thành issues — vertical slices, publish lên GitHub.
 ```
 
-After `/pm` or `/to-prd` produces a PRD or user stories, `/to-issues` drafts tracer-bullet slices, quizzes you on granularity and dependencies, then publishes to GitHub via `gh` with the `ready-for-agent` label when triage labels are configured. Hands off to `/dev` for the first unblocked slice. See [issue-template.md](skills/to-issues/issue-template.md).
+After `/reqs` or `/to-prd` produces a PRD or user stories, `/to-issues` drafts tracer-bullet slices, quizzes you on granularity and dependencies, then publishes to GitHub via `gh` with the `ready-for-agent` label when triage labels are configured. Hands off to `/dev` for the first unblocked slice. See [issue-template.md](skills/to-issues/issue-template.md).
 
 ### `/triage` — Issue Backlog Triage
 
@@ -295,7 +303,7 @@ Matt Pocock's [`writing-great-skills`](https://github.com/mattpocock/skills/tree
 ```
 /craft
 
-Review skills/pm/SKILL.md for sprawl and no-ops.
+Review skills/reqs/SKILL.md for sprawl and no-ops.
 ```
 
 Covers predictability, invocation, information hierarchy, leading words, and pruning. See [glossary.md](skills/craft/glossary.md).
@@ -327,12 +335,11 @@ ai-kit/
 │   ├── README.md
 │   └── pipeline-feature-walkthrough.md
 ├── agents/
-│   ├── design-agent.md
-│   ├── devops-agent.md
-│   ├── docs-agent.md
-│   ├── dev-agent.md
-│   ├── pm-agent.md
-│   └── tester-agent.md
+│   ├── designer.md
+│   ├── developer.md
+│   ├── pm.md
+│   ├── techlead.md
+│   └── tester.md
 └── skills/
     ├── align/
     │   └── SKILL.md
@@ -380,7 +387,7 @@ ai-kit/
     │   ├── design-spec-template.md
     │   ├── PREFLIGHT.md
     │   └── REDESIGN.md
-    ├── pm/
+    ├── reqs/
     │   ├── SKILL.md
     │   ├── enterprise-prd-template.md
     │   └── user-story-guide.md
@@ -419,34 +426,34 @@ docs/agents/
 Run `/craft` before authoring or editing skills. Then:
 
 1. Create `skills/<name>/SKILL.md` with frontmatter `name` and `description`
-2. Optionally add `agents/<name>-agent.md` for isolated deep work (suffix `-agent` distinguishes from the skill)
-3. Keep skill names **short** — lowercase, 2–4 chars when possible (`pm`, `ux`, `dev`)
+2. Optionally add `agents/<role>.md` for isolated deep work (org role — not 1:1 with the skill)
+3. Keep skill names **short** — lowercase, 2–4 chars when possible (`reqs`, `design`, `dev`)
 4. Commit and push; `git pull` on other machines is enough when using directory symlinks
 
 ### Conventions
 
-| Rule                               | Example                                        |
-| ---------------------------------- | ---------------------------------------------- |
-| Short invoke name                  | `/pm`, not `/product-management`               |
-| Skill folder = skill name          | `skills/pm/SKILL.md` → `name: pm`              |
-| Agent file = agent name            | `agents/pm-agent.md` → `name: pm-agent`        |
-| Description includes trigger terms | `/pm`, user stories, ưu tiên backlog (EN + VI) |
-| Bilingual triggers                 | English WHAT + EN/VI WHEN in every description |
+| Rule                               | Example                                              |
+| ---------------------------------- | ---------------------------------------------------- |
+| Short invoke name                  | `/reqs`, not `/product-management`                   |
+| Skill folder = skill name          | `skills/reqs/SKILL.md` → `name: reqs`                |
+| Agent file = org role              | `agents/pm.md` → `name: pm` (no `-agent` suffix)     |
+| Description includes trigger terms | `/reqs`, user stories, ưu tiên backlog (EN + VI)     |
+| Bilingual triggers                 | English WHAT + EN/VI WHEN in every description       |
 | Templates in separate files        | `enterprise-prd-template.md`, linked from `SKILL.md` |
-| No built-in tool skills            | Do not copy Cursor `skills-cursor/` content    |
-| Invocation rules                   | `docs/agents/invocation.md`, ADR-0001          |
-| Cursor rule when editing skills    | `.cursor/rules/skill-invocation.mdc`           |
+| No built-in tool skills            | Do not copy Cursor `skills-cursor/` content          |
+| Invocation rules                   | `docs/agents/invocation.md`, ADR-0001                |
+| Cursor rule when editing skills    | `.cursor/rules/skill-invocation.mdc`                 |
 
 ## Agentic fullstack pipeline
 
 ```
-Idea → /align → /pm or /to-prd → /to-issues → /design → /dev → /code-review → ship
+Idea → /align → /reqs or /to-prd → /to-issues → /design → /dev → /code-review → ship
 Raw issues → /triage → ready-for-agent → /dev → /code-review
 ```
 
 Run `/setup` once per repo first (includes triage label mapping).
 
-Each stage produces artifacts the next agent can consume. `/pm` drafts enterprise PRD/stories in chat;
+Each stage produces artifacts the next agent can consume. `/reqs` drafts enterprise PRD/stories in chat;
 `/to-prd` publishes a lean PRD to the tracker; `/to-issues` publishes vertical-slice GitHub issues; `/triage`
 processes inbound backlog into `ready-for-agent` issues with agent briefs; `/design` adds `docs/design/` specs
 mapped to `@polyms/core-ui`; Dev implements against briefs and design specs (`dev` uses `core-ui` for UI
@@ -464,14 +471,14 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 
 - [x] `/setup` — repo configuration for ai-kit pipeline
 - [x] `/align` + `align-loop` + `domain-modeling` — alignment and domain docs with auto-discovery (EN/VI)
-- [x] `/pm` — discovery, enterprise PRD, user stories (user-invoked; does not publish)
+- [x] `/reqs` — discovery, enterprise PRD, user stories (user-invoked; does not publish)
 - [x] `/to-prd` — synthesize conversation into lean PRD, publish to GitHub (from Matt's to-prd)
 - [x] `/to-issues` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
 - [x] `/triage` — issue backlog triage, agent briefs, `ready-for-agent` (from Matt's triage)
 - [x] `/dev` — fullstack implementation, TDD, solution ladder, scope self-check, status report
 - [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
-- [x] `/docs` — developer-facing docs (`docs-agent`)
-- [x] `/e2e` — E2E automation (`tester-agent`)
+- [x] `/docs` — developer-facing docs (`techlead`)
+- [x] `/e2e` — E2E automation (`tester`)
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
 - [x] `/arch-refactor` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)

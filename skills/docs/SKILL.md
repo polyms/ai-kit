@@ -2,7 +2,7 @@
 name: docs
 description: Developer-facing documentation — API reference, tutorials, integration guides,
   migration notes. Invoke with /docs, write docs, API docs, tutorial, hướng dẫn tích hợp,
-  viết tài liệu kỹ thuật, or use docs-agent for long doc sessions.
+  viết tài liệu kỹ thuật, or use techlead for long doc sessions.
 disable-model-invocation: true
 ---
 
@@ -11,7 +11,7 @@ disable-model-invocation: true
 Write **developer-facing** docs for systems that already exist (or are shipping). Not PRDs,
 not UI specs, not marketing copy.
 
-**Boundary vs `/pm`:** `/pm` owns product requirements (what to build). **`/docs`** owns how
+**Boundary vs `/reqs`:** `/reqs` owns product requirements (what to build). **`/docs`** owns how
 to use/integrate what was built.
 
 **Boundary vs `/dev`:** `/dev` owns production code and TDD. **`/docs`** may cite seams and
@@ -26,12 +26,12 @@ Prefer `docs/agents/language.md` when present for documentation language. No `/s
 
 ## Quick Router
 
-| Intent                         | Workflow                                      |
-| ------------------------------ | --------------------------------------------- |
-| API / MCP / CLI reference      | [Reference workflow](#reference-workflow)     |
-| Tutorial / how-to              | [Tutorial workflow](#tutorial-workflow)       |
-| Breaking change / migrate      | [Migration workflow](#migration-workflow)     |
-| Review existing docs for drift | [Drift workflow](#drift-workflow)             |
+| Intent                         | Workflow                                  |
+| ------------------------------ | ----------------------------------------- |
+| API / MCP / CLI reference      | [Reference workflow](#reference-workflow) |
+| Tutorial / how-to              | [Tutorial workflow](#tutorial-workflow)   |
+| Breaking change / migrate      | [Migration workflow](#migration-workflow) |
+| Review existing docs for drift | [Drift workflow](#drift-workflow)         |
 
 ## Reference Workflow
 
@@ -82,7 +82,7 @@ One sentence: “After this, the reader can __.” Out of scope listed.
    output)
 3. Common failure paths (short)
 
-Do not invent product behavior — if a step needs undecided product choice → `/pm`.
+Do not invent product behavior — if a step needs undecided product choice → `/reqs`.
 
 **Completion criterion:** Stranger can finish without asking; every step has verify.
 
@@ -117,14 +117,14 @@ before creating a new top-level docs tree.
 For long doc sets or multi-file reference work:
 
 ```
-Use the docs-agent to [task]
+Use the techlead to [task]
 ```
 
 The agent reads this skill when invoked.
 
 ## Handoffs
 
-- Undecided product → `/pm` or `/align`
+- Undecided product → `/reqs` or `/align`
 - Wrong/missing implementation → `/dev`
 - Deploy/CI setup docs that need Knowledge fix recipes → cite `/devops` / Knowledge; do not
   invent infra config

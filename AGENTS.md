@@ -33,15 +33,15 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Pipeline
 
-Idea → `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Specs on issue tracker; glossary in `CONTEXT.md`.
+Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Specs on issue tracker; glossary in `CONTEXT.md`.
 
 ### Design stack
 
-`/design` — UI spec from PRD at `docs/design/`; `@polyms/core-ui` + `/core-ui` skill for implementation (lib repo, not ai-kit). Long sessions: `design-agent` in `agents/design-agent.md`.
+`/design` — UI spec from PRD at `docs/design/`; `@polyms/core-ui` + `/core-ui` skill for implementation (lib repo, not ai-kit). Long sessions: `designer` in `agents/designer.md`.
 
 ### Maintenance
 
-`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; long sessions: `devops-agent` in `agents/devops-agent.md`. `/docs` — developer-facing docs; `docs-agent`. `/e2e` — E2E automation; principal agent `tester-agent` (skill/agent id mismatch by design). Pipeline walkthrough: `examples/pipeline-feature-walkthrough.md`.
+`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — developer-facing docs; `techlead`. `/e2e` — E2E automation; principal agent `tester` (skill id `e2e`). Pipeline walkthrough: `examples/pipeline-feature-walkthrough.md`.
 
 ### Invocation
 
@@ -49,15 +49,14 @@ User-invoked vs model-invoked skills; hard vs soft `/setup` dependencies. See `d
 
 ### Principal agents
 
-Isolated subagents for deep artifact work — one **principal** owner per lane. **`/align`** is skill-only (interactive grill in the main chat; no subagent — subagents cannot pause for one-question-at-a-time dialogue):
+Isolated subagents for deep artifact work — one **principal** owner per org role (not 1:1 with skills). **`/align`** is skill-only (interactive grill in the main chat; no subagent — subagents cannot pause for one-question-at-a-time dialogue):
 
-| Agent           | Role                          | Owns                                                              |
-| --------------- | ----------------------------- | ----------------------------------------------------------------- |
-| `pm-agent`      | Principal product manager     | PRD, stories, acceptance criteria, scope                          |
-| `design-agent`  | Principal product designer    | `docs/design/` UI specs, `@polyms/core-ui` maps                   |
-| `dev-agent`     | Principal software engineer   | Implementation, TDD, scope self-check, multi-slice status         |
-| `devops-agent`  | Principal DevOps engineer     | Deploy/CI incidents, Knowledge `intent: incident`, SEV close-out  |
-| `docs-agent`    | Principal technical writer    | API reference, tutorials, integration/migration guides            |
-| `tester-agent`  | Principal tester              | E2E harness, flake, CI sharding, journeys (`/e2e` skill)          |
+| Agent       | Role                        | Owns                                                                               |
+| ----------- | --------------------------- | ---------------------------------------------------------------------------------- |
+| `pm`        | Principal product manager   | PRD, stories, acceptance criteria, scope (`/reqs`)                                 |
+| `designer`  | Principal product designer  | `docs/design/` UI specs, `@polyms/core-ui` maps (`/design`)                        |
+| `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
+| `tester`    | Principal tester            | E2E harness, flake, CI sharding, journeys (`/e2e`)                                 |
+| `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |
 
-Handoffs: `/align` → pm/to-prd → design → dev → code-review; public surface → `/docs`; E2E flake → `/e2e` (`tester-agent`); deploy/CI infra → `/devops`. Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.
+Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public surface → `/docs` (`techlead`); E2E flake → `/e2e` (`tester`); deploy/CI infra → `/devops` (`developer` executes, `techlead` owns SEV). Each agent stays in lane; escalates gaps upstream, does not relitigate downstream artifacts.

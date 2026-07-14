@@ -5,7 +5,7 @@ REPO="$(cd "$(dirname "$0")" && pwd)"
 CURSOR="$HOME/.cursor"
 CLAUDE="$HOME/.claude"
 
-mkdir -p "$CURSOR" "$CLAUDE/skills"
+mkdir -p "$CURSOR" "$CLAUDE/skills" "$CLAUDE/agents"
 
 link_dir() {
   local source="$1"
@@ -28,6 +28,12 @@ for skill in "$REPO"/skills/*/; do
   name="$(basename "$skill")"
   ln -sfn "$skill" "$CLAUDE/skills/$name"
   echo "Linked: $CLAUDE/skills/$name -> $skill"
+done
+
+for agent in "$REPO"/agents/*.md; do
+  name="$(basename "$agent")"
+  ln -sfn "$agent" "$CLAUDE/agents/$name"
+  echo "Linked: $CLAUDE/agents/$name -> $agent"
 done
 
 echo ""

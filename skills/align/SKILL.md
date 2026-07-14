@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Run **align-loop** using **domain-modeling** — the same pairing as Matt `grill-with-docs`: grill the plan **and** write vocabulary and hard decisions down as they land.
 
-Close the communication gap before `/pm`, `/to-prd`, `/design`, or `/dev`. Do not substitute `/pm` discovery, a PRD draft, or a feature list for the grill.
+Close the communication gap before `/reqs`, `/to-prd`, `/design`, or `/dev`. Do not substitute `/reqs` discovery, a PRD draft, or a feature list for the grill.
 
 Run `/setup` first if `docs/agents/` is missing.
 
@@ -40,28 +40,28 @@ Enter only when align-loop completion criteria are met and the user confirms the
 or the user picked **B** and confirmed the deferred list — never with a silently empty section while
 implementer-facing gaps remain (that is how `/to-prd` surfaces markers the user never saw).
 
-## When `/pm` vs `/to-prd` vs `/align`
+## When `/reqs` vs `/to-prd` vs `/align`
 
-Same decision tree in `/pm` and `/to-prd` — keep in sync:
+Same decision tree in `/reqs` and `/to-prd` — keep in sync:
 
 ```
 Decisions / problem statement clear?
 ├─ Yes, aligned chat ready to ship a PRD → tell user to invoke `/to-prd`
-│     (lean template, publish to tracker — `/pm` does NOT publish)
-├─ No — need more design-tree grill → continue `/align` (or restart)
-└─ No — need PM discovery, enterprise PRD, stories, or prioritization → tell user to invoke `/pm`
+│     (lean template, publish to tracker — `/reqs` does NOT publish)
+├─ No — need design-tree grill (tech forks, domain terms) → continue `/align` (or restart)
+└─ No — need requirements discovery, enterprise PRD, stories, or prioritization → tell user to invoke `/reqs`
       (draft in chat or docs/prd/; does NOT create tracker issues)
 ```
 
 When suggesting `/to-prd`, say so explicitly (e.g. gõ `/to-prd`) — do not say only "viết PRD" (easy to
-confuse with `/pm`).
+confuse with `/reqs`).
 
-| Next step | When                                                                              |
-| --------- | --------------------------------------------------------------------------------- |
+| Next step | When                                                                               |
+| --------- | ---------------------------------------------------------------------------------- |
 | `/to-prd` | Decisions confirmed; open questions resolved **or** user confirmed deferral to PRD |
-| `/pm`     | Need discovery interview, enterprise PRD (chat), stories, or prioritization         |
-| `/dev`    | Small, well-bounded change with clear seams                                         |
-| `/design` | UI flows or design specs needed before implementation                               |
+| `/reqs`   | Need discovery interview, enterprise PRD (chat), stories, or prioritization        |
+| `/dev`    | Small, well-bounded change with clear seams                                        |
+| `/design` | UI flows or design specs needed before implementation                              |
 
 End with:
 
@@ -73,7 +73,7 @@ End with:
 - [each item — or "none" only after audit confirms zero unsettled implementer-facing details]
 
 ## Next Step
-→ /to-prd | /pm | /design | /dev
+→ /to-prd | /reqs | /design | /dev
 ```
 
 **Completion criterion:** Handoff block delivered; `## Open Questions` matches the audit (not silently empty); user confirmed

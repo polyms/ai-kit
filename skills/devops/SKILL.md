@@ -1,6 +1,6 @@
 ---
 name: devops
-description: Deploy, CI, and infra — symptom → fix via Knowledge retrieval. Use when a deploy/CI/infra symptom is reported cold (no `/dev` slice in progress) — deploy failure, Vercel build failed, CI broken, sửa deploy, lỗi build, infra fix. Invoke with /devops, or use devops-agent for long incident sessions.
+description: Deploy, CI, and infra — symptom → fix via Knowledge retrieval. Use when a deploy/CI/infra symptom is reported cold (no `/dev` slice in progress) — deploy failure, Vercel build failed, CI broken, sửa deploy, lỗi build, infra fix. Invoke with /devops, or use developer (executor) / techlead (SEV) for long incident sessions.
 ---
 
 # DevOps — Deploy, CI & Infra
@@ -10,19 +10,19 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 **Boundary vs `/dev`:** a deploy/CI symptom reported cold — no `/dev` slice already in progress — routes here automatically. One surfacing mid-slice (deploy-aware `/dev` touching infra config inside a feature slice) stays in `/dev`. **`/devops`** owns operational incidents end-to-end otherwise. Hand off app feature work to `/dev`.
 
 **Boundary vs `/e2e`:** flaky or slow **test** jobs, Playwright config, sharding → **`/e2e`**
-(`tester-agent`). Deploy/build/install Knowledge matches stay here.
+(`tester`). Deploy/build/install Knowledge matches stay here.
 
 **Boundary vs `arch`:** design seams and module shape → **`arch`** + `intent: design`. Irreversible **why** → `docs/adr/`. This skill applies **symptom → fix** only.
 
 ## Quick Router
 
-| Intent                       | Workflow                                               |
-| ---------------------------- | ------------------------------------------------------ |
-| Deploy/build/CI failure      | [Incident workflow](#incident-workflow)                |
-| Proactive infra or CI change | [Incident workflow](#incident-workflow) — search first |
-| Post-fix confirmation        | Re-run **verify** steps from matched Knowledge chunk   |
+| Intent                        | Workflow                                                                                      |
+| ----------------------------- | --------------------------------------------------------------------------------------------- |
+| Deploy/build/CI failure       | [Incident workflow](#incident-workflow)                                                       |
+| Proactive infra or CI change  | [Incident workflow](#incident-workflow) — search first                                        |
+| Post-fix confirmation         | Re-run **verify** steps from matched Knowledge chunk                                          |
 | SEV classify / status / close | [Close & communicate](#5-close--communicate) + [incident-templates.md](incident-templates.md) |
-| Flaky Playwright / E2E job   | User invokes `/e2e` — not this skill                   |
+| Flaky Playwright / E2E job    | User invokes `/e2e` — not this skill                                                          |
 
 ## Incident Workflow
 
@@ -93,10 +93,14 @@ After verify is green (or when the incident is SEV1/SEV2 even mid-flight):
 
 ## Agent
 
-For long incident sessions or multi-step deploy debugging:
+For long incident sessions or multi-step deploy debugging — primary executor is **`developer`**; **`techlead`** for SEV / infra ownership:
 
 ```
-Use the devops-agent to [symptom]
+Use the developer to [symptom]
+```
+
+```
+Use the techlead to [symptom] — SEV ownership
 ```
 
 The agent reads this skill when invoked.

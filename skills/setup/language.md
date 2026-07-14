@@ -19,7 +19,7 @@ messages, and technical vocabulary (seam, ADR, PRD, sortOrder, …) stay in Engl
 Skills that write persistent docs read this file and write in the confirmed language:
 
 - `domain-modeling` — `CONTEXT.md`, glossary entries
-- `pm`, `to-prd` — PRDs, user stories, acceptance criteria
+- `reqs`, `to-prd` — PRDs, user stories, acceptance criteria
 - `design` — `docs/design/<feature>.md`
 - `arch` — ADRs in `docs/adr/`
 - `to-issues` — issue bodies on the tracker

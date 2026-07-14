@@ -17,11 +17,11 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 
 `/design` does **not** duplicate core-ui API docs. **User-invoked** — you cannot agent-fire `/core-ui`. Before the component map, ask the user to invoke **`/core-ui`** in this chat (skill ships with the lib — symlink or `npx skills add`), or follow it if the user already attached it.
 
-**Boundary vs `pm`:** `pm` writes requirements and PRD — `/design` consumes PRD and produces UI spec. Do not rewrite product scope.
+**Boundary vs `/reqs`:** `/reqs` writes requirements and PRD — `/design` consumes PRD and produces UI spec. Do not rewrite product scope.
 
 **Boundary vs `arch`:** `arch` is code module/seam shape — not visual design.
 
-**Upstream:** `/align` → `/pm` or `/to-prd` → `/to-issues` (optional) → `/design`.
+**Upstream:** `/align` → `/reqs` or `/to-prd` → `/to-issues` (optional) → `/design`.
 
 **Downstream:** `/dev` implements from `docs/design/<feature>.md`; `dev` uses `core-ui` when writing UI code.
 
@@ -29,21 +29,21 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 
 ## References
 
-| Topic           | Read when                                                                                                      |
-| --------------- | -------------------------------------------------------------------------------------------------------------- |
-| Brief inference | [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — **mandatory** before layout                                         |
-| Anti-slop       | [ANTI-SLOP.md](ANTI-SLOP.md) — big bans + composition; cite in spec                                            |
-| Quality bar     | [QUALITY-BAR.md](QUALITY-BAR.md) — visual reference + measurable craft intent                                  |
-| CSS intent      | [CSS-INTENT.md](CSS-INTENT.md) — **required** §4 in spec; `/dev` implements before wiring                      |
+| Topic           | Read when                                                                                       |
+| --------------- | ----------------------------------------------------------------------------------------------- |
+| Brief inference | [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — **mandatory** before layout                          |
+| Anti-slop       | [ANTI-SLOP.md](ANTI-SLOP.md) — big bans + composition; cite in spec                             |
+| Quality bar     | [QUALITY-BAR.md](QUALITY-BAR.md) — visual reference + measurable craft intent                   |
+| CSS intent      | [CSS-INTENT.md](CSS-INTENT.md) — **required** §4 in spec; `/dev` implements before wiring       |
 | Visual accept   | [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — criteria `/dev` proves via visual-ship in `/dev` |
-| Spec template   | [design-spec-template.md](design-spec-template.md)                                                             |
-| Pre-flight      | [PREFLIGHT.md](PREFLIGHT.md) — must pass before handoff                                                        |
-| Redesign        | [REDESIGN.md](REDESIGN.md) — audit-first when modernizing existing UI                                          |
-| Domain glossary | `CONTEXT.md` at repo root                                                                                      |
-| ADRs            | `docs/adr/` — do not re-litigate recorded decisions                                                            |
-| PRD source      | Issue tracker, `docs/`, or conversation — fetch per issue-tracker if needed                                    |
-| Component API   | **`/core-ui`** in `@polyms/core-ui` — user invokes before component map, or attached in chat                   |
-| External ref    | [Taste Skill](https://www.tasteskill.dev/) — anti-slop discipline only; DS locked to core-ui                   |
+| Spec template   | [design-spec-template.md](design-spec-template.md)                                              |
+| Pre-flight      | [PREFLIGHT.md](PREFLIGHT.md) — must pass before handoff                                         |
+| Redesign        | [REDESIGN.md](REDESIGN.md) — audit-first when modernizing existing UI                           |
+| Domain glossary | `CONTEXT.md` at repo root                                                                       |
+| ADRs            | `docs/adr/` — do not re-litigate recorded decisions                                             |
+| PRD source      | Issue tracker, `docs/`, or conversation — fetch per issue-tracker if needed                     |
+| Component API   | **`/core-ui`** in `@polyms/core-ui` — user invokes before component map, or attached in chat    |
+| External ref    | [Taste Skill](https://www.tasteskill.dev/) — anti-slop discipline only; DS locked to core-ui    |
 
 ## Quick Router
 
@@ -140,7 +140,7 @@ Follow [REDESIGN.md](REDESIGN.md) — audit-first, preserve behaviour, update vi
 
 1. Document the gap in the spec **Custom components** table
 2. Propose follow-up (GitHub issue or ADR) — do not invent the primitive in `/dev` without approval
-3. Hand off to `/pm` or user if scope change is needed
+3. Hand off to `/reqs` or user if scope change is needed
 
 **Completion criterion:** Gap documented with follow-up action; no silent custom UI in implementation spec.
 
@@ -155,7 +155,7 @@ Follow [REDESIGN.md](REDESIGN.md) — audit-first, preserve behaviour, update vi
 For long design sessions in isolated context (full feature spec, redesign audit):
 
 ```
-Use the design-agent to [task]
+Use the designer to [task]
 ```
 
 The agent reads this skill when invoked.

@@ -1,7 +1,7 @@
 # Lean PRD Template
 
 Lean template for `/to-prd` — synthesize from conversation, publish to the issue tracker. Enterprise discovery
-PRD (chat only, no publish) uses `/pm`'s [enterprise-prd-template.md](../pm/enterprise-prd-template.md).
+PRD (chat only, no publish) uses `/reqs`'s [enterprise-prd-template.md](../reqs/enterprise-prd-template.md).
 
 **Audience:** PRD must be **human + AI readable** — clear prose for PM/stakeholder; structure sufficient for
 the agent. Avoid shorthand only an AI can parse (wave rollup, code-only bullets, missing Given/When/Then).

@@ -55,24 +55,28 @@ hero_line2: real engineering
 hero_sub: ai-kit là bộ não dùng chung của Polyms cho agentic fullstack — skill tên ngắn invoke bằng slash, từ requirements đến code đã review.
 
 # --- home ---
-home_catalog_heading: Mười hai skill. Không ceremony.
+home_catalog_heading: Mười lăm skill. Không ceremony.
 home_catalog_intro: Mỗi capability là skill hoặc agent ngắn tên — invoke bằng slash command.
 
 # --- pipeline ---
 pipeline_agentsLabel: Principal agents
 pipeline_agent_design_owns: docs/design/ UI specs, @polyms/core-ui maps
 pipeline_agent_design_role: Principal product designer
-pipeline_agent_dev_owns: Implementation, TDD, production code
+pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
 pipeline_agent_dev_role: Principal software engineer
 pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
 pipeline_agent_pm_role: Principal product manager
+pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys
+pipeline_agent_tester_role: Principal tester
+pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; /devops SEV
+pipeline_agent_techlead_role: Principal tech lead
 pipeline_intro: Mỗi stage tạo artifact cho agent kế tiếp. Issue thô đi qua /triage — verify và brief trước khi tới /dev.
 pipeline_stage_align: Align
 pipeline_stage_design: Design
 pipeline_stage_dev: Dev
 pipeline_stage_idea: Idea
 pipeline_stage_issues: To issues
-pipeline_stage_pm: PM / To PRD
+pipeline_stage_reqs: Reqs / To PRD
 pipeline_stage_review: Code review
 pipeline_stage_ship: Ship
 pipeline_title: Một pipeline, từ đầu tới ship.
@@ -101,9 +105,9 @@ palette_placeholder: Gõ để lọc skill…
 palette_title: Command palette
 
 # --- principles ---
-principles_1_body: /align thu hẹp khoảng cách giao tiếp — grill quyết định trước /pm hoặc /to-prd.
+principles_1_body: /align thu hẹp khoảng cách giao tiếp — grill quyết định trước /reqs hoặc /to-prd.
 principles_1_title: Align trước khi build
-principles_2_body: Skill tên ngắn (/pm, /design, /dev) ghép theo task — không quy trình nặng.
+principles_2_body: Skill tên ngắn (/reqs, /design, /dev) ghép theo task — không quy trình nặng.
 principles_2_title: Nhỏ và ghép được
 principles_3_body: /dev mã hóa TDD, types, debug có kỷ luật — tín hiệu nhanh, không codegen mù.
 principles_3_title: Vòng phản hồi
@@ -146,7 +150,7 @@ knowledge_results: Kết quả
 knowledge_resultsCaption: Kết quả tìm knowledge
 knowledge_searchLabel: Tìm knowledge theo topic hoặc symptom
 knowledge_searchPlaceholder: biome prettier setup
-knowledge_sub: Incident · design · toolchain — một retrieval model cho dev-agent, /dev, /devops, /arch.
+knowledge_sub: Incident · design · toolchain — một retrieval model cho developer, /dev, /devops, /arch.
 knowledge_title: Knowledge
 
 # --- ops ---

@@ -44,7 +44,7 @@ Output path: `docs/design/ai-kit-landing.md`
 ### Preservation rules (không đổi — v3.1 deltas noted)
 
 - Routes: `/`, `/skills`, `/skills/:slug`, `/#quick-start`, `/quick-start` → redirect `/#quick-start` — **cấm** `/agents/*` routes (agents = panel on skill detail)
-- **13 skills** in overlay (12 available + **1 planned** `/devops`); 11 sample prompts + arch model hint (available skills only); pipeline nodes (main + triage) — content preserved for future §3.2; 3 principal agents (`/align` skill-only) — content preserved for future §3.3; 5 principles full list
+- **15 skills** in overlay (all **available**); sample prompts + arch model hint; pipeline nodes (main + triage) — content preserved for future §3.2; 5 principal agents (`/align` skill-only) — content preserved for future §3.3; 5 principles full list
 - **Single registry:** `apps/landing/src/content/overlay.ts` — **cấm** `demo-catalog.ts` or parallel catalogs
 - Quick start blocks, copy clipboard + toast (available skills only), locale VI/EN, theme dark/light
 - Umami: `copy_prompt`, `pipeline_section_view`, `cta_quick_start`, `theme_toggle`, `command_palette_open`
@@ -52,21 +52,21 @@ Output path: `docs/design/ai-kit-landing.md`
 
 ### Implementation priority (cho `/dev` — v3.1 catalog slice first)
 
-| Order  | Slice                                                                                  | Why                                            |
-| ------ | -------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| **P0** | **Overlay v3.1 shape** §8 — extend types, add DevOps planned, rich fields              | Single source of truth for all catalog UI      |
-| **P0** | **Delete `demo-catalog.ts`**; wire `HomeCatalog` from `skillOverlays` §3.0b            | Remove stale duplicate; homepage = overlay     |
-| **P0** | **Rich skill detail** §3 — extended sections, status badge, agent panel, planned rules | Align detail with CONTEXT.md Skill detail      |
-| **P0** | **`SkillCommandRow` + detail** — status badge from `overlay.status`                    | Fix hardcoded «Available»                      |
-| **P0** | **Nav fix** §3 Global chrome — remove misleading Pipeline nav item                     | Label/href mismatch until §3.2 ships           |
-| **P0** | **Locale fixes** — `en.json` `/ux` → `/design`; `domain.devops`                        | Content accuracy                               |
-| **P1** | Dark-first flash script + `globals.css` type scale + break centered-container trap     | First paint + every section depends on tokens  |
-| **P1** | Hero composition §3.0 + `HeroTerminalStrip` (mobile visible, header clearance)         | Bounce decision in 3s                          |
-| **P1** | `PrinciplesBento` explicit grid maps §3.1                                              | Shipped bento broken at `grid-cols-2`          |
-| **P1** | `SkillCommandList` + `CommandPalette` → core-ui Modal / Field.Control                  | Discovery path                                 |
-| **P2** | `TerminalSection` quick start polish                                                   | Content OK, chrome weak                        |
-| **P3** | Motion polish, catalog keyboard nav, search highlight                                  | Should-have engagement                         |
-| **—**  | ~~`PipelineDiagram` §3.2~~, ~~`PrincipalPanels` §3.3~~, ~~Featured teaser~~            | **Deferred** — future pass after catalog slice |
+| Order  | Slice                                                                                                   | Why                                            |
+| ------ | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **P0** | **Overlay v3.1 shape** §8 — extend types, rich fields; devops **available** (was planned in §0 history) | Single source of truth for all catalog UI      |
+| **P0** | **Delete `demo-catalog.ts`**; wire `HomeCatalog` from `skillOverlays` §3.0b                             | Remove stale duplicate; homepage = overlay     |
+| **P0** | **Rich skill detail** §3 — extended sections, status badge, agent panel, planned rules                  | Align detail with CONTEXT.md Skill detail      |
+| **P0** | **`SkillCommandRow` + detail** — status badge from `overlay.status`                                     | Fix hardcoded «Available»                      |
+| **P0** | **Nav fix** §3 Global chrome — remove misleading Pipeline nav item                                      | Label/href mismatch until §3.2 ships           |
+| **P0** | **Locale fixes** — `en.json` `/ux` → `/design`; `domain.devops`                                         | Content accuracy                               |
+| **P1** | Dark-first flash script + `globals.css` type scale + break centered-container trap                      | First paint + every section depends on tokens  |
+| **P1** | Hero composition §3.0 + `HeroTerminalStrip` (mobile visible, header clearance)                          | Bounce decision in 3s                          |
+| **P1** | `PrinciplesBento` explicit grid maps §3.1                                                               | Shipped bento broken at `grid-cols-2`          |
+| **P1** | `SkillCommandList` + `CommandPalette` → core-ui Modal / Field.Control                                   | Discovery path                                 |
+| **P2** | `TerminalSection` quick start polish                                                                    | Content OK, chrome weak                        |
+| **P3** | Motion polish, catalog keyboard nav, search highlight                                                   | Should-have engagement                         |
+| **—**  | ~~`PipelineDiagram` §3.2~~, ~~`PrincipalPanels` §3.3~~, ~~Featured teaser~~                             | **Deferred** — future pass after catalog slice |
 
 ---
 
@@ -94,12 +94,12 @@ Kit site là **terminal của pipeline** — README nâng cấp thành interacti
 
 Per [QUALITY-BAR.md](../../skills/design/QUALITY-BAR.md) — finished-site tier, not wireframe boxes.
 
-| Dimension        | Kit site bar                                                                                                                                              |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Completeness** | Every route end-to-end: token/CSS intent in §4 — no gray placeholders, no README pasted as unstyled markdown                                              |
-| **core-ui**      | §5 + §17 — `Modal`, `Field.Control`, `Button` variants; cấm raw `<input>`, Dialog alias, ad-hoc locale buttons where `ToggleGroup` fits                   |
-| **Composition**  | Measurable splits §3.0–§3.3; diagram canvas + rail; bento `grid-area`; type scale §4.1 — reads **designed**, not template slop                            |
-| **Content**      | PRD §6.3 locked — overlay keys + §15 checklist; copy from README/CONTEXT, không marketing fluff; **v3.1:** single overlay, 13 skills incl. devops planned |
+| Dimension        | Kit site bar                                                                                                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Completeness** | Every route end-to-end: token/CSS intent in §4 — no gray placeholders, no README pasted as unstyled markdown                                                        |
+| **core-ui**      | §5 + §17 — `Modal`, `Field.Control`, `Button` variants; cấm raw `<input>`, Dialog alias, ad-hoc locale buttons where `ToggleGroup` fits                             |
+| **Composition**  | Measurable splits §3.0–§3.3; diagram canvas + rail; bento `grid-area`; type scale §4.1 — reads **designed**, not template slop                                      |
+| **Content**      | PRD §6.3 locked — overlay keys + §15 checklist; copy from README/CONTEXT, không marketing fluff; **v3.1+:** single overlay, 15 skills (docs, e2e, devops available) |
 
 - **Visual reference:** [tasteskill.dev](https://www.tasteskill.dev/) — hero density, asymmetric split, section rhythm, dark craft tier. **Do not** copy brand, skill grid, or sponsor strip (PRD §6.6 #3).
 - **Craft intent:** Full-bleed landing với **surface alternation** (`bg-body` / `bg-surface-2`), **1px `border-line` section seams**, **border-s-4 accent** on active panels — not uniform `rounded-xl` cards. Invoke mono **largest in row**. Pipeline diagram nodes có **active ring + hover lift**; detail panel compact (`min-h 240px`). Dark-first acceptance screenshots; light toggle AA-safe via core-ui semantic tokens only. `/dev` ships CSS classes from §4 — not “we’ll polish later.”
@@ -303,7 +303,7 @@ flowchart TD
 
 #### Terminal strip rules
 
-- Prefix `> ` on active line; cycle `/align` → `/pm` → `/design` → `/dev` (ADR-0002).
+- Prefix `> ` on active line; cycle `/align` → `/reqs` → `/design` → `/dev` (ADR-0002).
 - Header line: `polyms/ai-kit` + `.prompt-cursor` blink — **cấm** label «terminal».
 - `prefers-reduced-motion`: static frame showing `/dev`.
 - Surface: `bg-surface border border-line rounded-lg` — single card OK here only.
@@ -316,7 +316,7 @@ flowchart TD
 ```
 ┌─ page-x py-6 md:py-8 border-b border-line ────────────────────────────────────┐
 │ flex overflow-x-auto md:grid md:grid-cols-[1fr_1fr_1fr_1fr_auto] divide-x     │
-│ /setup | /align | /pm | /dev | «Xem 13 skill →»                               │
+│ /setup | /align | /reqs | /dev | «Xem 15 skill →»                               │
 └───────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -327,7 +327,7 @@ flowchart TD
 | -------- | ------------- |
 | `/setup` | Cấu hình repo |
 | `/align` | Chốt hướng    |
-| `/pm`    | Viết PRD      |
+| `/reqs`  | Viết PRD      |
 | `/dev`   | Ship code     |
 
 **States (Featured skill teaser — sub-section of Landing):**
@@ -337,7 +337,7 @@ flowchart TD
 | Loading | 4 skeleton bars in `divide-x` row         | —                              |
 | Empty   | N/A (overlay always has 4 featured slugs) | —                              |
 | Error   | Hide row; hero CTAs remain                | Scroll to catalog              |
-| Success | 4 invoke links + «Xem 13 skill →»         | Click invoke → `/skills/:slug` |
+| Success | 4 invoke links + «Xem 15 skill →»         | Click invoke → `/skills/:slug` |
 
 ---
 
@@ -353,7 +353,7 @@ flowchart TD
 
 - **Only** `skillOverlays` from `apps/landing/src/content/overlay.ts`
 - **Delete** `apps/landing/src/components/home/demo-catalog.ts` — cấm parallel catalogs
-- Homepage grid and `/skills` list **must show the same 13 entries** (filter/search applies only on `/skills`)
+- Homepage grid and `/skills` list **must show the same 15 entries** (filter/search applies only on `/skills`)
 
 **States:**
 
@@ -377,7 +377,7 @@ flowchart TD
 │ │         setup — one-line description from overlay.description            │   │
 │ │         domain badge (optional compact)                                  │   │
 │ └──────────────────────────────────────────────────────────────────────────┘   │
-│ … 13 cards total — includes design, arch, arch-refactor, devops (Planned)     │
+│ … 15 cards total — includes design, docs, e2e, arch, arch-refactor, devops     │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -579,7 +579,7 @@ Same as `md` with increased padding and hero min-height `280px`; number scale `#
 │ │ progress line       │ │ ROW A: PipelineDiagram (visual canvas)            │  │
 │ │ ● Idea              │ │   SVG or composed div — nodes, dashed triage branch│  │
 │ │ ● /align  ←active   │ │   artifact chips on nodes; clickable               │  │
-│ │ ○ /pm | /to-prd     │ │   min-h 320px md:min-h 400px                       │  │
+│ │ ○ /reqs | /to-prd     │ │   min-h 320px md:min-h 400px                       │  │
 │ │ ...                 │ ├───────────────────────────────────────────────────┤  │
 │ │ ┄┄ triage           │ │ ROW B: StageDetailPanel (ONE panel, content swap)  │  │
 │ │ ○ /triage           │ │   active stage: title, i18n body, chips, link      │  │
@@ -610,7 +610,7 @@ Same as `md` with increased padding and hero min-height `280px`; number scale `#
 ASCII coordinate map — origin top-left; canvas `min-h 320px md:min-h 400px`:
 
 ```
-y=40  ──● Idea(80,40)────● /align(200,40)────● /pm(320,40)────● /to-issues(440,40)────● /design(560,40)────● /dev(680,40)────● /code-review(800,40)────● ship(880,40)
+y=40  ──● Idea(80,40)────● /align(200,40)────● /reqs(320,40)────● /to-issues(440,40)────● /design(560,40)────● /dev(680,40)────● /code-review(800,40)────● ship(880,40)
          │                  │                    │                     │                      │                   │                      │
 y=200 ──● Raw(80,200)╌╌╌╌╌╌● /triage(280,200)╌╌╌╌● ready(480,200)╌╌╌╌● /dev(680,200)╌╌╌╌● /code-review(800,200)
          triage branch (stroke-dasharray 6 4, stroke-line)
@@ -620,7 +620,7 @@ y=200 ──● Raw(80,200)╌╌╌╌╌╌● /triage(280,200)╌╌╌╌●
 | ------------- | ---------- | -------------- | --------- |
 | idea          | 80, 40     | `r-28` (56×56) | No        |
 | align         | 200, 40    | `r-28`         | Yes       |
-| pm            | 320, 40    | `r-32` (64×64) | Yes       |
+| reqs          | 320, 40    | `r-32` (64×64) | Yes       |
 | to-issues     | 440, 40    | `r-28`         | Yes       |
 | design        | 560, 40    | `r-28`         | Yes       |
 | dev           | 680, 40    | `r-28`         | Yes       |
@@ -661,7 +661,7 @@ Connectors: main path `stroke-line stroke-2`; triage `stroke-line stroke-2 strok
 
 Interactive nodes remain focusable `<button>` overlays or `<g role="button" tabindex="0">` with keyboard handlers — diagram `aria-label` from `pipeline.srPath`; per-node `aria-current` when active.
 
-**Main path nodes (order):** Idea → /align → /pm \| /to-prd → /to-issues → /design → /dev → /code-review → ship
+**Main path nodes (order):** Idea → /align → /reqs \| /to-prd → /to-issues → /design → /dev → /code-review → ship
 
 **Triage branch:** Raw issues → /triage → ready-for-agent → /dev → /code-review
 
@@ -702,7 +702,7 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 ```
 ┌─ border-s-4 border-primary-700 — min-h 240px py-8 ─────────────────────────────┐
 │ h3.font-invoke — /dev                                                           │
-│ p — «Ship production code — TDD, tight feedback loops, principal dev-agent.»    │
+│ p — «Ship production code — TDD, tight feedback loops, principal developer.»    │
 │ chips: production code · TDD                                                    │
 │ Link — «Mở /dev →» /skills/dev                                                  │
 └─────────────────────────────────────────────────────────────────────────────────┘
@@ -721,7 +721,7 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
   <div class="pipeline-scroll-driver" aria-hidden="true">
     <div data-stage-id="idea" class="pipeline-scroll-driver__sentinel" />
     <div data-stage-id="align" class="pipeline-scroll-driver__sentinel" />
-    <div data-stage-id="pm" class="pipeline-scroll-driver__sentinel" />
+    <div data-stage-id="reqs" class="pipeline-scroll-driver__sentinel" />
     <div data-stage-id="to-issues" class="pipeline-scroll-driver__sentinel" />
     <div data-stage-id="design" class="pipeline-scroll-driver__sentinel" />
     <div data-stage-id="dev" class="pipeline-scroll-driver__sentinel" />
@@ -747,16 +747,16 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 
 **Artifact chips per stage** (unchanged mapping):
 
-| Stage           | Artifacts           |
-| --------------- | ------------------- |
-| /align          | `CONTEXT.md`, `ADR` |
-| /pm \| /to-prd  | `PRD`, user stories |
-| /to-issues      | GitHub issues       |
-| /design         | `docs/design/`      |
-| /dev            | production code     |
-| /code-review    | review findings     |
-| /triage         | agent brief         |
-| ready-for-agent | `ready-for-agent`   |
+| Stage            | Artifacts           |
+| ---------------- | ------------------- |
+| /align           | `CONTEXT.md`, `ADR` |
+| /reqs \| /to-prd | `PRD`, user stories |
+| /to-issues       | GitHub issues       |
+| /design          | `docs/design/`      |
+| /dev             | production code     |
+| /code-review     | review findings     |
+| /triage          | agent brief         |
+| ready-for-agent  | `ready-for-agent`   |
 
 #### Scroll-scrub + IO
 
@@ -769,7 +769,7 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 
 ```
 ┌─ sticky top-14 chip strip — horizontal scroll ─────────────────────────────────┐
-│ Idea | /align | /pm | … | /triage | …                                          │
+│ Idea | /align | /reqs | … | /triage | …                                          │
 └────────────────────────────────────────────────────────────────────────────────┘
 ┌─ Collapsed PipelineDiagram — vertical compact timeline ──────────────────────┐
 │ ● Idea ── ● /align ── ● …                                                     │
@@ -796,29 +796,34 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 
 | Field | Value                         |
 | ----- | ----------------------------- |
-| Goal  | 3 principals — owns field nổi |
+| Goal  | 5 principals — owns field nổi |
 | Entry | Scroll landing                |
 | Exit  | `/skills/:slug`               |
 
-**States:** Loading = 3 skeletons; Empty = N/A; Error = hide + console; Success = bento panels.
+**States:** Loading = 5 skeletons; Empty = N/A; Error = hide + console; Success = bento panels.
 
 ```
-┌─ pm-agent — col-span-2 ────────────────┐ ┌─ design-agent — offset ─┐
+┌─ pm — col-span-2 ────────────────┐ ┌─ designer — offset ─┐
 │ border-s-4 border-primary-700          │ │ PRINCIPAL DESIGNER      │
 │ PRINCIPAL PM                           │ │ owns: docs/design/      │
 └────────────────────────────────────────┘ └─────────────────────────┘
-┌─ dev-agent — col-span-full ─────────────────────────────────────────┐
-│ PRINCIPAL ENGINEER · owns: TDD, production code                     │
-└─────────────────────────────────────────────────────────────────────┘
+┌─ developer ──────────────────────┐ ┌─ tester ────────────┐
+│ PRINCIPAL ENGINEER · TDD,/devops │ │ PRINCIPAL TESTER    │
+└──────────────────────────────────┘ └─────────────────────┘
+┌─ techlead — col-span-full ──────────────────────────────────────────────────┐
+│ PRINCIPAL TECH LEAD · owns: /docs, arch, code-review, arch-refactor; SEV   │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-| Agent        | Stamp              | Owns                      |
-| ------------ | ------------------ | ------------------------- |
-| pm-agent     | PRINCIPAL PM       | PRD, stories, AC          |
-| design-agent | PRINCIPAL DESIGNER | docs/design/, core-ui map |
-| dev-agent    | PRINCIPAL ENGINEER | TDD, production code      |
+| Agent     | Stamp               | Owns                                                |
+| --------- | ------------------- | --------------------------------------------------- |
+| pm        | PRINCIPAL PM        | PRD, stories, AC, scope                             |
+| designer  | PRINCIPAL DESIGNER  | docs/design/, core-ui map                           |
+| developer | PRINCIPAL ENGINEER  | TDD, production code, /devops (primary)             |
+| tester    | PRINCIPAL TESTER    | E2E harness, flake, CI sharding                     |
+| techlead  | PRINCIPAL TECH LEAD | /docs, arch, code-review, arch-refactor; devops SEV |
 
-- **cấm:** 3× identical `rounded-xl border bg-surface p-6` cards.
+- **cấm:** 5× identical `rounded-xl border bg-surface p-6` cards.
 - CTA: `font-invoke text-sm text-primary-700` link — not Button.
 
 #### Grid map — `default` (`<768px`) — 1 column stack
@@ -830,29 +835,33 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
   gap: 1px;
   background: var(--line);
 }
-.p-agent-pm     { grid-column: 1; grid-row: 1; min-height: 160px; border-s-4 border-primary-700; }
-.p-agent-design { grid-column: 1; grid-row: 2; min-height: 120px; }
-.p-agent-dev    { grid-column: 1; grid-row: 3; min-height: 160px; border-s-4 border-primary-700; }
+.p-agent-pm       { grid-column: 1; grid-row: 1; min-height: 160px; border-s-4 border-primary-700; }
+.p-agent-design   { grid-column: 1; grid-row: 2; min-height: 120px; }
+.p-agent-dev      { grid-column: 1; grid-row: 3; min-height: 160px; border-s-4 border-primary-700; }
+.p-agent-tester   { grid-column: 1; grid-row: 4; min-height: 120px; }
+.p-agent-techlead { grid-column: 1; grid-row: 5; min-height: 160px; border-s-4 border-primary-700; }
 ```
 
 ```
 ┌─ PRINCIPALS — page-x section-y border-b — gap-px bg-line ─────────────────────┐
-│ h2 — «3 principal agents» (+ `/align` skill — no agent)                        │
-│ ┌─ #1 pm-agent — full width, border-s-4 accent — min-h 160px ────────────────┐ │
+│ h2 — «5 principal agents» (+ `/align` skill — no agent)                        │
+│ ┌─ #1 pm — full width, border-s-4 accent — min-h 160px ────────────────┐ │
 │ │ PRINCIPAL PM · owns: PRD, stories, AC                                        │ │
 │ └────────────────────────────────────────────────────────────────────────────┘ │
-│ ┌─ #2 design-agent ──────────────────────────────────────────────────────────┐ │
-│ ┌─ #3 dev-agent — full width, border-s-4 accent — min-h 160px ───────────────┐ │
+│ ┌─ #2 designer ──────────────────────────────────────────────────────────┐ │
+│ ┌─ #3 developer — full width, border-s-4 accent — min-h 160px ───────────────┐ │
+│ ┌─ #4 tester ────────────────────────────────────────────────────────────┐ │
+│ ┌─ #5 techlead — full width, border-s-4 accent — min-h 160px ────────────────┐ │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Grid map — `md` (`768–1023px`) — 2×2 asymmetric
+#### Grid map — `md` (`768–1023px`) — 2-col wrap
 
 ```css
 @media (min-width: 768px) {
   .principal-grid {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
   }
   .p-agent-pm {
     grid-column: 1 / 3;
@@ -865,8 +874,18 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
     min-height: 120px;
   }
   .p-agent-dev {
-    grid-column: 1 / 3;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    min-height: 120px;
+  }
+  .p-agent-tester {
+    grid-column: 1 / 2;
     grid-row: 3 / 4;
+    min-height: 120px;
+  }
+  .p-agent-techlead {
+    grid-column: 1 / 3;
+    grid-row: 4 / 5;
     min-height: 140px;
   }
 }
@@ -880,24 +899,26 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto;
   }
-  .p-agent-pm     { grid-column: 1 / 3; grid-row: 1 / 2; min-height: 160px; padding: p-8; }
-  .p-agent-design { grid-column: 3 / 4; grid-row: 1 / 2; min-height: 120px; margin-top: 2rem; }
-  .p-agent-dev    { grid-column: 1 / 4; grid-row: 2 / 3; min-height: 150px; border-s-4 border-primary-700; }
+  .p-agent-pm       { grid-column: 1 / 2; grid-row: 1 / 2; min-height: 160px; padding: p-8; }
+  .p-agent-design   { grid-column: 2 / 3; grid-row: 1 / 2; min-height: 120px; }
+  .p-agent-dev      { grid-column: 3 / 4; grid-row: 1 / 2; min-height: 160px; border-s-4 border-primary-700; }
+  .p-agent-tester   { grid-column: 1 / 2; grid-row: 2 / 3; min-height: 120px; }
+  .p-agent-techlead { grid-column: 2 / 4; grid-row: 2 / 3; min-height: 150px; border-s-4 border-primary-700; }
 }
 ```
 
 ```
 ┌─ lg: 3-col ───────────────────────────────────────────────────────────────────┐
-│ ┌─ pm col 1-2 ─────────────────┐ ┌─ design col 3 offset-y ────────────────┐ │
-│ └──────────────────────────────┘ └────────────────────────────────────────┘ │
-│ ┌─ dev col 1-3 — border-s-4 ──────────────────────────────────────────────┐ │
-│ └───────────────────────────────────────────────────────────────────────────┘ │
+│ ┌─ pm ──────┐ ┌─ designer ──┐ ┌─ developer — border-s-4 ──────────────────┐ │
+│ └───────────┘ └─────────────┘ └───────────────────────────────────────────┘ │
+│ ┌─ tester ──┐ ┌─ techlead col 2-3 — border-s-4 ───────────────────────────┐ │
+│ └───────────┘ └───────────────────────────────────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 #### Cell anatomy (all breakpoints)
 
-| Element | Hero panels (pm, dev)                              | Compact (design)                 |
+| Element | Hero panels (pm, developer, techlead)              | Compact (designer, tester)       |
 | ------- | -------------------------------------------------- | -------------------------------- |
 | Surface | `bg-body`                                          | `bg-body`                        |
 | Accent  | `border-s-4 border-primary-700`                    | none or `border-s-2 border-line` |
@@ -913,7 +934,7 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 
 | Field | Value                                     |
 | ----- | ----------------------------------------- |
-| Goal  | 13 skills as command list; keyboard-first |
+| Goal  | 15 skills as command list; keyboard-first |
 | Entry | Nav, hero, ⌘K, footer, home grid          |
 | Exit  | Detail, GitHub                            |
 
@@ -921,7 +942,7 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 
 | State   | User sees                       | Action                  |
 | ------- | ------------------------------- | ----------------------- |
-| Loading | 13 row skeletons                | —                       |
+| Loading | 15 row skeletons                | —                       |
 | Empty   | `> 0 kết quả` mono + clear hint | Clear filters           |
 | Error   | Alert                           | Retry                   |
 | Success | Filters + list                  | Search, chips, ↑↓ Enter |
@@ -938,25 +959,29 @@ ul.divide-y — rows: > /setup  setup  desc  [badges incl. status]
 
 **v3.1 status badge rule:** `SkillCommandRow` reads `skill.status` — **cấm** hardcoded `catalog.status.available`. Planned rows show Planned badge (§4.7); row remains clickable → detail.
 
-**13 skills** — source: `overlay.ts` only (full inventory):
+**15 skills** — source: `overlay.ts` only (full inventory):
 
-| Invoke           | Name          | Status      | Invocation | Domain         |
-| ---------------- | ------------- | ----------- | ---------- | -------------- |
-| `/setup`         | setup         | available   | user       | repo-config    |
-| `/align`         | align         | available   | user       | alignment      |
-| `/pm`            | pm            | available   | user       | requirements   |
-| `/to-prd`        | to-prd        | available   | user       | requirements   |
-| `/to-issues`     | to-issues     | available   | user       | requirements   |
-| `/triage`        | triage        | available   | user       | triage         |
-| `/design`        | design        | available   | user       | design         |
-| `/dev`           | dev           | available   | model      | implementation |
-| `/code-review`   | code-review   | available   | model      | review         |
-| `/craft`         | craft         | available   | user       | authoring      |
-| `/arch-refactor` | arch-refactor | available   | user       | architecture   |
-| `/arch`          | arch          | available   | model      | architecture   |
-| `/devops`        | devops        | **planned** | user       | **devops**     |
+| Invoke           | Name          | Status    | Invocation | Domain         | Principal              |
+| ---------------- | ------------- | --------- | ---------- | -------------- | ---------------------- |
+| `/setup`         | setup         | available | user       | repo-config    | —                      |
+| `/align`         | align         | available | user       | alignment      | skill-only             |
+| `/reqs`          | reqs          | available | user       | requirements   | `pm`                   |
+| `/to-prd`        | to-prd        | available | user       | requirements   | —                      |
+| `/to-issues`     | to-issues     | available | user       | requirements   | —                      |
+| `/triage`        | triage        | available | user       | triage         | —                      |
+| `/design`        | design        | available | user       | design         | `designer`             |
+| `/dev`           | dev           | available | model      | implementation | `developer`            |
+| `/code-review`   | code-review   | available | model      | review         | `techlead`             |
+| `/docs`          | docs          | available | user       | docs           | `techlead`             |
+| `/e2e`           | e2e           | available | user       | e2e            | `tester`               |
+| `/craft`         | craft         | available | user       | authoring      | —                      |
+| `/arch-refactor` | arch-refactor | available | user       | architecture   | `techlead`             |
+| `/arch`          | arch          | available | model      | architecture   | `techlead`             |
+| `/devops`        | devops        | available | model      | devops         | `developer`+`techlead` |
 
-Footnote on `/align` row: align-loop + domain-modeling (model-invoked). `/arch` row: model-invoked — no slash prompt block (see §3 sample prompts). **`/devops`:** planned — deploy/CI/infra via runbooks at `docs/runbooks/`; `relatedAgents: ['devops-agent']`; no `samplePrompt`.
+Footnote on `/align` row: align-loop + domain-modeling (model-invoked). `/arch` row: model-invoked — no slash prompt block (see §3 sample
+prompts). **`/devops`:** available — deploy/CI/infra via Knowledge (`intent: incident`);
+`relatedAgents: ['developer', 'techlead']`.
 
 **cấm:** status filter tab in v1 — planned skills appear in default list with badge.
 
@@ -994,7 +1019,7 @@ Footnote on `/align` row: align-loop + domain-modeling (model-invoked). `/arch` 
 | Entry | List, home grid, palette, pipeline _(future)_, principal _(future)_ |
 | Exit  | Catalog, GitHub skill source, GitHub agent source                   |
 
-**Route rule:** **No** `/agents/*` pages. Agents render as **`AgentPanel`** section on parent skill detail when `relatedAgents` + `agentPanel` present. Principal landing panels (§3.3 future) exit → parent skill (e.g. `/skills/design` for design-agent).
+**Route rule:** **No** `/agents/*` pages. Agents render as **`AgentPanel`** section on parent skill detail when `relatedAgents` + `agentPanel` present. Principal landing panels (§3.3 future) exit → parent skill (e.g. `/skills/design` for designer).
 
 **States:**
 
@@ -1005,11 +1030,11 @@ Footnote on `/align` row: align-loop + domain-modeling (model-invoked). `/arch` 
 | Error   | Alert                   | Retry        |
 | Success | Rich invoke panel       | Copy, links  |
 
-#### Wireframe — available skill (e.g. `/skills/pm`)
+#### Wireframe — available skill (e.g. `/skills/reqs`)
 
 ```
 ┌─ SKILL DETAIL — page-x max-w-3xl ──────────────────────────────────────────────┐
-│ InvokeTabBar — active tab: /pm (border-b-2 border-primary-700)                 │
+│ InvokeTabBar — active tab: /reqs (border-b-2 border-primary-700)                 │
 │                                                                                │
 │ BADGES ROW                                                                     │
 │   [Requirements] [Available] [Model-invoked]                                   │
@@ -1042,20 +1067,22 @@ Footnote on `/align` row: align-loop + domain-modeling (model-invoked). `/arch` 
 │   invoke: agentPanel.invokeHint (font-invoke)                                  │
 │   links: relatedAgents → GitHub agents/*.md                                    │
 │                                                                                │
-│ LINKS ROW — viewSource ↗ · pm-agent ↗ · design-agent ↗                         │
+│ LINKS ROW — viewSource ↗ · pm ↗ · designer ↗                         │
 │ ← Back to catalog                                                              │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Wireframe — planned skill (e.g. `/skills/devops`)
+#### Wireframe — planned skill (when any `status: 'planned'` exist)
 
 Same layout **except:**
 
 - Status badge: **Planned** (§4.7) — not Available
 - **No** Sample prompt section — **cấm** `TerminalPromptBlock`, **cấm** copy button
-- `agentPanel` still shown (planned agent context)
+- `agentPanel` still shown when set (planned agent context)
 - Extended copy fields (`summary`, `whenToUse`, `pipeline`, `boundaries`) **shown** — planned ≠ empty page
 - GitHub source link optional / muted if skill path not shipped yet
+
+**Current overlay:** all 15 skills are `available` (including `/devops`). Keep this wireframe for the type + badge rule; do not treat devops as Planned in QA.
 
 #### Structured sections — anti-slop rule
 
@@ -1080,22 +1107,22 @@ skill.status === 'planned'
   : t('catalog.status.available')
 ```
 
-#### DevOps planned entry (overlay content spec)
+#### DevOps available entry (overlay content spec)
 
-| Field           | Value                                                                                                                              |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `invoke`        | `/devops`                                                                                                                          |
-| `slug`          | `devops`                                                                                                                           |
-| `status`        | `planned`                                                                                                                          |
-| `invocation`    | `user`                                                                                                                             |
-| `domain`        | `devops`                                                                                                                           |
-| `description`   | Deploy, CI, and infra — symptom → fix via runbooks at `docs/runbooks/`                                                             |
-| `relatedAgents` | `['devops-agent']`                                                                                                                 |
-| `samplePrompt`  | **omit**                                                                                                                           |
-| `agentPanel`    | `{ role: 'PRINCIPAL DEVOPS', owns: 'runbooks, stack profiles, deploy/CI fixes', invokeHint: 'Use the devops-agent to [symptom]' }` |
-| `githubPath`    | `skills/devops/` _(planned path)_                                                                                                  |
+| Field           | Value                                                                                                                                                                                                    |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `invoke`        | `/devops`                                                                                                                                                                                                |
+| `slug`          | `devops`                                                                                                                                                                                                 |
+| `status`        | `available`                                                                                                                                                                                              |
+| `invocation`    | `model`                                                                                                                                                                                                  |
+| `domain`        | `devops`                                                                                                                                                                                                 |
+| `description`   | Deploy, CI, and infra — symptom → fix via Knowledge (`intent: incident`); SEV/post-mortem templates.                                                                                                     |
+| `relatedAgents` | `['developer', 'techlead']`                                                                                                                                                                              |
+| `samplePrompt`  | `/devops` + Vercel / Knowledge incident line                                                                                                                                                             |
+| `agentPanel`    | `{ role: 'PRINCIPAL ENGINEER · TECH LEAD', owns: 'incident knowledge, stack profiles, deploy/CI fixes, SEV/post-mortem', invokeHint: 'Use the developer to [symptom] — or techlead for SEV ownership' }` |
+| `githubPath`    | `skills/devops/`                                                                                                                                                                                         |
 
-#### 11 sample prompts + arch hint (available skills only)
+#### Sample prompts + arch hint (available skills)
 
 Source: `apps/landing/src/content/overlay.ts` — bilingual display in `TerminalPromptBlock`; keys stable for `/dev`. **Planned skills omit `samplePrompt`.**
 
@@ -1103,17 +1130,19 @@ Source: `apps/landing/src/content/overlay.ts` — bilingual display in `Terminal
 | --- | ------------- | --------------- | ---------------------------------------------------- |
 | 1   | setup         | `samplePrompt`  | `/setup`                                             |
 | 2   | align         | `samplePrompt`  | `/align` + grill line VI                             |
-| 3   | pm            | `samplePrompt`  | `/pm` + PRD template                                 |
+| 3   | reqs          | `samplePrompt`  | `/reqs` + PRD template                               |
 | 4   | to-prd        | `samplePrompt`  | `/to-prd` + publish line                             |
 | 5   | to-issues     | `samplePrompt`  | `/to-issues` + vertical slices                       |
 | 6   | triage        | `samplePrompt`  | `/triage` + issue brief                              |
 | 7   | design        | `samplePrompt`  | `/design` + PRD ref                                  |
 | 8   | dev           | `samplePrompt`  | `/dev` + PRD path                                    |
 | 9   | code-review   | `samplePrompt`  | `/code-review` + diff since main                     |
-| 10  | craft         | `samplePrompt`  | `/craft` + SKILL.md review                           |
-| 11  | arch-refactor | `samplePrompt`  | `/arch-refactor` + deepen scan                       |
-| 12  | arch          | `footnote` only | Model-invoked triggers list — no `<pre>` slash block |
-| —   | devops        | _(none)_        | Planned — no prompt block                            |
+| 10  | docs          | `samplePrompt`  | `/docs` + tutorial / MCP line                        |
+| 11  | e2e           | `samplePrompt`  | `/e2e` + flake stabilize line                        |
+| 12  | craft         | `samplePrompt`  | `/craft` + SKILL.md review                           |
+| 13  | arch-refactor | `samplePrompt`  | `/arch-refactor` + deepen scan                       |
+| 14  | arch          | `footnote` only | Model-invoked triggers list — no `<pre>` slash block |
+| 15  | devops        | `samplePrompt`  | `/devops` + Knowledge incident line                  |
 
 **Pointer:** Full strings live in `overlay.ts` `skillOverlays[].samplePrompt`; do not paraphrase in UI.
 
@@ -1486,7 +1515,7 @@ export type SkillDomain =
 export type AgentPanel = {
   role: string // e.g. 'PRINCIPAL DESIGNER'
   owns: string | string[]
-  invokeHint: string // e.g. 'Use the design-agent to spec UI from PRD #42'
+  invokeHint: string // e.g. 'Use the designer to spec UI from PRD #42'
 }
 
 export type SkillOverlay = {
@@ -1553,7 +1582,7 @@ Script async/defer; env-gated; footer «Phân tích ẩn danh».
 | --------------- | ------------------------------------------- |
 | `/`             | ai-kit — Kỹ năng agent cho real engineering |
 | `/skills`       | Danh mục kỹ năng — ai-kit                   |
-| `/skills/:slug` | `/pm` — ai-kit                              |
+| `/skills/:slug` | `/reqs` — ai-kit                            |
 
 ---
 
@@ -1648,18 +1677,18 @@ Full checkbox audit — PRD item → spec section. **v3.1 catalog slice** items 
 | Pipeline triage branch (dashed parallel)        | §3.2 triage row y=200 + dashed CSS          | defer  | ✓   |
 | Pipeline nodes clickable → skill detail         | §3.2 click rules + non-clickable exceptions | defer  | ✓   |
 | Caption `/setup` once per repo                  | §3.2 caption                                | defer  | ✓   |
-| 3 principal agent cards (+ `/align` skill-only) | §3.3 + grid maps                            | defer  | ✓   |
+| 5 principal agent cards (+ `/align` skill-only) | §3.3 + grid maps                            | defer  | ✓   |
 | CTA band: catalog + quick start                 | §3.4 Footer CTA band                        | P2     | ✓   |
 | Featured teaser 4 skills                        | §3.0 Featured skill teaser                  | defer  | ✓   |
 
 ### Skill catalog (`/skills`)
 
-| PRD §6.3 item                              | Spec section                    | Slice  | ✓   |
-| ------------------------------------------ | ------------------------------- | ------ | --- |
-| **13 skills table (incl. devops planned)** | §3 Skill catalog — inline table | **P0** | ✓   |
-| Filters: search, domain, invocation tabs   | §3 Skill catalog layout         | P1     | ✓   |
-| **Status badge from overlay.status**       | §3 + §4.7                       | **P0** | ✓   |
-| URL query sync                             | §3 + §9 router search params    | P1     | ✓   |
+| PRD §6.3 item                                     | Spec section                    | Slice  | ✓   |
+| ------------------------------------------------- | ------------------------------- | ------ | --- |
+| **15 skills table (docs, e2e, devops available)** | §3 Skill catalog — inline table | **P0** | ✓   |
+| Filters: search, domain, invocation tabs          | §3 Skill catalog layout         | P1     | ✓   |
+| **Status badge from overlay.status**              | §3 + §4.7                       | **P0** | ✓   |
+| URL query sync                                    | §3 + §9 router search params    | P1     | ✓   |
 
 ### Skill detail (`/skills/:slug`)
 
@@ -1668,24 +1697,24 @@ Full checkbox audit — PRD item → spec section. **v3.1 catalog slice** items 
 | **Rich detail — summary, whenToUse, pipeline, boundaries** | §3 Skill detail v3.1 wireframe           | **P0** | ✓   |
 | **Planned skill — badge, no prompt**                       | §3 planned wireframe + §8 rules          | **P0** | ✓   |
 | **Agent panel on detail (no /agents route)**               | §3 AgentPanel + §8 agentPanel            | **P0** | ✓   |
-| 11 sample prompts + arch hint                              | §3 Skill detail — prompt inventory table | P0     | ✓   |
+| Sample prompts + arch hint (all available skills)          | §3 Skill detail — prompt inventory table | P0     | ✓   |
 | Copy clipboard + toast + fallback                          | §3 Skill detail + §2 error path          | P0     | ✓   |
 | Agent hint, GitHub, breadcrumb                             | §3 Skill detail layout                   | P0     | ✓   |
 
 ### v3.1 catalog slice — acceptance criteria (P0 sign-off)
 
-| #   | Criterion                                                                                 | Verify         |
-| --- | ----------------------------------------------------------------------------------------- | -------------- |
-| 1   | `demo-catalog.ts` deleted; no imports remain                                              | grep codebase  |
-| 2   | Homepage grid shows **13** cards from `skillOverlays`                                     | visual + count |
-| 3   | Homepage cards are `Link` → `/skills/:slug`                                               | click test     |
-| 4   | `/skills/devops` shows Planned badge, extended sections, agent panel, **no** prompt block | route test     |
-| 5   | `/skills/pm` shows Available badge + `TerminalPromptBlock` + copy                         | route test     |
-| 6   | `SkillCommandRow` Planned badge for devops                                                | list view      |
-| 7   | Nav has **no** misleading Pipeline item pointing to `#catalog`                            | header inspect |
-| 8   | `en.json` principles.2 uses `/design` not `/ux`                                           | locale file    |
-| 9   | `domain.devops` in both locales                                                           | locale file    |
-| 10  | design, arch, arch-refactor visible on homepage (were missing from demo-catalog)          | grid inspect   |
+| #   | Criterion                                                                               | Verify         |
+| --- | --------------------------------------------------------------------------------------- | -------------- |
+| 1   | `demo-catalog.ts` deleted; no imports remain                                            | grep codebase  |
+| 2   | Homepage grid shows **15** cards from `skillOverlays` (incl. docs, e2e, devops)         | visual + count |
+| 3   | Homepage cards are `Link` → `/skills/:slug`                                             | click test     |
+| 4   | `/skills/devops` shows Available badge, extended sections, agent panel, **with** prompt | route test     |
+| 5   | `/skills/reqs` shows Available badge + `TerminalPromptBlock` + copy                     | route test     |
+| 6   | `SkillCommandRow` Available badge for devops; status from `overlay.status`              | list view      |
+| 7   | Nav has **no** misleading Pipeline item pointing to `#catalog`                          | header inspect |
+| 8   | `en.json` principles.2 uses `/design` not `/ux`                                         | locale file    |
+| 9   | `domain.devops` in both locales                                                         | locale file    |
+| 10  | design, arch, arch-refactor visible on homepage (were missing from demo-catalog)        | grid inspect   |
 
 ### Quick start
 
@@ -1719,21 +1748,21 @@ Screenshot matrix — **pass/fail** against §0 audit + §1b craft bar. **v3.1 P
 | ---------------- | ----------- | --------------- | ------------ | -------- | ------ |
 | `/` catalog grid | Required    | Required        | Required     | **dark** | **P0** |
 | `/skills`        | Required    | Optional        | Required     | dark     | **P0** |
-| `/skills/pm`     | Required    | Optional        | Required     | dark     | **P0** |
+| `/skills/reqs`   | Required    | Optional        | Required     | dark     | **P0** |
 | `/skills/devops` | Required    | Optional        | Required     | dark     | **P0** |
 | `/` hero         | Required    | Required        | Required     | dark     | P1     |
 | `/` light toggle | Optional    | Optional        | Optional     | light    | P1     |
 
 ### Required captures — catalog slice (P0, dark)
 
-| #   | Route            | Viewport | Focus              | Pass criteria                                                                      |
-| --- | ---------------- | -------- | ------------------ | ---------------------------------------------------------------------------------- |
-| C1  | `/`              | `lg`     | Home catalog §3.0b | 13 cards; design/arch/arch-refactor present; devops Planned badge; cards clickable |
-| C2  | `/`              | `sm`     | Home catalog       | Stack/grid readable; Link focus ring                                               |
-| C3  | `/skills`        | `lg`     | List               | devops row Planned badge; status not hardcoded Available                           |
-| C4  | `/skills/pm`     | `lg`     | Detail available   | Structured sections; sample prompt + copy; agent panel                             |
-| C5  | `/skills/devops` | `lg`     | Detail planned     | Planned badge; sections present; **no** prompt block                               |
-| C6  | `/`              | `lg`     | Header nav         | No Pipeline nav item → `#catalog`                                                  |
+| #   | Route            | Viewport | Focus              | Pass criteria                                                                |
+| --- | ---------------- | -------- | ------------------ | ---------------------------------------------------------------------------- |
+| C1  | `/`              | `lg`     | Home catalog §3.0b | 15 cards; design/docs/e2e/arch/arch-refactor/devops present; cards clickable |
+| C2  | `/`              | `sm`     | Home catalog       | Stack/grid readable; Link focus ring                                         |
+| C3  | `/skills`        | `lg`     | List               | devops row Available badge; status from overlay, not hardcoded               |
+| C4  | `/skills/reqs`   | `lg`     | Detail available   | Structured sections; sample prompt + copy; agent panel (`pm`)                |
+| C5  | `/skills/devops` | `lg`     | Detail available   | Available badge; sections + prompt; agent links `developer` + `techlead`     |
+| C6  | `/`              | `lg`     | Header nav         | No Pipeline nav item → `#catalog`                                            |
 
 ### Required captures on `/` (dark) — deferred / P1
 
@@ -1752,9 +1781,10 @@ Screenshot matrix — **pass/fail** against §0 audit + §1b craft bar. **v3.1 P
 ### Fail conditions (auto-reject)
 
 - `demo-catalog.ts` still imported anywhere
-- Homepage grid ≠ 13 overlay entries or uses stale `/ux` planned entry
+- Homepage grid ≠ 15 overlay entries or uses stale `/ux` / `/pm` planned entry
 - Skill detail hardcodes Available for planned skill
 - Planned detail shows sample prompt or copy button
+- `/skills/devops` treated as Planned (current overlay: available)
 - Pipeline nav label points to `#catalog` (§3 Global chrome)
 - Light theme on first paint without user toggle (§0 Theme first paint) — P1
 - Centered hero or `max-w-6xl` on landing sections — P1
@@ -1827,12 +1857,12 @@ User invokes **`/core-ui`** during `/dev` — this section flags API choices and
 
 → **`/dev`** — Implement **v3.1 catalog slice** per §0 priority:
 
-1. Extend `overlay.ts` §8 — types, rich fields, DevOps planned entry
-2. Delete `demo-catalog.ts`; wire `HomeCatalog` from overlay §3.0b
+1. Extend `overlay.ts` §8 — types, rich fields, DevOps **available** entry
+2. Delete `demo-catalog.ts`; wire `HomeCatalog` from overlay §3.0b (**15** cards incl. docs/e2e/devops)
 3. Rich skill detail page §3 — sections, `AgentPanel`, status-aware prompt block
 4. Fix `SkillCommandRow` + detail status badges §4.7
 5. Nav fix — remove Pipeline item §3 Global chrome
-6. Locale — `domain.devops`, `en.json` `/design` fix
+6. Locale — `domain.devops`, `/design` (not `/ux`) fix
 
 **Then** P1: dark flash §4.6, hero §3.0, principles bento §3.1. **Deferred:** pipeline §3.2, principals §3.3, featured teaser §3.0.
 

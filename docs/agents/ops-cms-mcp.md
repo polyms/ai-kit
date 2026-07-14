@@ -6,12 +6,12 @@ How agents retrieve and author **Knowledge** via MCP on the kit site. Pointer on
 
 ## Endpoint
 
-| Setting    | Value                                                                    |
-| ---------- | ------------------------------------------------------------------------ |
-| **URL**    | `https://ai-kit.polyms.dev/mcp`                                          |
-| Transport  | MCP SDK default (Streamable HTTP on `/mcp`)                              |
+| Setting    | Value                                                                                   |
+| ---------- | --------------------------------------------------------------------------------------- |
+| **URL**    | `https://ai-kit.polyms.dev/mcp`                                                         |
+| Transport  | MCP SDK default (Streamable HTTP on `/mcp`)                                             |
 | Auth       | **OAuth required** — Bearer JWT from polyms.dev (`openid profile email offline_access`) |
-| Rate limit | Same edge rule as the kit site (shared quota)                            |
+| Rate limit | Same edge rule as the kit site (shared quota)                                           |
 
 Local dev: `http://localhost:6300/mcp` when `pnpm dev` is running in `apps/landing/`.
 
@@ -21,19 +21,19 @@ OAuth authenticates the user; **write tools** are gated server-side by JWT claim
 
 MCP discovery advertises **`offline_access`** so clients request a **refresh token** at connect time. polyms.dev SSO issues refresh tokens for this scope; the client silently exchanges them for new access tokens — no browser re-auth on every MCP call.
 
-| Discovery field | Value |
-| --------------- | ----- |
-| `scopes_supported` | `openid`, `profile`, `email`, `offline_access` |
-| `grant_types_supported` | `authorization_code`, `refresh_token` |
+| Discovery field         | Value                                          |
+| ----------------------- | ---------------------------------------------- |
+| `scopes_supported`      | `openid`, `profile`, `email`, `offline_access` |
+| `grant_types_supported` | `authorization_code`, `refresh_token`          |
 
 **After deploying scope changes:** remove the MCP server in Cursor Settings → MCP, then add it again so DCR + consent include `offline_access`. Existing connections without refresh tokens will keep prompting until reconnected.
 
 ## OAuth discovery
 
-| Path                                        | Role                                                                      |
-| ------------------------------------------- | ------------------------------------------------------------------------- |
-| `/.well-known/oauth-protected-resource`     | Resource metadata — MCP URL, authorization servers, OIDC scopes           |
-| `/.well-known/oauth-protected-resource/mcp` | Same metadata (path advertised in `401 WWW-Authenticate`)                 |
+| Path                                        | Role                                                                                |
+| ------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `/.well-known/oauth-protected-resource`     | Resource metadata — MCP URL, authorization servers, OIDC scopes                     |
+| `/.well-known/oauth-protected-resource/mcp` | Same metadata (path advertised in `401 WWW-Authenticate`)                           |
 | `/.well-known/oauth-authorization-server`   | Authorization server metadata (proxied from polyms.dev; MCP scopes + refresh grant) |
 
 OAuth **resource/audience** is `{origin}/mcp`. Discovery uses **request origin** when present.

@@ -45,7 +45,7 @@ const RB001_DATA = {
   title: 'Vercel + TanStack Start + Nitro (pnpm Nx monorepo)',
   summary:
     'Vercel deploy/build for TanStack Start + Nitro in a pnpm Nx monorepo; GitHub Packages for @polyms/*; vercel build / dist / .output / SSR routing errors.',
-  audience: 'devops-agent',
+  audience: 'developer',
   axisTags: [
     'vercel',
     'tanstack-start',

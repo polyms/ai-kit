@@ -17,14 +17,14 @@ This command is _informed_ by the project's domain model and built on shared des
 
 ## References
 
-| Topic           | Read when                                                                        |
-| --------------- | -------------------------------------------------------------------------------- |
-| Arch vocabulary | `arch` skill — glossary, principles, design-it-twice                             |
-| HTML report     | [HTML-REPORT.md](HTML-REPORT.md) — scaffold, diagrams, tone                      |
-| Domain glossary | `CONTEXT.md` at repo root                                                        |
-| ADRs            | `docs/adr/` — decisions in the area you are touching                             |
+| Topic           | Read when                                                                             |
+| --------------- | ------------------------------------------------------------------------------------- |
+| Arch vocabulary | `arch` skill — glossary, principles, design-it-twice                                  |
+| HTML report     | [HTML-REPORT.md](HTML-REPORT.md) — scaffold, diagrams, tone                           |
+| Domain glossary | `CONTEXT.md` at repo root                                                             |
+| ADRs            | `docs/adr/` — decisions in the area you are touching                                  |
 | Grill           | `align-loop` skill — one question, lettered options + `(Recommended)` (model-invoked) |
-| Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline                             |
+| Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline                                  |
 
 ## Process
 
@@ -80,3 +80,13 @@ Run **`domain-modeling`** inline as terms resolve.
 ## Next Step
 
 After grilling resolves the design: hand off to **`/dev`** to implement the deepening at confirmed seams. If scope is still fuzzy, hand back to **`/align`** before implementation.
+
+## Agent
+
+For long deepening scans or multi-module refactor planning:
+
+```
+Use the techlead to [arch-refactor task]
+```
+
+The agent reads this skill when invoked.

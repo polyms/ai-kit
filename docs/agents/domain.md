@@ -1,6 +1,6 @@
 # Domain Docs
 
-How `/align`, `/pm`, and `/dev` consume domain documentation.
+How `/align`, `/reqs`, and `/dev` consume domain documentation.
 
 ## Before exploring, read
 

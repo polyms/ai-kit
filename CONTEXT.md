@@ -29,21 +29,23 @@ _Avoid_: auto, automatic, agent-discovered
 ## Skills & Agents
 
 **Skill**:
-Workflow file at `skills/<name>/SKILL.md` — the agent reads and follows it in the same chat when you invoke `/pm`, `/dev`, etc.
+Workflow file at `skills/<name>/SKILL.md` — the agent reads and follows it in the same chat when you invoke `/reqs`, `/dev`, etc.
 _Avoid_: prompt, instruction, rule
 
 **Agent**:
-Subagent at `agents/<name>-agent.md` — isolated context for long artifact work. **Principal**
-tier: `pm-agent`, `design-agent`, `dev-agent`, `devops-agent`, `docs-agent`, `tester-agent`.
-**`/align`** has no agent — grill is interactive in the main chat. Usually reads the matching
-skill (`pm` → `pm-agent`). **Exception:** skill `e2e` pairs with agent `tester-agent` (not
-`e2e-agent`). Suffix `-agent` distinguishes from the skill.
-_Avoid_: subagent, bot, assistant (when referring to `agents/*-agent.md` files)
+Subagent at `agents/<role>.md` — isolated context for long artifact work. Maps to a **real org
+role**, not 1:1 with a skill. **Principal** tier: `pm`, `designer`, `developer`, `tester`,
+`techlead`. **`/align`** has no agent — grill is interactive in the main chat. Skills stay
+playbooks; multiple skills per agent OK (`developer` → `/dev` + `/devops`; `techlead` → `/docs`,
+`arch`, `/code-review`, `/arch-refactor`, `/devops`). Skill↔agent: `/reqs`→`pm`, `/design`→`designer`,
+`/dev`→`developer`, `/e2e`→`tester`; `/docs`, `arch`, `/code-review`, `/arch-refactor`→`techlead`;
+`/devops`→`developer` (exec) + `techlead` (SEV).
+_Avoid_: subagent, bot, assistant (when referring to `agents/*.md` principal files), `*-agent` filename
 
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/pm` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
+The stage chain that turns ideas into shipped code: `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
 **Setup**:
@@ -54,18 +56,20 @@ _Avoid_: bootstrap (when meaning repo config, not symlink install)
 Align before you build — grill decisions, sharpen domain language, update `CONTEXT.md`. Invoke with `/align`.
 _Avoid_: discovery, planning session
 
-**PM**:
-Discovery, enterprise PRD, user stories, acceptance criteria — draft in chat; does not publish. Invoke with `/pm`
-(user-invoked). Template: `skills/pm/enterprise-prd-template.md`. After align to ship lean PRD → `/to-prd`.
-_Avoid_: product management (generic), write PRD (when meaning `/to-prd` publish)
+**Reqs**:
+Discovery, enterprise PRD, user stories, acceptance criteria — draft in chat; does not publish. Invoke with `/reqs`
+(user-invoked). Template: `skills/reqs/enterprise-prd-template.md`. Long sessions: `pm`. After align to ship lean
+PRD → `/to-prd`.
+_Avoid_: /pm (old invoke), PM (when meaning this skill — agent role stays `pm`), write PRD (when meaning `/to-prd`
+publish), product management (generic)
 
 **To PRD**:
 Synthesize the current conversation into a lean PRD and publish to the issue tracker — no interview. Invoke with
 `/to-prd` (user-invoked). Template: `skills/to-prd/lean-prd-template.md`.
-_Avoid_: publish PRD (generic), enterprise discovery (when meaning `/pm`)
+_Avoid_: publish PRD (generic), enterprise discovery (when meaning `/reqs`)
 
 **Design**:
-Turn a PRD into an engineering-ready UI spec at `docs/design/<feature>.md`, mapped to `@polyms/core-ui`. Invoke with `/design`. Long sessions: `design-agent`.
+Turn a PRD into an engineering-ready UI spec at `docs/design/<feature>.md`, mapped to `@polyms/core-ui`. Invoke with `/design`. Long sessions: `designer`.
 _Avoid_: UX phase, UI spec (generic)
 
 **Core UI**:
@@ -73,19 +77,23 @@ Design system library (`@polyms/core-ui`, Tailwind CSS 4) and matching `/core-ui
 _Avoid_: component library (generic), shadcn
 
 **Dev**:
-Ship production code from spec — TDD, solution ladder, scope self-check, multi-slice status report, debugging. Pre-merge review via `code-review`. Invoke with `/dev`.
+Ship production code from spec — TDD, solution ladder, scope self-check, multi-slice status report, debugging.
+Pre-merge review via `code-review`. Invoke with `/dev`. Long sessions: `developer`.
 _Avoid_: implementation, coding phase
 
 **Code review**:
-Three-axis review skill (Standards + Spec + Simplify) since a pinned git fixed point — parallel sub-agents, severity-tagged findings (🔴 blocker / 🟡 suggestion / 💭 nit). Diffs under 10 changed lines skip sub-agent spawn and review inline instead. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code", "over-engineered", "cắt bớt". Invoke with `/code-review`.
+Three-axis review skill (Standards + Spec + Simplify) since a pinned git fixed point — parallel sub-agents,
+severity-tagged findings (🔴 blocker / 🟡 suggestion / 💭 nit). Diffs under 10 changed lines skip sub-agent
+spawn and review inline instead. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code",
+"over-engineered", "cắt bớt". Invoke with `/code-review`. Long sessions: `techlead`.
 _Avoid_: PR review (generic), lint check
 
 **Docs**:
-Developer-facing documentation — API reference, tutorials, integration/migration guides for shipped surfaces. Invoke with `/docs`. Long sessions: `docs-agent`. Does **not** own PRDs (`/pm`) or feature code (`/dev`).
-_Avoid_: technical writer (generic), README dump, /pm (when meaning requirements)
+Developer-facing documentation — API reference, tutorials, integration/migration guides for shipped surfaces. Invoke with `/docs`. Long sessions: `techlead`. Does **not** own PRDs (`/reqs`) or feature code (`/dev`).
+_Avoid_: technical writer (generic), README dump, /reqs (when meaning requirements)
 
 **E2E**:
-End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/e2e`. Long sessions: **`tester-agent`** (skill id `e2e`, agent id `tester-agent`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
+End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/e2e`. Long sessions: **`tester`** (skill id `e2e`, agent id `tester`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
 _Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when meaning seam TDD)
 
 **Scope self-check**:
@@ -97,7 +105,7 @@ Multi-slice `/dev` progress template — phase, slice table, quality gates, one 
 _Avoid_: standup notes (generic), orchestrator pipeline (agency-style autonomous spawn)
 
 **DevOps**:
-Deploy, CI, and infra ownership — **symptom → fix** via **Runbook** retrieval (CMS/MCP), filtered by **stack manifest**; SEV/status/post-mortem via skill templates. Model-invoked; auto-fires on a deploy/CI symptom reported cold (no `/dev` slice already in progress) — one surfacing mid-slice stays in deploy-aware `/dev`. Invoke with `/devops`. Long sessions: `devops-agent`. Does **not** own architecture _why_ (ADR) or seam vocabulary (`arch`) or stack design guides (**Stack guide**).
+Deploy, CI, and infra ownership — **symptom → fix** via **Runbook** retrieval (CMS/MCP), filtered by **stack manifest**; SEV/status/post-mortem via skill templates. Model-invoked; auto-fires on a deploy/CI symptom reported cold (no `/dev` slice already in progress) — one surfacing mid-slice stays in deploy-aware `/dev`. Invoke with `/devops`. Primary executor: `developer`; SEV / infra ownership: `techlead`. Does **not** own architecture _why_ (ADR) or seam vocabulary (`arch`) or stack design guides (**Stack guide**).
 _Avoid_: SRE (generic), ops runbook (when meaning the skill specifically), arch (when meaning module design)
 
 **Incident templates**:
@@ -139,7 +147,7 @@ Architecture Decision Record — a hard-to-reverse **why** decision that needs c
 _Avoid_: decision doc, RFC, runbook (when meaning deploy/CI incident fixes)
 
 **Knowledge**:
-Unified Ops CMS content store for agent retrieval — **Knowledge article** + **Knowledge chunk** (`sortOrder` for display/agent reading order) + hybrid search (keyword + pgvector when `OPENROUTER_API_KEY` is set). Intents: `incident`, `design`, `toolchain`. Postgres canonical; public `/knowledge/*` (`/runbooks/*`, `/guides/*` redirect); MCP `search_knowledge` / `get_knowledge` / `get_knowledge_chunk`. Audience: **`/dev`**, **`dev-agent`**, **`/devops`**, **`/arch`**. `docs/runbooks/*.md` = import snapshot only.
+Unified Ops CMS content store for agent retrieval — **Knowledge article** + **Knowledge chunk** (`sortOrder` for display/agent reading order) + hybrid search (keyword + pgvector when `OPENROUTER_API_KEY` is set). Intents: `incident`, `design`, `toolchain`. Postgres canonical; public `/knowledge/*` (`/runbooks/*`, `/guides/*` redirect); MCP `search_knowledge` / `get_knowledge` / `get_knowledge_chunk`. Audience: **`/dev`**, **`developer`**, **`/devops`**, **`/arch`**, **`techlead`**. `docs/runbooks/*.md` = import snapshot only.
 _Avoid_: stack guide (when meaning the unified store), generic wiki, Notion
 
 **Knowledge article**:
@@ -159,7 +167,7 @@ Setup/agent doc at `docs/agents/knowledge.md` — how agents retrieve **Knowledg
 _Avoid_: knowledge index in git (when meaning live CMS content)
 
 **Language pointer**:
-Setup output at `docs/agents/language.md` — the fixed language for persistent written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft dependency for `domain-modeling`, `pm`/`to-prd`, `design`, `arch` — they match this language or, absent the file, whatever doc they're already editing. Chat tone is unaffected — IDE/user rules, or opt-in `.cursor/rules/agent-voice.mdc` from `/setup`.
+Setup output at `docs/agents/language.md` — the fixed language for persistent written docs (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft dependency for `domain-modeling`, `reqs`/`to-prd`, `design`, `arch` — they match this language or, absent the file, whatever doc they're already editing. Chat tone is unaffected — IDE/user rules, or opt-in `.cursor/rules/agent-voice.mdc` from `/setup`.
 _Avoid_: **Locale toggle** (kit-site UI language, not repo docs), i18n (generic), shipping a always-on kit persona
 
 **Voice rule**:
@@ -246,7 +254,7 @@ Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without
 _Avoid_: must run setup (when meaning hard dependency only)
 
 **Soft setup dependency**:
-Skill that reads `CONTEXT.md` / ADRs when present but works without them (e.g. `/dev`, `/pm`).
+Skill that reads `CONTEXT.md` / ADRs when present but works without them (e.g. `/dev`, `/reqs`).
 _Avoid_: optional context
 
 ## Kit site
@@ -276,7 +284,7 @@ Curated metadata layered on `skills/*/SKILL.md` frontmatter — status, domain t
 _Avoid_: generated content, skill config (generic)
 
 **Planned skill**:
-Skill or agent listed on the kit site before its `SKILL.md` or `agents/*-agent.md` ships in the repo — overlay `status: planned`; detail page shows Planned badge, no sample prompt.
+Skill or agent listed on the kit site before its `SKILL.md` or `agents/<role>.md` ships in the repo — overlay `status: planned`; detail page shows Planned badge, no sample prompt.
 _Avoid_: roadmap item (generic), coming soon (UI label only)
 
 **Locale toggle**:
@@ -296,7 +304,7 @@ Kit site typography — **Quicksand** for UI/display (loaded via `@polyms/core-u
 _Avoid_: system font stack (when meaning kit site after font decision), web font (generic)
 
 **Featured skill teaser**:
-Compact landing strip below the hero — four entry-point commands (`/setup`, `/align`, `/pm`, `/dev`) with one-line descriptions and links to skill detail; distinct from the hero terminal animation (pipeline path). Full catalog remains at `/skills`.
+Compact landing strip below the hero — four entry-point commands (`/setup`, `/align`, `/reqs`, `/dev`) with one-line descriptions and links to skill detail; distinct from the hero terminal animation (pipeline path). Full catalog remains at `/skills`.
 _Avoid_: top skills, skill highlights (generic)
 
 **Default client router**:

@@ -30,7 +30,7 @@ related_files:
   - apps/landing/vite.config.ts
   - apps/landing/project.json
   - apps/landing/DEPLOY.md
-audience: devops-agent
+audience: developer
 ---
 
 > **Git snapshot** — live canonical content: [RB-001 on kit site](https://ai-kit.polyms.dev/knowledge/RB-001). Agents retrieve via [docs/agents/runbooks.md](../agents/runbooks.md), not this file.

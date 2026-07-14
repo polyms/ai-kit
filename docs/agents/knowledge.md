@@ -19,7 +19,7 @@ How agents retrieve **Knowledge** — unified Ops CMS content (incident, design,
 | `design`    | `/arch`    | Stack-combo seams (routing, state, modules)               |
 | `toolchain` | `/dev`     | Org-wide setup recipes (e.g. **KN-001** Biome + Prettier) |
 
-## Retrieval (`/dev`, `dev-agent`, `/devops`, `/arch`)
+## Retrieval (`/dev`, `developer`, `/devops`, `/arch`, `techlead`)
 
 1. Read **`docs/agents/stack-profile.md`** when present — pass manifest `axes` to search (optional; omit for org defaults like `polyms-default`).
 2. Connect MCP with OAuth (polyms.dev) — see [ops-cms-mcp.md](./ops-cms-mcp.md).
@@ -30,7 +30,7 @@ How agents retrieve **Knowledge** — unified Ops CMS content (incident, design,
 5. Open **`get_knowledge_chunk`** for config artifacts before copying into a target repo — confirm `artifactFilename` and verbatim `body`.
 6. For toolchain setup in a greenfield repo, retrieve **KN-001** (`intent: toolchain`, `q: biome prettier`) before inventing formatter config.
 
-### Toolchain example (`dev-agent`)
+### Toolchain example (`developer`)
 
 ```
 search_knowledge({ q: "biome prettier", intent: "toolchain" })

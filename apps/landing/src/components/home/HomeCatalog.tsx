@@ -10,16 +10,19 @@ import { HomeSectionChip } from './HomeSectionChip'
 const HOME_CATALOG_SLUGS = [
   'setup',
   'align',
-  'pm',
+  'reqs',
   'to-prd',
   'to-issues',
   'triage',
   'design',
   'dev',
   'code-review',
+  'docs',
+  'e2e',
   'craft',
   'arch-refactor',
   'arch',
+  'devops',
 ] as const
 
 const homeCatalogSkills = HOME_CATALOG_SLUGS.map(slug => skillOverlays.find(s => s.slug === slug)).filter(

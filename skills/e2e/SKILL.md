@@ -2,7 +2,7 @@
 name: e2e
 description: End-to-end test automation — Playwright flake, CI parallelization, journey
   suites, traces. Invoke with /e2e, Playwright flake, stabilize E2E, CI test sharding, test
-  automation, flake CI, làm ổn định E2E, or use tester-agent for long suite work.
+  automation, flake CI, làm ổn định E2E, or use tester for long suite work.
 disable-model-invocation: true
 ---
 
@@ -28,12 +28,12 @@ No `/setup` gate. Use repo Playwright/Cypress config and CI workflows as source 
 
 ## Quick Router
 
-| Intent                            | Workflow                                            |
-| --------------------------------- | --------------------------------------------------- |
-| Flake / intermittent CI fail      | [Flake workflow](#flake-workflow)                   |
-| Suite too slow / needs shards     | [Parallelize workflow](#parallelize-workflow)       |
-| New journey coverage              | [Journey workflow](#journey-workflow)               |
-| Trace / triage red CI test job    | [Triage workflow](#triage-workflow)                 |
+| Intent                         | Workflow                                      |
+| ------------------------------ | --------------------------------------------- |
+| Flake / intermittent CI fail   | [Flake workflow](#flake-workflow)             |
+| Suite too slow / needs shards  | [Parallelize workflow](#parallelize-workflow) |
+| New journey coverage           | [Journey workflow](#journey-workflow)         |
+| Trace / triage red CI test job | [Triage workflow](#triage-workflow)           |
 
 ## Flake Workflow
 
@@ -75,22 +75,22 @@ No `/setup` gate. Use repo Playwright/Cypress config and CI workflows as source 
 
 **Goal:** Classify a red test job in one pass.
 
-| Class                         | Hand off                                      |
-| ----------------------------- | --------------------------------------------- |
-| Product regression            | `/dev` with repro steps                       |
-| Flake / harness               | Stay on `/e2e` — Flake workflow               |
-| Deploy/build/install          | `/devops`                                     |
-| Spec wrong / missing AC       | `/pm`                                         |
+| Class                   | Hand off                        |
+| ----------------------- | ------------------------------- |
+| Product regression      | `/dev` with repro steps         |
+| Flake / harness         | Stay on `/e2e` — Flake workflow |
+| Deploy/build/install    | `/devops`                       |
+| Spec wrong / missing AC | `/reqs`                         |
 
 **Completion criterion:** Class assigned; one next skill named; no shotgun config edits.
 
 ## Agent
 
-Skill folder is `e2e`; long sessions use **`tester-agent`** (deliberate name mismatch — principal
+Skill folder is `e2e`; long sessions use **`tester`** (skill id ≠ agent id by design — principal
 tester owns this skill):
 
 ```
-Use the tester-agent to [task]
+Use the tester to [task]
 ```
 
 The agent reads this skill when invoked.

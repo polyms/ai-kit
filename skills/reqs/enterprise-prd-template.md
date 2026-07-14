@@ -1,6 +1,6 @@
 # Enterprise PRD Template
 
-Enterprise template for `/pm` — discovery + formal PRD in chat (optional `docs/prd/`). Does **not** publish
+Enterprise template for `/reqs` — discovery + formal PRD in chat (optional `docs/prd/`). Does **not** publish
 to the issue tracker; use `/to-prd` + [lean-prd-template.md](../to-prd/lean-prd-template.md) to publish from
 an aligned conversation.
 
