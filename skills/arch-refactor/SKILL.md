@@ -32,7 +32,18 @@ This command is _informed_ by the project's domain model and built on shared des
 
 Read the project's domain glossary (`CONTEXT.md`) and any ADRs in the area you're touching first.
 
-Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
+When deepening touches **stack-combo seams** (routing, state, module layout), soft-require Knowledge
+MCP — [knowledge.md](../../docs/agents/knowledge.md):
+
+1. Read **`docs/agents/stack-profile.md`** when present. Coverage notes are bootstrap only — not
+   live SSOT.
+2. Re-call **`get_knowledge_coverage`** for the design-intent axis **subset under work** (heuristic
+   subset from [setup stack-profile](../setup/stack-profile.md), or a tighter subset for this review).
+3. Follow with **`search_knowledge`** (`intent: "design"`) before inventing module conventions when
+   coverage reports a hit.
+
+Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid
+heuristics — explore organically and note where you experience friction:
 
 - Where does understanding one concept require bouncing between many small modules?
 - Where are modules **shallow** — interface nearly as complex as the implementation?

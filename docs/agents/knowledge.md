@@ -30,7 +30,8 @@ Legacy public paths `/runbooks/*` and `/guides/*` redirect to `/knowledge/*`.
 Always **search → open match → use chunks**. Same process for every intent.
 
 1. Read **`docs/agents/stack-profile.md`** when present — pass manifest `axes` to search
-   (optional; omit for org defaults like `polyms-default`).
+   (optional; omit for org defaults like `polyms-default`). Coverage notes there are
+   **bootstrap only** — not live SSOT (see [Knowledge coverage](#knowledge-coverage)).
 2. Connect MCP with OAuth (polyms.dev) — see [ops-cms-mcp.md](./ops-cms-mcp.md).
 3. Call **`search_knowledge`** with:
    - `q` — symptom, seam topic, tool/config name, or user phrasing
@@ -73,6 +74,7 @@ Per-app context: `apps/*/DEPLOY.md`.
 ### Search shape (illustrative)
 
 ```
+get_knowledge_coverage({ axes: [...], intents? })  # gap/hit for a subset — optional first step
 search_knowledge({ q: "<topic or symptom>", intent: "<incident|design|toolchain>", axes? })
 → pick best hit from results
 → get_knowledge({ id: <id from hit> })
@@ -80,6 +82,47 @@ search_knowledge({ q: "<topic or symptom>", intent: "<incident|design|toolchain>
 ```
 
 Ids come from search results — never from skill memory or seed fixtures.
+
+## Knowledge coverage
+
+Gap/hit check for intentional axis **subsets** — complements `search_knowledge`, does not replace
+it. Soft-required for `/setup` (persist into stack-profile), `/arch`, and `/arch-refactor`
+(those two **re-call MCP** for the subset under work; do not trust stale stack-profile alone).
+
+### Tool: `get_knowledge_coverage`
+
+| Arg       | Required                      | Notes                                                                 |
+| --------- | ----------------------------- | --------------------------------------------------------------------- |
+| `axes`    | **yes**, non-empty `string[]` | Empty, missing, or blank (trim) entries → validation tool error       |
+| `intents` | optional                      | Omit/`undefined` → all three; `[]` → validation error                 |
+
+**Match rule:** an article **covers** when `axes ⊆ article.axisTags` (case-insensitive). Only
+**published** articles (same filter as public search / `listKnowledgeArticlesFromDb`).
+
+**Auth:** OAuth any connected user (same as `search_knowledge`) — not admin-only.
+
+**Response shape:**
+
+```json
+{
+  "axes": ["vercel", "tanstack-start", "nitro"],
+  "intents": ["incident", "design", "toolchain"],
+  "byIntent": {
+    "incident": { "covered": true, "articleIds": ["RB-001"] },
+    "design": { "covered": false, "articleIds": [] },
+    "toolchain": { "covered": false, "articleIds": [] }
+  }
+}
+```
+
+Echoes `axes` + resolved `intents`. Per intent: `{ covered, articleIds }` only — no titles or
+summaries. Use hits as a signal to search/open; do not invent seams when coverage already lists a
+hit.
+
+### Setup axis heuristics
+
+`/setup` does **not** call coverage with the full profile axes list. Pool + core-priority tables and
+Coverage section format: [stack-profile.md](../../skills/setup/stack-profile.md).
 
 ## Authoring via MCP (admin)
 

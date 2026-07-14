@@ -3,6 +3,7 @@ import type { KnowledgeArticle } from './knowledge.types'
 
 const upsertMock = vi.hoisted(() => vi.fn())
 const deleteMock = vi.hoisted(() => vi.fn())
+const getCoverageMock = vi.hoisted(() => vi.fn())
 
 vi.mock('./knowledge.mutation.server', () => ({
   upsertKnowledgeArticle: upsertMock,
@@ -12,7 +13,17 @@ vi.mock('./knowledge.mutation.server', () => ({
   },
 }))
 
-import { executeDeleteKnowledge, executeUpsertKnowledge } from './knowledge.mcp'
+vi.mock('./knowledge.service.server', () => ({
+  getKnowledgeCoverage: getCoverageMock,
+}))
+
+import { KnowledgeCoverageValidationError } from './knowledge.coverage'
+import {
+  executeDeleteKnowledge,
+  executeGetKnowledgeCoverage,
+  executeUpsertKnowledge,
+  registerKnowledgeMcpTools,
+} from './knowledge.mcp'
 
 function sampleArticle(): KnowledgeArticle {
   return {
@@ -79,5 +90,71 @@ describe('knowledge.mcp write tools', () => {
   it('deletes with admin role', async () => {
     const result = await executeDeleteKnowledge({ userId: 'u1', role: 'admin' }, { id: 'KN-TEST' })
     expect(JSON.parse(result.content[0]!.text)).toEqual({ deleted: true, id: 'KN-TEST' })
+  })
+})
+
+describe('knowledge.mcp get_knowledge_coverage', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('registers get_knowledge_coverage for any OAuth user', () => {
+    const registerTool = vi.fn()
+    registerKnowledgeMcpTools({ registerTool } as never, { session: { userId: 'u1' } })
+    const names = registerTool.mock.calls.map(call => call[0])
+    expect(names).toContain('get_knowledge_coverage')
+  })
+
+  it('returns coverage JSON from the service', async () => {
+    const coverage = {
+      axes: ['vercel', 'tanstack-start', 'nitro'],
+      intents: ['incident', 'design', 'toolchain'],
+      byIntent: {
+        incident: { covered: true, articleIds: ['RB-001'] },
+        design: { covered: false, articleIds: [] },
+        toolchain: { covered: false, articleIds: [] },
+      },
+    }
+    getCoverageMock.mockResolvedValue(coverage)
+
+    const result = await executeGetKnowledgeCoverage({
+      axes: ['vercel', 'tanstack-start', 'nitro'],
+    })
+
+    expect(result.isError).toBeUndefined()
+    expect(JSON.parse(result.content[0]!.text)).toEqual(coverage)
+    expect(getCoverageMock).toHaveBeenCalledWith({
+      axes: ['vercel', 'tanstack-start', 'nitro'],
+    })
+  })
+
+  it('returns VALIDATION_ERROR when axes are empty', async () => {
+    getCoverageMock.mockRejectedValue(
+      new KnowledgeCoverageValidationError('axes is required and must be a non-empty string array')
+    )
+
+    const result = await executeGetKnowledgeCoverage({ axes: [] })
+
+    expect(result.isError).toBe(true)
+    expect(JSON.parse(result.content[0]!.text)).toEqual({
+      error: 'VALIDATION_ERROR',
+      message: 'axes is required and must be a non-empty string array',
+    })
+  })
+
+  it('returns VALIDATION_ERROR when intents is an empty array', async () => {
+    getCoverageMock.mockRejectedValue(
+      new KnowledgeCoverageValidationError(
+        'intents must be a non-empty array when provided (omit to evaluate all three)'
+      )
+    )
+
+    const result = await executeGetKnowledgeCoverage({ axes: ['vercel'], intents: [] })
+
+    expect(result.isError).toBe(true)
+    expect(JSON.parse(result.content[0]!.text)).toEqual({
+      error: 'VALIDATION_ERROR',
+      message: 'intents must be a non-empty array when provided (omit to evaluate all three)',
+    })
   })
 })

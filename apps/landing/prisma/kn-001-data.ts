@@ -2,7 +2,11 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { KnowledgeArticle, KnowledgeChunk } from '../src/lib/knowledge/knowledge.types'
-import { TAILWIND_CONFIG_FILE } from './seed-placeholders'
+import {
+  APP_ROOT,
+  assertNoForbiddenSeedLiterals,
+  TAILWIND_CONFIG_FILE,
+} from './seed-placeholders'
 
 /** Repo root from `apps/{project}/prisma/` when seeding the kit site. */
 export function defaultRepoRoot(): string {
@@ -20,6 +24,32 @@ export function vscodeSettingsForKn001(repoRoot: string = defaultRepoRoot()): st
     /"tailwindCSS\.experimental\.configFile":\s*"[^"]*"/,
     `"tailwindCSS.experimental.configFile": "${TAILWIND_CONFIG_FILE}"`
   )
+}
+
+type BiomeJson = {
+  assist?: { includes?: string[] }
+  javascript?: { globals?: string[]; [key: string]: unknown }
+  [key: string]: unknown
+}
+
+/**
+ * KN-001 biome.json — verbatim from repo root, sanitized for org-wide CMS:
+ * - `apps/landing` → `apps/{project}` (keep kit biome.json untouched)
+ * - drop kit-only `javascript.globals` injects
+ */
+export function biomeJsonForKn001(repoRoot: string = defaultRepoRoot()): string {
+  const parsed = JSON.parse(readRepoFile(repoRoot, 'biome.json')) as BiomeJson
+  if (parsed.assist?.includes) {
+    parsed.assist.includes = parsed.assist.includes.map(entry =>
+      entry.replaceAll('apps/landing', APP_ROOT)
+    )
+  }
+  if (parsed.javascript && 'globals' in parsed.javascript) {
+    delete parsed.javascript.globals
+  }
+  const body = JSON.stringify(parsed, null, 2)
+  assertNoForbiddenSeedLiterals(body, 'KN-001 biome.json')
+  return body
 }
 
 function packageJsonScriptsBlock(repoRoot: string): string {
@@ -199,11 +229,13 @@ Run \`check\` (\`biome check . && prettier --check .\`) in CI — read-only, nev
 
 const CHECKLIST_BODY = 'Verify steps for applying the Biome + Prettier Polyms default to a target repo.'
 
-/** Build KN-001 from verbatim repo-root config files (kit site stays in sync with this monorepo). */
+const CHECKLIST_ITEMS = STATIC_CHUNKS.find(c => c.id === 'KN-001-checklist')?.checklistItems ?? []
+
+/** Build KN-001 from repo-root config files sanitized for org-wide CMS (kit biome.json stays as-is). */
 export function buildKN001(repoRoot: string = defaultRepoRoot()): KnowledgeArticle {
   const bodies: Record<string, string> = {
     'KN-001-rationale': RATIONALE_BODY,
-    'KN-001-biome-json': readRepoFile(repoRoot, 'biome.json'),
+    'KN-001-biome-json': biomeJsonForKn001(repoRoot),
     'KN-001-prettierrc': readRepoFile(repoRoot, '.prettierrc.yml'),
     'KN-001-prettierignore': readRepoFile(repoRoot, '.prettierignore'),
     'KN-001-package-scripts': packageJsonScriptsBlock(repoRoot),
@@ -219,7 +251,7 @@ export function buildKN001(repoRoot: string = defaultRepoRoot()): KnowledgeArtic
       'Toolchain recipe for the Biome + Prettier dual-tool split: Biome owns JS/TS/CSS/HTML/JSON, Prettier owns MD/MDX/YAML.',
     intent: 'toolchain',
     axisTags: ['typescript', 'polyms-default', 'biome', 'prettier'],
-    checklist: [],
+    checklist: [...CHECKLIST_ITEMS],
     chunks: STATIC_CHUNKS.map(chunk => ({
       ...chunk,
       body: bodies[chunk.id] ?? '',

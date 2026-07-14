@@ -218,7 +218,7 @@ Must contain a catch-all route to the server function:
       slug: 'rb-001-05-database-url-missing',
       title: 'DATABASE_URL missing at runtime',
       symptom:
-        'CMS-backed routes (/knowledge/*, /ops/*) return 500 or empty; PrismaClientInitializationError in server logs.',
+        'CMS-backed routes return 500 or empty; PrismaClientInitializationError in server logs.',
       cause: [
         'DATABASE_URL not set on Vercel or local .env for the Start app.',
         'Migrations or seed not applied to the Postgres instance.',
@@ -229,10 +229,10 @@ Must contain a catch-all route to the server function:
         'Use Supabase pooled URI for serverless; direct URL for migrations if provider requires it.',
       ],
       verify: [
-        `curl -s ${DEV_ORIGIN}/knowledge/RB-001 | head   # HTML, not 500`,
+        `curl -s ${DEV_ORIGIN}/… | head   # CMS-backed page HTML, not 500`,
         `pnpm db:seed in ${appRoot}/ completes without error`,
       ],
-      triggerPhrases: ['PrismaClientInitializationError', 'DATABASE_URL', 'knowledge 500', 'Invalid prisma'],
+      triggerPhrases: ['PrismaClientInitializationError', 'DATABASE_URL', 'CMS 500', 'Invalid prisma'],
       relatedFiles: [`${appRoot}/.env.example`, `${appRoot}/prisma/schema.prisma`, 'vercel.json'],
       axisTags: ['vercel', 'tanstack-start', 'postgres', 'prisma'],
     },

@@ -56,13 +56,14 @@ OAuth **resource/audience** is `{origin}/mcp`. Discovery uses **request origin**
 
 ## Tools
 
-| Tool                  | Auth                      |
-| --------------------- | ------------------------- |
-| `search_knowledge`    | OAuth (any user)          |
-| `get_knowledge`       | OAuth                     |
-| `get_knowledge_chunk` | OAuth                     |
-| `upsert_knowledge`    | OAuth + JWT `role: admin` |
-| `delete_knowledge`    | OAuth + JWT `role: admin` |
+| Tool                     | Auth                      |
+| ------------------------ | ------------------------- |
+| `search_knowledge`       | OAuth (any user)          |
+| `get_knowledge_coverage` | OAuth (any user)          |
+| `get_knowledge`          | OAuth                     |
+| `get_knowledge_chunk`    | OAuth                     |
+| `upsert_knowledge`       | OAuth + JWT `role: admin` |
+| `delete_knowledge`       | OAuth + JWT `role: admin` |
 
 ## Env
 

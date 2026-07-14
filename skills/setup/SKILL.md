@@ -134,6 +134,11 @@ Per-repo **Stack manifest** axes for Knowledge search — see [stack-profile.md]
 2. Show the candidate list; let the user add/remove/confirm.
 3. Greenfield / unclear stack: ask once, or use `polyms-default` only when the user confirms org
    defaults.
+4. After axes are confirmed (and MCP is available): for each intent, build a heuristic **subset**
+   (intersection with the intent pool, core priority, max ~3–4 — see
+   [stack-profile.md](stack-profile.md) **Coverage**). Skip intents with an empty subset. Call
+   **`get_knowledge_coverage`** per non-empty subset; write a **Coverage** section into
+   `docs/agents/stack-profile.md` (bootstrap only — not live SSOT for later `/arch` work).
 
 **Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed;
 issue tracker, domain layout, artifact paths, triage labels, design paths, voice choice (No or Yes +
@@ -149,7 +154,7 @@ Show before writing:
 - `docs/agents/domain.md`
 - `docs/agents/triage-labels.md`
 - `docs/agents/design.md`
-- `docs/agents/stack-profile.md` (axes list + detected-from notes)
+- `docs/agents/stack-profile.md` (axes list + detected-from notes + optional Coverage)
 - If voice **Yes**: `.cursor/rules/agent-voice.mdc` and `.claude/rules/agent-voice.mdc` → symlink
 
 Let user edit.
@@ -213,7 +218,8 @@ Write docs using templates:
 - Domain → [domain.md](domain.md)
 - Triage labels → [triage-labels.md](triage-labels.md)
 - Design → [design.md](design.md)
-- Stack profile → [stack-profile.md](stack-profile.md) (fill confirmed axes + detected-from)
+- Stack profile → [stack-profile.md](stack-profile.md) (fill confirmed axes + detected-from +
+  Coverage when MCP coverage ran)
 
 **If voice Yes:**
 

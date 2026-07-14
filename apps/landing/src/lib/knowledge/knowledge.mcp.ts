@@ -2,11 +2,16 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import { isMcpAdmin, type McpAuthSession } from '../mcp-auth.server'
 import {
+  type ComputeKnowledgeCoverageParams,
+  KnowledgeCoverageValidationError,
+} from './knowledge.coverage'
+import {
   DELETE_KNOWLEDGE_TOOL_DESCRIPTION,
   UPSERT_KNOWLEDGE_TOOL_DESCRIPTION,
 } from './knowledge.mcp-authoring'
 import {
   GET_KNOWLEDGE_CHUNK_TOOL_DESCRIPTION,
+  GET_KNOWLEDGE_COVERAGE_TOOL_DESCRIPTION,
   GET_KNOWLEDGE_TOOL_DESCRIPTION,
   SEARCH_KNOWLEDGE_TOOL_DESCRIPTION,
 } from './knowledge.mcp-retrieval'
@@ -24,6 +29,18 @@ const searchInputSchema = {
     .describe('Knowledge intent to scope results'),
   axes: z.array(z.string()).optional().describe('Stack manifest axis tags to filter by'),
   limit: z.number().int().positive().max(50).optional().describe('Max results (default 20)'),
+}
+
+const coverageInputSchema = {
+  axes: z
+    .array(z.string().trim().min(1))
+    .min(1)
+    .describe('Required non-empty axis subset — article covers when axes ⊆ article.axisTags'),
+  intents: z
+    .array(z.enum(['incident', 'design', 'toolchain']))
+    .min(1)
+    .optional()
+    .describe('Intents to evaluate (omit for all three; empty array is invalid)'),
 }
 
 const idInputSchema = {
@@ -145,6 +162,31 @@ export async function executeDeleteKnowledge(
   }
 }
 
+export async function executeGetKnowledgeCoverage(
+  input: ComputeKnowledgeCoverageParams
+): Promise<McpTextResult> {
+  try {
+    const { getKnowledgeCoverage } = await import('./knowledge.service.server')
+    const coverage = await getKnowledgeCoverage(input)
+    return {
+      content: [{ type: 'text', text: JSON.stringify(coverage, null, 2) }],
+    }
+  } catch (error) {
+    if (error instanceof KnowledgeCoverageValidationError) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify({ error: 'VALIDATION_ERROR', message: error.message }),
+          },
+        ],
+        isError: true,
+      }
+    }
+    throw error
+  }
+}
+
 export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeMcpToolContext): void {
   const { session } = context
 
@@ -161,6 +203,15 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
         content: [{ type: 'text' as const, text: JSON.stringify({ results }, null, 2) }],
       }
     }
+  )
+
+  server.registerTool(
+    'get_knowledge_coverage',
+    {
+      description: GET_KNOWLEDGE_COVERAGE_TOOL_DESCRIPTION,
+      inputSchema: coverageInputSchema,
+    },
+    async ({ axes, intents }) => executeGetKnowledgeCoverage({ axes, intents })
   )
 
   server.registerTool(

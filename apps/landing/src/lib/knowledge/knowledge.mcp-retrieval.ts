@@ -11,3 +11,13 @@ Chunks return in sortOrder — read checklist/overview chunks first, config arti
 export const GET_KNOWLEDGE_CHUNK_TOOL_DESCRIPTION = `Get a single Knowledge chunk and its parent article by chunk id or slug.
 
 For config chunks (chunkType: config), the body is a verbatim artifact — confirm artifactFilename before copying it into a target repo; do not paraphrase or partially copy it.`
+
+export const GET_KNOWLEDGE_COVERAGE_TOOL_DESCRIPTION = `Evaluate whether published Knowledge articles cover a required axis subset for one or more intents.
+
+Pass a non-empty axes array (stack manifest tags; no blank entries). An article covers when every
+passed axis is on article.axisTags (subset match). Omit intents to evaluate incident, design, and
+toolchain — do not pass an empty intents array. Returns axes, resolved intents, and byIntent:
+{ covered, articleIds } — no titles or summaries.
+Use before inventing seams when you only need gap/hit signals; still call search_knowledge to
+retrieve recipes. Soft-required for /setup Coverage notes and for /arch / /arch-refactor on the
+subset under work (do not trust stale stack-profile Coverage alone).`

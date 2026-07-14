@@ -19,16 +19,22 @@ language.
 When the task touches **routing, state, or stack module shape** (not pure vocabulary), **search**
 Knowledge before inventing conventions — [Knowledge pointer](../../docs/agents/knowledge.md).
 
-1. Read **`docs/agents/stack-profile.md`** when present — pass `axes` to search
-2. Call **`search_knowledge`** with `q` (seam topic) and `intent: "design"` — no MCP: browse
+1. Read **`docs/agents/stack-profile.md`** when present — pass `axes` to search. Coverage notes
+   there are **bootstrap only** — not live SSOT.
+2. Soft-require: call **`get_knowledge_coverage`** for the design-intent axis **subset under work**
+   (heuristic subset from [setup stack-profile](../setup/stack-profile.md), or a tighter subset for
+   this session). Do not invent seams when coverage already lists a hit — still
+   **`search_knowledge`** to open recipes.
+3. Call **`search_knowledge`** with `q` (seam topic) and `intent: "design"` — no MCP: browse
    `/knowledge?q=…&intent=design` on the kit site
-3. Open **`get_knowledge`** on the **best search hit** — read chunks in **`sortOrder`** (ids from
+4. Open **`get_knowledge`** on the **best search hit** — read chunks in **`sortOrder`** (ids from
    results, not memorized)
-4. No match: fall back to [stack-defaults.md](../dev/stack-defaults.md); irreversible **why** stays
+5. No match: fall back to [stack-defaults.md](../dev/stack-defaults.md); irreversible **why** stays
    in `docs/adr/`
 
 **Completion criterion:** At least one design article opened in sortOrder, or explicit no-match with
-search terms documented before applying stack-defaults / ADR.
+search terms documented before applying stack-defaults / ADR; coverage re-called for the subset under
+work when MCP is available.
 
 Skip this section when the session is vocabulary-only (defining seam/depth with no stack-combo
 choice).

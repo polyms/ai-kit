@@ -219,16 +219,30 @@ _Avoid_: symptom→fix (→ **Knowledge intent** `incident`), separate CMS conte
 
 **Stack profile**:
 Declared tooling/deploy combination — e.g. TanStack Start + Vercel + pnpm Nx. Incident articles
-cover deploy-correct config; design articles cover seams for the same axes. Matrix tracks
-coverage per **Knowledge intent**.
+cover deploy-correct config; design articles cover seams for the same axes. Written by `/setup`
+to `docs/agents/stack-profile.md` (axes + optional Coverage notes from **Knowledge coverage**).
 _Avoid_: stack doc (generic), single checklist duplicated across intents (author one intent per
 item)
 
 **Stack manifest**:
-Per-repo record of stack axes for the dimension matrix — detected from repo files during
-`/setup`, user-confirmed, written to `docs/agents/stack-profile.md`. Filters **Knowledge**
-search (all intents); matrix shows coverage gaps per intent.
+Per-repo record of stack axes — detected from repo files during `/setup`, user-confirmed,
+written to `docs/agents/stack-profile.md`. Filters **Knowledge** search (`axes`); `/setup`
+records **Knowledge coverage** gaps for intentional axis subsets (not the full axes list in one
+shot). Ops `/ops/matrix` remains the human full-catalog view.
 _Avoid_: stack.yaml (generic), tech stack file (when meaning setup output specifically)
+
+**Knowledge coverage**:
+MCP read tool `get_knowledge_coverage` — required non-empty `axes` subset + optional intents;
+echo inputs; per intent `{ covered, articleIds }`. An article **covers** when
+`axes ⊆ article.axisTags`; only **published** articles. Empty/blank `axes` or `intents: []` →
+tool validation error; omit intents → all three.
+OAuth any connected user. Soft-required for `/setup` (persist Coverage into stack-profile as
+bootstrap via fixed per-intent axis heuristics), `/arch`, `/arch-refactor` — those two **re-call
+MCP** for the subset under work; stack-profile notes are not live SSOT. Placeholder / kit-bleed
+stripping on upsert stays **agent-owned**. Complements `search_knowledge`; does not replace it.
+_Avoid_: `/ops/matrix` dump for agents, inventing seams when coverage already lists a hit,
+server-side “strip apps/landing” as a complete authoring fix, trusting stale stack-profile
+Coverage without re-calling MCP in `/arch` / `/arch-refactor`
 
 **Ops CMS**:
 Kit-site ops knowledge admin at `/ops/*` — canonical store is **Knowledge** (articles + chunks +

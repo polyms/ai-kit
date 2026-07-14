@@ -31,10 +31,14 @@ describe('knowledge.catalog-search — KN-001 smoke test', () => {
     expect(chunkResults).toHaveLength(7)
   })
 
-  it('biome.json chunk matches repo root verbatim', () => {
+  it('biome.json chunk is sanitized from repo root (placeholder path, no kit bleed)', () => {
     const chunk = KN001.chunks.find(c => c.id === 'KN-001-biome-json')
     const rootBiome = readFileSync(join(repoRoot, 'biome.json'), 'utf8').trimEnd()
-    expect(chunk?.body).toBe(rootBiome)
+    expect(chunk?.body).not.toBe(rootBiome)
+    expect(rootBiome).toContain('apps/landing')
+    expect(chunk?.body).toContain('apps/{project}')
+    expect(chunk?.body).not.toContain('apps/landing')
+    expect(chunk?.body).not.toContain('__ORIGIN_POLYMS__')
   })
 
   it('vscode settings chunk uses placeholder for tailwind config path', () => {

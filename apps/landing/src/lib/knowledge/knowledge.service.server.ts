@@ -1,4 +1,9 @@
 import { scoreKnowledgeFromCatalog, searchKnowledgeFromCatalog } from './knowledge.catalog-search'
+import {
+  type ComputeKnowledgeCoverageParams,
+  type KnowledgeCoverageResult,
+  computeKnowledgeCoverage,
+} from './knowledge.coverage'
 import { searchChunksByVector } from './knowledge.embedding.repository.server'
 import { embedTexts, isEmbeddingEnabled } from './knowledge.embedding.server'
 import { mergeHybridSearchResults } from './knowledge.hybrid-search'
@@ -26,6 +31,13 @@ export async function getKnowledgeChunk(
   id: string
 ): Promise<{ chunk: KnowledgeChunk; article: KnowledgeArticle } | undefined> {
   return getKnowledgeChunkFromDb(id)
+}
+
+export async function getKnowledgeCoverage(
+  params: ComputeKnowledgeCoverageParams
+): Promise<KnowledgeCoverageResult> {
+  const articles = await listKnowledgeArticlesFromDb()
+  return computeKnowledgeCoverage(articles, params)
 }
 
 export async function searchKnowledge(

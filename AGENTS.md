@@ -23,7 +23,8 @@ Deploy/CI/infra **incident**, stack-combo **design**, and **toolchain** recipes 
 (Postgres). Agents retrieve via MCP or kit site — not git markdown body:
 
 - [docs/agents/knowledge.md](docs/agents/knowledge.md) — unified retrieval (`search_knowledge`,
-  `get_knowledge`, `get_knowledge_chunk`); intents `incident` · `design` · `toolchain`
+  `get_knowledge`, `get_knowledge_chunk`, `get_knowledge_coverage`); intents `incident` · `design` ·
+  `toolchain`
 - [docs/agents/stack-profile.md](docs/agents/stack-profile.md) — per-repo stack axes (from
   `/setup`) for Knowledge search filters
 - [docs/agents/ops-cms-mcp.md](docs/agents/ops-cms-mcp.md) — MCP at `ai-kit.polyms.dev/mcp`, Cursor

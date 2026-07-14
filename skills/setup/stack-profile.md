@@ -2,7 +2,7 @@
 
 Per-repo **Stack manifest** — axes that filter Knowledge search (`search_knowledge`
 `axes`). Written by `/setup`; consumed by `/dev`, `/devops`, `/arch`. Pointer only; live recipes
-stay in Ops CMS — see [knowledge.md](./knowledge.md).
+stay in Ops CMS — see [knowledge.md](../../docs/agents/knowledge.md).
 
 ## Axes
 
@@ -33,6 +33,40 @@ Summarize how axes were chosen (package.json deps, `vercel.json`, workspace layo
 confirm):
 
 - …
+
+## Coverage
+
+Optional bootstrap from MCP **`get_knowledge_coverage`** after axes are confirmed. Not live SSOT —
+`/arch` and `/arch-refactor` re-call MCP for the subset under work.
+
+### Axis heuristics (per intent)
+
+Do **not** pass the full axes list in one shot. For each intent:
+
+1. `subset = intersection(profile.axes, POOL)`
+2. Keep tags in **core priority** order, max ~3–4
+3. If subset empty → **skip** that intent (never call with empty `axes`)
+4. Call `get_knowledge_coverage({ axes: subset, intents: [intent] })`
+
+| Intent      | Pool                                                                                                                           | Core priority                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| `incident`  | vercel, tanstack-start, nitro, pnpm, nx, monorepo, postgres, prisma, ssr, build-output-api, github-packages, ci, github-actions | vercel → tanstack-start → nitro → (pnpm\|nx)                |
+| `design`    | tanstack-start, tanstack-router, nitro, zustand, pnpm, nx, monorepo, prisma, typescript                                        | tanstack-start → tanstack-router → zustand → (nx\|monorepo) |
+| `toolchain` | biome, prettier, typescript, polyms-default, markdown, formatting                                                              | biome → prettier → (polyms-default if present)              |
+
+### Example section (fill from MCP; omit intents you skipped)
+
+```markdown
+## Coverage
+
+Bootstrap only — re-call `get_knowledge_coverage` in `/arch` / `/arch-refactor`.
+
+| Intent      | Axes subset                              | Covered | Article ids |
+| ----------- | ---------------------------------------- | ------- | ----------- |
+| incident    | vercel, tanstack-start, nitro            | yes/no  | …           |
+| design      | tanstack-start, tanstack-router, zustand | yes/no  | …           |
+| toolchain   | biome, prettier                          | yes/no  | …           |
+```
 
 ## Notes
 
