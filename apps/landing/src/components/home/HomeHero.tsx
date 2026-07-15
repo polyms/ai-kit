@@ -55,9 +55,9 @@ function AlignCard() {
       </div>
       <div className='mb-3 font-bold font-mono text-[15px] text-primary-600'>/align checkout refactor</div>
       <div className='font-mono text-[12.5px] text-muted leading-[1.9]'>
-        <div>→ 3 clarifying questions before spec</div>
+        <div>→ {m.hero_alignCard_clarify()}</div>
         <div>
-          → wrote <span className='font-semibold text-fg'>docs/adr/0007.md</span>
+          → {m.hero_alignCard_wrote()} <span className='font-semibold text-fg'>docs/adr/0007.md</span>
         </div>
       </div>
     </div>

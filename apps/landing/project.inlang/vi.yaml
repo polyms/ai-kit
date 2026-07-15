@@ -6,83 +6,83 @@ catalog_back: Quay lại danh mục
 catalog_clear: Xóa bộ lọc
 catalog_copied: Đã sao chép
 catalog_copy: Sao chép
-catalog_copyFail: Không sao chép được — chọn và copy thủ công
-catalog_empty: Không có skill nào khớp bộ lọc
+catalog_copyFail: Không sao chép được — hãy chọn văn bản rồi sao chép thủ công
+catalog_empty: Không có kỹ năng nào khớp bộ lọc
 catalog_filterAll: Tất cả
-catalog_filterModel: Model-invoked
-catalog_filterUser: User-invoked
-catalog_notFound: Không tìm thấy skill
-catalog_samplePrompt: Sample prompt
-catalog_search: Tìm skill…
-catalog_status_available: Available
-catalog_status_planned: Planned
-catalog_sub: 15 skill — invoke, mô tả, trạng thái, domain
+catalog_filterModel: Agent tự gọi
+catalog_filterUser: Bạn gõ lệnh
+catalog_notFound: Không tìm thấy kỹ năng
+catalog_samplePrompt: Prompt mẫu
+catalog_search: Tìm kỹ năng…
+catalog_status_available: Có sẵn
+catalog_status_planned: Sắp có
+catalog_sub: 15 kỹ năng — lệnh gọi, mô tả, trạng thái, lĩnh vực
 catalog_title: Danh mục kỹ năng
 catalog_viewAll: Xem toàn bộ danh mục
-catalog_viewSource: Mở trên GitHub
+catalog_viewSource: Xem trên GitHub
+catalog_zeroResults: 0 kết quả
 
 # --- domain ---
-domain_alignment: Alignment
-domain_architecture: Architecture
-domain_authoring: Authoring
-domain_design: Design
+domain_alignment: Đồng thuận
+domain_architecture: Kiến trúc
+domain_authoring: Biên soạn
+domain_design: Thiết kế
 domain_devops: DevOps
-domain_docs: Docs
+domain_docs: Tài liệu
 domain_e2e: E2E
-domain_implementation: Implementation
+domain_implementation: Triển khai
 domain_repoConfig: Cấu hình repo
-domain_requirements: Requirements
-domain_review: Review
-domain_triage: Triage
+domain_requirements: Yêu cầu
+domain_review: Rà soát
+domain_triage: Phân loại
 
 # --- footer ---
-footer_blurb: Kỹ năng agent cho real engineering — một kit version-controlled, symlink global xuyên project.
+footer_blurb: Bộ skill cho kỹ thuật thật tế — một kit quản lý phiên bản, liên kết dùng chung trên mọi dự án.
 footer_col_community: Cộng đồng
-footer_col_pipeline: Pipeline
+footer_col_pipeline: Luồng xử lý
 footer_col_resources: Tài nguyên
 footer_copyright: MIT © 2026 Polyms
 footer_link_catalog: Danh mục skill
-footer_link_discussions: Discussions
 footer_link_issues: Issues
-footer_starGithub: Star trên GitHub
+footer_starGithub: Gắn sao trên GitHub
 
 # --- hero ---
-hero_badge: Cursor-first · tool-agnostic by design
+hero_badge: Ưu tiên Cursor · thiết kế không phụ thuộc công cụ
 hero_ctaPrimary: git clone ai-kit
 hero_ctaSecondary: Đọc tài liệu →
-hero_line1: Agent skills cho
-hero_line2: real engineering
-hero_sub: ai-kit là bộ não dùng chung của Polyms cho agentic fullstack — skill tên ngắn invoke bằng slash, từ requirements đến code đã review.
+hero_line1: Bộ kỹ năng agent cho
+hero_line2: kỹ thuật thực tế
+hero_sub:
+  ai-kit là bộ não dùng chung của Polyms dành cho lập trình viên agentic fullstack — mỗi kỹ năng có tên ngắn, gọi bằng
+  lệnh `/`, từ yêu cầu sản phẩm đến bản phát hành với mã nguồn đã được rà soát.
 
 # --- home ---
-home_catalog_heading: Mười lăm skill. Không ceremony.
-home_catalog_intro: Mỗi capability là skill hoặc agent ngắn tên — invoke bằng slash command.
+home_catalog_heading: Mười lăm skill. Không thủ tục thừa.
+home_catalog_intro: Mỗi năng lực là một tên kỹ năng hoặc tên agent ngắn, gọi bằng lệnh `/`.
 
 # --- pipeline ---
-pipeline_agentsLabel: Principal agents
-pipeline_agent_design_owns: docs/design/ UI specs, @polyms/core-ui maps
-pipeline_agent_design_role: Principal product designer
-pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
-pipeline_agent_dev_role: Principal software engineer
-pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
-pipeline_agent_pm_role: Principal product manager
-pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys
-pipeline_agent_tester_role: Principal tester
-pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; /devops SEV
-pipeline_agent_techlead_role: Principal tech lead
-pipeline_intro: Mỗi stage tạo artifact cho agent kế tiếp. Issue thô đi qua /triage — verify và brief trước khi tới /dev.
-pipeline_stage_align: Align
-pipeline_stage_design: Design
-pipeline_stage_dev: Dev
-pipeline_stage_idea: Idea
-pipeline_stage_issues: To issues
-pipeline_stage_reqs: Reqs / To PRD
-pipeline_stage_review: Code review
-pipeline_stage_ship: Ship
-pipeline_title: Một pipeline, từ đầu tới ship.
+pipeline_agentsLabel: Agent chuyên trách
+pipeline_agent_design_owns: Spec UI tại docs/design/, ánh xạ @polyms/core-ui
+pipeline_agent_dev_owns: Lập trình, TDD, /devops (vai trò chính)
+pipeline_agent_pm_owns: PRD, story, tiêu chí chấp nhận, phạm vi
+pipeline_agent_tester_owns: Bộ E2E, flake, chia nhỏ CI, kiểm thử theo hành trình
+pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; SEV của /devops
+pipeline_intro: Mỗi giai đoạn tạo đầu ra để agent kế tiếp dùng. Vấn đề thô đi riêng qua /triage — được xác
+  minh và viết tóm tắt trước khi tới /dev.
+pipeline_stage_align: Thống nhất
+pipeline_stage_design: Thiết kế
+pipeline_stage_dev: Lập trình
+pipeline_stage_idea: Ý tưởng
+pipeline_stage_issues: Gửi vấn đề
+pipeline_stage_reqs: Yêu cầu / Tạo PRD
+pipeline_stage_review: Đánh giá code
+pipeline_stage_ship: Phát hành
+pipeline_title: Một luồng xử lý, từ ý tưởng cho đến khi phát hành.
 
 # --- quickstart ---
-quickstart_body: Clone repo, chạy `pnpm bootstrap` — symlink skills và agents vào Cursor lẫn Claude Code. Restart editor rồi gõ `/` để chọn skill.
+quickstart_body: Clone repo, chạy `pnpm bootstrap` — symlink skill và agent vào Cursor lẫn Claude Code. Khởi
+  động lại editor rồi gõ `/` để chọn.
+quickstart_terminalComment: symlink agent và skill vào Cursor và Claude Code
 quickstart_titlePrefix: Chín mươi giây tới
 
 # --- nav ---
@@ -91,7 +91,7 @@ nav_docs: Tài liệu
 nav_github: GitHub
 nav_locale: Ngôn ngữ giao diện
 nav_overview: Tổng quan
-nav_pipeline: Pipeline
+nav_pipeline: Luồng xử lý
 nav_knowledge: Knowledge
 nav_skip: Bỏ qua điều hướng
 nav_start: Bắt đầu nhanh
@@ -102,97 +102,122 @@ nav_to_top: Lên đầu trang
 # --- palette ---
 palette_hint: ↑↓ chọn · Enter mở · Esc đóng
 palette_placeholder: Gõ để lọc skill…
-palette_title: Command palette
+palette_title: Bảng lệnh
 
 # --- principles ---
-principles_1_body: /align thu hẹp khoảng cách giao tiếp — grill quyết định trước /reqs hoặc /to-prd.
-principles_1_title: Align trước khi build
-principles_2_body: Skill tên ngắn (/reqs, /design, /dev) ghép theo task — không quy trình nặng.
-principles_2_title: Nhỏ và ghép được
-principles_3_body: /dev mã hóa TDD, types, debug có kỷ luật — tín hiệu nhanh, không codegen mù.
+principles_1_body: /align thu hẹp khoảng cách giao tiếp — hỏi xoáy quyết định trước khi vào /reqs hoặc /to-prd.
+principles_1_title: Thống nhất trước khi bắt đầu dựng
+principles_2_body: Kết hợp theo từng việc với các kỹ năng có tên ngắn (/reqs, /design, /dev) — không cần quy trình nặng nề.
+principles_2_title: Nhỏ và dễ kết hợp
+principles_3_body:
+  /dev đưa TDD, kiểm soát kiểu, và debug có kỷ luật vào quy trình — tín hiệu nhanh, không sinh
+  code mù quáng.
 principles_3_title: Vòng phản hồi
-principles_4_body: Spec đặt tên module và seam; skill code chống ball of mud mà agent thúc đẩy.
+principles_4_body:
+  Spec đặt tên rõ cho module và seam; kỹ năng giữ code khỏi rối thành khối bùn mà agent dễ tạo ra
+  khi code nhanh.
 principles_4_title: Thiết kế mỗi ngày
-principles_5_body: Fork, chỉnh, commit lại — skill là của bạn, không phải prompt hộp đen.
-principles_5_title: Hack và sở hữu
-principles_titleAccent: engineering.
-principles_titlePrefix: Real
+principles_5_body: Fork, chỉnh sửa, rồi commit lại — kỹ năng là của bạn, không phải prompt hộp đen.
+principles_5_title: Tự sửa và sở hữu
+principles_titleAccent: thật tế
+principles_titlePrefix: Kỹ thuật
 
 # --- knowledge ---
-knowledge_axisTags: Axis tags
-knowledge_backToIndex: Về danh sách knowledge
-knowledge_checklist: Checklist
-knowledge_cause: Cause
-knowledge_fix: Fix
-knowledge_verify: Verify
-knowledge_chunkType_checklist: Checklist
-knowledge_chunkType_config: Config
-knowledge_chunkType_incident: Incident
-knowledge_chunkType_prose: Prose
+knowledge_axisTags: Nhãn trục
+knowledge_backToIndex: Quay lại Tri thức
+knowledge_checklist: Kiểm mục
+knowledge_cause: Nguyên nhân
+knowledge_fix: Cách sửa
+knowledge_verify: Xác minh
+knowledge_chunkType_checklist: Kiểm mục
+knowledge_chunkType_config: Cấu hình
+knowledge_chunkType_incident: Sự cố
+knowledge_chunkType_prose: Văn bản
 knowledge_chunkType_seam: Seam
-knowledge_chunks: Chunks
+knowledge_chunks: Đoạn
 knowledge_chunkNav: Trên trang này
 knowledge_readingOrder: Thứ tự đọc
 knowledge_col_id: ID
 knowledge_col_match: Khớp
-knowledge_col_tags: Tags
+knowledge_col_tags: Nhãn
 knowledge_col_title: Tiêu đề
 knowledge_col_type: Loại
-knowledge_empty: Không có knowledge article khớp tìm kiếm.
-knowledge_fallback: 'Bản mirror trên GitHub:'
-knowledge_intent: Intent
-knowledge_intent_design: Design
-knowledge_intent_incident: Incident
-knowledge_intent_toolchain: Toolchain
+knowledge_empty: Không có bài Knowledge nào khớp tìm kiếm.
+knowledge_fallback: 'Bản sao trên GitHub:'
+knowledge_intent: Mục đích
+knowledge_intent_design: Thiết kế
+knowledge_intent_incident: Sự cố
+knowledge_intent_toolchain: Công cụ
 knowledge_kicker: KNOWLEDGE
-knowledge_notFound: Không tìm thấy knowledge article.
+knowledge_notFound: Không tìm thấy bài Knowledge.
 knowledge_results: Kết quả
-knowledge_resultsCaption: Kết quả tìm knowledge
-knowledge_searchLabel: Tìm knowledge theo topic hoặc symptom
+knowledge_resultsCaption: Kết quả tìm Knowledge
+knowledge_searchLabel: Tìm Knowledge theo chủ đề hoặc triệu chứng
 knowledge_searchPlaceholder: biome prettier setup
-knowledge_sub: Incident · design · toolchain — một retrieval model cho developer, /dev, /devops, /arch.
+knowledge_sub: Sự cố · thiết kế · công cụ — một mô hình truy xuất chung cho lập trình viên, /dev, /devops, /arch.
 knowledge_title: Knowledge
 
 # --- ops ---
 ops_col_actions: Thao tác
 ops_col_id: ID
 ops_col_status: Trạng thái
-ops_col_tags: Axis tags
+ops_col_tags: Nhãn trục
 ops_col_title: Tiêu đề
 ops_col_updated: Cập nhật
 ops_edit: Sửa
-ops_loginCta: Đăng nhập polyms.dev
-ops_loginDev: Dev sign-in
-ops_loginDevDisabled: Dev sign-in chỉ có khi chạy local dev server.
+ops_loginCta: Đăng nhập với polyms.dev
+ops_loginDev: Đăng nhập dev
+ops_loginDevDisabled: Đăng nhập dev chỉ dùng được khi chạy máy chủ phát triển ở máy local.
 ops_loginNetworkError: Lỗi mạng — thử lại.
 ops_loginOidcMissing: Chưa cấu hình OIDC. Đặt OIDC_CLIENT_ID.
-ops_loginSub: Đăng nhập Polyms để sửa Knowledge articles.
+ops_loginSub: Đăng nhập bằng tài khoản Polyms để sửa bài Knowledge.
 ops_loginTitle: Ops CMS
-ops_matrixEmpty: Chưa có axis data — thêm tags vào nội dung
-ops_matrixIntentCoverage: Intent coverage
+ops_matrixEmpty: Chưa có dữ liệu trục — hãy thêm nhãn vào nội dung
+ops_matrixIntentCoverage: Độ phủ theo mục đích
 ops_matrixKnowledge: Knowledge
-ops_intent_design: design
-ops_intent_incident: incident
-ops_intent_toolchain: toolchain
+ops_intent_design: thiết kế
+ops_intent_incident: sự cố
+ops_intent_toolchain: công cụ
 ops_matrixLegendGap: thiếu
 ops_matrixLegendCovered: đủ
-ops_matrixTitle: Coverage matrix
-ops_matrixSub: Hàng = tổ hợp axis từ tags. Intent coverage theo Knowledge article.
+ops_matrixTitle: Ma trận độ phủ
+ops_matrixSub: Hàng = tổ hợp trục từ nhãn. Độ phủ mục đích tính theo từng bài Knowledge.
 ops_nav_knowledge: Knowledge
-ops_nav_matrix: Matrix
+ops_nav_matrix: Ma trận
 ops_nav_signOut: Đăng xuất
-ops_knowledgeEmpty: Chưa có knowledge article
+ops_knowledgeEmpty: Chưa có bài Knowledge nào
 ops_knowledgeTitle: Knowledge
-ops_createKnowledge: Article mới
+ops_createKnowledge: Tạo bài mới
 ops_sessionExpired: Phiên hết hạn. Đăng nhập lại để tiếp tục.
 ops_signInAgain: Đăng nhập lại
 ops_status_draft: nháp
-ops_status_published: published
-ops_viewPublic: Xem public
+ops_status_published: đã xuất bản
+ops_viewPublic: Xem công khai
 
 # --- skillDetail ---
-skillDetail_boundaries: Ran giới
-skillDetail_downstream: Downstream
-skillDetail_pipeline: Pipeline
-skillDetail_upstream: Upstream
+skillDetail_boundaries: Ranh giới
+skillDetail_downstream: Giai đoạn sau
+skillDetail_owns: Đảm nhiệm
+skillDetail_pipeline: Luồng xử lý
+skillDetail_upstream: Giai đoạn trước
 skillDetail_whenToUse: Khi nào dùng
+
+# --- ticker ---
+ticker_specBeforeCode: viết spec trước, code sau
+ticker_citeFile: trích dẫn đúng file
+ticker_noVibeCoding: không code theo cảm tính
+ticker_cursorFirst: ưu tiên Cursor
+ticker_toolAgnostic: không phụ thuộc công cụ
+ticker_mitLicensed: giấy phép MIT
+ticker_reviewDiff: rà soát diff
+ticker_shipGreen: chỉ phát hành khi build xanh
+
+# --- hero align card ---
+hero_alignCard_clarify: 3 câu hỏi làm rõ trước khi viết spec
+hero_alignCard_wrote: đã ghi
+
+# --- home section chips ---
+chip_principles: nguyên tắc
+chip_pipeline: luồng xử lý
+chip_catalog: danh mục
+chip_quickstart: khởi đầu nhanh

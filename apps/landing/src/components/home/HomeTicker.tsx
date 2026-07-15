@@ -1,16 +1,17 @@
-const WORDS = [
-  'spec before code',
-  'cite the file',
-  'no vibe coding',
-  'cursor-first',
-  'tool-agnostic',
-  'MIT licensed',
-  'review the diff',
-  'ship green builds',
-] as const
+import { m } from '../../paraglide/messages.js'
 
 export function HomeTicker() {
-  const track = [...WORDS, ...WORDS]
+  const words = [
+    m.ticker_specBeforeCode(),
+    m.ticker_citeFile(),
+    m.ticker_noVibeCoding(),
+    m.ticker_cursorFirst(),
+    m.ticker_toolAgnostic(),
+    m.ticker_mitLicensed(),
+    m.ticker_reviewDiff(),
+    m.ticker_shipGreen(),
+  ]
+  const track = [...words, ...words]
 
   return (
     <div aria-hidden className='app-ticker overflow-hidden py-4'>
@@ -18,7 +19,7 @@ export function HomeTicker() {
         {track.map(word => (
           <span
             className='app-ticker__word inline-flex items-center gap-7 whitespace-nowrap font-mono text-[12.5px] tracking-wide'
-            key={`${word}`}
+            key={word}
           >
             {word}
             <span className='app-ticker__dot'>◆</span>

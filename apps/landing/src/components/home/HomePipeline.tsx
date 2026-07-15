@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { m } from '../../paraglide/messages.js'
 import { HOME_PLAYFUL } from './brand'
 import { HomeSectionChip } from './HomeSectionChip'
@@ -16,27 +17,27 @@ const STAGES = [
 const AGENTS = [
   {
     name: 'pm',
-    role: m.pipeline_agent_pm_role,
+    role: 'Principal Product Manager',
     owns: m.pipeline_agent_pm_owns,
   },
   {
     name: 'designer',
-    role: m.pipeline_agent_design_role,
+    role: 'Principal Product Designer',
     owns: m.pipeline_agent_design_owns,
   },
   {
     name: 'developer',
-    role: m.pipeline_agent_dev_role,
+    role: 'Principal Software Engineer',
     owns: m.pipeline_agent_dev_owns,
   },
   {
     name: 'tester',
-    role: m.pipeline_agent_tester_role,
+    role: 'Principal Tester',
     owns: m.pipeline_agent_tester_owns,
   },
   {
     name: 'techlead',
-    role: m.pipeline_agent_techlead_role,
+    role: 'Principal Tech Lead',
     owns: m.pipeline_agent_techlead_owns,
   },
 ] as const
@@ -62,7 +63,7 @@ function StageChip({ label, invoke, last }: { label: string; invoke?: string; la
 export function HomePipeline() {
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='pipeline'>
-      <HomeSectionChip label='pipeline' n='02' />
+      <HomeSectionChip label={m.chip_pipeline()} n='02' />
       <h2 className='app-pipeline__title m-0 mb-3 font-bold font-sans text-fg'>{m.pipeline_title()}</h2>
       <p className='mb-9 max-w-[640px] text-muted'>{m.pipeline_intro()}</p>
 
@@ -83,17 +84,17 @@ export function HomePipeline() {
         </span>
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
-      <div className='flex flex-wrap gap-4'>
+      <div className='flex flex-wrap gap-6'>
         {AGENTS.map((agent, i) => {
           const playfulRotate =
-            HOME_PLAYFUL && i % 2 === 0 ? '-rotate-[0.3deg]' : HOME_PLAYFUL ? 'rotate-[0.3deg]' : ''
+            HOME_PLAYFUL && i % 2 === 0 ? '-rotate-[1deg]' : HOME_PLAYFUL ? 'rotate-[1deg]' : ''
           return (
             <div
-              className={`min-w-[220px] flex-[1_1_220px] rounded-[20px] border border-line bg-body p-[22px] ${playfulRotate}`}
+              className={clsx('rounded-3xl border border-line bg-body p-6', playfulRotate, 'flex-[1_0_30%]')}
               key={agent.name}
             >
               <div className='mb-2 font-bold font-mono text-[15px] text-primary-600'>{agent.name}</div>
-              <div className='mb-1.5 font-bold text-[15px] text-fg'>{agent.role()}</div>
+              <div className='mb-1.5 font-bold text-fg'>{agent.role}</div>
               <div className='text-[13.5px] text-muted leading-snug'>{agent.owns()}</div>
             </div>
           )

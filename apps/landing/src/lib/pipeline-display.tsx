@@ -1,8 +1,8 @@
 import { SkillInvokeText } from '../components/SkillInvokeText'
-import type { SkillPipeline } from '../content/overlay'
+import type { ResolvedSkillPipeline } from './skills'
 
 type PipelineDisplayProps = {
-  pipeline: SkillPipeline
+  pipeline: ResolvedSkillPipeline
   upstreamLabel: string
   downstreamLabel: string
 }

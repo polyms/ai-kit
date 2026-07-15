@@ -2,11 +2,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { KnowledgeArticle, KnowledgeChunk } from '../src/lib/knowledge/knowledge.types'
-import {
-  APP_ROOT,
-  assertNoForbiddenSeedLiterals,
-  TAILWIND_CONFIG_FILE,
-} from './seed-placeholders'
+import { APP_ROOT, assertNoForbiddenSeedLiterals, TAILWIND_CONFIG_FILE } from './seed-placeholders'
 
 /** Repo root from `apps/{project}/prisma/` when seeding the kit site. */
 export function defaultRepoRoot(): string {
@@ -40,9 +36,7 @@ type BiomeJson = {
 export function biomeJsonForKn001(repoRoot: string = defaultRepoRoot()): string {
   const parsed = JSON.parse(readRepoFile(repoRoot, 'biome.json')) as BiomeJson
   if (parsed.assist?.includes) {
-    parsed.assist.includes = parsed.assist.includes.map(entry =>
-      entry.replaceAll('apps/landing', APP_ROOT)
-    )
+    parsed.assist.includes = parsed.assist.includes.map(entry => entry.replaceAll('apps/landing', APP_ROOT))
   }
   if (parsed.javascript && 'globals' in parsed.javascript) {
     delete parsed.javascript.globals

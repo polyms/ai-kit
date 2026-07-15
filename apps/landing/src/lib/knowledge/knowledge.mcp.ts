@@ -1,10 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import { isMcpAdmin, type McpAuthSession } from '../mcp-auth.server'
-import {
-  type ComputeKnowledgeCoverageParams,
-  KnowledgeCoverageValidationError,
-} from './knowledge.coverage'
+import { type ComputeKnowledgeCoverageParams, KnowledgeCoverageValidationError } from './knowledge.coverage'
 import {
   DELETE_KNOWLEDGE_TOOL_DESCRIPTION,
   UPSERT_KNOWLEDGE_TOOL_DESCRIPTION,

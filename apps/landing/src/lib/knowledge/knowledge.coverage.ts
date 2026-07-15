@@ -51,14 +51,10 @@ export function computeKnowledgeCoverage(
 ): KnowledgeCoverageResult {
   const { axes } = params
   if (!Array.isArray(axes) || axes.length === 0) {
-    throw new KnowledgeCoverageValidationError(
-      'axes is required and must be a non-empty string array'
-    )
+    throw new KnowledgeCoverageValidationError('axes is required and must be a non-empty string array')
   }
   if (axes.some(axis => typeof axis !== 'string' || axis.trim() === '')) {
-    throw new KnowledgeCoverageValidationError(
-      'axes must not contain empty or whitespace-only strings'
-    )
+    throw new KnowledgeCoverageValidationError('axes must not contain empty or whitespace-only strings')
   }
 
   const intents = resolveIntents(params.intents)

@@ -217,8 +217,7 @@ Must contain a catch-all route to the server function:
       id: 'RB-001-05',
       slug: 'rb-001-05-database-url-missing',
       title: 'DATABASE_URL missing at runtime',
-      symptom:
-        'CMS-backed routes return 500 or empty; PrismaClientInitializationError in server logs.',
+      symptom: 'CMS-backed routes return 500 or empty; PrismaClientInitializationError in server logs.',
       cause: [
         'DATABASE_URL not set on Vercel or local .env for the Start app.',
         'Migrations or seed not applied to the Postgres instance.',

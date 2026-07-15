@@ -17,7 +17,7 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
       {
         name: 'description',
-        content: 'Polyms agent skills — align, spec, ship. Agent skills for real engineering.',
+        content: 'ai-kit — bộ skill agent của Polyms cho kỹ thuật thật tế: align, viết spec, rồi ship.',
       },
       { title: 'ai-kit — Polyms' },
       { name: 'theme-color', content: __THEME_COLOR__ },

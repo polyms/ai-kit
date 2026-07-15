@@ -4,6 +4,7 @@ import { IconMagnifier } from '../lib/icons'
 import { domainLabel, domainOptions, filterSkills, getSkills } from '../lib/skills'
 import type { SkillsSearch } from '../lib/skills-search'
 import { m } from '../paraglide/messages.js'
+import { useAppStore } from '../stores/useAppStore'
 import { SkillCommandRow } from './SkillCommandRow'
 
 type SkillCommandListProps = {
@@ -15,6 +16,7 @@ export function SkillCommandList({ search, onSearchChange }: SkillCommandListPro
   const [debouncedQ, setDebouncedQ] = useState(search.q)
   const [activeIndex, setActiveIndex] = useState(0)
   const searchRef = useRef<HTMLInputElement>(null)
+  const locale = useAppStore(s => s.locale)
 
   useEffect(() => {
     const id = window.setTimeout(() => setDebouncedQ(search.q), 150)
@@ -23,12 +25,12 @@ export function SkillCommandList({ search, onSearchChange }: SkillCommandListPro
 
   const skills = useMemo(
     () =>
-      filterSkills(getSkills(), {
+      filterSkills(getSkills(locale), {
         search: debouncedQ,
         domain: search.domain === 'all' ? undefined : search.domain,
         invocation: search.invocation,
       }),
-    [debouncedQ, search.domain, search.invocation]
+    [debouncedQ, search.domain, search.invocation, locale]
   )
 
   useEffect(() => {
@@ -106,7 +108,7 @@ export function SkillCommandList({ search, onSearchChange }: SkillCommandListPro
 
       {skills.length === 0 ? (
         <div className='border border-line border-dashed py-16 text-center'>
-          <p className='font-invoke text-muted'>&gt; 0 results</p>
+          <p className='font-invoke text-muted'>&gt; {m.catalog_zeroResults()}</p>
           <p className='mt-2 text-muted text-sm'>{m.catalog_empty()}</p>
           <button
             className='mt-4 text-primary-700 text-sm hover:underline'

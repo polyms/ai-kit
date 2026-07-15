@@ -1,9 +1,9 @@
-import type { AgentPanel as AgentPanelData } from '../content/overlay'
 import { GITHUB_REPO } from '../content/overlay'
+import type { ResolvedAgentPanel } from '../lib/skills'
 import { m } from '../paraglide/messages.js'
 
 type AgentPanelProps = {
-  panel: AgentPanelData
+  panel: ResolvedAgentPanel
   relatedAgents?: string[]
 }
 
@@ -17,7 +17,7 @@ export function AgentPanel({ panel, relatedAgents }: AgentPanelProps) {
       <p className='label-mono'>{m.catalog_agentHint()}</p>
       <p className='mt-2 font-semibold text-sm'>{panel.role}</p>
       <p className='mt-1 text-muted text-sm'>
-        <span className='font-medium text-fg'>Owns:</span> {formatOwns(panel.owns)}
+        <span className='font-medium text-fg'>{m.skillDetail_owns()}:</span> {formatOwns(panel.owns)}
       </p>
       <pre className='mt-3 font-invoke text-sm'>{panel.invokeHint}</pre>
       {relatedAgents && relatedAgents.length > 0 && (

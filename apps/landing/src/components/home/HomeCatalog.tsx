@@ -1,7 +1,8 @@
 import { Link } from '@tanstack/react-router'
-import { skillOverlays } from '../../content/overlay'
 import { SkillIcon } from '../../lib/skill-icons'
+import { getSkills } from '../../lib/skills'
 import { m } from '../../paraglide/messages.js'
+import { useAppStore } from '../../stores/useAppStore'
 import { HOME_PLAYFUL } from './brand'
 import { catalogCategory, catalogDisplayName } from './catalogCategory'
 import { HomeSectionChip } from './HomeSectionChip'
@@ -25,17 +26,19 @@ const HOME_CATALOG_SLUGS = [
   'devops',
 ] as const
 
-const homeCatalogSkills = HOME_CATALOG_SLUGS.map(slug => skillOverlays.find(s => s.slug === slug)).filter(
-  (s): s is NonNullable<typeof s> => s != null
-)
-
 export function HomeCatalog() {
+  const locale = useAppStore(s => s.locale)
+  const skills = getSkills(locale)
+  const homeCatalogSkills = HOME_CATALOG_SLUGS.map(slug => skills.find(s => s.slug === slug)).filter(
+    (s): s is NonNullable<typeof s> => s != null
+  )
+
   return (
     <section
       className='app-home-section app-home-section--catalog app-shell mx-auto max-w-[1080px]'
       id='catalog'
     >
-      <HomeSectionChip label='catalog' n='03' />
+      <HomeSectionChip label={m.chip_catalog()} n='03' />
       <div className='mb-3 flex items-baseline gap-3.5'>
         <h2 className='app-catalog__title m-0 font-bold font-sans tracking-tight'>
           {m.home_catalog_heading()}

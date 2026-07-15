@@ -1,8 +1,8 @@
 import { scoreKnowledgeFromCatalog, searchKnowledgeFromCatalog } from './knowledge.catalog-search'
 import {
   type ComputeKnowledgeCoverageParams,
-  type KnowledgeCoverageResult,
   computeKnowledgeCoverage,
+  type KnowledgeCoverageResult,
 } from './knowledge.coverage'
 import { searchChunksByVector } from './knowledge.embedding.repository.server'
 import { embedTexts, isEmbeddingEnabled } from './knowledge.embedding.server'

@@ -9,13 +9,6 @@ import { HomeSectionChip } from './HomeSectionChip'
 const REPO = 'git@github.com:polyms/ai-kit.git'
 const PATH = '~/src/ai-kit'
 
-const LINES = [
-  { prefix: '$', text: `git clone ${REPO} ${PATH}` },
-  { prefix: '$', text: `cd ${PATH}` },
-  { prefix: '$', text: 'pnpm bootstrap' },
-  { prefix: '#', text: 'symlinks agents + skills into Cursor and Claude Code' },
-] as const
-
 function renderTerminalLine(text: string, isComment: boolean) {
   if (isComment) {
     return <span className='app-terminal__dim'>{text}</span>
@@ -53,9 +46,16 @@ function renderTerminalLine(text: string, isComment: boolean) {
 }
 
 export function HomeQuickStart() {
+  const lines = [
+    { prefix: '$', text: `git clone ${REPO} ${PATH}` },
+    { prefix: '$', text: `cd ${PATH}` },
+    { prefix: '$', text: 'pnpm bootstrap' },
+    { prefix: '#', text: m.quickstart_terminalComment() },
+  ] as const
+
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='start'>
-      <HomeSectionChip label='quickstart' n='04' />
+      <HomeSectionChip label={m.chip_quickstart()} n='04' />
       <div className='flex flex-wrap items-center gap-14'>
         <div className='min-w-[280px] max-w-[460px] flex-[1_1_380px]'>
           <h2 className='app-install__title m-0 mb-5 font-bold font-sans text-fg'>
@@ -88,7 +88,7 @@ export function HomeQuickStart() {
             <span className='app-terminal__title ms-auto font-mono text-[11px]'>zsh — ai-kit bootstrap</span>
           </div>
           <div className='relative px-[22px] py-[18px] font-mono text-[14.5px] leading-loose'>
-            {LINES.map(line => {
+            {lines.map(line => {
               const isComment = line.prefix === '#'
               return (
                 <div key={line.text}>

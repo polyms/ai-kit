@@ -1,11 +1,10 @@
 import { Link } from '@tanstack/react-router'
-import type { SkillOverlay } from '../content/overlay'
-import { domainLabel } from '../lib/skills'
+import { domainLabel, type ResolvedSkillOverlay } from '../lib/skills'
 import { m } from '../paraglide/messages.js'
 import { SkillStatusBadge } from './SkillStatusBadge'
 
 type SkillCommandRowProps = {
-  skill: SkillOverlay
+  skill: ResolvedSkillOverlay
   active?: boolean
   onMouseEnter?: () => void
   onClick?: () => void

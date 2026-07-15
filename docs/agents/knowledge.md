@@ -91,10 +91,10 @@ it. Soft-required for `/setup` (persist into stack-profile), `/arch`, and `/arch
 
 ### Tool: `get_knowledge_coverage`
 
-| Arg       | Required                      | Notes                                                                 |
-| --------- | ----------------------------- | --------------------------------------------------------------------- |
-| `axes`    | **yes**, non-empty `string[]` | Empty, missing, or blank (trim) entries → validation tool error       |
-| `intents` | optional                      | Omit/`undefined` → all three; `[]` → validation error                 |
+| Arg       | Required                      | Notes                                                           |
+| --------- | ----------------------------- | --------------------------------------------------------------- |
+| `axes`    | **yes**, non-empty `string[]` | Empty, missing, or blank (trim) entries → validation tool error |
+| `intents` | optional                      | Omit/`undefined` → all three; `[]` → validation error           |
 
 **Match rule:** an article **covers** when `axes ⊆ article.axisTags` (case-insensitive). Only
 **published** articles (same filter as public search / `listKnowledgeArticlesFromDb`).

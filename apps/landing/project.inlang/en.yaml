@@ -20,6 +20,7 @@ catalog_sub: 15 skills — invoke, description, status, domain
 catalog_title: Skill catalog
 catalog_viewAll: View full catalog
 catalog_viewSource: View on GitHub
+catalog_zeroResults: 0 results
 
 # --- domain ---
 domain_alignment: Alignment
@@ -42,7 +43,6 @@ footer_col_pipeline: Pipeline
 footer_col_resources: Resources
 footer_copyright: MIT © 2026 Polyms
 footer_link_catalog: Skill catalog
-footer_link_discussions: Discussions
 footer_link_issues: Issues
 footer_starGithub: Star on GitHub
 
@@ -61,15 +61,10 @@ home_catalog_intro: Each capability is a short-named skill or agent, invoked wit
 # --- pipeline ---
 pipeline_agentsLabel: Principal agents
 pipeline_agent_design_owns: docs/design/ UI specs, @polyms/core-ui maps
-pipeline_agent_design_role: Principal product designer
 pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
-pipeline_agent_dev_role: Principal software engineer
 pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
-pipeline_agent_pm_role: Principal product manager
 pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys
-pipeline_agent_tester_role: Principal tester
 pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; /devops SEV
-pipeline_agent_techlead_role: Principal tech lead
 pipeline_intro: Each stage produces artifacts the next agent consumes. Raw issues route in separately via /triage — verified and briefed before they reach /dev.
 pipeline_stage_align: Align
 pipeline_stage_design: Design
@@ -83,6 +78,7 @@ pipeline_title: One pipeline, start to ship.
 
 # --- quickstart ---
 quickstart_body: Clone the repo, run `pnpm bootstrap` — it symlinks skills and agents into both Cursor and Claude Code. Restart your editor and type `/` to pick one.
+quickstart_terminalComment: symlinks agents + skills into Cursor and Claude Code
 quickstart_titlePrefix: Ninety seconds to first
 
 # --- nav ---
@@ -193,6 +189,27 @@ ops_viewPublic: View public
 # --- skillDetail ---
 skillDetail_boundaries: Boundaries
 skillDetail_downstream: Downstream
+skillDetail_owns: Owns
 skillDetail_pipeline: Pipeline
 skillDetail_upstream: Upstream
 skillDetail_whenToUse: When to use
+
+# --- ticker ---
+ticker_specBeforeCode: spec before code
+ticker_citeFile: cite the file
+ticker_noVibeCoding: no vibe coding
+ticker_cursorFirst: cursor-first
+ticker_toolAgnostic: tool-agnostic
+ticker_mitLicensed: MIT licensed
+ticker_reviewDiff: review the diff
+ticker_shipGreen: ship green builds
+
+# --- hero align card ---
+hero_alignCard_clarify: 3 clarifying questions before spec
+hero_alignCard_wrote: wrote
+
+# --- home section chips ---
+chip_principles: principles
+chip_pipeline: pipeline
+chip_catalog: catalog
+chip_quickstart: quickstart

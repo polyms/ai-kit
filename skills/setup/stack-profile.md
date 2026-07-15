@@ -48,11 +48,11 @@ Do **not** pass the full axes list in one shot. For each intent:
 3. If subset empty → **skip** that intent (never call with empty `axes`)
 4. Call `get_knowledge_coverage({ axes: subset, intents: [intent] })`
 
-| Intent      | Pool                                                                                                                           | Core priority                                               |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| Intent      | Pool                                                                                                                            | Core priority                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | `incident`  | vercel, tanstack-start, nitro, pnpm, nx, monorepo, postgres, prisma, ssr, build-output-api, github-packages, ci, github-actions | vercel → tanstack-start → nitro → (pnpm\|nx)                |
-| `design`    | tanstack-start, tanstack-router, nitro, zustand, pnpm, nx, monorepo, prisma, typescript                                        | tanstack-start → tanstack-router → zustand → (nx\|monorepo) |
-| `toolchain` | biome, prettier, typescript, polyms-default, markdown, formatting                                                              | biome → prettier → (polyms-default if present)              |
+| `design`    | tanstack-start, tanstack-router, nitro, zustand, pnpm, nx, monorepo, prisma, typescript                                         | tanstack-start → tanstack-router → zustand → (nx\|monorepo) |
+| `toolchain` | biome, prettier, typescript, polyms-default, markdown, formatting                                                               | biome → prettier → (polyms-default if present)              |
 
 ### Example section (fill from MCP; omit intents you skipped)
 
@@ -61,11 +61,11 @@ Do **not** pass the full axes list in one shot. For each intent:
 
 Bootstrap only — re-call `get_knowledge_coverage` in `/arch` / `/arch-refactor`.
 
-| Intent      | Axes subset                              | Covered | Article ids |
-| ----------- | ---------------------------------------- | ------- | ----------- |
-| incident    | vercel, tanstack-start, nitro            | yes/no  | …           |
-| design      | tanstack-start, tanstack-router, zustand | yes/no  | …           |
-| toolchain   | biome, prettier                          | yes/no  | …           |
+| Intent    | Axes subset                              | Covered | Article ids |
+| --------- | ---------------------------------------- | ------- | ----------- |
+| incident  | vercel, tanstack-start, nitro            | yes/no  | …           |
+| design    | tanstack-start, tanstack-router, zustand | yes/no  | …           |
+| toolchain | biome, prettier                          | yes/no  | …           |
 ```
 
 ## Notes

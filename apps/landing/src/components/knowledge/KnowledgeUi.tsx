@@ -134,7 +134,7 @@ export function KnowledgeResultsTable({ results, empty, onClear }: KnowledgeResu
             return (
               <tr className='cursor-pointer' key={`${row.type}-${row.id}`}>
                 <td>
-                  <span className='badge badge-light font-mono text-xs uppercase'>
+                  <span className='badge badge-light whitespace-nowrap font-mono text-xs uppercase'>
                     {row.type === 'article' ? intentLabel(row.intent) : chunkTypeLabel(row.chunkType)}
                   </span>
                 </td>
@@ -227,7 +227,7 @@ export function KnowledgeChunkBlock({ chunk }: KnowledgeChunkBlockProps) {
     <section className='knowledge-chunk mt-8 border-line border-t pt-8' id={chunk.slug}>
       <div className='flex flex-wrap items-center gap-2'>
         <h3 className='h3'>{chunk.title}</h3>
-        <span className='badge badge-light font-mono text-xs uppercase'>
+        <span className='badge badge-light whitespace-nowrap font-mono text-xs uppercase'>
           {chunkTypeLabel(chunk.chunkType)}
         </span>
         {chunk.artifactFilename ? (

@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  KnowledgeCoverageValidationError,
-  computeKnowledgeCoverage,
-} from './knowledge.coverage'
+import { computeKnowledgeCoverage, KnowledgeCoverageValidationError } from './knowledge.coverage'
 import type { KnowledgeArticle } from './knowledge.types'
 
 function article(
@@ -99,33 +96,27 @@ describe('computeKnowledgeCoverage', () => {
   })
 
   it('rejects empty axes', () => {
-    expect(() => computeKnowledgeCoverage(fixtures, { axes: [] })).toThrow(
-      KnowledgeCoverageValidationError
-    )
+    expect(() => computeKnowledgeCoverage(fixtures, { axes: [] })).toThrow(KnowledgeCoverageValidationError)
     expect(() => computeKnowledgeCoverage(fixtures, { axes: [] })).toThrow(/axes/i)
   })
 
   it('rejects blank axes after trim', () => {
     for (const axes of [[''], ['  '], ['vercel', '']] as string[][]) {
-      expect(() => computeKnowledgeCoverage(fixtures, { axes })).toThrow(
-        KnowledgeCoverageValidationError
-      )
+      expect(() => computeKnowledgeCoverage(fixtures, { axes })).toThrow(KnowledgeCoverageValidationError)
       expect(() => computeKnowledgeCoverage(fixtures, { axes })).toThrow(/axes/i)
     }
   })
 
   it('rejects empty intents array (omit means all three)', () => {
-    expect(() =>
-      computeKnowledgeCoverage(fixtures, { axes: ['vercel'], intents: [] })
-    ).toThrow(KnowledgeCoverageValidationError)
-    expect(() =>
-      computeKnowledgeCoverage(fixtures, { axes: ['vercel'], intents: [] })
-    ).toThrow(/intents/i)
+    expect(() => computeKnowledgeCoverage(fixtures, { axes: ['vercel'], intents: [] })).toThrow(
+      KnowledgeCoverageValidationError
+    )
+    expect(() => computeKnowledgeCoverage(fixtures, { axes: ['vercel'], intents: [] })).toThrow(/intents/i)
   })
 
   it('rejects missing axes', () => {
-    expect(() =>
-      computeKnowledgeCoverage(fixtures, { axes: undefined as unknown as string[] })
-    ).toThrow(KnowledgeCoverageValidationError)
+    expect(() => computeKnowledgeCoverage(fixtures, { axes: undefined as unknown as string[] })).toThrow(
+      KnowledgeCoverageValidationError
+    )
   })
 })

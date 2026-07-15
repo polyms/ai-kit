@@ -9,6 +9,7 @@ import { PipelineDisplay } from '../../lib/pipeline-display'
 import { domainLabel, getSkillBySlug } from '../../lib/skills'
 import { defaultSkillsSearch } from '../../lib/skills-search'
 import { m } from '../../paraglide/messages.js'
+import { useAppStore } from '../../stores/useAppStore'
 
 export const Route = createFileRoute('/skills/$slug')({
   component: SkillDetailPage,
@@ -16,7 +17,8 @@ export const Route = createFileRoute('/skills/$slug')({
 
 function SkillDetailPage() {
   const { slug } = Route.useParams()
-  const skill = getSkillBySlug(slug)
+  const locale = useAppStore(s => s.locale)
+  const skill = getSkillBySlug(slug, locale)
 
   if (!skill) {
     return (
@@ -97,9 +99,9 @@ function SkillDetailPage() {
           </div>
         )}
 
-        {!showPrompt && skill.slug === 'arch' && (
+        {!showPrompt && skill.slug === 'arch' && skill.footnote && (
           <div className='mt-8 border border-line bg-surface p-4 text-muted text-sm'>
-            Model-invoked — agent reaches via description when placing seams or deepening modules.
+            <SkillInvokeText text={skill.footnote} />
           </div>
         )}
 

@@ -22,7 +22,8 @@ export function CommandPalette() {
   const [activeIndex, setActiveIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
-  const skills = getSkills()
+  const locale = useAppStore(s => s.locale)
+  const skills = getSkills(locale)
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -136,7 +137,7 @@ export function CommandPalette() {
           ))}
           {filtered.length === 0 && (
             <div className='px-4 py-8 text-center'>
-              <p className='font-invoke text-muted'>&gt; 0 results</p>
+              <p className='font-invoke text-muted'>&gt; {m.catalog_zeroResults()}</p>
               <p className='mt-2 text-muted text-sm'>{m.catalog_empty()}</p>
             </div>
           )}
