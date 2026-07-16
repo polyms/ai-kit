@@ -81,7 +81,7 @@ paste.
 Skip this step when step 1 decided **inline** (diff under 10 changed lines) — go straight
 to **5. Aggregate** with your own inline findings instead.
 
-Send a **single message** with three Task tool calls (`subagent_type: general-purpose`) —
+Send a **single message** with three Agent tool calls (`subagent_type: general-purpose`) —
 or two when Spec is skipped. Do not run axes sequentially.
 
 Always include Standards and Simplify. Include Spec when a spec source exists.
@@ -124,11 +124,20 @@ same batch when available, or skipped with explicit reason.
 
 ### 5. Aggregate
 
-Present each run axis under `## Standards`, `## Spec`, and `## Simplify` headings,
-verbatim or lightly cleaned (`## Spec` states **no spec available** when that axis was
-skipped). Do **not** merge or rerank findings across axes.
+Present each run axis under `## Standards`, `## Spec`, and `## Simplify` headings
+(`## Spec` states **no spec available** when that axis was skipped). Do **not** merge or
+rerank findings across axes.
 
-**Severity tags** (presentation only — apply when cleaning each axis; do not invent new
+**Never paste raw sub-agent output to the user.** Sub-agents write terse, jargon-dense
+English under a word limit — that's fine for their own reasoning, but it isn't the report
+a person reads. Rewrite every finding as one full, plain Vietnamese sentence: what's wrong,
+where, why it matters. Keep file paths, identifiers, quoted code, and rule names verbatim —
+translate everything around them. Cryptic axis-specific tags never reach the user bare:
+turn Simplify's `delete:` / `stdlib:` / `native:` / `yagni:` / `shrink:` into a short
+Vietnamese clause (e.g. "xoá được — logic này trùng với X ở dòng Y" instead of a bare
+`delete:` line).
+
+**Severity tags** (presentation only — apply when rewriting each axis; do not invent new
 findings):
 
 | Tag               | Meaning               | Typical sources                                                                          |
@@ -139,14 +148,18 @@ findings):
 
 Prefix each finding line with one tag. When an axis returns unstructured prose, assign the
 strongest justified tag per discrete issue — prefer under-tagging over inflating blockers.
+State the legend once, briefly, near the top of the report (in Vietnamese) so 🔴/🟡/💭
+don't require the reader to already know this table.
 
-End with a one-line summary: total findings per axis **by severity** (e.g. `Standards:
-1🔴 2🟡 · Spec: 0 · Simplify: 3💭`), and the worst issue _within each axis_ (if any).
+End with a one-line summary in Vietnamese: total findings per axis **by severity** (e.g.
+`Standards: 1🔴 2🟡 · Spec: 0 · Simplify: 3💭`), and the worst issue _within each axis_ (if
+any), stated as a plain sentence — not a re-paste of the sub-agent's shorthand.
 Don't pick a single winner across axes.
 
 **Completion criterion:** Each run axis under its heading (`## Spec` states **no spec
-available** when skipped); every finding tagged; per-axis totals by severity and worst
-issue stated.
+available** when skipped); every finding rewritten as a full Vietnamese sentence with no
+bare jargon tags; every finding tagged; severity legend stated once; per-axis totals by
+severity and worst issue stated in prose.
 
 ## Why three axes
 
