@@ -5,7 +5,13 @@ import type {
 
 export type KnowledgeIntent = 'incident' | 'design' | 'toolchain'
 
-export type KnowledgeChunkType = 'incident' | 'seam' | 'config' | 'checklist' | 'prose'
+const KNOWLEDGE_INTENTS = new Set<string>(['incident', 'design', 'toolchain'] satisfies KnowledgeIntent[])
+
+export function parseKnowledgeIntent(value: string | null | undefined): KnowledgeIntent | undefined {
+  return value !== null && value !== undefined && KNOWLEDGE_INTENTS.has(value)
+    ? (value as KnowledgeIntent)
+    : undefined
+}
 
 export type KnowledgeChunk = Omit<DbKnowledgeChunk, 'articleId' | 'createdAt' | 'updatedAt'>
 
@@ -26,6 +32,7 @@ export type KnowledgeSearchResultItem =
       type: 'chunk'
       id: string
       articleId: string
+      slug: string
       title: string
       match: string
       intent: string

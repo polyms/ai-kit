@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as QuickStartRouteImport } from './routes/quick-start'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as OpsRouteRouteImport } from './routes/ops/route'
+import { Route as KnowledgeRouteRouteImport } from './routes/knowledge/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SkillsIndexRouteImport } from './routes/skills/index'
 import { Route as OpsIndexRouteImport } from './routes/ops/index'
@@ -43,6 +44,11 @@ const OpsRouteRoute = OpsRouteRouteImport.update({
   path: '/ops',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KnowledgeRouteRoute = KnowledgeRouteRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -59,9 +65,9 @@ const OpsIndexRoute = OpsIndexRouteImport.update({
   getParentRoute: () => OpsRouteRoute,
 } as any)
 const KnowledgeIndexRoute = KnowledgeIndexRouteImport.update({
-  id: '/knowledge/',
-  path: '/knowledge/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => KnowledgeRouteRoute,
 } as any)
 const SkillsSlugRoute = SkillsSlugRouteImport.update({
   id: '/skills/$slug',
@@ -74,9 +80,9 @@ const OpsLoginRoute = OpsLoginRouteImport.update({
   getParentRoute: () => OpsRouteRoute,
 } as any)
 const KnowledgeIdRoute = KnowledgeIdRouteImport.update({
-  id: '/knowledge/$id',
-  path: '/knowledge/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => KnowledgeRouteRoute,
 } as any)
 const DotwellKnownOauthProtectedResourceRoute =
   DotwellKnownOauthProtectedResourceRouteImport.update({
@@ -124,6 +130,7 @@ const ApiOpsAuthCallbackRoute = ApiOpsAuthCallbackRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/knowledge': typeof KnowledgeRouteRouteWithChildren
   '/ops': typeof OpsRouteRouteWithChildren
   '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/knowledge': typeof KnowledgeRouteRouteWithChildren
   '/ops': typeof OpsRouteRouteWithChildren
   '/mcp': typeof McpRoute
   '/quick-start': typeof QuickStartRoute
@@ -186,6 +194,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/knowledge'
     | '/ops'
     | '/mcp'
     | '/quick-start'
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/knowledge'
     | '/ops'
     | '/mcp'
     | '/quick-start'
@@ -246,14 +256,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KnowledgeRouteRoute: typeof KnowledgeRouteRouteWithChildren
   OpsRouteRoute: typeof OpsRouteRouteWithChildren
   McpRoute: typeof McpRoute
   QuickStartRoute: typeof QuickStartRoute
   DotwellKnownOauthAuthorizationServerRoute: typeof DotwellKnownOauthAuthorizationServerRoute
   DotwellKnownOauthProtectedResourceRoute: typeof DotwellKnownOauthProtectedResourceRouteWithChildren
-  KnowledgeIdRoute: typeof KnowledgeIdRoute
   SkillsSlugRoute: typeof SkillsSlugRoute
-  KnowledgeIndexRoute: typeof KnowledgeIndexRoute
   SkillsIndexRoute: typeof SkillsIndexRoute
   ApiOpsAuthCallbackRoute: typeof ApiOpsAuthCallbackRoute
   ApiOpsAuthLoginRoute: typeof ApiOpsAuthLoginRoute
@@ -283,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpsRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/knowledge': {
+      id: '/knowledge'
+      path: '/knowledge'
+      fullPath: '/knowledge'
+      preLoaderRoute: typeof KnowledgeRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -306,10 +322,10 @@ declare module '@tanstack/react-router' {
     }
     '/knowledge/': {
       id: '/knowledge/'
-      path: '/knowledge'
+      path: '/'
       fullPath: '/knowledge/'
       preLoaderRoute: typeof KnowledgeIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof KnowledgeRouteRoute
     }
     '/skills/$slug': {
       id: '/skills/$slug'
@@ -327,10 +343,10 @@ declare module '@tanstack/react-router' {
     }
     '/knowledge/$id': {
       id: '/knowledge/$id'
-      path: '/knowledge/$id'
+      path: '/$id'
       fullPath: '/knowledge/$id'
       preLoaderRoute: typeof KnowledgeIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof KnowledgeRouteRoute
     }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
@@ -391,6 +407,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface KnowledgeRouteRouteChildren {
+  KnowledgeIdRoute: typeof KnowledgeIdRoute
+  KnowledgeIndexRoute: typeof KnowledgeIndexRoute
+}
+
+const KnowledgeRouteRouteChildren: KnowledgeRouteRouteChildren = {
+  KnowledgeIdRoute: KnowledgeIdRoute,
+  KnowledgeIndexRoute: KnowledgeIndexRoute,
+}
+
+const KnowledgeRouteRouteWithChildren = KnowledgeRouteRoute._addFileChildren(
+  KnowledgeRouteRouteChildren,
+)
+
 interface OpsRouteRouteChildren {
   OpsLoginRoute: typeof OpsLoginRoute
   OpsIndexRoute: typeof OpsIndexRoute
@@ -426,6 +456,7 @@ const DotwellKnownOauthProtectedResourceRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KnowledgeRouteRoute: KnowledgeRouteRouteWithChildren,
   OpsRouteRoute: OpsRouteRouteWithChildren,
   McpRoute: McpRoute,
   QuickStartRoute: QuickStartRoute,
@@ -433,9 +464,7 @@ const rootRouteChildren: RootRouteChildren = {
     DotwellKnownOauthAuthorizationServerRoute,
   DotwellKnownOauthProtectedResourceRoute:
     DotwellKnownOauthProtectedResourceRouteWithChildren,
-  KnowledgeIdRoute: KnowledgeIdRoute,
   SkillsSlugRoute: SkillsSlugRoute,
-  KnowledgeIndexRoute: KnowledgeIndexRoute,
   SkillsIndexRoute: SkillsIndexRoute,
   ApiOpsAuthCallbackRoute: ApiOpsAuthCallbackRoute,
   ApiOpsAuthLoginRoute: ApiOpsAuthLoginRoute,

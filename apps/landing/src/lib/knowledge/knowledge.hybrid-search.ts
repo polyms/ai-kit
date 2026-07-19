@@ -1,7 +1,7 @@
 import type { KnowledgeArticle, KnowledgeSearchResultItem } from './knowledge.types'
 
-export const HYBRID_VECTOR_BOOST = 1.5
-export const HYBRID_VECTOR_MIN_SCORE = 0.28
+const HYBRID_VECTOR_BOOST = 1.5
+const HYBRID_VECTOR_MIN_SCORE = 0.28
 
 export type VectorSearchHit = {
   chunkId: string
@@ -47,6 +47,7 @@ export function mergeHybridSearchResults(
       type: 'chunk',
       id: chunk.id,
       articleId: hit.articleId,
+      slug: chunk.slug,
       title: chunk.title,
       match: `semantic (${hit.similarity.toFixed(2)})`,
       intent: chunk.intent,

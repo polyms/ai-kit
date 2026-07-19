@@ -1,5 +1,12 @@
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
-import { AxisTagRow, intentLabel, KnowledgeBreadcrumb, KnowledgeChunkBlock } from '../../components/knowledge'
+import {
+  AxisTagRow,
+  chunkTypeLabel,
+  intentLabel,
+  KnowledgeCheckList,
+  KnowledgeChunkBlock,
+} from '../../components/knowledge'
+import { IconChecklistMinimalistic, IconTuning2 } from '../../lib/icons'
 import { defaultKnowledgeSearch, getKnowledgeArticleFn } from '../../lib/knowledge/knowledge.fns'
 import { m } from '../../paraglide/messages.js'
 
@@ -17,7 +24,7 @@ export const Route = createFileRoute('/knowledge/$id')({
 
 function KnowledgeNotFound() {
   return (
-    <div className='page-x section-y mx-auto max-w-4xl'>
+    <div className='px-8 py-16'>
       <div className='rounded-lg border border-line border-dashed py-16 text-center'>
         <p className='text-muted'>{m.knowledge_notFound()}</p>
         <RouterLink
@@ -34,71 +41,77 @@ function KnowledgeNotFound() {
 
 function KnowledgeDetailPage() {
   const { article } = Route.useLoaderData()
+  const hasToc = article.chunks.length > 1
 
   return (
-    <div className='knowledge-page page-x section-y mx-auto max-w-4xl'>
-      <KnowledgeBreadcrumb
-        items={[{ label: m.knowledge_title(), href: '/knowledge' }, { label: article.id }]}
-      />
+    <div className='knowledge-page w-full px-8 py-10 lg:px-12'>
+      <div className='flex flex-wrap items-center gap-2.5'>
+        <span className='inline-flex items-center rounded-full bg-surface px-2.5 py-1 font-mono text-muted text-xs'>
+          {article.id}
+        </span>
+        <span className='badge badge-primary inline-flex items-center gap-1'>
+          <IconTuning2 aria-hidden size={12} />
+          {m.knowledge_intent()}: {intentLabel(article.intent)}
+        </span>
+      </div>
 
-      <p className='label-mono'>{article.id}</p>
-      <h1 className='h1 mt-2'>
-        {article.id}: {article.title}
-      </h1>
-      <div className='mt-4 flex flex-wrap items-center gap-2'>
-        <span className='label-mono'>{m.knowledge_intent()}</span>
-        <span className='badge badge-primary'>{intentLabel(article.intent)}</span>
+      <h1 className='h1 mt-3'>{article.title}</h1>
+
+      <div className='mt-4'>
         <AxisTagRow tags={article.axisTags} />
       </div>
 
-      {article.checklist.length > 0 ? (
-        <section
-          className='knowledge-section mt-10 rounded-lg border border-line bg-surface p-5'
-          id='checklist'
-        >
-          <h2 className='h2'>{m.knowledge_checklist()}</h2>
-          <ul className='mt-4 list-none space-y-2'>
-            {article.checklist.map(item => (
-              <li className='flex gap-2 text-sm' key={item}>
-                <span aria-hidden className='text-primary-700'>
-                  ✓
-                </span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
+      <div className='mt-10 flex flex-col gap-10 xl:flex-row'>
+        <div className='min-w-0 flex-1'>
+          {article.checklist.length > 0 ? (
+            <div className='mb-8 rounded-2xl border border-line border-dashed p-5'>
+              <div className='mb-2 flex items-center gap-2'>
+                <IconChecklistMinimalistic aria-hidden className='text-primary-600' size={18} />
+                <span className='font-bold text-sm'>{m.knowledge_checklist()}</span>
+              </div>
+              <KnowledgeCheckList items={article.checklist} />
+            </div>
+          ) : null}
 
-      <section className='knowledge-section mt-12' id='chunks'>
-        <div className='flex items-baseline gap-2'>
-          <h2 className='h2'>{m.knowledge_chunks()}</h2>
-          <span className='badge badge-light font-mono'>{article.chunks.length}</span>
+          <div>
+            {article.chunks.map(chunk => (
+              <KnowledgeChunkBlock chunk={chunk} key={chunk.id} />
+            ))}
+          </div>
         </div>
 
-        {article.chunks.length > 1 ? (
-          <nav
-            aria-label={m.knowledge_chunkNav()}
-            className='mt-4 rounded-lg border border-line bg-surface p-4'
-          >
-            <p className='label-mono text-xs'>{m.knowledge_readingOrder()}</p>
-            <ol className='mt-2 list-decimal space-y-1 ps-5 text-sm'>
-              {article.chunks.map(chunk => (
-                <li key={chunk.id}>
-                  <a className='link' href={`#${chunk.slug}`}>
-                    {chunk.title}
-                  </a>
-                  <span className='ms-2 font-mono text-muted text-xs uppercase'>{chunk.chunkType}</span>
-                </li>
-              ))}
-            </ol>
-          </nav>
+        {hasToc ? (
+          <div className='shrink-0 xl:w-56'>
+            <div className='xl:sticky xl:top-8'>
+              <p className='label-mono mb-2 text-muted'>
+                {m.knowledge_readingOrder()} · {article.chunks.length}
+              </p>
+              <nav aria-label={m.knowledge_chunkNav()}>
+                <ol className='list-none space-y-1'>
+                  {article.chunks.map((chunk, index) => (
+                    <li key={chunk.id}>
+                      <a
+                        className='flex items-center gap-2.5 rounded-lg px-2.5 py-2 no-underline hover:bg-surface'
+                        href={`#${chunk.slug}`}
+                      >
+                        <span className='flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-surface font-mono text-[10.5px] text-muted'>
+                          {index + 1}
+                        </span>
+                        <span className='min-w-0 flex-1'>
+                          <span className='block truncate font-semibold text-fg text-xs'>{chunk.title}</span>
+                          <span className='block text-[11px] text-muted'>
+                            {chunkTypeLabel(chunk.chunkType)}
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </div>
+          </div>
         ) : null}
-
-        {article.chunks.map(chunk => (
-          <KnowledgeChunkBlock chunk={chunk} key={chunk.id} />
-        ))}
-      </section>
+      </div>
     </div>
   )
 }

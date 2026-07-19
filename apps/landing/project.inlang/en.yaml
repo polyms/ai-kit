@@ -115,7 +115,6 @@ principles_titleAccent: engineering.
 principles_titlePrefix: Real
 
 # --- knowledge ---
-knowledge_axisTags: Axis tags
 knowledge_backToIndex: Back to knowledge
 knowledge_checklist: Checklist
 knowledge_cause: Cause
@@ -126,23 +125,19 @@ knowledge_chunkType_config: Config
 knowledge_chunkType_incident: Incident
 knowledge_chunkType_prose: Prose
 knowledge_chunkType_seam: Seam
-knowledge_chunks: Chunks
 knowledge_chunkNav: On this page
 knowledge_readingOrder: Reading order
-knowledge_col_id: ID
-knowledge_col_match: Match
-knowledge_col_tags: Tags
-knowledge_col_title: Title
-knowledge_col_type: Type
 knowledge_empty: No Knowledge articles match your search.
-knowledge_fallback: 'Mirror on GitHub:'
 knowledge_intent: Intent
 knowledge_intent_design: Design
 knowledge_intent_incident: Incident
 knowledge_intent_toolchain: Toolchain
-knowledge_kicker: KNOWLEDGE
+knowledge_intent_design_desc: Seams between stack choices — routing, state, modules.
+knowledge_intent_incident_desc: Deploy/CI symptom → cause → fix → verify.
+knowledge_intent_toolchain_desc: Org-wide setup recipes — formatters, tooling.
+knowledge_intro_body: Pick an article from the list on the left to read it, or filter by intent below.
+knowledge_intro_title: Knowledge retrieval for agents
 knowledge_notFound: Knowledge article not found.
-knowledge_results: Results
 knowledge_resultsCaption: Knowledge search results
 knowledge_searchLabel: Search Knowledge by topic or symptom
 knowledge_searchPlaceholder: biome prettier setup

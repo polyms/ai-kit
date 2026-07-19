@@ -123,7 +123,6 @@ principles_titleAccent: thật tế
 principles_titlePrefix: Kỹ thuật
 
 # --- knowledge ---
-knowledge_axisTags: Nhãn trục
 knowledge_backToIndex: Quay lại Tri thức
 knowledge_checklist: Kiểm mục
 knowledge_cause: Nguyên nhân
@@ -134,23 +133,19 @@ knowledge_chunkType_config: Cấu hình
 knowledge_chunkType_incident: Sự cố
 knowledge_chunkType_prose: Văn bản
 knowledge_chunkType_seam: Seam
-knowledge_chunks: Đoạn
 knowledge_chunkNav: Trên trang này
 knowledge_readingOrder: Thứ tự đọc
-knowledge_col_id: ID
-knowledge_col_match: Khớp
-knowledge_col_tags: Nhãn
-knowledge_col_title: Tiêu đề
-knowledge_col_type: Loại
 knowledge_empty: Không có bài Knowledge nào khớp tìm kiếm.
-knowledge_fallback: 'Bản sao trên GitHub:'
 knowledge_intent: Mục đích
 knowledge_intent_design: Thiết kế
 knowledge_intent_incident: Sự cố
 knowledge_intent_toolchain: Công cụ
-knowledge_kicker: KNOWLEDGE
+knowledge_intent_design_desc: Seam giữa các lựa chọn stack — routing, state, module hoá.
+knowledge_intent_incident_desc: Triệu chứng deploy/CI → nguyên nhân → cách sửa → xác minh.
+knowledge_intent_toolchain_desc: Công thức thiết lập dùng chung toàn tổ chức — formatter, tooling.
+knowledge_intro_body: Chọn một tài liệu ở danh sách bên trái để xem chi tiết, hoặc lọc theo mục đích bên dưới.
+knowledge_intro_title: Tra cứu tri thức cho agent
 knowledge_notFound: Không tìm thấy bài Knowledge.
-knowledge_results: Kết quả
 knowledge_resultsCaption: Kết quả tìm Knowledge
 knowledge_searchLabel: Tìm Knowledge theo chủ đề hoặc triệu chứng
 knowledge_searchPlaceholder: biome prettier setup

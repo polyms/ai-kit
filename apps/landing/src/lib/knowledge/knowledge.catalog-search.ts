@@ -45,6 +45,7 @@ function chunkToResult(chunk: KnowledgeChunk, articleId: string, match: string):
     type: 'chunk',
     id: chunk.id,
     articleId,
+    slug: chunk.slug,
     title: chunk.title,
     match,
     intent: chunk.intent,

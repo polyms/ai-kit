@@ -1,6 +1,7 @@
 import { Button } from '@polyms/core-ui'
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
 import { OpsShell } from '../../../components/ops'
+import { defaultKnowledgeSearch } from '../../../lib/knowledge/knowledge.fns'
 import { listOpsKnowledgeFn } from '../../../lib/ops/ops.cms.fns'
 import { m } from '../../../paraglide/messages.js'
 
@@ -78,6 +79,7 @@ function OpsKnowledgePage() {
                       <RouterLink
                         className='link link-primary me-3'
                         params={{ id: row.id }}
+                        search={defaultKnowledgeSearch}
                         to='/knowledge/$id'
                       >
                         {m.ops_viewPublic()}

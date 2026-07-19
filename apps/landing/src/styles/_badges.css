@@ -5,3 +5,15 @@
 .badge-status-planned {
   @apply rounded-md border border-line bg-surface-2/50 px-2 py-0.5 text-muted text-xs;
 }
+
+.item-incident {
+  @apply bg-danger-500/10 text-danger-600;
+}
+
+.item-design {
+  @apply bg-info-500/10 text-info-600;
+}
+
+.item-toolchain {
+  @apply bg-warning-500/10 text-warning-600;
+}

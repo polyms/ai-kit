@@ -1,11 +1,9 @@
+export { KnowledgeSidebar } from './KnowledgeSidebar'
 export {
   AxisTagRow,
   chunkTypeLabel,
   intentLabel,
-  KnowledgeBreadcrumb,
+  KnowledgeCheckList,
   KnowledgeChunkBlock,
-  KnowledgeIntentTabs,
-  KnowledgeResultsSkeleton,
-  KnowledgeResultsTable,
   KnowledgeSearch,
 } from './KnowledgeUi'

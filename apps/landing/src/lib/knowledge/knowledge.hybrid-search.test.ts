@@ -61,6 +61,7 @@ describe('knowledge.hybrid-search', () => {
         type: 'chunk' as const,
         id: 'KN-001-biome-json',
         articleId: 'KN-001',
+        slug: 'biome-json',
         title: 'biome.json',
         match: 'biome.json',
         intent: 'toolchain',

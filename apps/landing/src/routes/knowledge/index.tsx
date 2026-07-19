@@ -1,103 +1,68 @@
-import { createFileRoute } from '@tanstack/react-router'
-import {
-  KnowledgeIntentTabs,
-  KnowledgeResultsSkeleton,
-  KnowledgeResultsTable,
-  KnowledgeSearch as KnowledgeSearchForm,
-} from '../../components/knowledge'
-import {
-  defaultKnowledgeSearch,
-  type KnowledgeSearch,
-  searchKnowledgeFn,
-} from '../../lib/knowledge/knowledge.fns'
+import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
+import { IconBookBookmark, IconCodeSquare, IconDangerTriangle, IconPaletteRound } from '../../lib/icons'
+import type { KnowledgeSearch } from '../../lib/knowledge/knowledge.fns'
 import type { KnowledgeIntent } from '../../lib/knowledge/knowledge.types'
 import { m } from '../../paraglide/messages.js'
 
-const KNOWLEDGE_INTENTS = ['incident', 'design', 'toolchain'] as const
-
-function parseIntent(value: unknown): KnowledgeIntent | undefined {
-  return typeof value === 'string' && KNOWLEDGE_INTENTS.includes(value as KnowledgeIntent)
-    ? (value as KnowledgeIntent)
-    : undefined
-}
-
 export const Route = createFileRoute('/knowledge/')({
-  validateSearch: (search: Record<string, unknown>): KnowledgeSearch => ({
-    q: typeof search.q === 'string' ? search.q : '',
-    intent: parseIntent(search.intent),
-  }),
-  loaderDeps: ({ search: { q, intent } }) => ({ q, intent }),
-  loader: async ({ deps: { q, intent } }) => ({
-    results: await searchKnowledgeFn({ data: { q, intent } }),
-  }),
   component: KnowledgeIndexPage,
-  pendingComponent: KnowledgeIndexPending,
 })
 
-function KnowledgeIndexPending() {
-  return (
-    <div className='knowledge-page page-x section-y mx-auto max-w-4xl'>
-      <p className='label-mono'>{m.knowledge_kicker()}</p>
-      <h1 className='h1 mt-2'>{m.knowledge_title()}</h1>
-      <p className='mt-2 text-muted'>{m.knowledge_sub()}</p>
-      <div className='mt-8'>
-        <KnowledgeResultsSkeleton />
-      </div>
-    </div>
-  )
-}
+const INTENT_CARDS = [
+  {
+    value: 'incident',
+    icon: IconDangerTriangle,
+    label: () => m.knowledge_intent_incident(),
+    desc: () => m.knowledge_intent_incident_desc(),
+  },
+  {
+    value: 'design',
+    icon: IconPaletteRound,
+    label: () => m.knowledge_intent_design(),
+    desc: () => m.knowledge_intent_design_desc(),
+  },
+  {
+    value: 'toolchain',
+    icon: IconCodeSquare,
+    label: () => m.knowledge_intent_toolchain(),
+    desc: () => m.knowledge_intent_toolchain_desc(),
+  },
+] as const satisfies ReadonlyArray<{
+  value: KnowledgeIntent
+  icon: typeof IconDangerTriangle
+  label: () => string
+  desc: () => string
+}>
 
 function KnowledgeIndexPage() {
-  const { q, intent } = Route.useSearch()
-  const navigate = Route.useNavigate()
-  const { results } = Route.useLoaderData()
-
   return (
-    <div className='knowledge-page page-x section-y mx-auto max-w-4xl'>
-      <p className='label-mono'>{m.knowledge_kicker()}</p>
-      <h1 className='h1 mt-2'>{m.knowledge_title()}</h1>
-      <p className='mt-2 text-muted'>{m.knowledge_sub()}</p>
+    <div className='flex min-h-full flex-col items-center justify-center px-8 py-16 text-center'>
+      <span className='flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-100 text-primary-600'>
+        <IconBookBookmark aria-hidden size={26} />
+      </span>
+      <h2 className='mt-5 font-bold font-display text-xl'>{m.knowledge_intro_title()}</h2>
+      <p className='mt-2 max-w-md text-muted text-sm leading-relaxed'>{m.knowledge_intro_body()}</p>
 
-      <div className='mt-8 space-y-5'>
-        <KnowledgeSearchForm
-          onQueryChange={next => {
-            navigate({ search: (prev: KnowledgeSearch) => ({ ...prev, q: next }) })
-          }}
-          query={q}
-        />
-        <KnowledgeIntentTabs
-          intent={intent}
-          onIntentChange={next => {
-            navigate({ search: (prev: KnowledgeSearch) => ({ ...prev, intent: next }) })
-          }}
-        />
+      <div className='mt-10 grid w-full max-w-2xl gap-3 sm:grid-cols-3'>
+        {INTENT_CARDS.map(card => {
+          const Icon = card.icon
+          return (
+            <RouterLink
+              className='flex flex-col items-start gap-2.5 rounded-2xl border border-line p-4 text-start no-underline transition-colors hover:bg-surface'
+              from='/knowledge/'
+              key={card.value}
+              search={(prev: KnowledgeSearch) => ({ ...prev, intent: card.value })}
+              to='/knowledge'
+            >
+              <span className='flex h-9 w-9 items-center justify-center rounded-xl bg-primary-100 text-primary-600'>
+                <Icon aria-hidden size={18} />
+              </span>
+              <span className='font-semibold text-fg text-sm'>{card.label()}</span>
+              <span className='text-muted text-xs leading-relaxed'>{card.desc()}</span>
+            </RouterLink>
+          )
+        })}
       </div>
-
-      <div className='mt-10 flex items-baseline gap-2'>
-        <h2 className='h2'>{m.knowledge_results()}</h2>
-        <span className='badge badge-light font-mono'>{results.length}</span>
-      </div>
-      <div className='mt-4'>
-        <KnowledgeResultsTable
-          empty={results.length === 0}
-          onClear={() => {
-            navigate({ search: () => defaultKnowledgeSearch })
-          }}
-          results={results}
-        />
-      </div>
-
-      <p className='mt-8 text-muted text-sm'>
-        {m.knowledge_fallback()}{' '}
-        <a
-          className='link link-primary'
-          href='https://github.com/polyms/ai-kit/tree/main/docs/agents/knowledge.md'
-          rel='noopener noreferrer'
-          target='_blank'
-        >
-          docs/agents/knowledge.md
-        </a>
-      </p>
     </div>
   )
 }
