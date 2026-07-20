@@ -138,13 +138,13 @@ Before delivering any artifact, verify:
 - [ ] Success metrics are measurable (number, threshold, or binary outcome)
 - [ ] Scope has explicit out-of-scope section
 - [ ] Stories are prioritized (P0/P1/P2) and each is independently testable — P0 set alone is a shippable
-  slice
+      slice
 - [ ] Acceptance criteria are testable (no "user-friendly", "fast", "easy" without definition)
 - [ ] Edge cases and error states addressed
 - [ ] Accessibility and security considered where applicable
 - [ ] Assumptions listed separately from facts
 - [ ] No silent guesses — unresolved details carry `[NEEDS CLARIFICATION]` markers, collected under open
-  questions
+      questions
 - [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; no repo-path banner; a human can
       understand scope from the body alone (see Audience on
       [enterprise-prd-template.md](enterprise-prd-template.md))

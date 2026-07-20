@@ -10,21 +10,21 @@ opening the repo or the parent PRD; agent `/dev` can still parse it. Expand enou
 
 **Cross-references:**
 
-| Prefer (main body)                              | Defer to end (optional note)                         |
-| ----------------------------------------------- | ---------------------------------------------------- |
-| Parent / Blocked by as **issue key or URL**     | Repo paths (`docs/prd/…`, `CONTEXT.md`, source files) |
-| Acceptance criteria that name the **behavior**  | `US#17` / `§8.5` as the only criterion title         |
-| Cut scope under “Out of this slice” in prose    | Strikethrough archaeology mid-body                   |
+| Prefer (main body)                             | Defer to end (optional note)                          |
+| ---------------------------------------------- | ----------------------------------------------------- |
+| Parent / Blocked by as **issue key or URL**    | Repo paths (`docs/prd/…`, `CONTEXT.md`, source files) |
+| Acceptance criteria that name the **behavior** | `US#17` / `§8.5` as the only criterion title          |
+| Cut scope under “Out of this slice” in prose   | Strikethrough archaeology mid-body                    |
 
 **Anti-patterns:**
 
-| Avoid                                              | Do instead                                                   |
-| -------------------------------------------------- | ------------------------------------------------------------ |
-| Parent link to the project issues **index**        | Link `SPROMPT-1` / `#12` / the full issue URL                |
-| Mid-body “Tài liệu tham chiếu” dumping repo docs   | State behavior here; paths only in a short **Repo notes**    |
-| File-path inventory as “What to build”             | End-to-end behavior in product terms; paths optional at end  |
-| AC titled only `US#17 RunLog + lastRunDate`        | Name the outcome; story id secondary if useful               |
-| Leaving ~~struck~~ cut work in the body            | Delete it, or one line under out-of-slice                    |
+| Avoid                                            | Do instead                                                  |
+| ------------------------------------------------ | ----------------------------------------------------------- |
+| Parent link to the project issues **index**      | Link `SPROMPT-1` / `#12` / the full issue URL               |
+| Mid-body “Tài liệu tham chiếu” dumping repo docs | State behavior here; paths only in a short **Repo notes**   |
+| File-path inventory as “What to build”           | End-to-end behavior in product terms; paths optional at end |
+| AC titled only `US#17 RunLog + lastRunDate`      | Name the outcome; story id secondary if useful              |
+| Leaving ~~struck~~ cut work in the body          | Delete it, or one line under out-of-slice                   |
 
 ```markdown
 ## Parent

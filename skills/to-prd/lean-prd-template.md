@@ -12,11 +12,11 @@ that belongs in **Repo references** at the end, if at all.
 
 **Cross-references:**
 
-| Prefer (main body)                         | Defer to end (`## Repo references`)                          |
-| ------------------------------------------ | ------------------------------------------------------------ |
-| Tracker issues (`#12`, `SPROMPT-2`, URL)   | Repo paths (`docs/…`, `CONTEXT.md`, `apps/…`, `lib/…`)       |
-| Named decisions in plain language          | ADR file paths — summarize the decision; path only in appendix |
-| Glossary meaning written once in prose     | “see CONTEXT.md” as a substitute for definition              |
+| Prefer (main body)                       | Defer to end (`## Repo references`)                            |
+| ---------------------------------------- | -------------------------------------------------------------- |
+| Tracker issues (`#12`, `SPROMPT-2`, URL) | Repo paths (`docs/…`, `CONTEXT.md`, `apps/…`, `lib/…`)         |
+| Named decisions in plain language        | ADR file paths — summarize the decision; path only in appendix |
+| Glossary meaning written once in prose   | “see CONTEXT.md” as a substitute for definition                |
 
 **Voice:** Full sentences. Name who hurts and what changes in product terms. Do **not** ship wave rollups,
 code-identifier laundry lists, or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`). Bold glossary tokens
@@ -24,13 +24,13 @@ sparingly — define the idea in a sentence first.
 
 **Anti-patterns (seen on bad tracker PRDs):**
 
-| Avoid                                                         | Do instead                                                      |
-| ------------------------------------------------------------- | --------------------------------------------------------------- |
-| Banner of `docs/prd/…` · `CONTEXT.md` · align notes under H1  | Start with **Related Issues** or **Problem Statement**          |
-| Mid-body “Tài liệu tham chiếu” / “see docs/…” as requirements | Write the requirement; path only in **Repo references**         |
-| Story titled only `US#17` / `§8.5` / `Wave W3`                | Title the human outcome; section refs secondary if useful       |
-| Strikethrough archaeology for cut scope                       | Delete it, or list under **Out of Scope**                       |
-| Related issue links to the project issues **index**           | Link the specific issue key or URL                              |
+| Avoid                                                         | Do instead                                                |
+| ------------------------------------------------------------- | --------------------------------------------------------- |
+| Banner of `docs/prd/…` · `CONTEXT.md` · align notes under H1  | Start with **Related Issues** or **Problem Statement**    |
+| Mid-body “Tài liệu tham chiếu” / “see docs/…” as requirements | Write the requirement; path only in **Repo references**   |
+| Story titled only `US#17` / `§8.5` / `Wave W3`                | Title the human outcome; section refs secondary if useful |
+| Strikethrough archaeology for cut scope                       | Delete it, or list under **Out of Scope**                 |
+| Related issue links to the project issues **index**           | Link the specific issue key or URL                        |
 
 **Ambiguity rule:** never guess silently. When the conversation did not settle a detail the implementer will
 need — a threshold, a method, a behavior on failure — write `[NEEDS CLARIFICATION: the specific question]`

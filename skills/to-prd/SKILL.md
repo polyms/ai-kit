@@ -51,12 +51,12 @@ missing. Read `docs/agents/language.md` when present — publish the PRD in that
 
 ## References
 
-| Topic           | Read when                                                                                      |
-| --------------- | ---------------------------------------------------------------------------------------------- |
-| Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands      |
-| Triage labels   | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping |
-| PRD body        | [lean-prd-template.md](lean-prd-template.md)                                                   |
-| Domain glossary | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                |
+| Topic           | Read when                                                                                        |
+| --------------- | ------------------------------------------------------------------------------------------------ |
+| Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands        |
+| Triage labels   | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping   |
+| PRD body        | [lean-prd-template.md](lean-prd-template.md)                                                     |
+| Domain glossary | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                  |
 | ADRs            | `docs/adr/` — fold decisions into **Implementation Decisions**; path only in **Repo references** |
 
 ## Process

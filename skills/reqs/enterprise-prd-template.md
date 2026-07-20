@@ -14,12 +14,12 @@ banner under the title.
 
 **Anti-patterns:**
 
-| Avoid                                      | Do instead                                         |
-| ------------------------------------------ | -------------------------------------------------- |
-| Repo-path banner under H1                  | Start with Executive Summary or Problem            |
-| Mid-body “see docs/…” as the requirement   | Write the requirement; path in Appendix            |
-| Story titled only `US#n` / `§8.5`          | Title the human outcome                            |
-| Strikethrough archaeology for cut scope    | Delete, or list under Out of scope                 |
+| Avoid                                    | Do instead                              |
+| ---------------------------------------- | --------------------------------------- |
+| Repo-path banner under H1                | Start with Executive Summary or Problem |
+| Mid-body “see docs/…” as the requirement | Write the requirement; path in Appendix |
+| Story titled only `US#n` / `§8.5`        | Title the human outcome                 |
+| Strikethrough archaeology for cut scope  | Delete, or list under Out of scope      |
 
 Two rules that keep this template honest:
 

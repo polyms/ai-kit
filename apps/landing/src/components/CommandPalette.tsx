@@ -10,9 +10,7 @@ import { useAppStore } from '../stores/useAppStore'
 import { SkillCommandRow } from './SkillCommandRow'
 
 function isPaletteHidden(pathname: string) {
-  return (
-    pathname.startsWith('/knowledge') || pathname.startsWith('/ops') || pathname.startsWith('/skills')
-  )
+  return pathname.startsWith('/knowledge') || pathname.startsWith('/ops') || pathname.startsWith('/skills')
 }
 
 export function CommandPalette() {
