@@ -1,6 +1,8 @@
 ---
 name: to-issues
-description: Break a plan, spec, or PRD into independently-grabbable GitHub issues using tracer-bullet vertical slices. Invoke with /to-issues, tách issue, vertical slice, break down PRD, bẻ PRD thành issues, publish issues, đẩy issues lên GitHub, or splitting a spec into implementation tickets.
+description: Break a plan, spec, or PRD into independently-grabbable tracker issues using tracer-bullet
+  vertical slices. Invoke with /to-issues, tách issue, vertical slice, break down PRD, bẻ PRD thành issues,
+  publish issues, đẩy issues lên GitHub, or splitting a spec into implementation tickets.
 disable-model-invocation: true
 ---
 
@@ -8,12 +10,16 @@ disable-model-invocation: true
 
 Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tracer bullet** vertical slices.
 
-**Upstream:** `/reqs` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
+**Upstream:** `/reqs` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into
+implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
 
 **Audience:** Follow [issue-template.md](issue-template.md). Do **not** pass a parent PRD executive summary
 into slices or ship agent-only shorthand (e.g. `"US#1–9: tenancy..."`) — expand enough context per wave.
+Tracker body is for humans first: issue keys for Parent/Blocked by; repo paths only in optional **Repo notes**.
 
-**Prerequisites:** Issue tracker and domain docs should already be configured — run `/setup` if `docs/agents/issue-tracker.md` is missing. Read `docs/agents/language.md` when present — write issue bodies in that language.
+**Prerequisites:** Issue tracker and domain docs should already be configured — run `/setup` if
+`docs/agents/issue-tracker.md` is missing. Read `docs/agents/language.md` when present — write issue bodies in
+that language.
 
 ## References
 
@@ -21,15 +27,16 @@ into slices or ship agent-only shorthand (e.g. `"US#1–9: tenancy..."`) — exp
 | --------------- | ---------------------------------------------------------------------------------------------- |
 | Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — `gh` CLI commands         |
 | Triage labels   | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping |
-| Domain glossary | `CONTEXT.md` at repo root                                                                      |
-| ADRs            | `docs/adr/` — decisions in the area you are touching                                           |
+| Domain glossary | `CONTEXT.md` — use terms in **prose**; do not cite the file as main issue content              |
+| ADRs            | `docs/adr/` — fold decisions into **What to build**; path only in **Repo notes**               |
 | Issue body      | [issue-template.md](issue-template.md)                                                         |
 
 ## Process
 
 ### 1. Gather context
 
-Work from whatever is already in the conversation. If the user passes an issue reference (number, URL, or path), fetch it — PRDs from `/to-prd` use title `PRD: <feature>`:
+Work from whatever is already in the conversation. If the user passes an issue reference (number, URL, or
+path), fetch it — PRDs from `/to-prd` use title `PRD: <feature>`:
 
 ```bash
 gh issue view <number> --comments
@@ -37,28 +44,38 @@ gh issue view <number> --comments
 
 Read the full body and comments. If the source is a PRD or plan in chat, use that directly.
 
-**Completion criterion:** Source material (issue, PRD, or plan) is fully read; parent issue identified if one exists.
+**Completion criterion:** Source material (issue, PRD, or plan) is fully read; parent issue identified if one
+exists.
 
 ### 2. Explore the codebase (optional)
 
-If you have not already explored the codebase, do so to understand current state. Issue titles and descriptions must use glossary vocabulary from `CONTEXT.md` and respect ADRs in the area you are touching.
+If you have not already explored the codebase, do so to understand current state. Issue titles and descriptions
+must use glossary vocabulary from `CONTEXT.md` **in prose** (define once) and respect ADRs in the area you are
+touching — do not replace decisions with bare paths.
 
-Look for opportunities to prefactor — "make the change easy, then make the easy change." Prefactoring slices belong first in the breakdown.
+Look for opportunities to prefactor — "make the change easy, then make the easy change." Prefactoring slices
+belong first in the breakdown.
 
-**Completion criterion:** Domain vocabulary and relevant ADRs noted; prefactoring opportunities flagged or explicitly skipped with reason.
+**Completion criterion:** Domain vocabulary and relevant ADRs noted; prefactoring opportunities flagged or
+explicitly skipped with reason.
 
 ### 3. Draft vertical slices
 
-Break the plan into **tracer bullet** issues. Each issue is a thin vertical slice through ALL integration layers end-to-end — NOT a horizontal slice of one layer.
+Break the plan into **tracer bullet** issues. Each issue is a thin vertical slice through ALL integration
+layers end-to-end — NOT a horizontal slice of one layer.
 
 - Each slice delivers a narrow but **complete** path through every layer (schema, API, UI, tests)
 - A completed slice is demoable or verifiable on its own
 - Any prefactoring should come first
-- When the source PRD prioritizes stories (P0/P1/P2), order slices so the P0 set completes first — P0 slices alone should be a shippable MVP; a `[NEEDS CLARIFICATION]` marker inside a slice's stories blocks that slice until resolved
+- When the source PRD prioritizes stories (P0/P1/P2), order slices so the P0 set completes first — P0 slices
+  alone should be a shippable MVP; a `[NEEDS CLARIFICATION]` marker inside a slice's stories blocks that slice
+  until resolved
 
-Do not re-run `/reqs` user-story workflows here. Map slices to existing user stories from the source material when present; do not invent new stories unless the source has gaps the user confirms.
+Do not re-run `/reqs` user-story workflows here. Map slices to existing user stories from the source material
+when present; do not invent new stories unless the source has gaps the user confirms.
 
-**Completion criterion:** Numbered slice list drafted; each slice has title, blocked-by, and user stories covered (if applicable).
+**Completion criterion:** Numbered slice list drafted; each slice has title, blocked-by, and user stories
+covered (if applicable).
 
 ### 4. Quiz the user
 
@@ -80,11 +97,17 @@ Iterate until the user approves the breakdown.
 
 ### 5. Publish issues
 
-For each approved slice, create a GitHub issue using [issue-template.md](issue-template.md). Publish in
-dependency order (blockers first) so you can reference real issue numbers in **Blocked by**.
+For each approved slice, create a tracker issue using [issue-template.md](issue-template.md). Publish in
+dependency order (blockers first) so you can reference real issue numbers in **Blocked by**. Follow
+[docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) for create commands (`gh` example below).
 
-**Human-readable check (before each create):** body stands alone without the parent PRD; acceptance is
-Given/When/Then or a specific checklist (not a wave rollup); prose is clear to a human reading the tracker.
+**Human-readable check (before each create):**
+
+- [ ] Body stands alone without opening the parent PRD or the repo
+- [ ] **Parent** / **Blocked by** use real issue keys or URLs (not the project issues index)
+- [ ] Acceptance criteria name the **behavior** (Given/When/Then or checklist — not `US#n`-only titles)
+- [ ] No mid-body repo-doc dump or strikethrough archaeology
+- [ ] Repo paths only under optional **Repo notes** (or omitted)
 
 ```bash
 gh issue create --title "..." --body "$(cat <<'EOF'

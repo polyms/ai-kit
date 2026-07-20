@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { SkillOverlay } from '../content/overlay'
-import { getSkillCopy } from './skills'
+import { getSkillCopy, getSkills } from './skills'
 
 const skill: SkillOverlay = {
   name: 'demo',
@@ -52,4 +52,21 @@ describe('getSkillCopy', () => {
     expect(copy.slug).toBe('demo')
     expect(copy.name).toBe('demo')
   })
+})
+
+describe('skillOverlays catalog copy', () => {
+  for (const locale of ['en', 'vi'] as const) {
+    it(`gives every skill non-empty human-facing copy in ${locale}`, () => {
+      const skills = getSkills(locale)
+
+      expect(skills.length).toBeGreaterThan(0)
+
+      for (const s of skills) {
+        expect(s.description.trim().length, `${s.slug}.description`).toBeGreaterThan(20)
+        expect(s.summary?.trim().length, `${s.slug}.summary`).toBeGreaterThan(20)
+        expect(s.whenToUse?.trim().length, `${s.slug}.whenToUse`).toBeGreaterThan(20)
+        expect(s.boundaries?.trim().length, `${s.slug}.boundaries`).toBeGreaterThan(20)
+      }
+    })
+  }
 })

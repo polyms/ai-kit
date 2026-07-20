@@ -11,6 +11,11 @@ disable-model-invocation: true
 Write **developer-facing** docs for systems that already exist (or are shipping). Not PRDs,
 not UI specs, not marketing copy.
 
+**Readable first:** A stranger (new hire, integrator, agent author) must follow the doc without opening
+Slack or guessing. Lead with purpose in full sentences; define terms once in prose. Repo paths and schema
+names are welcome **after** the idea is clear — docs live in the repo, but path dumps are not a substitute for
+explanation. Prefer tracker issue keys when pointing at product decisions (`SPROMPT-1`, `#12`).
+
 **Boundary vs `/reqs`:** `/reqs` owns product requirements (what to build). **`/docs`** owns how
 to use/integrate what was built.
 
@@ -49,21 +54,27 @@ Prefer `docs/agents/language.md` when present for documentation language. No `/s
 
 For each operation/tool cover:
 
-- Purpose (one sentence)
+- Purpose (one sentence a stranger understands)
 - Auth / prerequisites
 - Inputs (required vs optional) + types
 - Outputs / side effects
 - Errors callers must handle
 - One runnable example (curl, code, or MCP call)
 
-**Completion criterion:** Every public entry has purpose, auth, I/O, errors, example.
+Write the **why/what** before the path or identifier laundry list. If a product decision is tracked, link the
+issue — do not say only "see the PRD in `docs/prd/…`".
+
+**Completion criterion:** Every public entry has purpose, auth, I/O, errors, example; prose stands alone.
 
 ### 3. Verify
 
 Run or mentally walk each example against current code. Flag undocumented behavior and
 undocumented-but-public surface as gaps.
 
-**Completion criterion:** Examples match current contracts; gaps listed or fixed.
+**Human-readable check:** a new integrator can complete the happy path from the doc alone — no required
+detour through `CONTEXT.md` or a buried align note for the core flow.
+
+**Completion criterion:** Examples match current contracts; gaps listed or fixed; human-readable check passed.
 
 ## Tutorial Workflow
 

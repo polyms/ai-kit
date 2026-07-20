@@ -8,6 +8,13 @@ I want [goal/capability],
 So that [benefit/outcome].
 ```
 
+**Readable titles:** When listing stories in a PRD or tracker issue, lead with the human outcome
+("Playground records a successful run") — not only an id (`US#17`) or section pointer (`§8.5`). Ids may follow
+as secondary labels.
+
+**Personas:** Prefer roles a stakeholder recognizes (student, educator, owner, engineer). If the consumer is an
+agent or skill, say so in plain language ("engineer running `/dev`") — not bare backtick role ids alone.
+
 ## INVEST Checklist
 
 | Principle       | Question                                        |
@@ -70,12 +77,13 @@ Scenario: [error case]
 
 Story is ready for sprint when:
 
-- [ ] User story written in standard format
-- [ ] Acceptance criteria complete and testable
-- [ ] Dependencies identified
+- [ ] User story written in standard format with a human-readable outcome title
+- [ ] Acceptance criteria complete and testable (Given/When/Then or concrete checklist)
+- [ ] Dependencies identified (prefer tracker issue keys when published)
 - [ ] Design attached (if UI)
 - [ ] Priority assigned
 - [ ] No open blocking questions
+- [ ] Body stands alone — no "see CONTEXT.md / docs/prd/…" as a substitute for the story
 
 ## Definition of Done (DoD)
 

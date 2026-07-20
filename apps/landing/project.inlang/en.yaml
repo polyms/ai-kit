@@ -15,7 +15,6 @@ catalog_samplePrompt: Sample prompt
 catalog_search: Find skill…
 catalog_sub: 15 skills — invoke, description, domain
 catalog_title: Skill catalog
-catalog_viewSource: View on GitHub
 catalog_zeroResults: 0 results
 
 # --- skills shell ---

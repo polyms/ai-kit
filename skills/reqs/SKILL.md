@@ -64,7 +64,9 @@ the conversation is ready to ship, tell the user to invoke `/to-prd`.
 `/align`. Below is discovery + enterprise PRD only — not align-loop.
 
 **Audience:** Follow [enterprise-prd-template.md](enterprise-prd-template.md). Do **not** ship
-executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
+executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`). Prefer tracker issue links
+when referring to published work; keep repo paths in Appendix. No `docs/…` / `CONTEXT.md` banner under the
+title.
 
 1. Run discovery if problem statement is missing
 2. Fill [enterprise-prd-template.md](enterprise-prd-template.md) — no empty headers: fill a section with
@@ -75,7 +77,9 @@ executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy.
 5. Add **non-functional requirements** (performance, security, accessibility, i18n) — only rows that apply
 6. End with open questions (collected markers) and `## Next Step` (see [Handoff](#handoff))
 7. **Human-readable check:** re-read as a PM unfamiliar with the codebase — every kept section filled; no
-   one-line wave summaries; Given/When/Then per P0 story; body stands alone without opening the repo
+   one-line wave summaries; Given/When/Then per P0 story; story titles name the outcome (not `US#n` alone);
+   body stands alone without opening the repo; repo paths only in Appendix; cut scope deleted or listed under
+   Out of scope (no strikethrough leftovers)
 
 **Completion criterion:** PRD passes the [quality checklist](#quality-checklist); human-readable check
 passed; no tracker issue created by this skill.
@@ -133,14 +137,17 @@ Before delivering any artifact, verify:
 - [ ] Problem statement answers "why" before "what"
 - [ ] Success metrics are measurable (number, threshold, or binary outcome)
 - [ ] Scope has explicit out-of-scope section
-- [ ] Stories are prioritized (P0/P1/P2) and each is independently testable — P0 set alone is a shippable slice
+- [ ] Stories are prioritized (P0/P1/P2) and each is independently testable — P0 set alone is a shippable
+  slice
 - [ ] Acceptance criteria are testable (no "user-friendly", "fast", "easy" without definition)
 - [ ] Edge cases and error states addressed
 - [ ] Accessibility and security considered where applicable
 - [ ] Assumptions listed separately from facts
-- [ ] No silent guesses — unresolved details carry `[NEEDS CLARIFICATION]` markers, collected under open questions
-- [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; a human can understand scope from the
-      body alone (see Audience on [enterprise-prd-template.md](enterprise-prd-template.md))
+- [ ] No silent guesses — unresolved details carry `[NEEDS CLARIFICATION]` markers, collected under open
+  questions
+- [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; no repo-path banner; a human can
+      understand scope from the body alone (see Audience on
+      [enterprise-prd-template.md](enterprise-prd-template.md))
 - [ ] **No publish** — this skill did not create a tracker issue; publish path is `/to-prd`
 
 ## Handoff
@@ -173,6 +180,9 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 | Solution in req before validation | Problem + options + recommendation                 |
 | Missing error flows               | Include failure/empty/loading states               |
 | Publishing PRD via `gh` here      | Tell user to invoke `/to-prd`                      |
+
+Human-readable PRD anti-patterns (repo-path banner, `US#n`-only titles, strikethrough cut scope) live in
+[enterprise-prd-template.md](enterprise-prd-template.md) — single source of truth; do not restate here.
 
 ## Agent
 

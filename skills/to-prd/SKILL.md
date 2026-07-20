@@ -6,7 +6,8 @@ disable-model-invocation: true
 
 # To PRD
 
-Synthesize the **current conversation** and codebase understanding into a PRD and **publish** it to the issue tracker.
+Synthesize the **current conversation** and codebase understanding into a lean PRD and **publish** it to the
+issue tracker.
 
 **Do NOT interview** — synthesize from conversation + codebase context already in session.
 
@@ -23,8 +24,15 @@ Decisions / problem statement clear?
       (draft in chat or docs/prd/; `/reqs` does NOT create tracker issues)
 ```
 
-**Audience:** Follow [lean-prd-template.md](lean-prd-template.md). Do **not** ship executive-summary
-rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
+**Audience:** Follow [lean-prd-template.md](lean-prd-template.md). The published issue is for **humans on the
+tracker first** (PM, stakeholder, engineer skimming the issue) — agents reuse the same body. Do **not** ship
+executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
+
+**References on the tracker:**
+
+- **Main body** cross-links other **issues** (`#n`, `SPROMPT-2`, full URL) under **Related Issues**.
+- **Repo paths** (`CONTEXT.md`, `docs/prd/…`, `docs/adr/…`, source files) belong only in **Repo references** at
+  the end — never as a banner under the title, never as a substitute for writing the decision in prose.
 
 **Boundary vs `/reqs`:**
 
@@ -33,11 +41,13 @@ rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
 | `/reqs`   | Discovery, formal PRD, stories, priority | May interview; enterprise-prd-template in `/reqs`; **does not publish**                                   |
 | `/to-prd` | "We've talked enough — ship the PRD"     | **Synthesize only** — no discovery interview; [lean-prd-template.md](lean-prd-template.md); **publishes** |
 
-**Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain language before synthesis.
+**Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain
+language before synthesis.
 
 **Downstream:** `/to-issues` breaks the published PRD into vertical-slice issues.
 
-**Prerequisites:** Run `/setup` if `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is missing. Read `docs/agents/language.md` when present — publish the PRD in that language.
+**Prerequisites:** Run `/setup` if `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is
+missing. Read `docs/agents/language.md` when present — publish the PRD in that language.
 
 ## References
 
@@ -46,16 +56,22 @@ rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
 | Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands      |
 | Triage labels   | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping |
 | PRD body        | [lean-prd-template.md](lean-prd-template.md)                                                   |
-| Domain glossary | `CONTEXT.md` at repo root                                                                      |
-| ADRs            | `docs/adr/` — decisions in the area you are touching                                           |
+| Domain glossary | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                |
+| ADRs            | `docs/adr/` — fold decisions into **Implementation Decisions**; path only in **Repo references** |
 
 ## Process
 
 ### 1. Explore the codebase
 
-If you have not already explored the codebase, do so to understand current state. Use glossary vocabulary from `CONTEXT.md` throughout the PRD and respect ADRs in the area you are touching.
+If you have not already explored the codebase, do so to understand current state. Use glossary vocabulary from
+`CONTEXT.md` **in the PRD prose** (define each term once in a sentence). Respect ADRs in the area you are
+touching — state the decision in **Implementation Decisions**, do not replace that prose with a bare path.
 
-**Completion criterion:** Glossary terms and relevant ADRs noted.
+Scan the tracker for related issues (prior PRDs, blockers, superseded work) so **Related Issues** can be
+filled with real issue keys or URLs (not the project issues index).
+
+**Completion criterion:** Glossary terms and relevant ADRs noted for prose; related tracker issues listed or
+confirmed none.
 
 ### 2. Sketch test seams
 
@@ -66,7 +82,8 @@ Sketch the seams at which you will test the feature:
 - If new seams are needed, propose them at the highest point you can
 - The fewer seams across the codebase, the better — the ideal number is **one**
 
-Present the proposed seams to the user and **check that they match expectations** before writing the PRD. User may explicitly defer confirmation.
+Present the proposed seams to the user and **check that they match expectations** before writing the PRD. User
+may explicitly defer confirmation.
 
 **Completion criterion:** User confirmed seams (or explicitly deferred).
 
@@ -80,23 +97,37 @@ If any would appear in **Open Questions**: list them, **do not draft or publish 
 run `/align` on the listed items; **B** proceeds to step 4 with confirmed markers. If `/align` already
 deferred the same items with **B**, restate the list and proceed only after explicit yes.
 
-**Completion criterion:** Zero unsettled markers, or user explicitly chose **B** and confirmed the deferred list.
+**Completion criterion:** Zero unsettled markers, or user explicitly chose **B** and confirmed the deferred
+list.
 
 ### 4. Write the PRD
 
-Fill every section of [lean-prd-template.md](lean-prd-template.md) from conversation context and codebase understanding. No empty headers.
+Fill every section of [lean-prd-template.md](lean-prd-template.md) from conversation context and codebase
+understanding. No empty headers. Omit **Related Issues** / **Repo references** only when truly empty.
 
-**User Stories** must be an extensive, **prioritized** numbered list (per template) — P0 stories independently testable, with Given/When/Then acceptance scenarios. Include test seams from step 2 under **Testing Decisions** and relevant ADRs under **Implementation Decisions**.
+**User Stories** must be an extensive, **prioritized** numbered list (per template) — P0 stories independently
+testable, with Given/When/Then acceptance scenarios. Title each story with the human outcome (not `US#17` /
+`§8.5` alone). Include test seams from step 2 under **Testing Decisions** and aligned technical choices under
+**Implementation Decisions** (prose first).
 
-**Synthesize, don't invent:** this skill has no interview step — when the conversation didn't settle a detail, mark it `[NEEDS CLARIFICATION: …]` inline and collect markers under **Open Questions**. Inventing an answer here ships it straight to `/dev` unreviewed. Markers may appear only after step 3 **B** confirmation.
+**Synthesize, don't invent:** this skill has no interview step — when the conversation didn't settle a detail,
+mark it `[NEEDS CLARIFICATION: …]` inline and collect markers under **Open Questions**. Inventing an answer
+here ships it straight to `/dev` unreviewed. Markers may appear only after step 3 **B** confirmation.
 
-**Human-readable check (before publish):** re-read the draft as a PM unfamiliar with the codebase — every
-template section filled; no one-line wave summaries; Given/When/Then per P0 story; body stands alone without
-opening the repo.
+**Human-readable check (before publish):** re-read the draft as a PM unfamiliar with the codebase:
 
-**Completion criterion:** PRD draft complete; every template section filled; every unsettled detail carries a
-marker instead of a guess; markers match the step 3 confirmed deferral list when any exist; human-readable check
-passed.
+- [ ] Every required template section filled (including **Success Criteria** and **Open Questions**)
+- [ ] No repo-path banner under the title (`docs/prd/…`, `CONTEXT.md`, align notes)
+- [ ] Problem / Solution / stories read as full prose — not identifier dumps or wave rollups
+- [ ] Story titles name the outcome; Given/When/Then on every P0 story
+- [ ] Related tracker work uses issue keys / URLs in **Related Issues** (or section correctly omitted)
+- [ ] Repo paths and ADR filenames appear only under **Repo references** (or section omitted)
+- [ ] Cut scope is deleted or listed under **Out of Scope** — no strikethrough archaeology
+- [ ] Body stands alone on the tracker without opening the repo
+
+**Completion criterion:** PRD draft complete; every template section filled or correctly omitted; every
+unsettled detail carries a marker instead of a guess; markers match the step 3 confirmed deferral list when
+any exist; human-readable check passed.
 
 ### 5. Publish
 
@@ -123,12 +154,12 @@ matching `docs/prd/<feature-slug>.md` written.
 
 ### 6. Handoff
 
-Summarize what was published (issue number + title). End with `## Next Step` — prefer **exactly
-one** next skill (typically `/to-issues` on the published PRD). Second option only when UI-heavy
-and design should land before slicing (`→ /design` with when). Never a 3+ menu.
+Summarize what was published (issue number + title). End with `## Next Step` — prefer **exactly one** next
+skill (typically `/to-issues` on the published PRD). Second option only when UI-heavy and design should land
+before slicing (`→ /design` with when). Never a 3+ menu.
 
 **Completion criterion:** Summary delivered; `## Next Step` names one preferred skill (two max with
 when/why).
 
-_Future:_ a dedicated `prd-view` skill for reading and presenting PRDs from issues is planned — for
-now, fetch via `issue-tracker.md` read commands.
+_Future:_ a dedicated `prd-view` skill for reading and presenting PRDs from issues is planned — for now, fetch
+via `issue-tracker.md` read commands.

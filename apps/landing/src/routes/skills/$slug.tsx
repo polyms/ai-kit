@@ -105,18 +105,9 @@ function SkillDetailPage() {
 
         {skill.agentPanel && <AgentPanel panel={skill.agentPanel} relatedAgents={skill.relatedAgents} />}
 
-        <div className='mt-8 flex flex-wrap gap-4 font-invoke text-sm'>
-          <a
-            className='text-primary-700 hover:underline'
-            href={`${GITHUB_REPO}/tree/main/${skill.githubPath}`}
-            rel='noopener noreferrer'
-            target='_blank'
-          >
-            {m.catalog_viewSource()} ↗
-          </a>
-          {skill.relatedAgents &&
-            !skill.agentPanel &&
-            skill.relatedAgents.map(agent => (
+        {skill.relatedAgents && !skill.agentPanel && (
+          <div className='mt-8 flex flex-wrap gap-4 font-invoke text-sm'>
+            {skill.relatedAgents.map(agent => (
               <a
                 className='text-muted hover:text-fg'
                 href={`${GITHUB_REPO}/blob/main/agents/${agent}.md`}
@@ -127,15 +118,8 @@ function SkillDetailPage() {
                 {agent} ↗
               </a>
             ))}
-        </div>
-
-        <Link
-          className='mt-10 inline-block text-muted text-sm hover:text-fg'
-          search={mergeSkillsSearch}
-          to='/skills'
-        >
-          ← {m.catalog_back()}
-        </Link>
+          </div>
+        )}
       </div>
     </div>
   )

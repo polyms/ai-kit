@@ -7,8 +7,19 @@ an aligned conversation.
 Copy this structure when writing a PRD. Replace bracketed placeholders. Delete instructional comments.
 
 **Audience:** PRD must be **human + AI readable** — clear prose for PM/stakeholder; structure for agents.
-Avoid shorthand only an AI can parse (wave rollup, code-only bullets, missing Given/When/Then). Issue body
-stands alone.
+Avoid shorthand only an AI can parse (wave rollup, code-only bullets, missing Given/When/Then). Body stands
+alone without opening the repo. Prefer tracker issue links when referring to published work; keep repo paths
+in Appendix, not as the main explanation. Do **not** open with a `docs/prd/` · `CONTEXT.md` · align-notes
+banner under the title.
+
+**Anti-patterns:**
+
+| Avoid                                      | Do instead                                         |
+| ------------------------------------------ | -------------------------------------------------- |
+| Repo-path banner under H1                  | Start with Executive Summary or Problem            |
+| Mid-body “see docs/…” as the requirement   | Write the requirement; path in Appendix            |
+| Story titled only `US#n` / `§8.5`          | Title the human outcome                            |
+| Strikethrough archaeology for cut scope    | Delete, or list under Out of scope                 |
 
 Two rules that keep this template honest:
 
@@ -73,9 +84,14 @@ Each metric must be measurable and technology-agnostic — a number, threshold, 
 
 Prioritized, numbered stories — `As an <actor>, I want a <feature>, so that <benefit>`:
 
-- **Prioritize:** tag each story **P0** (core — the feature is pointless without it), **P1** (important), or **P2** (nice-to-have). One line of _why this priority_ for each P0.
-- **Independent:** each story must be independently testable — implementing only the P0 stories should still yield a viable, deployable slice. If a story only makes sense together with another, merge them. (`/to-issues` slices along these lines.)
+- **Title the outcome** in human language (not `US#17` / section number alone).
+- **Prioritize:** tag each story **P0** (core — the feature is pointless without it), **P1** (important), or
+  **P2** (nice-to-have). One line of _why this priority_ for each P0.
+- **Independent:** each story must be independently testable — implementing only the P0 stories should still
+  yield a viable, deployable slice. If a story only makes sense together with another, merge them.
+  (`/to-issues` slices along these lines.)
 - Cover error, empty, and permission states — not just the happy path.
+- Prefer human personas stakeholders recognize; if the consumer is an agent skill, say so in plain language.
 
 For each P0 story, add acceptance scenarios:
 
@@ -175,4 +191,6 @@ Collect every `[NEEDS CLARIFICATION]` marker from the sections above here.
 
 ## 15. Appendix
 
-[Research links, competitor analysis, technical spikes, glossary. Note deleted sections here in one line each.]
+[Research links, competitor analysis, technical spikes, glossary. Repo paths and ADR filenames that extend
+the prose — not a substitute for writing decisions in the sections above. Note deleted sections here in one
+line each.]
