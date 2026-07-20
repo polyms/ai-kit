@@ -2,12 +2,11 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { AgentPanel } from '../../components/AgentPanel'
 import { SkillDetailSection } from '../../components/SkillDetailSection'
 import { SkillInvokeText } from '../../components/SkillInvokeText'
-import { SkillStatusBadge } from '../../components/SkillStatusBadge'
 import { TerminalPromptBlock } from '../../components/TerminalPromptBlock'
 import { GITHUB_REPO } from '../../content/overlay'
 import { PipelineDisplay } from '../../lib/pipeline-display'
 import { domainLabel, getSkillBySlug } from '../../lib/skills'
-import { defaultSkillsSearch } from '../../lib/skills-search'
+import { mergeSkillsSearch } from '../../lib/skills-search'
 import { m } from '../../paraglide/messages.js'
 import { useAppStore } from '../../stores/useAppStore'
 
@@ -22,11 +21,11 @@ function SkillDetailPage() {
 
   if (!skill) {
     return (
-      <div className='page-x py-16 text-center'>
+      <div className='flex min-h-full flex-col items-center justify-center px-8 py-16 text-center'>
         <p className='text-lg'>{m.catalog_notFound()}</p>
         <Link
           className='mt-4 inline-block font-invoke text-primary-700 hover:underline'
-          search={defaultSkillsSearch}
+          search={mergeSkillsSearch}
           to='/skills'
         >
           {m.catalog_back()}
@@ -37,10 +36,10 @@ function SkillDetailPage() {
 
   const label = domainLabel(skill.domain)
   const summary = skill.summary ?? skill.description
-  const showPrompt = skill.status === 'available' && skill.samplePrompt
+  const showPrompt = Boolean(skill.samplePrompt)
 
   return (
-    <div className='page-x py-10 md:py-12'>
+    <div className='px-8 py-10 md:px-10 md:py-12'>
       <div className='mx-auto max-w-3xl'>
         <div className='flex border-line border-b'>
           <div className='border-primary-700 border-b-2 px-4 py-2 font-bold font-invoke text-lg text-primary-700'>
@@ -50,7 +49,6 @@ function SkillDetailPage() {
 
         <div className='mt-6 flex flex-wrap items-center gap-2'>
           <span className='rounded-md border border-line px-2 py-0.5 text-muted text-xs'>{label}</span>
-          <SkillStatusBadge status={skill.status} />
           <span className='rounded-md border border-line px-2 py-0.5 text-muted text-xs'>
             {skill.invocation === 'user' ? m.catalog_filterUser() : m.catalog_filterModel()}
           </span>
@@ -109,9 +107,7 @@ function SkillDetailPage() {
 
         <div className='mt-8 flex flex-wrap gap-4 font-invoke text-sm'>
           <a
-            className={
-              skill.status === 'planned' ? 'text-muted hover:text-fg' : 'text-primary-700 hover:underline'
-            }
+            className='text-primary-700 hover:underline'
             href={`${GITHUB_REPO}/tree/main/${skill.githubPath}`}
             rel='noopener noreferrer'
             target='_blank'
@@ -135,7 +131,7 @@ function SkillDetailPage() {
 
         <Link
           className='mt-10 inline-block text-muted text-sm hover:text-fg'
-          search={defaultSkillsSearch}
+          search={mergeSkillsSearch}
           to='/skills'
         >
           ← {m.catalog_back()}

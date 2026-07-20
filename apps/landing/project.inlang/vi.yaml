@@ -3,7 +3,6 @@
 # --- catalog ---
 catalog_agentHint: Agent
 catalog_back: Quay lại danh mục
-catalog_clear: Xóa bộ lọc
 catalog_copied: Đã sao chép
 catalog_copy: Sao chép
 catalog_copyFail: Không sao chép được — hãy chọn văn bản rồi sao chép thủ công
@@ -14,13 +13,18 @@ catalog_filterUser: Bạn gõ lệnh
 catalog_notFound: Không tìm thấy kỹ năng
 catalog_samplePrompt: Prompt mẫu
 catalog_search: Tìm kỹ năng…
-catalog_status_available: Có sẵn
-catalog_status_planned: Sắp có
-catalog_sub: 15 kỹ năng — lệnh gọi, mô tả, trạng thái, lĩnh vực
+catalog_sub: 15 kỹ năng — lệnh gọi, mô tả, lĩnh vực
 catalog_title: Danh mục kỹ năng
-catalog_viewAll: Xem toàn bộ danh mục
 catalog_viewSource: Xem trên GitHub
 catalog_zeroResults: 0 kết quả
+
+# --- skills shell ---
+skills_intro_body: Chọn một kỹ năng ở danh sách bên trái, hoặc lọc theo cách gọi bên dưới.
+skills_intro_title: Danh mục kỹ năng cho agent
+skills_invocation_model_desc: Agent tự quyết định khi nào gọi.
+skills_invocation_user_desc: Bạn gõ lệnh slash trong chat.
+skills_resultsCaption: Kết quả tìm kỹ năng
+skills_searchLabel: Tìm kỹ năng
 
 # --- domain ---
 domain_alignment: Đồng thuận

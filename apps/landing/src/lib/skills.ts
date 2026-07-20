@@ -89,15 +89,11 @@ export function filterSkills(
   skills: ResolvedSkillOverlay[],
   query: {
     search?: string
-    domain?: string
     invocation?: 'all' | 'user' | 'model'
   }
 ): ResolvedSkillOverlay[] {
   const q = query.search?.trim().toLowerCase() ?? ''
   return skills.filter(skill => {
-    if (query.domain && query.domain !== 'all' && skill.domain !== query.domain) {
-      return false
-    }
     if (query.invocation && query.invocation !== 'all' && skill.invocation !== query.invocation) {
       return false
     }
@@ -106,22 +102,6 @@ export function filterSkills(
     return haystack.includes(q)
   })
 }
-
-export const domainOptions = [
-  'all',
-  'repo-config',
-  'alignment',
-  'requirements',
-  'triage',
-  'design',
-  'implementation',
-  'review',
-  'docs',
-  'e2e',
-  'authoring',
-  'architecture',
-  'devops',
-] as const
 
 export type SkillDomain = SkillOverlay['domain']
 

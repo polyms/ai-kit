@@ -1,18 +1,13 @@
-import { Link } from '@tanstack/react-router'
 import { domainLabel, type ResolvedSkillOverlay } from '../lib/skills'
 import { m } from '../paraglide/messages.js'
-import { SkillStatusBadge } from './SkillStatusBadge'
 
 type SkillCommandRowProps = {
   skill: ResolvedSkillOverlay
   active?: boolean
   onMouseEnter?: () => void
   onClick?: () => void
-  asButton?: boolean
   highlight?: string
   id?: string
-  /** Marks row as a listbox option (command palette). */
-  asOption?: boolean
 }
 
 function highlightInvoke(invoke: string, query: string) {
@@ -30,20 +25,32 @@ function highlightInvoke(invoke: string, query: string) {
   )
 }
 
+/** Command-palette listbox option for a skill. */
 export function SkillCommandRow({
   skill,
   active,
   onMouseEnter,
   onClick,
-  asButton,
   highlight = '',
   id,
-  asOption,
 }: SkillCommandRowProps) {
   const label = domainLabel(skill.domain)
 
-  const inner = (
-    <>
+  return (
+    <button
+      aria-selected={active ?? false}
+      className={`flex w-full flex-col gap-3 px-4 py-4 text-left transition-colors duration-100 sm:flex-row sm:items-center sm:gap-4 ${
+        active
+          ? 'border-primary-700 border-s-2 bg-primary-700/5'
+          : 'border-transparent border-s-2 hover:bg-primary-700/5'
+      }`}
+      id={id}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      role='option'
+      tabIndex={active ? 0 : -1}
+      type='button'
+    >
       <span className='hidden shrink-0 font-invoke text-muted sm:inline'>&gt;</span>
       <div className='min-w-0 flex-1'>
         <div className='flex flex-wrap items-baseline gap-x-3 gap-y-1'>
@@ -57,54 +64,10 @@ export function SkillCommandRow({
       </div>
       <div className='flex shrink-0 flex-wrap gap-2 text-xs'>
         <span className='rounded-md border border-line px-2 py-0.5 text-muted'>{label}</span>
-        <SkillStatusBadge status={skill.status} />
         <span className='rounded-md border border-line px-2 py-0.5 text-muted'>
           {skill.invocation === 'user' ? m.catalog_filterUser() : m.catalog_filterModel()}
         </span>
       </div>
-    </>
-  )
-
-  const className = `flex w-full flex-col gap-3 px-4 py-4 text-left transition-colors duration-100 sm:flex-row sm:items-center sm:gap-4 ${
-    active
-      ? 'border-s-2 border-primary-700 bg-primary-700/5'
-      : 'border-s-2 border-transparent hover:bg-primary-700/5'
-  }`
-
-  if (asButton && asOption) {
-    return (
-      <button
-        aria-selected={active ?? false}
-        className={className}
-        id={id}
-        onClick={onClick}
-        onMouseEnter={onMouseEnter}
-        role='option'
-        tabIndex={active ? 0 : -1}
-        type='button'
-      >
-        {inner}
-      </button>
-    )
-  }
-
-  if (asButton) {
-    return (
-      <button className={className} id={id} onClick={onClick} onMouseEnter={onMouseEnter} type='button'>
-        {inner}
-      </button>
-    )
-  }
-
-  return (
-    <Link
-      className={className}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      params={{ slug: skill.slug }}
-      to='/skills/$slug'
-    >
-      {inner}
-    </Link>
+    </button>
   )
 }

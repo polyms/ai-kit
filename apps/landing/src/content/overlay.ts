@@ -3,7 +3,6 @@ import type { Locale } from '../paraglide/runtime'
 /** Plain string when EN/VI copy is identical (identifiers, arrow chains); otherwise per-locale prose. */
 export type LocalizedString = string | Record<Locale, string>
 
-export type SkillStatus = 'available' | 'planned'
 export type SkillInvocation = 'user' | 'model'
 export type SkillDomain =
   | 'repo-config'
@@ -37,7 +36,6 @@ export type SkillOverlay = {
   invoke: string
   slug: string
   description: LocalizedString
-  status: SkillStatus
   invocation: SkillInvocation
   domain: SkillDomain
   githubPath: string
@@ -62,7 +60,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Configure a repo for the ai-kit pipeline — issue tracker, domain docs, agent pointers.',
       vi: 'Cấu hình repo để dùng chuỗi làm việc ai-kit — nối hệ thống theo dõi issue, tài liệu domain, và con trỏ agent.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'repo-config',
     samplePrompt: '/setup',
@@ -98,7 +95,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Align on a plan before building — relentless grill (design tree, lettered options), sharpen domain language, update CONTEXT.md and ADRs as you go.',
       vi: 'Thống nhất kế hoạch trước khi dựng — hỏi xoáy liên tục (cây thiết kế, các lựa chọn A/B/C/D), mài sắc ngôn ngữ domain, cập nhật CONTEXT.md và ADR ngay trong lúc làm.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'alignment',
     samplePrompt: '/align\n\nGrill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.',
@@ -132,7 +128,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Requirements — discovery, enterprise PRD, user stories, acceptance criteria, scope, MVP, MoSCoW, RICE. Does not publish — after align use `/to-prd`.',
       vi: 'Yêu cầu sản phẩm — khám phá, PRD bản đầy đủ, user story, tiêu chí chấp nhận, phạm vi, MVP, MoSCoW, RICE. Không xuất bản — sau `/align` thì dùng `/to-prd`.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'requirements',
     samplePrompt:
@@ -140,7 +135,7 @@ export const skillOverlays: SkillOverlay[] = [
     githubPath: 'skills/reqs/',
     relatedAgents: ['pm'],
     agentPanel: {
-      role: { en: 'PRINCIPAL PM', vi: 'PM CHÍNH' },
+      role: 'PRINCIPAL PM',
       owns: ['PRD', 'user stories', 'acceptance criteria', 'scope'],
       invokeHint: {
         en: 'Use the pm to write a PRD for [feature]',
@@ -175,7 +170,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Synthesize the current conversation into a lean PRD and publish it to the issue tracker — no interview.',
       vi: 'Chốt cuộc hội thoại hiện tại thành một PRD bản gọn và xuất bản lên hệ thống theo dõi issue — không cần phỏng vấn thêm.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'requirements',
     samplePrompt: '/to-prd\n\nChốt PRD từ cuộc chat này — publish lên GitHub.',
@@ -205,7 +199,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Break a plan, spec, or PRD into independently-grabbable GitHub issues using tracer-bullet vertical slices.',
       vi: 'Bẻ một kế hoạch, đặc tả, hoặc PRD thành các issue GitHub độc lập, nhận việc ngay được — theo lát cắt dọc kiểu tracer-bullet.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'requirements',
     samplePrompt: '/to-issues\n\nBẻ PRD #42 thành issues — vertical slices, publish lên GitHub.',
@@ -238,7 +231,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Move GitHub issues through a triage state machine — categorise, verify, grill if needed, write agent briefs.',
       vi: 'Đưa issue GitHub đi qua máy trạng thái sàng lọc — phân loại, xác minh, hỏi xoáy thêm nếu cần, và viết tóm tắt cho agent.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'triage',
     samplePrompt:
@@ -269,14 +261,13 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Turn a PRD or feature brief into an engineering-ready design spec mapped to @polyms/core-ui.',
       vi: 'Biến một PRD hoặc tóm tắt tính năng thành đặc tả thiết kế sẵn sàng cho kỹ thuật, ánh xạ theo @polyms/core-ui.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'design',
     samplePrompt: '/design\n\nThiết kế màn hình từ PRD #42 — spec giao diện.',
     githubPath: 'skills/design/',
     relatedAgents: ['designer'],
     agentPanel: {
-      role: { en: 'PRINCIPAL DESIGNER', vi: 'THIẾT KẾ CHÍNH' },
+      role: 'PRINCIPAL DESIGNER',
       owns: ['docs/design/', '@polyms/core-ui component maps'],
       invokeHint: {
         en: 'Use the designer to spec UI from PRD #42',
@@ -308,14 +299,13 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Fullstack implementation with TDD, solution ladder, scope self-check, and debugging.',
       vi: 'Triển khai toàn ngăn xếp với TDD, thang giải pháp, tự kiểm phạm vi, và gỡ lỗi.',
     },
-    status: 'available',
     invocation: 'model',
     domain: 'implementation',
     samplePrompt: '/dev\n\nImplement [feature] from PRD at docs/prd/feature-x.md',
     githubPath: 'skills/dev/',
     relatedAgents: ['developer'],
     agentPanel: {
-      role: { en: 'PRINCIPAL ENGINEER', vi: 'KỸ SƯ CHÍNH' },
+      role: 'PRINCIPAL ENGINEER',
       owns: ['production code', 'TDD', 'solution ladder', 'scope self-check', 'status report', 'debugging'],
       invokeHint: {
         en: 'Use the developer to implement [feature] from spec',
@@ -347,14 +337,13 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Review code changes since a pinned git fixed point — Standards, Spec, and Simplify axes.',
       vi: 'Rà soát thay đổi code từ một điểm mốc git cố định — theo ba trục Chuẩn mực, Đặc tả, và Đơn giản hóa.',
     },
-    status: 'available',
     invocation: 'model',
     domain: 'review',
     samplePrompt: '/code-review\n\nReview diff since main.\nRà soát code trên branch này so với main.',
     githubPath: 'skills/code-review/',
     relatedAgents: ['techlead'],
     agentPanel: {
-      role: { en: 'PRINCIPAL TECH LEAD', vi: 'TRƯỞNG KỸ THUẬT CHÍNH' },
+      role: 'PRINCIPAL TECH LEAD',
       owns: ['Standards', 'Spec', 'Simplify', 'pre-merge gate'],
       invokeHint: {
         en: 'Use the techlead to review diff since main',
@@ -386,7 +375,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Developer-facing documentation — API reference, tutorials, integration guides, migration notes.',
       vi: 'Tài liệu dành cho lập trình viên — tham chiếu API, hướng dẫn, tích hợp, ghi chú migration.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'docs',
     samplePrompt:
@@ -394,7 +382,7 @@ export const skillOverlays: SkillOverlay[] = [
     githubPath: 'skills/docs/',
     relatedAgents: ['techlead'],
     agentPanel: {
-      role: { en: 'PRINCIPAL TECH LEAD', vi: 'TRƯỞNG KỸ THUẬT CHÍNH' },
+      role: 'PRINCIPAL TECH LEAD',
       owns: ['API reference', 'tutorials', 'integration guides', 'migration notes'],
       invokeHint: { en: 'Use the techlead to [task]', vi: 'Nhờ agent techlead làm [công việc]' },
     },
@@ -429,7 +417,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'End-to-end test automation — Playwright flake, CI parallelization, journey suites, traces.',
       vi: 'Tự động hóa kiểm thử đầu cuối — xử lý flaky Playwright, chạy CI song song, bộ hành trình, và trace.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'e2e',
     samplePrompt:
@@ -437,7 +424,7 @@ export const skillOverlays: SkillOverlay[] = [
     githubPath: 'skills/e2e/',
     relatedAgents: ['tester'],
     agentPanel: {
-      role: { en: 'PRINCIPAL TESTER', vi: 'KIỂM THỬ CHÍNH' },
+      role: 'PRINCIPAL TESTER',
       owns: ['Playwright suite', 'flake elimination', 'CI sharding', 'traces'],
       invokeHint: { en: 'Use the tester to [task]', vi: 'Nhờ agent tester làm [công việc]' },
     },
@@ -466,7 +453,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Reference for writing and editing ai-kit skills — predictability, invocation, pruning.',
       vi: 'Tài liệu tham khảo để viết và sửa skill của ai-kit — tính dự đoán được, cách gọi lệnh, và cắt giảm lan man.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'authoring',
     samplePrompt: '/craft\n\nReview skills/reqs/SKILL.md for sprawl and no-ops.',
@@ -496,14 +482,13 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Scan codebase for deepening opportunities, present visual HTML report, then grill the candidate you pick.',
       vi: 'Quét codebase để tìm cơ hội làm sâu module, xuất báo cáo HTML trực quan, rồi hỏi xoáy ứng viên bạn chọn.',
     },
-    status: 'available',
     invocation: 'user',
     domain: 'architecture',
     samplePrompt: '/arch-refactor\n\nRà soát kiến trúc — tìm chỗ deepen module.',
     githubPath: 'skills/arch-refactor/',
     relatedAgents: ['techlead'],
     agentPanel: {
-      role: { en: 'PRINCIPAL TECH LEAD', vi: 'TRƯỞNG KỸ THUẬT CHÍNH' },
+      role: 'PRINCIPAL TECH LEAD',
       owns: ['deepening scan', 'HTML report', 'grill candidate'],
       invokeHint: {
         en: 'Use the techlead to scan for deepening opportunities',
@@ -538,7 +523,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Architecture vocabulary for deep modules — seam, depth, leverage, locality, design-it-twice.',
       vi: 'Từ vựng kiến trúc cho module sâu — seam, depth, leverage, locality, design-it-twice.',
     },
-    status: 'available',
     invocation: 'model',
     domain: 'architecture',
     footnote: {
@@ -548,7 +532,7 @@ export const skillOverlays: SkillOverlay[] = [
     githubPath: 'skills/arch/',
     relatedAgents: ['techlead'],
     agentPanel: {
-      role: { en: 'PRINCIPAL TECH LEAD', vi: 'TRƯỞNG KỸ THUẬT CHÍNH' },
+      role: 'PRINCIPAL TECH LEAD',
       owns: ['seams', 'depth', 'leverage', 'design-it-twice'],
       invokeHint: {
         en: 'Use the techlead to place seams for [module]',
@@ -583,7 +567,6 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Deploy, CI, and infra — symptom → fix via Knowledge (`intent: incident`); SEV/post-mortem templates.',
       vi: 'Deploy, CI, và hạ tầng — đi từ triệu chứng tới cách xử lý qua Knowledge (`intent: incident`); có mẫu SEV/post-mortem.',
     },
-    status: 'available',
     invocation: 'model',
     domain: 'devops',
     samplePrompt:
@@ -591,7 +574,7 @@ export const skillOverlays: SkillOverlay[] = [
     githubPath: 'skills/devops/',
     relatedAgents: ['developer', 'techlead'],
     agentPanel: {
-      role: { en: 'PRINCIPAL ENGINEER · TECH LEAD', vi: 'KỸ SƯ CHÍNH · TRƯỞNG KỸ THUẬT CHÍNH' },
+      role: 'PRINCIPAL ENGINEER · TECH LEAD',
       owns: ['incident knowledge', 'stack profiles', 'deploy/CI fixes', 'SEV/post-mortem'],
       invokeHint: {
         en: 'Use the developer to [symptom] — or techlead for SEV ownership',

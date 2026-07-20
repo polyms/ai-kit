@@ -7,7 +7,6 @@ const skill: SkillOverlay = {
   invoke: '/demo',
   slug: 'demo',
   description: { en: 'English description', vi: 'Mô tả tiếng Việt' },
-  status: 'available',
   invocation: 'user',
   domain: 'design',
   githubPath: 'skills/demo/',
@@ -17,7 +16,7 @@ const skill: SkillOverlay = {
     downstream: [{ en: 'Ship', vi: 'Ship' }, '/dev'],
   },
   agentPanel: {
-    role: { en: 'PRINCIPAL DEMO', vi: 'DEMO CHÍNH' },
+    role: 'PRINCIPAL DEMO',
     owns: ['PRD', 'scope'],
     invokeHint: { en: 'Use the demo to ship', vi: 'Nhờ agent demo ship' },
   },
@@ -31,7 +30,7 @@ describe('getSkillCopy', () => {
     expect(copy.summary).toBe('Same in both locales')
     expect(copy.pipeline).toEqual({ upstream: 'Ý tưởng', downstream: ['Ship', '/dev'] })
     expect(copy.agentPanel).toEqual({
-      role: 'DEMO CHÍNH',
+      role: 'PRINCIPAL DEMO',
       owns: ['PRD', 'scope'],
       invokeHint: 'Nhờ agent demo ship',
     })

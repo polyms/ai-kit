@@ -7,15 +7,15 @@ import { injectUmami } from '../../lib/umami'
 import { m } from '../../paraglide/messages.js'
 import { PolymsWordmark } from '../PolymsWordmark'
 
-/** Main-path skills — href → `/skills/:slug` (no `/agents/*`; design §3 deep links). */
+/** Main-path skills — href → `/skills?q=<invoke>` (listing shell, not detail). */
 const PIPELINE_LINKS = [
-  { invoke: '/align', slug: 'align' },
-  { invoke: '/reqs', slug: 'reqs' },
-  { invoke: '/to-prd', slug: 'to-prd' },
-  { invoke: '/to-issues', slug: 'to-issues' },
-  { invoke: '/design', slug: 'design' },
-  { invoke: '/dev', slug: 'dev' },
-  { invoke: '/code-review', slug: 'code-review' },
+  { invoke: '/align' },
+  { invoke: '/reqs' },
+  { invoke: '/to-prd' },
+  { invoke: '/to-issues' },
+  { invoke: '/design' },
+  { invoke: '/dev' },
+  { invoke: '/code-review' },
 ] as const
 
 export function HomeFooter() {
@@ -49,7 +49,11 @@ export function HomeFooter() {
           </div>
           <div className='flex flex-col gap-1'>
             {PIPELINE_LINKS.map(link => (
-              <a className='link font-medium no-underline' href={`/skills/${link.slug}`} key={link.slug}>
+              <a
+                className='link font-medium no-underline'
+                href={`/skills?q=${encodeURIComponent(link.invoke)}`}
+                key={link.invoke}
+              >
                 {link.invoke}
               </a>
             ))}
@@ -72,7 +76,7 @@ export function HomeFooter() {
             <a className='link font-medium no-underline' href='/knowledge'>
               {m.nav_knowledge()}
             </a>
-            <a className='link font-medium no-underline' href='/#catalog'>
+            <a className='link font-medium no-underline' href='/skills'>
               {m.footer_link_catalog()}
             </a>
             <a className='link font-medium no-underline' href='https://ui.polyms.dev'>

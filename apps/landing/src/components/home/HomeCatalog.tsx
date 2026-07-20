@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { SkillIcon } from '../../lib/skill-icons'
 import { getSkills } from '../../lib/skills'
+import { defaultSkillsSearch } from '../../lib/skills-search'
 import { m } from '../../paraglide/messages.js'
 import { useAppStore } from '../../stores/useAppStore'
 import { HOME_PLAYFUL } from './brand'
@@ -56,6 +57,7 @@ export function HomeCatalog() {
               className={`app-catalog-card flex flex-col rounded-[24px] border p-7 no-underline transition-transform duration-300 ease-in-out hover:opacity-95 ${featured ? 'app-catalog-card--featured' : 'border-line bg-body'} ${playfulRotate}`}
               key={skill.slug}
               params={{ slug: skill.slug }}
+              search={defaultSkillsSearch}
               to='/skills/$slug'
             >
               <div className='mb-5 flex items-center justify-between'>

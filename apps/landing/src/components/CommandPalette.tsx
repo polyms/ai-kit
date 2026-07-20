@@ -3,13 +3,16 @@ import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { IconMagnifier } from '../lib/icons'
 import { getSkills } from '../lib/skills'
+import { defaultSkillsSearch } from '../lib/skills-search'
 import { trackEvent } from '../lib/umami'
 import { m } from '../paraglide/messages.js'
 import { useAppStore } from '../stores/useAppStore'
 import { SkillCommandRow } from './SkillCommandRow'
 
 function isPaletteHidden(pathname: string) {
-  return pathname.startsWith('/knowledge') || pathname.startsWith('/ops')
+  return (
+    pathname.startsWith('/knowledge') || pathname.startsWith('/ops') || pathname.startsWith('/skills')
+  )
 }
 
 export function CommandPalette() {
@@ -64,7 +67,7 @@ export function CommandPalette() {
 
   const goToSkill = (slug: string) => {
     setPaletteOpen(false)
-    navigate({ to: '/skills/$slug', params: { slug } })
+    navigate({ to: '/skills/$slug', params: { slug }, search: defaultSkillsSearch })
   }
 
   const handleOpenChange = (next: boolean) => {
@@ -125,8 +128,6 @@ export function CommandPalette() {
           {filtered.map((skill, i) => (
             <SkillCommandRow
               active={i === activeIndex}
-              asButton
-              asOption
               highlight={query}
               id={`command-palette-option-${skill.slug}`}
               key={skill.slug}

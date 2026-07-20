@@ -3,7 +3,6 @@
 # --- catalog ---
 catalog_agentHint: Agent
 catalog_back: Back to catalog
-catalog_clear: Clear filters
 catalog_copied: Copied
 catalog_copy: Copy
 catalog_copyFail: Could not copy — select text manually
@@ -14,13 +13,18 @@ catalog_filterUser: User-invoked
 catalog_notFound: Skill not found
 catalog_samplePrompt: Sample prompt
 catalog_search: Find skill…
-catalog_status_available: Available
-catalog_status_planned: Planned
-catalog_sub: 15 skills — invoke, description, status, domain
+catalog_sub: 15 skills — invoke, description, domain
 catalog_title: Skill catalog
-catalog_viewAll: View full catalog
 catalog_viewSource: View on GitHub
 catalog_zeroResults: 0 results
+
+# --- skills shell ---
+skills_intro_body: Pick a skill from the list on the left, or filter by how it is invoked below.
+skills_intro_title: Skill catalog for agents
+skills_invocation_model_desc: The agent decides when to call it.
+skills_invocation_user_desc: You type the slash command in chat.
+skills_resultsCaption: Skill search results
+skills_searchLabel: Search skills
 
 # --- domain ---
 domain_alignment: Alignment

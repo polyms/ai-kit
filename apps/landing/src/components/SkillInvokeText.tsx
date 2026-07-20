@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { skillOverlays } from '../content/overlay'
+import { defaultSkillsSearch } from '../lib/skills-search'
 
 const skillSlugSet = new Set(skillOverlays.map(s => s.slug))
 
@@ -12,6 +13,7 @@ function SkillInvokeBadge({ invoke, slug }: { invoke: string; slug: string }) {
     <Link
       className='inline align-baseline no-underline hover:opacity-90'
       params={{ slug }}
+      search={defaultSkillsSearch}
       to='/skills/$slug'
     >
       <span className='badge badge-info font-invoke text-xs'>{invoke}</span>
