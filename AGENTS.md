@@ -6,8 +6,8 @@ Polyms agent skills for real engineering — align, spec, ship.
 
 ### Documentation language
 
-English. See `docs/agents/language.md`. Chat tone: IDE/user rules (kit does not set persona unless `/setup`
-opted in chat voice → `.cursor/rules/agent-voice.mdc`).
+English. See `docs/agents/language.md` (prose language + pure-tech tokens). Chat tone: IDE/user rules (kit
+does not set persona unless `/setup` opted in chat voice → `.cursor/rules/agent-voice.mdc`).
 
 ### Issue tracker
 

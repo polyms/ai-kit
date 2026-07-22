@@ -46,7 +46,9 @@ different people chat with agents in different languages.
 | **English**                                                                   | Internal team writes/reads docs in English    |
 | **Other**                                                                     | User names the language                       |
 
-Code, identifiers, file paths, and technical terms (seam, ADR, PRD, …) stay in English regardless of choice.
+Code, identifiers, file paths, and **pure-tech tokens** stay in English regardless of choice — see
+[language.md](language.md) (**Pure-tech tokens** / anti-mix). Ordinary prose words are **not** tech tokens;
+write them in the confirmed language.
 
 **B — Issue tracker**
 
@@ -271,6 +273,6 @@ they have a raw backlog ready: `→ /triage` with when.
 ## Language
 
 Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `reqs`,
-`to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Code, identifiers, and
-technical vocabulary stay in English. Chat tone is unaffected by this file — IDE/user rules, or
-`.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in.
+`to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Prose stays natural in
+that language; only **pure-tech tokens** stay English ([language.md](language.md)). Chat tone is unaffected
+by this file — IDE/user rules, or `.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in.

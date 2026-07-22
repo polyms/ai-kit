@@ -7,10 +7,11 @@ an aligned conversation.
 Copy this structure when writing a PRD. Replace bracketed placeholders. Delete instructional comments.
 
 **Audience:** PRD must be **human + AI readable** — clear prose for PM/stakeholder; structure for agents.
-Avoid shorthand only an AI can parse (wave rollup, code-only bullets, missing Given/When/Then). Body stands
-alone without opening the repo. Prefer tracker issue links when referring to published work; keep repo paths
-in Appendix, not as the main explanation. Do **not** open with a `docs/prd/` · `CONTEXT.md` · align-notes
-banner under the title.
+Write in `docs/agents/language.md`'s confirmed language (natural register; only **pure-tech tokens** stay
+English — no mid-sentence EN/VI mix). Avoid shorthand only an AI can parse (wave rollup, code-only bullets,
+missing Given/When/Then). Body stands alone without opening the repo. Prefer tracker issue links when
+referring to published work; keep repo paths in Appendix, not as the main explanation. Do **not** open with
+a `docs/prd/` · `CONTEXT.md` · align-notes banner under the title.
 
 **Anti-patterns:**
 

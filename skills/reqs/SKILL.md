@@ -10,8 +10,9 @@ disable-model-invocation: true
 
 Turn ideas into engineering-ready artifacts. Read this skill fully before producing output.
 
-Read `docs/agents/language.md` when present — write PRDs and stories in that language. No file: match the issue
-tracker's existing language.
+Read `docs/agents/language.md` when present — write PRDs and stories in that language (**one prose language**;
+only pure-tech tokens stay English — no mid-sentence EN/VI mix). No file: match the issue tracker's existing
+language; same prose-vs-token bar.
 
 ## When `/reqs` vs `/to-prd` vs `/align`
 
@@ -79,7 +80,8 @@ title.
 7. **Human-readable check:** re-read as a PM unfamiliar with the codebase — every kept section filled; no
    one-line wave summaries; Given/When/Then per P0 story; story titles name the outcome (not `US#n` alone);
    body stands alone without opening the repo; repo paths only in Appendix; cut scope deleted or listed under
-   Out of scope (no strikethrough leftovers)
+   Out of scope (no strikethrough leftovers); prose reads native in `docs/agents/language.md` (only pure-tech
+   tokens left in English — see language.md anti-mix)
 
 **Completion criterion:** PRD passes the [quality checklist](#quality-checklist); human-readable check
 passed; no tracker issue created by this skill.
@@ -148,6 +150,8 @@ Before delivering any artifact, verify:
 - [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; no repo-path banner; a human can
       understand scope from the body alone (see Audience on
       [enterprise-prd-template.md](enterprise-prd-template.md))
+- [ ] **Prose language** — native in `docs/agents/language.md`; only pure-tech tokens stay English (no
+      flavor English / mid-clause mix)
 - [ ] **No publish** — this skill did not create a tracker issue; publish path is `/to-prd`
 
 ## Handoff

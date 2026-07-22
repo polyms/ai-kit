@@ -47,7 +47,8 @@ language before synthesis.
 **Downstream:** `/to-issues` breaks the published PRD into vertical-slice issues.
 
 **Prerequisites:** Run `/setup` if `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is
-missing. Read `docs/agents/language.md` when present — publish the PRD in that language.
+missing. Read `docs/agents/language.md` when present — publish the PRD in that language (**one prose
+language**; only pure-tech tokens stay English — no mid-sentence EN/VI mix).
 
 ## References
 
@@ -124,6 +125,8 @@ here ships it straight to `/dev` unreviewed. Markers may appear only after step 
 - [ ] Repo paths and ADR filenames appear only under **Repo references** (or section omitted)
 - [ ] Cut scope is deleted or listed under **Out of Scope** — no strikethrough archaeology
 - [ ] Body stands alone on the tracker without opening the repo
+- [ ] Prose reads native in `docs/agents/language.md` — only pure-tech tokens left in English (no flavor
+      English / mid-clause mix)
 
 **Completion criterion:** PRD draft complete; every template section filled or correctly omitted; every
 unsettled detail carries a marker instead of a guess; markers match the step 3 confirmed deferral list when

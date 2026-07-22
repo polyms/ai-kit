@@ -18,9 +18,12 @@ that belongs in **Repo references** at the end, if at all.
 | Named decisions in plain language        | ADR file paths — summarize the decision; path only in appendix |
 | Glossary meaning written once in prose   | “see CONTEXT.md” as a substitute for definition                |
 
-**Voice:** Full sentences. Name who hurts and what changes in product terms. Do **not** ship wave rollups,
-code-identifier laundry lists, or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`). Bold glossary tokens
-sparingly — define the idea in a sentence first.
+**Voice:** Full sentences in `docs/agents/language.md`'s confirmed language — natural register, not
+EN/VI collage. Keep English only for **pure-tech tokens** (invokes, protocols, identifiers, canonical
+glossary terms); rewrite ordinary adjectives and clauses into the prose language. Name who hurts and what
+changes in product terms. Do **not** ship wave rollups, code-identifier laundry lists, or agent-only
+shorthand (e.g. `"W1 P0 #1–9: tenancy..."`). Bold glossary tokens sparingly — define the idea in a sentence
+first.
 
 **Anti-patterns (seen on bad tracker PRDs):**
 

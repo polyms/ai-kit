@@ -19,7 +19,8 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 1. **Read the reqs skill** at `~/.cursor/skills/reqs/SKILL.md` (or `skills/reqs/SKILL.md`) and follow its workflows.
 2. Route via the skill's **Quick Router** and **When `/reqs` vs `/to-prd` vs `/align`** — after align to
    publish, tell the user to invoke `/to-prd`; do not publish tracker issues yourself.
-3. Read `CONTEXT.md` and relevant ADRs — requirements must use canonical domain language.
+3. Read `CONTEXT.md`, relevant ADRs, and `docs/agents/language.md` when present — requirements use canonical
+   domain language; PRD prose stays native in the confirmed language (only pure-tech tokens in English).
 4. Gather context from the user, codebase, or docs when relevant.
 5. Produce structured output using [enterprise-prd-template.md](~/.cursor/skills/reqs/enterprise-prd-template.md)
    or the user-story guide from the skill.

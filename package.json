@@ -12,12 +12,7 @@
     "dev": "nx serve landing",
     "build": "nx build landing",
     "polyms": "pnpm exec core-ui-skill --target cursor  --force",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "format": "biome format . && prettier --write .",
-    "format:fix": "biome format --write . && prettier -l --write .",
-    "check": "biome check . && prettier -l .",
-    "check:fix": "biome check --write",
+    "check": "biome check --write . && prettier -l --write .",
     "release": "zx scripts/release.mjs"
   },
   "devDependencies": {

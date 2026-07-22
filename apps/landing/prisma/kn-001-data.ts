@@ -54,12 +54,7 @@ function packageJsonScriptsBlock(repoRoot: string): string {
   return JSON.stringify(
     {
       scripts: {
-        lint: pkg.scripts.lint,
-        'lint:fix': pkg.scripts['lint:fix'],
-        format: pkg.scripts.format,
-        'format:fix': pkg.scripts['format:fix'],
         check: pkg.scripts.check,
-        'check:fix': pkg.scripts['check:fix'],
       },
       devDependencies: {
         '@biomejs/biome': pkg.devDependencies['@biomejs/biome'],
@@ -90,9 +85,9 @@ const STATIC_CHUNKS: Omit<KnowledgeChunk, 'body'>[] = [
     checklistItems: [
       'Install devDependencies: @biomejs/biome@2.5.2, prettier@~3.9.4',
       'Copy biome.json, .prettierrc.yml, .prettierignore, .vscode/settings.json into the target repo root',
-      'Wire package.json scripts: lint, format, check, check:fix',
+      'Wire package.json scripts: check',
       'Install editor extensions: biomejs.biome, esbenp.prettier-vscode',
-      'Verify: pnpm check passes (biome check . && prettier -l .)',
+      'Verify: pnpm check auto-fixes (biome check --write . && prettier -l --write .)',
       'Verify CI runs pnpm check on pull requests',
     ],
     parentChunkId: null,
@@ -186,7 +181,7 @@ const STATIC_CHUNKS: Omit<KnowledgeChunk, 'body'>[] = [
     cause: [],
     fix: [],
     verify: [],
-    triggerPhrases: ['package.json lint format check scripts'],
+    triggerPhrases: ['package.json check script'],
     artifactFilename: 'package.json',
     artifactType: 'config',
     checklistItems: [],
@@ -219,7 +214,7 @@ const RATIONALE_BODY = `Biome handles JS/TS/CSS/HTML/JSON/JSONC formatting and l
 
 This is a deliberate split, not redundancy: each tool owns file extensions the other never touches. \`.prettierignore\` excludes every extension Biome owns (see the ignore-file chunk); Biome's \`files.includes\` only matches its own language set. Never let both tools claim the same file type.
 
-Run \`check\` (\`biome check . && prettier --check .\`) in CI — read-only, never mutates. Run \`check:fix\` (or \`format:fix\`) locally before committing to auto-fix both tools' domains in one command.`
+Run \`check\` (\`biome check --write . && prettier -l --write .\`) — always auto-fix both tools' domains in one command. In CI, run it and fail if the working tree is dirty (uncommitted fixes).`
 
 const CHECKLIST_BODY = 'Verify steps for applying the Biome + Prettier Polyms default to a target repo.'
 

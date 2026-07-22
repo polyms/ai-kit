@@ -187,10 +187,12 @@ _Avoid_: knowledge index in git (when meaning live CMS content)
 Setup output at `docs/agents/language.md` — the fixed language for persistent written docs
 (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft
 dependency for `domain-modeling`, `reqs`/`to-prd`, `design`, `arch` — they match this language
-or, absent the file, whatever doc they're already editing. Chat tone is unaffected — IDE/user
-rules, or opt-in `.cursor/rules/agent-voice.mdc` from `/setup`.
+or, absent the file, whatever doc they're already editing. Prose stays natural in that language;
+only **pure-tech tokens** (invokes, protocols, identifiers, canonical glossary terms) stay
+English — no mid-sentence language mix. Chat tone is unaffected — IDE/user rules, or opt-in
+`.cursor/rules/agent-voice.mdc` from `/setup`.
 _Avoid_: **Locale toggle** (kit-site UI language, not repo docs), i18n (generic), shipping a
-always-on kit persona
+always-on kit persona, treating ordinary adjectives as "tech terms" so PRDs become EN/VI collage
 
 **Voice rule**:
 Optional `/setup` output — `.cursor/rules/agent-voice.mdc` (`alwaysApply`); Claude Code uses
