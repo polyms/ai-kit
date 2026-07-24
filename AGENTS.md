@@ -66,4 +66,5 @@ Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public su
 (`techlead`); E2E flake → `/e2e` (`tester`); deploy/CI infra → `/devops` (`developer` executes,
 `techlead` owns SEV). Each stage ends with `## Next Step` — one preferred skill (two max with
 when/why; see CONTEXT.md **Handoff**). Each agent stays in lane; escalates gaps upstream, does not
-relitigate downstream artifacts.
+relitigate downstream artifacts. Subagent spawn: do not duplicate delegated search; set explore
+thoroughness — see [docs/agents/invocation.md](docs/agents/invocation.md#subagent-delegation).

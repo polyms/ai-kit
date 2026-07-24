@@ -72,7 +72,7 @@ _Avoid_: publish PRD (generic), enterprise discovery (when meaning `/reqs`)
 Turn a PRD into an engineering-ready UI spec at `docs/design/<feature>.md`, mapped to `@polyms/ui-kit`. Invoke with `/design`. Long sessions: `designer`.
 _Avoid_: UX phase, UI spec (generic)
 
-**Core UI**:
+**UI Kit**:
 Design system library (`@polyms/ui-kit`, Tailwind CSS 4) and matching `/ui-kit` skill for composing primitives — not part of ai-kit; ships with the lib repo.
 _Avoid_: component library (generic), shadcn
 

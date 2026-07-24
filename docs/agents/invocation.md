@@ -44,6 +44,22 @@ User-invoked skills only appear in the invoke-name column. Model-invoked skills 
 `/dev`; agents delegate to `dev`). Agent files live at `agents/<role>.md` with frontmatter `name: <role>` — no
 `-agent` suffix.
 
+## Subagent delegation
+
+When the parent chat (or a principal agent) spawns an explore / Task / nested agent:
+
+- **Do not duplicate work** — if you delegated a search or plan, wait for that result; do not re-run the same
+  greps/reads in the parent context unless the child failed or returned a gap.
+- **Explore thoroughness** — when spawning a codebase explore agent, set breadth explicitly: `quick` (single
+  targeted lookup), `medium` (moderate fan-out), or `very thorough` (multiple locations / naming conventions).
+  Prefer `quick`/`medium` unless the question truly needs broad sweeps.
+- **Resume before re-spawn** — if a matching agent already ran (or is still running) for the same question,
+  continue that thread instead of launching a duplicate.
+
+Agent `description` frontmatter should include **negative triggers** (`Do NOT use for…`) so the parent does
+not mis-route. Keep agent bodies **lean**: role + router + constraints + “read the skill”; put workflows in
+`skills/*/SKILL.md`, not in `agents/*.md`.
+
 ## Dependencies between skills
 
 Express dependencies as skill-name prose ("Run `align-loop`", "Use `domain-modeling`"), not deep `../other-skill/FILE.md` cross-references into another skill's body.

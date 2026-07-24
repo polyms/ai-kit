@@ -19,6 +19,9 @@ Subagent files: `agents/<role>.md` with frontmatter `name: <role>` — org role,
 suffix). Agents: `pm`, `designer`, `developer`, `tester`, `techlead`. Multiple skills per agent OK (e.g.
 `developer` → `/dev` + `/devops`; `techlead` → `/docs`, `arch`, `/code-review`, `/arch-refactor`, `/devops`).
 
+Lean harness, negative description triggers, and subagent spawn rules:
+[docs/agents/invocation.md](../../docs/agents/invocation.md#subagent-delegation).
+
 Cross-skill deps: prose (`Run align-loop`, `Use arch`), not deep links into another skill's body.
 
 Reading `CONTEXT.md` ≠ `domain-modeling`. Active glossary/ADR updates = `domain-modeling`.
