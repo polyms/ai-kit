@@ -41,10 +41,10 @@ Handoff → `/to-issues` then `/design`.
 
 ## Design
 
-Spec includes CSS intent, four states (loading / empty / error / populated), core-ui
+Spec includes CSS intent, four content states (loading / empty / error / success), ui-kit
 map for chips. Visual acceptance rows for dark default.
 
-Handoff → `/dev` (ask user to attach `/core-ui` if needed).
+Handoff → `/dev` (ask user to attach `/ui-kit` if needed).
 
 ## Dev (multi-slice)
 

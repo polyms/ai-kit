@@ -1,4 +1,4 @@
-import { Button, NavigationMenu } from '@polyms/core-ui'
+import { Button, NavigationMenu } from '@polyms/ui-kit'
 import { Code2 } from '@solar-icons/react-perf/BoldDuotone'
 import { Link, useRouterState } from '@tanstack/react-router'
 import { GITHUB_REPO } from '../../content/overlay'

@@ -14,6 +14,10 @@ Before drafting layout, fill this table honestly. **Do not skip** — generic ou
 | **Theme default**  | dark-first / light-first / system | **Dark-first** per ADR — spec must say how light mode stays AA                                   |
 | **Reference tier** | What "good" looks like (URLs)     | [tasteskill.dev](https://www.tasteskill.dev/) craft tier — borrow density/composition, not brand |
 
+Optional: if the user attached a craft URL/screenshot, add one line of **DNA** (layout family /
+type roles / colour anchor) under Reference tier — structure only; see
+[QUALITY-BAR.md](QUALITY-BAR.md)#visual-reference--dna-optional.
+
 ## Output of this step
 
 One paragraph **Brief lock** in the spec §1 — user confirms or corrects before wireframes.

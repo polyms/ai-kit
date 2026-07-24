@@ -103,12 +103,12 @@ for `gh label create` examples).
 
 **F — Design**
 
-| Item          | Default                                                      |
-| ------------- | ------------------------------------------------------------ |
-| Design specs  | `docs/design/<feature>.md`                                   |
-| Design system | `@polyms/core-ui` + `/core-ui` skill (symlink from lib repo) |
+| Item          | Default                                                     |
+| ------------- | ----------------------------------------------------------- |
+| Design specs  | `docs/design/<feature>.md`                                  |
+| Design system | `@polyms/ui-kit` + `/ui-kit` skill (symlink from lib repo) |
 
-Confirm paths. Note: `/design` writes specs; `/core-ui` skill documents component API — not duplicated in
+Confirm paths. Note: `/design` writes specs; `/ui-kit` skill documents component API — not duplicated in
 ai-kit.
 
 **G — Chat voice** (optional)
@@ -192,7 +192,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Design
 
-UI specs and `@polyms/core-ui` pointers. See `docs/agents/design.md`.
+UI specs and `@polyms/ui-kit` pointers. See `docs/agents/design.md`.
 
 ### Knowledge
 

@@ -9,4 +9,4 @@ allowBuilds:
   prisma: true
 
 minimumReleaseAgeExclude:
-  - '@polyms/core-ui'
+  - '@polyms/ui-kit'

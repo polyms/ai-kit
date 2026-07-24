@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-/** Polyms wordmark icon — same asset as https://ui.polyms.dev/ (`core-ui/docs/src/assets/FaviconFit.tsx`). */
+/** Polyms wordmark icon — same asset as https://ui.polyms.dev/ (`ui-kit/docs/src/assets/FaviconFit.tsx`). */
 export function FaviconFit(props: SVGProps<SVGSVGElement>) {
   return (
     <svg

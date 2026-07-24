@@ -12,7 +12,7 @@ Switch, Select, NumberField, Toggle, Checkbox, Radio. Form fields with validatio
 **`Field`** / **`Field.Floating`**: **[field.md](field.md)**. Form in Modal/Offcanvas: **field.md** + **modal.md**.
 
 ```tsx
-import { Checkbox, Field, Radio, RadioGroup } from '@polyms/core-ui'
+import { Checkbox, Field, Radio, RadioGroup } from '@polyms/ui-kit'
 
 <Checkbox checked={accepted} onCheckedChange={setAccepted}>
   I accept the terms
@@ -35,7 +35,7 @@ import { Checkbox, Field, Radio, RadioGroup } from '@polyms/core-ui'
 Standalone numeric input with increment/decrement and optional label scrub — **not** a `Field` compound slot. Use **`Field`** + `type='number'` only when you need validation feedback trees; use **`NumberField`** for steppers, quantities, and scrub-by-label.
 
 ```tsx
-import { NumberField } from '@polyms/core-ui'
+import { NumberField } from '@polyms/ui-kit'
 
 <NumberField defaultValue={0} label='Quantity' min={0} max={100} step={1} size='lg' />
 
@@ -60,7 +60,7 @@ import { NumberField } from '@polyms/core-ui'
 Boolean toggle with optional inline label — not a `Field` replacement for settings forms that need validation feedback.
 
 ```tsx
-import { Switch } from '@polyms/core-ui'
+import { Switch } from '@polyms/ui-kit'
 
 <Switch label='Receive email notifications' labelPos='start' defaultChecked />
 <Switch label='Enable dark mode' disabled />
@@ -80,7 +80,7 @@ Use inside `Modal.Body` or settings panels for instant-effect prefs. For labeled
 Pressed-state control for formatting tools — not a settings **`Switch`**.
 
 ```tsx
-import { Toggle, ToggleGroup } from '@polyms/core-ui'
+import { Toggle, ToggleGroup } from '@polyms/ui-kit'
 
 const alignmentToggleGroup = (
   <ToggleGroup aria-label='Alignment' className='toggle-group' defaultValue={['left']}>
@@ -106,7 +106,7 @@ const alignmentToggleGroup = (
 **Tree:** `Select` → `Select.Trigger` + `Select.Content` → `Select.Item`, `Select.Group`, `Select.GroupLabel`, `Select.Separator`.
 
 ```tsx
-import { Select } from '@polyms/core-ui'
+import { Select } from '@polyms/ui-kit'
 
 const exportFormats = [
   { label: 'CSV', value: 'csv' },

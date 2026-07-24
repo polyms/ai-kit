@@ -1,4 +1,4 @@
-import { Alert, Button } from '@polyms/core-ui'
+import { Alert, Button } from '@polyms/ui-kit'
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { isOidcConfigured } from '../../lib/ops/oidc-config'

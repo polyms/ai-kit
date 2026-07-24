@@ -1,6 +1,6 @@
 import { MoveTopIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon as Icon } from '@hugeicons/react'
-import { Button, Toggle, ToggleGroup, Toolbar, Tooltip } from '@polyms/core-ui'
+import { Button, Toggle, ToggleGroup, Toolbar, Tooltip } from '@polyms/ui-kit'
 import { Moon, Sun, Widget } from '@solar-icons/react-perf/BoldDuotone'
 import clsx from 'clsx'
 import { useEffect, useId, useState } from 'react'

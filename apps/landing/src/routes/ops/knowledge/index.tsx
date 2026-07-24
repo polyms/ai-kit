@@ -1,4 +1,4 @@
-import { Button } from '@polyms/core-ui'
+import { Button } from '@polyms/ui-kit'
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
 import { OpsShell } from '../../../components/ops'
 import { defaultKnowledgeSearch } from '../../../lib/knowledge/knowledge.fns'

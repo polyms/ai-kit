@@ -8,7 +8,7 @@
 2. **Root Directory:** repo root (`./`) — `vercel.json` lives here
 3. Framework preset: **TanStack Start** (from `vercel.json`)
 4. Add env vars:
-   - `GITHUB_TOKEN` — GitHub PAT with `read:packages` (required for `@polyms/core-ui`)
+   - `GITHUB_TOKEN` — GitHub PAT with `read:packages` (required for `@polyms/ui-kit`)
    - `DATABASE_URL` — Supabase Postgres URI (required for `/knowledge/*` CMS read)
    - `VITE_UMAMI_SCRIPT_URL` (optional)
    - `VITE_UMAMI_WEBSITE_ID` (optional)

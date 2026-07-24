@@ -12,11 +12,11 @@ Copy this section into every UI design spec. Design writes criteria; **`/dev` pr
 | Check          | Pass when                                                                     |
 | -------------- | ----------------------------------------------------------------------------- |
 | Dark-first     | First paint dark (or per ADR); acceptance screenshots in dark                 |
-| Type scale     | `.display` / `.h1` / `.h2` / mono invoke visible in hero + one inner section  |
+| Type scale     | Type tiers from spec §4 visible (e.g. display / h1 / h2 / body) — not one size everywhere |
 | Surface rhythm | ≥2 distinct surfaces or `border-line` seams — not flat single background      |
 | Focal beat     | Hero (or primary section) has one clear visual anchor — not five equal blocks |
-| core-ui        | No raw form controls where spec maps `Field.Control` / `Button` / `Modal`     |
-| Anti-slop      | No §A rows from ANTI-SLOP.md visible in shipped UI                            |
+| ui-kit        | No raw form controls where spec maps `Field.Control` / `Button` / `Modal`     |
+| Anti-slop      | No §A / §A2 (and §B if layout in scope) from ANTI-SLOP.md; failures use §E format |
 
 **P0 slices (order):** [list — CSS/globals → hero → … from implementation priority]
 ```

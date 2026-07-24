@@ -5,7 +5,7 @@ reading. Trace the real flow (files and callers the change touches) before climb
 
 Use after seams are confirmed and before the red-green loop. Stack already chosen in the
 repo, design spec, or ADRs **overrides** "prefer native / avoid deps" for that choice
-(e.g. Zustand, TanStack Router, `@polyms/core-ui` stay).
+(e.g. Zustand, TanStack Router, `@polyms/ui-kit` stay).
 
 ## Rungs
 

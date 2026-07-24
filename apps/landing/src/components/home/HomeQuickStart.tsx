@@ -1,4 +1,4 @@
-import { Button } from '@polyms/core-ui'
+import { Button } from '@polyms/ui-kit'
 import { CodeSquare, Programming } from '@solar-icons/react-perf/BoldDuotone'
 import { Fragment } from 'react'
 import { GITHUB_REPO } from '../../content/overlay'

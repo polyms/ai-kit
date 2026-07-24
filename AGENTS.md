@@ -40,7 +40,7 @@ Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/
 
 ### Design stack
 
-`/design` — UI spec from PRD at `docs/design/`; `@polyms/core-ui` + `/core-ui` skill for implementation (lib repo, not ai-kit). Long sessions: `designer` in `agents/designer.md`.
+`/design` — UI spec from PRD at `docs/design/`; `@polyms/ui-kit` + `/ui-kit` skill for implementation (lib repo, not ai-kit). Long sessions: `designer` in `agents/designer.md`.
 
 ### Maintenance
 
@@ -57,7 +57,7 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | Agent       | Role                        | Owns                                                                               |
 | ----------- | --------------------------- | ---------------------------------------------------------------------------------- |
 | `pm`        | Principal product manager   | PRD, stories, acceptance criteria, scope (`/reqs`)                                 |
-| `designer`  | Principal product designer  | `docs/design/` UI specs, `@polyms/core-ui` maps (`/design`)                        |
+| `designer`  | Principal product designer  | `docs/design/` UI specs, `@polyms/ui-kit` maps (`/design`)                         |
 | `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
 | `tester`    | Principal tester            | E2E harness, flake, CI sharding, journeys (`/e2e`)                                 |
 | `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |

@@ -1,4 +1,4 @@
-import { Modal, Toast } from '@polyms/core-ui'
+import { Modal, Toast } from '@polyms/ui-kit'
 import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
 import { getLocale } from '~/paraglide/runtime'
 import { CommandPalette } from '../components/CommandPalette'

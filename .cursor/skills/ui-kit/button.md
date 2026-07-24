@@ -96,7 +96,7 @@ Footer **`Modal.Close`** wires Dialog dismiss — pass **`children`** for a labe
 When `render` is provided on **`Button`**, the default `type='button'` is dropped so the target element keeps its own semantics.
 
 ```tsx
-import { Button } from '@polyms/core-ui'
+import { Button } from '@polyms/ui-kit'
 
 <Button variant='primary' size='lg' onClick={save}>
   Save changes

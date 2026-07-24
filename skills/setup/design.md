@@ -1,6 +1,6 @@
 # Design
 
-How `/design` and `/dev` consume UI specifications and `@polyms/core-ui`.
+How `/design` and `/dev` consume UI specifications and `@polyms/ui-kit`.
 
 ## Design specs
 
@@ -12,17 +12,17 @@ Template: `skills/design/design-spec-template.md` in ai-kit.
 
 ## Design system
 
-- **Library:** `@polyms/core-ui` (Tailwind CSS 4)
-- **Skill:** `/core-ui` ships with the lib — symlink via bootstrap or install from the core-ui repo
-- **Boundary:** `/design` maps _what_ (screens, component map, motion intent); `/core-ui` documents _how_ (primitives, tokens, motion API)
+- **Library:** `@polyms/ui-kit` (Tailwind CSS 4)
+- **Skill:** `/ui-kit` ships with the lib — symlink via bootstrap or install from the ui-kit repo
+- **Boundary:** `/design` maps _what_ (screens, component map, motion intent); `/ui-kit` documents _how_ (primitives, tokens, motion API)
 
-`/design` does not duplicate core-ui API documentation.
+`/design` does not duplicate ui-kit API documentation.
 
 ## Before designing
 
 - Read **`CONTEXT.md`** for screen and domain naming
 - Read **`docs/adr/`** for decisions that constrain UI
-- Before component mapping, user invokes **`/core-ui`** (or attaches it in chat)
+- Before component mapping, user invokes **`/ui-kit`** (or attaches it in chat)
 
 ## Rules
 

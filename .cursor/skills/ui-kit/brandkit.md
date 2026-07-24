@@ -1,11 +1,11 @@
 ---
 description: >-
-  Brand kit for @polyms/core-ui — primary accent, surfaces, BRAND.md tokens. Not brand image generation.
+  Brand kit for @polyms/ui-kit — primary accent, surfaces, BRAND.md tokens. Not brand image generation.
   Migrating old screens → also load redesign.md.
 disable-model-invocation: true
 ---
 
-# Brand Kit → @polyms/core-ui
+# Brand Kit → @polyms/ui-kit
 
 A **token map + application rules** so every screen reads as one product. For day-to-day color rules: [theming.md](theming.md). For migrating existing screens: [redesign.md](redesign.md).
 
@@ -47,7 +47,7 @@ Infer before touching tokens:
 
 ## Token map (implementation)
 
-`@polyms/core-ui` ships defaults in `_root.css`. Consumers override in **their** global CSS after importing library styles.
+`@polyms/ui-kit` ships defaults in `_root.css`. Consumers override in **their** global CSS after importing library styles.
 
 ### What you own (brand)
 
@@ -68,7 +68,7 @@ Infer before touching tokens:
 ### Minimal brand theme example
 
 ```css
-@import '@polyms/core-ui/styles/tailwind.css';
+@import '@polyms/ui-kit/styles/tailwind.css';
 
 @theme {
   /* Brand: replace cyan default with your hue — generate 50–950 consistently */
@@ -134,7 +134,7 @@ Apply the brand through **real exports** — identity applications, not feature 
 
 - Show **fragments** — header, one form, one table row, one modal — not a fake full dashboard built from `<div>` rectangles.
 - Browser chrome / URL bar is optional in marketing captures; in app code, use real routes and `NavigationMenu` / sidebar patterns.
-- No div-based fake product UI when `@polyms/core-ui` provides the primitive.
+- No div-based fake product UI when `@polyms/ui-kit` provides the primitive.
 
 ## Logo and mark
 
@@ -204,7 +204,7 @@ Skill agent checklist (authoritative — not the `BRAND.md` template above):
 
 Run before shipping branded shell changes. **If any item fails, the brand pass is not done.**
 
-- [ ] `@polyms/core-ui` styles imported; overrides live in **consumer** CSS only
+- [ ] `@polyms/ui-kit` styles imported; overrides live in **consumer** CSS only
 - [ ] `primary-*` ramp complete enough for hover/active (`btn-*`, `item-primary` use `primary-700` / mixes)
 - [ ] `slate` chrome intact; semantic tones used for intent
 - [ ] Light and `.dark` tested — brand accent readable on both
@@ -216,7 +216,7 @@ Run before shipping branded shell changes. **If any item fails, the brand pass i
 ## Out of scope
 
 - Generating 3×3 brand-guidelines **images** or logo concept boards — use [Taste Skill brandkit](https://www.tasteskill.dev/) for that
-- Replacing the entire type system inside `core/` package CSS
+- Replacing the entire type system inside `ui-kit/ package CSS
 - Custom fonts as the first step before tokens work
 - Marketing landing layouts (bento hero, parallax, grain overlays) inside this skill
 - shadcn/ui or second component library for "brand expression"

@@ -14,7 +14,7 @@ Anchored panel for hints, metadata, compact actions. No `Modal.Container`, no fo
 **Tree:** `Popover` → `Popover.Trigger` + `Popover.Content`.
 
 ```tsx
-import { Button, Popover } from '@polyms/core-ui'
+import { Button, Popover } from '@polyms/ui-kit'
 
 const storagePopover = (
   <Popover>
@@ -42,7 +42,7 @@ Hover/focus hint — **not** a dialog or toast.
 **Simple API** — wrap a single child and pass `title`:
 
 ```tsx
-import { Button, Tooltip } from '@polyms/core-ui'
+import { Button, Tooltip } from '@polyms/ui-kit'
 
 const tooltipRegion = (
   <Tooltip.Provider>

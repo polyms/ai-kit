@@ -58,9 +58,9 @@ ones at the highest level possible. For full module/seam vocabulary and deepenin
 
 **Completion criterion:** User confirms seams under test before any failing test is written.
 
-When implementing UI, use **`core-ui`** for primitives. Read design spec **§4 CSS** and
+When implementing UI, use **`ui-kit`** for primitives. Read design spec **§4 CSS** and
 **§8 visual acceptance** first — run [visual-ship.md](visual-ship.md) (CSS before wiring).
-If `core-ui` is not in context, ask the user to attach or invoke `/core-ui`.
+If `ui-kit` is not in context, ask the user to attach or invoke `/ui-kit`.
 
 ### 3. Solution ladder
 

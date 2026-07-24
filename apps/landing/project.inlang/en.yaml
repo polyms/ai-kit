@@ -63,7 +63,7 @@ home_catalog_intro: Each capability is a short-named skill or agent, invoked wit
 
 # --- pipeline ---
 pipeline_agentsLabel: Principal agents
-pipeline_agent_design_owns: docs/design/ UI specs, @polyms/core-ui maps
+pipeline_agent_design_owns: docs/design/ UI specs, @polyms/ui-kit maps
 pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
 pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
 pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys

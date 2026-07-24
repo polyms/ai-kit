@@ -41,7 +41,7 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
    symptom — confirm symptom + cause before changing infra; do not invent config.
 6. UI from `docs/design/`: implement spec §4 CSS first; run
    [visual-ship.md](~/.cursor/skills/dev/visual-ship.md) before done.
-7. Use **`core-ui`** when implementing UI — ask the user to attach `/core-ui` if primitives are
+7. Use **`ui-kit`** when implementing UI — ask the user to attach `/ui-kit` if primitives are
    unclear.
 8. Multi-slice / long `/dev` session: refresh
    [status-report.md](~/.cursor/skills/dev/status-report.md) after each green slice and when

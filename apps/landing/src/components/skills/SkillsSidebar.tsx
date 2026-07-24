@@ -1,4 +1,4 @@
-import { Toggle, ToggleGroup, Toolbar } from '@polyms/core-ui'
+import { Toggle, ToggleGroup, Toolbar } from '@polyms/ui-kit'
 import { Link as RouterLink } from '@tanstack/react-router'
 import { IconMagnifier } from '../../lib/icons'
 import { domainLabel, type ResolvedSkillOverlay } from '../../lib/skills'

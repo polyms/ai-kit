@@ -11,7 +11,7 @@
     "bootstrap": "bash bootstrap.sh",
     "dev": "nx serve landing",
     "build": "nx build landing",
-    "polyms": "pnpm exec core-ui-skill --target cursor  --force",
+    "polyms": "pnpm exec ui-kit-skill --target cursor --force",
     "check": "biome check --write . && prettier -l --write .",
     "release": "zx scripts/release.mjs"
   },
@@ -37,6 +37,6 @@
     "zx": "^8.8.5"
   },
   "dependencies": {
-    "@polyms/core-ui": "0.4.36"
+    "@polyms/ui-kit": "1.0.2"
   }
 }

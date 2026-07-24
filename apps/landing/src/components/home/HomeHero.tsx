@@ -1,4 +1,4 @@
-import { Button } from '@polyms/core-ui'
+import { Button } from '@polyms/ui-kit'
 import { ChatRoundDots, Code2, MagicStick3, Rocket2 } from '@solar-icons/react-perf/BoldDuotone'
 import { GITHUB_REPO } from '../../content/overlay'
 import { m } from '../../paraglide/messages.js'

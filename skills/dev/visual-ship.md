@@ -9,7 +9,7 @@ Design pre-flight ([PREFLIGHT.md](../design/PREFLIGHT.md)) gates the spec. This 
 1. Read spec **Typography & visual system** ( [CSS-INTENT.md](../design/CSS-INTENT.md) ) and **Visual acceptance** sections
 2. Implement `globals.css` / theme / type scale / grid classes **first**
 3. Section shells (wrappers, borders, surfaces) **second**
-4. core-ui primitives and data wiring **third**
+4. ui-kit primitives and data wiring **third**
 5. Motion last
 
 Do not ship a vertical slice that is correct in React but still using default unstyled layout.
@@ -64,9 +64,12 @@ per slice. A new session re-asks from scratch.
 
 - [ ] Dark theme is the default acceptance view — matches spec (flash script if specified)
 - [ ] Type scale from spec is visible — display / section / body / mono, not one size everywhere
-- [ ] No ANTI-SLOP §A violations in shipped UI (centered hero slop, equal card grid soup, 70vh text void)
-- [ ] core-ui primitives used where spec maps them — not raw `<input>` / ad-hoc buttons
-- [ ] Compared to spec **visual reference** URL — composition tier in the same ballpark; gaps listed if not
+- [ ] No [ANTI-SLOP.md](../design/ANTI-SLOP.md) §A / §A2 violations in shipped UI; if layout is
+      in scope, no §B misses either; failures → §E punch-list format before claiming done
+- [ ] No invented metrics / proof bars unless sourced from PRD/CONTEXT
+- [ ] ui-kit primitives used where spec maps them — not raw `<input>` / ad-hoc buttons
+- [ ] Compared to spec **visual reference** URL — composition tier in the same ballpark; gaps
+      listed if not
 - [ ] Evidence log filled — hard checks traced to screenshot, snapshot, or visual-acceptance IDs
 
 ## Visual acceptance section

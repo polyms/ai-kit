@@ -1,4 +1,4 @@
-import { Tabs } from '@polyms/core-ui'
+import { Tabs } from '@polyms/ui-kit'
 import { createFileRoute } from '@tanstack/react-router'
 import { OpsShell } from '../../../components/ops'
 import { getOpsMatrixFn } from '../../../lib/ops/ops.cms.fns'

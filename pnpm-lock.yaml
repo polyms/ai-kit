@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@polyms/core-ui':
-        specifier: 0.4.36
-        version: 0.4.36(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@polyms/ui-kit':
+        specifier: 1.0.2
+        version: 1.0.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
     devDependencies:
       '@biomejs/biome':
         specifier: 2.5.2
@@ -81,9 +81,6 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.29.0
         version: 1.29.0(zod@4.4.3)
-      '@polyms/core-ui':
-        specifier: 0.4.36
-        version: 0.4.36(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@prisma/adapter-pg':
         specifier: ^6.19.0
         version: 6.19.3
@@ -593,8 +590,8 @@ packages:
   '@oxc-project/types@0.138.0':
     resolution: {integrity: sha512-1a7ZKmrRTCoN1XMZ4L0PyyqrMnrNlLyPuOkdSX2MZg7IiIGRUyurNhAm73ptDOraoBcIordsIGKNPKUzy3ZmfA==}
 
-  '@polyms/core-ui@0.4.36':
-    resolution: {integrity: sha512-e1Xv+ujN9Hmkxzsa34JR1Wcl1vdFmnyQDbTyLJpoxnR6y7DTQ2RCkCF1uR1n84Bf8LMNyF5JNC8i+laSUNvujw==, tarball: https://npm.pkg.github.com/download/@polyms/core-ui/0.4.36/c9c121ebbd57d110da959ac15ef35f1a10db9a56}
+  '@polyms/ui-kit@1.0.2':
+    resolution: {integrity: sha512-eXtK05lzxhxmBhXj9XBFEwa4LF5WxKrI6qVAGOdRtxMX2pUc+VkeCs6PimJpAUM0PknUwac7s46JwNjznKWAAQ==, tarball: https://npm.pkg.github.com/download/@polyms/ui-kit/1.0.2/7e541a2fe38f7bcfc98144ca061f864e6c1922a4}
     hasBin: true
     peerDependencies:
       react: '>=19.0.0'
@@ -3521,7 +3518,7 @@ snapshots:
 
   '@oxc-project/types@0.138.0': {}
 
-  '@polyms/core-ui@0.4.36(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@polyms/ui-kit@1.0.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)

@@ -1,4 +1,4 @@
-import { Field } from '@polyms/core-ui'
+import { Field } from '@polyms/ui-kit'
 import { useEffect, useRef, useState } from 'react'
 import { IconMagnifier } from '../../lib/icons'
 import { m } from '../../paraglide/messages.js'

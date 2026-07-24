@@ -37,7 +37,7 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 | `align-loop`      | Same when exploring codebase                                                                                                                                                             |
 | `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve; writes in `docs/agents/language.md` if present                                                                                           |
 | `reqs`, `to-prd`  | Glossary vocabulary in specs when `CONTEXT.md` exists; writes in `docs/agents/language.md` if present (`/reqs` does not publish; `/to-prd` does)                                         |
-| `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/core-ui` before component map; writes in `docs/agents/language.md` if present                                                        |
+| `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/ui-kit` before component map; writes in `docs/agents/language.md` if present                                                        |
 | `devops`          | [knowledge.md](../agents/knowledge.md) (`intent: incident`) + MCP; `stack-profile.md` when present (from `/setup`)                                                                       |
 | `docs`            | `docs/agents/language.md` when present; `CONTEXT.md` vocabulary only (no glossary expansion)                                                                                             |
 | `e2e`             | Repo Playwright/Cypress + CI workflows as source of truth; no docs/agents gate                                                                                                           |

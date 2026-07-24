@@ -12,7 +12,7 @@ Toast, Alert, Avatar, Accordion, Collapsible, Spinner — inline and transient f
 Declarative provider + portal container. Imperative toasts via `Toast.useToastManager()`.
 
 ```tsx
-import { Toast } from '@polyms/core-ui'
+import { Toast } from '@polyms/ui-kit'
 
 export function App() {
   return (
@@ -30,7 +30,7 @@ const toastManager = Toast.useToastManager()
 toastManager.add({
   title: 'Saved',
   description: 'Profile updated.',
-  type: 'success',
+  type: 'success', // success | danger | warning | info | actions
 })
 ```
 
@@ -41,6 +41,7 @@ Deep reference for Modal/Offcanvas overlays: **[modal.md](modal.md)** — Toast 
 | Rule               | Detail                                                                                                                                                                                        |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Non-blocking**   | Toast does not trap focus — use **`Modal`** for delete confirm and irreversible actions.                                                                                                      |
+| **Types**          | `success`, `danger`, `warning`, `info`, or `actions` (with `actionProps` for undo/retry). There is no `primary` toast type.                                                                   |
 | **Auto-dismiss**   | Default **`timeout`** is **5000** ms; set `timeout: 0` only when the user must read or act (e.g. undo).                                                                                       |
 | **Screen readers** | Keep `title` / `description` concise — Base UI announces via a live region; do not rely on toast alone for critical errors that need a persistent **`Alert`** or inline **`Field.Feedback`**. |
 | **Undo / retry**   | Prefer `type: 'actions'` with one clear action — not a second toast stacked on the first.                                                                                                     |
@@ -50,7 +51,7 @@ Deep reference for Modal/Offcanvas overlays: **[modal.md](modal.md)** — Toast 
 Inline status banner — **not** Toast (temporary) and **not** Modal (blocking).
 
 ```tsx
-import { Alert } from '@polyms/core-ui'
+import { Alert } from '@polyms/ui-kit'
 
 <Alert variant='success'>
   <Alert.Heading>Changes saved</Alert.Heading>
@@ -82,7 +83,7 @@ import { Alert } from '@polyms/core-ui'
 User identity chip — image, initials fallback, or icon.
 
 ```tsx
-import { Avatar } from '@polyms/core-ui'
+import { Avatar } from '@polyms/ui-kit'
 
 const userAvatar = (
   <Avatar className='size-10'>
@@ -105,7 +106,7 @@ Expand/collapse sections — Polyms wrapper on Base UI with bundled `accordion-*
 **Shorthand** — `title` on `Accordion.Item`:
 
 ```tsx
-import { Accordion } from '@polyms/core-ui'
+import { Accordion } from '@polyms/ui-kit'
 
 const faqAccordion = (
   <Accordion defaultValue={['billing']}>
@@ -163,7 +164,7 @@ Single expand/collapse region — Base UI wrapper with `.collapsible` animation 
 ```tsx
 import { ArrowRight01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Collapsible } from '@polyms/core-ui'
+import { Collapsible } from '@polyms/ui-kit'
 
 const detailsCollapsible = (
   <Collapsible className='rounded-lg border border-line' defaultOpen>
@@ -193,7 +194,7 @@ const detailsCollapsible = (
 Loading indicator for async operations — pair with disabled buttons or skeleton layouts.
 
 ```tsx
-import { Spinner } from '@polyms/core-ui'
+import { Spinner } from '@polyms/ui-kit'
 
 <Spinner />
 <Spinner className='text-primary' size={24} />

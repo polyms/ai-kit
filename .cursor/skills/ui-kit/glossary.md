@@ -1,11 +1,11 @@
 ---
 description: >-
-  Core-ui jargon — compound tree, useRender, item-*, semantic tones, Container, barrel import, built-in shell.
+  UI Kit jargon — compound tree, useRender, mergeProps, item-*, semantic tones, Container, barrel import, built-in shell.
 ---
 
 # Glossary
 
-Core-ui jargon — load when a term below appears in the task or generated code.
+UI Kit jargon — load when a term below appears in the task or generated code.
 
 ## Compound tree / compound component
 
@@ -21,6 +21,12 @@ Base UI pattern for polymorphic primitives. `render={<Button … />}` on a trigg
 
 - Extend wrappers with `useRender.ComponentProps<'tag'>` — [components.md#extending-primitives-with-userender](components.md#extending-primitives-with-userender).
 - Compose triggers: [button.md#compose-button-through-render](button.md#compose-button-through-render).
+
+## mergeProps
+
+Base UI helper re-exported from `@polyms/ui-kit` to combine prop objects when wrapping primitives: event handlers chain, `className` concatenates, `style` shallow-merges. **`ref` is not merged** — use `useRender({ ref: [internalRef, ref] })` instead.
+
+- Pair with `useRender` when merging defaults + consumer props — [components.md#extending-primitives-with-userender](components.md#extending-primitives-with-userender).
 
 ## Ghost style
 
@@ -67,4 +73,4 @@ Pre-styled library surface (`Modal.Content`, `Menu.Content`, `Select.Content`, `
 
 ## Barrel import
 
-`import { … } from '@polyms/core-ui'` only. Confirm symbols in `index.d.ts` — never deep-import `core/src/…` paths.
+`import { … } from '@polyms/ui-kit'` only. Confirm symbols in `index.d.ts` — never deep-import `ui-kit/src/…` paths.

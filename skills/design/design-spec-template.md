@@ -16,6 +16,7 @@ Per [QUALITY-BAR.md](QUALITY-BAR.md):
 
 - **Visual reference:** [URL or screenshot] — required for UI specs
 - **Craft intent:** [measurable — type scale, surface rhythm, density; not “modern clean”]
+- **DNA notes (optional):** [layout family · type roles · colour anchor — borrow, don’t clone]
 
 ## 2. Flows
 
@@ -42,7 +43,7 @@ flowchart LR
 | Entry | [how user arrives]            |
 | Exit  | [where user goes next]        |
 
-**States** (all four required):
+**Content states** (all four required — screen / data):
 
 | State   | User sees | Action available |
 | ------- | --------- | ---------------- |
@@ -74,14 +75,18 @@ Per [CSS-INTENT.md](CSS-INTENT.md) — **required for UI**. `/dev` implements th
 
 ## 5. Component map
 
-Map every interactive element to `@polyms/core-ui` primitives. User should invoke **`/core-ui`** when unsure of catalog or API.
+Map every interactive element to `@polyms/ui-kit` primitives. User should invoke **`/ui-kit`** when unsure of catalog or API.
 
-| UI element    | core-ui primitive | Variant / notes        |
-| ------------- | ----------------- | ---------------------- |
-| [e.g. Submit] | Button            | primary, loading state |
-| ...           | ...               | ...                    |
+| UI element    | ui-kit primitive | Variant / notes                            |
+| ------------- | ----------------- | ------------------------------------------ |
+| [e.g. Submit] | Button            | primary; loading + disabled; focus-visible |
+| ...           | ...               | ...                                        |
 
-**Custom components** (only when core-ui has no primitive):
+For primary controls, note **interaction states** the primitive supports (default · hover ·
+focus-visible · active · disabled · loading · error · success). Do not invent parallel chrome —
+ship what ui-kit exposes. **Content states** (loading/empty/error/success) stay in §3.
+
+**Custom components** (only when ui-kit has no primitive):
 
 | Component | Why custom | Follow-up |
 | --------- | ---------- | --------- |
@@ -89,7 +94,7 @@ Map every interactive element to `@polyms/core-ui` primitives. User should invok
 
 ## 6. Motion plan
 
-Intent only — implementation details via `/core-ui` motion API.
+Intent only — implementation details via `/ui-kit` motion API.
 
 | Transition        | Trigger    | Tier (subtle / standard / emphasis) | Reduced motion    |
 | ----------------- | ---------- | ----------------------------------- | ----------------- |
@@ -115,6 +120,17 @@ Run [PREFLIGHT.md](PREFLIGHT.md) — every item must pass before handoff.
 ## 10. Open questions
 
 - [question 1]
+
+## 11. Anti-slop appendix
+
+Per [ANTI-SLOP.md](ANTI-SLOP.md) — list applicable §A / §A2 rows (apply or N/A + reason) and §B
+rules this feature must satisfy. Do not paste the full ban tables.
+
+| ID    | Apply / N/A | Note |
+| ----- | ----------- | ---- |
+| §A …  |             |      |
+| §A2 … |             |      |
+| §B …  |             |      |
 
 ## Next Step
 

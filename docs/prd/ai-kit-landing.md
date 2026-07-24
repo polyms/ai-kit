@@ -8,7 +8,7 @@
 | Last updated | 2026-07-03                               |
 | Stakeholders | Polyms engineering, designer, developer  |
 
-**Related artifacts:** [ADR-0002](../adr/0002-kit-site-static-vite-core-ui.md) · [Design spec (baseline)](../design/ai-kit-landing.md) · [CONTEXT.md](../../CONTEXT.md)
+**Related artifacts:** [ADR-0002](../adr/0002-kit-site-static-vite-ui-kit.md) · [Design spec (baseline)](../design/ai-kit-landing.md) · [CONTEXT.md](../../CONTEXT.md)
 
 ---
 
@@ -27,7 +27,7 @@ Design spec hiện tại (`docs/design/ai-kit-landing.md`) quá **calm editorial
 
 ### Background
 
-ai-kit có README dày cho contributor; end-user cần browse UX tốt hơn — lọc skill, copy prompt, thấy full pipeline + principal agents. ADR-0002 đã lock stack (Nx `apps/landing`, Vite + React + `@polyms/core-ui`, VI-first, Umami).
+ai-kit có README dày cho contributor; end-user cần browse UX tốt hơn — lọc skill, copy prompt, thấy full pipeline + principal agents. ADR-0002 đã lock stack (Nx `apps/landing`, Vite + React + `@polyms/ui-kit`, VI-first, Umami).
 
 ### Problem
 
@@ -127,7 +127,7 @@ Tham chiếu đầy đủ: `docs/design/ai-kit-landing.md`. Tóm tắt bắt bu�
 | **Pipeline là hệ thống** | Main path + triage branch như **living diagram** — stage highlight, artifact output labels (`PRD`, `docs/design/`, `ready-for-agent`) | Mỗi stage produce artifact next stage consume   |
 | **Agents là principals** | 5 agent cards như «process owner» — owns field cụ thể; `/align` skill-only (grill tương tác)                                          | Handoff có lane; không relitigate downstream    |
 | **Prompts là contract**  | Sample prompt blocks giống snippet trong terminal/chat — bilingual, không marketing rewrite                                           | Copy-paste = invoke thật trong Cursor           |
-| **Dogfood core-ui**      | Component map từ `@polyms/core-ui` — site chứng minh design system                                                                    | Design every day — spec map tới primitives      |
+| **Dogfood ui-kit**      | Component map từ `@polyms/ui-kit` — site chứng minh design system                                                                     | Design every day — spec map tới primitives      |
 
 **Anti-vibe-coding signal:** Mọi section phải trả lời «sau khi đọc, tôi biết **lệnh gì chạy tiếp**» — không chỉ «sản phẩm hay».
 
@@ -213,7 +213,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
    - Không bento 6 ô identical icon+title.
 
 5. **Dark-first dev aesthetic — accessible**
-   - Default theme: dark hoặc high-contrast (core-ui tokens); light toggle optional nếu core-ui hỗ trợ không tốn scope.
+   - Default theme: dark hoặc high-contrast (ui-kit tokens); light toggle optional nếu ui-kit hỗ trợ không tốn scope.
    - Contrast AA bắt buộc; không sacrifice readability cho «cool».
 
 ### 6.5 Creative Layout Direction (gợi ý — designer chốt chi tiết)
@@ -227,13 +227,13 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | Catalog     | Standard card grid                    | Command-palette header + dense grid; invoke as primary visual                                                                            |
 | Quick start | Linear steps                          | Step rail giống CI log hoặc numbered terminal blocks                                                                                     |
 
-**Typography:** Display font cho H1 only (design chọn — geometric hoặc neo-grotesk bold); body giữ system/core-ui stack; invoke luôn monospace.
+**Typography:** Display font cho H1 only (design chọn — geometric hoặc neo-grotesk bold); body giữ system/ui-kit stack; invoke luôn monospace.
 
 ### 6.6 Anti-Patterns — Template slop (explicit ban list)
 
 | #   | Anti-pattern                                      | Thay bằng                                                               |
 | --- | ------------------------------------------------- | ----------------------------------------------------------------------- |
-| 1   | Purple/blue gradient hero full-bleed              | Solid dark hoặc subtle noise texture; accent từ core-ui semantic tokens |
+| 1   | Purple/blue gradient hero full-bleed              | Solid dark hoặc subtle noise texture; accent từ ui-kit semantic tokens |
 | 2   | 3-column «Features» với icon giống nhau           | Principles bento hoặc pipeline-anchored groups                          |
 | 3   | «Trusted by» logo bar                             | Không có v1 — không invent social proof                                 |
 | 4   | Generic «How it works» 1-2-3 với số tròn          | Pipeline diagram thật với skill invoke names                            |
@@ -252,7 +252,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 | Item                                                             | Notes                                                                                 |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Dark-first hoặc high-contrast theme                              | core-ui tokens; AA contrast                                                           |
+| Dark-first hoặc high-contrast theme                              | ui-kit tokens; AA contrast                                                           |
 | Asymmetric hero + bold typography                                | Không centered generic                                                                |
 | Pipeline interactive **hoặc** scroll-driven highlight            | Ít nhất hover/active stage; scroll-scrub nice-to-have nhưng stage activation bắt buộc |
 | Full content checklist §6.3                                      | Non-negotiable                                                                        |
@@ -271,7 +271,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | Scroll-scrubbed pipeline progression                                           | Section pin + stage advance         |
 | `/` keyboard shortcut focus search on catalog                                  | Global listener khi route `/skills` |
 | Umami custom events: `copy_prompt`, `pipeline_section_view`, `cta_quick_start` | Không PII                           |
-| Light theme toggle                                                             | Nếu core-ui switch trivial          |
+| Light theme toggle                                                             | Nếu ui-kit switch trivial          |
 | Landing teaser: 4–6 featured skills với copy                                   | Dẫn tới full catalog                |
 
 #### Could Have (v1.1 post-launch)
@@ -326,8 +326,8 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 ## 9. Assumptions
 
-- `@polyms/core-ui` hỗ trợ dark theme hoặc semantic tokens đủ cho dark-first mà không fork lib
-- Creative layout vẫn map được tới core-ui primitives (ADR dogfood)
+- `@polyms/ui-kit` hỗ trợ dark theme hoặc semantic tokens đủ cho dark-first mà không fork lib
+- Creative layout vẫn map được tới ui-kit primitives (ADR dogfood)
 - Designer revise `docs/design/ai-kit-landing.md` trước `/dev` — không code trước spec
 - Content overlay maintain thủ công khi thêm skill (ADR-0002)
 
@@ -338,7 +338,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | Risk                                      | Impact | Mitigation                                                |
 | ----------------------------------------- | ------ | --------------------------------------------------------- |
 | Creative layout phá a11y                  | High   | Test sớm với axe; reduced-motion path; sr-only pipeline   |
-| Dark-first conflict core-ui light default | Med    | Confirm tokens với `/core-ui`; theme provider app-level   |
+| Dark-first conflict ui-kit light default | Med    | Confirm tokens với `/ui-kit`; theme provider app-level   |
 | Scroll pipeline tốn dev                   | Med    | MoSCoW: hover activation Must; scroll-scrub Should        |
 | «Phá cách» quá đà — khó đọc               | Med    | Content checklist audit; peer review với engineer persona |
 | Custom events Umami chưa setup            | Low    | Pageviews Must; custom P1                                 |
@@ -374,7 +374,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | 2   | Pipeline        | **Full scroll-scrub**                                               |
 | 3   | Hero animation  | **Typewriter** `align → reqs → design → dev`                        |
 | 4   | Umami events    | **Ship v1**                                                         |
-| 5   | Font stack      | **Quicksand** (core-ui `_fonts.css`) + **JetBrains Mono** (app)     |
+| 5   | Font stack      | **Quicksand** (ui-kit `_fonts.css`) + **JetBrains Mono** (app)     |
 | 6   | Featured teaser | **Confirmed** — strip `setup` / `align` / `reqs` / `dev` below hero |
 
 ## Open Questions

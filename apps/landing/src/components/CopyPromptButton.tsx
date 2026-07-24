@@ -1,4 +1,4 @@
-import { Button, Toast } from '@polyms/core-ui'
+import { Button, Toast } from '@polyms/ui-kit'
 import { copyText } from '../lib/copy'
 import { IconCopy } from '../lib/icons'
 import { trackEvent } from '../lib/umami'

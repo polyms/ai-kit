@@ -65,7 +65,7 @@ home_catalog_intro: Mỗi năng lực là một tên kỹ năng hoặc tên agen
 
 # --- pipeline ---
 pipeline_agentsLabel: Agent chuyên trách
-pipeline_agent_design_owns: Spec UI tại docs/design/, ánh xạ @polyms/core-ui
+pipeline_agent_design_owns: Spec UI tại docs/design/, ánh xạ @polyms/ui-kit
 pipeline_agent_dev_owns: Lập trình, TDD, /devops (vai trò chính)
 pipeline_agent_pm_owns: PRD, story, tiêu chí chấp nhận, phạm vi
 pipeline_agent_tester_owns: Bộ E2E, flake, chia nhỏ CI, kiểm thử theo hành trình

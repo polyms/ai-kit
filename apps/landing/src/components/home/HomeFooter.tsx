@@ -1,4 +1,4 @@
-import { Button } from '@polyms/core-ui'
+import { Button } from '@polyms/ui-kit'
 import { Code2BoldDuotone } from '@solar-icons/react-perf'
 import { ChatRoundDots, Code2, DocumentText } from '@solar-icons/react-perf/BoldDuotone'
 import { useEffect } from 'react'

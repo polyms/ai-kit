@@ -36,4 +36,4 @@ Nothing to cut → exactly: `Lean already. Ship.`
 - Do **not** flag a single smoke / seam regression test as bloat.
 - Do **not** apply fixes — list only.
 - Design-spec / ADR / stack choices already locked for the change are not delete targets
-  (e.g. chosen router, `@polyms/core-ui`, Zustand) — only surplus on top of them.
+  (e.g. chosen router, `@polyms/ui-kit`, Zustand) — only surplus on top of them.

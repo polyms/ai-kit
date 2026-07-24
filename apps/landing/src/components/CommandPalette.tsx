@@ -1,4 +1,4 @@
-import { Field, Modal } from '@polyms/core-ui'
+import { Field, Modal } from '@polyms/ui-kit'
 import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { IconMagnifier } from '../lib/icons'

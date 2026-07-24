@@ -258,8 +258,8 @@ export const skillOverlays: SkillOverlay[] = [
     invoke: '/design',
     slug: 'design',
     description: {
-      en: 'Turn a PRD or feature brief into an engineering-ready UI spec mapped to @polyms/core-ui.',
-      vi: 'Biến PRD hoặc tóm tắt tính năng thành đặc tả UI sẵn sàng cho kỹ thuật, map theo @polyms/core-ui.',
+      en: 'Turn a PRD or feature brief into an engineering-ready UI spec mapped to @polyms/ui-kit.',
+      vi: 'Biến PRD hoặc tóm tắt tính năng thành đặc tả UI sẵn sàng cho kỹ thuật, map theo @polyms/ui-kit.',
     },
     invocation: 'user',
     domain: 'design',
@@ -268,15 +268,15 @@ export const skillOverlays: SkillOverlay[] = [
     relatedAgents: ['designer'],
     agentPanel: {
       role: 'PRINCIPAL DESIGNER',
-      owns: ['docs/design/', '@polyms/core-ui component maps'],
+      owns: ['docs/design/', '@polyms/ui-kit component maps'],
       invokeHint: {
         en: 'Use the designer to spec UI from PRD #42',
         vi: 'Nhờ agent designer viết đặc tả giao diện từ PRD #42',
       },
     },
     summary: {
-      en: 'Write UI specs at `docs/design/<feature>.md` — flows, empty/loading/error/success states, accessibility, and core-ui component maps.',
-      vi: 'Viết đặc tả UI tại `docs/design/<feature>.md` — luồng, bốn trạng thái empty/loading/error/success, a11y, và map component core-ui.',
+      en: 'Write UI specs at `docs/design/<feature>.md` — flows, empty/loading/error/success states, accessibility, and ui-kit component maps.',
+      vi: 'Viết đặc tả UI tại `docs/design/<feature>.md` — luồng, bốn trạng thái empty/loading/error/success, a11y, và map component ui-kit.',
     },
     whenToUse: {
       en: 'A PRD exists and screens or flows need a spec before `/dev` ships UI.',
@@ -287,8 +287,8 @@ export const skillOverlays: SkillOverlay[] = [
       downstream: '/dev',
     },
     boundaries: {
-      en: 'Does not rewrite product scope (`/reqs`). Does not place code seams (`arch`). Does not document the core-ui API (`/core-ui` in the lib repo).',
-      vi: 'Không viết lại phạm vi sản phẩm (`/reqs`). Không đặt seam trong code (`arch`). Không viết tài liệu API core-ui (`/core-ui` ở lib repo).',
+      en: 'Does not rewrite product scope (`/reqs`). Does not place code seams (`arch`). Does not document the ui-kit API (`/ui-kit` in the lib repo).',
+      vi: 'Không viết lại phạm vi sản phẩm (`/reqs`). Không đặt seam trong code (`arch`). Không viết tài liệu API ui-kit (`/ui-kit` ở lib repo).',
     },
   },
   {

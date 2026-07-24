@@ -69,11 +69,11 @@ Synthesize the current conversation into a lean PRD and publish to the issue tra
 _Avoid_: publish PRD (generic), enterprise discovery (when meaning `/reqs`)
 
 **Design**:
-Turn a PRD into an engineering-ready UI spec at `docs/design/<feature>.md`, mapped to `@polyms/core-ui`. Invoke with `/design`. Long sessions: `designer`.
+Turn a PRD into an engineering-ready UI spec at `docs/design/<feature>.md`, mapped to `@polyms/ui-kit`. Invoke with `/design`. Long sessions: `designer`.
 _Avoid_: UX phase, UI spec (generic)
 
 **Core UI**:
-Design system library (`@polyms/core-ui`, Tailwind CSS 4) and matching `/core-ui` skill for composing primitives — not part of ai-kit; ships with the lib repo.
+Design system library (`@polyms/ui-kit`, Tailwind CSS 4) and matching `/ui-kit` skill for composing primitives — not part of ai-kit; ships with the lib repo.
 _Avoid_: component library (generic), shadcn
 
 **Dev**:
@@ -353,7 +353,7 @@ Kit site control switching between dark (default) and light UI chrome; persists 
 _Avoid_: dark mode (generic), color scheme (generic)
 
 **Font stack**:
-Kit site typography — **Quicksand** for UI/display (loaded via `@polyms/core-ui/styles/_fonts.css`, same as core-ui setup); **JetBrains Mono** for invoke lines, prompts, and pipeline rail (app-owned `@font-face` or Google Fonts). Map to Tailwind `--font-sans` / `--font-mono` in `apps/landing/`.
+Kit site typography — **Quicksand** for UI/display (loaded via `@polyms/ui-kit/styles/_fonts.css`, same as ui-kit setup); **JetBrains Mono** for invoke lines, prompts, and pipeline rail (app-owned `@font-face` or Google Fonts). Map to Tailwind `--font-sans` / `--font-mono` in `apps/landing/`.
 _Avoid_: system font stack (when meaning kit site after font decision), web font (generic)
 
 **Featured skill teaser**:

@@ -1,13 +1,13 @@
 ---
 description: >-
-  Redesign existing screens with @polyms/core-ui. Use when migrating, refreshing, or re-skinning legacy UI.
+  Redesign existing screens with @polyms/ui-kit. Use when migrating, refreshing, or re-skinning legacy UI.
   Greenfield → SKILL.md#skill-routing; package source → quality.md#maintainer.
 disable-model-invocation: true
 ---
 
-# Redesign with @polyms/core-ui
+# Redesign with @polyms/ui-kit
 
-For **upgrading existing app screens** to `@polyms/core-ui`. `@polyms/core-ui` **is** the target design system — do not install shadcn/ui, Fluent, or parallel libraries during a redesign.
+For **upgrading existing app screens** to `@polyms/ui-kit`. `@polyms/ui-kit` **is** the target design system — do not install shadcn/ui, Fluent, or parallel libraries during a redesign.
 
 ## Workflow
 
@@ -23,7 +23,7 @@ Read the codebase before editing:
 
 | Check                                                                  | Why                                                                                     |
 | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `package.json` — is `@polyms/core-ui` installed?                       | Run [setup.md](setup.md) first if missing                                               |
+| `package.json` — is `@polyms/ui-kit` installed?                        | Run [setup.md](setup.md) first if missing                                               |
 | Styles entry — `styles-<hash>.css` or `styles/tailwind.css` imported?  | Unstyled primitives if CSS is missing                                                   |
 | `Modal.Container` / `Offcanvas.Container` / `Toast.Container` mounted? | Programmatic overlays break without containers                                          |
 | Styling method — Tailwind v4, plain CSS, mixed inline                  | Match existing app patterns; use DS tokens on top                                       |
@@ -32,7 +32,7 @@ Read the codebase before editing:
 
 Declare one line before changing code:
 
-**"Redesign mode: \<preserve \| overhaul \| greenfield-screen> — migrating \<screen> to @polyms/core-ui, \<density> density."**
+**"Redesign mode: \<preserve \| overhaul \| greenfield-screen> — migrating \<screen> to @polyms/ui-kit, \<density> density."**
 
 ### 2. Detect mode
 
@@ -60,7 +60,7 @@ List concrete problems before fixing. Group findings under the headings below.
 - FAQ / settings sections as stacked `divide-y` divs instead of `Accordion` when sections collapse
 - `neutral-*`, `zinc-*`, or raw `blue-*` / `rose-*` for chrome instead of `slate` + semantic tones ([theming.md](theming.md))
 - Hand-written `hover:bg-*` on nav rows instead of `item-*` ([css-utilities.md](css-utilities.md))
-- Deep imports (`@polyms/core-ui/button`) or invented subcomponents (`ModalHeader`)
+- Deep imports (`@polyms/ui-kit/button`) or invented subcomponents (`ModalHeader`)
 - Large Tailwind bundles on `Modal.Content`, `Menu.Content`, `Select.Content` shells
 
 #### Typography and spacing
@@ -132,7 +132,7 @@ Apply in order. **Stop when the brief is satisfied** — do not keep restyling f
 | Step | Action                                                                                                       | Risk       |
 | ---- | ------------------------------------------------------------------------------------------------------------ | ---------- |
 | 1    | **Setup** — package, styles, overlay containers ([setup.md](setup.md))                                       | Low        |
-| 2    | **Component swap** — map ad-hoc markup to `@polyms/core-ui` primitives; keep compound trees intact           | Low–medium |
+| 2    | **Component swap** — map ad-hoc markup to `@polyms/ui-kit` primitives; keep compound trees intact            | Low–medium |
 | 3    | **Semantic tokens** — `bg-body`, `text-fg`, `border-line`, `slate` chrome ([theming.md](theming.md))         | Low        |
 | 4    | **Interactive surfaces** — `item-*` for ghost nav/actions; `btn-*` variants for actions                      | Low        |
 | 5    | **Spacing and density** — align to Comfortable / Compact / Cockpit ([quality.md](quality.md#visual-density)) | Medium     |
@@ -177,7 +177,7 @@ Run after Fix. If any item fails, the redesign is not done.
 
 ### Migration
 
-- [ ] `@polyms/core-ui` installed; styles imported; `index.d.ts` checked for symbols used
+- [ ] `@polyms/ui-kit` installed; styles imported; `index.d.ts` checked for symbols used
 - [ ] Barrel imports only — no deep paths, no invented compound subcomponents
 - [ ] Each replaced control uses the closest library primitive
 - [ ] Overlay containers mounted before programmatic `showModal` / `showOffcanvas`
@@ -198,10 +198,10 @@ Run after Fix. If any item fails, the redesign is not done.
 
 ## Out of scope
 
-Do not apply these redesign-skill ideas inside a `@polyms/core-ui` migration:
+Do not apply these redesign-skill ideas inside a `@polyms/ui-kit` migration:
 
 - Swap to Geist/Outfit/custom fonts as the first move
 - Marketing layout patterns (bento hero, marquee, parallax, grain overlays)
 - Replace modals with inline editing when `Modal` / `Offcanvas` is the right primitive
 - Install Taste Skill or shadcn/ui alongside this design system
-- Rewrite the `core/` library API or CSS for one consumer app's taste
+- Rewrite the `ui-kit/ library API or CSS for one consumer app's taste

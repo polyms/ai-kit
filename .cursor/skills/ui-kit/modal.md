@@ -34,7 +34,7 @@ Both: declarative `<Root>` + `Trigger` + `Content` tree, or `use*Store.getState(
 **Tree:** `Modal` → `Modal.Trigger` + `Modal.Content` → `Modal.Header`, `Modal.Body`, `Modal.Footer`, `Modal.Close`.
 
 ```tsx
-import { Button, Field, Modal } from '@polyms/core-ui'
+import { Button, Field, Modal } from '@polyms/ui-kit'
 
 const editProfileModal = (
   <Modal>
@@ -83,7 +83,7 @@ Footer = actions only — no `Field` roots in `Modal.Footer`.
 No `Offcanvas.Footer` — actions live in `Offcanvas.Body` or header area.
 
 ```tsx
-import { Button, Offcanvas } from '@polyms/core-ui'
+import { Button, Offcanvas } from '@polyms/ui-kit'
 
 const filtersOffcanvas = (
   <Offcanvas swipeDirection='right'>
@@ -134,7 +134,7 @@ Requires **`Modal.Container`** / **`Offcanvas.Container`** in the app shell ([se
 Pass a **full compound tree** as the second argument — same Header/Body/Footer rules as declarative modals.
 
 ```tsx
-import { Button, Modal, useModalStore } from '@polyms/core-ui'
+import { Button, Modal, useModalStore } from '@polyms/ui-kit'
 
 function confirmDelete() {
   useModalStore.getState().showModal(
@@ -154,7 +154,7 @@ function confirmDelete() {
 ```
 
 ```tsx
-import { Offcanvas, useOffcanvasStore } from '@polyms/core-ui'
+import { Offcanvas, useOffcanvasStore } from '@polyms/ui-kit'
 
 function openNotifications() {
   useOffcanvasStore.getState().showOffcanvas(

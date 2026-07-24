@@ -1,6 +1,6 @@
 ---
 description: >-
-  Product UI quality for @polyms/core-ui. Use when shipping screens, demos, -views/, pre-flight checks,
+  Product UI quality for @polyms/ui-kit. Use when shipping screens, demos, -views/, pre-flight checks,
   or fixing anti-slop / field label tone. Not marketing landing pages.
 disable-model-invocation: true
 ---
@@ -9,13 +9,13 @@ disable-model-invocation: true
 
 Adapted from [Taste Skill](https://www.tasteskill.dev/) ideas for **dashboards, forms, tables, toolbars, overlays, and docs demos** — not landing-page marketing.
 
-`@polyms/core-ui` is the design system. Do not install shadcn/ui, Fluent, Carbon, or parallel component libraries in the same app tree.
+`@polyms/ui-kit` is the design system. Do not install shadcn/ui, Fluent, Carbon, or parallel component libraries in the same app tree.
 
 ## Task Read (Before Generating)
 
 Infer the task before writing code. State one line:
 
-**"Reading this as: \<surface> for \<audience>, using @polyms/core-ui, \<density> density."**
+**"Reading this as: \<surface> for \<audience>, using @polyms/ui-kit, \<density> density."**
 
 **Routing:** match keywords → load every file from **[SKILL.md#skill-routing](SKILL.md#skill-routing)** only. This section classifies surface and density — it does not list component files.
 
@@ -26,7 +26,7 @@ Infer the task before writing code. State one line:
 | **Brand kit**  | Rebrand, `theme.css`, primary tokens                               | Usually comfortable — [brandkit.md](brandkit.md)                                  |
 | **Docs demo**  | `-views/`, MDX live preview in the docs site                       | Comfortable — [Sample Data and Docs Demos](#sample-data-and-docs-demos)           |
 | **Redesign**   | Migrate or refresh an existing consumer screen                     | Pick in Scan — [redesign.md](redesign.md)                                         |
-| **Maintainer** | Change package primitives, styles, or compound APIs in `core/`     | N/A — [Maintainer](#maintainer)                                                   |
+| **Maintainer** | Change package primitives, styles, or compound APIs in `ui-kit/    | N/A — [Maintainer](#maintainer)                                                   |
 
 **Pairs & cross-cutting** (load both; also in [SKILL.md](SKILL.md)):
 
@@ -38,11 +38,11 @@ Infer the task before writing code. State one line:
 
 ## Maintainer
 
-**@polyms/core-ui library source only** — skip in consumer app repos. When changing package primitives, styles, or compound APIs:
+**@polyms/ui-kit library source only** — skip in consumer app repos. When changing package primitives, styles, or compound APIs:
 
 1. **Conventions:** Biome format/lint; TS/TSX use 110-character `// ── Section ─` separators (Types before Components when types exist); colocated Vitest tests; when public API or shipped CSS utilities change, update the matching file in **this skill pack** (and [css-utilities.md](css-utilities.md) when utilities are consumer-facing).
 2. Do not break compound trees for one-off styling; update skill files when consumption changes.
-3. **Live docs demos:** complete compound trees; `@polyms/core-ui` barrel imports (library monorepo demos often live in `-views/` preview folders beside MDX).
+3. **Live docs demos:** complete compound trees; `@polyms/ui-kit` barrel imports (library monorepo demos often live in `-views/` preview folders beside MDX).
 4. Docs-only accordion overrides (API Reference table grid) must stay scoped under **`.api-reference`** — never global `.accordion-trigger` rules that break live demos.
 5. **CSS section comments** in package and docs-site `styles/_*.css` — short block headers (e.g. `/* Trigger button styling */`, `/* Panel styling */`). Do not delete when refactoring, scoping selectors, or formatting; add the same style of comment for new distinct blocks; remove a section comment only when removing the rule block it labels.
 
@@ -64,7 +64,7 @@ High-density screens: **do not** wrap every metric in identical card boxes. Let 
 
 Product UI ships on phones, tablets, and desktops. **Default styles for narrow viewports**, then add `sm:` / `md:` / `lg:` for wider — do not design desktop-first and bolt on `max-md:` fixes later.
 
-`@polyms/core-ui` owns component chrome; **your app owns page layout** (shell, grids, sidebars, table wrappers). Do not restyle library shells to “fix” responsive — wrap or recompose instead.
+`@polyms/ui-kit` owns component chrome; **your app owns page layout** (shell, grids, sidebars, table wrappers). Do not restyle library shells to “fix” responsive — wrap or recompose instead.
 
 ### Page shell
 
@@ -209,7 +209,7 @@ Live component-library demos should:
 1. Show **complete compound trees** (e.g. `Modal.Header` + `Modal.Body` + `Modal.Footer`, not a bare `Modal.Content`).
 2. Use **interactive state** where the component expects it (`open`, `invalid`, `disabled`, `checked`).
 3. Use **natural field labels** on user-facing forms (see [Field label copy](#field-label-copy)); keep descriptions and feedback concrete, not marketing prose.
-4. Match **import style** of sibling demos (`@polyms/core-ui` barrel).
+4. Match **import style** of sibling demos (`@polyms/ui-kit` barrel).
 5. Style overlay/menu triggers with **`render={<Button … />}`** — not `className='btn …'` on primitives (see [button.md](button.md#compose-button-through-render)).
 6. **Accordion demos:** plain text in `Accordion.Panel` — no extra `<p>` for padding; do not override core `accordion-*` with unscoped docs CSS.
 7. **Collapsible demos:** custom padding on trigger/panel is OK — unlike `Accordion.Panel`, there is no built-in body wrapper.
@@ -284,7 +284,7 @@ Run before shipping UI. If any item fails, fix before delivering.
 
 ### Design system
 
-- [ ] Components imported from `@polyms/core-ui` barrel only.
+- [ ] Components imported from `@polyms/ui-kit` barrel only.
 - [ ] Closest library primitive used before custom markup.
 - [ ] Compound tree intact (no invented `ModalHeader`-style imports).
 - [ ] Gray chrome uses `slate`; intent uses semantic tones (`primary`, `danger`, …).

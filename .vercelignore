@@ -1,5 +1,5 @@
 # Monorepo — exclude paths outside the landing app from Vercel upload
-# (mirrors core-ui vercel.json monorepo pattern; speeds deploys when root = apps/landing)
+# (mirrors ui-kit vercel.json monorepo pattern; speeds deploys when root = apps/landing)
 
 # Other apps / demos (root-only — avoid matching apps/landing/src/routes/skills/)
 /demo/

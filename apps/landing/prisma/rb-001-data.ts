@@ -121,7 +121,7 @@ Must contain a catch-all route to the server function:
       id: 'RB-001-01',
       slug: 'rb-001-01-github-packages-auth',
       title: 'GitHub Packages auth',
-      symptom: 'pnpm install fails on Vercel for @polyms/core-ui; 401/404 from npm.pkg.github.com.',
+      symptom: 'pnpm install fails on Vercel for @polyms/ui-kit; 401/404 from npm.pkg.github.com.',
       cause: [
         'Vercel does not expand GITHUB_TOKEN in a committed project .npmrc (pnpm 11+ ignores it for security).',
         'Appending tokens to .npmrc during install pollutes git and duplicates lines on retry.',

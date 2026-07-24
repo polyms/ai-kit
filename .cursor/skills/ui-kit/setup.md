@@ -1,5 +1,5 @@
 ---
-description: Wire @polyms/core-ui into a new consumer app — install, styles, app shell, Toast/Modal/Offcanvas containers.
+description: Wire @polyms/ui-kit into a new consumer app — install, styles, app shell, Toast/Modal/Offcanvas containers.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 ## Install
 
 ```bash
-pnpm add @polyms/core-ui
+pnpm add @polyms/ui-kit
 ```
 
 `react` and `react-dom` must be `>=19.0.0`. Install `zustand` when using programmatic modals or offcanvas stores.
@@ -22,18 +22,18 @@ pnpm add zustand
 Import components from the package barrel.
 
 ```tsx
-import { Button, Field, Modal } from '@polyms/core-ui'
+import { Button, Field, Modal } from '@polyms/ui-kit'
 ```
 
 Do not deep import feature modules.
-When unsure a symbol exists, open `node_modules/@polyms/core-ui/index.d.ts`.
+When unsure a symbol exists, open `node_modules/@polyms/ui-kit/index.d.ts`.
 
 ## Styles
 
 Consumers must import the package styles. Pick one path based on the app build pipeline:
 
-- Pre-built CSS: import the installed `styles-<hash>.css` file from `node_modules/@polyms/core-ui/`.
-- Tailwind v4 pipeline: import `@polyms/core-ui/styles/tailwind.css`.
+- Pre-built CSS: import the installed `styles-<hash>.css` file from `node_modules/@polyms/ui-kit/`.
+- Tailwind v4 pipeline: import `@polyms/ui-kit/styles/tailwind.css`.
 
 Trust the installed package files for exact paths because the hashed CSS filename changes by release.
 
@@ -42,7 +42,7 @@ Trust the installed package files for exact paths because the hashed CSS filenam
 Recommended consumer root — mount programmatic overlay containers once. Install **`zustand`** when using `useModalStore` / `useOffcanvasStore`.
 
 ```tsx
-import { Modal, Offcanvas, Toast } from '@polyms/core-ui'
+import { Modal, Offcanvas, Toast } from '@polyms/ui-kit'
 
 export function App() {
   return (
@@ -75,7 +75,7 @@ Full compound trees, `Modal.Close` patterns, and anti-patterns: **[modal.md#prog
 Consumer apps can install the bundled agent skill so assistants follow the same composition rules:
 
 ```bash
-pnpm exec core-ui-skill
+pnpm exec ui-kit-skill
 ```
 
-Copies the bundled skill into `.cursor/skills/core-ui`, `.claude/skills/core-ui`, and `.agents/skills/core-ui`. Re-run after upgrading `@polyms/core-ui`.
+Copies the bundled skill into `.cursor/skills/ui-kit`, `.claude/skills/ui-kit`, and `.agents/skills/ui-kit`. Re-run after upgrading `@polyms/ui-kit`.

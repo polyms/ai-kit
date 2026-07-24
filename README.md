@@ -33,13 +33,13 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 /to-prd        → synthesize conversation into lean PRD, publish to GitHub
 /to-issues     → break spec into vertical-slice GitHub issues
 /triage        → move raw issues through triage state machine
-/design        → UI spec from PRD at docs/design/ (maps to @polyms/core-ui)
+/design        → UI spec from PRD at docs/design/ (maps to @polyms/ui-kit)
 /dev           → fullstack implementation, TDD, debugging
 /code-review   → three-axis review (Standards + Spec + Simplify) before merge
 /arch-refactor → scan codebase for deepening opportunities (maintenance)
 ```
 
-`arch` (model-invoked) supplies architecture vocabulary. **`/core-ui`** skill ships with `@polyms/core-ui` (Tailwind CSS 4) — symlink from the lib repo; `/design` and `/dev` reach it for component API, not duplicated in ai-kit.
+`arch` (model-invoked) supplies architecture vocabulary. **`/ui-kit`** skill ships with `@polyms/ui-kit` (Tailwind CSS 4) — symlink from the lib repo; `/design` and `/dev` reach it for component API, not duplicated in ai-kit.
 
 The goal: a coherent pipeline where PM artifacts hand off cleanly to design and engineering agents — without reinventing prompts every project.
 
@@ -61,7 +61,7 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | `/to-prd`        | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)        |
 | `/to-issues`     | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                    |
 | `/triage`        | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent`     |
-| `/design`        | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, core-ui component map, a11y      |
+| `/design`        | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, ui-kit component map, a11y      |
 | `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging       |
 | `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes           |
 | `/docs`          | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`techlead`)                    |
@@ -174,7 +174,7 @@ Grill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.
 
 ### `/design` — UI Spec from PRD
 
-Turn a PRD or feature brief into an engineering-ready design spec at `docs/design/<feature>.md`, mapped to **`@polyms/core-ui`**:
+Turn a PRD or feature brief into an engineering-ready design spec at `docs/design/<feature>.md`, mapped to **`@polyms/ui-kit`**:
 
 ```
 /design
@@ -182,7 +182,12 @@ Turn a PRD or feature brief into an engineering-ready design spec at `docs/desig
 Thiết kế màn hình từ PRD #42 — spec giao diện.
 ```
 
-Flows, screen inventory (four states each), **§4 CSS intent**, **§8 visual acceptance**, component map. [`/dev` runs visual-ship](skills/dev/visual-ship.md) before UI is done. See [QUALITY-BAR.md](skills/design/QUALITY-BAR.md). User invokes **`/core-ui`** when mapping primitives. Pre-flight via [PREFLIGHT.md](skills/design/PREFLIGHT.md). Hands off to `/dev`. See [design-spec-template.md](skills/design/design-spec-template.md).
+Flows, screen inventory (**four content states** each), **§4 CSS intent**, **§8 visual
+acceptance**, **§11 anti-slop appendix**, component map. Audit-only branch (`chấm UI` / score
+this screen) → punch list, no spec file. [`/dev` runs visual-ship](skills/dev/visual-ship.md)
+before UI is done. See [QUALITY-BAR.md](skills/design/QUALITY-BAR.md). User invokes
+**`/ui-kit`** when mapping primitives. Pre-flight via [PREFLIGHT.md](skills/design/PREFLIGHT.md).
+Hands off to `/dev`. See [design-spec-template.md](skills/design/design-spec-template.md).
 
 **Agent** (optional — isolated context for long design sessions):
 
@@ -190,7 +195,7 @@ Flows, screen inventory (four states each), **§4 CSS intent**, **§8 visual acc
 Use the designer to spec UI from PRD #42
 ```
 
-**External:** Install `@polyms/core-ui` and symlink its `/core-ui` skill (bootstrap or `npx skills add` from the core-ui repo).
+**External:** Install `@polyms/ui-kit` and symlink its `/ui-kit` skill (bootstrap or `npx skills add` from the ui-kit repo).
 
 ### `/dev` — Fullstack Implementation
 
@@ -456,7 +461,7 @@ Run `/setup` once per repo first (includes triage label mapping).
 Each stage produces artifacts the next agent can consume. `/reqs` drafts enterprise PRD/stories in chat;
 `/to-prd` publishes a lean PRD to the tracker; `/to-issues` publishes vertical-slice GitHub issues; `/triage`
 processes inbound backlog into `ready-for-agent` issues with agent briefs; `/design` adds `docs/design/` specs
-mapped to `@polyms/core-ui`; Dev implements against briefs and design specs (`dev` uses `core-ui` for UI
+mapped to `@polyms/ui-kit`; Dev implements against briefs and design specs (`dev` uses `ui-kit` for UI
 code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 
 ## Daily workflow
@@ -482,7 +487,7 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
 - [x] `/arch-refactor` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)
-- [x] `/design` — UI spec from PRD at `docs/design/`, `@polyms/core-ui` + `/core-ui` boundary
+- [x] `/design` — UI spec from PRD at `docs/design/`, `@polyms/ui-kit` + `/ui-kit` boundary
 - [x] `examples/` — pipeline feature walkthrough for onboarding
 - [ ] Frontmatter validation script
 - [ ] Claude agent support

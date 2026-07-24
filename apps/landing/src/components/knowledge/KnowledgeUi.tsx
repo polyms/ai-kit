@@ -1,4 +1,4 @@
-import { Field } from '@polyms/core-ui'
+import { Field } from '@polyms/ui-kit'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Markdown, { type Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'

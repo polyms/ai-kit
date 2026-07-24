@@ -1,13 +1,13 @@
 ---
 description: >-
-  Component composition root — public surface, compound slots, dynamic import, useRender.
+  Component composition root — public surface, compound slots, dynamic import, useRender, mergeProps.
   Sub-topics → button, inputs, navigation, display, overlays. Field → field.md; Modal → modal.md.
 disable-model-invocation: true
 ---
 
 # Component Composition
 
-Prefer exported React components from `@polyms/core-ui` before generating custom markup. Keep compound trees intact so accessibility wiring, focus management, sibling selectors, and animations keep working.
+Prefer exported React components from `@polyms/ui-kit` before generating custom markup. Keep compound trees intact so accessibility wiring, focus management, sibling selectors, and animations keep working.
 
 ## Topic routing
 
@@ -19,8 +19,8 @@ Sub-topics from this file: [button.md](button.md) · [inputs.md](inputs.md) · [
 
 Use the package barrel only. Common exports include:
 
-- Polyms components: `Alert`, `Button`, `Checkbox`, `Radio`, `RadioGroup`, `Switch`, `Field`, `Modal`, `NumberField`, `Select`, `Toast`, `Offcanvas`, `Menu`, `NavigationMenu`, `Tabs`, `Toolbar`, `Avatar`, `Breadcrumb`, `Accordion`, `Collapsible`, `Spinner`, `Popover`, `Tooltip`, and others — confirm in `index.d.ts`.
-- Base UI re-exports: `Toggle`, `ToggleGroup`, and `useRender`.
+- Polyms components: `Alert`, `Button`, `Checkbox`, `Radio`, `RadioGroup`, `Switch`, `Field`, `Modal`, `NumberField`, `Select`, `Toast`, `Offcanvas`, `Menu`, `NavigationMenu`, `Tabs`, `Toolbar`, `Avatar`, `Breadcrumb`, `Toc`, `Accordion`, `Collapsible`, `Spinner`, `Popover`, `Tooltip`, and others — confirm in `index.d.ts`.
+- Base UI re-exports: `Toggle`, `ToggleGroup`, `useRender`, and `mergeProps`.
 - Programmatic overlays: `useModalStore` and `useOffcanvasStore`.
 - Code splitting: `dynamic` (alias `LazyComponentLoader`) — [Dynamic import](#dynamic-import)
 
@@ -39,6 +39,7 @@ Common compound roots:
 | Toast          | `Toast`, `Toast.Container`; use `Toast.useToastManager` for imperative toast flows                                                                                                                                                                                            |
 | Alert          | `Alert`, `Alert.Heading`                                                                                                                                                                                                                                                      |
 | Breadcrumb     | `Breadcrumb`, `Breadcrumb.Item`                                                                                                                                                                                                                                               |
+| Toc            | `Toc`, `Toc.List`, `Toc.Item`, `Toc.Indicator`; also `useToc`, `useVisibleHeadings`, `scrollToHeading`, `scrollToTop`                                                                                                                                                         |
 | Accordion      | `Accordion`, `Accordion.Item`, `Accordion.Header`, `Accordion.Trigger`, `Accordion.Panel`                                                                                                                                                                                     |
 | Collapsible    | `Collapsible`, `Collapsible.Trigger`, `Collapsible.Panel`                                                                                                                                                                                                                     |
 | Popover        | `Popover`, `Popover.Trigger`, `Popover.Content`, `Popover.Close`                                                                                                                                                                                                              |
@@ -51,7 +52,7 @@ Common compound roots:
 Utility — wraps **`React.lazy`** + **`Suspense`**. Import as **`dynamic`** or **`LazyComponentLoader`** (same helper). Not a visual primitive.
 
 ```tsx
-import { dynamic, Spinner } from '@polyms/core-ui'
+import { dynamic, Spinner } from '@polyms/ui-kit'
 
 const SettingsPanel = dynamic(() => import('./SettingsPanel'), { loadingComponent: <Spinner size={24} /> })
 
@@ -71,26 +72,28 @@ function Page() {
 
 ## Extending Primitives With useRender
 
-When building a wrapper primitive, use `useRender.ComponentProps<'tag'>` and pass `props.ref` into `useRender`. React 19 does not require `forwardRef` for this pattern.
+When building a wrapper primitive, use `useRender.ComponentProps<'tag'>` and pass the destructured **`ref`** into `useRender({ ref })` (or `[internalRef, ref]` when you need both). Merge library defaults with consumer props via **`mergeProps`** (event handlers, `className`, and `style` chain correctly; **`ref` is not merged** — pass refs through `useRender`'s `ref` option only). React 19 does not require `forwardRef` for this pattern.
 
 ```tsx
-import { useRender } from '@polyms/core-ui'
+import { mergeProps, useRender } from '@polyms/ui-kit'
 import clsx from 'clsx'
+import { useRef } from 'react'
 
 type ComponentProps = useRender.ComponentProps<'div'>
 
-export function Component({ className, render, ...props }: ComponentProps) {
+export function Component({ className, render, ref, ...props }: ComponentProps) {
+  const internalRef = useRef<HTMLDivElement | null>(null)
+
   return useRender({
     defaultTagName: 'div',
-    ref: props.ref,
+    ref: [internalRef, ref],
     render,
-    props: {
-      ...props,
-      className: clsx('component-class', className),
-    },
+    props: mergeProps<'div'>({ className: clsx('component-class', className) }, props),
   })
 }
 ```
+
+Do not import `@base-ui/react/merge-props` or `@base-ui/react/use-render` in app code — use the `@polyms/ui-kit` barrel.
 
 ## Built-In Shells
 

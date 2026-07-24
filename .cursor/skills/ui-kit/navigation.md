@@ -1,18 +1,18 @@
 ---
 description: >-
-  Menu, NavigationMenu, Toolbar, Tabs, Breadcrumb. Responsive toolbar/tabs patterns. Triggers → button.md#compose-button-through-render.
+  Menu, NavigationMenu, Toolbar, Tabs, Breadcrumb, Toc. Responsive toolbar/tabs patterns. Triggers → button.md#compose-button-through-render.
 ---
 
 # Navigation
 
-Menu, NavigationMenu, Toolbar, Tabs, Breadcrumb. Triggers with `Button` → [button.md](button.md#compose-button-through-render).
+Menu, NavigationMenu, Toolbar, Tabs, Breadcrumb, Toc. Triggers with `Button` → [button.md](button.md#compose-button-through-render).
 
 ## Menu
 
 Keep options as `Menu.Item` or `Menu.SubmenuTrigger` so keyboard navigation, disabled state, and variants work. Use `variant='danger'` for destructive actions. Style **`Menu.Trigger`** with **`render={<Button … />}`** — not hand-written `btn-*` classes.
 
 ```tsx
-import { Button, Menu } from '@polyms/core-ui'
+import { Button, Menu } from '@polyms/ui-kit'
 
 const actionsMenu = (
   <Menu>
@@ -34,7 +34,7 @@ Submenus use `Menu.SubmenuRoot`, `Menu.SubmenuTrigger`, and nested `Menu.Content
 Each `NavigationMenu.Item` owns its trigger/content, and one shared `NavigationMenu.Viewport` belongs at the end of the root.
 
 ```tsx
-import { NavigationMenu } from '@polyms/core-ui'
+import { NavigationMenu } from '@polyms/ui-kit'
 
 const siteNavigation = (
   <NavigationMenu>
@@ -94,7 +94,7 @@ Use `NavigationMenu.GroupLabel`, `NavigationMenu.Separator`, and `NavigationMenu
 Wrap toolbar actions in `Toolbar.Button` for roving focus. Compose `Toggle`, `Menu.Trigger`, `Select.Trigger`, or `Button` through the `render` prop. Always provide `aria-label` on `Toolbar` and `Toolbar.Group`.
 
 ```tsx
-import { Toggle, ToggleGroup, Toolbar } from '@polyms/core-ui'
+import { Toggle, ToggleGroup, Toolbar } from '@polyms/ui-kit'
 
 const formattingToolbar = (
   <Toolbar aria-label='Formatting'>
@@ -126,7 +126,7 @@ The library toolbar is a single horizontal (or vertical) flex row — **your app
 | Side rail (wide settings)               | `orientation='vertical'` on `Toolbar` at `lg:` — pair with a column layout you own                                                                                              |
 
 ```tsx
-import { Button, Menu, Toolbar } from '@polyms/core-ui'
+import { Button, Menu, Toolbar } from '@polyms/ui-kit'
 
 const tableToolbar = (
   <div className='overflow-x-auto'>
@@ -163,7 +163,7 @@ const tableToolbar = (
 **Tree:** `Tabs` → `Tabs.List` + `Tabs.Tab` … + matching `Tabs.Panel` per `value`.
 
 ```tsx
-import { Tabs } from '@polyms/core-ui'
+import { Tabs } from '@polyms/ui-kit'
 
 const accountTabs = (
   <Tabs defaultValue='profile'>
@@ -204,7 +204,7 @@ const accountTabs = (
 **Horizontal scroll** (peer tabs, filters):
 
 ```tsx
-import { Tabs } from '@polyms/core-ui'
+import { Tabs } from '@polyms/ui-kit'
 
 const filterTabs = (
   <Tabs defaultValue='all'>
@@ -225,7 +225,7 @@ const filterTabs = (
 **Vertical settings rail** (mobile stacks, desktop side nav):
 
 ```tsx
-import { Tabs } from '@polyms/core-ui'
+import { Tabs } from '@polyms/ui-kit'
 
 const settingsTabs = (
   <Tabs className='flex flex-col gap-4 md:flex-row md:gap-6' defaultValue='profile' orientation='vertical'>
@@ -254,7 +254,7 @@ const settingsTabs = (
 **Tree:** `Breadcrumb` → `Breadcrumb.Item` (list items).
 
 ```tsx
-import { Breadcrumb } from '@polyms/core-ui'
+import { Breadcrumb } from '@polyms/ui-kit'
 
 const projectBreadcrumb = (
   <Breadcrumb>
@@ -269,3 +269,39 @@ const projectBreadcrumb = (
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | **Current page** | `active` or omit `href` on the last crumb — sets `aria-current="page"` on that item only; ancestor links with `href` do not |
 | **Router links** | `Breadcrumb.Item` `render` for client-side links — confirm props in `index.d.ts`                                            |
+
+## Toc
+
+**Tree:** `Toc` → `Toc.List` → `Toc.Item` (+ optional `Toc.Indicator`). Scroll spy runs inside `Toc` and styles items automatically.
+
+```tsx
+import { Toc } from '@polyms/ui-kit'
+
+const items = [
+  { title: 'Overview', url: '#overview', depth: 2 },
+  { title: 'Setup', url: '#setup', depth: 2 },
+]
+
+const pageToc = (
+  <Toc>
+    <Toc.List>
+      {items.map((item) => (
+        <Toc.Item key={item.url} depth={item.depth} href={item.url}>
+          {item.title}
+        </Toc.Item>
+      ))}
+      <Toc.Indicator />
+    </Toc.List>
+  </Toc>
+)
+```
+
+| Rule                 | Detail                                                                                        |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| **Heading ids**      | Page headings must use the same ids as item `href` fragments (`#overview` → `id="overview"`)  |
+| **Scroll spy**       | Built into `Toc` — do not pass `visible` / `primary` unless you need an override              |
+| **Scroll container** | Pass `scrollRef` on `Toc` when the page scrolls inside an overflow element (not the window)   |
+| **Custom chrome**    | `useToc()` inside the tree, or standalone `useVisibleHeadings(ids, { root })` outside `Toc`   |
+| **Indicator**        | Spans first→last **visible** items inside `Toc.List`; omit when you do not need the range bar |
+| **Scroll helpers**   | `scrollToHeading(id)` for hash targets; `scrollToTop()` for the window top                    |
+| **Top control**      | Omit `href` on `Toc.Item` for a button (e.g. back to top) + `scrollToTop()`                   |
