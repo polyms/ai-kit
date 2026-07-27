@@ -25,6 +25,7 @@ When authoring skills in this repo:
 | User-invoked by default    | `disable-model-invocation: true` unless agent must auto-reach                                                                   |
 | Bilingual descriptions     | WHAT in English; triggers in EN + VI (users mix both languages)                                                                 |
 | No Cursor built-ins        | Do not copy `skills-cursor/` content                                                                                            |
+| API error UX guardrail     | User-facing API errors must be friendly; do not expose raw technical error internals                                            |
 | Handoff `## Next Step`     | Stage end: one preferred `→ /skill` (two max with when/why) — SSOT CONTEXT.md **Handoff**                                       |
 
 Structure:

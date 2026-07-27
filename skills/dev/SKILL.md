@@ -96,6 +96,7 @@ name an upstream skill when blocked.
 
 - [ ] Types complete — no `any` without justification
 - [ ] Error, empty, and loading states handled
+- [ ] API error surfaces return friendly end-user messages; raw technical errors stay in logs/telemetry
 - [ ] Accessibility considered (labels, focus, contrast)
 - [ ] No secrets or credentials in code
 - [ ] Conventional commit ready
