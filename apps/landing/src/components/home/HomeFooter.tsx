@@ -26,8 +26,8 @@ export function HomeFooter() {
   return (
     <footer className='app-shell relative mx-5 mb-5 overflow-hidden rounded-[28px] bg-slate-900 text-[#eceff4]'>
       <div aria-hidden className='app-footer__glow pointer-events-none absolute inset-0' />
-      <div className='relative flex flex-wrap gap-[60px] px-11 pt-14 pb-8'>
-        <div className='min-w-[260px] flex-[1_1_280px]'>
+      <div className='relative flex flex-wrap gap-15 px-11 pt-14 pb-8'>
+        <div className='min-w-65 flex-[1_1_280px]'>
           <div className='mb-3.5'>
             <PolymsWordmark iconClassName='text-white' size='footer' textClassName='font-sans' />
           </div>
@@ -43,7 +43,7 @@ export function HomeFooter() {
           </Button>
         </div>
 
-        <div className='min-w-[140px]'>
+        <div className='min-w-35'>
           <div className='mb-3.5 font-mono font-normal text-[#7d8290] text-[11px] uppercase tracking-[0.08em]'>
             {m.footer_col_pipeline()}
           </div>
@@ -60,17 +60,12 @@ export function HomeFooter() {
           </div>
         </div>
 
-        <div className='min-w-[140px]'>
+        <div className='min-w-35'>
           <div className='mb-3.5 font-mono font-normal text-[#7d8290] text-[11px] uppercase tracking-[0.08em]'>
             {m.footer_col_resources()}
           </div>
           <div className='flex flex-col gap-2.5'>
-            <a
-              className='link font-medium no-underline'
-              href={`${GITHUB_REPO}#readme`}
-              rel='noopener noreferrer'
-              target='_blank'
-            >
+            <a className='link font-medium no-underline' href='/skills'>
               {m.nav_docs()}
             </a>
             <a className='link font-medium no-underline' href='/knowledge'>
@@ -85,7 +80,7 @@ export function HomeFooter() {
           </div>
         </div>
 
-        <div className='min-w-[140px]'>
+        <div className='min-w-35'>
           <div className='mb-3.5 font-mono font-normal text-[#7d8290] text-[11px] uppercase tracking-[0.08em]'>
             {m.footer_col_community()}
           </div>
@@ -110,7 +105,7 @@ export function HomeFooter() {
         </div>
       </div>
 
-      <div className='relative flex flex-wrap items-center justify-between gap-4 border-[color-mix(in_oklab,#fff_10%,transparent)] border-t px-11 py-[18px] text-[#7d8290] text-[13px]'>
+      <div className='relative flex flex-wrap items-center justify-between gap-4 border-[color-mix(in_oklab,#fff_10%,transparent)] border-t px-11 py-4.5 text-[#7d8290] text-[13px]'>
         <span>{m.footer_copyright()}</span>
         <div className='flex gap-3.5'>
           <Code2 aria-hidden color='#dfe3ea' size={18} />

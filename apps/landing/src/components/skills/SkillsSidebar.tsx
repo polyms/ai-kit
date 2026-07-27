@@ -1,6 +1,6 @@
 import { Toggle, ToggleGroup, Toolbar } from '@polyms/ui-kit'
 import { Link as RouterLink } from '@tanstack/react-router'
-import { IconMagnifier } from '../../lib/icons'
+import { IconCodeSquare, IconMagnifier, IconTuning2 } from '../../lib/icons'
 import { domainLabel, type ResolvedSkillOverlay } from '../../lib/skills'
 import { mergeSkillsSearch, type SkillsSearch } from '../../lib/skills-search'
 import { m } from '../../paraglide/messages.js'
@@ -19,11 +19,13 @@ type SkillsSidebarProps = {
 }
 
 function SkillRow({ skill }: { skill: ResolvedSkillOverlay }) {
+  const InvocationIcon = skill.invocation === 'user' ? IconCodeSquare : IconTuning2
+
   return (
     <RouterLink
       activeOptions={{ exact: true }}
-      activeProps={{ className: 'bg-primary-100' }}
-      className='flex items-start gap-2.5 rounded-xl px-3 py-2.5 no-underline transition-colors hover:bg-surface'
+      activeProps={{ className: 'bg-primary-100/60' }}
+      className='group flex items-start gap-2.5 rounded-xl px-3 py-2.5 no-underline transition-colors hover:bg-surface'
       from='/skills'
       params={{ slug: skill.slug }}
       search={mergeSkillsSearch}
@@ -31,8 +33,14 @@ function SkillRow({ skill }: { skill: ResolvedSkillOverlay }) {
     >
       {({ isActive }) => (
         <>
-          <span className='mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-100 font-bold font-invoke text-primary-700 text-xs'>
-            /
+          <span
+            className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-white text-primary-700 transition-[border-style] ${
+              isActive
+                ? 'border-primary-500 border-solid'
+                : 'border-primary-400 border-dashed group-hover:border-solid'
+            }`}
+          >
+            <InvocationIcon aria-hidden size={16} />
           </span>
           <span className='min-w-0 flex-1'>
             <span
@@ -63,7 +71,15 @@ export function SkillsSidebar({
   return (
     <aside className='flex h-full w-full shrink-0 flex-col border-line border-e lg:w-88'>
       <div className='shrink-0 px-5 pt-6 pb-1'>
-        <h1 className='font-bold font-display text-2xl tracking-tight'>{m.catalog_title()}</h1>
+        <h1 className='font-bold font-display text-2xl tracking-tight'>
+          <RouterLink
+            className='text-fg no-underline hover:text-primary-700'
+            search={mergeSkillsSearch}
+            to='/skills'
+          >
+            {m.catalog_title()}
+          </RouterLink>
+        </h1>
         <p className='mt-1.5 text-muted text-sm leading-relaxed'>{m.catalog_sub()}</p>
       </div>
 

@@ -18,12 +18,20 @@ catalog_title: Danh mục kỹ năng
 catalog_zeroResults: 0 kết quả
 
 # --- skills shell ---
-skills_intro_body: Chọn một kỹ năng ở danh sách bên trái, hoặc lọc theo cách gọi bên dưới.
-skills_intro_title: Danh mục kỹ năng cho agent
+skills_intro_body: Bootstrap kit, rồi chọn skill. Mỗi trang chi tiết có điều kiện tiên quyết, các bước, và prompt mẫu dán thẳng vào Cursor.
+skills_intro_title: Bắt đầu với ai-kit
+skills_getStarted_stepsTitle: Ba bước tới lệnh đầu tiên
+skills_getStarted_step1: Clone repo và chạy `pnpm bootstrap` để symlink skill vào Cursor.
+skills_getStarted_step2: Trong dự án, chạy `/setup` một lần để pipeline biết tracker và bố cục docs.
+skills_getStarted_step3: Mở một skill bên dưới, sao chép prompt mẫu, dán vào Cursor, rồi làm theo bước tiếp theo.
+skills_getStarted_fullQuickstart: Xem hướng dẫn terminal đầy đủ trên trang chủ →
+skills_getStarted_pipelineTitle: Luồng chính
+skills_getStarted_pipelineHint: Bắt đầu từ đây cho một feature điển hình — mở skill để xem bước và prompt sẵn.
 skills_invocation_model_desc: Agent tự quyết định khi nào gọi.
 skills_invocation_user_desc: Bạn gõ lệnh slash trong chat.
 skills_resultsCaption: Kết quả tìm kỹ năng
 skills_searchLabel: Tìm kỹ năng
+skills_filterTitle: Lọc theo cách gọi
 
 # --- domain ---
 domain_alignment: Đồng thuận
@@ -194,9 +202,13 @@ ops_viewPublic: Xem công khai
 
 # --- skillDetail ---
 skillDetail_boundaries: Ranh giới
+skillDetail_doneWhen: Xong khi
 skillDetail_downstream: Giai đoạn sau
+skillDetail_howTo: Cách dùng
 skillDetail_owns: Đảm nhiệm
 skillDetail_pipeline: Luồng xử lý
+skillDetail_prerequisites: Điều kiện tiên quyết
+skillDetail_tips: Mẹo
 skillDetail_upstream: Giai đoạn trước
 skillDetail_whenToUse: Khi nào dùng
 

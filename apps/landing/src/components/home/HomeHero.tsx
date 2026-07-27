@@ -44,12 +44,12 @@ function FloatingIcon({
 function AlignCard() {
   return (
     <div
-      className={`relative w-full max-w-[380px] rounded-[20px] border border-line bg-body p-5 shadow-popout ${HOME_PLAYFUL ? 'rotate-[0.8deg]' : ''}`}
+      className={`relative w-full max-w-95 rounded-[20px] border border-line bg-body p-5 shadow-popout ${HOME_PLAYFUL ? 'rotate-[0.8deg]' : ''}`}
     >
       <div className='mb-3.5 flex items-center gap-2'>
         <span
           aria-hidden
-          className='size-[7px] rounded-full bg-primary-600 shadow-[0_0_0_3px_var(--accent-glow)]'
+          className='size-2 rounded-full bg-primary-600 shadow-[0_0_0_3px_var(--accent-glow)]'
         />
         <span className='font-mono text-[12.5px] text-muted'>polyms/ai-kit · main</span>
       </div>
@@ -107,13 +107,7 @@ export function HomeHero() {
               <Button
                 className='font-bold'
                 outlined
-                render={
-                  <a
-                    href='https://github.com/polyms/ai-kit#readme'
-                    rel='noopener noreferrer'
-                    target='_blank'
-                  />
-                }
+                render={<a href='/skills' />}
                 rounded
                 size='xl'
                 variant='light'

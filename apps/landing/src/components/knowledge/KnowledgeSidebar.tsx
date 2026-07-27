@@ -85,7 +85,7 @@ function ChunkRow({ chunk }: { chunk: ChunkResult }) {
       {({ isActive }) => (
         <>
           <span
-            className={`absolute inset-s-0 top-1/2 h-[9px] w-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-body ${isActive ? 'bg-primary-600' : 'bg-line'}`}
+            className={`absolute inset-s-0 top-1/2 h-2.25 w-2.25 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-body ${isActive ? 'bg-primary-600' : 'bg-line'}`}
           />
           <span
             className={`min-w-0 flex-1 truncate text-xs ${isActive ? 'font-semibold text-primary-700' : 'text-muted'}`}

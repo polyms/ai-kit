@@ -22,13 +22,29 @@ export type ResolvedAgentPanel = {
 
 export type ResolvedSkillOverlay = Omit<
   SkillOverlay,
-  'description' | 'summary' | 'whenToUse' | 'pipeline' | 'boundaries' | 'footnote' | 'agentPanel'
+  | 'description'
+  | 'summary'
+  | 'whenToUse'
+  | 'pipeline'
+  | 'boundaries'
+  | 'prerequisites'
+  | 'howTo'
+  | 'doneWhen'
+  | 'tips'
+  | 'samplePrompt'
+  | 'footnote'
+  | 'agentPanel'
 > & {
   description: string
   summary?: string
   whenToUse?: string
   pipeline?: ResolvedSkillPipeline
   boundaries?: string
+  prerequisites?: string[]
+  howTo?: string[]
+  doneWhen?: string
+  tips?: string[]
+  samplePrompt?: string
   footnote?: string
   agentPanel?: ResolvedAgentPanel
 }
@@ -43,6 +59,10 @@ function resolveText(value: LocalizedString, locale: Locale): string {
 
 function resolveMulti(value: LocalizedString | LocalizedString[], locale: Locale): string | string[] {
   return Array.isArray(value) ? value.map(v => resolveText(v, locale)) : resolveText(value, locale)
+}
+
+function resolveList(value: LocalizedString[] | undefined, locale: Locale): string[] | undefined {
+  return value === undefined ? undefined : value.map(v => resolveText(v, locale))
 }
 
 function resolvePipeline(pipeline: SkillPipeline, locale: Locale): ResolvedSkillPipeline {
@@ -64,6 +84,12 @@ export function getSkillCopy(skill: SkillOverlay, locale: Locale): ResolvedSkill
     whenToUse: skill.whenToUse === undefined ? undefined : resolveText(skill.whenToUse, locale),
     pipeline: skill.pipeline === undefined ? undefined : resolvePipeline(skill.pipeline, locale),
     boundaries: skill.boundaries === undefined ? undefined : resolveText(skill.boundaries, locale),
+    prerequisites: resolveList(skill.prerequisites, locale),
+    howTo: resolveList(skill.howTo, locale),
+    doneWhen: skill.doneWhen === undefined ? undefined : resolveText(skill.doneWhen, locale),
+    tips: resolveList(skill.tips, locale),
+    samplePrompt:
+      skill.samplePrompt === undefined ? undefined : resolveText(skill.samplePrompt, locale),
     footnote: skill.footnote === undefined ? undefined : resolveText(skill.footnote, locale),
     agentPanel:
       skill.agentPanel === undefined

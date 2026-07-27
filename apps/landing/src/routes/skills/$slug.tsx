@@ -3,7 +3,7 @@ import { AgentPanel } from '../../components/AgentPanel'
 import { SkillDetailSection } from '../../components/SkillDetailSection'
 import { SkillInvokeText } from '../../components/SkillInvokeText'
 import { TerminalPromptBlock } from '../../components/TerminalPromptBlock'
-import { GITHUB_REPO } from '../../content/overlay'
+import { AGENT_SKILL_SLUG } from '../../content/overlay'
 import { PipelineDisplay } from '../../lib/pipeline-display'
 import { domainLabel, getSkillBySlug } from '../../lib/skills'
 import { mergeSkillsSearch } from '../../lib/skills-search'
@@ -66,6 +66,38 @@ function SkillDetailPage() {
           </SkillDetailSection>
         )}
 
+        {skill.prerequisites && skill.prerequisites.length > 0 && (
+          <SkillDetailSection label={m.skillDetail_prerequisites()}>
+            <ul className='list-disc space-y-1.5 ps-5'>
+              {skill.prerequisites.map(item => (
+                <li key={item}>
+                  <SkillInvokeText text={item} />
+                </li>
+              ))}
+            </ul>
+          </SkillDetailSection>
+        )}
+
+        {skill.howTo && skill.howTo.length > 0 && (
+          <SkillDetailSection label={m.skillDetail_howTo()}>
+            <ol className='list-decimal space-y-1.5 ps-5'>
+              {skill.howTo.map(item => (
+                <li key={item}>
+                  <SkillInvokeText text={item} />
+                </li>
+              ))}
+            </ol>
+          </SkillDetailSection>
+        )}
+
+        {skill.doneWhen && (
+          <SkillDetailSection label={m.skillDetail_doneWhen()}>
+            <p>
+              <SkillInvokeText text={skill.doneWhen} />
+            </p>
+          </SkillDetailSection>
+        )}
+
         {skill.pipeline && (
           <SkillDetailSection label={m.skillDetail_pipeline()}>
             <PipelineDisplay
@@ -81,6 +113,18 @@ function SkillDetailPage() {
             <p>
               <SkillInvokeText text={skill.boundaries} />
             </p>
+          </SkillDetailSection>
+        )}
+
+        {skill.tips && skill.tips.length > 0 && (
+          <SkillDetailSection label={m.skillDetail_tips()}>
+            <ul className='list-disc space-y-1.5 ps-5'>
+              {skill.tips.map(item => (
+                <li key={item}>
+                  <SkillInvokeText text={item} />
+                </li>
+              ))}
+            </ul>
           </SkillDetailSection>
         )}
 
@@ -107,19 +151,39 @@ function SkillDetailPage() {
 
         {skill.relatedAgents && !skill.agentPanel && (
           <div className='mt-8 flex flex-wrap gap-4 font-invoke text-sm'>
-            {skill.relatedAgents.map(agent => (
-              <a
-                className='text-muted hover:text-fg'
-                href={`${GITHUB_REPO}/blob/main/agents/${agent}.md`}
-                key={agent}
-                rel='noopener noreferrer'
-                target='_blank'
-              >
-                {agent} ↗
-              </a>
-            ))}
+            {skill.relatedAgents.map(agent => {
+              const agentSlug = AGENT_SKILL_SLUG[agent]
+              if (!agentSlug) {
+                return (
+                  <span className='text-muted' key={agent}>
+                    {agent}
+                  </span>
+                )
+              }
+              return (
+                <Link
+                  className='text-primary-700 hover:underline'
+                  key={agent}
+                  params={{ slug: agentSlug }}
+                  search={mergeSkillsSearch}
+                  to='/skills/$slug'
+                >
+                  {agent}
+                </Link>
+              )
+            })}
           </div>
         )}
+
+        <div className='mt-10 border-line border-t pt-6'>
+          <Link
+            className='inline-block font-medium text-primary-700 text-sm no-underline hover:underline'
+            search={mergeSkillsSearch}
+            to='/skills'
+          >
+            ← {m.footer_link_catalog()}
+          </Link>
+        </div>
       </div>
     </div>
   )

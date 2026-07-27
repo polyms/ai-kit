@@ -1,5 +1,7 @@
-import { GITHUB_REPO } from '../content/overlay'
+import { Link } from '@tanstack/react-router'
+import { AGENT_SKILL_SLUG } from '../content/overlay'
 import type { ResolvedAgentPanel } from '../lib/skills'
+import { mergeSkillsSearch } from '../lib/skills-search'
 import { m } from '../paraglide/messages.js'
 
 type AgentPanelProps = {
@@ -22,17 +24,27 @@ export function AgentPanel({ panel, relatedAgents }: AgentPanelProps) {
       <pre className='mt-3 font-invoke text-sm'>{panel.invokeHint}</pre>
       {relatedAgents && relatedAgents.length > 0 && (
         <div className='mt-4 flex flex-wrap gap-3 font-invoke text-sm'>
-          {relatedAgents.map(agent => (
-            <a
-              className='text-primary-700 hover:underline'
-              href={`${GITHUB_REPO}/blob/main/agents/${agent}.md`}
-              key={agent}
-              rel='noopener noreferrer'
-              target='_blank'
-            >
-              {agent} ↗
-            </a>
-          ))}
+          {relatedAgents.map(agent => {
+            const slug = AGENT_SKILL_SLUG[agent]
+            if (!slug) {
+              return (
+                <span className='text-muted' key={agent}>
+                  {agent}
+                </span>
+              )
+            }
+            return (
+              <Link
+                className='text-primary-700 hover:underline'
+                key={agent}
+                params={{ slug }}
+                search={mergeSkillsSearch}
+                to='/skills/$slug'
+              >
+                {agent}
+              </Link>
+            )
+          })}
         </div>
       )}
     </div>

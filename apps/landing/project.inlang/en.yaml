@@ -18,13 +18,20 @@ catalog_title: Skill catalog
 catalog_zeroResults: 0 results
 
 # --- skills shell ---
-skills_intro_body: Pick a skill from the list on the left, or filter by how it is invoked below.
-skills_intro_title: Skill catalog for agents
+skills_intro_body: Bootstrap the kit, then pick a skill. Each detail page has prerequisites, steps, and a sample prompt you can paste into Cursor.
+skills_intro_title: Get started with ai-kit
+skills_getStarted_stepsTitle: Three steps to first invoke
+skills_getStarted_step1: Clone the repo and run `pnpm bootstrap` to symlink skills into Cursor.
+skills_getStarted_step2: In your project, run `/setup` once so the pipeline knows your tracker and docs layout.
+skills_getStarted_step3: Open a skill below, copy the sample prompt, paste it into Cursor, and follow the next step.
+skills_getStarted_fullQuickstart: Full terminal walkthrough on the homepage →
+skills_getStarted_pipelineTitle: Main pipeline
+skills_getStarted_pipelineHint: Start here for a typical feature — open a skill for steps and a ready prompt.
 skills_invocation_model_desc: The agent decides when to call it.
 skills_invocation_user_desc: You type the slash command in chat.
 skills_resultsCaption: Skill search results
 skills_searchLabel: Search skills
-
+skills_filterTitle: Filter by how it is invoked
 # --- domain ---
 domain_alignment: Alignment
 domain_architecture: Architecture
@@ -186,9 +193,13 @@ ops_viewPublic: View public
 
 # --- skillDetail ---
 skillDetail_boundaries: Boundaries
+skillDetail_doneWhen: Done when
 skillDetail_downstream: Downstream
+skillDetail_howTo: How to use
 skillDetail_owns: Owns
 skillDetail_pipeline: Pipeline
+skillDetail_prerequisites: Prerequisites
+skillDetail_tips: Tips
 skillDetail_upstream: Upstream
 skillDetail_whenToUse: When to use
 
