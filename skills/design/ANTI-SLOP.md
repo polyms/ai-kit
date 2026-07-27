@@ -39,7 +39,7 @@ parallel skills that invent tokens outside ui-kit.
 | Stock AI footer (4 link columns · social row · tiny ©)            | Genre-blind sitemap cosplay                                                   |
 | Re-drawn browser / phone / IDE chrome around screenshots          | Fake OS frame; use real screenshot + hairline at most                         |
 | Invented metrics / testimonials / logo counts                     | Proof bar lies; use `—` + “metric to confirm” or drop slot                    |
-| Emoji as primary feature icons (`✨` `🚀` `⚡`)                   | OS-glyph shortcut; one icon library (ui-kit → Hugeicons) or omit             |
+| Emoji as primary feature icons (`✨` `🚀` `⚡`)                   | OS-glyph shortcut; one icon library (ui-kit → Hugeicons) or omit              |
 | Mid-render hex / OKLCH bypassing named tokens                     | Theme drift; lift into token then `var(--…)`                                  |
 | Inter (or one sans) as both display and body with no pairing      | Template type on marketing; product OK if brandkit single-face is intentional |
 
@@ -82,7 +82,7 @@ When output still looks bad after spec v2:
 | Check                                       | Action                                                                                  |
 | ------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Spec has tokens but no **layout bug** notes | Add viewport-specific grid rules (`sm`/`md`/`lg`) — bento often breaks at `grid-cols-2` |
-| `/dev` never ran `/ui-kit`                 | Hard gate — primitives list in spec unused                                              |
+| `/dev` never ran `/ui-kit`                  | Hard gate — primitives list in spec unused                                              |
 | No screenshot review                        | **Visual acceptance** in PREFLIGHT — hero + one scroll section                          |
 | Theme wrong on first paint                  | ADR dark-first vs `prefers-color-scheme` — spec must state flash script or default      |
 

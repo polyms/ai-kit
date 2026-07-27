@@ -39,9 +39,9 @@ screen or cluster:
 | Audit item     | Note                                                                       |
 | -------------- | -------------------------------------------------------------------------- |
 | Screen purpose | Still matches PRD / CONTEXT?                                               |
-| ui-kit usage  | Which primitives already used vs raw HTML/Tailwind?                        |
+| ui-kit usage   | Which primitives already used vs raw HTML/Tailwind?                        |
 | State coverage | Missing loading/empty/error? Primary controls missing interaction states?  |
-| Motion         | Ad-hoc animations vs ui-kit motion API?                                   |
+| Motion         | Ad-hoc animations vs ui-kit motion API?                                    |
 | a11y gaps      | Focus traps, labels, contrast                                              |
 | Slop signals   | §A / §A2 (+ §B if layout in scope) — §E punch list before proposing levers |
 

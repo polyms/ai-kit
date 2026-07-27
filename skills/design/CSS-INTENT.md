@@ -11,7 +11,7 @@ Required in every `docs/design/<feature>.md` that ships UI. `/dev` implements th
 | **Layout shells**  | `.page-x`, `.section-y`, max-width per route — not one container everywhere                                       |
 | **Grids**          | Bento / asymmetric layouts: explicit `grid-template` or `grid-area` per breakpoint — not only `grid-cols-2` prose |
 | **Accent**         | When `border-s-4 border-primary-*`, focal card treatment, mono invoke scale                                       |
-| **Theme**          | dark-first default, flash script if needed, light mode AA via ui-kit tokens only                                 |
+| **Theme**          | dark-first default, flash script if needed, light mode AA via ui-kit tokens only                                  |
 | **Custom CSS**     | List classes that belong in `globals.css` `@layer components` — not scattered inline styles                       |
 
 ## Borrow / avoid (when visual reference is set)

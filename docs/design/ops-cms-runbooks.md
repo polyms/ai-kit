@@ -28,7 +28,7 @@ Output path: `docs/design/ops-cms-runbooks.md`
 | **Layout family**  | Primary family                  | **Docs tool column + sticky local nav** (public); **dense admin shell + split editor** (ops) — not card grid landing                                                                       |
 | **Focal moment**   | One viewport = one hero beat    | **Public runbook index:** symptom search + first result row; **Public guide index:** stack-axis search + first guide row; **Guide detail:** design checklist; **Ops editor:** live preview |
 | **Density**        | sparse / balanced / dense       | **Dense** — tables, mono IDs, checklist rows; whitespace via seams not empty panels                                                                                                        |
-| **Theme default**  | dark-first / light-first        | **Dark-first** — inherit kit site flash script + tokens; light toggle AA via ui-kit semantic tokens only                                                                                  |
+| **Theme default**  | dark-first / light-first        | **Dark-first** — inherit kit site flash script + tokens; light toggle AA via ui-kit semantic tokens only                                                                                   |
 | **Reference tier** | Craft URLs                      | [tasteskill.dev](https://www.tasteskill.dev/) craft tier (typography/seams) + **RB-001 markdown** as runbook content layout reference                                                      |
 
 ### Brief lock
@@ -69,7 +69,7 @@ Per [QUALITY-BAR.md](../../skills/design/QUALITY-BAR.md) — borrow [tasteskill.
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Visual reference** | [tasteskill.dev](https://www.tasteskill.dev/) — type scale, border seams, dark craft; **RB-001** — symptom index table, issue block structure; **Stack guide detail** — checklist + seam section rhythm (prose + mono callouts)    |
 | **Craft intent**     | 3-level type scale (`.h1` page / `.h2` section / `.label-mono` IDs); **`max-w-4xl`** docs column public; **`max-w-7xl`** ops tables; **`border-b border-line`** section seams; search is largest interactive control on each index |
-| **ui-kit**          | Tables, Field, Button, Badge, Tabs, Modal — no raw `<input>`; invoke **`/ui-kit`** before `/dev` (not attached this session)                                                                                                      |
+| **ui-kit**           | Tables, Field, Button, Badge, Tabs, Modal — no raw `<input>`; invoke **`/ui-kit`** before `/dev` (not attached this session)                                                                                                       |
 | **Content**          | Copy from PRD + RB-001 + CONTEXT glossary — English body v1; no invented marketing fluff                                                                                                                                           |
 
 **Borrow vs avoid:**
@@ -901,7 +901,7 @@ No `.display` on runbook or guide routes — utilitarian `.h1` only (**anti-slop
 
 **Invoke `/ui-kit` before `/dev`** — user has not attached this session; confirm `Field`, `Table`, `Modal`, `Tabs`, `Badge`, `Button`, `Select`, `Alert`, `Toast` APIs against `@polyms/ui-kit` catalog.
 
-| UI element             | ui-kit primitive       | Variant / notes                                     |
+| UI element             | ui-kit primitive        | Variant / notes                                     |
 | ---------------------- | ----------------------- | --------------------------------------------------- |
 | Site header nav        | `NavigationMenu.Link`   | Add Runbooks + **Guides** items                     |
 | Footer link            | `Link`                  | text-muted hover:text-fg                            |
@@ -921,7 +921,7 @@ No `.display` on runbook or guide routes — utilitarian `.h1` only (**anti-slop
 | New runbook / guide    | `Button`                | `variant="primary"`                                 |
 | Form labels            | `Field.Label`           | paired with Control                                 |
 | Title, slug, audience  | `Field.Control`         | slug: mono                                          |
-| Markdown bodies        | `Textarea` or `Field`   | stack profile, seam sections — confirm `/ui-kit`   |
+| Markdown bodies        | `Textarea` or `Field`   | stack profile, seam sections — confirm `/ui-kit`    |
 | Status draft/published | `Badge`                 | success vs muted                                    |
 | Matrix type tabs       | `Tabs`                  | Runbook \| Stack guide switcher + axis sub-tabs     |
 | Unsaved / 401 modal    | `Modal`                 | focus trap, returnTo                                |
@@ -931,21 +931,21 @@ No `.display` on runbook or guide routes — utilitarian `.h1` only (**anti-slop
 
 **Custom components** (compose ui-kit — no parallel DS):
 
-| Component             | Why custom                                     | Follow-up                                                   |
-| --------------------- | ---------------------------------------------- | ----------------------------------------------------------- |
-| `OpsShell`            | Side nav + main grid layout                    | `apps/landing/src/components/ops/`                          |
-| `SymptomIndexTable`   | Linked issue ID column from CMS data           | Uses `Table`                                                |
-| `GuideSearch`         | Stack guide index search + axis filter chips   | Uses `Field.Control` + `Badge`                              |
-| `GuideChecklist`      | Design checklist render + ops line editor      | Uses list markup + `Field`                                  |
-| `SeamSection`         | Markdown seam block with anchor id             | Uses prose renderer                                         |
-| `SiblingLink`         | Runbook ↔ Stack guide cross-link card          | Uses `Link`, `Badge`                                        |
-| `TriggerPhraseChips`  | Add/remove trigger strings                     | Uses `Badge` + `Field.Control`                              |
+| Component             | Why custom                                     | Follow-up                                                  |
+| --------------------- | ---------------------------------------------- | ---------------------------------------------------------- |
+| `OpsShell`            | Side nav + main grid layout                    | `apps/landing/src/components/ops/`                         |
+| `SymptomIndexTable`   | Linked issue ID column from CMS data           | Uses `Table`                                               |
+| `GuideSearch`         | Stack guide index search + axis filter chips   | Uses `Field.Control` + `Badge`                             |
+| `GuideChecklist`      | Design checklist render + ops line editor      | Uses list markup + `Field`                                 |
+| `SeamSection`         | Markdown seam block with anchor id             | Uses prose renderer                                        |
+| `SiblingLink`         | Runbook ↔ Stack guide cross-link card          | Uses `Link`, `Badge`                                       |
+| `TriggerPhraseChips`  | Add/remove trigger strings                     | Uses `Badge` + `Field.Control`                             |
 | `AxisTagPicker`       | Multi-select axis tags                         | Uses `ToggleGroup` or `Checkbox` group — confirm `/ui-kit` |
-| `CoverageMatrixGrid`  | 2D gap highlighting per content type           | CSS grid + `Button` cell                                    |
-| `RunbookPreviewPane`  | Live symptom index from form state             | Uses `SymptomIndexTable`                                    |
-| `GuidePreviewPane`    | Live checklist + seam excerpt from form state  | Uses `GuideChecklist`, `SeamSection`                        |
-| `RunbookMarkdownBody` | Renders CMS markdown sections on public detail | May use existing markdown renderer                          |
-| `DocsLocalNav`        | Sticky in-page section links                   | `Link` list                                                 |
+| `CoverageMatrixGrid`  | 2D gap highlighting per content type           | CSS grid + `Button` cell                                   |
+| `RunbookPreviewPane`  | Live symptom index from form state             | Uses `SymptomIndexTable`                                   |
+| `GuidePreviewPane`    | Live checklist + seam excerpt from form state  | Uses `GuideChecklist`, `SeamSection`                       |
+| `RunbookMarkdownBody` | Renders CMS markdown sections on public detail | May use existing markdown renderer                         |
+| `DocsLocalNav`        | Sticky in-page section links                   | `Link` list                                                |
 
 ---
 
@@ -994,7 +994,7 @@ No hero motion on runbook or guide routes.
 | Type scale     | `.h1` + `.h2` + `.label-mono` visible on indexes and detail pages                                               |
 | Surface rhythm | ≥2 surfaces (`bg-body` + `bg-surface` preview or `bg-surface-2` ops nav)                                        |
 | Focal beat     | Indexes: search dominates above fold; Runbook detail: symptom index first; Guide detail: design checklist first |
-| ui-kit        | No raw `<input>`; search uses `Field.Control`; ops save uses `Button`                                           |
+| ui-kit         | No raw `<input>`; search uses `Field.Control`; ops save uses `Button`                                           |
 | Anti-slop      | No §A violations — no card grid, no purple hero, no `.display` marketing on ops routes                          |
 | RB-001 parity  | Public RB-001 page sections match runbook markdown order and table                                              |
 | Sibling link   | When `relatedRunbookId` / `relatedGuideId` set, SiblingLink visible on both detail pages                        |

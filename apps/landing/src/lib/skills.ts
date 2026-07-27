@@ -88,8 +88,7 @@ export function getSkillCopy(skill: SkillOverlay, locale: Locale): ResolvedSkill
     howTo: resolveList(skill.howTo, locale),
     doneWhen: skill.doneWhen === undefined ? undefined : resolveText(skill.doneWhen, locale),
     tips: resolveList(skill.tips, locale),
-    samplePrompt:
-      skill.samplePrompt === undefined ? undefined : resolveText(skill.samplePrompt, locale),
+    samplePrompt: skill.samplePrompt === undefined ? undefined : resolveText(skill.samplePrompt, locale),
     footnote: skill.footnote === undefined ? undefined : resolveText(skill.footnote, locale),
     agentPanel:
       skill.agentPanel === undefined

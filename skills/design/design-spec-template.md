@@ -78,9 +78,9 @@ Per [CSS-INTENT.md](CSS-INTENT.md) — **required for UI**. `/dev` implements th
 Map every interactive element to `@polyms/ui-kit` primitives. User should invoke **`/ui-kit`** when unsure of catalog or API.
 
 | UI element    | ui-kit primitive | Variant / notes                            |
-| ------------- | ----------------- | ------------------------------------------ |
-| [e.g. Submit] | Button            | primary; loading + disabled; focus-visible |
-| ...           | ...               | ...                                        |
+| ------------- | ---------------- | ------------------------------------------ |
+| [e.g. Submit] | Button           | primary; loading + disabled; focus-visible |
+| ...           | ...              | ...                                        |
 
 For primary controls, note **interaction states** the primitive supports (default · hover ·
 focus-visible · active · disabled · loading · error · success). Do not invent parallel chrome —

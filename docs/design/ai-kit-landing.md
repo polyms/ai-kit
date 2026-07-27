@@ -20,8 +20,8 @@ Output path: `docs/design/ai-kit-landing.md`
 | **Principles bento**  | 1 hero cell + 4 compact; `gap-px bg-line` grid lines       | `grid-cols-2` + `row-span-2` on #1 **without explicit placement** → numbers `text-line` float, grid lines invisible on light, auto-flow breaks at `md` | Explicit `grid-template` + `grid-area` per breakpoint §3.1; numbers `text-primary-700/15` not `text-line`                                                              |
 | **Pipeline**          | Living diagram + scroll activation; triage dashed parallel | 12× `min-h-[70vh]` panels — one title + paragraph centered in void (**ANTI-SLOP §A**)                                                                  | **`PipelineDiagram` canvas** + sticky rail; **one `StageDetailPanel`** swaps content; scroll section height = `stages × 40vh` driver divs hidden, not 12 visible walls |
 | **Rail / IO**         | Scroll-scrub + hover; `pipeline_section_view`              | Rail OK desktop; IO on 12 tall panels → jittery active state                                                                                           | IO on **scroll driver** segments; rail + diagram node sync; events unchanged                                                                                           |
-| **Catalog / palette** | Command palette density                                    | Raw input patterns partially fixed                                                                                                                     | ui-kit `Field.Control`, `Modal`; `>` prefix rows                                                                                                                      |
-| **ui-kit map**       | Dogfood primitives                                         | Mixed raw HTML                                                                                                                                         | §5 — **Modal** not Dialog; **Field.Control** not Input                                                                                                                 |
+| **Catalog / palette** | Command palette density                                    | Raw input patterns partially fixed                                                                                                                     | ui-kit `Field.Control`, `Modal`; `>` prefix rows                                                                                                                       |
+| **ui-kit map**        | Dogfood primitives                                         | Mixed raw HTML                                                                                                                                         | §5 — **Modal** not Dialog; **Field.Control** not Input                                                                                                                 |
 | **Content registry**  | Single `overlay.ts` — homepage + `/skills`                 | **`demo-catalog.ts` duplicate** — 10 stale items; missing design/arch/arch-refactor; `/ux` planned wrong                                               | Delete `demo-catalog.ts`; wire `HomeCatalog` + list from `skillOverlays` only §3.0b                                                                                    |
 | **Home catalog grid** | Clickable cards → `/skills/:slug`; planned badge           | `cursor-default` `<div>` — not navigable; separate data source                                                                                         | `Link` per card; `status` from overlay §3.0b                                                                                                                           |
 | **Skill detail**      | Rich overlay fields + status badge + agent panel           | Hardcoded «Available» badge; description only; no summary/whenToUse/pipeline/boundaries                                                                | §3 Skill detail v3.1 layout; planned = no prompt §3                                                                                                                    |
@@ -63,7 +63,7 @@ Output path: `docs/design/ai-kit-landing.md`
 | **P1** | Dark-first flash script + `globals.css` type scale + break centered-container trap                      | First paint + every section depends on tokens  |
 | **P1** | Hero composition §3.0 + `HeroTerminalStrip` (mobile visible, header clearance)                          | Bounce decision in 3s                          |
 | **P1** | `PrinciplesBento` explicit grid maps §3.1                                                               | Shipped bento broken at `grid-cols-2`          |
-| **P1** | `SkillCommandList` + `CommandPalette` → ui-kit Modal / Field.Control                                   | Discovery path                                 |
+| **P1** | `SkillCommandList` + `CommandPalette` → ui-kit Modal / Field.Control                                    | Discovery path                                 |
 | **P2** | `TerminalSection` quick start polish                                                                    | Content OK, chrome weak                        |
 | **P3** | Motion polish, catalog keyboard nav, search highlight                                                   | Should-have engagement                         |
 | **—**  | ~~`PipelineDiagram` §3.2~~, ~~`PrincipalPanels` §3.3~~, ~~Featured teaser~~                             | **Deferred** — future pass after catalog slice |
@@ -83,7 +83,7 @@ Output path: `docs/design/ai-kit-landing.md`
 | **Layout family**  | Primary family                  | Asymmetric split hero + sticky rail scrollytelling with **diagram canvas** — not centered hero + 3-col features   |
 | **Focal moment**   | One viewport = one hero beat    | **Hero:** typographic cascade dominates left 62%; terminal strip supports right 38% — not competing equal columns |
 | **Density**        | sparse / balanced / dense       | **Balanced-dense** — information-rich; whitespace carries structure (grid lines, diagram), not emptiness          |
-| **Theme default**  | dark-first / light-first        | **Dark-first** (ADR-0002 §9); light toggle AA-safe via ui-kit semantic tokens                                    |
+| **Theme default**  | dark-first / light-first        | **Dark-first** (ADR-0002 §9); light toggle AA-safe via ui-kit semantic tokens                                     |
 | **Reference tier** | Craft URLs                      | Primary: [tasteskill.dev](https://www.tasteskill.dev/) — density, hero drama, section rhythm                      |
 
 ### Brief lock
@@ -97,18 +97,18 @@ Per [QUALITY-BAR.md](../../skills/design/QUALITY-BAR.md) — finished-site tier,
 | Dimension        | Kit site bar                                                                                                                                                        |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Completeness** | Every route end-to-end: token/CSS intent in §4 — no gray placeholders, no README pasted as unstyled markdown                                                        |
-| **ui-kit**      | §5 + §17 — `Modal`, `Field.Control`, `Button` variants; cấm raw `<input>`, Dialog alias, ad-hoc locale buttons where `ToggleGroup` fits                             |
+| **ui-kit**       | §5 + §17 — `Modal`, `Field.Control`, `Button` variants; cấm raw `<input>`, Dialog alias, ad-hoc locale buttons where `ToggleGroup` fits                             |
 | **Composition**  | Measurable splits §3.0–§3.3; diagram canvas + rail; bento `grid-area`; type scale §4.1 — reads **designed**, not template slop                                      |
 | **Content**      | PRD §6.3 locked — overlay keys + §15 checklist; copy from README/CONTEXT, không marketing fluff; **v3.1+:** single overlay, 15 skills (docs, e2e, devops available) |
 
 - **Visual reference:** [tasteskill.dev](https://www.tasteskill.dev/) — hero density, asymmetric split, section rhythm, dark craft tier. **Do not** copy brand, skill grid, or sponsor strip (PRD §6.6 #3).
 - **Craft intent:** Full-bleed landing với **surface alternation** (`bg-body` / `bg-surface-2`), **1px `border-line` section seams**, **border-s-4 accent** on active panels — not uniform `rounded-xl` cards. Invoke mono **largest in row**. Pipeline diagram nodes có **active ring + hover lift**; detail panel compact (`min-h 240px`). Dark-first acceptance screenshots; light toggle AA-safe via ui-kit semantic tokens only. `/dev` ships CSS classes from §4 — not “we’ll polish later.”
 
-| Field          | Value                                                                                   |
-| -------------- | --------------------------------------------------------------------------------------- |
-| Persona        | Kỹ sư fullstack / tech lead Polyms — Cursor daily, dark theme                           |
-| Job to be done | Hiểu pipeline; browse/copy prompt; bootstrap — **biết invoke tiếp theo**                |
-| Mood / layout  | Command surface v3 — terminal + pipeline diagram (PRD §6.1)                             |
+| Field          | Value                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------- |
+| Persona        | Kỹ sư fullstack / tech lead Polyms — Cursor daily, dark theme                          |
+| Job to be done | Hiểu pipeline; browse/copy prompt; bootstrap — **biết invoke tiếp theo**               |
+| Mood / layout  | Command surface v3 — terminal + pipeline diagram (PRD §6.1)                            |
 | Theme preset   | ui-kit dark default + light toggle; `localStorage` `ai-kit-theme`; inline flash script |
 
 **Visual reference detail** — see §1b borrow/avoid table:
@@ -405,7 +405,7 @@ flowchart TD
 
 #### Component map
 
-| UI     | ui-kit / custom                                              |
+| UI     | ui-kit / custom                                               |
 | ------ | ------------------------------------------------------------- |
 | Grid   | CSS grid — `gap-px bg-line` or `gap-4` per shipped demo shell |
 | Card   | `Link` + surface — not `Card` per cell (ANTI-SLOP §A)         |
@@ -818,7 +818,7 @@ Dev uses these as **visual acceptance copy** — must match `pipeline.stages.{id
 | Agent     | Stamp               | Owns                                                |
 | --------- | ------------------- | --------------------------------------------------- |
 | pm        | PRINCIPAL PM        | PRD, stories, AC, scope                             |
-| designer  | PRINCIPAL DESIGNER  | docs/design/, ui-kit map                           |
+| designer  | PRINCIPAL DESIGNER  | docs/design/, ui-kit map                            |
 | developer | PRINCIPAL ENGINEER  | TDD, production code, /devops (primary)             |
 | tester    | PRINCIPAL TESTER    | E2E harness, flake, CI sharding                     |
 | techlead  | PRINCIPAL TECH LEAD | /docs, arch, code-review, arch-refactor; devops SEV |
@@ -1148,7 +1148,7 @@ Source: `apps/landing/src/content/overlay.ts` — bilingual display in `Terminal
 
 #### Component map — skill detail
 
-| UI element          | ui-kit / custom   | Notes                                                                       |
+| UI element          | ui-kit / custom    | Notes                                                                       |
 | ------------------- | ------------------ | --------------------------------------------------------------------------- |
 | InvokeTabBar        | `Tabs` or custom   | file-tab metaphor                                                           |
 | Status badge        | `Badge`            | from `overlay.status` §4.7                                                  |
@@ -1391,7 +1391,7 @@ Place **before** `<div id="root">`. Zustand hydrate reconciles after.
 
 User invokes **`/ui-kit`** during `/dev` to confirm APIs. **Note:** ui-kit uses **`Modal`** not Dialog; form search uses **`Field.Control`** not raw Input.
 
-| UI element             | ui-kit primitive             | Variant / notes                    |
+| UI element             | ui-kit primitive              | Variant / notes                    |
 | ---------------------- | ----------------------------- | ---------------------------------- |
 | Site logo              | `Link` + `Text`               | `font-invoke text-lg font-bold`    |
 | Header nav             | `Link`                        | ghost                              |
@@ -1627,7 +1627,7 @@ Script async/defer; env-gated; footer «Phân tích ẩn danh».
 | Check             | v3 action                                              |
 | ----------------- | ------------------------------------------------------ |
 | Layout bug notes  | Principles grid-area §3.1; pipeline architecture §3.2  |
-| `/ui-kit` at dev | §5 + §17 Modal, Field.Control, Button variants         |
+| `/ui-kit` at dev  | §5 + §17 Modal, Field.Control, Button variants         |
 | Visual acceptance | §16 screenshot matrix + §0 audit + dark screenshots P0 |
 | Theme first paint | §4.6 inline script                                     |
 
@@ -1640,7 +1640,7 @@ Script async/defer; env-gated; footer «Phân tích ẩn danh».
 | Four states per screen     | ✓ §3 — landing, teaser §3.0, footer §3.4, catalog, palette, detail, quick start, chrome |
 | No TBD/TODO in body        | ✓                                                                                       |
 | PRD §6.3 content checklist | ✓ §15 full mapping table                                                                |
-| ui-kit map complete       | ✓ §5 + §17 handoff — Modal, Field.Control, Button variants                              |
+| ui-kit map complete        | ✓ §5 + §17 handoff — Modal, Field.Control, Button variants                              |
 | BRIEF-INFERENCE table      | ✓ §1                                                                                    |
 | QUALITY-BAR.md note        | ✓ §1b — craft bar table + visual reference + craft intent                               |
 | ANTI-SLOP §A–§D            | ✓ §12                                                                                   |
@@ -1822,7 +1822,7 @@ User invokes **`/ui-kit`** during `/dev` — this section flags API choices and 
 | Pipeline nav  | `nav.pipeline` → `/#catalog`    | **Remove** until §3.2 ships     |
 | ⌘K button     | `variant="light" size="sm"`     | `variant="ghost" size="sm"`     |
 | Theme button  | `variant="light" outlined icon` | `variant="outline" size="icon"` |
-| Locale toggle | Raw `<button>` in `div.border`  | `ToggleGroup` from ui-kit      |
+| Locale toggle | Raw `<button>` in `div.border`  | `ToggleGroup` from ui-kit       |
 | Nav links     | Raw `<a>` / `Link` OK           | `Link` ghost styling — OK       |
 
 ### Shipped mismatches (`HomeCatalog.tsx` + `$slug.tsx` + `SkillCommandRow.tsx` — P0)

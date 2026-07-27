@@ -10,12 +10,12 @@ ai-kit needs a public-facing landing for end users — skill catalog, sample pro
 
 Alternatives considered:
 
-| Option                 | Pros                                                        | Cons                                                   |
-| ---------------------- | ----------------------------------------------------------- | ------------------------------------------------------ |
-| Astro static           | Fast, content-focused                                       | Extra stack; ui-kit is React — islands add complexity |
-| Next.js                | Familiar, SSR                                               | Overkill for marketing/docs; heavier CI and hosting    |
-| README/docs only       | Zero build                                                  | Poor browse/copy UX; duplicates effort for prompts     |
-| Vite + React + ui-kit | Dogfoods design system; dep already present; SPA sufficient | Client-only; SEO needs meta tags, not SSR              |
+| Option                | Pros                                                        | Cons                                                  |
+| --------------------- | ----------------------------------------------------------- | ----------------------------------------------------- |
+| Astro static          | Fast, content-focused                                       | Extra stack; ui-kit is React — islands add complexity |
+| Next.js               | Familiar, SSR                                               | Overkill for marketing/docs; heavier CI and hosting   |
+| README/docs only      | Zero build                                                  | Poor browse/copy UX; duplicates effort for prompts    |
+| Vite + React + ui-kit | Dogfoods design system; dep already present; SPA sufficient | Client-only; SEO needs meta tags, not SSR             |
 
 ## Decision
 

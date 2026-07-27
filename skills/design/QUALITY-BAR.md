@@ -13,7 +13,7 @@ focal beats — not vague “modern clean.”
 | **Visual reference**  | **Required** for UI specs — URL or screenshot (e.g. [tasteskill.dev](https://www.tasteskill.dev/) craft tier). Borrow composition density, not brand. |
 | **CSS intent**        | §4 [CSS-INTENT.md](CSS-INTENT.md) — named classes, surfaces, grids; `/dev` implements before wiring                                                   |
 | **Visual acceptance** | §8 [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — `/dev` proves via [visual-ship.md](../dev/visual-ship.md)                                           |
-| **ui-kit**           | Primitives and tokens — not ad-hoc one-off styling                                                                                                    |
+| **ui-kit**            | Primitives and tokens — not ad-hoc one-off styling                                                                                                    |
 | **Content**           | Copy from PRD/README/CONTEXT — not invented marketing fluff, metrics, or testimonials                                                                 |
 
 ## Visual reference — DNA optional

@@ -127,7 +127,7 @@ Tham chiếu đầy đủ: `docs/design/ai-kit-landing.md`. Tóm tắt bắt bu�
 | **Pipeline là hệ thống** | Main path + triage branch như **living diagram** — stage highlight, artifact output labels (`PRD`, `docs/design/`, `ready-for-agent`) | Mỗi stage produce artifact next stage consume   |
 | **Agents là principals** | 5 agent cards như «process owner» — owns field cụ thể; `/align` skill-only (grill tương tác)                                          | Handoff có lane; không relitigate downstream    |
 | **Prompts là contract**  | Sample prompt blocks giống snippet trong terminal/chat — bilingual, không marketing rewrite                                           | Copy-paste = invoke thật trong Cursor           |
-| **Dogfood ui-kit**      | Component map từ `@polyms/ui-kit` — site chứng minh design system                                                                     | Design every day — spec map tới primitives      |
+| **Dogfood ui-kit**       | Component map từ `@polyms/ui-kit` — site chứng minh design system                                                                     | Design every day — spec map tới primitives      |
 
 **Anti-vibe-coding signal:** Mọi section phải trả lời «sau khi đọc, tôi biết **lệnh gì chạy tiếp**» — không chỉ «sản phẩm hay».
 
@@ -231,20 +231,20 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 ### 6.6 Anti-Patterns — Template slop (explicit ban list)
 
-| #   | Anti-pattern                                      | Thay bằng                                                               |
-| --- | ------------------------------------------------- | ----------------------------------------------------------------------- |
+| #   | Anti-pattern                                      | Thay bằng                                                              |
+| --- | ------------------------------------------------- | ---------------------------------------------------------------------- |
 | 1   | Purple/blue gradient hero full-bleed              | Solid dark hoặc subtle noise texture; accent từ ui-kit semantic tokens |
-| 2   | 3-column «Features» với icon giống nhau           | Principles bento hoặc pipeline-anchored groups                          |
-| 3   | «Trusted by» logo bar                             | Không có v1 — không invent social proof                                 |
-| 4   | Generic «How it works» 1-2-3 với số tròn          | Pipeline diagram thật với skill invoke names                            |
-| 5   | Stock photos / 3D illustrations                   | Không illustration — typography + diagram + code                        |
-| 6   | «AI-powered» / «Supercharge» headline             | «Real engineering», «align, spec, ship»                                 |
-| 7   | CTA «Get started free»                            | «Xem skill catalog», «Bắt đầu nhanh», «Sao chép»                        |
-| 8   | Testimonial carousel                              | Không                                                                   |
-| 9   | FAQ accordion 10 câu generic                      | Quick start + catalog đủ; FAQ defer                                     |
-| 10  | Mermaid runtime client bundle cho decorative      | SVG build-time hoặc hand-coded `PipelineDiagram`                        |
-| 11  | Giảm 15 skills xuống «top 6» trên landing         | Full catalog route; landing có thể teaser 4–6 + CTA «xem tất cả»        |
-| 12  | Light editorial làm sole theme khi không có lý do | Dark-first hoặc high-contrast — phù hợp Cursor audience                 |
+| 2   | 3-column «Features» với icon giống nhau           | Principles bento hoặc pipeline-anchored groups                         |
+| 3   | «Trusted by» logo bar                             | Không có v1 — không invent social proof                                |
+| 4   | Generic «How it works» 1-2-3 với số tròn          | Pipeline diagram thật với skill invoke names                           |
+| 5   | Stock photos / 3D illustrations                   | Không illustration — typography + diagram + code                       |
+| 6   | «AI-powered» / «Supercharge» headline             | «Real engineering», «align, spec, ship»                                |
+| 7   | CTA «Get started free»                            | «Xem skill catalog», «Bắt đầu nhanh», «Sao chép»                       |
+| 8   | Testimonial carousel                              | Không                                                                  |
+| 9   | FAQ accordion 10 câu generic                      | Quick start + catalog đủ; FAQ defer                                    |
+| 10  | Mermaid runtime client bundle cho decorative      | SVG build-time hoặc hand-coded `PipelineDiagram`                       |
+| 11  | Giảm 15 skills xuống «top 6» trên landing         | Full catalog route; landing có thể teaser 4–6 + CTA «xem tất cả»       |
+| 12  | Light editorial làm sole theme khi không có lý do | Dark-first hoặc high-contrast — phù hợp Cursor audience                |
 
 ### 6.7 MoSCoW — Creative v1 vs defer
 
@@ -252,7 +252,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 | Item                                                             | Notes                                                                                 |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Dark-first hoặc high-contrast theme                              | ui-kit tokens; AA contrast                                                           |
+| Dark-first hoặc high-contrast theme                              | ui-kit tokens; AA contrast                                                            |
 | Asymmetric hero + bold typography                                | Không centered generic                                                                |
 | Pipeline interactive **hoặc** scroll-driven highlight            | Ít nhất hover/active stage; scroll-scrub nice-to-have nhưng stage activation bắt buộc |
 | Full content checklist §6.3                                      | Non-negotiable                                                                        |
@@ -271,7 +271,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | Scroll-scrubbed pipeline progression                                           | Section pin + stage advance         |
 | `/` keyboard shortcut focus search on catalog                                  | Global listener khi route `/skills` |
 | Umami custom events: `copy_prompt`, `pipeline_section_view`, `cta_quick_start` | Không PII                           |
-| Light theme toggle                                                             | Nếu ui-kit switch trivial          |
+| Light theme toggle                                                             | Nếu ui-kit switch trivial           |
 | Landing teaser: 4–6 featured skills với copy                                   | Dẫn tới full catalog                |
 
 #### Could Have (v1.1 post-launch)
@@ -335,13 +335,13 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 
 ## 10. Risks & Mitigations
 
-| Risk                                      | Impact | Mitigation                                                |
-| ----------------------------------------- | ------ | --------------------------------------------------------- |
-| Creative layout phá a11y                  | High   | Test sớm với axe; reduced-motion path; sr-only pipeline   |
-| Dark-first conflict ui-kit light default | Med    | Confirm tokens với `/ui-kit`; theme provider app-level   |
-| Scroll pipeline tốn dev                   | Med    | MoSCoW: hover activation Must; scroll-scrub Should        |
-| «Phá cách» quá đà — khó đọc               | Med    | Content checklist audit; peer review với engineer persona |
-| Custom events Umami chưa setup            | Low    | Pageviews Must; custom P1                                 |
+| Risk                                     | Impact | Mitigation                                                |
+| ---------------------------------------- | ------ | --------------------------------------------------------- |
+| Creative layout phá a11y                 | High   | Test sớm với axe; reduced-motion path; sr-only pipeline   |
+| Dark-first conflict ui-kit light default | Med    | Confirm tokens với `/ui-kit`; theme provider app-level    |
+| Scroll pipeline tốn dev                  | Med    | MoSCoW: hover activation Must; scroll-scrub Should        |
+| «Phá cách» quá đà — khó đọc              | Med    | Content checklist audit; peer review với engineer persona |
+| Custom events Umami chưa setup           | Low    | Pageviews Must; custom P1                                 |
 
 ---
 
@@ -374,7 +374,7 @@ Design creative **không được** hy sinh item nào dưới đây để đơn 
 | 2   | Pipeline        | **Full scroll-scrub**                                               |
 | 3   | Hero animation  | **Typewriter** `align → reqs → design → dev`                        |
 | 4   | Umami events    | **Ship v1**                                                         |
-| 5   | Font stack      | **Quicksand** (ui-kit `_fonts.css`) + **JetBrains Mono** (app)     |
+| 5   | Font stack      | **Quicksand** (ui-kit `_fonts.css`) + **JetBrains Mono** (app)      |
 | 6   | Featured teaser | **Confirmed** — strip `setup` / `align` / `reqs` / `dev` below hero |
 
 ## Open Questions

@@ -103,9 +103,9 @@ for `gh label create` examples).
 
 **F — Design**
 
-| Item          | Default                                                     |
-| ------------- | ----------------------------------------------------------- |
-| Design specs  | `docs/design/<feature>.md`                                  |
+| Item          | Default                                                    |
+| ------------- | ---------------------------------------------------------- |
+| Design specs  | `docs/design/<feature>.md`                                 |
 | Design system | `@polyms/ui-kit` + `/ui-kit` skill (symlink from lib repo) |
 
 Confirm paths. Note: `/design` writes specs; `/ui-kit` skill documents component API — not duplicated in

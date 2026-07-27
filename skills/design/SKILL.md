@@ -13,9 +13,9 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 
 **Boundary vs `ui-kit`:**
 
-| Invoke         | Repo             | Answers                                                       |
-| -------------- | ---------------- | ------------------------------------------------------------- |
-| **`/design`**  | ai-kit           | _What_ — flows, screens, states, component map, motion intent |
+| Invoke        | Repo             | Answers                                                       |
+| ------------- | ---------------- | ------------------------------------------------------------- |
+| **`/design`** | ai-kit           | _What_ — flows, screens, states, component map, motion intent |
 | **`/ui-kit`** | `@polyms/ui-kit` | _How_ — compose primitives, tokens, motion API when coding    |
 
 `/design` does **not** duplicate ui-kit API docs. **User-invoked** — you cannot agent-fire `/ui-kit`. Before the component map, ask the user to invoke **`/ui-kit`** in this chat (skill ships with the lib — symlink or `npx skills add`), or follow it if the user already attached it.
@@ -32,30 +32,30 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 
 ## References
 
-| Topic           | Read when                                                                                                                                                              |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Brief inference | [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — **mandatory** before layout                                                                                                 |
-| Anti-slop       | [ANTI-SLOP.md](ANTI-SLOP.md) — §A/§A2 bans, composition, §E punch list                                                                                                 |
-| Quality bar     | [QUALITY-BAR.md](QUALITY-BAR.md) — visual reference + optional DNA notes                                                                                               |
-| CSS intent      | [CSS-INTENT.md](CSS-INTENT.md) — **required** §4 in spec; `/dev` implements before wiring                                                                              |
-| Visual accept   | [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — criteria `/dev` proves via visual-ship in `/dev`                                                                        |
-| Spec template   | [design-spec-template.md](design-spec-template.md)                                                                                                                     |
-| Pre-flight      | [PREFLIGHT.md](PREFLIGHT.md) — must pass before handoff (includes craft critique)                                                                                      |
-| Redesign        | [REDESIGN.md](REDESIGN.md) — audit-only punch list or full redesign                                                                                                    |
-| Domain glossary | `CONTEXT.md` at repo root                                                                                                                                              |
-| ADRs            | `docs/adr/` — do not re-litigate recorded decisions                                                                                                                    |
-| PRD source      | Issue tracker, `docs/`, or conversation — fetch per issue-tracker if needed                                                                                            |
+| Topic           | Read when                                                                                                                                                             |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Brief inference | [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — **mandatory** before layout                                                                                                |
+| Anti-slop       | [ANTI-SLOP.md](ANTI-SLOP.md) — §A/§A2 bans, composition, §E punch list                                                                                                |
+| Quality bar     | [QUALITY-BAR.md](QUALITY-BAR.md) — visual reference + optional DNA notes                                                                                              |
+| CSS intent      | [CSS-INTENT.md](CSS-INTENT.md) — **required** §4 in spec; `/dev` implements before wiring                                                                             |
+| Visual accept   | [VISUAL-ACCEPTANCE.md](VISUAL-ACCEPTANCE.md) — criteria `/dev` proves via visual-ship in `/dev`                                                                       |
+| Spec template   | [design-spec-template.md](design-spec-template.md)                                                                                                                    |
+| Pre-flight      | [PREFLIGHT.md](PREFLIGHT.md) — must pass before handoff (includes craft critique)                                                                                     |
+| Redesign        | [REDESIGN.md](REDESIGN.md) — audit-only punch list or full redesign                                                                                                   |
+| Domain glossary | `CONTEXT.md` at repo root                                                                                                                                             |
+| ADRs            | `docs/adr/` — do not re-litigate recorded decisions                                                                                                                   |
+| PRD source      | Issue tracker, `docs/`, or conversation — fetch per issue-tracker if needed                                                                                           |
 | Component API   | **`/ui-kit`** in `@polyms/ui-kit` — user invokes before component map, or attached in chat                                                                            |
 | External ref    | [Taste](https://www.tasteskill.dev/) / [Hallmark](https://github.com/Nutlope/hallmark) — anti-slop discipline only; DS locked to ui-kit; do not install theme engines |
 
 ## Quick Router
 
-| User intent               | Workflow                                |
-| ------------------------- | --------------------------------------- |
-| New feature from PRD      | [Spec from PRD](#spec-from-prd)         |
-| One complex flow          | [Screen drill-down](#screen-drill-down) |
-| Score existing UI only    | [Audit-only](#audit-only)               |
-| Modernize existing UI     | [Redesign audit](#redesign-audit)       |
+| User intent              | Workflow                                |
+| ------------------------ | --------------------------------------- |
+| New feature from PRD     | [Spec from PRD](#spec-from-prd)         |
+| One complex flow         | [Screen drill-down](#screen-drill-down) |
+| Score existing UI only   | [Audit-only](#audit-only)               |
+| Modernize existing UI    | [Redesign audit](#redesign-audit)       |
 | Missing ui-kit primitive | [Component gap](#component-gap)         |
 
 ## Spec from PRD

@@ -53,7 +53,7 @@ Score the draft spec 1–5 on each axis. Any axis below 3 → revise before hand
 | Execution   |     | §4 CSS + §8 visual acceptance concrete enough for `/dev` without guessing |
 | Specificity |     | Visual reference + anti-slop rows cited; no orphan PRD paths              |
 | Restraint   |     | No invented proof metrics; eyebrows/chrome tells marked N/A or banned     |
-| Consistency |     | Product routes share ui-kit tokens/chrome — no variety-for-variety       |
+| Consistency |     | Product routes share ui-kit tokens/chrome — no variety-for-variety        |
 
 ## Visual acceptance (before `/dev` handoff)
 

@@ -1,6 +1,6 @@
 {
   "name": "@polyms/ai-kit",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "private": true,
   "description": "Polyms agent skills for real engineering — PM, design, and fullstack dev workflows",
   "license": "MIT",
