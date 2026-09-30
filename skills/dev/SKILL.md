@@ -13,6 +13,8 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 - New feature from spec → [Implement workflow](#implement-workflow);
   reference: [tdd-guide.md](tdd-guide.md), [solution-ladder.md](solution-ladder.md)
+- Touch untested shipping code → [characterization.md](characterization.md) before
+  red-green (Implement step 3b / Debug)
 - Bug / regression → [Debug workflow](#debug-workflow);
   reference: [debug-loop.md](debug-loop.md)
 - Branch / PR review → **`code-review`** (pre-merge gate, not red-green loop)
@@ -70,18 +72,30 @@ do not climb instead of reading. Repo / design / ADR stack choices override "pre
 native" for that stack.
 
 **Completion criterion:** Chosen rung named (YAGNI / reuse / stdlib / native / installed
-dep / one-liner / minimum); path that would over-build relative to that rung discarded.
+dep / one-liner / minimum); path that would over-build relative to that rung discarded;
+single-call-site helpers stay colocated (solution-ladder **Colocate**), not in helpers/utils.
+
+### 3b. Characterization (legacy / untested only)
+
+When the change touches **existing shipping behavior** with **no test covering that
+seam**, capture as-is first — see [characterization.md](characterization.md). Skip for
+new seams with clear AC and no prior behavior to preserve.
+
+**Completion criterion:** Characterization PASS before the first production edit, or
+explicit skip (new seam / covered already) recorded.
 
 ### 4. Red-green loop
 
 One vertical slice at a time — see [tdd-guide.md](tdd-guide.md):
 
-1. Write failing test at confirmed seam
+1. Write failing test at confirmed seam (desired behavior — after 3b when it fired)
 2. Minimal code to pass **at the rung chosen in step 3**
 3. Repeat for next slice
 4. Refactor only after green (not during the loop)
 
-**Completion criterion:** All acceptance criteria covered; tests pass; no speculative code.
+**Completion criterion:** All acceptance criteria covered; tests pass on disk (see ship
+**Disk gate**); no speculative code; WRITE-delta / RUN-all per
+[characterization.md](characterization.md) when that branch fired.
 
 ### 4b. Status (multi-slice only)
 
@@ -100,14 +114,20 @@ name an upstream skill when blocked.
 - [ ] Accessibility considered (labels, focus, contrast)
 - [ ] No secrets or credentials in code
 - [ ] Conventional commit ready
+- [ ] **Disk gate** — re-run the **gate-deciding** test/typecheck (and build if that is the
+      ship gate) on disk yourself; read real exit code. A sub-agent or prior turn saying
+      "green" is not enough — see [invocation.md](../../docs/agents/invocation.md)
+      (**Verification after delegation**). Skip only for diffs with no runnable gate
+      (e.g. docs-only).
 - [ ] **Scope self-check** — fill [scope-self-check.md](scope-self-check.md); shrink
-      any line that fails the pass rule before declaring done
+      any line that fails the pass rule (incl. **Colocate** / single-call helpers/utils)
+      before declaring done
 - [ ] **UI from `docs/design/`:** [visual-ship.md](visual-ship.md) passed — CSS layer + dark
       acceptance vs visual reference; default posture is **not ship-ready** until checks
       pass with evidence
 
-**Completion criterion:** Every ship checklist item verified; scope self-check filled;
-diff passes the line-by-line pass rule.
+**Completion criterion:** Every ship checklist item verified; Disk gate exit code recorded
+(or docs-only skip); scope self-check filled; diff passes the line-by-line pass rule.
 
 ### 6. Handoff
 
@@ -127,17 +147,20 @@ genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/
 
 **Goal:** Fix with a tight feedback loop — see [debug-loop.md](debug-loop.md).
 
-1. Build a **tight** red-capable loop (failing test, curl, script)
-2. Reproduce and minimise
-3. Hypothesise (3–5 ranked, falsifiable)
-4. Instrument one variable at a time
-5. Fix + regression test at correct seam
-6. Cleanup debug logs; state hypothesis in commit message
-7. Run [scope-self-check.md](scope-self-check.md) — bug-fix diffs stay minimal; list
+1. **Untested shipping code:** [characterization.md](characterization.md) PASS at the
+   seam before editing production (skip if coverage already captures as-is)
+2. Build a **tight** red-capable loop (failing test, curl, script)
+3. Reproduce and minimise
+4. Hypothesise (3–5 ranked, falsifiable)
+5. Instrument one variable at a time
+6. Fix + regression test at correct seam
+7. Cleanup debug logs; state hypothesis in commit message
+8. **Disk gate** — re-run gate-deciding command on disk (same rule as Implement ship)
+9. Run [scope-self-check.md](scope-self-check.md) — bug-fix diffs stay minimal; list
    cleanup temptations as follow-ups, do not sneak them in
 
-**Completion criterion:** Loop goes green; regression test exists or seam gap documented;
-scope self-check filled.
+**Completion criterion:** Loop goes green on disk; regression test exists or seam gap
+documented; characterization done or skipped with reason; scope self-check filled.
 
 ## Stack Defaults
 

@@ -46,7 +46,9 @@ No `/setup` gate. Use repo Playwright/Cypress config and CI workflows as source 
 5. Re-run locally and in CI; document repro
 
 **Completion criterion:** Flake reproduced then fixed, or quarantined with owner; sleep-based
-“fixes” rejected unless justified as last resort.
+“fixes” rejected unless justified as last resort; gate-deciding suite/CI command re-run on
+disk before claiming green ([invocation.md](../../docs/agents/invocation.md)
+**Verification after delegation**).
 
 ## Parallelize Workflow
 
@@ -69,7 +71,8 @@ No `/setup` gate. Use repo Playwright/Cypress config and CI workflows as source 
 4. Attach trace/video on failure in CI
 5. Keep `/dev` TDD at seams for unit logic — E2E asserts observable journey only
 
-**Completion criterion:** Journey green locally + CI path noted; out-of-scope journeys listed.
+**Completion criterion:** Journey green locally + CI path noted (disk exit code, not a nested
+agent summary); out-of-scope journeys listed.
 
 ## Triage Workflow
 

@@ -51,5 +51,7 @@ Route by intent, then read the matching skill:
 - Do not own E2E harness / flake — hand off to `/e2e` (`tester`)
 - Do not guess deploy/CI or stack-seam config when Knowledge search returns no match — report gap
   and search terms tried; never hardcode article ids
+- Do not declare build/test/CI green from a nested agent's summary — re-run gate-deciding
+  commands on disk (`docs/agents/invocation.md` **Verification after delegation**)
 - Do not commit unless user asks
 - Escalate undecided product to `/reqs`; broken feature code to `/dev`

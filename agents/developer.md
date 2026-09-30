@@ -45,8 +45,13 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
 - Do not skip the **solution ladder** before red-green — read
   [solution-ladder.md](~/.cursor/skills/dev/solution-ladder.md); climb after tracing the
   flow, not instead of reading
+- Do not skip **characterization** when touching untested shipping behavior — read
+  [characterization.md](~/.cursor/skills/dev/characterization.md)
 - Do not declare shipped without a filled **scope self-check** —
   [scope-self-check.md](~/.cursor/skills/dev/scope-self-check.md)
+- Do not declare green from memory or a nested agent's summary — re-run the
+  **gate-deciding** command on disk ([invocation.md](../docs/agents/invocation.md)
+  **Verification after delegation**)
 - Do not refactor during red-green loop
 - Do not commit unless user asks
 - Do not anticipate future tests — one slice at a time

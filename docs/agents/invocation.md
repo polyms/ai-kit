@@ -56,6 +56,27 @@ When the parent chat (or a principal agent) spawns an explore / Task / nested ag
 - **Resume before re-spawn** — if a matching agent already ran (or is still running) for the same question,
   continue that thread instead of launching a duplicate.
 
+### Verification after delegation
+
+A nested agent's **"green" / "done" report is not ground truth** for pass/fail gates. Before the
+parent declares a gate or ship step PASS:
+
+1. **Re-run only the gate-deciding command(s)** on disk (e.g. package test script, `typecheck`,
+   targeted build, compose health + smoke — whichever the workflow treats as the gate). Read the
+   **real exit code / counts**, not the child's summary.
+2. **Cross-check load-bearing artifacts** when the child claimed to write them (path exists, expected
+   content or digest present, no out-of-scope production edits).
+3. **On mismatch** → trust the disk, surface it, fix before continuing.
+
+This is the deliberate exception to **Do not duplicate work**: search/plan results stay trusted;
+**gate-deciding verification** must be re-executed by the parent (or by the same agent before it
+claims done — same discipline, no silent trust of an earlier turn's claim).
+
+Do **not** re-run the entire monorepo "just in case". Docs-only / no-runnable-gate diffs skip this.
+
+Skills that ship code (`dev`, `e2e`, `devops`, `code-review` when claiming build/test green)
+point here from their ship/close steps.
+
 Agent `description` frontmatter should include **negative triggers** (`Do NOT use for…`) so the parent does
 not mis-route. Keep agent bodies **lean**: role + router + constraints + “read the skill”; put workflows in
 `skills/*/SKILL.md`, not in `agents/*.md`.

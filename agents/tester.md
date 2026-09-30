@@ -33,5 +33,8 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
 - Do not invent a new E2E stack when the repo already has a harness
 - Do not treat deploy/build/install failures as test flakes — escalate to `/devops`
 - Do not quarantine without an owner and issue/link
+- Do not declare suite/CI green from a nested agent's summary — re-run the
+  gate-deciding command on disk (see `docs/agents/invocation.md` **Verification after
+  delegation**)
 - Do not commit unless user asks
 - Do not rewrite product scope — escalate to `/reqs`

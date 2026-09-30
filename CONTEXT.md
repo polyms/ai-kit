@@ -100,6 +100,14 @@ _Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when m
 Pre-ship audit that every changed line is required by the stated task — surface temptations as follow-ups, do not expand the diff. Part of `/dev` ship checklist; see `skills/dev/scope-self-check.md`.
 _Avoid_: YAGNI checklist (use solution ladder for build choices), minimal change engineer
 
+**Characterization**:
+Test that captures **as-is** shipping behavior (PASS first) before editing untested legacy at a seam. Part of `/dev` when the characterization pointer fires; see `skills/dev/characterization.md`. WRITE new tests for the delta; RUN the full existing suite.
+_Avoid_: characterization of the whole repo upfront, red-green TDD (desired behavior)
+
+**Verification after delegation**:
+Parent (or same agent before claiming done) re-runs **gate-deciding** commands on disk and trusts exit codes over a nested agent's "green" report. SSOT: `docs/agents/invocation.md`. Wired into `/dev` ship **Disk gate**.
+_Avoid_: re-running exploratory greps (still "do not duplicate work"), full-monorepo theater
+
 **Status report**:
 Multi-slice `/dev` progress template — phase, slice table, quality gates, one Next. See `skills/dev/status-report.md`. Skip for single-slice one-liners.
 _Avoid_: standup notes (generic), orchestrator pipeline (agency-style autonomous spawn)

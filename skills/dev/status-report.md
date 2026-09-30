@@ -26,7 +26,9 @@ after each green slice, and before ship checklist.
 
 ### Quality gates
 
+- Disk gate (gate-deciding cmd re-run): [pending / exit 0 + note]
 - Tests: [green / red — which]
+- Characterization (if legacy touch): [n/a / PASS before edit]
 - Scope self-check: [pending / filled]
 - Visual ship (UI): [n/a / pending / passed + evidence]
 - Open 🔴 from `/code-review`: [none / list]

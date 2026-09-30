@@ -2,6 +2,14 @@
 
 Discipline for hard bugs. Skip phases only when explicitly justified.
 
+## Phase 0 — Characterization (when pointer fires)
+
+Before changing production code in an area with **no test capturing current behavior**,
+run [characterization.md](characterization.md) until PASS. Then build the red loop for the
+**desired** fix (Phase 1). Skip when the seam already has coverage of as-is behavior.
+
+**Completion criterion:** Characterization PASS, or explicit skip recorded.
+
 ## Phase 1 — Build a tight loop
 
 **This is the skill.** A tight pass/fail signal that goes red on _this_ bug finds the cause.
@@ -84,5 +92,7 @@ No correct seam → document the architectural gap.
 
 - [ ] Original repro no longer reproduces
 - [ ] Regression test passes (or seam gap documented)
+- [ ] Gate-deciding command re-run on disk — exit code read (not a prior "green" report)
+- [ ] Full suite RUN when characterization / WRITE-delta branch fired
 - [ ] All `[DEBUG-...]` removed
 - [ ] Hypothesis stated in commit message

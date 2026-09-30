@@ -26,7 +26,7 @@ surface them as out-of-scope notes only.
 
 - …
 
-**Abstractions rejected** (kept duplicated / inline because < 4 call sites):
+**Abstractions rejected** (kept colocated / inline — single call site, not helpers/utils):
 
 - …
 
@@ -38,8 +38,14 @@ surface them as out-of-scope notes only.
 Every changed line must answer: _"Does the stated task require this exact line?"_
 If no → delete it or move it to **Tempted, not done**.
 
-Bug fixes: touch only the buggy surface (+ regression test). Refactors and cleanup
-belong in a separate ask.
+**Colocate (bundle graph):** any new or extended `helpers/` / `utils/` / shared-barrel export
+in this diff must have **≥2 importers** (this change or an existing second caller). One call
+site → move the function next to its consumer (see solution-ladder **Colocate**). Fail the
+self-check until fixed.
+
+Bug fixes: touch only the buggy surface (+ regression test). Characterization of
+as-is behavior before the edit is in-scope when [characterization.md](characterization.md)
+fires — not a "while I'm here" extra. Refactors and cleanup belong in a separate ask.
 
 ## Boundaries
 

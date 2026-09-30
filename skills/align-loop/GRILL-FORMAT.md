@@ -13,15 +13,22 @@ Every grill turn is **one decision**, **one question**, **2–4 lettered options
 **Q:** [One sentence — the decision in plain language]
 
 **A.** [Option — trade-off named]
+
 **B.** [Option] **(Recommended)** — [one-line why: codebase, CONTEXT.md, constraint, prior pick]
+
 **C.** [Option — only when a third real strategy exists]
 ```
 
 Rules:
 
-- **Count by quality, not quota** — two sharp options beat four with filler; three is common; four only when a fourth is a real alternative
+- **Count by quality, not quota** — two sharp options beat four with filler; three is common; four only
+  when a fourth is a real alternative
 - Exactly one **(Recommended)** — user reacts to your proposal, not a blank prompt
-- Options must be **mutually exclusive** outcomes or clearly different strategies — no straw men to pad the list
+- Options must be **mutually exclusive** outcomes or clearly different strategies — no straw men to pad
+  the list
+- **One paragraph per option** — blank line between **A.** / **B.** / **C.**. Chat markdown joins
+  consecutive lines into one unreadably long paragraph. Persona density rules do not collapse options onto
+  one line, and do not inline "pick A, B, or C?" in the lead-in
 - After user picks or refines, **do not** ask the next question in the same turn
 - User may answer with a letter, "B but…", or propose the next letter if their pick wasn't listed
 
@@ -48,7 +55,9 @@ When code or `CONTEXT.md` can narrow the answer:
 **Q:** Do we need line-item cancellation in this change?
 
 **A.** Yes — extend model and API **(Recommended)** — matches how support talks about "cancel line 2"
+
 **B.** No — whole-order only; document the limit
+
 **C.** Defer — ship whole-order first; partial in v2
 ```
 
@@ -60,6 +69,7 @@ Binary (two options only):
 **Q:** Block partial cancel at the API until v2?
 
 **A.** Yes — reject at API; whole-order only **(Recommended)** — matches current code path
+
 **B.** No — add partial cancel in this change
 ```
 
@@ -71,7 +81,9 @@ Em vừa xem `OrderService.cancel()` — hiện chỉ hủy cả đơn, chưa h�
 **Q:** Lần này mình có cần hủy từng dòng hàng không?
 
 **A.** Có — mở rộng model + API **(Recommended)** — support hay mô tả kiểu "hủy dòng 2"
+
 **B.** Không — chỉ hủy cả đơn; ghi rõ giới hạn
+
 **C.** Để v2 — ship hủy cả đơn trước
 ```
 
@@ -84,8 +96,11 @@ real forks here. Vietnamese: same shape; match the user's address forms.
 **Q:** Before I grill deep — how comfortable are you with this topic, and how hard should I push?
 
 **A.** New — brief teach on gaps, light pressure
+
 **B.** Working knowledge — tradeoffs, standard pressure **(Recommended)**
+
 **C.** Expert — skip basics; probe failure modes and reversibility
+
 **D.** Expert + hard — sharp edge cases; demand observable validation
 ```
 
@@ -93,14 +108,19 @@ Free-text answers ("softer", "I wrote the ADR, grill hard") map to the align-loo
 
 ## Domain boundary scenarios
 
-When terms or relationships are fuzzy, invent a **concrete scenario** and put the boundary call in lettered options. Pair with **domain-modeling** — update `CONTEXT.md` inline when the user picks.
+When terms or relationships are fuzzy, invent a **concrete scenario** and put the boundary call in lettered
+options. Pair with **domain-modeling** — update `CONTEXT.md` inline when the user picks.
 
 ```markdown
 **Q:** Customer cancels one line from a shipped order. What happens to the remaining lines?
 
 **A.** Remaining lines stay shipped — partial cancel is refund-only
-**B.** Whole order re-enters fulfillment — cancel is all-or-nothing **(Recommended)** — matches current `Order` aggregate
+
+**B.** Whole order re-enters fulfillment — cancel is all-or-nothing **(Recommended)** — matches current
+`Order` aggregate
+
 **C.** Split into child orders — each line is its own fulfillment unit going forward
+
 **D.** Block partial cancel — force full order cancel or nothing
 ```
 
@@ -113,7 +133,9 @@ List the items first, then one confirmation turn — three real forks:
 **Q:** These details are still unsettled: [list]. Resolve before the PRD?
 
 **A.** Grill now — resolve before PRD **(Recommended)** when alignment looked "done" but gaps remain
+
 **B.** Defer — each item ships as `[NEEDS CLARIFICATION]` in the published PRD; confirm the list
+
 **C.** Cut — drop the feature aspect that depends on the unsettled detail
 ```
 
@@ -122,6 +144,8 @@ List the items first, then one confirmation turn — three real forks:
 | Avoid                                               | Do instead                                                |
 | --------------------------------------------------- | --------------------------------------------------------- |
 | Prose recommendation without lettered options       | Always lettered options — count matches real forks        |
+| Options stacked with no blank line (markdown joins) | Blank line between each **A.** / **B.** / **C.**          |
+| Inline "pick A, B, or C?" in the lead-in            | Lead-in, then **Q:**, then separate option paragraphs     |
 | Padding to four options with straw men              | Stop at 2–3; user can add the next letter in reply        |
 | Multiple questions in one turn                      | One decision per turn                                     |
 | Ask what code already shows                         | Explore, report, then lettered options                    |

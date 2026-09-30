@@ -29,6 +29,9 @@ test('checkout calls paymentService.process', async () => {
 
 A **seam** is the public boundary you test at. Test only at **confirmed** seams — agree with user before writing.
 
+Changing **untested shipping** behavior at a seam? Capture as-is first —
+[characterization.md](characterization.md) — then red-green for desired behavior.
+
 ## Anti-patterns
 
 | Pattern                    | Problem                                                  |

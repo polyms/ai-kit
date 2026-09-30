@@ -10,7 +10,8 @@ repo, design spec, or ADRs **overrides** "prefer native / avoid deps" for that c
 ## Rungs
 
 1. **YAGNI** — does this need to exist for the confirmed acceptance criteria?
-2. **Reuse** — helper, util, type, or pattern already in this codebase?
+2. **Reuse** — helper, util, type, or pattern **already** in this codebase? (Do not invent a
+   new shared helper to “reuse later” — see **Colocate** below.)
 3. **Stdlib** — language / runtime standard library covers it?
 4. **Native platform** — browser/OS/DB feature covers it? (`<input type="date">`, CSS,
    constraint, `Intl`, …)
@@ -20,6 +21,18 @@ repo, design spec, or ADRs **overrides** "prefer native / avoid deps" for that c
 7. **Minimum that works** — only then write the smallest code that passes the seam tests.
 
 Two rungs work → take the higher (lazier) one and move on.
+
+## Colocate
+
+A function with **one call site** stays with its consumer — inline or private in the same
+module. Do **not** park it in `helpers/`, `utils/`, `lib/`, or a shared barrel “for neatness.”
+
+Extract to a shared helper only when a **second real call site** exists (or the same shape is
+already duplicated across files). Premature shared helpers widen the import / bundle graph,
+hurt tree-shaking, and erase locality.
+
+Not this rule: domain types, seam adapters, or trust-boundary validation the module already
+owns — those live at the seam, not in a junk-drawer utils file.
 
 ## Never strip
 

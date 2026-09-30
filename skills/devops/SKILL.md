@@ -65,10 +65,13 @@ Do **not** apply fixes from a partial symptom match. If no match: say so; do not
 ### 4. Apply + verify
 
 1. Apply **fix** steps minimally — smallest config change that addresses the confirmed cause
-2. Run **verify** steps from the same chunk (build, deploy preview, CI green, curl check, …)
+2. Run **verify** steps from the same chunk (build, deploy preview, CI green, curl check, …) —
+   re-run on disk yourself; a nested agent's "green" is not enough
+   ([invocation.md](../../docs/agents/invocation.md) **Verification after delegation**)
 3. If verify fails, return to **Retrieve** — do not stack speculative changes
 
-**Completion criterion:** Verify steps from Knowledge pass, or gap documented with next search terms.
+**Completion criterion:** Verify steps from Knowledge pass with observed exit codes / logs, or
+gap documented with next search terms.
 
 ### 5. Close & communicate
 
