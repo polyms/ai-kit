@@ -15,7 +15,7 @@ export const Route = createFileRoute('/skills')({
 
 function useSkillsNavHandlers() {
   const navigate = Route.useNavigate()
-  const isPending = useRouterState({ select: s => s.isTransitioning })
+  const isPending = useRouterState({ select: s => s.isLoading })
 
   return {
     isPending,

@@ -9,45 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as QuickStartRouteImport } from './routes/quick-start'
-import { Route as McpRouteImport } from './routes/mcp'
-import { Route as SkillsRouteRouteImport } from './routes/skills/route'
-import { Route as OpsRouteRouteImport } from './routes/ops/route'
-import { Route as KnowledgeRouteRouteImport } from './routes/knowledge/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SkillsIndexRouteImport } from './routes/skills/index'
-import { Route as OpsIndexRouteImport } from './routes/ops/index'
-import { Route as KnowledgeIndexRouteImport } from './routes/knowledge/index'
-import { Route as SkillsSlugRouteImport } from './routes/skills/$slug'
-import { Route as OpsLoginRouteImport } from './routes/ops/login'
-import { Route as KnowledgeIdRouteImport } from './routes/knowledge/$id'
-import { Route as DotwellKnownOauthProtectedResourceRouteImport } from './routes/[.]well-known.oauth-protected-resource'
+import { Route as KnowledgeRouteRouteImport } from './routes/knowledge/route'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as OpsRouteRouteImport } from './routes/ops/route'
+import { Route as QuickStartRouteImport } from './routes/quick-start'
+import { Route as SkillsRouteRouteImport } from './routes/skills/route'
 import { Route as DotwellKnownOauthAuthorizationServerRouteImport } from './routes/[.]well-known.oauth-authorization-server'
-import { Route as OpsMatrixIndexRouteImport } from './routes/ops/matrix/index'
-import { Route as OpsKnowledgeIndexRouteImport } from './routes/ops/knowledge/index'
+import { Route as DotwellKnownOauthProtectedResourceRouteImport } from './routes/[.]well-known.oauth-protected-resource'
+import { Route as KnowledgeIndexRouteImport } from './routes/knowledge/index'
+import { Route as KnowledgeIdRouteImport } from './routes/knowledge/$id'
+import { Route as OpsIndexRouteImport } from './routes/ops/index'
+import { Route as OpsLoginRouteImport } from './routes/ops/login'
+import { Route as SkillsIndexRouteImport } from './routes/skills/index'
+import { Route as SkillsSlugRouteImport } from './routes/skills/$slug'
 import { Route as DotwellKnownOauthProtectedResourceSplatRouteImport } from './routes/[.]well-known.oauth-protected-resource.$'
-import { Route as ApiOpsAuthLogoutRouteImport } from './routes/api/ops/auth/logout'
-import { Route as ApiOpsAuthLoginRouteImport } from './routes/api/ops/auth/login'
+import { Route as OpsKnowledgeIndexRouteImport } from './routes/ops/knowledge/index'
+import { Route as OpsMatrixIndexRouteImport } from './routes/ops/matrix/index'
 import { Route as ApiOpsAuthCallbackRouteImport } from './routes/api/ops/auth/callback'
+import { Route as ApiOpsAuthLoginRouteImport } from './routes/api/ops/auth/login'
+import { Route as ApiOpsAuthLogoutRouteImport } from './routes/api/ops/auth/logout'
 
-const QuickStartRoute = QuickStartRouteImport.update({
-  id: '/quick-start',
-  path: '/quick-start',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const McpRoute = McpRouteImport.update({
-  id: '/mcp',
-  path: '/mcp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SkillsRouteRoute = SkillsRouteRouteImport.update({
-  id: '/skills',
-  path: '/skills',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OpsRouteRoute = OpsRouteRouteImport.update({
-  id: '/ops',
-  path: '/ops',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KnowledgeRouteRoute = KnowledgeRouteRouteImport.update({
@@ -55,62 +40,67 @@ const KnowledgeRouteRoute = KnowledgeRouteRouteImport.update({
   path: '/knowledge',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SkillsIndexRoute = SkillsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SkillsRouteRoute,
+const OpsRouteRoute = OpsRouteRouteImport.update({
+  id: '/ops',
+  path: '/ops',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const OpsIndexRoute = OpsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => OpsRouteRoute,
+const QuickStartRoute = QuickStartRouteImport.update({
+  id: '/quick-start',
+  path: '/quick-start',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const KnowledgeIndexRoute = KnowledgeIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => KnowledgeRouteRoute,
+const SkillsRouteRoute = SkillsRouteRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const SkillsSlugRoute = SkillsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => SkillsRouteRoute,
-} as any)
-const OpsLoginRoute = OpsLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => OpsRouteRoute,
-} as any)
-const KnowledgeIdRoute = KnowledgeIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => KnowledgeRouteRoute,
-} as any)
-const DotwellKnownOauthProtectedResourceRoute =
-  DotwellKnownOauthProtectedResourceRouteImport.update({
-    id: '/.well-known/oauth-protected-resource',
-    path: '/.well-known/oauth-protected-resource',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const DotwellKnownOauthAuthorizationServerRoute =
   DotwellKnownOauthAuthorizationServerRouteImport.update({
     id: '/.well-known/oauth-authorization-server',
     path: '/.well-known/oauth-authorization-server',
     getParentRoute: () => rootRouteImport,
   } as any)
-const OpsMatrixIndexRoute = OpsMatrixIndexRouteImport.update({
-  id: '/matrix/',
-  path: '/matrix/',
+const DotwellKnownOauthProtectedResourceRoute =
+  DotwellKnownOauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const KnowledgeIndexRoute = KnowledgeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => KnowledgeRouteRoute,
+} as any)
+const KnowledgeIdRoute = KnowledgeIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => KnowledgeRouteRoute,
+} as any)
+const OpsIndexRoute = OpsIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => OpsRouteRoute,
 } as any)
-const OpsKnowledgeIndexRoute = OpsKnowledgeIndexRouteImport.update({
-  id: '/knowledge/',
-  path: '/knowledge/',
+const OpsLoginRoute = OpsLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => OpsRouteRoute,
+} as any)
+const SkillsIndexRoute = SkillsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SkillsRouteRoute,
+} as any)
+const SkillsSlugRoute = SkillsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SkillsRouteRoute,
 } as any)
 const DotwellKnownOauthProtectedResourceSplatRoute =
   DotwellKnownOauthProtectedResourceSplatRouteImport.update({
@@ -118,9 +108,19 @@ const DotwellKnownOauthProtectedResourceSplatRoute =
     path: '/$',
     getParentRoute: () => DotwellKnownOauthProtectedResourceRoute,
   } as any)
-const ApiOpsAuthLogoutRoute = ApiOpsAuthLogoutRouteImport.update({
-  id: '/api/ops/auth/logout',
-  path: '/api/ops/auth/logout',
+const OpsKnowledgeIndexRoute = OpsKnowledgeIndexRouteImport.update({
+  id: '/knowledge/',
+  path: '/knowledge/',
+  getParentRoute: () => OpsRouteRoute,
+} as any)
+const OpsMatrixIndexRoute = OpsMatrixIndexRouteImport.update({
+  id: '/matrix/',
+  path: '/matrix/',
+  getParentRoute: () => OpsRouteRoute,
+} as any)
+const ApiOpsAuthCallbackRoute = ApiOpsAuthCallbackRouteImport.update({
+  id: '/api/ops/auth/callback',
+  path: '/api/ops/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiOpsAuthLoginRoute = ApiOpsAuthLoginRouteImport.update({
@@ -128,9 +128,9 @@ const ApiOpsAuthLoginRoute = ApiOpsAuthLoginRouteImport.update({
   path: '/api/ops/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiOpsAuthCallbackRoute = ApiOpsAuthCallbackRouteImport.update({
-  id: '/api/ops/auth/callback',
-  path: '/api/ops/auth/callback',
+const ApiOpsAuthLogoutRoute = ApiOpsAuthLogoutRouteImport.update({
+  id: '/api/ops/auth/logout',
+  path: '/api/ops/auth/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -280,32 +280,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/quick-start': {
-      id: '/quick-start'
-      path: '/quick-start'
-      fullPath: '/quick-start'
-      preLoaderRoute: typeof QuickStartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mcp': {
-      id: '/mcp'
-      path: '/mcp'
-      fullPath: '/mcp'
-      preLoaderRoute: typeof McpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/skills': {
-      id: '/skills'
-      path: '/skills'
-      fullPath: '/skills'
-      preLoaderRoute: typeof SkillsRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ops': {
-      id: '/ops'
-      path: '/ops'
-      fullPath: '/ops'
-      preLoaderRoute: typeof OpsRouteRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/knowledge': {
@@ -315,60 +294,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KnowledgeRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/skills/': {
-      id: '/skills/'
-      path: '/'
-      fullPath: '/skills/'
-      preLoaderRoute: typeof SkillsIndexRouteImport
-      parentRoute: typeof SkillsRouteRoute
+    '/ops': {
+      id: '/ops'
+      path: '/ops'
+      fullPath: '/ops'
+      preLoaderRoute: typeof OpsRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/ops/': {
-      id: '/ops/'
-      path: '/'
-      fullPath: '/ops/'
-      preLoaderRoute: typeof OpsIndexRouteImport
-      parentRoute: typeof OpsRouteRoute
+    '/quick-start': {
+      id: '/quick-start'
+      path: '/quick-start'
+      fullPath: '/quick-start'
+      preLoaderRoute: typeof QuickStartRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/knowledge/': {
-      id: '/knowledge/'
-      path: '/'
-      fullPath: '/knowledge/'
-      preLoaderRoute: typeof KnowledgeIndexRouteImport
-      parentRoute: typeof KnowledgeRouteRoute
-    }
-    '/skills/$slug': {
-      id: '/skills/$slug'
-      path: '/$slug'
-      fullPath: '/skills/$slug'
-      preLoaderRoute: typeof SkillsSlugRouteImport
-      parentRoute: typeof SkillsRouteRoute
-    }
-    '/ops/login': {
-      id: '/ops/login'
-      path: '/login'
-      fullPath: '/ops/login'
-      preLoaderRoute: typeof OpsLoginRouteImport
-      parentRoute: typeof OpsRouteRoute
-    }
-    '/knowledge/$id': {
-      id: '/knowledge/$id'
-      path: '/$id'
-      fullPath: '/knowledge/$id'
-      preLoaderRoute: typeof KnowledgeIdRouteImport
-      parentRoute: typeof KnowledgeRouteRoute
-    }
-    '/.well-known/oauth-protected-resource': {
-      id: '/.well-known/oauth-protected-resource'
-      path: '/.well-known/oauth-protected-resource'
-      fullPath: '/.well-known/oauth-protected-resource'
-      preLoaderRoute: typeof DotwellKnownOauthProtectedResourceRouteImport
+    '/skills': {
+      id: '/skills'
+      path: '/skills'
+      fullPath: '/skills'
+      preLoaderRoute: typeof SkillsRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.well-known/oauth-authorization-server': {
@@ -378,19 +329,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DotwellKnownOauthAuthorizationServerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ops/matrix/': {
-      id: '/ops/matrix/'
-      path: '/matrix'
-      fullPath: '/ops/matrix/'
-      preLoaderRoute: typeof OpsMatrixIndexRouteImport
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof DotwellKnownOauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/knowledge/': {
+      id: '/knowledge/'
+      path: '/'
+      fullPath: '/knowledge/'
+      preLoaderRoute: typeof KnowledgeIndexRouteImport
+      parentRoute: typeof KnowledgeRouteRoute
+    }
+    '/knowledge/$id': {
+      id: '/knowledge/$id'
+      path: '/$id'
+      fullPath: '/knowledge/$id'
+      preLoaderRoute: typeof KnowledgeIdRouteImport
+      parentRoute: typeof KnowledgeRouteRoute
+    }
+    '/ops/': {
+      id: '/ops/'
+      path: '/'
+      fullPath: '/ops/'
+      preLoaderRoute: typeof OpsIndexRouteImport
       parentRoute: typeof OpsRouteRoute
     }
-    '/ops/knowledge/': {
-      id: '/ops/knowledge/'
-      path: '/knowledge'
-      fullPath: '/ops/knowledge/'
-      preLoaderRoute: typeof OpsKnowledgeIndexRouteImport
+    '/ops/login': {
+      id: '/ops/login'
+      path: '/login'
+      fullPath: '/ops/login'
+      preLoaderRoute: typeof OpsLoginRouteImport
       parentRoute: typeof OpsRouteRoute
+    }
+    '/skills/': {
+      id: '/skills/'
+      path: '/'
+      fullPath: '/skills/'
+      preLoaderRoute: typeof SkillsIndexRouteImport
+      parentRoute: typeof SkillsRouteRoute
+    }
+    '/skills/$slug': {
+      id: '/skills/$slug'
+      path: '/$slug'
+      fullPath: '/skills/$slug'
+      preLoaderRoute: typeof SkillsSlugRouteImport
+      parentRoute: typeof SkillsRouteRoute
     }
     '/.well-known/oauth-protected-resource/$': {
       id: '/.well-known/oauth-protected-resource/$'
@@ -399,11 +385,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DotwellKnownOauthProtectedResourceSplatRouteImport
       parentRoute: typeof DotwellKnownOauthProtectedResourceRoute
     }
-    '/api/ops/auth/logout': {
-      id: '/api/ops/auth/logout'
-      path: '/api/ops/auth/logout'
-      fullPath: '/api/ops/auth/logout'
-      preLoaderRoute: typeof ApiOpsAuthLogoutRouteImport
+    '/ops/knowledge/': {
+      id: '/ops/knowledge/'
+      path: '/knowledge'
+      fullPath: '/ops/knowledge/'
+      preLoaderRoute: typeof OpsKnowledgeIndexRouteImport
+      parentRoute: typeof OpsRouteRoute
+    }
+    '/ops/matrix/': {
+      id: '/ops/matrix/'
+      path: '/matrix'
+      fullPath: '/ops/matrix/'
+      preLoaderRoute: typeof OpsMatrixIndexRouteImport
+      parentRoute: typeof OpsRouteRoute
+    }
+    '/api/ops/auth/callback': {
+      id: '/api/ops/auth/callback'
+      path: '/api/ops/auth/callback'
+      fullPath: '/api/ops/auth/callback'
+      preLoaderRoute: typeof ApiOpsAuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ops/auth/login': {
@@ -413,11 +413,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOpsAuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/ops/auth/callback': {
-      id: '/api/ops/auth/callback'
-      path: '/api/ops/auth/callback'
-      fullPath: '/api/ops/auth/callback'
-      preLoaderRoute: typeof ApiOpsAuthCallbackRouteImport
+    '/api/ops/auth/logout': {
+      id: '/api/ops/auth/logout'
+      path: '/api/ops/auth/logout'
+      fullPath: '/api/ops/auth/logout'
+      preLoaderRoute: typeof ApiOpsAuthLogoutRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
