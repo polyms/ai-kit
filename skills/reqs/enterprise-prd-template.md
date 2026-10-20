@@ -6,21 +6,40 @@ an aligned conversation.
 
 Copy this structure when writing a PRD. Replace bracketed placeholders. Delete instructional comments.
 
-**Audience:** PRD must be **human + AI readable** — clear prose for PM/stakeholder; structure for agents.
-Write in `docs/agents/language.md`'s confirmed language (natural register; only **pure-tech tokens** stay
-English — no mid-sentence EN/VI mix). Avoid shorthand only an AI can parse (wave rollup, code-only bullets,
-missing Given/When/Then). Body stands alone without opening the repo. Prefer tracker issue links when
-referring to published work; keep repo paths in Appendix, not as the main explanation. Do **not** open with
-a `docs/prd/` · `CONTEXT.md` · align-notes banner under the title.
+**Audience:** PRD must be **human + AI readable** — any role (PM, design, eng, ops, support, sales, exec)
+understands the product without opening the repo or knowing the stack. Structure helps agents; **prose serves
+humans first**.
+
+**Plain language:** Full sentences in everyday words. When a domain term first appears, define it in one
+sentence. Problem, Solution, and Stories state **behavior and outcomes** — not a file, API, or path inventory.
+
+**Native + English thrift:** One prose language from `docs/agents/language.md`. When that language is
+Vietnamese, prefer Vietnamese first; keep English only for pure-tech / specialty terms (Keep-EN table and
+anti-mix in `skills/setup/language.md`). Do not sprinkle ordinary English (feature, submit, flow, dashboard,
+feedback) when a natural Vietnamese phrasing exists. Avoid shorthand only an AI can parse (wave rollup,
+code-only bullets, missing Given/When/Then).
+
+**Cross-references:**
+
+| Prefer (main body)                                          | Do not (unless the user asked)                                   |
+| ----------------------------------------------------------- | ---------------------------------------------------------------- |
+| Tracker issue keys / URLs                                   | Repo paths, blob URLs, `docs/…`, `CONTEXT.md`, `apps/…`, `lib/…` |
+| Opaque ids (`FR-01`, open-question / clarification markers) | Mid-body “see docs/…” / “see CONTEXT.md” as the requirement      |
+| Decision written in prose                                   | ADR filename as the explanation                                  |
+
+Do **not** open with a `docs/prd/` · `CONTEXT.md` · align-notes banner under the title. Omit repo-path lists
+from the Appendix unless the user asked for repo refs.
 
 **Anti-patterns:**
 
-| Avoid                                    | Do instead                              |
-| ---------------------------------------- | --------------------------------------- |
-| Repo-path banner under H1                | Start with Executive Summary or Problem |
-| Mid-body “see docs/…” as the requirement | Write the requirement; path in Appendix |
-| Story titled only `US#n` / `§8.5`        | Title the human outcome                 |
-| Strikethrough archaeology for cut scope  | Delete, or list under Out of scope      |
+| Avoid                                                  | Do instead                                     |
+| ------------------------------------------------------ | ---------------------------------------------- |
+| Repo-path banner under H1                              | Start with Executive Summary or Problem        |
+| Mid-body “see docs/…” as the requirement               | Write the requirement; omit the path           |
+| Repo paths / blob links in body or Appendix by default | Omit unless the user asked for repo refs       |
+| Flavor English in a Vietnamese body                    | Rewrite in natural Vietnamese (English thrift) |
+| Story titled only `US#n` / `§8.5`                      | Title the human outcome                        |
+| Strikethrough archaeology for cut scope                | Delete, or list under Out of scope             |
 
 Two rules that keep this template honest:
 
@@ -275,6 +294,6 @@ Collect every `[NEEDS CLARIFICATION]` marker from the sections above here.
 
 ## 16. Appendix
 
-[Research links, competitor analysis, technical spikes, glossary. Repo paths and ADR filenames that extend
-the prose — not a substitute for writing decisions in the sections above. Note deleted sections here in one
-line each.]
+[Research links, competitor analysis, technical spikes, glossary, and one-line notes for deleted sections.
+Do **not** list repo paths, blob URLs, or ADR filenames here unless the user asked for repo refs — decisions
+belong in the sections above, written in prose.]

@@ -22,7 +22,8 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 2. Route via **When `/reqs` vs `/to-prd` vs `/align`** — after align to publish, tell the user to invoke
    `/to-prd`; do not publish tracker issues yourself.
 3. Read `CONTEXT.md`, relevant ADRs, and `docs/agents/language.md` when present — requirements use canonical
-   domain language; PRD prose stays native in the confirmed language (only pure-tech tokens in English).
+   domain language; PRD prose stays native with English thrift (prefer confirmed language; only pure-tech /
+   specialty tokens in English).
 4. Gather context; deliver structured output; flag gaps, risks, and open questions at the end.
 
 ## Output Format
@@ -50,3 +51,5 @@ publish is skipped.
 - Do not invent business constraints; state assumptions when information is missing
 - Do **not** publish PRDs to the issue tracker (`gh issue create`) — that is `/to-prd` only
 - When working inside a codebase, reference existing patterns only to inform feasibility, not to dictate architecture
+- PRDs and stories: plain language any role can skim; English thrift when Vietnamese (prefer VI; pure-tech
+  only); no internal repo links unless the user asked (opaque ids and tracker keys OK)

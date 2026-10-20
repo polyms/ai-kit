@@ -25,14 +25,16 @@ Decisions / problem statement clear?
 ```
 
 **Audience:** Follow [lean-prd-template.md](lean-prd-template.md). The published issue is for **humans on the
-tracker first** (PM, stakeholder, engineer skimming the issue) — agents reuse the same body. Do **not** ship
-executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
+tracker first** — any role skimming the issue without opening the repo. Agents reuse the same body. Do **not**
+ship executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`).
 
 **References on the tracker:**
 
-- **Main body** cross-links other **issues** (`#n`, `SPROMPT-2`, full URL) under **Related Issues**.
-- **Repo paths** (`CONTEXT.md`, `docs/prd/…`, `docs/adr/…`, source files) belong only in **Repo references** at
-  the end — never as a banner under the title, never as a substitute for writing the decision in prose.
+- **Main body** cross-links other **issues** (`#n`, `SPROMPT-2`, full URL) under **Related Issues**. Opaque
+  ids (open-question markers) are fine.
+- **Repo paths** (`CONTEXT.md`, `docs/prd/…`, `docs/adr/…`, source files) — omit by default. Add
+  **Repo references** only when the user asked; never as a banner under the title, never as a substitute for
+  writing the decision in prose.
 
 **Boundary vs `/reqs`:**
 
@@ -48,18 +50,19 @@ language before synthesis.
 
 **Prerequisites:** Run `/setup` if `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is
 missing. Read `docs/agents/language.md` when present — publish the PRD in that language (**one prose
-language**; only pure-tech tokens stay English — no mid-sentence EN/VI mix).
+language**; **English thrift** — prefer confirmed language for ordinary words; only pure-tech / specialty
+tokens stay English — no mid-sentence EN/VI mix; VI SSOT `skills/setup/language.md`).
 
 ## References
 
-| Topic            | Read when                                                                                        |
-| ---------------- | ------------------------------------------------------------------------------------------------ |
-| Issue tracker    | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands        |
-| Triage labels    | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping   |
-| PRD body         | [lean-prd-template.md](lean-prd-template.md)                                                     |
-| Template default | `docs/agents/requirements.md` when present                                                       |
-| Domain glossary  | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                  |
-| ADRs             | `docs/adr/` — fold decisions into **Implementation Decisions**; path only in **Repo references** |
+| Topic            | Read when                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| Issue tracker    | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands                       |
+| Triage labels    | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping                  |
+| PRD body         | [lean-prd-template.md](lean-prd-template.md)                                                                    |
+| Template default | `docs/agents/requirements.md` when present                                                                      |
+| Domain glossary  | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                                 |
+| ADRs             | `docs/adr/` — fold decisions into **Implementation Decisions**; path only if user asked for **Repo references** |
 
 When that file's default is **AI-optimized**, carry each phase's testable output and the prohibitions into
 **Implementation Decisions** and **Testing Decisions**. Missing file: lean body only.
@@ -108,7 +111,8 @@ list.
 ### 4. Write the PRD
 
 Fill every section of [lean-prd-template.md](lean-prd-template.md) from conversation context and codebase
-understanding. No empty headers. Omit **Related Issues** / **Repo references** only when truly empty.
+understanding. No empty headers. Omit **Related Issues** when empty. Omit **Repo references** unless the user
+asked for repo refs.
 
 **User Stories** must be an extensive, **prioritized** numbered list (per template) — P0 stories independently
 testable, with Given/When/Then acceptance scenarios. Title each story with the human outcome (not `US#17` /
@@ -119,18 +123,20 @@ testable, with Given/When/Then acceptance scenarios. Title each story with the h
 mark it `[NEEDS CLARIFICATION: …]` inline and collect markers under **Open Questions**. Inventing an answer
 here ships it straight to `/dev` unreviewed. Markers may appear only after step 3 **B** confirmation.
 
-**Human-readable check (before publish):** re-read the draft as a PM unfamiliar with the codebase:
+**Human-readable check (before publish):** re-read the draft as an outsider / non-builder (any role, no repo
+knowledge). When prose is Vietnamese, also run the English-thrift read-aloud test in
+`skills/setup/language.md`:
 
 - [ ] Every required template section filled (including **Success Criteria** and **Open Questions**)
 - [ ] No repo-path banner under the title (`docs/prd/…`, `CONTEXT.md`, align notes)
 - [ ] Problem / Solution / stories read as full prose — not identifier dumps or wave rollups
 - [ ] Story titles name the outcome; Given/When/Then on every P0 story
 - [ ] Related tracker work uses issue keys / URLs in **Related Issues** (or section correctly omitted)
-- [ ] Repo paths and ADR filenames appear only under **Repo references** (or section omitted)
+- [ ] No internal repo links unless the user asked — **Repo references** omitted by default
 - [ ] Cut scope is deleted or listed under **Out of Scope** — no strikethrough archaeology
 - [ ] Body stands alone on the tracker without opening the repo
-- [ ] Prose reads native in `docs/agents/language.md` — only pure-tech tokens left in English (no flavor
-      English / mid-clause mix)
+- [ ] Prose reads native in `docs/agents/language.md` — **English thrift** (prefer confirmed language for
+      ordinary words; only pure-tech / specialty tokens left in English)
 
 **Completion criterion:** PRD draft complete; every template section filled or correctly omitted; every
 unsettled detail carries a marker instead of a guess; markers match the step 3 confirmed deferral list when

@@ -12,8 +12,9 @@ disable-model-invocation: true
 Turn ideas into engineering-ready artifacts. Read this skill fully before producing output.
 
 Read `docs/agents/language.md` when present — write PRDs and stories in that language (**one prose language**;
-only pure-tech tokens stay English — no mid-sentence EN/VI mix). No file: match the issue tracker's existing
-language; same prose-vs-token bar.
+**English thrift** — prefer confirmed language for ordinary words; only pure-tech / specialty tokens stay
+English — no mid-sentence EN/VI mix; VI SSOT `skills/setup/language.md`). No file: match the issue tracker's
+existing language; same prose-vs-token bar.
 
 Read `docs/agents/requirements.md` when present — follow its **Confirmed default** (Standard, MVP, or
 AI-optimized). No file: Standard, the enterprise template; the kit copy of that catalog is
@@ -72,7 +73,9 @@ including who is not a user).
 4. Mark unresolved details inline with `[NEEDS CLARIFICATION: …]` — never invent a threshold, method,
    recovery behavior, market size, or capacity number the user didn't settle
 5. End with open questions (collected markers) and `## Next Step` (see [Handoff](#handoff))
-6. Re-read as a PM unfamiliar with the codebase and run the [quality checklist](#quality-checklist)
+6. Re-read as an outsider / non-builder (any role, no repo knowledge) and run the
+   [quality checklist](#quality-checklist). When prose language is Vietnamese, also run the English-thrift
+   read-aloud test in `skills/setup/language.md`.
 
 **Completion criterion:** Every checklist row passes; no tracker issue created by this skill.
 
@@ -147,11 +150,15 @@ Before delivering any artifact, verify:
       review
 - [ ] No silent guesses — unresolved details carry `[NEEDS CLARIFICATION]` markers, collected under open
       questions
-- [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; no repo-path banner; repo paths only
-      in Appendix; cut scope deleted or under Out of scope (no strikethrough); a human can understand scope
-      from the body alone (see Audience on [enterprise-prd-template.md](enterprise-prd-template.md))
-- [ ] **Prose language** — native in `docs/agents/language.md`; only pure-tech tokens stay English (no
-      flavor English / mid-clause mix)
+- [ ] **Human + AI readable** — any role understands scope from the body alone; plain language (define domain
+      terms once); no wave-rollup or agent-only shorthand; no repo-path banner; cut scope deleted or under Out
+      of scope (no strikethrough) — see Audience on [enterprise-prd-template.md](enterprise-prd-template.md)
+- [ ] **Prose language** — native in `docs/agents/language.md`; **English thrift** when Vietnamese (prefer VI
+      for ordinary words; only pure-tech / specialty tokens stay English — no flavor English / mid-clause
+      mix; SSOT `skills/setup/language.md`)
+- [ ] **No internal repo links** — no repo paths, blob URLs, or `docs/…` / `CONTEXT.md` links in body or
+      Appendix unless the user asked; tracker issue keys/URLs and opaque ids (`FR-01`, open-question markers)
+      are fine
 - [ ] **No publish** — this skill did not create a tracker issue; publish path is `/to-prd`
 
 ## Handoff
@@ -176,18 +183,21 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 
 ## Anti-Patterns
 
-| Avoid                             | Do instead                                         |
-| --------------------------------- | -------------------------------------------------- |
-| Feature list without problem      | Lead with user problem + outcome                   |
-| Vague AC: "works well"            | "Loads in <2s on 3G; shows skeleton while loading" |
-| One giant story                   | Split by user goal (INVEST)                        |
-| Solution in req before validation | Problem + options + recommendation                 |
-| Missing error flows               | Include failure/empty/loading states               |
-| A second BRD, FRD, MRD, TRD, QRD  | One PRD — [Document types](#document-types)        |
-| Publishing PRD via `gh` here      | Tell user to invoke `/to-prd`                      |
+| Avoid                                          | Do instead                                         |
+| ---------------------------------------------- | -------------------------------------------------- |
+| Feature list without problem                   | Lead with user problem + outcome                   |
+| Vague AC: "works well"                         | "Loads in <2s on 3G; shows skeleton while loading" |
+| One giant story                                | Split by user goal (INVEST)                        |
+| Solution in req before validation              | Problem + options + recommendation                 |
+| Missing error flows                            | Include failure/empty/loading states               |
+| A second BRD, FRD, MRD, TRD, QRD               | One PRD — [Document types](#document-types)        |
+| Publishing PRD via `gh` here                   | Tell user to invoke `/to-prd`                      |
+| Repo/code links in body or Appendix by default | Write the requirement; omit paths unless asked     |
+| Flavor English in a Vietnamese body            | Prefer VI; keep only tech specialty tokens         |
 
-Human-readable PRD anti-patterns (repo-path banner, `US#n`-only titles, strikethrough cut scope) live in
-[enterprise-prd-template.md](enterprise-prd-template.md) — single source of truth; do not restate here.
+Human-readable PRD anti-patterns (repo-path banner, `US#n`-only titles, strikethrough cut scope, English
+thrift) live in [enterprise-prd-template.md](enterprise-prd-template.md) — single source of truth; do not
+restate the full tables here.
 
 ## Agent
 

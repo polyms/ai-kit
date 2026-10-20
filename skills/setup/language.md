@@ -36,6 +36,10 @@ register a stakeholder can skim without translating mid-sentence. If a user writ
 than this file specifies, still write the artifact in the confirmed language — flag the mismatch rather than
 silently switching.
 
+**English thrift:** Prefer the confirmed language for ordinary words. Keep English **only** for pure-tech /
+specialty terms (see table below). Do not sprinkle English for flavor when a natural word exists in the
+confirmed language.
+
 ### Pure-tech tokens stay English
 
 Keep English **only** for tokens that have no natural prose substitute (or that `CONTEXT.md` defines as
@@ -54,7 +58,8 @@ language, the English word was not a pure-tech token — rewrite it.
 
 ### Anti-mix (Vietnamese example)
 
-When Language is Vietnamese, do **not** sprinkle English for flavor:
+When Language is Vietnamese, prefer Vietnamese first. Do **not** sprinkle English for flavor — especially
+ordinary PRD words (user, feature, submit, flow, dashboard, feedback, error, scope, cover):
 
 | Avoid (mix)                                                | Do (natural VI + tech tokens)                                             |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -62,6 +67,9 @@ When Language is Vietnamese, do **not** sprinkle English for flavor:
 | Motion: Purposeful — pipeline activate khi scroll          | Chuyển động có chủ đích — pipeline sáng khi người dùng scroll             |
 | Confident, slightly irreverent — «align trước khi build»   | Tự tin, hơi ngang — «align trước khi build»                               |
 | Agents là principals; prompts là contract                  | Agent là chủ sở hữu process; sample prompt là contract để copy vào Cursor |
+| User có thể submit feature request trên dashboard          | Người dùng có thể gửi yêu cầu tính năng trên trang tổng quan              |
+| Flow này cần feedback rõ khi error                         | Luồng này cần phản hồi rõ khi lỗi                                         |
+| Scope MVP cover happy path                                 | Phạm vi MVP chỉ gồm luồng thành công                                      |
 
 Same rule inverted when Language is English: no Vietnamese clauses mid-sentence; keep VI only for required
 product copy strings (locale samples, quoted UI).

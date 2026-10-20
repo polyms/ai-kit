@@ -10,10 +10,14 @@ So that [benefit/outcome].
 
 **Readable titles:** When listing stories in a PRD or tracker issue, lead with the human outcome
 ("Playground records a successful run") — not only an id (`US#17`) or section pointer (`§8.5`). Ids may follow
-as secondary labels.
+as secondary labels. A non-engineer should understand the outcome from the title alone.
 
 **Personas:** Prefer roles a stakeholder recognizes (student, educator, owner, engineer). If the consumer is an
 agent or skill, say so in plain language ("engineer running `/dev`") — not bare backtick role ids alone.
+
+**Language:** Write title, persona, and acceptance criteria in `docs/agents/language.md`'s confirmed language.
+When that language is Vietnamese, prefer Vietnamese first (English thrift — ordinary words in VI; only
+pure-tech / specialty tokens stay English; see `skills/setup/language.md`).
 
 ## INVEST Checklist
 
@@ -78,12 +82,15 @@ Scenario: [error case]
 Story is ready for sprint when:
 
 - [ ] User story written in standard format with a human-readable outcome title
-- [ ] Acceptance criteria complete and testable (Given/When/Then or concrete checklist)
-- [ ] Dependencies identified (prefer tracker issue keys when published)
+- [ ] Acceptance criteria complete and testable (Given/When/Then or concrete checklist) — readable by a
+      non-engineer
+- [ ] Dependencies identified (prefer tracker issue keys when published; opaque ids OK)
 - [ ] Design attached (if UI)
 - [ ] Priority assigned
 - [ ] No open blocking questions
-- [ ] Body stands alone — no "see CONTEXT.md / docs/prd/…" as a substitute for the story
+- [ ] Body stands alone — no repo/code links or "see CONTEXT.md / docs/prd/…" as a substitute for the story
+      (unless the user asked for repo refs)
+- [ ] When prose is Vietnamese — title/AC/persona pass English thrift (no ordinary English sprinkled in)
 
 ## Definition of Done (DoD)
 

@@ -3,34 +3,38 @@
 Lean template for `/to-prd` — synthesize from conversation, publish to the issue tracker. Enterprise discovery
 PRD (chat only, no publish) uses `/reqs`'s [enterprise-prd-template.md](../reqs/enterprise-prd-template.md).
 
-**Audience:** A PM or stakeholder reading the **tracker issue** must understand the product without opening
-the repo. Agents may consume the same body — structure helps them; **prose serves humans first**.
+**Audience:** Any role reading the **tracker issue** (PM, design, eng, ops, support, sales, exec) must
+understand the product without opening the repo or knowing the stack. Agents may consume the same body —
+structure helps them; **prose serves humans first**.
 
 **Canonical home:** Tracker issue body. `docs/prd/` is a mirror of the same prose (links may differ; stories
-and decisions must match). Do **not** put a "repo canonical / glossary / align notes" banner under the title —
-that belongs in **Repo references** at the end, if at all.
+and decisions must match). Do **not** put a "repo canonical / glossary / align notes" banner under the title.
 
 **Cross-references:**
 
-| Prefer (main body)                       | Defer to end (`## Repo references`)                            |
-| ---------------------------------------- | -------------------------------------------------------------- |
-| Tracker issues (`#12`, `SPROMPT-2`, URL) | Repo paths (`docs/…`, `CONTEXT.md`, `apps/…`, `lib/…`)         |
-| Named decisions in plain language        | ADR file paths — summarize the decision; path only in appendix |
-| Glossary meaning written once in prose   | “see CONTEXT.md” as a substitute for definition                |
+| Prefer (main body)                                     | Do not (unless the user asked)                                    |
+| ------------------------------------------------------ | ----------------------------------------------------------------- |
+| Tracker issues (`#12`, `SPROMPT-2`, URL)               | Repo paths, blob URLs (`docs/…`, `CONTEXT.md`, `apps/…`, `lib/…`) |
+| Opaque ids (open-question / clarification markers)     | Mid-body “see docs/…” / “see CONTEXT.md” as the requirement       |
+| Named decisions and glossary meaning in plain language | ADR filename or path dump as the explanation                      |
+
+Omit **`## Repo references`** by default. Add it only when the user asked for repo refs.
 
 **Voice:** Full sentences in `docs/agents/language.md`'s confirmed language — natural register, not
-EN/VI collage. Keep English only for **pure-tech tokens** (invokes, protocols, identifiers, canonical
-glossary terms); rewrite ordinary adjectives and clauses into the prose language. Name who hurts and what
-changes in product terms. Do **not** ship wave rollups, code-identifier laundry lists, or agent-only
-shorthand (e.g. `"W1 P0 #1–9: tenancy..."`). Bold glossary tokens sparingly — define the idea in a sentence
-first.
+EN/VI collage. **English thrift:** when that language is Vietnamese, prefer Vietnamese first; keep English
+only for pure-tech / specialty tokens (Keep-EN + anti-mix in `skills/setup/language.md`). Rewrite ordinary
+words (feature, submit, flow, dashboard, feedback) into Vietnamese. Name who hurts and what changes in product
+terms. Do **not** ship wave rollups, code-identifier laundry lists, or agent-only shorthand (e.g.
+`"W1 P0 #1–9: tenancy..."`). Bold glossary tokens sparingly — define the idea in a sentence first.
 
 **Anti-patterns (seen on bad tracker PRDs):**
 
 | Avoid                                                         | Do instead                                                |
 | ------------------------------------------------------------- | --------------------------------------------------------- |
 | Banner of `docs/prd/…` · `CONTEXT.md` · align notes under H1  | Start with **Related Issues** or **Problem Statement**    |
-| Mid-body “Tài liệu tham chiếu” / “see docs/…” as requirements | Write the requirement; path only in **Repo references**   |
+| Mid-body “Tài liệu tham chiếu” / “see docs/…” as requirements | Write the requirement; omit the path                      |
+| Repo-path dump under **Repo references** when not asked       | Omit the section                                          |
+| Flavor English in a Vietnamese body                           | Prefer VI; keep only tech specialty tokens                |
 | Story titled only `US#17` / `§8.5` / `Wave W3`                | Title the human outcome; section refs secondary if useful |
 | Strikethrough archaeology for cut scope                       | Delete it, or list under **Out of Scope**                 |
 | Related issue links to the project issues **index**           | Link the specific issue key or URL                        |
@@ -115,7 +119,7 @@ decides, how a wrong answer is recovered, and the check for good enough. Colors 
 are `/design`.
 
 Do **not** make this section a file-tree or path dump. Do **not** rely on "see `docs/…`" as the decision —
-write the decision here; put the path under **Repo references** if useful for someone with the repo open.
+write the decision here in prose. Add a path under **Repo references** only when the user asked for repo refs.
 
 Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state
 machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came
@@ -128,7 +132,7 @@ Testing decisions that were made. Include:
 - What makes a good test for this feature (prefer external behavior over implementation details). Each P0
   behavior names one check. Say which checks block release and which are advisory.
 - Which capabilities or modules will be tested
-- Prior art (similar tests already in the codebase — describe by behavior; path optional under
+- Prior art (similar tests already in the codebase — describe by behavior; path only if the user asked for
   **Repo references**)
 
 ## Out of Scope
@@ -154,15 +158,13 @@ stakeholder context). Keep this human-readable. Prefer linking related **issues*
 
 ## Repo references
 
-Optional appendix for readers who have the repository open. **Not required** to understand the PRD on the
-tracker. List paths, ADR filenames, or glossary file pointers that extend the prose above — do not move
-primary requirements into this section.
+Omit this section unless the user asked for repo refs. When included: optional appendix for readers who have
+the repository open — **not required** to understand the PRD on the tracker. List paths, ADR filenames, or
+glossary file pointers that extend the prose above — do not move primary requirements into this section.
 
-Examples:
+Examples (only when asked):
 
 - `docs/prd/<slug>.md` — repo mirror of this tracker PRD
 - `CONTEXT.md` — glossary terms already defined in prose above
 - `docs/adr/000N-….md` — ADR that records [decision summary in one clause]
 - `docs/agents/….md` — agent pointer docs touched by this work
-
-Omit the entire section when there is nothing useful to add.

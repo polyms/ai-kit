@@ -9,7 +9,9 @@ Adapted from the interviews on
 [BRD](https://thehuman2ai.com/product/prompts/brd-generator),
 [SRD](https://thehuman2ai.com/product/prompts/srd-generator), and
 [QRD](https://thehuman2ai.com/product/prompts/qrd-generator). Kit rules win on conflict: one enterprise
-PRD, `[NEEDS CLARIFICATION]` markers, prose language from `docs/agents/language.md`.
+PRD, `[NEEDS CLARIFICATION]` markers, prose language from `docs/agents/language.md`, and Audience / plain
+language / English thrift / no internal repo links on
+[enterprise-prd-template.md](enterprise-prd-template.md).
 
 ## How to ask
 
@@ -42,8 +44,10 @@ PRD, `[NEEDS CLARIFICATION]` markers, prose language from `docs/agents/language.
 
 ## Confirmation
 
-Restate, in one short block: product sentence, problem and who suffers, primary user, who is not a user, in
-scope (from the key actions), out of scope. Ask the user to confirm.
+Restate, in one short block of **plain language a non-builder can follow**: product sentence, problem and who
+suffers, primary user, who is not a user, in scope (from the key actions), out of scope. Use the confirmed
+prose language from `docs/agents/language.md` — when that is Vietnamese, restate in Vietnamese (English
+thrift: no ordinary English sprinkled in). Ask the user to confirm.
 
 If the PRD author is unknown, ask for the name once in this same turn.
 

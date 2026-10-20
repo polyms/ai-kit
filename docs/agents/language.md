@@ -32,5 +32,6 @@ Code, identifiers, paths, skill invokes (`/reqs`), protocols (OAuth, WCAG), prod
 canonical `CONTEXT.md` glossary tokens stay as written — do not invent translated spellings for them.
 
 When a consumer repo sets Language to Vietnamese (or another non-English language) via `/setup`, apply the
-full prose-vs-token rules and anti-mix examples in the template at `skills/setup/language.md` — **SSOT** for
-that case: prose in the confirmed language; only pure-tech tokens stay English.
+full prose-vs-token rules, **English thrift**, and anti-mix examples in the template at
+`skills/setup/language.md` — **SSOT** for that case: prefer the confirmed language for ordinary words; only
+pure-tech / specialty tokens stay English.
