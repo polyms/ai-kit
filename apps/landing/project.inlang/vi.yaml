@@ -48,7 +48,7 @@ domain_review: Rà soát
 domain_triage: Phân loại
 
 # --- footer ---
-footer_blurb: Bộ skill cho kỹ thuật thật tế — một kit quản lý phiên bản, liên kết dùng chung trên mọi dự án.
+footer_blurb: Bộ skill cho kỹ sư thực thụ — một kit quản lý phiên bản, liên kết dùng chung trên mọi dự án.
 footer_col_community: Cộng đồng
 footer_col_pipeline: Luồng xử lý
 footer_col_resources: Tài nguyên
@@ -62,7 +62,7 @@ hero_badge: Ưu tiên Cursor · thiết kế không phụ thuộc công cụ
 hero_ctaPrimary: git clone ai-kit
 hero_ctaSecondary: Đọc tài liệu →
 hero_line1: Bộ kỹ năng agent cho
-hero_line2: kỹ thuật thực tế
+hero_line2: kỹ sư thực thụ
 hero_sub:
   ai-kit là bộ não dùng chung của Polyms dành cho lập trình viên agentic fullstack — mỗi kỹ năng có tên ngắn, gọi bằng
   lệnh `/`, từ yêu cầu sản phẩm đến bản phát hành với mã nguồn đã được rà soát.
@@ -130,8 +130,8 @@ principles_4_body:
 principles_4_title: Thiết kế mỗi ngày
 principles_5_body: Fork, chỉnh sửa, rồi commit lại — kỹ năng là của bạn, không phải prompt hộp đen.
 principles_5_title: Tự sửa và sở hữu
-principles_titleAccent: thật tế
-principles_titlePrefix: Kỹ thuật
+principles_titleAccent: thực thụ
+principles_titlePrefix: Kỹ sư
 
 # --- knowledge ---
 knowledge_backToIndex: Quay lại Tri thức

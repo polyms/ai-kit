@@ -239,7 +239,7 @@ flowchart TD
 ┌─ HERO — page-x pt-14 pb-12 border-b border-line — 100% viewport width ────────┐
 │ ROW 1 — COPY — width 100%                                                     │
 │   .display (40px) — «Kỹ năng agent»                                           │
-│   .display .text-primary-700 — «cho real engineering»                         │
+│   .display .text-primary-700 — «cho kỹ sư thực thụ»                           │
 │   p.text-lg.text-muted.mt-3 — sub (max-width 36ch)                            │
 │   flex gap-4 mt-8 — Button primary full-width sm:auto + link secondary        │
 │                                                                               │
@@ -296,7 +296,7 @@ flowchart TD
 | Element       | VI                                        | EN                       |
 | ------------- | ----------------------------------------- | ------------------------ |
 | Line 1        | Kỹ năng agent                             | Agent skills             |
-| Line 2        | cho **real engineering**                  | for **real engineering** |
+| Line 2        | cho **kỹ sư thực thụ**                    | for **real engineering** |
 | Sub           | Polyms — align, spec, ship. Cursor-first. | Same EN                  |
 | CTA primary   | Mở danh mục `⌘K`                          | Open catalog `⌘K`        |
 | CTA secondary | Bắt đầu nhanh →                           | Quick start →            |
@@ -473,7 +473,7 @@ flowchart TD
 
 ```
 ┌─ PRINCIPLES — page-x section-y border-b ──────────────────────────────────────┐
-│ h2 — «5 nguyên tắc real engineering»                                            │
+│ h2 — «Kỹ sư thực thụ»                                                         │
 │ ┌─ gap-px bg-line ─────────────────────────────────────────────────────────┐  │
 │ │ ┌─ #1 hero ───────── col 1-2, row 1-2 ─ min-h 220px ─────────────────┐  │  │
 │ │ │ 01  Align trước khi build (text-lg) + body                          │  │  │
@@ -1578,11 +1578,11 @@ Script async/defer; env-gated; footer «Phân tích ẩn danh».
 
 ## 11. SEO meta (VI titles)
 
-| Route           | Title                                       |
-| --------------- | ------------------------------------------- |
-| `/`             | ai-kit — Kỹ năng agent cho real engineering |
-| `/skills`       | Danh mục kỹ năng — ai-kit                   |
-| `/skills/:slug` | `/reqs` — ai-kit                            |
+| Route           | Title                                     |
+| --------------- | ----------------------------------------- |
+| `/`             | ai-kit — Kỹ năng agent cho kỹ sư thực thụ |
+| `/skills`       | Danh mục kỹ năng — ai-kit                 |
+| `/skills/:slug` | `/reqs` — ai-kit                          |
 
 ---
 
