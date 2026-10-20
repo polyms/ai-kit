@@ -123,7 +123,9 @@ Users: [who]. Success metric: [what]. Deadline: [when].
 
 Includes:
 
-- Discovery, PRD, user story, prioritization, and refinement workflows
+- Discovery interview (one question at a time), then a behavior pass for rules, failures, and data
+- PRD, user story, prioritization, and refinement workflows — BRD/FRD/SRS behavior stays in that PRD
+- [PRD interview](skills/reqs/prd-interview.md)
 - [Enterprise PRD template](skills/reqs/enterprise-prd-template.md)
 - [User story guide](skills/reqs/user-story-guide.md) (INVEST, Gherkin AC, DoR/DoD)
 
@@ -394,6 +396,7 @@ ai-kit/
     │   └── REDESIGN.md
     ├── reqs/
     │   ├── SKILL.md
+    │   ├── prd-interview.md
     │   ├── enterprise-prd-template.md
     │   └── user-story-guide.md
     ├── to-prd/
@@ -414,6 +417,7 @@ ai-kit/
         ├── issue-tracker-github.md
         ├── issue-tracker-gitlab.md
         ├── issue-tracker-local.md
+        ├── requirements.md
         └── triage-labels.md
 ```
 
@@ -423,6 +427,7 @@ ai-kit/
 docs/agents/
 ├── issue-tracker.md
 ├── domain.md
+├── requirements.md
 └── triage-labels.md
 ```
 

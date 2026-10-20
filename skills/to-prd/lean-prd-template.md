@@ -91,7 +91,9 @@ Rules that make the list useful downstream (`/to-issues` slices along these line
   **P2** (nice-to-have). One line of _why this priority_ for each P0.
 - **Independent:** each story must be independently testable — implementing only the P0 stories should still
   yield a viable, deployable slice. If a story only makes sense together with another, merge them.
-- **Extensive:** cover all aspects of the feature, including error, empty, and permission states.
+- **Extensive:** cover all aspects of the feature, including error, empty, and permission states. When the
+  conversation settled an unhappy path (invalid input, connectivity, dependent system down), put that
+  behavior in a story. Unsettled recovery stays a `[NEEDS CLARIFICATION]` marker.
 - **Readable:** each story is a full sentence a PM can skim; no packed identifier lists; no `US#n`-only
   titles.
 
@@ -107,7 +109,10 @@ Decisions already made — enough for `/to-issues` and `/dev` without inventing 
 paragraphs or bullets that state **what** and **why**.
 
 May include: modules or seams to touch (by capability name), interface changes, schema or API contracts,
-architectural choices, specific interactions.
+architectural choices, specific interactions. Business rules (a threshold, a role gate, a time window) and
+entities the conversation named belong here in prose. When output can be wrong on the same input, say who
+decides, how a wrong answer is recovered, and the check for good enough. Colors and layout do not — those
+are `/design`.
 
 Do **not** make this section a file-tree or path dump. Do **not** rely on "see `docs/…`" as the decision —
 write the decision here; put the path under **Repo references** if useful for someone with the repo open.
@@ -120,7 +125,8 @@ from a prototype. Trim to the decision-rich parts — not a working demo.
 
 Testing decisions that were made. Include:
 
-- What makes a good test for this feature (prefer external behavior over implementation details)
+- What makes a good test for this feature (prefer external behavior over implementation details). Each P0
+  behavior names one check. Say which checks block release and which are advisory.
 - Which capabilities or modules will be tested
 - Prior art (similar tests already in the codebase — describe by behavior; path optional under
   **Repo references**)

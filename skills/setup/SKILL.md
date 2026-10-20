@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Configure a repo for the ai-kit pipeline — documentation language, issue tracker, domain docs, stack profile, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
+description: Configure a repo for the ai-kit pipeline — documentation language, issue tracker, domain docs, requirements templates, stack profile, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
 disable-model-invocation: true
 ---
 
@@ -18,7 +18,7 @@ Read what exists; don't assume:
 
 - `git remote -v` — GitHub, GitLab, or local-only?
 - `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` — presence, layout, and written language
-- `docs/agents/` — prior setup output? especially `stack-profile.md`
+- `docs/agents/` — prior setup output? especially `stack-profile.md` and `requirements.md`
 - Stack signals — `package.json` / lockfile (router, start, zustand, vercel, pnpm, nx);
   `vercel.json`; workspace / monorepo layout
 - `.scratch/` — local markdown issue convention?
@@ -142,9 +142,26 @@ Per-repo **Stack manifest** axes for Knowledge search — see [stack-profile.md]
    **`get_knowledge_coverage`** per non-empty subset; write a **Coverage** section into
    `docs/agents/stack-profile.md` (bootstrap only — not live SSOT for later `/arch` work).
 
+**I — Requirements templates**
+
+Which PRD shape this repo defaults to. Every family (PRD, BRD, FRD, MRD, SRD, TRD, QRD) and the kit file
+that carries it is [requirements.md](requirements.md). The choice matches
+[PRD templates](https://thehuman2ai.com/product/templates/prd): one variant, then fill, then delete unused
+sections.
+
+| Default          | When                                                                              |
+| ---------------- | --------------------------------------------------------------------------------- |
+| **Standard**     | New product, full spec. `/reqs` uses the enterprise template.                     |
+| **MVP**          | Hypothesis, short launch. Six-cut draft in [requirements.md](requirements.md).    |
+| **AI-optimized** | An agent implements in phases, with a testable output and prohibitions per phase. |
+
+Ask once. If the user has no preference, confirm **Standard**. On a re-run, show the existing
+`docs/agents/requirements.md` default and ask keep or change.
+
 **Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed;
 issue tracker, domain layout, artifact paths, triage labels, design paths, voice choice (No or Yes +
-any overrides), and **stack axes** confirmed by user.
+any overrides), **requirements template** default (Standard, MVP, or AI-optimized), and **stack axes**
+confirmed by user.
 
 ### 3. Confirm draft
 
@@ -156,6 +173,7 @@ Show before writing:
 - `docs/agents/domain.md`
 - `docs/agents/triage-labels.md`
 - `docs/agents/design.md`
+- `docs/agents/requirements.md` (confirmed default + catalog)
 - `docs/agents/stack-profile.md` (axes list + detected-from notes + optional Coverage)
 - If voice **Yes**: `.cursor/rules/agent-voice.mdc` and `.claude/rules/agent-voice.mdc` → symlink
 
@@ -194,6 +212,10 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 UI specs and `@polyms/ui-kit` pointers. See `docs/agents/design.md`.
 
+### Requirements templates
+
+Default: [Standard / MVP / AI-optimized]. See `docs/agents/requirements.md`.
+
 ### Knowledge
 
 Stack axes for Knowledge retrieval. See `docs/agents/stack-profile.md` and
@@ -211,6 +233,13 @@ Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/
 [path]; glossary in `CONTEXT.md`.
 ```
 
+**Context file shape.** That block stays a short pointer. Link `docs/agents/*` instead of pasting them. Do not
+paste a directory tree, generated docs, an API reference, or a rule a linter already enforces. A hard
+constraint is an explicit prohibition. When an agent repeats one mistake, add one prohibition — do not append
+an essay. Practice from [Nurijanian on CLAUDE.md and AGENTS.md][agents-md].
+
+[agents-md]: https://thehuman2ai.com/product/best-practices/nurijanian-claudemd-agents-pm-best-practices
+
 Write docs using templates:
 
 - Language → [language.md](language.md)
@@ -220,6 +249,8 @@ Write docs using templates:
 - Domain → [domain.md](domain.md)
 - Triage labels → [triage-labels.md](triage-labels.md)
 - Design → [design.md](design.md)
+- Requirements → [requirements.md](requirements.md) (set `Confirmed default:` to the step I choice; keep the
+  catalog)
 - Stack profile → [stack-profile.md](stack-profile.md) (fill confirmed axes + detected-from +
   Coverage when MCP coverage ran)
 
@@ -239,7 +270,8 @@ Do **not** duplicate the persona body under `.claude/` — one SoT, one link.
 
 **Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
 `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`,
-`docs/agents/stack-profile.md`, and agent config file written; if voice Yes, Cursor rule + Claude
+`docs/agents/requirements.md`, `docs/agents/stack-profile.md`, and agent config file written; if voice Yes,
+Cursor rule + Claude
 symlink present.
 
 ### 5. Done

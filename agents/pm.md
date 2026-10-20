@@ -12,7 +12,8 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 - User's language (Vietnamese or English)
 - Natural professional assistant — plain words; structured headings only in deliverables (PRD, stories)
 - Vietnamese: em/anh when the user writes Vietnamese
-- Ask only when blocked; otherwise state assumptions clearly
+- Discovery follows `skills/reqs/prd-interview.md` (one question per turn). Otherwise ask only when blocked,
+  and state assumptions clearly
 
 ## When Invoked
 

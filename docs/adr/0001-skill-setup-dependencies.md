@@ -36,7 +36,7 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 | `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch                                                                                                                            |
 | `align-loop`      | Same when exploring codebase                                                                                                                                                             |
 | `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve; writes in `docs/agents/language.md` if present                                                                                           |
-| `reqs`, `to-prd`  | Glossary vocabulary in specs when `CONTEXT.md` exists; writes in `docs/agents/language.md` if present (`/reqs` does not publish; `/to-prd` does)                                         |
+| `reqs`, `to-prd`  | Glossary when `CONTEXT.md` exists; `docs/agents/language.md` if present; PRD shape from `docs/agents/requirements.md` when present (`/reqs` does not publish; `/to-prd` does)            |
 | `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/ui-kit` before component map; writes in `docs/agents/language.md` if present                                                         |
 | `devops`          | [knowledge.md](../agents/knowledge.md) (`intent: incident`) + MCP; `stack-profile.md` when present (from `/setup`)                                                                       |
 | `docs`            | `docs/agents/language.md` when present; `CONTEXT.md` vocabulary only (no glossary expansion)                                                                                             |
@@ -51,6 +51,6 @@ Do **not** cargo-cult the `/setup` pointer into soft-dependency skills. No `docs
 - Hard-dependency skills stay token-light on setup prose — one prerequisite line, not repeated setup docs inline.
 - Authors adding skills must classify hard vs soft before writing prerequisites.
 - `/setup` remains the single place that writes `docs/agents/language.md`, `issue-tracker.md`, `domain.md`,
-  `triage-labels.md`, `design.md`, and `stack-profile.md`. Opt-in chat persona (default off) writes
+  `triage-labels.md`, `design.md`, `requirements.md`, and `stack-profile.md`. Opt-in chat persona (default off) writes
   `.cursor/rules/agent-voice.mdc` plus a Claude symlink under `.claude/rules/` — not a hard dependency for
   any skill.

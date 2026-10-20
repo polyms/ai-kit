@@ -49,7 +49,8 @@ The stage chain that turns ideas into shipped code: `/align` → `/reqs` or `/to
 _Avoid_: workflow, process, flow
 
 **Setup**:
-One-time repo configuration for the pipeline — documentation language, issue tracker, domain docs layout, artifact paths. Invoke with `/setup`.
+One-time repo configuration for the pipeline — documentation language, issue tracker, domain docs layout,
+artifact paths, requirements template default. Invoke with `/setup`.
 _Avoid_: bootstrap (when meaning repo config, not symlink install)
 
 **Align**:
@@ -57,9 +58,13 @@ Align before you build — grill decisions, sharpen domain language, update `CON
 _Avoid_: discovery, planning session
 
 **Reqs**:
-Discovery, enterprise PRD, user stories, acceptance criteria — draft in chat; does not publish. Invoke with `/reqs`
-(user-invoked). Template: `skills/reqs/enterprise-prd-template.md`. Long sessions: `pm`. After align to ship lean
-PRD → `/to-prd`.
+Discovery interview (one question at a time), enterprise PRD, user stories, acceptance criteria — draft in
+chat; does not publish. BRD, FRD, and SRS behavior fold into this PRD. When output can vary on the same
+input, the PRD records who decides and how a wrong answer is recovered. Market (MRD) and infra (TRD)
+documents are out of this skill. Invoke with `/reqs` (user-invoked). Interview:
+`skills/reqs/prd-interview.md`.
+Template: `skills/reqs/enterprise-prd-template.md`. Long sessions: `pm`.
+After align to ship lean PRD → `/to-prd`.
 _Avoid_: /pm (old invoke), PM (when meaning this skill — agent role stays `pm`), write PRD (when meaning `/to-prd`
 publish), product management (generic)
 

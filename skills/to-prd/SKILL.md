@@ -52,13 +52,17 @@ language**; only pure-tech tokens stay English — no mid-sentence EN/VI mix).
 
 ## References
 
-| Topic           | Read when                                                                                        |
-| --------------- | ------------------------------------------------------------------------------------------------ |
-| Issue tracker   | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands        |
-| Triage labels   | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping   |
-| PRD body        | [lean-prd-template.md](lean-prd-template.md)                                                     |
-| Domain glossary | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                  |
-| ADRs            | `docs/adr/` — fold decisions into **Implementation Decisions**; path only in **Repo references** |
+| Topic            | Read when                                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| Issue tracker    | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands        |
+| Triage labels    | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping   |
+| PRD body         | [lean-prd-template.md](lean-prd-template.md)                                                     |
+| Template default | `docs/agents/requirements.md` when present                                                       |
+| Domain glossary  | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                  |
+| ADRs             | `docs/adr/` — fold decisions into **Implementation Decisions**; path only in **Repo references** |
+
+When that file's default is **AI-optimized**, carry each phase's testable output and the prohibitions into
+**Implementation Decisions** and **Testing Decisions**. Missing file: lean body only.
 
 ## Process
 

@@ -36,9 +36,9 @@ MCP discovery advertises **`offline_access`** so clients request a **refresh tok
 | `/.well-known/oauth-protected-resource/mcp` | Same metadata (path advertised in `401 WWW-Authenticate`)                           |
 | `/.well-known/oauth-authorization-server`   | Authorization server metadata (proxied from polyms.dev; MCP scopes + refresh grant) |
 
-OAuth **resource/audience** is `{origin}/mcp`. Discovery uses **request origin** when present.
+OAuth **resource/audience** is `{origin}/mcp` (RFC 8707). Discovery uses **request origin** when present.
 
-**IdP (polyms.dev):** registers `…/mcp` in `validAudiences`. Admin users receive `role: admin` in the access token.
+**IdP (polyms.dev):** Better Auth 1.7+ — the same path-exact resource URL must exist as an **`oauthResource`** row on the IdP (not the removed `validAudiences` option). If authorize fails with `invalid_target`, the IdP is missing that identifier. Access tokens for admin users include JWT claim `role: admin` (write tools); the resource server still enforces `aud` + `role`.
 
 **Stale DCR client / missing refresh token:** Remove the MCP server in Cursor Settings and add it again after IdP or scope changes (e.g. first deploy of `offline_access`).
 

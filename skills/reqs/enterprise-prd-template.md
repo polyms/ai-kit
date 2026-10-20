@@ -45,21 +45,25 @@ Two rules that keep this template honest:
 
 ## 2. Problem Statement
 
-### Background
+### Current state (AS-IS)
 
-[Context: why this matters now]
+[What people do today, with which tools, and what it costs. Put a quantity the user gave here (hours, error
+rate, money). No quantity yet → `[NEEDS CLARIFICATION]`, not an estimate.]
 
 ### Problem
 
 [Specific pain point — who suffers, how often, cost of not solving]
 
-### Opportunity
+### Future state (TO-BE)
 
-[What success looks like at a high level]
+[What changes when this ships — outcomes, not a feature list]
 
 ## 3. Goals & Success Metrics
 
 Each metric must be measurable and technology-agnostic — a number, threshold, or binary outcome. "User-friendly" and "fast" are not metrics until defined.
+
+If the user gave no target, put `[NEEDS CLARIFICATION]` in the Target cell. A proposed metric name is fine.
+A proposed number is not agreed until the user supplies it — say that the target needs real data.
 
 | Goal                            | Metric            | Target | Measurement method |
 | ------------------------------- | ----------------- | ------ | ------------------ |
@@ -81,9 +85,26 @@ Each metric must be measurable and technology-agnostic — a number, threshold, 
 
 [If applicable — delete otherwise]
 
+### Who is not a user
+
+[Role or context this version does not serve. If unknown:
+`[NEEDS CLARIFICATION: who is explicitly not a user?]`]
+
+### Stakeholders
+
+People who approve or are affected, when they are not the primary user. Delete this subsection when they are
+the same person.
+
+| Role                            | Interest                   |
+| ------------------------------- | -------------------------- |
+| [sponsor / approver / affected] | [what they need from this] |
+
 ## 5. User Stories
 
 Prioritized, numbered stories — `As an <actor>, I want a <feature>, so that <benefit>`:
+
+Stories here are a **draft** and priority tags a proposal until the user confirms the list and the P0/P1/P2
+cut. Say so above the list.
 
 - **Title the outcome** in human language (not `US#17` / section number alone).
 - **Prioritize:** tag each story **P0** (core — the feature is pointless without it), **P1** (important), or
@@ -122,24 +143,80 @@ Given [initial state], when [action], then [outcome]
 
 ## 7. Functional Requirements
 
-| ID    | Requirement           | Priority (P0/P1/P2) | Notes |
-| ----- | --------------------- | ------------------- | ----- |
-| FR-01 | [The system shall...] | P0                  |       |
+Behavior only. Colors, layout, and visual design belong in `/design`.
+
+**P0** uses **shall** (must). **P1** uses **should**. **P2** is deferrable. Each row has a unique id. If you
+cannot name one check that proves the row, split it.
+
+### Business rules
+
+Precise gates: a threshold, a role, or a time window. Delete this subsection when there are none, and note
+that in the Appendix.
+
+- [e.g. Refunds above $200 require a user with the manager role]
+
+| ID    | Requirement           | Priority | Verified by            |
+| ----- | --------------------- | -------- | ---------------------- |
+| FR-01 | [The system shall...] | P0       | [one observable check] |
+
+### Data
+
+Entities the feature stores or processes. Delete this subsection when it stores nothing, and note that in
+the Appendix.
+
+| Entity  | Field    | Constraint                |
+| ------- | -------- | ------------------------- |
+| [Order] | [status] | [pending, paid, refunded] |
+
+### Model behavior
+
+Delete this whole subsection when every behavior is deterministic, and note that in the Appendix. A request
+that says "AI" is not a reason to keep it. If a rule or a simpler screen removes the same friction, write
+that requirement above and delete the rest of this subsection.
+
+- **Who decides:** the model acts, or a person confirms before anything changes.
+- **Wrong output:** how the user knows the answer is wrong, and how they recover. Unsettled →
+  `[NEEDS CLARIFICATION]`.
+- **Good enough:** one check tied to the user outcome. A threshold the user did not give stays a marker.
+  Model accuracy is not the success metric unless the user made it one.
+- **Data the model reads:** source, how old it may be, whose permissions it inherits. Delete this bullet
+  when the model reads nothing beyond the current request.
+- **Refusal and review:** what it must refuse, and when a human takes over. Delete this bullet when a wrong
+  answer cannot harm or mislead.
+- **Uncertainty:** what the user is shown when the model is unsure. Visual treatment belongs to `/design`.
+- **Cost:** at the volume the user named. No volume → delete this bullet. Do not estimate a bill.
 
 ## 8. Non-Functional Requirements
 
-Keep only rows that apply to this feature.
+Keep only rows that apply. Each kept row needs a measurable target — a number, a threshold, or a named
+standard. No target yet → `[NEEDS CLARIFICATION]` in the Requirement cell. Do not invent an industry default.
 
-| Category      | Requirement                |
-| ------------- | -------------------------- |
-| Performance   | [e.g. p95 < 200ms]         |
-| Security      | [auth, data handling]      |
-| Accessibility | [WCAG level, keyboard nav] |
-| Compatibility | [browsers, devices]        |
-| Scalability   | [expected load]            |
-| i18n          | [languages, RTL]           |
+**Blocking** means release waits on this row. **Advisory** means the row is tracked and does not block.
 
-## 9. Edge Cases & Error Handling
+| Category      | Requirement                | Ship gate |
+| ------------- | -------------------------- | --------- |
+| Performance   | [e.g. p95 < 200ms]         | Blocking  |
+| Security      | [auth, data handling]      | Advisory  |
+| Accessibility | [WCAG level, keyboard nav] | Blocking  |
+| Compatibility | [browsers, devices]        | Advisory  |
+| Scalability   | [expected load]            | Advisory  |
+| i18n          | [languages, RTL]           | Advisory  |
+
+## 9. Assumptions & Constraints
+
+Facts the plan depends on that are not yet proven, plus constraints that are not non-functional requirements
+(locked stack, required integration, budget, compliance, org policy).
+
+- **Assumption:** [statement — what we are treating as true]
+- **Constraint:** [statement — what we cannot change]
+
+Delete this section only when there are none, and note the deletion in Appendix.
+
+## 10. Edge Cases & Error Handling
+
+Every primary workflow has at least one row (invalid input, lost connectivity, or a dependent system down).
+When the user did not settle the recovery, write the scenario and put `[NEEDS CLARIFICATION]` in the behavior
+cell. Do not invent the recovery.
 
 | Scenario          | Expected behavior   |
 | ----------------- | ------------------- |
@@ -147,13 +224,16 @@ Keep only rows that apply to this feature.
 | [Network failure] | [retry + message]   |
 | [Invalid input]   | [inline validation] |
 
-## 10. Dependencies
+## 11. Dependencies
 
-| Dependency        | Owner  | Status          | Impact if delayed   |
-| ----------------- | ------ | --------------- | ------------------- |
-| [API from team X] | [team] | [blocked/ready] | [cannot ship FR-03] |
+Other systems this feature talks to, and the data that moves. Delete the section when nothing is external,
+and note that in the Appendix.
 
-## 11. Scope
+| Dependency        | Data exchanged     | Owner  | Impact if missing or down |
+| ----------------- | ------------------ | ------ | ------------------------- |
+| [API from team X] | [order id, status] | [team] | [cannot ship FR-03]       |
+
+## 12. Scope
 
 ### In scope (v1 / MVP)
 
@@ -161,19 +241,22 @@ Keep only rows that apply to this feature.
 
 ### Out of scope
 
-- [item — defer to v2 with brief reason]
+A longer exclusion list makes a sharper PRD. One line per item, with a brief reason (later version, never,
+or a different product). A single vague line is a gap.
+
+- [item — reason]
 
 ### Future considerations
 
 - [item for later, not committed]
 
-## 12. Risks & Mitigations
+## 13. Risks & Mitigations
 
 | Risk   | Likelihood | Impact | Mitigation |
 | ------ | ---------- | ------ | ---------- |
 | [risk] | H/M/L      | H/M/L  | [action]   |
 
-## 13. Timeline & Milestones
+## 14. Timeline & Milestones
 
 [Delete when there is no external deadline — agent-consumed PRDs rarely need this]
 
@@ -184,13 +267,13 @@ Keep only rows that apply to this feature.
 | Dev complete    | [date]      | Feature flag on |
 | Launch          | [date]      | GA              |
 
-## 14. Open Questions
+## 15. Open Questions
 
 Collect every `[NEEDS CLARIFICATION]` marker from the sections above here.
 
 - [ ] [Question — owner — due date]
 
-## 15. Appendix
+## 16. Appendix
 
 [Research links, competitor analysis, technical spikes, glossary. Repo paths and ADR filenames that extend
 the prose — not a substitute for writing decisions in the sections above. Note deleted sections here in one

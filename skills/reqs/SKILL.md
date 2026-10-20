@@ -1,7 +1,8 @@
 ---
 name: reqs
-description: Requirements — discovery, enterprise PRD, user stories, acceptance criteria, scope, MVP,
-  MoSCoW, RICE. Invoke with /reqs, requirements, user stories, ưu tiên backlog, or stakeholder alignment.
+description: Requirements — discovery interview, enterprise PRD, user stories, acceptance criteria, scope,
+  MVP, MoSCoW, RICE. Invoke with /reqs, requirements, user stories, PRD generator, FRD, functional
+  requirements, đặc tả chức năng, ưu tiên backlog, or stakeholder alignment.
   After align to publish lean PRD → /to-prd. Plan grill → /align.
 disable-model-invocation: true
 ---
@@ -13,6 +14,10 @@ Turn ideas into engineering-ready artifacts. Read this skill fully before produc
 Read `docs/agents/language.md` when present — write PRDs and stories in that language (**one prose language**;
 only pure-tech tokens stay English — no mid-sentence EN/VI mix). No file: match the issue tracker's existing
 language; same prose-vs-token bar.
+
+Read `docs/agents/requirements.md` when present — follow its **Confirmed default** (Standard, MVP, or
+AI-optimized). No file: Standard, the enterprise template; the kit copy of that catalog is
+`skills/setup/requirements.md`.
 
 ## When `/reqs` vs `/to-prd` vs `/align`
 
@@ -29,62 +34,47 @@ Decisions / problem statement clear?
 
 Do **not** treat "viết PRD" / "write a PRD" after `/align` as this skill — that path is `/to-prd`.
 
+## Document types
+
+One requirements artifact: the enterprise PRD. A request for a BRD, FRD, SRS, QRD, MRD, or TRD lands in a
+section of that PRD or outside this skill — the **Other families** table in the requirements catalog (see
+top) names which. Do not open a second document.
+
 ## Quick Router
 
-| User intent                                | Workflow                                            | Reference                                                |
-| ------------------------------------------ | --------------------------------------------------- | -------------------------------------------------------- |
-| Chốt / publish PRD from aligned chat       | User invokes `/to-prd` — not this skill             | —                                                        |
-| Plan still fuzzy / stress-test before spec | User invokes `/align` — not this skill              | —                                                        |
-| Discovery + formal enterprise PRD          | [PRD workflow](#prd-workflow)                       | [enterprise-prd-template.md](enterprise-prd-template.md) |
-| User stories / backlog                     | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md)               |
-| Làm rõ req / clarify                       | [Discovery workflow](#discovery-workflow)           | —                                                        |
-| Ưu tiên / prioritize                       | [Prioritization workflow](#prioritization-workflow) | —                                                        |
-| Review req hiện có                         | [Refinement workflow](#refinement-workflow)         | —                                                        |
+| User intent                       | Workflow                                            | Reference                                                |
+| --------------------------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| Discovery + formal enterprise PRD | [PRD workflow](#prd-workflow)                       | [enterprise-prd-template.md](enterprise-prd-template.md) |
+| User stories / backlog            | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md)               |
+| Làm rõ req / clarify              | [Discovery workflow](#discovery-workflow)           | [prd-interview.md](prd-interview.md)                     |
+| Ưu tiên / prioritize              | [Prioritization workflow](#prioritization-workflow) | —                                                        |
+| Review req hiện có                | [Refinement workflow](#refinement-workflow)         | —                                                        |
 
 ## Discovery Workflow
 
 **Goal:** Problem statement + scope boundary before any spec.
 
-1. Capture **who** (persona), **what problem**, **why now**, **success metric**
-2. List **constraints** (timeline, tech, compliance, budget)
-3. State **assumptions** explicitly
-4. Propose **in scope** / **out of scope**
-5. Ask user to confirm before proceeding to PRD or stories
+When either is missing, run questions 1–9 and the confirmation in [prd-interview.md](prd-interview.md).
 
-**Completion criterion:** User confirms problem statement and scope boundary.
+**Completion criterion:** User confirms problem statement and scope boundary (in scope and out of scope,
+including who is not a user).
 
 ## PRD Workflow
 
 **Goal:** Complete enterprise PRD ready for engineering + design review — delivered in chat (and optionally
 `docs/prd/`), **not** published to the issue tracker.
 
-**Does not publish.** Creating a tracker issue with a lean PRD body is `/to-prd` only. After `/align` when
-the conversation is ready to ship, tell the user to invoke `/to-prd`.
+1. Run the [Discovery Workflow](#discovery-workflow) if the problem statement or scope boundary is missing
+2. Run the behavior pass in [prd-interview.md](prd-interview.md) when its gate applies
+3. Fill [enterprise-prd-template.md](enterprise-prd-template.md), shaped by the confirmed default in
+   `docs/agents/requirements.md` — no empty headers: fill a section with real thinking or delete it and note
+   the deletion in Appendix
+4. Mark unresolved details inline with `[NEEDS CLARIFICATION: …]` — never invent a threshold, method,
+   recovery behavior, market size, or capacity number the user didn't settle
+5. End with open questions (collected markers) and `## Next Step` (see [Handoff](#handoff))
+6. Re-read as a PM unfamiliar with the codebase and run the [quality checklist](#quality-checklist)
 
-**Boundary:** Aligned-chat synthesize/publish → `/to-prd`. Plan still fuzzy or needs design-tree grill →
-`/align`. Below is discovery + enterprise PRD only — not align-loop.
-
-**Audience:** Follow [enterprise-prd-template.md](enterprise-prd-template.md). Do **not** ship
-executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: tenancy..."`). Prefer tracker issue links
-when referring to published work; keep repo paths in Appendix. No `docs/…` / `CONTEXT.md` banner under the
-title.
-
-1. Run discovery if problem statement is missing
-2. Fill [enterprise-prd-template.md](enterprise-prd-template.md) — no empty headers: fill a section with
-   real thinking or delete it and note the deletion in Appendix
-3. Mark unresolved details inline with `[NEEDS CLARIFICATION: …]` — never invent a threshold, method, or
-   behavior the user didn't settle
-4. Include wireframe notes or flow description where UI is involved
-5. Add **non-functional requirements** (performance, security, accessibility, i18n) — only rows that apply
-6. End with open questions (collected markers) and `## Next Step` (see [Handoff](#handoff))
-7. **Human-readable check:** re-read as a PM unfamiliar with the codebase — every kept section filled; no
-   one-line wave summaries; Given/When/Then per P0 story; story titles name the outcome (not `US#n` alone);
-   body stands alone without opening the repo; repo paths only in Appendix; cut scope deleted or listed under
-   Out of scope (no strikethrough leftovers); prose reads native in `docs/agents/language.md` (only pure-tech
-   tokens left in English — see language.md anti-mix)
-
-**Completion criterion:** PRD passes the [quality checklist](#quality-checklist); human-readable check
-passed; no tracker issue created by this skill.
+**Completion criterion:** Every checklist row passes; no tracker issue created by this skill.
 
 ## User Story Workflow
 
@@ -140,16 +130,26 @@ Before delivering any artifact, verify:
 - [ ] Success metrics are measurable (number, threshold, or binary outcome)
 - [ ] Scope has explicit out-of-scope section
 - [ ] Stories are prioritized (P0/P1/P2) and each is independently testable — P0 set alone is a shippable
-      slice
+      slice; every P0 story has Given/When/Then; story titles name the outcome (not `US#n` alone)
 - [ ] Acceptance criteria are testable (no "user-friendly", "fast", "easy" without definition)
-- [ ] Edge cases and error states addressed
+- [ ] Each functional requirement names how it is verified; a row too broad for one check is split
+- [ ] Functional requirements and user flows state behavior. Colors, layout, and visual design are not there
+      — that is `/design`
+- [ ] Each primary workflow has an error behavior, or a `[NEEDS CLARIFICATION]` marker
+- [ ] **Model behavior** is filled only when output can be wrong on the same input — otherwise the subsection
+      is deleted and noted in the Appendix
+- [ ] Kept NFR rows have a measurable target or a marker, and a blocking or advisory ship gate
 - [ ] Accessibility and security considered where applicable
-- [ ] Assumptions listed separately from facts
+- [ ] Who is not a user is named, or marked `[NEEDS CLARIFICATION]`
+- [ ] Assumptions and constraints sit in their own section when any exist — separate from facts
+- [ ] Out of scope is a list of specific exclusions
+- [ ] Priority cut, drafted stories, and any proposed metric targets are labeled as a proposal pending user
+      review
 - [ ] No silent guesses — unresolved details carry `[NEEDS CLARIFICATION]` markers, collected under open
       questions
-- [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; no repo-path banner; a human can
-      understand scope from the body alone (see Audience on
-      [enterprise-prd-template.md](enterprise-prd-template.md))
+- [ ] **Human + AI readable** — no wave-rollup or agent-only shorthand; no repo-path banner; repo paths only
+      in Appendix; cut scope deleted or under Out of scope (no strikethrough); a human can understand scope
+      from the body alone (see Audience on [enterprise-prd-template.md](enterprise-prd-template.md))
 - [ ] **Prose language** — native in `docs/agents/language.md`; only pure-tech tokens stay English (no
       flavor English / mid-clause mix)
 - [ ] **No publish** — this skill did not create a tracker issue; publish path is `/to-prd`
@@ -183,6 +183,7 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 | One giant story                   | Split by user goal (INVEST)                        |
 | Solution in req before validation | Problem + options + recommendation                 |
 | Missing error flows               | Include failure/empty/loading states               |
+| A second BRD, FRD, MRD, TRD, QRD  | One PRD — [Document types](#document-types)        |
 | Publishing PRD via `gh` here      | Tell user to invoke `/to-prd`                      |
 
 Human-readable PRD anti-patterns (repo-path banner, `US#n`-only titles, strikethrough cut scope) live in
