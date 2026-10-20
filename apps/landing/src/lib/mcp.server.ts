@@ -7,10 +7,12 @@ import {
   mcpUnauthorizedResponse,
   verifyMcpAccessToken,
 } from './mcp-auth.server'
+import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
 
 function createOpsCmsMcpServer(session: McpAuthSession): McpServer {
   const server = new McpServer({ name: 'ai-kit-ops-cms', version: __VERSION__ })
   registerKnowledgeMcpTools(server, { session })
+  registerSkillPackMcpTools(server)
   return server
 }
 

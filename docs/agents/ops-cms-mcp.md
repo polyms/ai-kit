@@ -64,6 +64,31 @@ OAuth **resource/audience** is `{origin}/mcp` (RFC 8707). Discovery uses **reque
 | `get_knowledge_chunk`    | OAuth                     |
 | `upsert_knowledge`       | OAuth + JWT `role: admin` |
 | `delete_knowledge`       | OAuth + JWT `role: admin` |
+| `list_skill_packs`       | OAuth (any user)          |
+| `get_skill_pack`         | OAuth (any user)          |
+
+## Skill packs (ChatGPT)
+
+`reqs` and `design` are published as **raw GitHub URLs** on `main`. The tools return paths and URLs.
+They do not return markdown bodies and do not fetch GitHub. Cursor and Claude keep reading the same
+files locally.
+
+Base: `https://raw.githubusercontent.com/polyms/ai-kit/refs/heads/main/`
+
+| Tool               | Returns                                                                                                                       |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| `list_skill_packs` | `{ packs: [{ name, skillRawUrl }] }` for `reqs` and `design`. `skillRawUrl` is `skills/<name>/SKILL.md`.                      |
+| `get_skill_pack`   | `{ name, files: [{ path, rawUrl }] }`. `design` also returns `uiKit` (the `@polyms/ui-kit` skill). Unknown name: `NOT_FOUND`. |
+
+ChatGPT: connect `https://ai-kit.polyms.dev/mcp`, then HTTP GET each `rawUrl`.
+
+- Call `get_skill_pack` with `reqs` before writing a PRD. Follow `SKILL.md`. Open a sibling only when that
+  file points at it.
+- Call `get_skill_pack` with `design` before writing a UI spec. GET both `files` and `uiKit`. When the
+  design `SKILL.md` says to invoke `/ui-kit`, GET the `uiKit` URLs instead of asking for a local skill.
+
+A skill edit is live after it merges to `main`. Redeploying the kit site is not required. Local MCP stays
+`http://localhost:6300/mcp`.
 
 ## Env
 
