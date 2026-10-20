@@ -27,18 +27,23 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 - Terms land in `CONTEXT.md` the moment they resolve — not batched at the end
 - The agent reads the codebase to answer its own questions where it can, then reports findings before options
 - ADRs stay rare — reversible choices are not rubber-stamped
-- Open-questions audit runs before handoff — `## Open Questions` is never silently empty when implementer-facing gaps remain
-- No PRD, no user stories, no premature handoff while branches are still open
+- Open-questions audit runs before a leaving skill — `## Open Questions` is never silently empty when
+  implementer-facing gaps remain
+- No PRD and no user stories during the grill. An open branch's next step is continue `/align`, not silence
+- Every turn that records a decision ends with `## Next Step`
 
 ## Handoff
 
-Enter only when align-loop completion criteria are met and the user confirms the decision summary.
+`## Next Step` closes every turn that records a decision, and any turn where the user asks what is next
+(`what next?`, bước tiếp). Do not wait for the final summary. The grill-format shape rule must not drop
+this block — see [Turn closer](../align-loop/GRILL-FORMAT.md#turn-closer).
 
 **Open questions gate** — before pointing to `/to-prd`: if the audit found unsettled items, list them under
 `## Open Questions` and ask the **open-questions confirmation** turn
 ([GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md)). `/to-prd` is valid only when open questions are **zero**,
 or the user picked **B** and confirmed the deferred list — never with a silently empty section while
-implementer-facing gaps remain (that is how `/to-prd` surfaces markers the user never saw).
+implementer-facing gaps remain (that is how `/to-prd` surfaces markers the user never saw). While a branch
+is still open, the preferred next step is `→ /align`.
 
 ## When `/reqs` vs `/to-prd` vs `/align`
 
@@ -56,17 +61,25 @@ Decisions / problem statement clear?
 When suggesting `/to-prd`, say so explicitly (e.g. gõ `/to-prd`) — do not say only "viết PRD" (easy to
 confuse with `/reqs`).
 
-| Next step | When                                                                               |
-| --------- | ---------------------------------------------------------------------------------- |
-| `/to-prd` | Decisions confirmed; open questions resolved **or** user confirmed deferral to PRD |
-| `/reqs`   | Need discovery interview, enterprise PRD (chat), stories, or prioritization        |
-| `/dev`    | Small, well-bounded change with clear seams                                        |
-| `/design` | UI flows or design specs needed before implementation                              |
+| Next step | When                                                                                  |
+| --------- | ------------------------------------------------------------------------------------- |
+| `/align`  | A branch is still open — name the next decision; do not ask that question in this turn |
+| `/to-prd` | Decisions confirmed; open questions resolved **or** user confirmed deferral to PRD    |
+| `/reqs`   | Need discovery interview, enterprise PRD (chat), stories, or prioritization           |
+| `/dev`    | Small, well-bounded change with clear seams                                           |
+| `/design` | UI flows or design specs needed before implementation                                 |
 
 Pick **one** preferred next skill from the table (at most two if the fork is genuinely
 ambiguous — each line with when/why). Do **not** paste a `|`-joined menu.
 
-End with:
+Mid-grill (the common turn):
+
+```
+## Next Step
+→ /align — next decision: whether an editor may change the graph from chat
+```
+
+Final close — tree settled and the user confirmed the summary. Other leaving skills: see the when-table.
 
 ```
 ## Decisions
@@ -79,18 +92,17 @@ End with:
 → /to-prd
 ```
 
-(Example above assumes lean publish is ready. Other picks: see when-table above.)
-
-Two-option example only when the fork is real:
+Two-option example only when continue vs leave is a real fork:
 
 ```
 ## Next Step
-→ /to-prd — decisions confirmed; ready to publish lean PRD
-→ /design — UI-heavy; flows must land before tracker publish
+→ /align — the write-permission branch is still open
+→ /dev — read-only scope is enough to implement now
 ```
 
-**Completion criterion:** Handoff block delivered; `## Open Questions` matches the audit (not silently
-empty); user confirmed deferral before `## Next Step` → `/to-prd` when any item remains;
-`## Next Step` names one preferred skill (two max with when/why).
+**Completion criterion:** Every decision turn, and every "what next?" turn, ends with `## Next Step`;
+`## Open Questions` matches the audit before a leaving skill (not silently empty); user confirmed
+deferral before `## Next Step` → `/to-prd` when any item remains; the closer names one preferred skill
+(two max with when/why). `/align` counts: it names the next branch and does not ask that question.
 
 Alignment is **interactive** — stay in this chat for the whole grill. There is no `align-agent` subagent; subagents run autonomously and cannot wait for one answer per turn.
