@@ -1,6 +1,5 @@
 import { Button } from '@polyms/ui-kit'
 import { ChatRoundDots, Code2, MagicStick3, Rocket2 } from '@solar-icons/react-perf/BoldDuotone'
-import { GITHUB_REPO } from '../../content/overlay'
 import { m } from '../../paraglide/messages.js'
 import { HOME_PLAYFUL } from './brand'
 
@@ -96,7 +95,7 @@ export function HomeHero() {
             <div className='flex flex-wrap items-center gap-3.5'>
               <Button
                 className='font-bold'
-                render={<a href={GITHUB_REPO} rel='noopener noreferrer' target='_blank' />}
+                render={<a href='/#start' />}
                 rounded
                 size='xl'
                 variant='primary'

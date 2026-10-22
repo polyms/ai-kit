@@ -8,7 +8,7 @@ import react from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig } from 'vite'
 import pkg from './package.json' with { type: 'json' }
-import { paraglideCompilerOptions } from './project.inlang/paraglide.options'
+import { paraglideCompilerOptions } from './project.inlang/paraglide.options.ts'
 
 const siteManifest = JSON.parse(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'public/manifest.json'), 'utf8')

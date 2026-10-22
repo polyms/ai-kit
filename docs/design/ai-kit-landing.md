@@ -1473,7 +1473,7 @@ User invokes **`/ui-kit`** during `/dev` to confirm APIs. **Note:** ui-kit uses 
 | Touch          | min 44×44 — rows, chips, nodes                                                 |
 | Focus order    | Skip → logo → nav → ⌘K → theme → locale → GitHub → main                        |
 | Keyboard       | ⌘K global; catalog `/` search; ↑↓ Enter; Esc Modal                             |
-| ARIA           | `lang="vi"` default; pipeline `nav` + `aria-current`; diagram `aria-label`     |
+| ARIA           | `lang="en"` default; pipeline `nav` + `aria-current`; diagram `aria-label`     |
 | sr-only        | Full pipeline path                                                             |
 | Contrast       | AA dark + light — test both after dark-first fix                               |
 | Reduced motion | All §6 → instant / static                                                      |

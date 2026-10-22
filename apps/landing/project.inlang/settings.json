@@ -1,17 +1,14 @@
 {
-	"$schema": "https://inlang.com/schema/project-settings",
-	"baseLocale": "vi",
-	"locales": [
-		"vi",
-		"en"
-	],
-	"modules": [
-		"./project.inlang/inlang.yaml.ts",
-		"https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@2/dist/index.js"
-	],
-	"plugin.inlang.yaml": {
-		"pathPattern": "./project.inlang/{locale}.yaml",
-		"namespaceSeparator": "_",
-		"sort": "asc"
-	}
+  "$schema": "https://inlang.com/schema/project-settings",
+  "baseLocale": "en",
+  "locales": ["en", "vi"],
+  "modules": [
+    "./project.inlang/inlang.yaml.ts",
+    "https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@2/dist/index.js"
+  ],
+  "plugin.inlang.yaml": {
+    "namespaceSeparator": "_",
+    "pathPattern": "./project.inlang/{locale}.yaml",
+    "sort": "asc"
+  }
 }

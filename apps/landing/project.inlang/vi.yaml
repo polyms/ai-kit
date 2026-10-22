@@ -59,7 +59,7 @@ footer_starGithub: Gắn sao trên GitHub
 
 # --- hero ---
 hero_badge: Ưu tiên Cursor · thiết kế không phụ thuộc công cụ
-hero_ctaPrimary: git clone ai-kit
+hero_ctaPrimary: Bắt đầu
 hero_ctaSecondary: Đọc tài liệu →
 hero_line1: Bộ kỹ năng agent cho
 hero_line2: kỹ sư thực thụ
@@ -91,9 +91,8 @@ pipeline_stage_ship: Phát hành
 pipeline_title: Một luồng xử lý, từ ý tưởng cho đến khi phát hành.
 
 # --- quickstart ---
-quickstart_body: Clone repo, chạy `pnpm bootstrap` — symlink skill và agent vào Cursor lẫn Claude Code. Khởi
-  động lại editor rồi gõ `/` để chọn.
-quickstart_terminalComment: symlink agent và skill vào Cursor và Claude Code
+quickstart_body: Một lệnh cài toàn bộ skill vào Cursor. Khởi động lại editor rồi gõ `/` để chọn.
+quickstart_terminalComment: cài skill vào ~/.cursor/skills
 quickstart_titlePrefix: Chín mươi giây tới
 
 # --- nav ---

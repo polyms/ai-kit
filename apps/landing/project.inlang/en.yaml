@@ -58,7 +58,7 @@ footer_starGithub: Star on GitHub
 
 # --- hero ---
 hero_badge: Cursor-first · tool-agnostic by design
-hero_ctaPrimary: git clone ai-kit
+hero_ctaPrimary: Get started
 hero_ctaSecondary: Read the docs →
 hero_line1: Agent skills for
 hero_line2: real engineering
@@ -87,8 +87,8 @@ pipeline_stage_ship: Ship
 pipeline_title: One pipeline, start to ship.
 
 # --- quickstart ---
-quickstart_body: Clone the repo, run `pnpm bootstrap` — it symlinks skills and agents into both Cursor and Claude Code. Restart your editor and type `/` to pick one.
-quickstart_terminalComment: symlinks agents + skills into Cursor and Claude Code
+quickstart_body: One command installs every skill into Cursor. Restart your editor and type `/` to pick one.
+quickstart_terminalComment: installs skills into ~/.cursor/skills
 quickstart_titlePrefix: Ninety seconds to first
 
 # --- nav ---

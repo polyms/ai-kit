@@ -192,6 +192,11 @@
     color: var(--terminal-prompt);
   }
 
+  .app-terminal__glyph {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   .app-terminal__dim {
     color: var(--terminal-dim);
   }
