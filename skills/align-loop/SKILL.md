@@ -13,8 +13,9 @@ The point is **not** to reach agreement quickly. Make every implicit call explic
 
 ## Discipline
 
-- **One question per turn** — batches are bewildering; wait for feedback before the next question. The
-  acknowledgement turn still ends with `## Next Step` when the delegating skill requires it (`/align` does)
+- **One question per turn** — batches are bewildering. After a pick, the same reply records it and asks
+  the next question while a branch remains. The reply that settles the tree is `## Next Step`, not another
+  question
 - **Proposal, not blank prompt** — **2–4 lettered options** (only real forks — never pad to four), one **(Recommended)** and a one-line rationale; user picks, refines ("B but…"), or proposes another option
 - **Codebase-first** — if the codebase or `CONTEXT.md` can answer, read it, report what you found briefly, then offer grounded options; never ask what files already show
 - **Implicit → explicit** — surface assumptions, contradictions with `CONTEXT.md`, and gaps between code and stated intent as grill questions
@@ -58,18 +59,17 @@ Mid-session adjustments — honor immediately: "softer", "harder", "teach more",
 2. **Frame** — if the problem statement is unclear, restate in one paragraph and confirm (lettered options when multiple valid framings); if clear, summarize the target in 3–6 bullets and ask for correction
 3. **Calibrate** — unless knowledge and pressure are obvious, one calibration turn; then enter the **highest unresolved dependency** on the tree
 4. Grill until every branch in scope is visited or explicitly deferred — dependencies before dependents; adapt depth to calibration dials
-5. **After each pick** — record the decision (glossary when a term resolves). Do not ask the next question
-   in that turn. End with `## Next Step` ([Turn closer](GRILL-FORMAT.md#turn-closer)): `→ /align` naming the
-   next open branch, or one leaving skill when the delegating skill's when-table says to leave. A "what
-   next?" from the user is this closer, not a silent extra question
-6. Name remaining risks and assumptions
-7. **Open-questions audit** — before the decision summary, list every unsettled detail an implementer would
-   need (thresholds, failure behavior, permission edges, scope boundaries); overloaded terms resolved or
-   logged via **domain-modeling**. Each item is answered in one more grill turn or **explicitly deferred** by
-   the user to land in the PRD as `[NEEDS CLARIFICATION]` — never left unnamed
-8. When the tree is settled, or the user asks to close, summarize decisions as bullets — include confirmed
-   open questions — user confirms before a leaving skill (`/to-prd`, `/reqs`, `/design`, `/dev`)
+5. **After each pick** — record the decision (glossary when a term resolves). While a branch is open, ask
+   that question in the same reply, including when the user asks what is next. If the pick settles the
+   tree, skip the question and run **Leave**
+6. **Open-questions audit** — when no branch is left, list every unsettled implementer detail, including
+   remaining risks (thresholds, failure behavior, permission edges, scope boundaries). Overloaded terms are
+   resolved or logged via **domain-modeling**. Each item is one more grill question or an **explicit
+   deferral** (`[NEEDS CLARIFICATION]`) — never left unnamed
+7. **Leave** — the reply that settles the tree (last pick, confirmed deferral, or the user asks to close)
+   is the leaving block: `## Decisions`, `## Open Questions`, `## Next Step`
+   ([Turn closer](GRILL-FORMAT.md#turn-closer)). Do not end on a summary that waits for another confirmation
 
-**Completion criterion:** Each decision turn ended with `## Next Step` when the delegating skill requires
-it; user confirms the decision summary before a leaving skill; every audit item resolved or explicitly
+**Completion criterion:** Each pick is followed by the next question in the same reply while a branch
+remains; the reply that settles the tree includes `## Next Step`; every audit item resolved or explicitly
 deferred; no silent assumptions on visited branches.

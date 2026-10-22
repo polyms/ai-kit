@@ -29,21 +29,26 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 - ADRs stay rare — reversible choices are not rubber-stamped
 - Open-questions audit runs before a leaving skill — `## Open Questions` is never silently empty when
   implementer-facing gaps remain
-- No PRD and no user stories during the grill. An open branch's next step is continue `/align`, not silence
-- Every turn that records a decision ends with `## Next Step`
+- No PRD and no user stories during the grill. An open branch is the next **Q:**, not a `## Next Step`
+- After each pick, the same reply asks the next question while a branch is open. The settling reply is
+  the leaving block, not another question
 
 ## Handoff
 
-`## Next Step` closes every turn that records a decision, and any turn where the user asks what is next
-(`what next?`, bước tiếp). Do not wait for the final summary. The grill-format shape rule must not drop
-this block — see [Turn closer](../align-loop/GRILL-FORMAT.md#turn-closer).
+Grill turns are questions while a branch is open. After the user picks, record the decision and ask the
+next open question in that same reply. Do not close that reply with `## Next Step`. If they ask what is
+next while a branch is open, ask that question. The reply that settles the tree does not add a question.
+
+`## Next Step` is only the leaving reply: the tree just settled, the user asked to close, or they confirmed
+deferral. That same reply carries `## Decisions`, `## Open Questions`, and `## Next Step`. Do not stop on
+a summary that asks them to confirm later. See [Turn closer](../align-loop/GRILL-FORMAT.md#turn-closer).
 
 **Open questions gate** — before pointing to `/to-prd`: if the audit found unsettled items, list them under
 `## Open Questions` and ask the **open-questions confirmation** turn
 ([GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md)). `/to-prd` is valid only when open questions are **zero**,
 or the user picked **B** and confirmed the deferred list — never with a silently empty section while
-implementer-facing gaps remain (that is how `/to-prd` surfaces markers the user never saw). While a branch
-is still open, the preferred next step is `→ /align`.
+implementer-facing gaps remain (that is how `/to-prd` surfaces markers the user never saw). An open branch
+is still a grill question, not `→ /align`.
 
 ## When `/reqs` vs `/to-prd` vs `/align`
 
@@ -61,25 +66,16 @@ Decisions / problem statement clear?
 When suggesting `/to-prd`, say so explicitly (e.g. gõ `/to-prd`) — do not say only "viết PRD" (easy to
 confuse with `/reqs`).
 
-| Next step | When                                                                                  |
-| --------- | ------------------------------------------------------------------------------------- |
-| `/align`  | A branch is still open — name the next decision; do not ask that question in this turn |
-| `/to-prd` | Decisions confirmed; open questions resolved **or** user confirmed deferral to PRD    |
-| `/reqs`   | Need discovery interview, enterprise PRD (chat), stories, or prioritization           |
-| `/dev`    | Small, well-bounded change with clear seams                                           |
-| `/design` | UI flows or design specs needed before implementation                                 |
+| Next step | When                                                                               |
+| --------- | ---------------------------------------------------------------------------------- |
+| `/to-prd` | Decisions confirmed; open questions resolved **or** user confirmed deferral to PRD |
+| `/reqs`   | Need discovery interview, enterprise PRD (chat), stories, or prioritization        |
+| `/dev`    | Small, well-bounded change with clear seams                                        |
+| `/design` | UI flows or design specs needed before implementation                              |
 
-Pick **one** preferred next skill from the table (at most two if the fork is genuinely
-ambiguous — each line with when/why). Do **not** paste a `|`-joined menu.
-
-Mid-grill (the common turn):
-
-```
-## Next Step
-→ /align — next decision: whether an editor may change the graph from chat
-```
-
-Final close — tree settled and the user confirmed the summary. Other leaving skills: see the when-table.
+Pick **one** preferred leaving skill (at most two if the fork is genuinely ambiguous — each line with
+when/why). Do **not** paste a `|`-joined menu. Do **not** list `/align` here: an open branch is the next
+**Q:**.
 
 ```
 ## Decisions
@@ -92,17 +88,19 @@ Final close — tree settled and the user confirmed the summary. Other leaving s
 → /to-prd
 ```
 
-Two-option example only when continue vs leave is a real fork:
+(Example assumes lean publish is ready. Other picks: see the when-table.)
+
+Two leaving skills only when that fork is real:
 
 ```
 ## Next Step
-→ /align — the write-permission branch is still open
-→ /dev — read-only scope is enough to implement now
+→ /to-prd — decisions confirmed; ready to publish a lean PRD
+→ /design — UI-heavy; flows must land before tracker publish
 ```
 
-**Completion criterion:** Every decision turn, and every "what next?" turn, ends with `## Next Step`;
-`## Open Questions` matches the audit before a leaving skill (not silently empty); user confirmed
-deferral before `## Next Step` → `/to-prd` when any item remains; the closer names one preferred skill
-(two max with when/why). `/align` counts: it names the next branch and does not ask that question.
+**Completion criterion:** While a branch is open, the reply asks the next question and has no
+`## Next Step`. The leaving reply names one preferred skill (two max with when/why). `## Open Questions`
+on that reply matches the audit (not silently empty). `→ /to-prd` only when that audit is empty, or the
+deferral pick is the message this reply answers.
 
 Alignment is **interactive** — stay in this chat for the whole grill. There is no `align-agent` subagent; subagents run autonomously and cannot wait for one answer per turn.

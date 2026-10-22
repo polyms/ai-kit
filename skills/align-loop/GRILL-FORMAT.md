@@ -3,9 +3,8 @@
 Used by **align-loop** (and any skill that delegates to it: `/align`, `/triage`, `/arch-refactor`).
 
 Shape only — one short lead-in sentence, then **Q:** and lettered options. No section headings in the
-grill body. `## Next Step` still closes the turn when the parent skill requires it (`/align` does on
-every decision). That closer is not a second question; the shape rule must not drop it. Persona (if
-any) is opt-in via `/setup` → `.cursor/rules/agent-voice.mdc`, not this file.
+grill body. Do not append `## Next Step` to a grill question; that closer is only for a turn that leaves
+the grill. Persona (if any) is opt-in via `/setup` → `.cursor/rules/agent-voice.mdc`, not this file.
 
 ## Shape
 
@@ -31,9 +30,9 @@ Rules:
 - **One paragraph per option** — blank line between **A.** / **B.** / **C.**. Chat markdown joins
   consecutive lines into one unreadably long paragraph. Persona density rules do not collapse options onto
   one line, and do not inline "pick A, B, or C?" in the lead-in
-- After the user picks or refines, **do not** ask the next grill question in the same turn. Still end
-  that turn with `## Next Step` when the parent requires it. Continue-grill names the next branch; it
-  does not ask it
+- After the user picks or refines, record it in one short line. While a branch is open, ask that next
+  grill question in the same reply. One question, and no `## Next Step` on that reply. If the pick
+  settles the tree, the same reply is the leaving block, not another question
 - User may answer with a letter, "B but…", or propose the next letter if their pick wasn't listed
 
 ### How many options?
@@ -145,17 +144,9 @@ List the items first, then one confirmation turn — three real forks:
 
 ## Turn closer
 
-Required by `/align` at the end of every turn that records a decision, and whenever the user asks what
-is next. One preferred line. A second line only when continue-grill vs leaving is a real fork.
-
-Continue:
-
-```markdown
-## Next Step
-→ /align — next decision: whether an editor may change the graph from chat
-```
-
-Leave (one of `/reqs`, `/to-prd`, `/design`, `/dev` — when-table in `/align` is the SSOT):
+Not part of a grill question. While a branch is open, ask it and do not append `## Next Step`. The reply
+that settles the tree carries `## Next Step` and no further **Q:** (`/reqs`, `/to-prd`, `/design`, `/dev`
+— when-table in the parent skill). Do not end on a summary that waits for another confirmation.
 
 ```markdown
 ## Next Step
@@ -170,14 +161,14 @@ Leave (one of `/reqs`, `/to-prd`, `/design`, `/dev` — when-table in `/align` i
 | Options stacked with no blank line (markdown joins) | Blank line between each **A.** / **B.** / **C.**          |
 | Inline "pick A, B, or C?" in the lead-in            | Lead-in, then **Q:**, then separate option paragraphs     |
 | Padding to four options with straw men              | Stop at 2–3; user can add the next letter in reply        |
-| Multiple questions in one turn                      | One decision per turn                                     |
+| Two **Q:** blocks in one reply                      | One **Q:**; last pick is one line above it                |
 | Ask what code already shows                         | Explore, report, then lettered options                    |
 | Dump the whole decision tree upfront                | Descend the tree; parent before child                     |
 | Robotic listing without a lead-in sentence          | One line why this decision is up now, then **Q:**         |
 | Batch glossary updates at the end                   | `domain-modeling` writes each term when it resolves       |
 | Hand off with "no open questions" while gaps remain | Open-questions audit; defer only with explicit user **B** |
-| Stop after a glossary update                        | `## Next Step`: continue `/align` or one leaving skill    |
-| Drop the closer to obey the headings ban            | Headings ban covers the grill body only                   |
+| `## Next Step` instead of the next question         | Ask the next **Q:**; closer only when leaving the grill   |
+| Glossary update, then stop                          | Next **Q:**, or the leaving block if the tree settled |
 | Terse fragments on security or irreversible ops     | Auto-clarity — full warning, explicit order               |
 
 ## Auto-clarity
