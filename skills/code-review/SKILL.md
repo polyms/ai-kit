@@ -35,9 +35,9 @@ non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents
 
 Check diff size (`git diff <fixed-point>...HEAD --stat`, sum of `+N/-M`). Under 10 changed
 lines → skip sub-agent spawn; read the diff yourself and apply all three checklists
-(Standards/Spec/Simplify) inline in one pass, then go straight to **5. Aggregate** using
-the same headings and severity tags as a spawned run. 10 lines or more → continue to
-steps 3–4 as normal.
+(Standards/Spec/Simplify) inline in one pass, then go straight to **5. Aggregate** and
+**6. Handoff** using the same headings and severity tags as a spawned run. 10 lines or
+more → continue to steps 3–4 as normal.
 
 **Completion criterion:** Valid ref, non-empty three-dot diff, diff command and commit
 list captured; diff-size branch decided (inline vs spawn).
@@ -79,7 +79,7 @@ paste.
 ### 4. Spawn three sub-agents in parallel
 
 Skip this step when step 1 decided **inline** (diff under 10 changed lines) — go straight
-to **5. Aggregate** with your own inline findings instead.
+to **5. Aggregate** and **6. Handoff** with your own inline findings instead.
 
 Send a **single message** with three Agent tool calls (`subagent_type: general-purpose`) —
 or two when Spec is skipped. Do not run axes sequentially.
@@ -151,15 +151,53 @@ strongest justified tag per discrete issue — prefer under-tagging over inflati
 State the legend once, briefly, near the top of the report (in Vietnamese) so 🔴/🟡/💭
 don't require the reader to already know this table.
 
-End with a one-line summary in Vietnamese: total findings per axis **by severity** (e.g.
-`Standards: 1🔴 2🟡 · Spec: 0 · Simplify: 3💭`), and the worst issue _within each axis_ (if
-any), stated as a plain sentence — not a re-paste of the sub-agent's shorthand.
-Don't pick a single winner across axes.
+Close the findings with a one-line summary in Vietnamese: total findings per axis **by
+severity** (e.g. `Standards: 1🔴 2🟡 · Spec: 0 · Simplify: 3💭`), and the worst issue
+_within each axis_ (if any), stated as a plain sentence — not a re-paste of the
+sub-agent's shorthand. Don't pick a single winner across axes. Then run **6. Handoff**.
 
 **Completion criterion:** Each run axis under its heading (`## Spec` states **no spec
 available** when skipped); every finding rewritten as a full Vietnamese sentence with no
 bare jargon tags; every finding tagged; severity legend stated once; per-axis totals by
-severity and worst issue stated in prose.
+severity and worst issue stated in prose. Step 6 has run.
+
+### 6. Handoff
+
+Severity cues are when/why (not a pasteable menu). The report always ends with
+`## Next Step` (CONTEXT.md **Handoff**) — prefer **exactly one** `→ /skill`. A summary
+without this block is an unfinished review.
+
+| Next step | When                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------------ |
+| `/dev`    | 🔴 in the code or Simplify cuts — name the fix or delete-list. No open 🔴 — ship checklist, then merge |
+| `/reqs`   | Spec is wrong (not the code) — update the issue before coding further                                  |
+
+🟡 suggestions and 💭 nits stay in the report body. They do not add a third arrow.
+
+Blocker in the code:
+
+```
+## Next Step
+→ /dev — fix the auth check in mcp.server.ts before merge
+```
+
+Spec gap, code is otherwise fine:
+
+```
+## Next Step
+→ /reqs — acceptance criteria never named the empty state the diff invented
+```
+
+Two arrows only when fix vs product-gap is a real fork:
+
+```
+## Next Step
+→ /reqs — the issue asked for export; the diff only lists the files
+→ /dev — after the issue is corrected, implement the missing export
+```
+
+**Completion criterion:** Report includes `## Next Step` with one preferred skill (two max
+with when/why when the fix-vs-product-gap fork is real).
 
 ## Why three axes
 
@@ -174,21 +212,6 @@ A change can pass one axis and fail another:
   separate so smell framing doesn't blur the delete-list.
 
 Reporting them separately stops one axis from masking the other.
-
-## Handoff
-
-Severity cues are when/why (not a pasteable menu). End the report with `## Next Step` (CONTEXT.md
-**Handoff**) — prefer **exactly one**:
-
-- **🔴 blocker** (any axis) → `→ /dev` to fix before merge. Spec wrong (not code) → `→ /reqs` /
-  update the issue before coding further (pick one).
-- **Ready to merge** (no open 🔴) → ship / merge (optionally note `/dev` ship checklist).
-- **Simplify cuts worth taking** → `→ /dev` with the delete-list.
-
-🟡 suggestions and 💭 nits stay in the report body — do not expand `## Next Step` into a menu.
-
-**Completion criterion:** Report includes `## Next Step` with one preferred action (two max with
-when/why when fix vs product-gap fork is real).
 
 ## Agent
 
