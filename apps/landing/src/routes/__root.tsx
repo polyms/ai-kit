@@ -1,5 +1,6 @@
 import { Modal, Toast } from '@polyms/ui-kit'
 import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
+import { Analytics } from '@vercel/analytics/react'
 import { getLocale } from '~/paraglide/runtime'
 import { CommandPalette } from '../components/CommandPalette'
 import { GlobalActionFlyout } from '../components/GlobalActionFlyout'
@@ -65,6 +66,7 @@ function RootLayout() {
             </>
           ) : null}
         </Toast>
+        <Analytics />
         <Scripts />
       </body>
     </html>
