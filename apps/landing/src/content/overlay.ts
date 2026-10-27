@@ -105,8 +105,8 @@ export const skillOverlays: SkillOverlay[] = [
     },
     prerequisites: [
       {
-        en: 'ai-kit cloned and `pnpm bootstrap` already ran so `/setup` appears in Cursor.',
-        vi: 'Đã clone ai-kit và chạy `pnpm bootstrap` để `/setup` hiện trong Cursor.',
+        en: 'ai-kit cloned, dependencies installed with `pnpm install`, and `pnpm bootstrap` run for your client: Cursor, Claude Code, Codex, or Copilot.',
+        vi: 'Đã clone ai-kit, cài dependency bằng `pnpm install`, và chạy `pnpm bootstrap` cho client đang dùng: Cursor, Claude Code, Codex hoặc Copilot.',
       },
       {
         en: 'You are in the target project repo (not only the ai-kit repo).',
@@ -115,8 +115,8 @@ export const skillOverlays: SkillOverlay[] = [
     ],
     howTo: [
       {
-        en: 'In Cursor chat, type `/setup` (or paste the sample prompt).',
-        vi: 'Trong chat Cursor, gõ `/setup` (hoặc dán prompt mẫu).',
+        en: 'In your target project, select `/setup` in Cursor, Claude Code, or Copilot. In Codex CLI/IDE, select `$setup` or use `/skills`; desktop clients can use their skill picker.',
+        vi: 'Trong dự án đích, chọn `/setup` trên Cursor, Claude Code hoặc Copilot. Với Codex CLI/IDE, chọn `$setup` hoặc dùng `/skills`; trên desktop, dùng bộ chọn skill.',
       },
       {
         en: 'Answer where issues live, docs language, and domain layout — one decision at a time.',

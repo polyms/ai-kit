@@ -9,7 +9,10 @@ import { m } from '../../paraglide/messages.js'
 import { HOME_PLAYFUL } from './brand'
 import { HomeSectionChip } from './HomeSectionChip'
 
-const COMMAND = `npx skills add ${GITHUB_REPO} --skill '*' -a cursor -g`
+const COMMAND = `git clone ${GITHUB_REPO}
+cd ai-kit
+pnpm install
+pnpm bootstrap`
 
 /** Drop shell prompts and comments so a drag-select paste stays a real command. */
 export function commandFromSelection(raw: string): string {
@@ -39,9 +42,11 @@ function renderTerminalLine(text: string) {
 export function HomeQuickStart() {
   const toastManager = Toast.useToastManager()
   const lines = [
-    { prefix: '$', text: 'npx skills add \\', comment: false },
-    { prefix: '>', text: `${GITHUB_REPO} \\`, comment: false },
-    { prefix: '>', text: "--skill '*' -a cursor -g", comment: false },
+    { prefix: '$', text: 'git clone \\', comment: false },
+    { prefix: '>', text: GITHUB_REPO, comment: false },
+    { prefix: '$', text: 'cd ai-kit', comment: false },
+    { prefix: '$', text: 'pnpm install', comment: false },
+    { prefix: '$', text: 'pnpm bootstrap', comment: false },
     { prefix: '#', text: m.quickstart_terminalComment(), comment: true },
   ] as const
 
@@ -95,7 +100,7 @@ export function HomeQuickStart() {
             <span className='size-2.5 shrink-0 rounded-full bg-[#f43f5e]' />
             <span className='size-2.5 shrink-0 rounded-full bg-[#f59e0b]' />
             <span className='size-2.5 shrink-0 rounded-full bg-[#10b981]' />
-            <span className='app-terminal__title ms-auto font-mono text-[11px]'>zsh — npx skills</span>
+            <span className='app-terminal__title ms-auto font-mono text-[11px]'>zsh — bootstrap</span>
             <Button className='shrink-0' onClick={handleCopyClick} rounded size='sm' variant='light'>
               <IconCopy aria-hidden size={14} />
               {m.catalog_copy()}
@@ -131,6 +136,13 @@ export function HomeQuickStart() {
             </div>
           </div>
         </div>
+      </div>
+      <div className='mt-8 space-y-3 text-muted text-sm leading-relaxed'>
+        <p className='m-0'>{m.quickstart_prerequisites()}</p>
+        <p className='m-0'>{m.quickstart_targets()}</p>
+        <p className='m-0'>{m.quickstart_invocation()}</p>
+        <p className='m-0'>{m.quickstart_copilot()}</p>
+        <p className='m-0'>{m.quickstart_mcp()}</p>
       </div>
     </section>
   )

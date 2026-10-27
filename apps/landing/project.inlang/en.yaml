@@ -18,12 +18,12 @@ catalog_title: Skill catalog
 catalog_zeroResults: 0 results
 
 # --- skills shell ---
-skills_intro_body: Bootstrap the kit, then pick a skill. Each detail page has prerequisites, steps, and a sample prompt you can paste into Cursor.
+skills_intro_body: 'Bootstrap the kit for Cursor, Claude Code, Codex, or GitHub Copilot, then pick a skill. Each detail page includes prerequisites, steps, and a sample prompt.'
 skills_intro_title: Get started with ai-kit
 skills_getStarted_stepsTitle: Three steps to first invoke
-skills_getStarted_step1: Clone the repo and run `pnpm bootstrap` to symlink skills into Cursor.
-skills_getStarted_step2: In your project, run `/setup` once so the pipeline knows your tracker and docs layout.
-skills_getStarted_step3: Open a skill below, copy the sample prompt, paste it into Cursor, and follow the next step.
+skills_getStarted_step1: 'Clone the repo, run `pnpm install`, then `pnpm bootstrap` to install skills and principal agents for all four clients.'
+skills_getStarted_step2: 'In your target project, run the setup skill once so the pipeline knows your tracker and docs layout.'
+skills_getStarted_step3: 'Open a skill below, copy its sample prompt into your client, and follow the next step. Use the invocation syntax for that client.'
 skills_getStarted_fullQuickstart: Full terminal walkthrough on the homepage →
 skills_getStarted_pipelineTitle: Main pipeline
 skills_getStarted_pipelineHint: Start here for a typical feature — open a skill for steps and a ready prompt.
@@ -87,9 +87,14 @@ pipeline_stage_ship: Ship
 pipeline_title: One pipeline, start to ship.
 
 # --- quickstart ---
-quickstart_body: One command installs every skill into Cursor. Restart your editor and type `/` to pick one.
-quickstart_terminalComment: installs skills into ~/.cursor/skills
-quickstart_titlePrefix: Ninety seconds to first
+quickstart_body: 'Install skills and the five principal agents for Cursor, Claude Code, Codex, and GitHub Copilot. Keep this checkout: the installed skills and role instructions link back to it.'
+quickstart_terminalComment: 'installs all four clients; existing Codex/Copilot entries are backed up'
+quickstart_titlePrefix: 'Start with'
+quickstart_prerequisites: 'Before installing, have Git, Node.js, pnpm, and access to the @polyms/ui-kit package on GitHub Packages available.'
+quickstart_targets: 'For one client only, replace the last command with pnpm bootstrap cursor, pnpm bootstrap claude, pnpm bootstrap codex, or pnpm bootstrap copilot. Codex/Copilot targets leave existing Cursor/Claude installations unchanged.'
+quickstart_invocation: 'Restart your editor or open a new chat, then select /setup in your target project. Cursor, Claude Code, and Copilot use /name; Codex CLI/IDE uses $name or /skills. Desktop clients can use their skill picker. The /name notation throughout this site names the same workflow.'
+quickstart_copilot: 'In VS Code, select the Copilot harness and open Chat: Open Customizations to check skills and the five agents. Codex and Copilot share skills in ~/.agents/skills; their agents are installed in ~/.codex/agents and ~/.copilot/agents respectively.'
+quickstart_mcp: 'Configure Knowledge MCP separately in each target project. For Codex, run codex mcp add aikit --url https://ai-kit.polyms.dev/mcp, then codex mcp login aikit. In VS Code, use MCP: Add Server with the same HTTP URL and complete OAuth. This ai-kit checkout already includes both project configurations.'
 
 # --- nav ---
 nav_catalog: Skills

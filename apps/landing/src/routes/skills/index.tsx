@@ -56,6 +56,7 @@ function SkillsIndexPage() {
               <li key={step.id}>{step.text()}</li>
             ))}
           </ol>
+          <p className='mt-3 text-muted text-sm leading-relaxed'>{m.quickstart_invocation()}</p>
           <a
             className='mt-4 inline-block font-medium text-primary-700 text-sm no-underline hover:underline'
             href='/#start'
