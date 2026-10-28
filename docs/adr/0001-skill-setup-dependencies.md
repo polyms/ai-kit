@@ -32,15 +32,16 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 
 | Skill             | Soft use                                                                                                                                                                                 |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `dev`             | Read `CONTEXT.md` + `docs/adr/` if present; Knowledge (`design`/`toolchain`/`incident`) + `stack-profile.md` when present                                                                |
+| `dev`             | Read `CONTEXT.md` + `docs/adr/` if present; Knowledge (`design`/`toolchain`/`incident`) + `stack-profile.md` when present. Reads `docs/agents/feature-map.md` when the index has area links; may edit that one area file in the same PR |
 | `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch                                                                                                                            |
 | `align-loop`      | Same when exploring codebase                                                                                                                                                             |
 | `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve; writes in `docs/agents/language.md` if present                                                                                           |
 | `reqs`, `to-prd`  | Glossary when `CONTEXT.md` exists; `docs/agents/language.md` if present; PRD shape from `docs/agents/requirements.md` when present (`/reqs` does not publish; `/to-prd` does)            |
 | `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/ui-kit` before component map; writes in `docs/agents/language.md` if present                                                         |
 | `devops`          | [knowledge.md](../agents/knowledge.md) (`intent: incident`) + MCP; `stack-profile.md` when present (from `/setup`)                                                                       |
-| `docs`            | `docs/agents/language.md` when present; `CONTEXT.md` vocabulary only (no glossary expansion)                                                                                             |
-| `e2e`             | Repo Playwright/Cypress + CI workflows as source of truth; no docs/agents gate                                                                                                           |
+| `docs`            | `docs/agents/language.md` when present; `CONTEXT.md` vocabulary only (no glossary expansion). Does not edit the repo feature-map package                                                |
+| `e2e`             | Repo Playwright/Cypress + CI workflows as source of truth; no docs/agents gate. Reads `docs/agents/feature-map.md` when the index has area links                                         |
+| `build-feature-map` | Writes the repo-local `feature-map` skill. No `/setup` gate. Uses `docs/agents/feature-map.md` and `docs/agents/language.md` when present                                              |
 | `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces; Knowledge `intent: design` for stack seams; `stack-profile.md` when present; writes in `docs/agents/language.md` if present |
 | `arch-refactor`   | Same; reaches `arch`, `align-loop`, `domain-modeling`                                                                                                                                    |
 
@@ -51,6 +52,8 @@ Do **not** cargo-cult the `/setup` pointer into soft-dependency skills. No `docs
 - Hard-dependency skills stay token-light on setup prose — one prerequisite line, not repeated setup docs inline.
 - Authors adding skills must classify hard vs soft before writing prerequisites.
 - `/setup` remains the single place that writes `docs/agents/language.md`, `issue-tracker.md`, `domain.md`,
-  `triage-labels.md`, `design.md`, `requirements.md`, and `stack-profile.md`. Opt-in chat persona (default off) writes
+  `triage-labels.md`, `design.md`, `requirements.md`, and `stack-profile.md`. Opt-in feature map (default off)
+  writes `docs/agents/feature-map.md` plus an empty `.cursor/skills/<slug>/` package; declining writes only
+  a `Status: declined` pointer so other skills stop suggesting the map. Opt-in chat persona (default off) writes
   `.cursor/rules/agent-voice.mdc` plus a Claude symlink under `.claude/rules/` — not a hard dependency for
   any skill.

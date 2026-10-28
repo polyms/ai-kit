@@ -27,6 +27,10 @@ examples; does not implement features or rewrite AC.
 **Boundary vs `domain-modeling`:** Reading `CONTEXT.md` for vocabulary is fine. Active glossary
 or ADR updates → escalate; do not expand product language in docs alone.
 
+**Boundary vs the feature map:** `.cursor/skills/feature-map/` (path in `docs/agents/feature-map.md`)
+is an agent inventory. Do not rewrite it as a tutorial, and do not edit its four H2 headings.
+Drift workflow skips that package. `/build-feature-map` owns it.
+
 ## Soft setup dependency
 
 Prefer `docs/agents/language.md` when present for documentation language. No `/setup` gate.

@@ -29,6 +29,13 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 - Read PRD, user stories, `/design` spec at `docs/design/<feature>.md`, or `/align` decisions
 - Read `CONTEXT.md` — use glossary vocabulary in code and tests
+- **Feature map:** Read `docs/agents/feature-map.md` when it exists. An area is a markdown link in
+  the index to a sibling `*.md`. When area links exist, read the repo `SKILL.md` at `Skill` and
+  open the one area file for this slice before confirming the seam. Its user path and gotchas are
+  the behavior contract. Still read the module this slice edits. The area file does not replace
+  that read, and it is not a reason to stop and retell the gotchas. Do not run
+  `/build-feature-map`. Do not suggest the map when it is missing — `/e2e` owns that suggestion.
+  Glossary, ADRs, the PRD, and `docs/design/<feature>.md` are still read in full.
 - Read **`docs/agents/stack-profile.md`** when present — pass `axes` on Knowledge searches below
 - **Deploy/CI slice (only when it surfaces mid-implementation):** [Knowledge pointer](../../docs/agents/knowledge.md)
   — MCP `search_knowledge` with `intent: incident` and `q` = symptom (no MCP: browse
@@ -127,6 +134,9 @@ name an upstream skill when blocked.
 - [ ] **UI from `docs/design/`:** [visual-ship.md](visual-ship.md) passed — CSS layer + dark
       acceptance vs visual reference; default posture is **not ship-ready** until checks
       pass with evidence
+- [ ] **Feature map:** when the index already has an area this diff touches, update that one
+      `references/features/` file in this PR. Do not start a seed. Do not run
+      `/build-feature-map`
 
 **Completion criterion:** Every ship checklist item verified; Disk gate exit code recorded
 (or docs-only skip); scope self-check filled; diff passes the line-by-line pass rule.

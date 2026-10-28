@@ -49,7 +49,8 @@ Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/
 
 ### Maintenance
 
-`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — developer-facing docs; `techlead`. `/e2e` — E2E automation; principal agent `tester` (skill id `e2e`). Pipeline walkthrough: `examples/pipeline-feature-walkthrough.md`.
+`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — developer-facing docs; `techlead`. `/e2e` — E2E automation; principal agent `tester` (skill id `e2e`). `/build-feature-map` — authors the
+repo-local `feature-map` skill; same principal `tester`. Pipeline walkthrough: `examples/pipeline-feature-walkthrough.md`.
 
 ### Invocation
 
@@ -64,7 +65,7 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | `pm`        | Principal product manager   | PRD, stories, acceptance criteria, scope (`/reqs`)                                 |
 | `designer`  | Principal product designer  | `docs/design/` UI specs, `@polyms/ui-kit` maps (`/design`)                         |
 | `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
-| `tester`    | Principal tester            | E2E harness, flake, CI sharding, journeys (`/e2e`)                                 |
+| `tester`    | Principal tester            | E2E (`/e2e`); repo feature map (`/build-feature-map`)                              |
 | `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |
 
 Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public surface → `/docs`

@@ -24,6 +24,12 @@ cause → fix → verify). **`/e2e`** owns flaky/slow/wrong **test** jobs and Pl
 **Boundary vs `code-review`:** Pre-merge Standards/Spec/Simplify is `code-review`. Suite
 stability is this skill.
 
+**Feature map:** Read `docs/agents/feature-map.md` when it exists. An area is a markdown link in
+the index to a sibling `*.md`. When area links exist, read the repo `SKILL.md` at `Skill` and use
+the one area file's `Driving it` section as journey coverage. Do not explore that surface. Do not
+run `/build-feature-map` on this turn. Flake, shard, and triage never hand off to
+`/build-feature-map`.
+
 ## Soft setup dependency
 
 No `/setup` gate. Use repo Playwright/Cypress config and CI workflows as source of truth.
@@ -72,9 +78,15 @@ disk before claiming green ([invocation.md](../../docs/agents/invocation.md)
 3. Prefer role-based selectors / stable test ids over brittle CSS
 4. Attach trace/video on failure in CI
 5. Keep `/dev` TDD at seams for unit logic — E2E asserts observable journey only
+6. When the feature map has an area for this journey, cover the `Driving it` paths that match the
+   AC. When the pointer says `Status: declined`, say nothing about the map. Otherwise, when the
+   index has no area links, say once, in the user's language, that the repo has no feature map,
+   this session explores as usual, and `/build-feature-map` lets later sessions open one file
+   instead. Then finish this journey.
 
 **Completion criterion:** Journey green locally + CI path noted (disk exit code, not a nested
-agent summary); out-of-scope journeys listed.
+agent summary); out-of-scope journeys listed. If the index has no areas and the map is not
+declined, `## Next Step` is `→ /build-feature-map`.
 
 ## Triage Workflow
 
@@ -105,12 +117,13 @@ The agent reads this skill when invoked.
 When/why cues for escalation (not a pasteable menu). End the session with `## Next Step`
 (CONTEXT.md **Handoff**) — prefer **exactly one**; two max with when/why:
 
-| Cue                         | Typical next                                   |
-| --------------------------- | ---------------------------------------------- |
-| Feature AC / seam tests     | `/dev`                                         |
-| Deploy/CI infra (non-test)  | `/devops`                                      |
-| Public flows stabilized     | optional `/docs` for tester/contributor how-to |
-| Harness changes on a branch | `/code-review` when ready for merge            |
-| Suite green; nothing queued | ship / done                                    |
+| Cue                                    | Typical next                                   |
+| -------------------------------------- | ---------------------------------------------- |
+| Feature AC / seam tests                | `/dev`                                         |
+| Journey walked, no areas, not declined | `/build-feature-map`                           |
+| Deploy/CI infra (non-test)             | `/devops`                                      |
+| Public flows stabilized                | optional `/docs` for tester/contributor how-to |
+| Harness changes on a branch            | `/code-review` when ready for merge            |
+| Suite green; nothing queued            | ship / done                                    |
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).

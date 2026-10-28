@@ -101,6 +101,14 @@ _Avoid_: technical writer (generic), README dump, /reqs (when meaning requiremen
 End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/e2e`. Long sessions: **`tester`** (skill id `e2e`, agent id `tester`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
 _Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when meaning seam TDD)
 
+**Feature map**:
+Repo-local skill (default `.cursor/skills/feature-map/`) whose `references/features/` index routes an agent to
+one behavior file. Four headings per area: `Sub-features`, `How to get to it (user POV)`, `Driving it`,
+`Gotchas`. The kit skill `/build-feature-map` authors that package. `/dev` and `/e2e` read it when the index
+has area links. Pointer: `docs/agents/feature-map.md`.
+_Avoid_: wiki, reading the app to find a surface the index already names, `docs/features/` (the map is not
+public docs)
+
 **Scope self-check**:
 Pre-ship audit that every changed line is required by the stated task — surface temptations as follow-ups, do not expand the diff. Part of `/dev` ship checklist; see `skills/dev/scope-self-check.md`.
 _Avoid_: YAGNI checklist (use solution ladder for build choices), minimal change engineer

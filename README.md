@@ -65,8 +65,9 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging       |
 | `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes           |
 | `/docs`          | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`techlead`)                    |
-| `/e2e`           | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester`)                                |
-| `/devops`        | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem         |
+| `/e2e`               | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester`)                                |
+| `/build-feature-map` | [`build-feature-map`](skills/build-feature-map/)                                                             | **Available** | Author the repo `feature-map` skill (`tester`)                      |
+| `/devops`            | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem         |
 | `/craft`         | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning              |
 | `/arch-refactor` | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates     |
 | `/arch`          | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)       |
@@ -297,6 +298,21 @@ Stabilize flaky Playwright checkout journey — signal waits, quarantine with ow
 
 See [SKILL.md](skills/e2e/SKILL.md).
 
+### `/build-feature-map` — Repo feature map
+
+Authors a repo-local skill at `.cursor/skills/feature-map/`. That skill reads
+`references/features/` and opens one area file. The kit skill does not contain the map.
+`/setup` can scaffold an empty package. `/dev` and `/e2e` read it once areas exist.
+Principal: `tester`.
+
+```
+/build-feature-map
+
+Seed a map from the sign-in then send-a-message journey. Three areas, then stop.
+```
+
+See [SKILL.md](skills/build-feature-map/SKILL.md).
+
 ### `/devops` — Deploy, CI & Infra
 
 Symptom → cause → fix → verify via Knowledge MCP (`intent: incident`). After green verify:
@@ -522,6 +538,7 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 - [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
 - [x] `/docs` — developer-facing docs (`techlead`)
 - [x] `/e2e` — E2E automation (`tester`)
+- [x] `/build-feature-map` — authors the repo-local `feature-map` skill (`tester`)
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
 - [x] `/arch-refactor` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)

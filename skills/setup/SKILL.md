@@ -166,10 +166,29 @@ sections.
 Ask once. If the user has no preference, confirm **Standard**. On a re-run, show the existing
 `docs/agents/requirements.md` default and ask keep or change.
 
+**J — Feature map** (optional)
+
+Repo-local behavior index so later sessions open one area file instead of exploring the app.
+Default: **do not** scaffold.
+
+Ask: _Do you want a feature map for this repo?_ If `.cursor/skills/feature-map/` or
+`docs/agents/feature-map.md` already exists with a `Skill` line, say so and keep it. Setup does
+not rewrite or remove a map; `/build-feature-map` maintains it. A pointer that only says
+`Status: declined` counts as a past **No** — show it and ask keep or change.
+
+| Choice           | When                                                     |
+| ---------------- | -------------------------------------------------------- |
+| **No** (default) | Library, kit, or an app that does not need a behavior map |
+| **Yes**          | An app with screens later sessions should not re-explore |
+
+If **Yes**, ask once for a harness command. No command → `Harness: none`. Slug stays
+`feature-map` unless that directory already holds a different skill — then ask once for another
+slug. Never `build-feature-map`.
+
 **Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed;
 issue tracker, domain layout, artifact paths, triage labels, design paths, voice choice (No or Yes +
-any overrides), **requirements template** default (Standard, MVP, or AI-optimized), and **stack axes**
-confirmed by user.
+any overrides), **requirements template** default (Standard, MVP, or AI-optimized), **stack axes**
+confirmed by user, and feature-map choice (No, or Yes + harness and slug).
 
 ### 3. Confirm draft
 
@@ -184,6 +203,9 @@ Show before writing:
 - `docs/agents/requirements.md` (confirmed default + catalog)
 - `docs/agents/stack-profile.md` (axes list + detected-from notes + optional Coverage)
 - If voice **Yes**: `.cursor/rules/agent-voice.mdc` and `.claude/rules/agent-voice.mdc` → symlink
+- If feature map **Yes**: `docs/agents/feature-map.md`, empty
+  `.cursor/skills/<slug>/` package, Claude and Codex symlinks
+- If feature map **No** and no pointer exists: `docs/agents/feature-map.md` with `Status: declined`
 
 Let user edit.
 
@@ -235,6 +257,12 @@ Stack axes for Knowledge retrieval. See `docs/agents/stack-profile.md` and
 Opt-in chat persona: `.cursor/rules/agent-voice.mdc` (Cursor). Claude Code:
 `.claude/rules/agent-voice.mdc` → symlink to that rule.
 
+### Feature map
+
+[Omit this subsection when feature map was **No**.]
+Repo skill `.cursor/skills/feature-map/` (or the confirmed slug). See `docs/agents/feature-map.md`.
+Areas are added with `/build-feature-map`, not during setup.
+
 ### Pipeline
 
 Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev`; raw issues via `/triage`. Specs in
@@ -261,6 +289,13 @@ Write docs using templates:
   catalog)
 - Stack profile → [stack-profile.md](stack-profile.md) (fill confirmed axes + detected-from +
   Coverage when MCP coverage ran)
+- Feature map pointer → [../build-feature-map/pointer-template.md](../build-feature-map/pointer-template.md)
+  (replace every `{slug}` and set `Harness` to the confirmed command)
+- Feature map skill →
+  [../build-feature-map/repo-skill-template.md](../build-feature-map/repo-skill-template.md) at
+  `.cursor/skills/<slug>/SKILL.md` (replace `{slug}` in the frontmatter `name`)
+- Feature map index → [../build-feature-map/index-template.md](../build-feature-map/index-template.md)
+  at `.cursor/skills/<slug>/references/features/README.md` (no area links yet)
 
 **If voice Yes:**
 
@@ -276,11 +311,51 @@ Do **not** duplicate the persona body under `.claude/` — one SoT, one link.
 
 **If voice No:** do not write or remove an existing rule unless the user confirmed replace/remove in step G.
 
+**If feature map Yes:**
+
+1. Write `docs/agents/feature-map.md` from the pointer template.
+2. Write `.cursor/skills/<slug>/SKILL.md` and `references/features/README.md` from the templates.
+   Do not write area files. An index with no area links is not a map yet.
+3. Write `.cursor/skills/<slug>/agents/openai.yaml` so Codex never selects the map on its own:
+
+```yaml
+policy:
+  allow_implicit_invocation: false
+```
+
+4. Check both link paths first. When `.claude/skills/<slug>` or `.agents/skills/<slug>` already
+   exists and is not a symlink to the Cursor package, stop: diff it against the package, keep a
+   backup outside any skill folder, and reconcile with the user. `ln -sfn` on a real directory
+   nests the link inside it instead of replacing it.
+5. `mkdir -p .claude/skills .agents/skills`
+6. Symlink Claude and Codex → the Cursor skill (relative paths so clones stay portable):
+
+```bash
+ln -sfn ../../.cursor/skills/<slug> .claude/skills/<slug>
+ln -sfn ../../.cursor/skills/<slug> .agents/skills/<slug>
+```
+
+Do **not** copy a second map under `.claude/` or `.agents/` — one directory, two links.
+
+**If feature map No:** when no pointer exists, write `docs/agents/feature-map.md` with this body so
+`collab` and `e2e` stop suggesting the map:
+
+```markdown
+# Feature map
+
+Status: declined
+
+Run `/build-feature-map` to start one; it replaces this file.
+```
+
+Never write a map package, and never remove an existing map or pointer.
+
 **Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
 `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`,
 `docs/agents/requirements.md`, `docs/agents/stack-profile.md`, and agent config file written; if voice Yes,
-Cursor rule + Claude
-symlink present.
+Cursor rule + Claude symlink present; if feature map Yes, pointer + empty skill package with
+`agents/openai.yaml` + Claude and Codex symlinks present, and the generated files contain no `{slug}`;
+if feature map No, a declined pointer or the existing pointer is present.
 
 ### 5. Done
 
@@ -289,13 +364,15 @@ pipeline entry points (`/align` before building; `/reqs` or `/to-prd` for specs;
 UI specs; `/triage` for backlog issues; `/dev` / `/devops` / `/arch` filter Knowledge via
 `docs/agents/stack-profile.md`). Remind them to create GitHub labels matching
 `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was
-installed, point at `.cursor/rules/agent-voice.mdc` to edit persona.
+installed, point at `.cursor/rules/agent-voice.mdc` to edit persona. If a feature map was
+scaffolded, point at `docs/agents/feature-map.md` and say areas start with `/build-feature-map`.
 
 Orientation is **not** `## Next Step` — see [Handoff](#handoff).
 
 **Completion criterion:** User notified setup is complete; orientation tour mentions pipeline
 entry points; stack-profile / Knowledge mentioned; label creation reminder given; voice path
-mentioned only when opted in; Handoff block delivered.
+mentioned only when opted in; feature-map path mentioned only when opted in; Handoff block
+delivered.
 
 ## Handoff
 
