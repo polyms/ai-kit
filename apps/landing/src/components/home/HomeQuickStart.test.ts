@@ -4,21 +4,13 @@ import { commandFromSelection } from './HomeQuickStart'
 describe('commandFromSelection', () => {
   it('drops shell prompts so a drag-select paste is the command', () => {
     const raw = [
-      '$ git clone \\',
-      '> https://github.com/polyms/ai-kit',
-      '$ cd ai-kit',
-      '$ pnpm install',
-      '$ pnpm bootstrap',
+      '$ npx skills add \\',
+      '> https://github.com/polyms/ai-kit \\',
+      "> --skill '*' -a cursor -g",
     ].join('\n')
 
     expect(commandFromSelection(raw)).toBe(
-      [
-        'git clone \\',
-        'https://github.com/polyms/ai-kit',
-        'cd ai-kit',
-        'pnpm install',
-        'pnpm bootstrap',
-      ].join('\n')
+      ['npx skills add \\', 'https://github.com/polyms/ai-kit \\', "--skill '*' -a cursor -g"].join('\n')
     )
   })
 

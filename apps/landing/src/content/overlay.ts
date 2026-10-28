@@ -91,8 +91,8 @@ export const skillOverlays: SkillOverlay[] = [
     },
     pipeline: {
       upstream: {
-        en: 'Bootstrap (`bootstrap.sh`) — symlink skills into your editor',
-        vi: 'Bootstrap (`bootstrap.sh`) — symlink skill vào editor',
+        en: 'Install (`npx skills add`) — skills into your editor',
+        vi: 'Cài đặt (`npx skills add`) — đưa skill vào editor',
       },
       downstream: {
         en: '/align, /reqs, /triage, and the rest of the pipeline',
@@ -100,13 +100,13 @@ export const skillOverlays: SkillOverlay[] = [
       },
     },
     boundaries: {
-      en: 'Does not install the skill symlinks — that is bootstrap. Does not handle day-to-day repo maintenance.',
-      vi: 'Không cài symlink skill — việc đó là bootstrap. Cũng không phải bảo trì repo hàng ngày.',
+      en: 'Does not install skills — that is `npx skills add`. Does not handle day-to-day repo maintenance.',
+      vi: 'Không cài skill — việc đó là `npx skills add`. Cũng không phải bảo trì repo hàng ngày.',
     },
     prerequisites: [
       {
-        en: 'ai-kit cloned, dependencies installed with `pnpm install`, and `pnpm bootstrap` run for your client: Cursor, Claude Code, Codex, or Copilot.',
-        vi: 'Đã clone ai-kit, cài dependency bằng `pnpm install`, và chạy `pnpm bootstrap` cho client đang dùng: Cursor, Claude Code, Codex hoặc Copilot.',
+        en: 'Skills installed with `npx skills add` for your client: Cursor, Claude Code, Codex, or Copilot.',
+        vi: 'Đã cài skill bằng `npx skills add` cho client đang dùng: Cursor, Claude Code, Codex hoặc Copilot.',
       },
       {
         en: 'You are in the target project repo (not only the ai-kit repo).',
@@ -186,8 +186,8 @@ export const skillOverlays: SkillOverlay[] = [
     },
     prerequisites: [
       {
-        en: 'Skills bootstrapped; `/setup` done if you will publish later.',
-        vi: 'Đã bootstrap skill; đã `/setup` nếu sắp publish.',
+        en: 'Skills installed; `/setup` done if you will publish later.',
+        vi: 'Đã cài skill; đã `/setup` nếu sắp publish.',
       },
       {
         en: 'A fuzzy idea, plan, or feature name — exact scope can wait.',

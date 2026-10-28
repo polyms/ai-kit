@@ -21,7 +21,7 @@ catalog_zeroResults: 0 kết quả
 skills_intro_body: 'Bootstrap kit cho Cursor, Claude Code, Codex hoặc GitHub Copilot, rồi chọn skill. Mỗi trang chi tiết có điều kiện tiên quyết, các bước và prompt mẫu.'
 skills_intro_title: Bắt đầu với ai-kit
 skills_getStarted_stepsTitle: Ba bước tới lệnh đầu tiên
-skills_getStarted_step1: 'Clone repo, chạy `pnpm install`, rồi `pnpm bootstrap` để cài skills và các principal agent cho cả bốn client.'
+skills_getStarted_step1: 'Chạy lệnh `npx skills add` ở phần Khởi đầu nhanh để cài toàn bộ skill vào client bạn dùng.'
 skills_getStarted_step2: 'Trong dự án đích, chạy skill setup một lần để pipeline biết tracker và bố cục docs.'
 skills_getStarted_step3: 'Mở một skill bên dưới, sao chép prompt mẫu vào client đang dùng và làm theo bước tiếp theo. Dùng cú pháp gọi skill của client đó.'
 skills_getStarted_fullQuickstart: Xem hướng dẫn terminal đầy đủ trên trang chủ →
@@ -91,14 +91,17 @@ pipeline_stage_ship: Phát hành
 pipeline_title: Một luồng xử lý, từ ý tưởng cho đến khi phát hành.
 
 # --- quickstart ---
-quickstart_body: 'Cài skills và năm principal agent cho Cursor, Claude Code, Codex và GitHub Copilot. Giữ lại repo đã clone vì skills và hướng dẫn vai trò được liên kết về đây.'
-quickstart_terminalComment: 'cài cả bốn client; bản cài Codex/Copilot cũ được sao lưu'
+quickstart_body: 'Một lệnh cài toàn bộ skill vào Cursor. Khởi động lại editor rồi gõ `/` để chọn.'
+quickstart_terminalComment: 'cài skill vào ~/.cursor/skills'
 quickstart_titlePrefix: 'Bắt đầu với'
-quickstart_prerequisites: 'Trước khi cài, chuẩn bị Git, Node.js, pnpm và quyền đọc gói @polyms/ui-kit trên GitHub Packages.'
-quickstart_targets: 'Nếu chỉ dùng một client, thay lệnh cuối bằng pnpm bootstrap cursor, pnpm bootstrap claude, pnpm bootstrap codex hoặc pnpm bootstrap copilot. Hai lựa chọn Codex/Copilot giữ nguyên bản cài Cursor/Claude hiện có.'
 quickstart_invocation: 'Khởi động lại editor hoặc mở chat mới, rồi chọn /setup trong dự án đích. Cursor, Claude Code và Copilot dùng /name; Codex CLI/IDE dùng $name hoặc /skills. Trên desktop, dùng bộ chọn skill. Ký hiệu /name trên site chỉ cùng một workflow.'
-quickstart_copilot: 'Trong VS Code, chọn harness Copilot và mở Chat: Open Customizations để kiểm tra skills cùng năm agent. Codex và Copilot dùng chung skills tại ~/.agents/skills; agent được cài riêng tại ~/.codex/agents và ~/.copilot/agents.'
-quickstart_mcp: 'Cấu hình Knowledge MCP riêng cho từng dự án đích. Với Codex, chạy codex mcp add aikit --url https://ai-kit.polyms.dev/mcp, rồi codex mcp login aikit. Trong VS Code, dùng MCP: Add Server với cùng URL HTTP và hoàn tất OAuth. Repo ai-kit này đã có sẵn hai cấu hình cấp dự án.'
+quickstart_notes_title: 'Sau khi cài'
+quickstart_target_title: 'Client khác'
+quickstart_target_body: 'Đổi -a cursor sang client bạn dùng. Lặp lại -a để cài vào nhiều client.'
+quickstart_setup_title: 'Chạy /setup'
+quickstart_setup_body: 'Khởi động lại editor hoặc mở chat mới, rồi chạy /setup trong dự án.'
+quickstart_mcp_title: 'Kết nối Knowledge MCP'
+quickstart_mcp_body: 'Thêm URL này làm MCP server trong client bạn dùng, mỗi dự án một lần, rồi đăng nhập.'
 
 # --- nav ---
 nav_catalog: Kỹ năng

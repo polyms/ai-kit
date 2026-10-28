@@ -9,7 +9,7 @@ export const Route = createFileRoute('/skills/')({
 })
 
 const BOOTSTRAP_STEPS = [
-  { id: 'clone-bootstrap', text: () => m.skills_getStarted_step1() },
+  { id: 'install', text: () => m.skills_getStarted_step1() },
   { id: 'setup-once', text: () => m.skills_getStarted_step2() },
   { id: 'copy-prompt', text: () => m.skills_getStarted_step3() },
 ] as const
