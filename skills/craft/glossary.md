@@ -14,15 +14,21 @@ _Avoid_: consistency, reliability, robustness, output-determinism
 
 ### Model-Invoked
 
-Keeps **description**; agent fires autonomously; human can still type name. Pays **context load** every turn. Other skills can reach it.
+Keeps the required **description**; the client may select the skill when the task matches it.
+The user can also select it explicitly. Other skills can reach it within the authorized workflow.
 
 ### User-Invoked
 
-`disable-model-invocation: true` — invisible to agent; human-only. Zero **context load**; pays **cognitive load**.
+Requires explicit user selection instead of automatic selection by the client. Keep both
+`name` and `description`. Cursor, Claude, and Copilot use `disable-model-invocation: true`;
+Codex uses `policy.allow_implicit_invocation: false` in `agents/openai.yaml`.
+Metadata visibility and **context load** depend on the client; this is not a zero-cost guarantee.
+An explicitly delegated principal may still read its playbook as a reference.
 
 ### Description
 
-Machine-readable trigger for model-invoked skills. Source of **context load**. Delete it → user-invoked.
+Required metadata explaining what a skill does and when to use it. Keep it for both
+invocation modes. Change invocation policy, never remove the description, to make a skill user-invoked.
 
 ### Context Pointer
 
@@ -30,7 +36,9 @@ Reference naming out-of-context material + condition for reaching it. Wording de
 
 ### Context Load
 
-Cost of model-invoked **description** always loaded. Brake on splitting into more model-invoked skills.
+Tokens spent on discovered metadata and selected skill instructions. The client controls
+when and how much is loaded. Consider this cost when splitting skills; do not assume
+user-invoked metadata is invisible or free.
 
 ### Cognitive Load
 

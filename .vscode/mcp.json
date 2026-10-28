@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "aikit": {
+      "type": "http",
+      "url": "https://ai-kit.polyms.dev/mcp"
+    }
+  }
+}

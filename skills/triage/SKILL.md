@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Triage
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Move issues on the project issue tracker through a small state machine of triage roles.
 
 If this repo treats external pull requests as a request surface (see [issue-tracker.md](../../docs/agents/issue-tracker.md)), triage covers them too: **a PR is an issue with attached code** — same roles, same states, same machine. Resolve a bare `#42` to an issue or PR per the tracker config.

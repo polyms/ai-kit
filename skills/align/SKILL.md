@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Align — Align Before You Build
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Run **align-loop** using **domain-modeling** — the same pairing as Matt `grill-with-docs`: grill the plan **and** write vocabulary and hard decisions down as they land.
 
 Close the communication gap before `/reqs`, `/to-prd`, `/design`, or `/dev`. Do not substitute `/reqs` discovery, a PRD draft, or a feature list for the grill.

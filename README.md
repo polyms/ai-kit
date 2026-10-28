@@ -85,12 +85,45 @@ cd ~/src/ai-kit
 pnpm bootstrap
 ```
 
-`bootstrap.sh` symlinks this repo into:
+`bootstrap.sh` installs this repo for Cursor, Claude Code, Codex, and GitHub Copilot.
+Run `pnpm bootstrap codex` or `pnpm bootstrap copilot` to install only that client
+(other targets: `cursor`, `claude`, `all`). Install dependencies with `pnpm install`
+first; the Codex/Copilot installer uses Node.js and the repo's YAML parser.
 
-| Tool            | Agents                          | Skills                                  |
-| --------------- | ------------------------------- | --------------------------------------- |
-| **Cursor**      | `~/.cursor/agents` (dir → repo) | `~/.cursor/skills` (dir → repo)         |
-| **Claude Code** | `~/.claude/agents` (per-file)   | `~/.claude/skills` (per-skill symlinks) |
+| Tool            | Agents                                             | Skills                                  |
+| --------------- | -------------------------------------------------- | --------------------------------------- |
+| **Cursor**      | `~/.cursor/agents` (dir → repo)                    | `~/.cursor/skills` (dir → repo)         |
+| **Claude Code** | `~/.claude/agents` (per-file)                      | `~/.claude/skills` (per-skill symlinks) |
+| **Codex**       | `~/.codex/agents/*.toml` (generated role pointers) | `~/.agents/skills` (per-skill symlinks) |
+| **Copilot**     | `~/.copilot/agents/*.agent.md` (generated role pointers) | `~/.agents/skills` (shared with Codex) |
+
+Codex respects `CODEX_HOME` for its agent directory; user skills remain under
+`~/.agents/skills`. Skill edits and agent body edits are read from this checkout.
+Rerun bootstrap after adding skills/roles or changing role names/descriptions.
+Existing Codex entries are backed up as `.bak`, `.bak.1`, etc. before replacement
+under `~/.agents/ai-kit-backups/skills` and `$CODEX_HOME/ai-kit-backups/agents`
+(`CODEX_HOME` defaults to `~/.codex`), outside skill/agent discovery folders.
+Copilot role backups live under `~/.copilot/ai-kit-backups/agents`.
+Unrelated entries are preserved. The installer does not change global MCP settings
+or VS Code user settings. The `codex`/`copilot` targets do not modify Cursor/Claude installs.
+
+Manual-only skills retain `disable-model-invocation: true` for Cursor/Claude/Copilot
+and add `agents/openai.yaml` policy for Codex. Kit `/name` examples remain valid for
+Cursor/Claude/Copilot; use `$name` or `/skills` in Codex CLI/IDE. See
+[client compatibility](docs/agents/client-compatibility.md) for runtime adaptations.
+
+In VS Code, select the **Copilot** harness and open **Chat: Open Customizations** to
+check skills and the five principal agents. The Local harness has different personal
+agent storage; use the Copilot harness for the native `~/.copilot/agents` installation.
+Project instructions use the existing `AGENTS.md`. Reload the window or start a new
+chat after installation. Discovery checks do not prove every workflow was exercised.
+
+This repo's `.codex/config.toml` connects to the production Knowledge MCP server.
+If OAuth is needed, run `codex mcp login aikit`. For local MCP development, start
+`pnpm dev`, then optionally add `codex mcp add ai-kit-local --url http://localhost:6300/mcp`.
+See [Ops CMS MCP](docs/agents/ops-cms-mcp.md) for endpoint and authentication details.
+VS Code uses `.vscode/mcp.json` for this same server. Start `aikit` through
+**MCP: List Servers** and complete OAuth if prompted; credentials are client-specific.
 
 Restart your editor or start a new chat session after bootstrap.
 

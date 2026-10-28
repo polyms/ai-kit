@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Arch Refactor
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
 
 **Maintenance skill** — outside the daily ship pipeline (`/align` → … → `/code-review`). Complements `/align` (product alignment) and `/dev` (implementation).

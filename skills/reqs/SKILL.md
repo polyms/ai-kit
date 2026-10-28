@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 # Reqs — Requirements
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Turn ideas into engineering-ready artifacts. Read this skill fully before producing output.
 
 Read `docs/agents/language.md` when present — write PRDs and stories in that language (**one prose language**;

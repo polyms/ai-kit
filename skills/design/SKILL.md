@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 # Design
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/design/<feature>.md`. Map screens and components to **`@polyms/ui-kit`** — do not invent a parallel design system.
 
 **Boundary vs `ui-kit`:**

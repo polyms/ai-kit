@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 # Docs — Technical Writing
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Write **developer-facing** docs for systems that already exist (or are shipping). Not PRDs,
 not UI specs, not marketing copy.
 

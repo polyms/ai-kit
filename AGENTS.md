@@ -4,6 +4,11 @@ Polyms agent skills for real engineering — align, spec, ship.
 
 ## Agent skills
 
+### Client compatibility
+
+Codex and GitHub Copilot: read `docs/agents/client-compatibility.md` for invocation,
+discovery, setup, and subagent adaptations. Cursor and Claude retain their existing workflow.
+
 ### Documentation language
 
 English. See `docs/agents/language.md` (prose language + pure-tech tokens). Chat tone: IDE/user rules (kit

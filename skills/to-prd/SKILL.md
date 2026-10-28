@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # To PRD
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Synthesize the **current conversation** and codebase understanding into a lean PRD and **publish** it to the
 issue tracker.
 

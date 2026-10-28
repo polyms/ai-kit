@@ -24,6 +24,10 @@ Template: `skills/design/design-spec-template.md` in ai-kit.
 - Read **`docs/adr/`** for decisions that constrain UI
 - Before component mapping, user invokes **`/ui-kit`** (or attaches it in chat)
 
+Codex/Copilot: an installed model-invoked `ui-kit` catalog may be read directly;
+see the kit's `docs/agents/client-compatibility.md`. Cursor/Claude keep the invocation
+flow above.
+
 ## Rules
 
 - Every screen spec includes loading, empty, error, and success states

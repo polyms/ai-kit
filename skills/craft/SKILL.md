@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Craft — Writing Great Skills
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Adapted from [Matt Pocock's `writing-great-skills`](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills). A skill wrangles determinism out of a stochastic system. **Predictability** — same _process_ every run, not same output — is the root virtue.
 
 **Bold terms** are defined in [glossary.md](glossary.md).
@@ -38,6 +40,11 @@ skills/<name>/
 ```
 
 ## Invocation
+
+For Codex, pair every `disable-model-invocation: true` skill with
+`agents/openai.yaml` containing `policy: { allow_implicit_invocation: false }`.
+Keep the existing frontmatter for Cursor, Claude, and Copilot. Runtime differences
+are defined in [client compatibility](../../docs/agents/client-compatibility.md).
 
 Repo rules: [docs/agents/invocation.md](../../docs/agents/invocation.md). Setup deps: [ADR-0001](../../docs/adr/0001-skill-setup-dependencies.md).
 

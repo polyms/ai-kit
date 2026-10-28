@@ -8,6 +8,7 @@
   "repository": "https://github.com/polyms/ai-kit.git",
   "scripts": {
     "bootstrap": "bash bootstrap.sh",
+    "test:clients": "node --test scripts/bootstrap-clients.test.mjs",
     "dev": "nx serve landing",
     "build": "nx build landing",
     "polyms": "pnpm exec ui-kit-skill --target cursor --force",

@@ -5,6 +5,8 @@ description: Relentless grill of a plan or design — walk the design tree one d
 
 # Align Loop
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Interview relentlessly about every aspect of the plan until shared understanding.
 
 The mental model is a **design tree**: decisions branch and depend on each other. Descend one node at a time — settle the parent before the choices hanging off it. A firehose of parallel questions loses the structure that makes the interview converge.

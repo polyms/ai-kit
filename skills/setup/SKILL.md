@@ -6,11 +6,19 @@ disable-model-invocation: true
 
 # Setup — Configure Repo for ai-kit
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Scaffold per-repo configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`,
 `/to-issues`, `/dev`, `/devops`, and `/arch` assume. Prompt-driven — explore, confirm with user,
 then write.
 
 ## Process
+
+For Codex/Copilot, apply the client compatibility guide's **Files and project setup**
+and **Feature map publication** branches throughout this process. They add `AGENTS.md`
+discovery, opt-in voice pointers, and shared `.agents/skills` publication to the legacy
+outputs below. Include those additive files in the draft and completion check. The
+legacy single-config-file rule below applies unchanged to Cursor/Claude-only setup.
 
 ### 1. Explore
 

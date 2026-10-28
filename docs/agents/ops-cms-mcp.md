@@ -42,6 +42,42 @@ OAuth **resource/audience** is `{origin}/mcp` (RFC 8707). Discovery uses **reque
 
 **Stale DCR client / missing refresh token:** Remove the MCP server in Cursor Settings and add it again after IdP or scope changes (e.g. first deploy of `offline_access`).
 
+## Codex setup
+
+The repo's `.codex/config.toml` declares the production server:
+
+```toml
+[mcp_servers.aikit]
+url = "https://ai-kit.polyms.dev/mcp"
+```
+
+Codex loads project MCP configuration for trusted projects. Run `codex mcp login aikit`
+to complete OAuth when needed, and `codex mcp list` to inspect the configured servers.
+For another repo without this configuration, run
+`codex mcp add aikit --url https://ai-kit.polyms.dev/mcp` first.
+Bootstrap installs skills and principal roles; it does not edit global MCP configuration.
+
+## GitHub Copilot in VS Code
+
+The repo's `.vscode/mcp.json` declares the same production endpoint:
+
+```json
+{
+  "servers": {
+    "aikit": {
+      "type": "http",
+      "url": "https://ai-kit.polyms.dev/mcp"
+    }
+  }
+}
+```
+
+Use **MCP: List Servers**, select `aikit`, and start the server. Complete OAuth in
+the browser when requested. Do not copy tokens from Cursor or Codex configuration.
+Select the Copilot harness for skills installed by `pnpm bootstrap copilot`.
+VS Code's [MCP configuration reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration)
+documents workspace files and server options.
+
 ## Cursor setup
 
 ```json

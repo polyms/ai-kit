@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 # E2E — Test Automation
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Own the **E2E / browser suite and its CI health** — deterministic journeys, flake elimination,
 sharding, traces. Not feature TDD at code seams.
 

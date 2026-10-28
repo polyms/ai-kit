@@ -7,6 +7,8 @@ description: Fullstack implementation with TDD and disciplined debugging. Use wh
 
 # Dev — Fullstack Implementation
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touching code.
 
 ## Quick Router

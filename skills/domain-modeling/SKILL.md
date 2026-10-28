@@ -5,6 +5,8 @@ description: Build and sharpen a project's domain model. Use when the user wants
 
 # Domain Modeling
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Actively build and sharpen the project's domain model as you design. This is the active discipline: challenge terms, probe edge-case scenarios, and write glossary entries or decisions down the moment they crystallize.
 
 Merely reading `CONTEXT.md` for vocabulary is not this skill. This skill is for changing the model.

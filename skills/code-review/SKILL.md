@@ -7,6 +7,8 @@ description: Review code changes since a pinned git fixed point — Standards, S
 
 # Code Review
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Three-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 - **Standards** — does the code conform to this repo's documented coding standards?

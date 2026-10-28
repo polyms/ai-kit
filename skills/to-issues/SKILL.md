@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 # To Issues
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tracer bullet** vertical slices.
 
 **Upstream:** `/reqs` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into

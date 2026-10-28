@@ -23,7 +23,8 @@ require a `docs/design/` write.
       custom exception with follow-up (issue/ADR)
 - [ ] No invented component names that duplicate an existing ui-kit primitive
 - [ ] Theme/variant choices reference ui-kit presets — not ad-hoc Tailwind one-offs in the spec
-- [ ] `/ui-kit` was available (user invoked or attached) when mapping components
+- [ ] `/ui-kit` was available (user invoked or attached; Codex/Copilot may read an
+      installed model-invoked catalog per the client compatibility guide) when mapping components
 - [ ] Colours and fonts in §4 reference named tokens / brandkit — no mid-spec raw hex improvisation
 
 ## Anti-slop (spec level)

@@ -4,16 +4,27 @@ How skills in ai-kit are reached — adapted from [Matt Pocock's `.agents/invoca
 
 ## User-invoked vs model-invoked
 
+Codex and GitHub Copilot also apply [client compatibility](client-compatibility.md).
+Keep existing frontmatter for Cursor/Claude and Copilot; manual-only skills additionally
+declare `policy.allow_implicit_invocation: false` in `agents/openai.yaml` for Codex.
+`/name` below is kit notation; use `$name` or `/skills` in Codex CLI/IDE and the current
+client's skill picker elsewhere. Selecting a workflow and reading its reference files
+are different operations. Principal agents may read their explicitly delegated playbooks.
+
 Every `skills/<name>/SKILL.md` is a skill. The axis that splits them is **invocation** — who can reach it:
 
 | Mode              | Frontmatter                      | Who reaches it            | Description                                                                          |
 | ----------------- | -------------------------------- | ------------------------- | ------------------------------------------------------------------------------------ |
 | **User-invoked**  | `disable-model-invocation: true` | Human typing `/name` only | Human-facing one-liner + invoke hints (EN + VI). No trigger spam for auto-discovery. |
-| **Model-invoked** | omit `disable-model-invocation`  | Model or human            | Model-facing: WHAT + WHEN triggers (EN + VI). Pays **context load** every turn.      |
+| **Model-invoked** | omit `disable-model-invocation`  | Model or human            | Model-facing: WHAT + WHEN triggers (EN + VI). Context cost depends on client discovery.      |
 
 Test for model-invocation: _could the model usefully reach for this autonomously, or must another skill invoke it?_
 
-A user-invoked skill has no model-facing description — **no other skill can fire it**. User-invoked skills may invoke model-invoked skills; never another user-invoked skill.
+A user-invoked skill keeps its required description; its invocation policy prevents
+automatic selection. Metadata visibility and context cost depend on the client.
+User-invoked skills may invoke model-invoked skills, but must not implicitly select
+another user-invoked workflow. An explicitly delegated principal may read its playbook
+as a reference without starting an unauthorized workflow.
 
 ## ai-kit examples
 

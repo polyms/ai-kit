@@ -5,6 +5,8 @@ description: Deploy, CI, and infra — symptom → fix via Knowledge retrieval. 
 
 # DevOps — Deploy, CI & Infra
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → cause → fix → verify. Do not guess config.
 
 **Boundary vs `/dev`:** a deploy/CI symptom reported cold — no `/dev` slice already in progress — routes here automatically. One surfacing mid-slice (deploy-aware `/dev` touching infra config inside a feature slice) stays in `/dev`. **`/devops`** owns operational incidents end-to-end otherwise. Hand off app feature work to `/dev`.
