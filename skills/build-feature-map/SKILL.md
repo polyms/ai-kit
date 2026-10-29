@@ -12,24 +12,40 @@ disable-model-invocation: true
 Write and keep a **repo-local** skill that routes behavior questions to one file. This kit skill
 holds the playbook and the templates. It does not hold the map.
 
-The map lives in the app repo:
+## Layout
+
+The map is one directory. Build it at `.agents/skills/<slug>/`:
 
 ```text
-.cursor/skills/<slug>/
+.agents/skills/<slug>/
   SKILL.md
   agents/openai.yaml
   references/features/README.md
   references/features/<area>.md
 ```
 
-Codex/Copilot: also follow **Feature map publication** in the client compatibility
-guide. Keep the existing canonical package and publish it through `.agents/skills`;
-do not create an independent map. Include the shared link and Codex invocation policy
-in the Seed completion check.
+Cursor and Claude do not discover `.agents/skills`. Their tool folders are symlinks:
+
+```bash
+ln -sfn ../../.agents/skills/<slug> .cursor/skills/<slug>
+ln -sfn ../../.agents/skills/<slug> .claude/skills/<slug>
+```
+
+Codex and Copilot read `.agents/skills/<slug>` directly. The pointer `Skill` and `Index` lines name
+those `.agents` paths. Never copy the map into a tool folder.
+
+**Legacy:** `.cursor/skills/<slug>` is a real directory and `.agents/skills/<slug>` is missing or
+links back to it. Move the directory to `.agents/skills/<slug>`, point both tool symlinks at it,
+and rewrite the pointer lines. When `.cursor/skills/<slug>` or `.claude/skills/<slug>` is a real
+directory that is not this package, stop: diff it, keep a backup outside any skill folder, and
+reconcile with the user. `ln -sfn` on a real directory nests the link inside it.
+
+Run Layout before Seed, Maintain, or Add area when the pointer or the tree still uses the Cursor
+directory as the real package.
 
 Default `<slug>` is `feature-map`. Never use `build-feature-map` — that name is this kit skill, and
-a project skill with the same name would hide the global symlink. If `.cursor/skills/feature-map/`
-already exists for something else, ask once for a different slug and record it.
+a project skill with the same name would hide the global symlink. If `.agents/skills/feature-map/`
+already holds a different skill, ask once for another slug and record it.
 
 Long sessions: **`tester`**. This skill does not write product code or seam tests.
 
@@ -62,7 +78,8 @@ shortcuts, drag-and-drop. It uses the same four H2s and is always last in the in
 
 ## Seed
 
-**Goal:** One journey, up to three area files, a router skill, and a pointer. Stop there.
+**Goal:** One journey, up to three area files, a router skill, and a pointer. Stop there. A legacy
+Cursor package → [Layout](#layout) before writing files.
 
 1. Read routes, screens, and existing tests. Propose **one** user journey. Ask once: keep it, or
    name another. Do not ask the user to list the app's features.
@@ -72,21 +89,19 @@ shortcuts, drag-and-drop. It uses the same four H2s and is always last in the in
 3. For each area, draft [feature-file-template.md](feature-file-template.md) from labels, routes,
    and tests already in the repo. Show the draft. The user edits **Gotchas** and paths the harness
    cannot drive. Write the file before starting the next area.
-4. Write `SKILL.md` from [repo-skill-template.md](repo-skill-template.md), replacing `{slug}`.
-   Write `agents/openai.yaml` with `policy: { allow_implicit_invocation: false }`. Write the index
-   from [index-template.md](index-template.md) with the areas in sweep order. Ask once for a
-   harness command; record `none` when there is no command.
+4. Write `.agents/skills/<slug>/SKILL.md` from [repo-skill-template.md](repo-skill-template.md),
+   replacing `{slug}`. Write `agents/openai.yaml` there with
+   `policy: { allow_implicit_invocation: false }`. Write the index from
+   [index-template.md](index-template.md) with the areas in sweep order. Ask once for a harness
+   command; record `none` when there is no command.
 5. Write `docs/agents/feature-map.md` from [pointer-template.md](pointer-template.md), replacing
-   `{slug}`. Link Claude at `.claude/skills/<slug>` and Codex at `.agents/skills/<slug>`, both →
-   `../../.cursor/skills/<slug>`. When either path already exists and is not that symlink, stop:
-   diff it against the package, keep a backup outside any skill folder, and reconcile with the
-   user — `ln -sfn` on a real directory nests the link inside it. One copy of the map; never copy
-   it into either folder.
+   `{slug}`. Create the Cursor and Claude symlinks in [Layout](#layout).
 
-**Completion criterion:** Pointer exists with a `Skill` line; index lists one to three area links;
-each area file has the four H2s; repo `SKILL.md` routes to `references/features/`; no `{slug}`
-remains; `agents/openai.yaml` disables implicit invocation; slug is not `build-feature-map`;
-`.claude/skills/<slug>` and `.agents/skills/<slug>` are symlinks to the Cursor package.
+**Completion criterion:** Pointer `Skill` line is `.agents/skills/<slug>/SKILL.md`; index lists one
+to three area links; each area file has the four H2s; repo `SKILL.md` routes to
+`references/features/`; no `{slug}` remains; `agents/openai.yaml` disables implicit invocation;
+slug is not `build-feature-map`; `.cursor/skills/<slug>` and `.claude/skills/<slug>` are symlinks
+to the `.agents` package.
 
 Tell the user the keep rule: the next UI change that touches an area updates that one file in the
 same PR. A later audit is `/build-feature-map` on the Maintain branch.
@@ -95,7 +110,8 @@ same PR. A later audit is `/build-feature-map` on the Maintain branch.
 
 **Goal:** The area the change touches matches the product. Do not re-seed.
 
-1. Read the pointer and the index. Missing areas → Seed, and say why.
+1. Read the pointer and the index. A legacy Cursor package → [Layout](#layout) first. Missing areas
+   → Seed, and say why.
 2. Sweep only when the user asked for a broad pass. Walk the index top to bottom. The journeys
    file, when present, is last.
 3. Otherwise open the one area file the diff or the user named. Refresh its four H2s. Split into a
@@ -110,8 +126,8 @@ untouched areas were not rewritten.
 
 **Goal:** One new area for a surface or flow the index does not cover yet. Do not re-seed.
 
-1. Read the pointer and the index. An existing area already covers the surface → Maintain, and
-   say which file.
+1. Read the pointer and the index. A legacy Cursor package → [Layout](#layout) first. An existing
+   area already covers the surface → Maintain, and say which file.
 2. A flow that crosses areas (sessions, shortcuts, drag-and-drop) goes in `journeys.md`. Create it
    when missing; otherwise add the flow to it. Any other surface gets its own `<area>.md`.
 3. Draft from [feature-file-template.md](feature-file-template.md) using labels, routes, and tests

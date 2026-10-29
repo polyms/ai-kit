@@ -15,10 +15,11 @@ then write.
 ## Process
 
 For Codex/Copilot, apply the client compatibility guide's **Files and project setup**
-and **Feature map publication** branches throughout this process. They add `AGENTS.md`
-discovery, opt-in voice pointers, and shared `.agents/skills` publication to the legacy
-outputs below. Include those additive files in the draft and completion check. The
-legacy single-config-file rule below applies unchanged to Cursor/Claude-only setup.
+branch throughout this process. It adds `AGENTS.md` discovery and opt-in voice pointers
+to the outputs below. Include those files in the draft and completion check. The legacy
+single-config-file rule below applies to Cursor/Claude-only setup. The feature map
+package is always `.agents/skills/<slug>/`; Cursor and Claude reach it through symlinks.
+See **Feature map publication** in that guide.
 
 ### 1. Explore
 
@@ -171,9 +172,10 @@ Ask once. If the user has no preference, confirm **Standard**. On a re-run, show
 Repo-local behavior index so later sessions open one area file instead of exploring the app.
 Default: **do not** scaffold.
 
-Ask: _Do you want a feature map for this repo?_ If `.cursor/skills/feature-map/` or
-`docs/agents/feature-map.md` already exists with a `Skill` line, say so and keep it. Setup does
-not rewrite or remove a map; `/build-feature-map` maintains it. A pointer that only says
+Ask: _Do you want a feature map for this repo?_ If `.agents/skills/feature-map/` or
+`docs/agents/feature-map.md` already exists with a `Skill` line, say so and keep it. A real
+directory still at `.cursor/skills/feature-map/` counts too — keep it; `/build-feature-map` moves
+that package to `.agents`. Setup does not rewrite or remove a map. A pointer that only says
 `Status: declined` counts as a past **No** — show it and ask keep or change.
 
 | Choice           | When                                                     |
@@ -182,8 +184,8 @@ not rewrite or remove a map; `/build-feature-map` maintains it. A pointer that o
 | **Yes**          | An app with screens later sessions should not re-explore |
 
 If **Yes**, ask once for a harness command. No command → `Harness: none`. Slug stays
-`feature-map` unless that directory already holds a different skill — then ask once for another
-slug. Never `build-feature-map`.
+`feature-map` unless `.agents/skills/feature-map/` already holds a different skill — then ask once
+for another slug. Never `build-feature-map`.
 
 **Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed;
 issue tracker, domain layout, artifact paths, triage labels, design paths, voice choice (No or Yes +
@@ -204,7 +206,7 @@ Show before writing:
 - `docs/agents/stack-profile.md` (axes list + detected-from notes + optional Coverage)
 - If voice **Yes**: `.cursor/rules/agent-voice.mdc` and `.claude/rules/agent-voice.mdc` → symlink
 - If feature map **Yes**: `docs/agents/feature-map.md`, empty
-  `.cursor/skills/<slug>/` package, Claude and Codex symlinks
+  `.agents/skills/<slug>/` package, Cursor and Claude symlinks to it
 - If feature map **No** and no pointer exists: `docs/agents/feature-map.md` with `Status: declined`
 
 Let user edit.
@@ -260,7 +262,8 @@ Opt-in chat persona: `.cursor/rules/agent-voice.mdc` (Cursor). Claude Code:
 ### Feature map
 
 [Omit this subsection when feature map was **No**.]
-Repo skill `.cursor/skills/feature-map/` (or the confirmed slug). See `docs/agents/feature-map.md`.
+Repo skill `.agents/skills/feature-map/` (or the confirmed slug). Cursor and Claude symlink to it.
+See `docs/agents/feature-map.md`.
 Areas are added with `/build-feature-map`, not during setup.
 
 ### Pipeline
@@ -293,9 +296,9 @@ Write docs using templates:
   (replace every `{slug}` and set `Harness` to the confirmed command)
 - Feature map skill →
   [../build-feature-map/repo-skill-template.md](../build-feature-map/repo-skill-template.md) at
-  `.cursor/skills/<slug>/SKILL.md` (replace `{slug}` in the frontmatter `name`)
+  `.agents/skills/<slug>/SKILL.md` (replace `{slug}` in the frontmatter `name`)
 - Feature map index → [../build-feature-map/index-template.md](../build-feature-map/index-template.md)
-  at `.cursor/skills/<slug>/references/features/README.md` (no area links yet)
+  at `.agents/skills/<slug>/references/features/README.md` (no area links yet)
 
 **If voice Yes:**
 
@@ -314,28 +317,28 @@ Do **not** duplicate the persona body under `.claude/` — one SoT, one link.
 **If feature map Yes:**
 
 1. Write `docs/agents/feature-map.md` from the pointer template.
-2. Write `.cursor/skills/<slug>/SKILL.md` and `references/features/README.md` from the templates.
+2. Write `.agents/skills/<slug>/SKILL.md` and `references/features/README.md` from the templates.
    Do not write area files. An index with no area links is not a map yet.
-3. Write `.cursor/skills/<slug>/agents/openai.yaml` so Codex never selects the map on its own:
+3. Write `.agents/skills/<slug>/agents/openai.yaml` so Codex never selects the map on its own:
 
 ```yaml
 policy:
   allow_implicit_invocation: false
 ```
 
-4. Check both link paths first. When `.claude/skills/<slug>` or `.agents/skills/<slug>` already
-   exists and is not a symlink to the Cursor package, stop: diff it against the package, keep a
+4. Check both tool paths first. When `.cursor/skills/<slug>` or `.claude/skills/<slug>` already
+   exists and is not a symlink to the `.agents` package, stop: diff it against the package, keep a
    backup outside any skill folder, and reconcile with the user. `ln -sfn` on a real directory
    nests the link inside it instead of replacing it.
-5. `mkdir -p .claude/skills .agents/skills`
-6. Symlink Claude and Codex → the Cursor skill (relative paths so clones stay portable):
+5. `mkdir -p .cursor/skills .claude/skills`
+6. Symlink Cursor and Claude → the `.agents` skill (relative paths so clones stay portable):
 
 ```bash
-ln -sfn ../../.cursor/skills/<slug> .claude/skills/<slug>
-ln -sfn ../../.cursor/skills/<slug> .agents/skills/<slug>
+ln -sfn ../../.agents/skills/<slug> .cursor/skills/<slug>
+ln -sfn ../../.agents/skills/<slug> .claude/skills/<slug>
 ```
 
-Do **not** copy a second map under `.claude/` or `.agents/` — one directory, two links.
+Do **not** copy a second map under `.cursor/` or `.claude/` — one directory, two links.
 
 **If feature map No:** when no pointer exists, write `docs/agents/feature-map.md` with this body so
 `collab` and `e2e` stop suggesting the map:

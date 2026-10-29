@@ -51,22 +51,28 @@ When voice is not selected, do not add that pointer.
 
 ## Feature map publication
 
-Keep the canonical map path from `docs/agents/feature-map.md`. If absent, retain the
-legacy default `.cursor/skills/<slug>/`. Existing Cursor/Claude packages stay in place.
-When setup or build-feature-map creates a map for Codex/Copilot:
+The map is one directory at `.agents/skills/<slug>/` (default slug `feature-map`).
+`docs/agents/feature-map.md` names that path in `Skill` and `Index`. Codex and Copilot
+discover it there. Cursor and Claude do not, so publish the same package with relative
+symlinks:
 
-1. Publish the same package at `.agents/skills/<slug>` through a relative symlink to
-   the canonical directory (for the default: `../../.cursor/skills/<slug>`).
-2. Add `agents/openai.yaml` to that canonical manual-only package. Keep its existing
-   `SKILL.md` frontmatter for Copilot, Cursor, and Claude.
-3. Keep the Claude symlink and the pointer's canonical `Skill`, `Index`, and `Harness`.
-4. If the publication path already holds independent content, compare it first. Do not
-   force-replace it or discard differences. Reconcile authorized changes and preserve
-   a backup outside skill discovery before converting it to a shared link.
+```bash
+ln -sfn ../../.agents/skills/<slug> .cursor/skills/<slug>
+ln -sfn ../../.agents/skills/<slug> .claude/skills/<slug>
+```
 
-The completion criterion includes Codex/Copilot discovery as well as the existing map
-shape. Never maintain a second copy. Other workflows follow the canonical pointer,
-including when a legacy repository has an older discovery copy.
+Ship `agents/openai.yaml` inside the `.agents` package. Keep `SKILL.md` frontmatter for
+Copilot, Cursor, and Claude.
+
+A legacy map whose real files still sit in `.cursor/skills/<slug>` moves to `.agents` on
+the next `/build-feature-map` run. Do not leave two copies. If a tool path already holds
+independent content, compare it first. Do not force-replace it or discard differences.
+Reconcile authorized changes and preserve a backup outside skill discovery before
+converting it to a shared link.
+
+The completion criterion includes discovery from `.agents` plus the two tool symlinks.
+Other workflows follow the pointer, including when a repository still has the older
+Cursor directory until that move runs.
 
 ## Subagents and runtime tools
 

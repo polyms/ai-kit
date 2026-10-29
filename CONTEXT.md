@@ -102,7 +102,7 @@ End-to-end test automation — Playwright (or repo harness) flake elimination, C
 _Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when meaning seam TDD)
 
 **Feature map**:
-Repo-local skill (default `.cursor/skills/feature-map/`) whose `references/features/` index routes an agent to
+Repo-local skill (default `.agents/skills/feature-map/`) whose `references/features/` index routes an agent to
 one behavior file. Four headings per area: `Sub-features`, `How to get to it (user POV)`, `Driving it`,
 `Gotchas`. The kit skill `/build-feature-map` authors that package. `/dev` and `/e2e` read it when the index
 has area links. Pointer: `docs/agents/feature-map.md`.

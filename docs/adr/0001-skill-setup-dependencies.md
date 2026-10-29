@@ -53,7 +53,9 @@ Do **not** cargo-cult the `/setup` pointer into soft-dependency skills. No `docs
 - Authors adding skills must classify hard vs soft before writing prerequisites.
 - `/setup` remains the single place that writes `docs/agents/language.md`, `issue-tracker.md`, `domain.md`,
   `triage-labels.md`, `design.md`, `requirements.md`, and `stack-profile.md`. Opt-in feature map (default off)
-  writes `docs/agents/feature-map.md` plus an empty `.cursor/skills/<slug>/` package; declining writes only
-  a `Status: declined` pointer so other skills stop suggesting the map. Opt-in chat persona (default off) writes
+  writes `docs/agents/feature-map.md` plus an empty `.agents/skills/<slug>/` package, with
+  `.cursor/skills/<slug>` and `.claude/skills/<slug>` symlinked to it; declining writes only
+  a `Status: declined` pointer so other skills stop suggesting the map. Opt-in chat persona
+  (default off) writes
   `.cursor/rules/agent-voice.mdc` plus a Claude symlink under `.claude/rules/` — not a hard dependency for
   any skill.

@@ -300,7 +300,8 @@ See [SKILL.md](skills/e2e/SKILL.md).
 
 ### `/build-feature-map` — Repo feature map
 
-Authors a repo-local skill at `.cursor/skills/feature-map/`. That skill reads
+Authors a repo-local skill at `.agents/skills/feature-map/`. Cursor and Claude symlink to that
+directory. That skill reads
 `references/features/` and opens one area file. The kit skill does not contain the map.
 `/setup` can scaffold an empty package. `/dev` and `/e2e` read it once areas exist.
 Principal: `tester`.
