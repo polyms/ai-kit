@@ -2,6 +2,9 @@
 
 How skills in ai-kit are reached — adapted from [Matt Pocock's `.agents/invocation.md`](https://github.com/mattpocock/skills/blob/main/.agents/invocation.md).
 
+This is the source of truth for skill invocation and agent routing conventions when authoring or editing
+`skills/` and `agents/`.
+
 ## User-invoked vs model-invoked
 
 Codex and GitHub Copilot also apply [client compatibility](client-compatibility.md).

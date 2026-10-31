@@ -6,11 +6,5 @@ alwaysApply: false
 
 # Markdown line wrap
 
-When editing markdown prose in this repo:
-
-- Match formatter width: wrap lines to **110 characters max**.
-- Keep this in sync with `.prettierrc.yml` `printWidth: 110`.
-- Keep this in sync with `biome.json` `lineWidth: 110`.
-- Prefer natural sentence breaks; do not split inline code tokens.
-- Keep tables when they improve human scanability or comparison.
-- Do not force table-to-list conversion; decide format case by case.
+Follow [docs/agents/conventions.md](../../docs/agents/conventions.md#markdown-formatting) when editing
+Markdown prose.

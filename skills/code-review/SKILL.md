@@ -67,7 +67,7 @@ skip Spec axis.
 Collect anything in the repo that documents how code should be written:
 
 - `CONTEXT.md` — glossary naming and domain vocabulary
-- `.cursor/rules/conventional-commits.mdc` — commit message format
+- `docs/agents/conventions.md` — commit message format
 - `CODING_STANDARDS.md`, `CONTRIBUTING.md`, `AGENTS.md` when present
 - Project linter/formatter configs referenced by the repo (ESLint, Prettier, etc.)
 

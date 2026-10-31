@@ -5,18 +5,5 @@ alwaysApply: true
 
 # Commit messages
 
-Format: `<type>[scope]: <imperative summary>` — lowercase after `:`, no period, ≤ 72 chars.
-
-Types: `feat` `fix` `refactor` `chore` `docs` `test` `ci` `style` `perf` `build`
-
-- Scope optional, lowercase: `feat(reqs): add user story guide`
-- Body (optional): explain why, not the diff
-- Footer: `Refs #123` / `Closes #123`; breaking → `type!:` + `BREAKING CHANGE:` footer
-- MR title = commit subject; MR description = purpose, changes, tests, issues
-- Avoid: vague (`update`, `WIP`), past tense (`added` → `add`), commit only when user asks
-
-```text
-feat(reqs): add user story guide
-fix(auth): handle expired sessions
-chore(release): v0.1.38
-```
+Follow [docs/agents/conventions.md](../../docs/agents/conventions.md#commit-messages) when preparing
+commits or MR titles.

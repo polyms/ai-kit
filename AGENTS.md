@@ -11,6 +11,11 @@ discovery, setup, and subagent adaptations. Cursor and Claude retain their exist
 
 Codex tool and command choice: follow `.codex/rules/tool-choice.md`.
 
+### Project conventions
+
+Follow [docs/agents/conventions.md](docs/agents/conventions.md) for Markdown formatting and commit messages.
+When creating or editing skills or agents, follow [docs/agents/invocation.md](docs/agents/invocation.md).
+
 ### Documentation language
 
 English. See `docs/agents/language.md` (prose language + pure-tech tokens). Chat tone: IDE/user rules (kit
