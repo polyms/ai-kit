@@ -1,2 +1,5 @@
 [mcp_servers.aikit]
 url = "https://ai-kit.polyms.dev/mcp"
+
+[mcp_servers.ai-kit-local]
+url = "http://localhost:6300/mcp"
