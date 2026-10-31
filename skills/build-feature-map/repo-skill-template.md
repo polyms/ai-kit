@@ -27,6 +27,12 @@ Index: [references/features/README.md](references/features/README.md).
 Harness: see `Harness` in `docs/agents/feature-map.md`. `none` means drive by selector and visible
 action. Do not invent a driver.
 
+Use the area's `Driving it` selector table: resolve the recorded scope before the CTA and
+check that the combined selector matches exactly one target in the intended state. For
+unresolved or unverified selectors, inspect the surface and report the gap before acting;
+never choose the first of several matches. Keep this table current when a UI change touches
+the area, including when labels or repeated-action scopes change.
+
 ## Proof bar
 
 Exercise the user-visible path. Record the action and the stable end state. A compile, a unit

@@ -178,6 +178,11 @@ directory still at `.cursor/skills/feature-map/` counts too — keep it; `/build
 that package to `.agents`. Setup does not rewrite or remove a map. A pointer that only says
 `Status: declined` counts as a past **No** — show it and ask keep or change.
 
+An existing map is **Keep existing**, not a request to scaffold. Read its pointer's `Skill`,
+`Index`, and `Harness` paths (including custom slugs and legacy locations); when no pointer
+exists, locate the existing package and index before drafting one. Include the Feature map
+subsection in the agent config just as for Issue tracker, even when setup creates no map files.
+
 | Choice           | When                                                     |
 | ---------------- | -------------------------------------------------------- |
 | **No** (default) | Library, kit, or an app that does not need a behavior map |
@@ -207,6 +212,8 @@ Show before writing:
 - If voice **Yes**: `.cursor/rules/agent-voice.mdc` and `.claude/rules/agent-voice.mdc` → symlink
 - If feature map **Yes**: `docs/agents/feature-map.md`, empty
   `.agents/skills/<slug>/` package, Cursor and Claude symlinks to it
+- If feature map **Keep existing**: Feature map subsection pointing to the existing map;
+  draft `docs/agents/feature-map.md` only if missing, using the discovered paths and harness
 - If feature map **No** and no pointer exists: `docs/agents/feature-map.md` with `Status: declined`
 
 Let user edit.
@@ -261,10 +268,10 @@ Opt-in chat persona: `.cursor/rules/agent-voice.mdc` (Cursor). Claude Code:
 
 ### Feature map
 
-[Omit this subsection when feature map was **No**.]
-Repo skill `.agents/skills/feature-map/` (or the confirmed slug). Cursor and Claude symlink to it.
-See `docs/agents/feature-map.md`.
-Areas are added with `/build-feature-map`, not during setup.
+[Include when feature map is **Yes** or **Keep existing**; substitute the actual Skill path.]
+Behavior index: `[actual Skill path]`. See `docs/agents/feature-map.md` for index and harness.
+Read the matching area before exploring a mapped surface; use its scoped CTA selectors.
+Author or repair areas with `/build-feature-map`.
 
 ### Pipeline
 
@@ -314,7 +321,13 @@ Do **not** duplicate the persona body under `.claude/` — one SoT, one link.
 
 **If voice No:** do not write or remove an existing rule unless the user confirmed replace/remove in step G.
 
-**If feature map Yes:**
+**If feature map Keep existing:** update the Feature map subsection in the chosen agent config
+in-place; do not duplicate it. Preserve the existing package, area files, index, harness, and
+tool links. Keep the pointer unchanged when present; if missing, write it using the discovered
+paths and harness (`none` when no harness is configured). Legacy migration stays with
+`/build-feature-map`.
+
+**If feature map Yes (new scaffold only):**
 
 1. Write `docs/agents/feature-map.md` from the pointer template.
 2. Write `.agents/skills/<slug>/SKILL.md` and `references/features/README.md` from the templates.
@@ -359,6 +372,8 @@ Never write a map package, and never remove an existing map or pointer.
 Cursor rule + Claude symlink present; if feature map Yes, pointer + empty skill package with
 `agents/openai.yaml` + Claude and Codex symlinks present, and the generated files contain no `{slug}`;
 if feature map No, a declined pointer or the existing pointer is present.
+For Keep existing, the agent config links the actual Skill path and pointer, and existing map
+contents are preserved. For both Yes and Keep existing, the Feature map subsection appears once.
 
 ### 5. Done
 
@@ -369,12 +384,13 @@ UI specs; `/triage` for backlog issues; `/dev` / `/devops` / `/arch` filter Know
 `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was
 installed, point at `.cursor/rules/agent-voice.mdc` to edit persona. If a feature map was
 scaffolded, point at `docs/agents/feature-map.md` and say areas start with `/build-feature-map`.
+If an existing map was kept, point at the same pointer and say its config reference was updated.
 
 Orientation is **not** `## Next Step` — see [Handoff](#handoff).
 
 **Completion criterion:** User notified setup is complete; orientation tour mentions pipeline
 entry points; stack-profile / Knowledge mentioned; label creation reminder given; voice path
-mentioned only when opted in; feature-map path mentioned only when opted in; Handoff block
+mentioned only when opted in; feature-map path mentioned when scaffolded or kept; Handoff block
 delivered.
 
 ## Handoff

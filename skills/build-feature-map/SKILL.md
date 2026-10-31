@@ -49,6 +49,12 @@ already holds a different skill, ask once for another slug and record it.
 
 Long sessions: **`tester`**. This skill does not write product code or seam tests.
 
+For every area created or refreshed, fill the **Selectors** table under `Driving it` using
+[feature-file-template.md](feature-file-template.md). Apply its selector rules to all mapped
+CTAs, including repeated actions visible together. Preserve the four H2s; selectors and actions
+are H3s. Completion requires each CTA to have an explicit scope and selector, with uniqueness
+verified in the relevant state or an unresolved/unverified gap recorded in `Gotchas`.
+
 ## Soft setup dependency
 
 No `/setup` gate. When `docs/agents/feature-map.md` exists, trust its `Skill`, `Index`, and

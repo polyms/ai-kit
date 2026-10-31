@@ -9,7 +9,7 @@ the baseline.
 ## Baseline preconditions
 
 - {Signed-in or other baseline. Delete lines that do not apply.}
-- Prefer accessible names and stable test ids. Class selectors are fallbacks.
+- Use the scoped CTA selectors recorded under each area's `Driving it` section.
 - Wait on an observable end state. Do not sleep a fixed time.
 
 ## Proof and skip reporting
