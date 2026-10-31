@@ -29,6 +29,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 ```
 /setup         → configure repo for ai-kit pipeline (run once)
 /align         → align before you build (grill + domain language)
+/collab        → one feature prompt → PRD + ADR (if needed) + UI spec
 /reqs            → discovery, enterprise PRD, stories (chat — does not publish)
 /to-prd        → synthesize conversation into lean PRD, publish to GitHub
 /to-issues     → break spec into vertical-slice GitHub issues
@@ -53,30 +54,31 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ### Catalog
 
-| Invoke           | Name                                                                                                         | Status        | Domain                                                              |
-| ---------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------------------------- |
-| `/setup`         | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline                  |
-| `/align`         | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md      |
-| `/reqs`          | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, enterprise PRD, stories (user-invoked; does not publish) |
-| `/to-prd`        | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)        |
-| `/to-issues`     | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                    |
-| `/triage`        | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent`     |
-| `/design`        | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, ui-kit component map, a11y       |
-| `/dev`           | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging       |
-| `/code-review`   | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes           |
-| `/docs`          | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`techlead`)                    |
+| Invoke               | Name                                                                                                         | Status        | Domain                                                              |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------------------------- |
+| `/setup`             | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline                  |
+| `/align`             | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md      |
+| `/collab`            | [`collab`](skills/collab/)                                                                                   | **Available** | One prompt → PRD, ADR if needed, UI spec (model-invoked)            |
+| `/reqs`              | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, enterprise PRD, stories (user-invoked; does not publish) |
+| `/to-prd`            | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)        |
+| `/to-issues`         | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                    |
+| `/triage`            | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent`     |
+| `/design`            | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, ui-kit component map, a11y       |
+| `/dev`               | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging       |
+| `/code-review`       | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes           |
+| `/docs`              | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`techlead`)                    |
 | `/e2e`               | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester`)                                |
 | `/build-feature-map` | [`build-feature-map`](skills/build-feature-map/)                                                             | **Available** | Author the repo `feature-map` skill (`tester`)                      |
 | `/devops`            | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem         |
-| `/craft`         | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning              |
-| `/arch-refactor` | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates     |
-| `/arch`          | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)       |
+| `/craft`             | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning              |
+| `/arch-refactor`     | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates     |
+| `/arch`              | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)       |
 
 Principal agents (`pm`, `designer`, `developer`, `tester`, `techlead`) map to **org roles** — multiple
 skills per agent OK. Use `/craft` when writing or editing any skill.
 
 **Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery
-for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`).
+for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`).
 
 ## Quick start
 
@@ -208,6 +210,21 @@ Grill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.
 
 `/align` (user-invoked) runs **align-loop** + **domain-modeling** together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/to-prd`, `/design`, or `/dev`.
 
+### `/collab` — One prompt, spec packet
+
+Model-invoked. A feature ask that names no skill — "build a CRUD user page", "làm trang user" —
+runs a codebase pass, asks at most once when a blocking fork is still open, then spawns `pm`,
+`techlead` (ADR only), and `designer`:
+
+```
+Build a CRUD user page.
+```
+
+Writes `docs/prd/<slug>.md` and, when there is a screen, `docs/design/<slug>.md`. ADR only when the
+decision is hard to reverse. Does not publish. Follows `/dev` in that turn when nothing
+blocking remains, and asks once when a fork is still open. Explicit `/reqs` or `/design` skips this and keeps that
+skill's own flow.
+
 ### `/design` — UI Spec from PRD
 
 Turn a PRD or feature brief into an engineering-ready design spec at `docs/design/<feature>.md`, mapped to **`@polyms/ui-kit`**:
@@ -303,8 +320,8 @@ See [SKILL.md](skills/e2e/SKILL.md).
 Authors a repo-local skill at `.agents/skills/feature-map/`. Cursor and Claude symlink to that
 directory. That skill reads
 `references/features/` and opens one area file. The kit skill does not contain the map.
-`/setup` can scaffold an empty package. `/dev` and `/e2e` read it once areas exist.
-Principal: `tester`.
+`/setup` can scaffold an empty package. `/collab`, `/dev`, and `/e2e` read it once areas
+exist. Principal: `tester`.
 
 ```
 /build-feature-map

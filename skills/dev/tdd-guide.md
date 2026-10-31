@@ -27,7 +27,8 @@ test('checkout calls paymentService.process', async () => {
 
 ## Seams
 
-A **seam** is the public boundary you test at. Test only at **confirmed** seams — agree with user before writing.
+A **seam** is the public boundary you test at. Test only at the seam locked in Implement step 2.
+Do not ask the user again when that step already locked the seam.
 
 Changing **untested shipping** behavior at a seam? Capture as-is first —
 [characterization.md](characterization.md) — then red-green for desired behavior.

@@ -103,6 +103,7 @@ describe('skillOverlays catalog copy', () => {
         'to-prd',
         'to-issues',
         'design',
+        'collab',
         'dev',
         'code-review',
       ])

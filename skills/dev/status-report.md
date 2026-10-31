@@ -3,7 +3,7 @@
 Use on **long** implement or debug sessions (multi-slice feature, `developer`, or when
 the user asks for progress). Do **not** spam on every single-line fix.
 
-Pairs with the Implement workflow in [SKILL.md](SKILL.md): refresh at seam confirmation,
+Pairs with the Implement workflow in [SKILL.md](SKILL.md): refresh when the seam is locked,
 after each green slice, and before ship checklist.
 
 ## Template

@@ -606,6 +606,81 @@ export const skillOverlays: SkillOverlay[] = [
     ],
   },
   {
+    name: 'collab',
+    invoke: '/collab',
+    slug: 'collab',
+    description: {
+      en: 'One feature prompt runs PM, tech lead, and design together — lean PRD, ADR only if hard to reverse, UI spec — from the codebase.',
+      vi: 'Một prompt feature cho PM, tech lead, và design làm cùng nhau — PRD gọn, ADR khi khó đảo, spec UI — dựa trên codebase.',
+    },
+    invocation: 'model',
+    domain: 'requirements',
+    samplePrompt: {
+      en: 'Build a CRUD user page.',
+      vi: 'Làm một trang CRUD user.',
+    },
+    footnote: {
+      en: 'Model-invoked. Naming /reqs, /design, or /dev skips this and keeps that skill.',
+      vi: 'Agent tự gọi. Gọi đúng /reqs, /design, hoặc /dev thì bỏ qua collab và giữ skill đó.',
+    },
+    githubPath: 'skills/collab/',
+    relatedAgents: ['pm', 'designer', 'techlead'],
+    summary: {
+      en: 'Turn "build a page" into a spec packet without invoking each principal or sitting through a discovery interview.',
+      vi: 'Biến “làm một trang” thành gói spec mà không cần gọi từng agent hay ngồi phỏng vấn discovery.',
+    },
+    whenToUse: {
+      en: 'A new screen or CRUD flow in one prompt, and you did not already name /reqs, /design, or /dev.',
+      vi: 'Màn hình hoặc luồng CRUD mới trong một prompt, và anh chưa gọi /reqs, /design, hay /dev.',
+    },
+    pipeline: {
+      upstream: { en: 'One feature prompt', vi: 'Một prompt feature' },
+      downstream: 'docs/prd + docs/design → /dev',
+    },
+    boundaries: {
+      en: 'Implements when the packet has no blocking gap. Asks once when a fork is still open. Does not publish (/to-prd). Skips the ADR when the three-part test fails.',
+      vi: 'Làm luôn khi gói spec không còn chỗ kẹt. Hỏi một lần khi còn ngã rẽ chưa chốt. Không publish (/to-prd). Bỏ ADR khi bài test ba điều kiện không đạt.',
+    },
+    prerequisites: [
+      {
+        en: 'A repo to read — nearest list, form, or entity is the evidence.',
+        vi: 'Có repo để đọc — list, form, hoặc entity gần nhất là bằng chứng.',
+      },
+    ],
+    howTo: [
+      {
+        en: 'Say the feature in one prompt, for example “build a CRUD user page”.',
+        vi: 'Nói feature trong một prompt, ví dụ “làm trang CRUD user”.',
+      },
+      {
+        en: 'Answer only if the agent batches a blocking fork the repo cannot settle.',
+        vi: 'Chỉ trả lời khi agent gom một ngã rẽ chặn mà repo không chốt được.',
+      },
+      {
+        en: 'Read the lean PRD, optional ADR, and UI spec the principals wrote.',
+        vi: 'Đọc PRD gọn, ADR nếu có, và spec UI mà các agent đã viết.',
+      },
+      {
+        en: 'If nothing blocking remains, collab continues into /dev in the same turn.',
+        vi: 'Nếu không còn chỗ kẹt, collab chạy tiếp /dev ngay trong lượt đó.',
+      },
+    ],
+    doneWhen: {
+      en: 'The spec packet is on disk, and implementation has started unless one blocking question is still open.',
+      vi: 'Gói spec đã có trên đĩa, và phần implement đã chạy trừ khi còn một câu hỏi chặn.',
+    },
+    tips: [
+      {
+        en: 'Assumptions are labeled. A [NEEDS CLARIFICATION] marker is the only open product fork.',
+        vi: 'Giả định được ghi rõ. Marker [NEEDS CLARIFICATION] là ngã rẽ sản phẩm còn mở.',
+      },
+      {
+        en: 'Copying an existing CRUD screen does not earn an ADR.',
+        vi: 'Chép một màn CRUD có sẵn thì không cần ADR.',
+      },
+    ],
+  },
+  {
     name: 'dev',
     invoke: '/dev',
     slug: 'dev',

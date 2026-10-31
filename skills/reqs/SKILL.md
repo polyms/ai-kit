@@ -50,6 +50,7 @@ top) names which. Do not open a second document.
 | Discovery + formal enterprise PRD | [PRD workflow](#prd-workflow)                       | [enterprise-prd-template.md](enterprise-prd-template.md) |
 | User stories / backlog            | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md)               |
 | Làm rõ req / clarify              | [Discovery workflow](#discovery-workflow)           | [prd-interview.md](prd-interview.md)                     |
+| Codebase đã đủ, đừng phỏng vấn    | [Codebase-first](#codebase-first)                   | [lean-prd-template.md](../to-prd/lean-prd-template.md)   |
 | Ưu tiên / prioritize              | [Prioritization workflow](#prioritization-workflow) | —                                                        |
 | Review req hiện có                | [Refinement workflow](#refinement-workflow)         | —                                                        |
 
@@ -61,6 +62,27 @@ When either is missing, run questions 1–9 and the confirmation in [prd-intervi
 
 **Completion criterion:** User confirms problem statement and scope boundary (in scope and out of scope,
 including who is not a user).
+
+## Codebase-first
+
+**Goal:** Lean PRD from the repo when `collab` passes an inference brief, or the user says to
+draft from the codebase without an interview.
+
+1. Do **not** run [prd-interview.md](prd-interview.md), the confirmation turn, or the behavior-pass
+   questions. The brief already settled scope.
+2. Write `docs/prd/<slug>.md` from [lean-prd-template.md](../to-prd/lean-prd-template.md). Fill a
+   section or delete it. Do **not** publish a tracker issue.
+3. Put inferences under **Assumptions**. Cite the product pattern in prose ("same as the member
+   list"), not a repo path, unless the user asked for paths.
+4. Use `[NEEDS CLARIFICATION]` only for a blocking fork the brief left open. Do not invent a
+   threshold the brief did not infer.
+5. Return the path and any markers to the parent. Do not ask the user a second interview.
+
+**Completion criterion:** `docs/prd/<slug>.md` exists; no tracker issue; no interview questions
+were sent.
+
+When the user invoked `/reqs` this way themselves (no `collab` parent), end with `## Next Step`
+→ `/design` if the feature has a screen, otherwise → `/to-prd`.
 
 ## PRD Workflow
 

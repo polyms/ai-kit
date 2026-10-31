@@ -3,7 +3,7 @@
 Stop at the **first rung that holds** — after the problem is understood, not instead of
 reading. Trace the real flow (files and callers the change touches) before climbing.
 
-Use after seams are confirmed and before the red-green loop. Stack already chosen in the
+Use after the seam is locked (Implement step 2) and before the red-green loop. Stack already chosen in the
 repo, design spec, or ADRs **overrides** "prefer native / avoid deps" for that choice
 (e.g. Zustand, TanStack Router, `@polyms/ui-kit` stay).
 

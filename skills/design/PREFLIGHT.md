@@ -24,7 +24,9 @@ require a `docs/design/` write.
 - [ ] No invented component names that duplicate an existing ui-kit primitive
 - [ ] Theme/variant choices reference ui-kit presets — not ad-hoc Tailwind one-offs in the spec
 - [ ] `/ui-kit` was available (user invoked or attached; Codex/Copilot may read an
-      installed model-invoked catalog per the client compatibility guide) when mapping components
+      installed model-invoked catalog per the client compatibility guide) when mapping components,
+      **or** a `collab` brief mapped every primitive from `@polyms/ui-kit` imports already in the
+      repo — no primitive invented without one
 - [ ] Colours and fonts in §4 reference named tokens / brandkit — no mid-spec raw hex improvisation
 
 ## Anti-slop (spec level)

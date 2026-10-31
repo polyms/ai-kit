@@ -30,9 +30,17 @@ as a reference without starting an unauthorized workflow.
 
 | User-invoked                                                                                                            | Model-invoked                                                           |
 | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/build-feature-map`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops` |
+| `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/build-feature-map`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab` |
 
-Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing); `/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch` when deepening. `/design` is user-invoked — ask the user to run `/ui-kit` (external lib skill) before component mapping; `dev` uses `ui-kit` when implementing UI.
+Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing);
+`/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch`
+when deepening. `collab` (model-invoked) is the one-prompt front door: codebase pass, at most one batched
+question, then spawn `pm` → `techlead` (ADR only) → `designer` (when there is a screen). It spawns
+agents; it does not fire `/reqs` or `/design`. A packet with no blocking gap follows `dev` in that
+turn. A blocking fork is one question, then a stop. `/design` is user-invoked — ask the user to
+run `/ui-kit` (external lib skill) before component mapping, except a `collab` brief that already
+cleared the ask gate;
+`dev` uses `ui-kit` when implementing UI.
 
 ## Slash prefix
 

@@ -78,9 +78,13 @@ From brief lock + PRD, state mood and layout family. Pick ui-kit **theme/variant
 Read [ANTI-SLOP.md](ANTI-SLOP.md) — list which §A / §A2 bans apply; which §B composition rules
 this feature must satisfy.
 
-Ask user to invoke **`/ui-kit`** if not already attached — use its catalog when listing primitives for the component map.
+Ask user to invoke **`/ui-kit`** if not already attached — use its catalog when listing primitives
+for the component map. A `collab` brief skips the extra confirm (see
+[BRIEF-INFERENCE.md](BRIEF-INFERENCE.md)); map primitives from existing `@polyms/ui-kit` imports
+when the repo already has them.
 
-**Completion criterion:** Brief + theme direction stated; anti-slop rows cited; user corrects or explicitly proceeds before step 3.
+**Completion criterion:** Brief + theme direction stated; anti-slop rows cited; user corrects or explicitly
+proceeds before step 3, or a `collab` brief already cleared the ask gate.
 
 ### 3. Draft spec
 

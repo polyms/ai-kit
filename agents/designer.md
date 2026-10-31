@@ -21,8 +21,14 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
    punch list per the skill → **stop** (do not draft a spec). Optional `## Next Step` → `/design`
    redesign only if critical tells remain.
 3. **Full spec:** read PRD + `CONTEXT.md` + ADRs; run skill workflows through **PREFLIGHT** — incomplete
-   specs do not leave your desk. Before the component map, ask the user to invoke **`/ui-kit`** (or
-   confirm it is already attached) — you cannot agent-fire user-invoked skills.
+   specs do not leave your desk. For component mapping, follow the active client's compatibility
+   procedure for `/ui-kit`; you cannot agent-fire a user-invoked skill. **Exception:** a `collab`
+   brief means the feature ask gate already passed — write the brief lock as inferred and continue.
+   Map `@polyms/ui-kit` from repo imports, an already attached `/ui-kit`, or, when client
+   compatibility allows, the installed `ui-kit` catalog. On a `collab` handoff, return missing or
+   manual-only access to the parent as a blocker unless repo imports cover every required primitive;
+   the parent asks the user to attach `/ui-kit` through the active client's picker. Do not invent
+   the component map.
 4. End with `## Next Step` per the design skill handoff / CONTEXT.md **Handoff** — preferred
    `→ /dev`; second option only when P0 CSS/visual slices should ship via `/to-issues` first
    (one-line when). Not a flat two-way menu. (Skip this step when audit-only stopped at §E.)

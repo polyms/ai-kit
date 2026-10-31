@@ -41,7 +41,15 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Pipeline
 
-Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Specs on issue tracker; glossary in `CONTEXT.md`.
+Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via
+`/triage`. A single feature prompt ("build a CRUD user page") may enter through model-invoked `collab`
+instead of naming each principal: codebase-first lean PRD (`pm`), ADR only when hard to reverse
+(`techlead`), UI spec when there is a screen (`designer`). Ask only for a blocking fork the repo cannot
+settle. A complete spec packet with no blocking questions authorizes `dev` in the same turn; do not
+wait for another confirmation. When scope or behavior is still uncertain and the repo cannot settle
+it, ask before implementation. Explicit `/align`,
+`/reqs`, `/design`, or `/dev` still wins when the user names it. Specs on issue tracker; glossary in
+`CONTEXT.md`.
 
 ### Design stack
 
@@ -50,7 +58,8 @@ Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/
 ### Maintenance
 
 `/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — developer-facing docs; `techlead`. `/e2e` — E2E automation; principal agent `tester` (skill id `e2e`). `/build-feature-map` — authors the
-repo-local `feature-map` skill; same principal `tester`. Pipeline walkthrough: `examples/pipeline-feature-walkthrough.md`.
+repo-local `feature-map` skill; same principal `tester`. Pipeline walkthrough:
+`examples/pipeline-feature-walkthrough.md`.
 
 ### Invocation
 
@@ -65,7 +74,7 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | `pm`        | Principal product manager   | PRD, stories, acceptance criteria, scope (`/reqs`)                                 |
 | `designer`  | Principal product designer  | `docs/design/` UI specs, `@polyms/ui-kit` maps (`/design`)                         |
 | `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
-| `tester`    | Principal tester            | E2E (`/e2e`); repo feature map (`/build-feature-map`)                              |
+| `tester`    | Principal tester            | E2E (`/e2e`); repo feature map (`/build-feature-map`)                                  |
 | `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |
 
 Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public surface → `/docs`

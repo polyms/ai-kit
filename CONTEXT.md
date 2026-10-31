@@ -45,8 +45,19 @@ _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` principal fil
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev` → `/code-review`; raw issues via `/triage`. Each stage produces artifacts the next stage consumes.
+The stage chain that turns ideas into shipped code: `/align` → `/reqs` or `/to-prd` → `/to-issues` →
+`/design` → `/dev` → `/code-review`; raw issues via `/triage`. A single feature prompt may enter through
+**Collab** instead of invoking each stage. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
+
+**Collab**:
+Model-invoked front door for one feature prompt. Codebase pass, at most one batched question, then `pm`
+writes a lean PRD, `techlead` writes an ADR only when the three-part test passes, and `designer` writes
+the UI spec when there is a screen. Follows `dev` in the same turn when no blocking gap remains.
+Asks once when a blocking fork is still open, and does not implement until that answer lands. Does
+not publish. Invoke with `/collab` or a build-a-page prompt that names no skill.
+_Avoid_: agency pipeline, interview (when meaning the `/reqs` discovery script), waiting for a
+confirm when the packet has no blocking gap
 
 **Setup**:
 One-time repo configuration for the pipeline — documentation language, issue tracker, domain docs layout,
@@ -104,8 +115,8 @@ _Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when m
 **Feature map**:
 Repo-local skill (default `.agents/skills/feature-map/`) whose `references/features/` index routes an agent to
 one behavior file. Four headings per area: `Sub-features`, `How to get to it (user POV)`, `Driving it`,
-`Gotchas`. The kit skill `/build-feature-map` authors that package. `/dev` and `/e2e` read it when the index
-has area links. Pointer: `docs/agents/feature-map.md`.
+`Gotchas`. The kit skill `/build-feature-map` authors that package. `/collab`, `/dev`, and `/e2e` read it
+when the index has area links. Pointer: `docs/agents/feature-map.md`.
 _Avoid_: wiki, reading the app to find a surface the index already names, `docs/features/` (the map is not
 public docs)
 

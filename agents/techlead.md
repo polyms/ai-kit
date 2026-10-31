@@ -36,6 +36,8 @@ Route by intent, then read the matching skill:
 1. Route via **Quick Router** — read the chosen skill and follow its workflows (Knowledge search,
    completion criteria, handoff).
 2. Read `CONTEXT.md` for vocabulary; do not actively expand the glossary (that is `domain-modeling`).
+   **Exception:** a `collab` ADR run tells you to use `domain-modeling` — write the ADR only when the
+   three-part test passes, and update glossary lines that decision forces. Do not widen product scope.
    Read **`docs/agents/stack-profile.md`** when present — pass `axes` to Knowledge search.
    Prefer `docs/agents/language.md` when present for documentation language.
 3. Meet each workflow's **completion criterion** before declaring done.

@@ -22,4 +22,8 @@ type roles / colour anchor) under Reference tier — structure only; see
 
 One paragraph **Brief lock** in the spec §1 — user confirms or corrects before wireframes.
 
-**Completion criterion:** Table filled; brief lock paragraph written; user proceeds explicitly.
+**Collab exception:** when the parent passed an inference brief and the ask gate already ran, write
+the brief lock as inferred, list assumptions, and continue. Do not wait for a second confirm.
+
+**Completion criterion:** Table filled; brief lock paragraph written; user proceeds explicitly, or
+the collab exception applied.

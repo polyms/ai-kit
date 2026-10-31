@@ -208,3 +208,20 @@ test('every manual-only skill has matching Codex policy while retaining legacy f
     }
   }
 })
+
+test('collab continues into dev only when the spec packet has no blocking questions', () => {
+  const collab = readFileSync(join(repo, 'skills/collab/SKILL.md'), 'utf8')
+  const dev = readFileSync(join(repo, 'skills/dev/SKILL.md'), 'utf8')
+  const instructions = readFileSync(join(repo, 'AGENTS.md'), 'utf8')
+
+  assert.match(collab, /Nothing blocking left.*?spawn `developer`.*?in this same turn/s)
+  assert.match(collab, /new `\[NEEDS CLARIFICATION\]`.*?Do not enter `dev`/s)
+  assert.match(
+    dev,
+    /A `collab` packet with no `\[NEEDS CLARIFICATION\]` and no blocking fork enters here in the same\s+turn\. Do not wait for a second confirm/
+  )
+  assert.match(
+    instructions,
+    /A complete spec packet with no blocking questions authorizes `dev` in the same turn; do not\s+wait for another confirmation/
+  )
+})

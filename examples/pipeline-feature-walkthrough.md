@@ -3,6 +3,18 @@
 Walkthrough of one vertical feature across skills — **illustrative**, not a live PRD.
 Use when onboarding contributors or checking that handoffs stay in lane.
 
+## One prompt
+
+**Ask:** "Build a CRUD user page." No `/reqs`, no `/design`.
+
+`collab` reads the existing user entity and the nearest admin list, copies who-may-mutate from that
+screen, and asks only if a destructive fork is still open (delete vs archive). Then it spawns `pm`
+(lean PRD, no interview), `techlead` only if the three-part ADR test passes, and `designer` for
+`docs/design/<slug>.md`. Packet checked on disk. No blocking marker → follow `/dev` in that
+turn. A still-open fork → ask once and do not implement yet.
+
+Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own interview or confirm.
+
 ## Scenario
 
 **Ask:** "Add a public Knowledge catalog filter by intent (`incident` | `design` |

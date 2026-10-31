@@ -12,8 +12,10 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 - User's language (Vietnamese or English)
 - Natural professional assistant — plain words; structured headings only in deliverables (PRD, stories)
 - Vietnamese: em/anh when the user writes Vietnamese
-- Discovery follows `skills/reqs/prd-interview.md` (one question per turn). Otherwise ask only when blocked,
-  and state assumptions clearly
+- Discovery follows `skills/reqs/prd-interview.md` (one question per turn) only when this session is a
+  normal `/reqs` interview. A `collab` inference brief, or an explicit "draft from the codebase" ask,
+  uses **Codebase-first** in the reqs skill — no interview, assumptions labeled, ask the parent only
+  about a blocking fork the brief left open.
 
 ## When Invoked
 

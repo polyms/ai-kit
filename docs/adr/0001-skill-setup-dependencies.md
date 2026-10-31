@@ -35,13 +35,14 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 | `dev`             | Read `CONTEXT.md` + `docs/adr/` if present; Knowledge (`design`/`toolchain`/`incident`) + `stack-profile.md` when present. Reads `docs/agents/feature-map.md` when the index has area links; may edit that one area file in the same PR |
 | `code-review`     | Read `docs/agents/issue-tracker.md` if present for `gh` fetch                                                                                                                            |
 | `align-loop`      | Same when exploring codebase                                                                                                                                                             |
+| `collab`          | `CONTEXT.md` + `docs/adr/` + `docs/agents/language.md` when present; codebase is enough to draft; no `/setup` gate. Reads `docs/agents/feature-map.md` when the index has area links |
 | `domain-modeling` | Creates `CONTEXT.md` lazily when terms resolve; writes in `docs/agents/language.md` if present                                                                                           |
 | `reqs`, `to-prd`  | Glossary when `CONTEXT.md` exists; `docs/agents/language.md` if present; PRD shape from `docs/agents/requirements.md` when present (`/reqs` does not publish; `/to-prd` does)            |
 | `design`          | `CONTEXT.md`; `docs/design/` output; user invokes `/ui-kit` before component map; writes in `docs/agents/language.md` if present                                                         |
 | `devops`          | [knowledge.md](../agents/knowledge.md) (`intent: incident`) + MCP; `stack-profile.md` when present (from `/setup`)                                                                       |
 | `docs`            | `docs/agents/language.md` when present; `CONTEXT.md` vocabulary only (no glossary expansion). Does not edit the repo feature-map package                                                |
-| `e2e`             | Repo Playwright/Cypress + CI workflows as source of truth; no docs/agents gate. Reads `docs/agents/feature-map.md` when the index has area links                                         |
-| `build-feature-map` | Writes the repo-local `feature-map` skill. No `/setup` gate. Uses `docs/agents/feature-map.md` and `docs/agents/language.md` when present                                              |
+| `e2e`             | Repo Playwright/Cypress + CI workflows as source of truth; no docs/agents gate. Reads `docs/agents/feature-map.md` when the index has area links |
+| `build-feature-map` | Writes the repo-local `feature-map` skill. No `/setup` gate. Uses `docs/agents/feature-map.md` and `docs/agents/language.md` when present                                      |
 | `arch`            | `CONTEXT.md` + `docs/adr/` when designing module interfaces; Knowledge `intent: design` for stack seams; `stack-profile.md` when present; writes in `docs/agents/language.md` if present |
 | `arch-refactor`   | Same; reaches `arch`, `align-loop`, `domain-modeling`                                                                                                                                    |
 

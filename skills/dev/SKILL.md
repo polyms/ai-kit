@@ -1,8 +1,8 @@
 ---
 name: dev
 description: Fullstack implementation with TDD and disciplined debugging. Use when user mentions /dev,
-  implement, build feature, fix bug, sửa lỗi, red-green-refactor, test-first, triển khai, or ship
-  from spec.
+  implement from spec, fix bug, sửa lỗi, red-green-refactor, test-first, triển khai, or ship from
+  spec. Do NOT start a new page or CRUD that has no PRD and no design spec — that is collab.
 ---
 
 # Dev — Fullstack Implementation
@@ -23,7 +23,29 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 ## Implement Workflow
 
-**Goal:** Vertical slice shipped with tests at confirmed seams.
+**Goal:** Vertical slice shipped with tests at the locked seam.
+
+### 0. Spec packet
+
+An explicit `/dev` (or "use developer") wins. Do not hand off to `collab`, even for a new screen with
+no spec. Read whatever spec exists, record the missing PRD or design spec as one line of assumptions,
+and continue to Orient.
+
+Without an explicit `/dev`, a new screen or CRUD whose PRD or `docs/design/<feature>.md` is missing
+is not this skill. Stop and follow `collab`, which resumes from whichever file exists. Do not write
+tests or production code on that turn.
+
+A `collab` packet with no `[NEEDS CLARIFICATION]` and no blocking fork enters here in the same
+turn. Do not wait for a second confirm. A packet that still has a blocking marker stays in
+`collab` until that question is answered.
+
+Any other ask (a field, an endpoint, a refactor, a change to an existing screen) skips this step.
+It needs no PRD or design spec. Go to Orient.
+
+**Completion criterion:** One of: the user typed `/dev` and any missing spec is recorded as
+assumptions; the ask is not a new screen or CRUD; the PRD and design spec are on disk with no
+blocking marker, including a packet `collab` just wrote; or the turn handed off to `collab`
+because a blocking gap remains.
 
 ### 1. Orient
 
@@ -31,20 +53,24 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 - Read `CONTEXT.md` — use glossary vocabulary in code and tests
 - **Feature map:** Read `docs/agents/feature-map.md` when it exists. An area is a markdown link in
   the index to a sibling `*.md`. When area links exist, read the repo `SKILL.md` at `Skill` and
-  open the one area file for this slice before confirming the seam. Its user path and gotchas are
-  the behavior contract. Still read the module this slice edits. The area file does not replace
-  that read, and it is not a reason to stop and retell the gotchas. Do not run
-  `/build-feature-map`. Do not suggest the map when it is missing — `/e2e` owns that suggestion.
-  Glossary, ADRs, the PRD, and `docs/design/<feature>.md` are still read in full.
+  open the one area file for this slice before locking the seam. Its user path and gotchas are the
+  behavior contract. Still read the module this slice edits. The area file does not replace that
+  read, and it is not a reason to stop and retell the gotchas. Do not run `/build-feature-map`.
+  Do not suggest the map when it is missing — `/collab` and `/e2e` own that suggestion. Glossary,
+  ADRs, the PRD, and `docs/design/<feature>.md` are still read in full.
 - Read **`docs/agents/stack-profile.md`** when present — pass `axes` on Knowledge searches below
 - **Deploy/CI slice (only when it surfaces mid-implementation):** [Knowledge pointer](../../docs/agents/knowledge.md)
   — MCP `search_knowledge` with `intent: incident` and `q` = symptom (no MCP: browse
   `/knowledge?q=…&intent=incident`). Confirm symptom + cause before fix. A deploy/CI symptom
   reported cold, opening the session with no slice already in progress, hands off to `/devops`
   instead.
-- **Design + stack slice:** MCP `search_knowledge` with `intent: design` and `q` = seam topic —
-  see [Knowledge pointer](../../docs/agents/knowledge.md). No MCP: `/knowledge?q=…&intent=design`.
-  Open best match in `sortOrder`. No match → [stack-defaults.md](stack-defaults.md) and ADRs
+- **Design + stack slice:** Search only when this slice chooses a router, a store, a module
+  boundary, or other stack the repo has not already locked. An Accepted ADR plus a design spec for
+  an existing screen is that lock — do not search, and do not retell a design article in chat.
+  When the slice does choose stack, MCP `search_knowledge` with `intent: design` and `q` = the seam
+  topic — see [Knowledge pointer](../../docs/agents/knowledge.md). No MCP:
+  `/knowledge?q=…&intent=design`. Open the best match in `sortOrder`. No match →
+  [stack-defaults.md](stack-defaults.md) and ADRs.
 - **Toolchain / formatter setup:** MCP `search_knowledge` with `intent: toolchain` and `q` =
   tool/config need (e.g. biome, prettier) — see [Knowledge pointer](../../docs/agents/knowledge.md).
   Open best match; use `get_knowledge_chunk` before copying config. No MCP: browse
@@ -54,24 +80,36 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
   stack-defaults fallback) — **TanStack Router** default; **TanStack Start** when the user needs
   SSR or server routes ([stack-defaults.md](stack-defaults.md))
 
-**Completion criterion:** Spec source and relevant glossary terms identified; candidate seams
-listed; for any design/toolchain/deploy Knowledge path that fired — article opened or no-match
-search terms documented; routing branch noted when applicable (only after Knowledge or explicit
-stack-defaults fallback).
+**Completion criterion:** Spec source and relevant glossary terms identified; the seam for this
+slice chosen; for any design, toolchain, or deploy Knowledge path that fired — article opened or
+no-match search terms recorded, not pasted into chat; routing branch noted when applicable (only
+after Knowledge or an explicit stack-defaults fallback).
 
-### 2. Confirm seams
+### 2. Lock seams
 
-Before any test, list seams under test. Get user confirmation. Prefer existing seams; propose new
-ones at the highest level possible. For full module/seam vocabulary and deepening principles, use
-**`arch`**.
+Name the public interface under test. Prefer an existing seam. Add a seam only when no existing
+public interface reaches the behavior. For module vocabulary, use **`arch`** — do not stop the
+slice to invoke it.
 
-> "What's the public interface, and which seams should we test?"
+A complete packet, or an explicit `/dev`, already approved the work. When the spec and the existing
+module agree, record the seam in one line and continue to the ladder and the tests in this same
+turn. Do not ask the user to confirm it.
 
-**Completion criterion:** User confirms seams under test before any failing test is written.
+Ask once, then stop, only when two existing public interfaces both match and picking one changes
+what the tests lock. Recommend one option, with the repo fact that supports it. Do not ask about
+copy, CSS classes, or which file to open.
+
+Do not paste an interview question. Do not narrate Knowledge hits, feature-map gotchas, or the
+ladder in the user reply.
+
+**Completion criterion:** The seam is named from the spec and the existing module, or the user
+answered the one blocking seam fork. No test is written before that. A settled seam does not end
+the turn.
 
 When implementing UI, use **`ui-kit`** for primitives. Read design spec **§4 CSS** and
-**§8 visual acceptance** first — run [visual-ship.md](visual-ship.md) (CSS before wiring).
-If `ui-kit` is not in context, ask the user to attach or invoke `/ui-kit`.
+**§8 visual acceptance** first — run [visual-ship.md](visual-ship.md) (CSS before wiring). Read
+the repo `ui-kit` skill when it is on disk. Ask the user to attach `/ui-kit` only when that skill
+is absent and the component map would be invented.
 
 ### 3. Solution ladder
 

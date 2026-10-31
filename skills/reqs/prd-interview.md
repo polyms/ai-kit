@@ -1,5 +1,8 @@
 # PRD Interview
 
+Skip this file on a `collab` inference brief or any codebase-first run — see **Codebase-first**
+in [SKILL.md](SKILL.md). Those runs do not ask these questions.
+
 Discovery script for `/reqs` when the problem statement or scope boundary is missing. Questions 1–9, then
 confirmation, then the behavior pass, then [enterprise-prd-template.md](enterprise-prd-template.md).
 
