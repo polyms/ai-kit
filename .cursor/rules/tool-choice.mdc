@@ -1,0 +1,28 @@
+---
+description: Prefer built-in tools and the project's own commands
+alwaysApply: true
+---
+
+# Tool and command choice
+
+Use the tool that already fits the job. Shell is for git, the package manager, and the project toolchain. Python, Node, and one-off scripts stay available when a built-in tool or a project command cannot express the task (data processing, a repo script, a transform Grep/Read cannot do).
+
+## Built-in tools
+
+- Find files → Glob
+- Search file contents → Grep
+- Read a file → Read
+- Edit → StrReplace / Write
+- Web → WebSearch / WebFetch
+- Lint diagnostics → ReadLints
+
+Do not shell out to `python`, `python3`, `node -e`, or a temp script to search, list, count, or read repo files when the tools above can do it.
+
+## Project commands
+
+Before invoking a binary directly (`biome`, `vitest`, `prisma`, `npx`, `npm`, `yarn`), read `package.json` `scripts` and `packageManager`, plus the lockfile. Run the script the repo already defines.
+
+- `pnpm-lock.yaml`, or `packageManager` starts with `pnpm` → `pnpm <script>`, `pnpm exec`, `pnpm dlx`. Skip `npm`, `npx`, and `yarn`.
+- `package-lock.json` → npm. `yarn.lock` → yarn. `bun.lock` / `bun.lockb` → bun.
+
+A pnpm repo runs `pnpm check`, `pnpm test`, `pnpm dev` — not `npx biome check` or `npm run test`.
