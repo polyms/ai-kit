@@ -15,8 +15,9 @@ const HOME_NAV: { id: NavId; href: string }[] = [
   { id: 'start', href: '/#start' },
 ]
 
-const SITE_NAV: { id: NavId | 'knowledge'; href: string }[] = [
+const SITE_NAV: { id: NavId | 'knowledge' | 'sdk'; href: string }[] = [
   ...HOME_NAV,
+  { id: 'sdk', href: '/sdk' },
   { id: 'knowledge', href: '/knowledge' },
 ]
 
@@ -27,13 +28,14 @@ const NAV_LABELS: Record<(typeof SITE_NAV)[number]['id'], () => string> = {
   start: m.nav_start,
   pipeline: m.nav_pipeline,
   knowledge: m.nav_knowledge,
+  sdk: m.nav_sdk,
 }
 
 export function HomeHeader() {
   const isActive = useNavActive()
   const pathname = useRouterState({ select: s => s.location.pathname })
   const onHome = pathname === '/'
-  const nav = onHome ? HOME_NAV : SITE_NAV
+  const nav = onHome ? SITE_NAV.filter(item => item.id !== 'knowledge') : SITE_NAV
 
   return (
     <header className='app-header sticky top-0 z-20 flex items-center justify-between px-10 py-4'>
@@ -56,7 +58,7 @@ export function HomeHeader() {
             <NavigationMenu.Item key={item.id}>
               <NavigationMenu.Link
                 active={
-                  item.id === 'knowledge' ? pathname.startsWith('/knowledge') : isActive(item.id as NavId)
+                  item.id === 'knowledge' ? pathname.startsWith('/knowledge') : item.id === 'sdk' ? pathname === '/sdk' : isActive(item.id as NavId)
                 }
                 className='font-bold'
                 href={item.href}

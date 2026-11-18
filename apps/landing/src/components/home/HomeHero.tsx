@@ -107,6 +107,13 @@ export function HomeHero() {
                   <span className='block text-[13px] text-muted leading-relaxed'>{m.hero_dev_path()}</span>
                 </span>
               </a>
+              <a className='flex items-start gap-3 rounded-2xl border border-line bg-body p-3.5 no-underline hover:border-primary-500' href='/sdk'>
+                <Code2 aria-hidden className='mt-0.5 shrink-0 text-primary-600' size={22} />
+                <span className='min-w-0'>
+                  <span className='block font-bold text-sm text-fg'>{m.nav_sdk()}</span>
+                  <span className='block text-[13px] text-muted leading-relaxed'>{m.sdk_hero_path()}</span>
+                </span>
+              </a>
             </div>
             <div className='flex flex-wrap items-center gap-3.5'>
               <Button className='font-bold' render={<a href='/#start' />} rounded size='xl' variant='primary'>
