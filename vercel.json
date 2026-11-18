@@ -2,7 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "tanstack-start",
   "buildCommand": "pnpm exec nx build landing --skip-nx-cache",
-  "installCommand": "bash scripts/vercel-install.sh",
   "git": {
     "deploymentEnabled": {
       "main": true
