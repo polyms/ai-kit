@@ -32,7 +32,7 @@ export default defineConfig(() => ({
           level === 'warn' &&
           log.code === 'MODULE_LEVEL_DIRECTIVE' &&
           log.message.includes('use client') &&
-          source.includes('@polyms/ui-kit')
+          (source.includes('@polyms/ui-kit') || source.includes('@tanstack/') || source.includes('@vercel/'))
         ) {
           return
         }
