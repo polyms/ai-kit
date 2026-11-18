@@ -4,7 +4,7 @@
 
 AI Kit extends its existing engineering workflows with reusable research, business, requirements,
 documentation and ticket-authoring capabilities. The same skill source serves local coding assistants
-and remote MCP clients, without client-specific workflow forks. The first seven published packs are
+and remote MCP clients, without client-specific workflow forks. The thirteen registered packs are
 listed below. Other local skills remain local until explicitly registered for remote delivery.
 
 This document is the maintainer and new-session entry point for the skill provider. For authentication
@@ -40,19 +40,26 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 
 | Pack | Intended output | Bundled references |
 | --- | --- | --- |
-| research | Evidence-based research brief or comparison | research-template.md |
-| business | Business case, pricing or decision analysis | business-case-template.md |
-| reqs | Explicit BRD or detailed PRD, user stories | business-requirements-template.md, existing PRD references |
-| docs | Business documents or developer documentation | business-doc-template.md |
+| research | Evidence-based research brief or comparison | research-template.md, evidence-guide.md |
+| business | Business case, pricing or decision analysis | business-case-template.md, decision-templates.md |
+| reqs | Explicit BRD or detailed PRD, user stories | business-requirements-template.md, assumptions-and-change.md, PRD references |
+| docs | Business documents or developer documentation | business-doc-template.md, work-records.md |
 | task | Actionable standalone task ticket | task-template.md |
 | bug | Evidence-based defect report | bug-template.md |
 | design | UI specification | Existing design references and uiKit files |
+| track | Ticket review, backlog snapshot, bulk update receipt | tracking-templates.md |
+| plan | Effort estimate and delivery plan | delivery-plan-template.md |
+| qa | Test plan, cases, coverage and report | qa-templates.md |
+| comms | Client replies, comments and stakeholder messages | communication-templates.md |
+| review | Artifact review, assumption challenge and gap analysis | review-template.md |
+| release | Readiness, go-live and release notes | release-templates.md |
 
 All packs except design include `docs/agents/work-artifact-standard.md`. Design retains its
 existing specialized quality guidance. The manifest, not this table, determines what MCP serves.
 
 Routing: research gathers evidence; business evaluates decisions; reqs specifies outcomes and
-behavior; docs explains or communicates; task defines work to perform; bug records a defect.
+behavior; docs explains or communicates; task defines work to perform; bug records a defect. Track manages existing work; plan estimates delivery; qa designs and verifies
+functional coverage; comms drafts professional messages.
 The existing `to-prd`, `to-issues`, `triage`, and engineering pipeline are not replaced.
 Use an explicit BRD for business-facing scope; use the enterprise PRD for detailed product behavior.
 Do not generate duplicate PRD/BRD artifacts unless requested.
@@ -68,6 +75,12 @@ skills/
   task/      SKILL.md, task-template.md
   bug/       SKILL.md, bug-template.md
   design/    SKILL.md, existing design references
+  track/     SKILL.md, tracking-templates.md
+  plan/      SKILL.md, delivery-plan-template.md
+  qa/        SKILL.md, qa-templates.md
+  comms/     SKILL.md, communication-templates.md
+  review/    SKILL.md, review-template.md
+  release/   SKILL.md, release-templates.md
 docs/agents/
   mcp-skill-provider.md       architecture, maintenance, verification
   work-artifact-standard.md  shared authoring and publishing rules
@@ -103,6 +116,21 @@ parallel reads. A Markdown-only edit to an already registered file does not requ
 landing app after it reaches main. New packs, changed file lists and server changes do require
 deployment. Preview/local servers also fetch from main, not the PR branch; mocked tests or a
 controlled test fixture are needed for pre-merge content checks.
+
+## Progressive retrieval
+
+Existing clients may continue to omit paths and receive complete packs. For large packs:
+- Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.
+- Fetch the entry point using `paths: ["skills/design/SKILL.md"]`, then request referenced files as needed.
+- Unselected files retain path and rawUrl but omit content. The design uiKit group is preserved.
+- All paths must match the selected pack manifest; INVALID_PATHS fails before external fetch.
+- For work packs, load the shared work artifact standard and relevant templates with the entry point.
+
+The provider has no arbitrary URL endpoint, cache or orchestration engine. Optional selection is a
+backward-compatible field; it does not change the default full-pack behavior.
+
+See [capabilities and composition](skill-capabilities.md), [external references](external-skill-references.md)
+and the [work skill evaluations](../../evals/work-skills/README.md).
 
 ## Human-readable and AI-readable artifacts
 
@@ -142,7 +170,7 @@ pnpm build
 
 After merge and Vercel deployment, smoke-test with an authenticated MCP client:
 
-- Discover seven packs and confirm descriptions; fetch each and verify every expected file is populated.
+- Discover thirteen packs and confirm descriptions; fetch each and verify every expected file is populated.
 - Confirm unknown pack handling; verify design still includes uiKit and no raw-URL follow-up is needed.
 - Draft a task, bug and BRD using their templates; check standalone context, testable criteria and unknowns.
 - Test at least two client implementations that support the endpoint's transport and OAuth.
@@ -150,13 +178,24 @@ After merge and Vercel deployment, smoke-test with an authenticated MCP client:
 
 ## Handoff status
 
-The initial work-operations expansion is tracked in [PR #3](https://github.com/polyms/ai-kit/pull/3).
-It includes server-side Markdown retrieval, the seven-pack catalog, six new templates, shared authoring
-rules and unit test changes. The PR branch is the source of these changes until merged.
-At the time of this handoff, automated tests/build and production smoke tests have not been executed,
-and the landing-site UI catalog has not been expanded for the four new skills. Check live PR and
-deployment status rather than assuming this snapshot stays current.
+Phase 1 was merged in PR #3. Production Vercel status succeeded and authenticated MCP retrieval
+returned nonempty Markdown for all seven initial packs. This verifies retrieval only, not workflow
+quality. Phase 2 adds track, plan, qa and comms, extending the MCP contract without breaking full-pack retrieval and using the same
+manifest and shared standard. Verify the expanded catalog and test each new workflow after deployment.
 
-Next: review the diff; run tests/build; reconcile landing-site catalog visibility as needed; merge,
-deploy and run the smoke checks above. Optimize payload size, caching or finer-grained reference
-retrieval only if measurements show a need. No compatibility claims for untested clients.
+PR #5 also adds review/release, evidence and decision references, assumption/change templates,
+work records, opt-in selective retrieval, and evaluation fixtures. REQS_REFERENCE_PATHS includes
+known kit-owned reqs dependencies. Project-specific context remains client-provided. Full legacy
+design dependency closure, landing-site UI catalog and actual comparative evaluation runs remain
+follow-up work.
+
+
+The initial expansion was merged in [PR #3](https://github.com/polyms/ai-kit/pull/3). The current
+work is in [PR #5](https://github.com/polyms/ai-kit/pull/5); check its live status for the latest state.
+At this handoff, Phase 2 tests/build, production smoke tests and comparative skill evaluations have
+not been run in the authoring session.
+
+Next: review the diff; run targeted and full tests/build; merge and deploy; verify full-pack and
+selective retrieval; run the evaluation fixtures with representative clients. Keep the landing-site
+catalog and remaining legacy dependencies as explicit follow-ups. No compatibility claims for untested
+clients.

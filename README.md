@@ -96,7 +96,14 @@ templates and references using `get_skill_pack`. The server retrieves Markdown f
 | [task](skills/task/) | Human-readable and AI-readable work tickets |
 | [bug](skills/bug/) | Evidence-based defect reports |
 | [design](skills/design/) | UI specifications and UI Kit references |
+| [track](skills/track/) | Ticket review, status and verified updates |
+| [plan](skills/plan/) | Effort estimates, capacity and delivery plans |
+| [qa](skills/qa/) | Test cases, requirements coverage and QA evidence |
+| [comms](skills/comms/) | Client replies, ticket comments and stakeholder communications |
+| [review](skills/review/) | Artifact review and assumption challenge |
+| [release](skills/release/) | Release readiness, go-live and rollback |
 
+For large packs, pass optional exact `paths` to `get_skill_pack`; `[]` returns the manifest only.
 The provider only loads skills; the client uses its authorized integrations to publish artifacts.
 See [architecture and maintenance](docs/agents/mcp-skill-provider.md),
 [work artifact standard](docs/agents/work-artifact-standard.md) and
@@ -469,6 +476,24 @@ ai-kit/
     ├── task/
     │   ├── SKILL.md
     │   └── task-template.md
+    ├── track/
+    │   ├── SKILL.md
+    │   └── tracking-templates.md
+    ├── plan/
+    │   ├── SKILL.md
+    │   └── delivery-plan-template.md
+    ├── qa/
+    │   ├── SKILL.md
+    │   └── qa-templates.md
+    ├── comms/
+    │   ├── SKILL.md
+    │   └── communication-templates.md
+    ├── review/
+    │   ├── SKILL.md
+    │   └── review-template.md
+    ├── release/
+    │   ├── SKILL.md
+    │   └── release-templates.md
     ├── bug/
     │   ├── SKILL.md
     │   └── bug-template.md
@@ -537,6 +562,10 @@ docs/agents/
 ```
 
 ## Adding skills and agents
+
+See [capability abstraction](docs/agents/skill-capabilities.md),
+[external references and licensing](docs/agents/external-skill-references.md) and
+[work skill evaluation fixtures](evals/work-skills/README.md).
 
 Run `/craft` before authoring or editing skills. Then:
 

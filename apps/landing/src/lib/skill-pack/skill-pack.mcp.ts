@@ -6,11 +6,12 @@ const listSkillPacksInputSchema = {}
 
 const getSkillPackInputSchema = {
   name: z.string().describe('Skill pack name from list_skill_packs'),
+  paths: z.array(z.string()).optional().describe('Optional exact manifest paths to load. Omit for all content; empty array for manifest only.'),
 }
 
 export const LIST_SKILL_PACKS_TOOL_DESCRIPTION = `List available ai-kit skill packs. Returns names, descriptions and raw URLs. Call get_skill_pack to load the Markdown directly; no client-side HTTP GET is required.`
 
-export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. Follow SKILL.md first and consult bundled templates and references only when needed. When design invokes /ui-kit, use the returned uiKit content. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.`
+export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. For large packs use paths: [] to discover files without content, then request exact paths (e.g. skills/design/SKILL.md); unselected files remain metadata only. Omit paths to preserve full-pack behavior. Unregistered paths return INVALID_PATHS without fetching. Follow SKILL.md first and consult bundled templates and references only when needed. When design invokes /ui-kit, use the returned uiKit content. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.`
 
 type McpTextResult = {
   content: [{ type: 'text'; text: string }]
@@ -23,17 +24,21 @@ export function executeListSkillPacks(): McpTextResult {
   }
 }
 
-async function loadFiles(files: SkillPackFile[], fetchFile: typeof fetch) {
+async function loadFiles(files: SkillPackFile[], fetchFile: typeof fetch, selected?: ReadonlySet<string>) {
   return Promise.all(files.map(async file => {
+    if (selected && !selected.has(file.path)) return file
     const response = await fetchFile(file.rawUrl, { signal: AbortSignal.timeout(10_000) })
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${file.path}`)
-    return { ...file, content: await response.text() }
+    const content = await response.text()
+    if (!content.trim()) throw new Error(`Empty file: ${file.path}`)
+    return { ...file, content }
   }))
 }
 
 export async function executeGetSkillPack(
   name: string,
-  fetchFile: typeof fetch = fetch
+  fetchFile: typeof fetch = fetch,
+  paths?: string[]
 ): Promise<McpTextResult> {
   const pack = getSkillPack(name)
   if (!pack) {
@@ -42,10 +47,21 @@ export async function executeGetSkillPack(
       isError: true,
     }
   }
+  const selected = paths === undefined ? undefined : new Set(paths)
+  if (selected) {
+    const allowed = new Set([...pack.files, ...(pack.name === 'design' ? pack.uiKit : [])].map(file => file.path))
+    const invalid = [...selected].filter(path => !allowed.has(path))
+    if (invalid.length) {
+      return {
+        content: [{ type: 'text', text: JSON.stringify({ error: 'INVALID_PATHS', name, paths: invalid }) }],
+        isError: true,
+      }
+    }
+  }
   try {
     const [files, uiKit] = await Promise.all([
-      loadFiles(pack.files, fetchFile),
-      pack.name === 'design' ? loadFiles(pack.uiKit, fetchFile) : Promise.resolve(undefined),
+      loadFiles(pack.files, fetchFile, selected),
+      pack.name === 'design' ? loadFiles(pack.uiKit, fetchFile, selected) : Promise.resolve(undefined),
     ])
     return {
       content: [{ type: 'text', text: JSON.stringify({ ...pack, files, uiKit }, null, 2) }],
@@ -74,6 +90,6 @@ export function registerSkillPackMcpTools(server: McpServer): void {
       description: GET_SKILL_PACK_TOOL_DESCRIPTION,
       inputSchema: getSkillPackInputSchema,
     },
-    async ({ name }) => executeGetSkillPack(name)
+    async ({ name, paths }) => executeGetSkillPack(name, fetch, paths)
   )
 }

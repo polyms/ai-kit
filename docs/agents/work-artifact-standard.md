@@ -26,6 +26,17 @@ to the destination's actual field values; do not invent assignees, labels, prior
 If a required destination or field cannot be resolved, return the draft and the blocker.
 Report the real created or updated ID and URL only after success. Never claim unperformed verification.
 
+## Updates and verification
+
+- For existing artifacts, read the latest version and preserve unrelated fields, confirmed decisions,
+  scope, acceptance criteria and references. Update only the requested section or field.
+- For bulk changes, resolve the exact target set; distinguish successful, failed, skipped and
+  unverified operations. Read back changed values when the integration supports it.
+- For summaries, record the scope and snapshot time, distinguish incomplete retrieval from complete
+  results, and cite the actual source. Do not infer that missing information means zero.
+- For estimates and test reports, distinguish proposed work from completed work. Use consistent units
+  and reconcile totals; do not represent an unexecuted test or unverified deployment as passed.
+
 ## Final check
 
 - [ ] A new reader understands the goal and scope from the artifact alone.

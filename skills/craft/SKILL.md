@@ -124,3 +124,10 @@ Compact pretrained concepts the agent thinks with (_tight_, _red_, _tracer bulle
 5. Run failure-mode checklist above before finishing
 
    **Completion criterion:** Failure-mode checklist passed with no unresolved duplication, sprawl, or no-op issues.
+
+## Evaluate changes
+
+For work skills, use the fixtures and rubric in `evals/work-skills/`. Compare the same prompts with
+and without the skill on the same client/model. Record output evidence, failures and measurements when
+available; do not claim evaluation success without running cases. Add anonymized regression cases
+for observed failures. Keep evaluation fixtures separate from runtime skill instructions.
