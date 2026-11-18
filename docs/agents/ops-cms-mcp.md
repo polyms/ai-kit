@@ -103,7 +103,7 @@ documents workspace files and server options.
 | `list_skill_packs`       | OAuth (any user)          |
 | `get_skill_pack`         | OAuth (any user)          |
 
-## Skill packs (ChatGPT)
+## Skill packs (MCP clients)
 
 The MCP server fetches Markdown for `reqs` and `design` from GitHub raw URLs on `main`.
 Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
@@ -113,8 +113,10 @@ Existing paths and URLs are preserved. Cursor and Claude keep reading the same f
 | `list_skill_packs` | `{ packs: [{ name, skillRawUrl }] }` for reqs and design. |
 | `get_skill_pack` | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. |
 
-ChatGPT: connect `https://ai-kit.polyms.dev/mcp` and call `get_skill_pack` directly.
-No client-side HTTP GET is needed.
+Any MCP-capable AI client or agent can connect to `https://ai-kit.polyms.dev/mcp` using the
+supported transport and OAuth flow. Call `list_skill_packs` to discover available packs and
+`get_skill_pack` to load the selected pack directly. No client-side HTTP GET is needed.
+Client-specific MCP availability, authentication, and invocation behavior may vary.
 
 - Follow `SKILL.md` first; consult sibling content only when referenced.
 - For design, use the returned `uiKit` content when the skill invokes `/ui-kit`.
