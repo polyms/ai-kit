@@ -105,26 +105,23 @@ documents workspace files and server options.
 
 ## Skill packs (ChatGPT)
 
-`reqs` and `design` are published as **raw GitHub URLs** on `main`. The tools return paths and URLs.
-They do not return markdown bodies and do not fetch GitHub. Cursor and Claude keep reading the same
-files locally.
+The MCP server fetches Markdown for `reqs` and `design` from GitHub raw URLs on `main`.
+Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
 
-Base: `https://raw.githubusercontent.com/polyms/ai-kit/refs/heads/main/`
+| Tool | Returns |
+| --- | --- |
+| `list_skill_packs` | `{ packs: [{ name, skillRawUrl }] }` for reqs and design. |
+| `get_skill_pack` | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. |
 
-| Tool               | Returns                                                                                                                       |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `list_skill_packs` | `{ packs: [{ name, skillRawUrl }] }` for `reqs` and `design`. `skillRawUrl` is `skills/<name>/SKILL.md`.                      |
-| `get_skill_pack`   | `{ name, files: [{ path, rawUrl }] }`. `design` also returns `uiKit` (the `@polyms/ui-kit` skill). Unknown name: `NOT_FOUND`. |
+ChatGPT: connect `https://ai-kit.polyms.dev/mcp` and call `get_skill_pack` directly.
+No client-side HTTP GET is needed.
 
-ChatGPT: connect `https://ai-kit.polyms.dev/mcp`, then HTTP GET each `rawUrl`.
+- Follow `SKILL.md` first; consult sibling content only when referenced.
+- For design, use the returned `uiKit` content when the skill invokes `/ui-kit`.
 
-- Call `get_skill_pack` with `reqs` before writing a PRD. Follow `SKILL.md`. Open a sibling only when that
-  file points at it.
-- Call `get_skill_pack` with `design` before writing a UI spec. GET both `files` and `uiKit`. When the
-  design `SKILL.md` says to invoke `/ui-kit`, GET the `uiKit` URLs instead of asking for a local skill.
-
-A skill edit is live after it merges to `main`. Redeploying the kit site is not required. Local MCP stays
-`http://localhost:6300/mcp`.
+Files are fetched in parallel without an application cache, with a ten-second timeout per file.
+Content edits on `main` do not require a site redeploy; GitHub CDN propagation may delay visibility.
+Local MCP stays `http://localhost:6300/mcp`.
 
 ## Env
 
