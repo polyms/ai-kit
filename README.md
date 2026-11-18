@@ -2,9 +2,10 @@
 
 **Polyms** agent skills for **real engineering** — not vibe coding.
 
-Agents and skills for agentic fullstack development: from product requirements to design specs to shipping production code. One version-controlled kit, linked globally across projects.
+Agents and skills for business operations and agentic fullstack development: research, requirements,
+documentation, work tickets, design and production code. One version-controlled kit for local and remote AI clients.
 
-Cursor-first today, tool-agnostic by design.
+Use local skill installation or the client-agnostic MCP skill provider.
 
 **Kit site:** [ai-kit.polyms.dev](https://ai-kit.polyms.dev) — browse skills, copy sample prompts, quick start. Source in `apps/landing/`.
 
@@ -24,7 +25,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 
 ## Vision
 
-`ai-kit` is the shared brain for **agentic fullstack dev** at Polyms. Each capability is a short-named skill or agent you invoke with a slash command:
+`ai-kit` is the shared brain for **business operations and agentic fullstack development** at Polyms. Each capability is a short-named skill or agent you invoke with a slash command:
 
 ```
 /setup         → configure repo for ai-kit pipeline (run once)
@@ -59,14 +60,14 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | `/setup`             | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline                  |
 | `/align`             | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md      |
 | `/collab`            | [`collab`](skills/collab/)                                                                                   | **Available** | One prompt → PRD, ADR if needed, UI spec (model-invoked)            |
-| `/reqs`              | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, enterprise PRD, stories (user-invoked; does not publish) |
+| `/reqs`              | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, BRD, enterprise PRD, stories (draft by default) |
 | `/to-prd`            | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)        |
 | `/to-issues`         | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                    |
 | `/triage`            | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent`     |
 | `/design`            | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, ui-kit component map, a11y       |
 | `/dev`               | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging       |
 | `/code-review`       | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes           |
-| `/docs`              | [`docs`](skills/docs/)                                                                                       | **Available** | Developer docs — API ref, tutorials (`techlead`)                    |
+| `/docs`              | [`docs`](skills/docs/)                                                                                       | **Available** | Business and developer docs — proposals, API ref, tutorials                    |
 | `/e2e`               | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester`)                                |
 | `/build-feature-map` | [`build-feature-map`](skills/build-feature-map/)                                                             | **Available** | Author the repo `feature-map` skill (`tester`)                      |
 | `/devops`            | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem         |
@@ -79,6 +80,27 @@ skills per agent OK. Use `/craft` when writing or editing any skill.
 
 **Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery
 for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`).
+
+## Remote skill provider (MCP)
+
+In addition to local installation, MCP-capable clients can connect to `https://ai-kit.polyms.dev/mcp`
+with Streamable HTTP and OAuth. Discover available packs via `list_skill_packs` and load workflow,
+templates and references using `get_skill_pack`. The server retrieves Markdown from GitHub main.
+
+| Pack | Scope |
+| --- | --- |
+| [research](skills/research/) | Research briefs and comparative analysis |
+| [business](skills/business/) | Business cases, pricing and decision analysis |
+| [reqs](skills/reqs/) | BRD, PRD and user stories |
+| [docs](skills/docs/) | Business and developer-facing documents |
+| [task](skills/task/) | Human-readable and AI-readable work tickets |
+| [bug](skills/bug/) | Evidence-based defect reports |
+| [design](skills/design/) | UI specifications and UI Kit references |
+
+The provider only loads skills; the client uses its authorized integrations to publish artifacts.
+See [architecture and maintenance](docs/agents/mcp-skill-provider.md),
+[work artifact standard](docs/agents/work-artifact-standard.md) and
+[connection details](docs/agents/ops-cms-mcp.md).
 
 ## Quick start
 
@@ -160,7 +182,8 @@ Users: [who]. Success metric: [what]. Deadline: [when].
 Includes:
 
 - Discovery interview (one question at a time), then a behavior pass for rules, failures, and data
-- PRD, user story, prioritization, and refinement workflows — BRD/FRD/SRS behavior stays in that PRD
+- PRD, user story, prioritization, and refinement workflows; explicit business-facing BRDs use the
+  [business requirements template](skills/reqs/business-requirements-template.md)
 - [PRD interview](skills/reqs/prd-interview.md)
 - [Enterprise PRD template](skills/reqs/enterprise-prd-template.md)
 - [User story guide](skills/reqs/user-story-guide.md) (INVEST, Gherkin AC, DoR/DoD)
@@ -288,8 +311,9 @@ Fetches spec from issue refs in commits (`gh issue view`), `docs/design/`, user 
 
 _Future:_ dedicated `prd-view` skill for presenting PRDs from issues — not in scope yet; Spec axis uses `gh` + paths for now.
 
-### `/docs` — Technical Writing
+### `/docs` — Business and Technical Writing
 
+Business proposals, SOPs, reports and internal memos use the [business document template](skills/docs/business-doc-template.md).
 Developer-facing docs for shipped surfaces — API/MCP/CLI reference, tutorials, migrations.
 Not PRDs (`/reqs`), not feature code (`/dev`). Long sessions: `techlead`.
 
@@ -434,7 +458,20 @@ ai-kit/
     │   ├── standards-baseline.md
     │   └── simplify-baseline.md
     ├── docs/
-    │   └── SKILL.md
+    │   ├── SKILL.md
+    │   └── business-doc-template.md
+    ├── research/
+    │   ├── SKILL.md
+    │   └── research-template.md
+    ├── business/
+    │   ├── SKILL.md
+    │   └── business-case-template.md
+    ├── task/
+    │   ├── SKILL.md
+    │   └── task-template.md
+    ├── bug/
+    │   ├── SKILL.md
+    │   └── bug-template.md
     ├── domain-modeling/
     │   └── SKILL.md
     ├── devops/
@@ -465,6 +502,7 @@ ai-kit/
     │   ├── SKILL.md
     │   ├── prd-interview.md
     │   ├── enterprise-prd-template.md
+    │   ├── business-requirements-template.md
     │   └── user-story-guide.md
     ├── to-prd/
     │   ├── SKILL.md
@@ -505,7 +543,8 @@ Run `/craft` before authoring or editing skills. Then:
 1. Create `skills/<name>/SKILL.md` with frontmatter `name` and `description`
 2. Optionally add `agents/<role>.md` for isolated deep work (org role — not 1:1 with the skill)
 3. Keep skill names **short** — lowercase, 2–4 chars when possible (`reqs`, `design`, `dev`)
-4. Commit and push; `git pull` on other machines is enough when using directory symlinks
+4. For MCP delivery, register the pack and test it per the [provider guide](docs/agents/mcp-skill-provider.md)
+5. Commit and push; `git pull` on other machines is enough when using directory symlinks
 
 ### Conventions
 
@@ -554,7 +593,9 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 - [x] `/triage` — issue backlog triage, agent briefs, `ready-for-agent` (from Matt's triage)
 - [x] `/dev` — fullstack implementation, TDD, solution ladder, scope self-check, status report
 - [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
-- [x] `/docs` — developer-facing docs (`techlead`)
+- [x] `/docs` — business and developer-facing docs
+- [x] `research`, `business`, `task`, `bug` — work operations skills and templates
+- [x] MCP skill provider — direct Markdown delivery (deployment verification pending)
 - [x] `/e2e` — E2E automation (`tester`)
 - [x] `/build-feature-map` — authors the repo-local `feature-map` skill (`tester`)
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates

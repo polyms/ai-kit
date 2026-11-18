@@ -1,6 +1,7 @@
 # Ops CMS MCP (agents)
 
-How agents retrieve and author **Knowledge** via MCP on the kit site. Pointer only — content lives in **Ops CMS** (Postgres).
+How agents retrieve and author **Knowledge** and retrieve reusable **skill packs** via MCP on the kit site.
+Knowledge content lives in Ops CMS (Postgres); skill files live in GitHub.
 
 **Primary pointer:** [knowledge.md](./knowledge.md) — unified retrieval workflow.
 
@@ -103,28 +104,32 @@ documents workspace files and server options.
 | `list_skill_packs`       | OAuth (any user)          |
 | `get_skill_pack`         | OAuth (any user)          |
 
-## Skill packs (ChatGPT)
+## Skill packs (MCP clients)
 
-`reqs` and `design` are published as **raw GitHub URLs** on `main`. The tools return paths and URLs.
-They do not return markdown bodies and do not fetch GitHub. Cursor and Claude keep reading the same
-files locally.
+See [MCP skill provider](mcp-skill-provider.md) for architecture, pack catalog, maintenance and rollout.
 
-Base: `https://raw.githubusercontent.com/polyms/ai-kit/refs/heads/main/`
+The MCP server fetches Markdown for `reqs`, `design`, `research`, `business`, `docs`, `task` and `bug` from GitHub raw URLs on `main`.
+Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
 
-| Tool               | Returns                                                                                                                       |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `list_skill_packs` | `{ packs: [{ name, skillRawUrl }] }` for `reqs` and `design`. `skillRawUrl` is `skills/<name>/SKILL.md`.                      |
-| `get_skill_pack`   | `{ name, files: [{ path, rawUrl }] }`. `design` also returns `uiKit` (the `@polyms/ui-kit` skill). Unknown name: `NOT_FOUND`. |
+| Tool | Returns |
+| --- | --- |
+| `list_skill_packs` | `{ packs: [{ name, skillRawUrl, description }] }`. |
+| `get_skill_pack` | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. |
 
-ChatGPT: connect `https://ai-kit.polyms.dev/mcp`, then HTTP GET each `rawUrl`.
+Any MCP-capable AI client or agent can connect to `https://ai-kit.polyms.dev/mcp` using the
+supported transport and OAuth flow. Call `list_skill_packs` to discover available packs and
+`get_skill_pack` to load the selected pack directly. No client-side HTTP GET is needed.
+Client-specific MCP availability, authentication, and invocation behavior may vary.
 
-- Call `get_skill_pack` with `reqs` before writing a PRD. Follow `SKILL.md`. Open a sibling only when that
-  file points at it.
-- Call `get_skill_pack` with `design` before writing a UI spec. GET both `files` and `uiKit`. When the
-  design `SKILL.md` says to invoke `/ui-kit`, GET the `uiKit` URLs instead of asking for a local skill.
+- Follow `SKILL.md` first; consult bundled templates and references when relevant.
+- Work skills include the shared work artifact standard and their applicable templates.
+- Skill loading is read-only; publishing tickets or documents uses the client's authorized integrations.
+- For design, use the returned `uiKit` content when the skill invokes `/ui-kit`.
 
-A skill edit is live after it merges to `main`. Redeploying the kit site is not required. Local MCP stays
-`http://localhost:6300/mcp`.
+Files are fetched in parallel without an application cache, with a ten-second timeout per file.
+Content edits to already registered files on `main` do not require a site redeploy; GitHub CDN
+propagation may delay visibility. New packs or manifest changes require a deployment.
+Local MCP stays `http://localhost:6300/mcp`.
 
 ## Env
 
@@ -139,3 +144,5 @@ Dev sign-in on `/ops/login` is available automatically when running `pnpm dev` (
 ## Related
 
 - [knowledge.md](./knowledge.md)
+- [mcp-skill-provider.md](./mcp-skill-provider.md)
+- [work-artifact-standard.md](./work-artifact-standard.md)

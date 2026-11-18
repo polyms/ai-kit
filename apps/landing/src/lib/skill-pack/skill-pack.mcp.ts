@@ -1,20 +1,16 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
-import { getSkillPack, listSkillPacks } from './skill-pack'
+import { getSkillPack, listSkillPacks, type SkillPackFile } from './skill-pack'
 
 const listSkillPacksInputSchema = {}
 
 const getSkillPackInputSchema = {
-  name: z.string().describe('Skill pack name: reqs or design'),
+  name: z.string().describe('Skill pack name from list_skill_packs'),
 }
 
-export const LIST_SKILL_PACKS_TOOL_DESCRIPTION = `List ai-kit skill packs published as GitHub raw URLs on the main branch.
+export const LIST_SKILL_PACKS_TOOL_DESCRIPTION = `List available ai-kit skill packs. Returns names, descriptions and raw URLs. Call get_skill_pack to load the Markdown directly; no client-side HTTP GET is required.`
 
-Returns { packs: [{ name, skillRawUrl }] } for reqs and design. skillRawUrl points at skills/<name>/SKILL.md. HTTP GET that URL and read its frontmatter before choosing a pack. This tool does not return markdown bodies.`
-
-export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Get GitHub raw URLs for one ai-kit skill pack: reqs or design.
-
-Returns { name, files: [{ path, rawUrl }] }. design also returns uiKit: the @polyms/ui-kit skill files. HTTP GET each rawUrl. Follow SKILL.md as the workflow and open a sibling file only when that skill points at it. When the design SKILL.md says to invoke /ui-kit, GET the uiKit URLs instead of asking the user to run a local skill. This tool does not return markdown bodies. An unknown name returns NOT_FOUND.`
+export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. Follow SKILL.md first and consult bundled templates and references only when needed. When design invokes /ui-kit, use the returned uiKit content. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.`
 
 type McpTextResult = {
   content: [{ type: 'text'; text: string }]
@@ -27,7 +23,18 @@ export function executeListSkillPacks(): McpTextResult {
   }
 }
 
-export function executeGetSkillPack(name: string): McpTextResult {
+async function loadFiles(files: SkillPackFile[], fetchFile: typeof fetch) {
+  return Promise.all(files.map(async file => {
+    const response = await fetchFile(file.rawUrl, { signal: AbortSignal.timeout(10_000) })
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${file.path}`)
+    return { ...file, content: await response.text() }
+  }))
+}
+
+export async function executeGetSkillPack(
+  name: string,
+  fetchFile: typeof fetch = fetch
+): Promise<McpTextResult> {
   const pack = getSkillPack(name)
   if (!pack) {
     return {
@@ -35,8 +42,19 @@ export function executeGetSkillPack(name: string): McpTextResult {
       isError: true,
     }
   }
-  return {
-    content: [{ type: 'text', text: JSON.stringify(pack, null, 2) }],
+  try {
+    const [files, uiKit] = await Promise.all([
+      loadFiles(pack.files, fetchFile),
+      pack.name === 'design' ? loadFiles(pack.uiKit, fetchFile) : Promise.resolve(undefined),
+    ])
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ ...pack, files, uiKit }, null, 2) }],
+    }
+  } catch {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: 'FETCH_FAILED', name }) }],
+      isError: true,
+    }
   }
 }
 

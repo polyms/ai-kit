@@ -58,13 +58,23 @@ it, ask before implementation. Explicit `/align`,
 `/reqs`, `/design`, or `/dev` still wins when the user names it. Specs on issue tracker; glossary in
 `CONTEXT.md`.
 
+### Business and work operations
+
+Use `research` for evidence-based investigation, `business` for decisions and financial analysis,
+`task` for actionable work tickets, and `bug` for defect reports. `/reqs` includes a business requirements
+template; `/docs` includes business documentation. Follow `docs/agents/work-artifact-standard.md` for
+human-readable and AI-readable artifacts. Draft by default; use authorized integrations to publish when
+explicitly requested. These workflows do not require a specific AI client or issue tracker.
+See [MCP skill provider](docs/agents/mcp-skill-provider.md) for architecture, pack structure,
+maintenance, verification and the rollout handoff. Read it before changing skill delivery.
+
 ### Design stack
 
 `/design` — UI spec from PRD at `docs/design/`; `@polyms/ui-kit` + `/ui-kit` skill for implementation (lib repo, not ai-kit). Long sessions: `designer` in `agents/designer.md`.
 
 ### Maintenance
 
-`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — developer-facing docs; `techlead`. `/e2e` — E2E automation; principal agent `tester` (skill id `e2e`). `/build-feature-map` — authors the
+`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — business and developer-facing docs; `techlead` for technical writing. `/e2e` — E2E automation; principal agent `tester` (skill id `e2e`). `/build-feature-map` — authors the
 repo-local `feature-map` skill; same principal `tester`. Pipeline walkthrough:
 `examples/pipeline-feature-walkthrough.md`.
 
