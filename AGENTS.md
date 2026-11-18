@@ -61,7 +61,8 @@ it, ask before implementation. Explicit `/align`,
 ### Business and work operations
 
 Use `research` for evidence-based investigation, `business` for decisions and financial analysis,
-`task` for actionable work tickets, and `bug` for defect reports. `/reqs` includes a business requirements
+`task` for actionable work tickets, and `bug` for defect reports. Use `track` for existing work items,
+`plan` for estimates and delivery, `qa` for functional coverage, and `comms` for stakeholder messages. `/reqs` includes a business requirements
 template; `/docs` includes business documentation. Follow `docs/agents/work-artifact-standard.md` for
 human-readable and AI-readable artifacts. Draft by default; use authorized integrations to publish when
 explicitly requested. These workflows do not require a specific AI client or issue tracker.

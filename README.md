@@ -96,6 +96,10 @@ templates and references using `get_skill_pack`. The server retrieves Markdown f
 | [task](skills/task/) | Human-readable and AI-readable work tickets |
 | [bug](skills/bug/) | Evidence-based defect reports |
 | [design](skills/design/) | UI specifications and UI Kit references |
+| [track](skills/track/) | Ticket review, status and verified updates |
+| [plan](skills/plan/) | Effort estimates, capacity and delivery plans |
+| [qa](skills/qa/) | Test cases, requirements coverage and QA evidence |
+| [comms](skills/comms/) | Client replies, ticket comments and stakeholder communications |
 
 The provider only loads skills; the client uses its authorized integrations to publish artifacts.
 See [architecture and maintenance](docs/agents/mcp-skill-provider.md),
@@ -469,6 +473,18 @@ ai-kit/
     ├── task/
     │   ├── SKILL.md
     │   └── task-template.md
+    ├── track/
+    │   ├── SKILL.md
+    │   └── tracking-templates.md
+    ├── plan/
+    │   ├── SKILL.md
+    │   └── delivery-plan-template.md
+    ├── qa/
+    │   ├── SKILL.md
+    │   └── qa-templates.md
+    ├── comms/
+    │   ├── SKILL.md
+    │   └── communication-templates.md
     ├── bug/
     │   ├── SKILL.md
     │   └── bug-template.md

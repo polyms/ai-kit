@@ -48,6 +48,10 @@ export const WORK_SKILL_PATHS = {
   docs: ['skills/docs/SKILL.md', 'skills/docs/business-doc-template.md'],
   task: ['skills/task/SKILL.md', 'skills/task/task-template.md'],
   bug: ['skills/bug/SKILL.md', 'skills/bug/bug-template.md'],
+  track: ['skills/track/SKILL.md', 'skills/track/tracking-templates.md'],
+  plan: ['skills/plan/SKILL.md', 'skills/plan/delivery-plan-template.md'],
+  qa: ['skills/qa/SKILL.md', 'skills/qa/qa-templates.md'],
+  comms: ['skills/comms/SKILL.md', 'skills/comms/communication-templates.md'],
 } as const
 
 export type WorkSkillName = keyof typeof WORK_SKILL_PATHS
@@ -61,6 +65,10 @@ const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   docs: 'Business and technical documentation',
   task: 'Actionable, testable work tickets',
   bug: 'Evidence-based and reproducible defect reports',
+  track: 'Ticket inspection, backlog summaries and verified work-item updates',
+  plan: 'Effort estimation, delivery planning, capacity and dependencies',
+  qa: 'Functional test design, requirements coverage and QA evidence',
+  comms: 'Professional messages, client replies and stakeholder updates',
 }
 
 export type SkillPackFile = {

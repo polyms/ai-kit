@@ -34,7 +34,7 @@ describe('skill pack manifest', () => {
   it('builds raw URLs on refs/heads/main and does not embed file bodies', () => {
     const packs = listSkillPacks()
     expect(packs.map(pack => pack.name)).toEqual([
-      'reqs', 'design', 'research', 'business', 'docs', 'task', 'bug',
+      'reqs', 'design', 'research', 'business', 'docs', 'task', 'bug', 'track', 'plan', 'qa', 'comms',
     ])
     for (const pack of packs) {
       expect(pack.skillRawUrl).toBe(skillPackRawUrl(`skills/${pack.name}/SKILL.md`))

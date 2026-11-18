@@ -108,7 +108,7 @@ documents workspace files and server options.
 
 See [MCP skill provider](mcp-skill-provider.md) for architecture, pack catalog, maintenance and rollout.
 
-The MCP server fetches Markdown for `reqs`, `design`, `research`, `business`, `docs`, `task` and `bug` from GitHub raw URLs on `main`.
+The MCP server fetches Markdown for `reqs`, `design`, `research`, `business`, `docs`, `task`, `bug`, `track`, `plan`, `qa` and `comms` from GitHub raw URLs on `main`.
 Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
 
 | Tool | Returns |

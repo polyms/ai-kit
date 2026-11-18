@@ -4,7 +4,7 @@
 
 AI Kit extends its existing engineering workflows with reusable research, business, requirements,
 documentation and ticket-authoring capabilities. The same skill source serves local coding assistants
-and remote MCP clients, without client-specific workflow forks. The first seven published packs are
+and remote MCP clients, without client-specific workflow forks. The eleven registered packs are
 listed below. Other local skills remain local until explicitly registered for remote delivery.
 
 This document is the maintainer and new-session entry point for the skill provider. For authentication
@@ -47,12 +47,17 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 | task | Actionable standalone task ticket | task-template.md |
 | bug | Evidence-based defect report | bug-template.md |
 | design | UI specification | Existing design references and uiKit files |
+| track | Ticket review, backlog snapshot, bulk update receipt | tracking-templates.md |
+| plan | Effort estimate and delivery plan | delivery-plan-template.md |
+| qa | Test plan, cases, coverage and report | qa-templates.md |
+| comms | Client replies, comments and stakeholder messages | communication-templates.md |
 
 All packs except design include `docs/agents/work-artifact-standard.md`. Design retains its
 existing specialized quality guidance. The manifest, not this table, determines what MCP serves.
 
 Routing: research gathers evidence; business evaluates decisions; reqs specifies outcomes and
-behavior; docs explains or communicates; task defines work to perform; bug records a defect.
+behavior; docs explains or communicates; task defines work to perform; bug records a defect. Track manages existing work; plan estimates delivery; qa designs and verifies
+functional coverage; comms drafts professional messages.
 The existing `to-prd`, `to-issues`, `triage`, and engineering pipeline are not replaced.
 Use an explicit BRD for business-facing scope; use the enterprise PRD for detailed product behavior.
 Do not generate duplicate PRD/BRD artifacts unless requested.
@@ -68,6 +73,10 @@ skills/
   task/      SKILL.md, task-template.md
   bug/       SKILL.md, bug-template.md
   design/    SKILL.md, existing design references
+  track/     SKILL.md, tracking-templates.md
+  plan/      SKILL.md, delivery-plan-template.md
+  qa/        SKILL.md, qa-templates.md
+  comms/     SKILL.md, communication-templates.md
 docs/agents/
   mcp-skill-provider.md       architecture, maintenance, verification
   work-artifact-standard.md  shared authoring and publishing rules
@@ -142,13 +151,22 @@ pnpm build
 
 After merge and Vercel deployment, smoke-test with an authenticated MCP client:
 
-- Discover seven packs and confirm descriptions; fetch each and verify every expected file is populated.
+- Discover eleven packs and confirm descriptions; fetch each and verify every expected file is populated.
 - Confirm unknown pack handling; verify design still includes uiKit and no raw-URL follow-up is needed.
 - Draft a task, bug and BRD using their templates; check standalone context, testable criteria and unknowns.
 - Test at least two client implementations that support the endpoint's transport and OAuth.
 - Test an authorized ticket creation in a safe project if publishing is in scope; verify the returned ID.
 
 ## Handoff status
+
+Phase 1 was merged in PR #3. Production Vercel status succeeded and authenticated MCP retrieval
+returned nonempty Markdown for all seven initial packs. This verifies retrieval only, not workflow
+quality. Phase 2 adds track, plan, qa and comms, preserving the MCP contract and using the same
+manifest and shared standard. Verify the expanded catalog and test each new workflow after deployment.
+
+Known Phase 2 scope exclusions: release/review skills, progressive or selective retrieval, full legacy
+reqs/design dependency closure, and landing-site UI catalog updates. These remain follow-up work.
+
 
 The initial work-operations expansion is tracked in [PR #3](https://github.com/polyms/ai-kit/pull/3).
 It includes server-side Markdown retrieval, the seven-pack catalog, six new templates, shared authoring
