@@ -216,3 +216,8 @@ Next: review the diff; run targeted and full tests/build; merge and deploy; veri
 selective retrieval; run the evaluation fixtures with representative clients. Keep the landing-site
 catalog and remaining legacy dependencies as explicit follow-ups. No compatibility claims for untested
 clients.
+
+## External integrations
+
+See [External skill provider](external-skill-provider.md) for the separate versioned HTTP API and
+local domain extension SDK. Existing MCP clients retain the original contract.
