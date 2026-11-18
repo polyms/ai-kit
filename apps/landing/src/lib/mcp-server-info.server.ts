@@ -12,7 +12,7 @@ export type ServerInfo = {
 /** Public, non-sensitive build identity; the landing package owns the release version. */
 export function getMcpServerInfo(
   version: string,
-  env: Pick<NodeJS.ProcessEnv, 'VERCEL_GIT_COMMIT_SHA' | 'VERCEL_ENV'> = process.env
+  env: Partial<Pick<NodeJS.ProcessEnv, 'VERCEL_GIT_COMMIT_SHA' | 'VERCEL_ENV'>> = process.env
 ): ServerInfo {
   const commit = env.VERCEL_GIT_COMMIT_SHA?.trim()
   const environment = env.VERCEL_ENV?.trim()
