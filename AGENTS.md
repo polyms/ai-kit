@@ -69,6 +69,7 @@ human-readable and AI-readable artifacts. Draft by default; use authorized integ
 explicitly requested. These workflows do not require a specific AI client or issue tracker.
 See [MCP skill provider](docs/agents/mcp-skill-provider.md) for architecture, pack structure,
 maintenance, verification and the rollout handoff. Read it before changing skill delivery.
+For remote routing and progressive retrieval, see `docs/agents/skill-intelligence.md`.
 See `docs/agents/skill-capabilities.md` for tool abstraction and composition,
 `docs/agents/external-skill-references.md` for licensing, and `evals/work-skills/` for evaluations.
 

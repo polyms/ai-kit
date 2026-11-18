@@ -98,12 +98,14 @@ and the server's OAuth flow. Client support for these features varies; do not as
 can connect or automatically invoke remote skills.
 
 1. Call `list_skill_packs` to discover names and descriptions.
-2. Call `get_skill_pack` with the selected name (for example, `{"name":"task"}`).
+2. Select only relevant packs using descriptions and routing hints; honor explicit invocation and client policy.
+   Call `get_skill_pack` with the selected name and that pack's `starterPaths` as `paths`.
 3. Read the returned SKILL.md first. Apply the relevant bundled template and shared standard.
 4. Use user-supplied or authorized context. Draft the output, or publish only when requested.
 5. Return actual ticket/document IDs and links after a successful write.
 
-The list returns `{packs: [{name, skillRawUrl, description}]}`.
+The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills}]}`.
+The additional routing fields are advisory and backward-compatible.
 The get operation returns `{name, files: [{path, rawUrl, content}]}`. For design it also returns
 `uiKit` entries of the same file shape. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
@@ -119,18 +121,29 @@ controlled test fixture are needed for pre-merge content checks.
 
 ## Progressive retrieval
 
-Existing clients may continue to omit paths and receive complete packs. For large packs:
+Existing clients may continue to omit paths and receive complete packs. Prefer the catalog's
+`starterPaths` for new calls: this returns entry content, shared standard for work packs and the default
+template where applicable; all other file paths remain metadata. For large packs:
 - Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.
 - Fetch the entry point using `paths: ["skills/design/SKILL.md"]`, then request referenced files as needed.
 - Unselected files retain path and rawUrl but omit content. The design uiKit group is preserved.
 - All paths must match the selected pack manifest; INVALID_PATHS fails before external fetch.
-- For work packs, load the shared work artifact standard and relevant templates with the entry point.
+- For work packs, load the shared work artifact standard and relevant templates before drafting.
+- Request only missing references. Reuse already loaded content within the current session.
+- Related skills are optional handoffs, not prerequisites, automatic execution or permission to publish.
 
 The provider has no arbitrary URL endpoint, cache or orchestration engine. Optional selection is a
 backward-compatible field; it does not change the default full-pack behavior.
 
 See [capabilities and composition](skill-capabilities.md), [external references](external-skill-references.md)
 and the [work skill evaluations](../../evals/work-skills/README.md).
+
+## Skill intelligence
+
+See [skill-intelligence.md](skill-intelligence.md) for routing metadata, selective retrieval policy,
+composition and regression checks. The server does not classify prompts or execute workflows.
+The client chooses relevant skills using metadata and user intent, while local manual-only policy
+continues to govern native skill invocation.
 
 ## Human-readable and AI-readable artifacts
 
@@ -185,15 +198,15 @@ manifest and shared standard. Verify the expanded catalog and test each new work
 
 PR #5 also adds review/release, evidence and decision references, assumption/change templates,
 work records, opt-in selective retrieval, and evaluation fixtures. REQS_REFERENCE_PATHS includes
-known kit-owned reqs dependencies. Project-specific context remains client-provided. Full legacy
-design dependency closure, landing-site UI catalog and actual comparative evaluation runs remain
-follow-up work.
+known kit-owned reqs dependencies. Project-specific context remains client-provided. V0.3 closes known relative Markdown links in design/docs, including client compatibility and
+visual-ship. Project-specific files and external resources are still resolved by the client.
+Landing-site UI catalog and actual comparative evaluation runs remain follow-up work.
 
 
 The initial expansion was merged in [PR #3](https://github.com/polyms/ai-kit/pull/3). The current
 work is in [PR #5](https://github.com/polyms/ai-kit/pull/5); check its live status for the latest state.
-At this handoff, Phase 2 tests/build, production smoke tests and comparative skill evaluations have
-not been run in the authoring session.
+V0.2 production smoke tests passed for all thirteen packs and selective retrieval; unit tests and
+comparative skill evaluations were not executed in the authoring session.
 
 Next: review the diff; run targeted and full tests/build; merge and deploy; verify full-pack and
 selective retrieval; run the evaluation fixtures with representative clients. Keep the landing-site
