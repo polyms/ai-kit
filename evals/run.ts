@@ -51,7 +51,9 @@ hash.update(executeListSkillPacks().content[0].text)
 hash.update(JSON.stringify(cases)).update(JSON.stringify(fixtureContext))
 const fixtureHash = hash.digest('hex')
 let revision = 'unknown'
-try { revision = execFileSync('git', ['rev-parse','HEAD'], {cwd:root,encoding:'utf8'}).trim() } catch {}
+try { revision = execFileSync('git', ['rev-parse','HEAD'], {cwd:root,encoding:'utf8'}).trim() } catch {
+  // Git metadata may be unavailable in packaged evaluation runs.
+}
 const plan = { cases: cases.length, pairedRuns: cases.length * repeat, modelRuns: cases.length * repeat * 2,
   maxGenerationRequests: cases.reduce((n,item) => n + (item.suite === 'routing' ? 2 : 18),0) * repeat,
   maxJudgeRequests: opts['judge-model'] ? cases.filter(item => item.suite !== 'routing').length * repeat * 2 : 0, revision, fixtureHash }
