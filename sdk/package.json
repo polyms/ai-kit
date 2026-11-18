@@ -20,5 +20,13 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polyms/ai-kit.git",
+    "directory": "sdk"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
