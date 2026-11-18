@@ -38,4 +38,19 @@ describe('versioned snapshot provider', () => {
       name: 'product-reqs', extends: 'ai-kit/reqs@0.3.0', instructions: 'Preserve project IDs.',
     }).base).toBe(bundle)
   })
+  it('does not cache errors and isolates returned bundles', async () => {
+    let attempts = 0
+    const transport = vi.fn(async () => {
+      attempts++
+      return attempts === 1 ? new Response('', { status: 503 }) :
+        skillProvider({ name: 'reqs', version: '0.3.0' })
+    })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.0', fetch: transport })
+    await expect(client.getSkill('reqs')).rejects.toThrow('503')
+    const first = await client.getSkill('reqs')
+    first.files[0].content = 'changed by caller'
+    const second = await client.getSkill('reqs')
+    expect(second.files[0].content).not.toBe('changed by caller')
+    expect(transport).toHaveBeenCalledTimes(2)
+  })
 })
