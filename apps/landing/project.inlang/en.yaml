@@ -47,7 +47,7 @@ domain_review: Review
 domain_triage: Triage
 
 # --- footer ---
-footer_blurb: Agent skills for real engineering — one version-controlled kit, linked globally across projects.
+footer_blurb: 'Agent skills for engineering and everyday work. One version-controlled kit, available locally and through MCP.'
 footer_col_community: Community
 footer_col_pipeline: Pipeline
 footer_col_resources: Resources
@@ -57,16 +57,16 @@ footer_link_issues: Issues
 footer_starGithub: Star on GitHub
 
 # --- hero ---
-hero_badge: Cursor-first · tool-agnostic by design
+hero_badge: 'Local skills · MCP-ready'
 hero_ctaPrimary: Get started
 hero_ctaSecondary: Read the docs →
 hero_line1: Agent skills for
 hero_line2: real engineering
-hero_sub: ai-kit is Polyms' shared brain for agentic fullstack dev — short-named skills you invoke with a slash command, from product requirements to shipped, reviewed code.
+hero_sub: 'ai-kit is Polyms’ shared toolkit for engineering and everyday work: from requirements and reviewed code to research, decisions, tasks and QA. Install skills locally or discover work packs through MCP.'
 
 # --- home ---
-home_catalog_heading: Fifteen skills. Zero ceremony.
-home_catalog_intro: Each capability is a short-named skill or agent, invoked with a slash command.
+home_catalog_heading: 'One kit. Many workflows.'
+home_catalog_intro: 'Explore local engineering skills and MCP work packs. Use a slash command in compatible editors or describe your goal to a connected AI client.'
 
 # --- pipeline ---
 pipeline_agentsLabel: Principal agents
@@ -96,8 +96,8 @@ quickstart_target_title: 'Another client'
 quickstart_target_body: 'Swap -a cursor for your client. Repeat -a to install into several.'
 quickstart_setup_title: 'Run /setup'
 quickstart_setup_body: 'Restart your editor or open a new chat, then run /setup in your project.'
-quickstart_mcp_title: 'Connect Knowledge MCP'
-quickstart_mcp_body: 'Add this URL as an MCP server in your client, once per project, then sign in.'
+quickstart_mcp_title: 'Connect AI Kit MCP'
+quickstart_mcp_body: 'Add this URL as an MCP server in a compatible client (including ChatGPT where custom MCP is available), then sign in. Discover skill packs and Knowledge; client capabilities and invocation rules vary.'
 
 # --- nav ---
 nav_catalog: Skills
@@ -230,3 +230,43 @@ chip_principles: principles
 chip_pipeline: pipeline
 chip_catalog: catalog
 chip_quickstart: quickstart
+
+domain_work: "Work operations"
+nav_intelligence: "Intelligence"
+chip_intelligence: "intelligence"
+home_catalog_group: "Skill collections"
+home_catalog_engineering: "Engineering"
+home_catalog_work: "MCP work packs"
+home_catalog_all: "View all skills"
+intelligence_title: "The right skill. Only what you need."
+intelligence_intro: "Connect the read-only skill provider to a compatible AI client. The client discovers relevant workflows, loads only necessary instructions, and combines skills when the task calls for it."
+intelligence_discovery_title: "Smart discovery"
+intelligence_discovery_body: "Intent, boundaries and suggested starter paths guide the client toward a minimal set of skills. Simple requests can skip skills entirely."
+intelligence_loading_title: "Progressive loading"
+intelligence_loading_body: "Read the entry workflow first. Retrieve templates and references by exact path only when needed; reuse content already in the session."
+intelligence_composition_title: "Skill composition"
+intelligence_composition_body: "Input/output contracts, shared context and completion gates guide optional handoffs. The client stops blocked work instead of inventing decisions."
+intelligence_loading_example: "Entry first, references later"
+intelligence_loading_explain: "Example: discover the design pack, then fetch only the advertised entry file."
+intelligence_loading_note: "Other files remain manifest metadata until requested."
+intelligence_eval_title: "Built to be evaluated"
+intelligence_eval_body: "An opt-in evaluation runner compares baseline and skill-assisted outputs, routing and composition."
+intelligence_packs: "MCP skill packs"
+intelligence_recipes: "workflow recipes"
+intelligence_eval_note: "41 scenarios cover output, routing and composition. Comparative model benchmarks are pending; no quality uplift claimed."
+intelligence_eval_link: "Read evaluation framework"
+intelligence_workflows_title: "Workflow recipes"
+intelligence_workflows_intro: "Start at the first missing artifact. These are suggested routes, not mandatory pipelines."
+intelligence_workflows_note: "Skip irrelevant stages, preserve approved scope and require explicit authorization for external writes. No server-side orchestration."
+recipe_product: "Product development"
+recipe_bug: "Bug lifecycle"
+recipe_business: "Business decision"
+recipe_sprint: "Sprint planning"
+recipe_release: "Release readiness"
+skillDetail_contract: "MCP skill contract"
+skillDetail_accepts: "Accepts (when relevant)"
+skillDetail_produces: "Produces"
+skillDetail_gate: "Ready when"
+skillDetail_related: "Optional handoffs"
+skillDetail_starter: "Starter paths"
+skillDetail_contract_note: "Advisory artifact identifiers and completion gate from the live catalog definition; not an execution or approval policy."

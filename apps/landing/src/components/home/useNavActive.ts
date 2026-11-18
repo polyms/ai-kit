@@ -1,7 +1,7 @@
 import { useRouterState } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
-export type NavId = 'overview' | 'catalog' | 'start' | 'pipeline'
+export type NavId = 'overview' | 'catalog' | 'start' | 'pipeline' | 'intelligence'
 
 export function useNavActive() {
   const pathname = useRouterState({ select: s => s.location.pathname })
@@ -19,6 +19,7 @@ export function useNavActive() {
     if (id === 'overview') return !hash || hash === '#'
     if (id === 'start') return hash === '#start'
     if (id === 'catalog') return hash === '#catalog'
+    if (id === 'intelligence') return hash === '#intelligence'
     if (id === 'pipeline') return hash === '#pipeline'
     return false
   }

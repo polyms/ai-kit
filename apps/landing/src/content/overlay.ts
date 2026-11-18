@@ -1,4 +1,5 @@
 import type { Locale } from '../paraglide/runtime'
+import { workSkillOverlays } from './work-skills'
 
 /** Plain string when EN/VI copy is identical (identifiers, arrow chains); otherwise per-locale prose. */
 export type LocalizedString = string | Record<Locale, string>
@@ -17,6 +18,7 @@ export type SkillDomain =
   | 'devops'
   | 'docs'
   | 'e2e'
+  | 'work'
 
 export type AgentPanel = {
   role: LocalizedString
@@ -1264,4 +1266,5 @@ export const skillOverlays: SkillOverlay[] = [
       vi: 'Deploy/CI đã xác minh xanh (hoặc rollback an toàn) và giấy tờ mức độ nghiêm trọng đã xong khi cần.',
     },
   },
+  ...workSkillOverlays,
 ]

@@ -19,6 +19,16 @@ type IconComponent = (props: ComponentProps<typeof LinkRound>) => ReactElement
 const iconProps = { size: 22, className: 'text-primary-600' } as const
 
 export const skillIconBySlug: Record<string, IconComponent> = {
+  research: p => <DocumentText {...iconProps} {...p} />,
+  business: p => <Structure {...iconProps} {...p} />,
+  task: p => <ChecklistMinimalistic {...iconProps} {...p} />,
+  bug: p => <ShieldCheck {...iconProps} {...p} />,
+  track: p => <SortByTime {...iconProps} {...p} />,
+  plan: p => <ClipboardList {...iconProps} {...p} />,
+  qa: p => <ChecklistMinimalistic {...iconProps} {...p} />,
+  comms: p => <ChatRoundDots {...iconProps} {...p} />,
+  review: p => <ShieldCheck {...iconProps} {...p} />,
+  release: p => <ServerSquare {...iconProps} {...p} />,
   setup: p => <LinkRound {...iconProps} {...p} />,
   align: p => <ChatRoundDots {...iconProps} {...p} />,
   reqs: p => <ClipboardList {...iconProps} {...p} />,

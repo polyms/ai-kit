@@ -10,6 +10,7 @@ import { type NavId, useNavActive } from './useNavActive'
 const HOME_NAV: { id: NavId; href: string }[] = [
   { id: 'overview', href: '/#main' },
   { id: 'pipeline', href: '/#pipeline' },
+  { id: 'intelligence', href: '/#intelligence' },
   { id: 'catalog', href: '/#catalog' },
   { id: 'start', href: '/#start' },
 ]
@@ -22,6 +23,7 @@ const SITE_NAV: { id: NavId | 'knowledge'; href: string }[] = [
 const NAV_LABELS: Record<(typeof SITE_NAV)[number]['id'], () => string> = {
   overview: m.nav_overview,
   catalog: m.nav_catalog,
+  intelligence: m.nav_intelligence,
   start: m.nav_start,
   pipeline: m.nav_pipeline,
   knowledge: m.nav_knowledge,

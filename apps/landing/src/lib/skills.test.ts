@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { SkillOverlay } from '../content/overlay'
+import { listSkillPacks } from './skill-pack/skill-pack'
 import { getSkillCopy, getSkills } from './skills'
 
 const skill: SkillOverlay = {
@@ -110,6 +111,20 @@ describe('skillOverlays catalog copy', () => {
       for (const s of getSkills(locale)) {
         if (!mainPath.has(s.slug)) continue
         expect(s.tips?.length, `${s.slug}.tips`).toBeGreaterThan(0)
+      }
+    })
+  }
+})
+
+describe('MCP packs in the skill catalog', () => {
+  for (const locale of ['en', 'vi'] as const) {
+    it(`resolves every MCP pack and related skill in ${locale}`, () => {
+      const skills = getSkills(locale)
+      const slugs = skills.map(skill => skill.slug)
+      expect(new Set(slugs).size).toBe(slugs.length)
+      for (const pack of listSkillPacks()) {
+        expect(slugs).toContain(pack.name)
+        expect(pack.relatedSkills.every(name => slugs.includes(name))).toBe(true)
       }
     })
   }

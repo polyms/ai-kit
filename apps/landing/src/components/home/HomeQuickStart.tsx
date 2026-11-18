@@ -89,7 +89,7 @@ export function HomeQuickStart() {
 
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='start'>
-      <HomeSectionChip label={m.chip_quickstart()} n='04' />
+      <HomeSectionChip label={m.chip_quickstart()} n='05' />
       <div className='flex flex-wrap items-center gap-14'>
         <div className='min-w-[280px] max-w-[460px] flex-[1_1_380px]'>
           <h2 className='app-install__title m-0 mb-5 font-bold font-sans text-fg'>

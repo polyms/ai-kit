@@ -48,7 +48,7 @@ domain_review: Rà soát
 domain_triage: Phân loại
 
 # --- footer ---
-footer_blurb: Bộ skill cho kỹ sư thực thụ — một kit quản lý phiên bản, liên kết dùng chung trên mọi dự án.
+footer_blurb: 'Bộ skill agent cho kỹ thuật và nghiệp vụ. Một kit quản lý phiên bản, dùng cục bộ hoặc qua MCP.'
 footer_col_community: Cộng đồng
 footer_col_pipeline: Luồng xử lý
 footer_col_resources: Tài nguyên
@@ -58,18 +58,16 @@ footer_link_issues: Issues
 footer_starGithub: Gắn sao trên GitHub
 
 # --- hero ---
-hero_badge: Ưu tiên Cursor · thiết kế không phụ thuộc công cụ
+hero_badge: 'Skill cục bộ · hỗ trợ MCP'
 hero_ctaPrimary: Bắt đầu
 hero_ctaSecondary: Đọc tài liệu →
 hero_line1: Bộ kỹ năng agent cho
 hero_line2: kỹ sư thực thụ
-hero_sub:
-  ai-kit là bộ não dùng chung của Polyms dành cho lập trình viên agentic fullstack — mỗi kỹ năng có tên ngắn, gọi bằng
-  lệnh `/`, từ yêu cầu sản phẩm đến bản phát hành với mã nguồn đã được rà soát.
+hero_sub: 'ai-kit là bộ công cụ dùng chung của Polyms cho kỹ thuật và nghiệp vụ: từ yêu cầu, mã nguồn đã review đến nghiên cứu, quyết định, task và QA. Cài skill cục bộ hoặc tìm work pack qua MCP.'
 
 # --- home ---
-home_catalog_heading: Mười lăm skill. Không thủ tục thừa.
-home_catalog_intro: Mỗi năng lực là một tên kỹ năng hoặc tên agent ngắn, gọi bằng lệnh `/`.
+home_catalog_heading: 'Một kit. Nhiều workflow.'
+home_catalog_intro: 'Khám phá skill kỹ thuật cục bộ và work pack MCP. Gọi lệnh slash trong editor tương thích hoặc mô tả mục tiêu với AI client đã kết nối.'
 
 # --- pipeline ---
 pipeline_agentsLabel: Agent chuyên trách
@@ -100,8 +98,8 @@ quickstart_target_title: 'Client khác'
 quickstart_target_body: 'Đổi -a cursor sang client bạn dùng. Lặp lại -a để cài vào nhiều client.'
 quickstart_setup_title: 'Chạy /setup'
 quickstart_setup_body: 'Khởi động lại editor hoặc mở chat mới, rồi chạy /setup trong dự án.'
-quickstart_mcp_title: 'Kết nối Knowledge MCP'
-quickstart_mcp_body: 'Thêm URL này làm MCP server trong client bạn dùng, mỗi dự án một lần, rồi đăng nhập.'
+quickstart_mcp_title: 'Kết nối AI Kit MCP'
+quickstart_mcp_body: 'Thêm URL này làm MCP server trong client tương thích (gồm ChatGPT nếu hỗ trợ MCP tùy chỉnh), rồi đăng nhập. Khám phá skill pack và Knowledge; khả năng và cách gọi tùy client.'
 
 # --- nav ---
 nav_catalog: Kỹ năng
@@ -238,3 +236,43 @@ chip_principles: nguyên tắc
 chip_pipeline: luồng xử lý
 chip_catalog: danh mục
 chip_quickstart: khởi đầu nhanh
+
+domain_work: "Nghiệp vụ"
+nav_intelligence: "Skill thông minh"
+chip_intelligence: "skill thông minh"
+home_catalog_group: "Nhóm skill"
+home_catalog_engineering: "Kỹ thuật"
+home_catalog_work: "Skill nghiệp vụ MCP"
+home_catalog_all: "Xem tất cả skill"
+intelligence_title: "Đúng skill. Chỉ tải phần cần thiết."
+intelligence_intro: "Kết nối bộ cung cấp skill chỉ đọc với AI client tương thích. Client tìm workflow phù hợp, chỉ tải hướng dẫn cần thiết và phối hợp skill khi công việc yêu cầu."
+intelligence_discovery_title: "Tìm skill phù hợp"
+intelligence_discovery_body: "Intent, ranh giới và starter paths giúp client chọn ít skill nhất cần thiết. Yêu cầu đơn giản có thể không dùng skill."
+intelligence_loading_title: "Tải theo nhu cầu"
+intelligence_loading_body: "Đọc workflow gốc trước. Tải template và tài liệu theo đường dẫn chính xác khi cần; tái sử dụng nội dung đã có trong phiên."
+intelligence_composition_title: "Phối hợp skill"
+intelligence_composition_body: "Contract đầu vào/đầu ra, ngữ cảnh chung và completion gate hướng dẫn bàn giao tùy chọn. Client dừng phần bị chặn thay vì tự bịa quyết định."
+intelligence_loading_example: "Tải workflow trước, tham chiếu sau"
+intelligence_loading_explain: "Ví dụ: tìm pack design rồi chỉ tải file gốc được công bố."
+intelligence_loading_note: "File còn lại chỉ là metadata cho đến khi được yêu cầu."
+intelligence_eval_title: "Thiết kế để kiểm chứng"
+intelligence_eval_body: "Evaluation runner tùy chọn so sánh đầu ra baseline và skill-assisted, routing và composition."
+intelligence_packs: "skill pack MCP"
+intelligence_recipes: "workflow recipe"
+intelligence_eval_note: "41 scenario bao phủ output, routing và composition. Benchmark đối chứng với model đang chờ; chưa công bố mức cải thiện."
+intelligence_eval_link: "Xem evaluation framework"
+intelligence_workflows_title: "Workflow recipe"
+intelligence_workflows_intro: "Bắt đầu từ kết quả còn thiếu. Đây là luồng gợi ý, không phải pipeline bắt buộc."
+intelligence_workflows_note: "Bỏ qua bước không liên quan, giữ phạm vi đã duyệt và yêu cầu quyền rõ ràng khi ghi ra hệ thống ngoài. Không điều phối ở server."
+recipe_product: "Phát triển sản phẩm"
+recipe_bug: "Vòng đời bug"
+recipe_business: "Quyết định kinh doanh"
+recipe_sprint: "Lập kế hoạch sprint"
+recipe_release: "Sẵn sàng release"
+skillDetail_contract: "Contract skill MCP"
+skillDetail_accepts: "Đầu vào (khi phù hợp)"
+skillDetail_produces: "Đầu ra"
+skillDetail_gate: "Điều kiện sẵn sàng"
+skillDetail_related: "Bàn giao tùy chọn"
+skillDetail_starter: "Starter paths"
+skillDetail_contract_note: "Định danh artifact và điều kiện hoàn thành từ định nghĩa catalog; không phải chính sách thực thi hay phê duyệt."
