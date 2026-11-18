@@ -1,4 +1,4 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import type { McpServer } from '@modelcontextprotocol/server'
 import { z } from 'zod'
 import { getSkillPack, listSkillPacks, type SkillPackFile } from './skill-pack'
 import { compositionCatalog } from './skill-composition'
@@ -80,7 +80,7 @@ export function registerSkillPackMcpTools(server: McpServer): void {
     'list_skill_packs',
     {
       description: LIST_SKILL_PACKS_TOOL_DESCRIPTION,
-      inputSchema: listSkillPacksInputSchema,
+      inputSchema: z.object(listSkillPacksInputSchema),
     },
     async () => executeListSkillPacks()
   )
@@ -89,7 +89,7 @@ export function registerSkillPackMcpTools(server: McpServer): void {
     'get_skill_pack',
     {
       description: GET_SKILL_PACK_TOOL_DESCRIPTION,
-      inputSchema: getSkillPackInputSchema,
+      inputSchema: z.object(getSkillPackInputSchema),
     },
     async ({ name, paths }) => executeGetSkillPack(name, fetch, paths)
   )
