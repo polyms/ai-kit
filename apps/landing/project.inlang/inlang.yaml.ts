@@ -124,8 +124,7 @@ async function listNamespaceFiles(pattern, locales) {
 
 	/** @param {string} dirAbs */
 	async function walk(dirAbs) {
-		/** @type {import('node:fs').Dirent[]} */
-		let entries
+		let entries: import('node:fs').Dirent[]
 		try {
 			entries = await fs.readdir(dirAbs, { withFileTypes: true })
 		} catch {
@@ -142,8 +141,7 @@ async function listNamespaceFiles(pattern, locales) {
 			if (!execResult) {
 				continue
 			}
-			/** @type {string | undefined} */
-			let locale = undefined
+			let locale: string | undefined
 			let namespace = ''
 			groups.forEach((group, index) => {
 				const value = execResult[index + 1]
