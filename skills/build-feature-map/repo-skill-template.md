@@ -1,5 +1,5 @@
 ---
-name: {slug}
+name: { slug }
 description: Route a behavior question to one feature file in this repo. Invoke with
   /{slug} when the map already has areas. Read by other skills; do not explore the surface
   this file already names.

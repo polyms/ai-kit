@@ -30,9 +30,9 @@ delivery. Do not generate a second document unless requested. For a ticket, keep
 
 ## Business requirements
 
-| ID | Requirement | Business rationale | Priority |
-| --- | --- | --- | --- |
-| BR-01 | [Actor needs a capability or outcome] | [Why] | [Agreed priority or unconfirmed] |
+| ID    | Requirement                           | Business rationale | Priority                         |
+| ----- | ------------------------------------- | ------------------ | -------------------------------- |
+| BR-01 | [Actor needs a capability or outcome] | [Why]              | [Agreed priority or unconfirmed] |
 
 ## Business rules and constraints
 

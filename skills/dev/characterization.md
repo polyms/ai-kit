@@ -5,7 +5,7 @@ area about to be touched**. Skip for greenfield seams with clear acceptance crit
 and no prior behavior to preserve.
 
 Pairs with [tdd-guide.md](tdd-guide.md): characterization captures **as-is**; red-green
-drives **desired**. Inspired by Feathers — *Working Effectively with Legacy Code*.
+drives **desired**. Inspired by Feathers — _Working Effectively with Legacy Code_.
 
 ## When the pointer fires
 
@@ -37,11 +37,11 @@ Do not retrofit characterization for the entire codebase in one pass.
 
 ## Vs greenfield TDD
 
-| | Characterization | Red-green TDD |
-| --- | --- | --- |
-| Asserts | Behavior **as it runs now** | Behavior **as required** |
-| First run | GREEN | RED |
-| Purpose | Detect unintentional change | Drive implementation |
+|           | Characterization            | Red-green TDD            |
+| --------- | --------------------------- | ------------------------ |
+| Asserts   | Behavior **as it runs now** | Behavior **as required** |
+| First run | GREEN                       | RED                      |
+| Purpose   | Detect unintentional change | Drive implementation     |
 
 ## Completion criterion
 

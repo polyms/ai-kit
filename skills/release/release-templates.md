@@ -6,12 +6,12 @@
 - Scope and references: [Changes, tickets, known exclusions]
 - Decision: [Ready / conditional / not ready / insufficient evidence; recommendation only]
 
-| Gate | Status | Evidence | Owner / next action |
-| --- | --- | --- | --- |
-| CI and build | [Pass / Fail / Blocked / Not run / Not applicable] | [Run link] | [Known] |
-| Functional QA | [Status] | [Test report] | [Known] |
-| Migration and configuration | [Status] | [Evidence] | [Known] |
-| Rollback and monitoring | [Status] | [Evidence] | [Known] |
+| Gate                        | Status                                             | Evidence      | Owner / next action |
+| --------------------------- | -------------------------------------------------- | ------------- | ------------------- |
+| CI and build                | [Pass / Fail / Blocked / Not run / Not applicable] | [Run link]    | [Known]             |
+| Functional QA               | [Status]                                           | [Test report] | [Known]             |
+| Migration and configuration | [Status]                                           | [Evidence]    | [Known]             |
+| Rollback and monitoring     | [Status]                                           | [Evidence]    | [Known]             |
 
 Add gates for relevant payments, security, privacy, performance and operational support.
 Do not mark a gate passed merely because it appeared in a checklist.

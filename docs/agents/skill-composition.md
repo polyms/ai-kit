@@ -78,11 +78,11 @@ Artifact readiness is independent of publication, execution and approval status.
 
 ## Gate semantics
 
-| Gate | Meaning |
-| --- | --- |
-| Ready | Sufficient inputs and evidence for the next requested action. Not approval. |
-| Conditional | A draft or bounded analysis is useful, with assumptions and exclusions visible. |
-| Blocked | A material missing decision, source, capability or permission prevents this action. |
+| Gate        | Meaning                                                                             |
+| ----------- | ----------------------------------------------------------------------------------- |
+| Ready       | Sufficient inputs and evidence for the next requested action. Not approval.         |
+| Conditional | A draft or bounded analysis is useful, with assumptions and exclusions visible.     |
+| Blocked     | A material missing decision, source, capability or permission prevents this action. |
 
 Examples: a draft requirement with an unknown optional copy string may still support estimates;
 an unsettled access-control rule blocks final permission acceptance criteria. A passing preview

@@ -24,6 +24,22 @@ export default defineConfig(() => ({
     __PHONE__: JSON.stringify('+84 918 168 159'),
     __EMAIL__: JSON.stringify('hello@polyms.dev'),
   },
+  build: {
+    rolldownOptions: {
+      onLog(level, log, defaultHandler) {
+        const source = `${log.id ?? ''} ${log.message}`
+        if (
+          level === 'warn' &&
+          log.code === 'MODULE_LEVEL_DIRECTIVE' &&
+          log.message.includes('use client') &&
+          (source.includes('@polyms/ui-kit') || source.includes('@tanstack/') || source.includes('@vercel/'))
+        ) {
+          return
+        }
+        defaultHandler(level, log)
+      },
+    },
+  },
   plugins: [
     paraglideVitePlugin(paraglideCompilerOptions),
     tanstackStart(),

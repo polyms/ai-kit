@@ -11,3 +11,9 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - '@polyms/ui-kit'
+
+permissions:
+  '@polyms/ui-kit':
+    skills: true
+  '@tanstack/react-start':
+    skills: true

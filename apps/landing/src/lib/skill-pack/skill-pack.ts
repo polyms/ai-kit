@@ -1,5 +1,5 @@
-import { SKILL_ROUTING } from './skill-routing'
 import { compositionPaths, SKILL_CONTRACTS, type SkillContract } from './skill-composition'
+import { SKILL_ROUTING } from './skill-routing'
 
 /** GitHub raw base for skill packs on `main`. Paths are repo-relative and have no leading slash. */
 export const SKILL_PACK_RAW_BASE = 'https://raw.githubusercontent.com/polyms/ai-kit/refs/heads/main/'
@@ -61,8 +61,16 @@ export const REQS_REFERENCE_PATHS = [
 export const WORK_ARTIFACT_STANDARD = 'docs/agents/work-artifact-standard.md'
 
 export const WORK_SKILL_PATHS = {
-  research: ['skills/research/SKILL.md', 'skills/research/research-template.md', 'skills/research/evidence-guide.md'],
-  business: ['skills/business/SKILL.md', 'skills/business/business-case-template.md', 'skills/business/decision-templates.md'],
+  research: [
+    'skills/research/SKILL.md',
+    'skills/research/research-template.md',
+    'skills/research/evidence-guide.md',
+  ],
+  business: [
+    'skills/business/SKILL.md',
+    'skills/business/business-case-template.md',
+    'skills/business/decision-templates.md',
+  ],
   docs: ['skills/docs/SKILL.md', 'skills/docs/business-doc-template.md', 'skills/docs/work-records.md'],
   task: ['skills/task/SKILL.md', 'skills/task/task-template.md'],
   bug: ['skills/bug/SKILL.md', 'skills/bug/bug-template.md'],
@@ -146,7 +154,15 @@ export function listSkillPacks(): SkillPackSummary[] {
 
 export function getSkillPack(name: string): SkillPack | null {
   if (name === 'reqs') {
-    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')]) }
+    return {
+      name: 'reqs',
+      files: toFiles([
+        ...REQS_SKILL_PATHS,
+        ...REQS_REFERENCE_PATHS,
+        WORK_ARTIFACT_STANDARD,
+        ...compositionPaths('reqs'),
+      ]),
+    }
   }
   if (name === 'design') {
     return {
@@ -160,7 +176,12 @@ export function getSkillPack(name: string): SkillPack | null {
     const references = workName === 'docs' ? DOCS_REFERENCE_PATHS : []
     return {
       name: workName,
-      files: toFiles([...WORK_SKILL_PATHS[workName], ...references, WORK_ARTIFACT_STANDARD, ...compositionPaths(workName)]),
+      files: toFiles([
+        ...WORK_SKILL_PATHS[workName],
+        ...references,
+        WORK_ARTIFACT_STANDARD,
+        ...compositionPaths(workName),
+      ]),
     }
   }
   return null

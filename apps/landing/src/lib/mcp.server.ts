@@ -1,5 +1,4 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js'
+import { createMcpHandler, McpServer } from '@modelcontextprotocol/server'
 import { registerKnowledgeMcpTools } from './knowledge/knowledge.mcp'
 import {
   McpAuthError,
@@ -7,11 +6,21 @@ import {
   mcpUnauthorizedResponse,
   verifyMcpAccessToken,
 } from './mcp-auth.server'
-import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
 import { registerMeMcpTool } from './mcp-me.server'
+import {
+  getMcpServerInfo,
+  getMcpServerInstructions,
+  registerServerInfoMcpTool,
+} from './mcp-server-info.server'
+import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
 
 function createOpsCmsMcpServer(session: McpAuthSession, accessToken: string): McpServer {
-  const server = new McpServer({ name: 'ai-kit-ops-cms', version: __VERSION__ })
+  const serverInfo = getMcpServerInfo(__VERSION__)
+  const server = new McpServer(
+    { name: serverInfo.name, version: serverInfo.version },
+    { instructions: getMcpServerInstructions(serverInfo) }
+  )
+  registerServerInfoMcpTool(server, __VERSION__)
   registerMeMcpTool(server, session, accessToken)
   registerKnowledgeMcpTools(server, { session })
   registerSkillPackMcpTools(server)
@@ -34,11 +43,8 @@ export async function handleMcpRequest(request: Request): Promise<Response> {
   const accessToken = request.headers.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1]
   if (!accessToken) return mcpUnauthorizedResponse(request)
 
-  const server = createOpsCmsMcpServer(session, accessToken)
-  const transport = new WebStandardStreamableHTTPServerTransport({
-    sessionIdGenerator: undefined,
-    enableJsonResponse: true,
-  })
-  await server.connect(transport)
-  return transport.handleRequest(request)
+  // createMcpHandler supports both 2025-era MCP and 2026-07-28 discovery.
+  // Its factory creates a new server for each request, scoped to this verified identity.
+  const handler = createMcpHandler(() => createOpsCmsMcpServer(session, accessToken))
+  return handler.fetch(request)
 }

@@ -38,21 +38,21 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 
 ## Published skill catalog
 
-| Pack | Intended output | Bundled references |
-| --- | --- | --- |
-| research | Evidence-based research brief or comparison | research-template.md, evidence-guide.md |
-| business | Business case, pricing or decision analysis | business-case-template.md, decision-templates.md |
-| reqs | Explicit BRD or detailed PRD, user stories | business-requirements-template.md, assumptions-and-change.md, PRD references |
-| docs | Business documents or developer documentation | business-doc-template.md, work-records.md |
-| task | Actionable standalone task ticket | task-template.md |
-| bug | Evidence-based defect report | bug-template.md |
-| design | UI specification | Existing design references and uiKit files |
-| track | Ticket review, backlog snapshot, bulk update receipt | tracking-templates.md |
-| plan | Effort estimate and delivery plan | delivery-plan-template.md |
-| qa | Test plan, cases, coverage and report | qa-templates.md |
-| comms | Client replies, comments and stakeholder messages | communication-templates.md |
-| review | Artifact review, assumption challenge and gap analysis | review-template.md |
-| release | Readiness, go-live and release notes | release-templates.md |
+| Pack     | Intended output                                        | Bundled references                                                           |
+| -------- | ------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| research | Evidence-based research brief or comparison            | research-template.md, evidence-guide.md                                      |
+| business | Business case, pricing or decision analysis            | business-case-template.md, decision-templates.md                             |
+| reqs     | Explicit BRD or detailed PRD, user stories             | business-requirements-template.md, assumptions-and-change.md, PRD references |
+| docs     | Business documents or developer documentation          | business-doc-template.md, work-records.md                                    |
+| task     | Actionable standalone task ticket                      | task-template.md                                                             |
+| bug      | Evidence-based defect report                           | bug-template.md                                                              |
+| design   | UI specification                                       | Existing design references and uiKit files                                   |
+| track    | Ticket review, backlog snapshot, bulk update receipt   | tracking-templates.md                                                        |
+| plan     | Effort estimate and delivery plan                      | delivery-plan-template.md                                                    |
+| qa       | Test plan, cases, coverage and report                  | qa-templates.md                                                              |
+| comms    | Client replies, comments and stakeholder messages      | communication-templates.md                                                   |
+| review   | Artifact review, assumption challenge and gap analysis | review-template.md                                                           |
+| release  | Readiness, go-live and release notes                   | release-templates.md                                                         |
 
 All packs except design include `docs/agents/work-artifact-standard.md`. Design retains its
 existing specialized quality guidance. The manifest, not this table, determines what MCP serves.
@@ -124,6 +124,7 @@ controlled test fixture are needed for pre-merge content checks.
 Existing clients may continue to omit paths and receive complete packs. Prefer the catalog's
 `starterPaths` for new calls: this returns entry content, shared standard for work packs and the default
 template where applicable; all other file paths remain metadata. For large packs:
+
 - Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.
 - Fetch the entry point using `paths: ["skills/design/SKILL.md"]`, then request referenced files as needed.
 - Unselected files retain path and rawUrl but omit content. The design uiKit group is preserved.
@@ -205,7 +206,6 @@ work records, opt-in selective retrieval, and evaluation fixtures. REQS_REFERENC
 known kit-owned reqs dependencies. Project-specific context remains client-provided. V0.3 closes known relative Markdown links in design/docs, including client compatibility and
 visual-ship. Project-specific files and external resources are still resolved by the client.
 Landing-site UI catalog and actual comparative evaluation runs remain follow-up work.
-
 
 The initial expansion was merged in [PR #3](https://github.com/polyms/ai-kit/pull/3). The current
 work is in [PR #5](https://github.com/polyms/ai-kit/pull/5); check its live status for the latest state.

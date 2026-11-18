@@ -5,10 +5,13 @@ const session = { userId: 'u1', role: 'admin' }
 const token = 'test-bearer'
 
 function stubUserInfo(body: unknown, status = 200) {
-  const fetcher = vi.fn(async () => new Response(JSON.stringify(body), {
-    status,
-    headers: { 'content-type': 'application/json' },
-  }))
+  const fetcher = vi.fn(
+    async () =>
+      new Response(JSON.stringify(body), {
+        status,
+        headers: { 'content-type': 'application/json' },
+      })
+  )
   return fetcher as unknown as typeof fetch
 }
 
@@ -46,23 +49,33 @@ describe('MCP me OIDC UserInfo', () => {
   })
 
   it('returns only verified identity when optional UserInfo claims are absent', async () => {
-    await expect(getMcpCurrentUser({ userId: 'u1' }, token, stubUserInfo({ sub: 'u1' })))
-      .resolves.toEqual({ userId: 'u1' })
+    await expect(getMcpCurrentUser({ userId: 'u1' }, token, stubUserInfo({ sub: 'u1' }))).resolves.toEqual({
+      userId: 'u1',
+    })
   })
 
   it('rejects a mismatching UserInfo subject', async () => {
-    await expect(getMcpCurrentUser(session, token, stubUserInfo({
-      sub: 'other', email: 'other@example.com',
-    }))).rejects.toThrow('OIDC UserInfo subject mismatch')
+    await expect(
+      getMcpCurrentUser(
+        session,
+        token,
+        stubUserInfo({
+          sub: 'other',
+          email: 'other@example.com',
+        })
+      )
+    ).rejects.toThrow('OIDC UserInfo subject mismatch')
   })
 
   it('rejects upstream error responses', async () => {
-    await expect(getMcpCurrentUser(session, token, stubUserInfo({ error: 'invalid_token' }, 401)))
-      .rejects.toThrow('OIDC UserInfo request failed')
+    await expect(
+      getMcpCurrentUser(session, token, stubUserInfo({ error: 'invalid_token' }, 401))
+    ).rejects.toThrow('OIDC UserInfo request failed')
   })
 
   it('rejects malformed and non-object responses', async () => {
-    await expect(getMcpCurrentUser(session, token, stubUserInfo(null)))
-      .rejects.toThrow('Invalid OIDC UserInfo response')
+    await expect(getMcpCurrentUser(session, token, stubUserInfo(null))).rejects.toThrow(
+      'Invalid OIDC UserInfo response'
+    )
   })
 })

@@ -16,10 +16,10 @@ are different operations. Principal agents may read their explicitly delegated p
 
 Every `skills/<name>/SKILL.md` is a skill. The axis that splits them is **invocation** — who can reach it:
 
-| Mode              | Frontmatter                      | Who reaches it            | Description                                                                          |
-| ----------------- | -------------------------------- | ------------------------- | ------------------------------------------------------------------------------------ |
-| **User-invoked**  | `disable-model-invocation: true` | Human typing `/name` only | Human-facing one-liner + invoke hints (EN + VI). No trigger spam for auto-discovery. |
-| **Model-invoked** | omit `disable-model-invocation`  | Model or human            | Model-facing: WHAT + WHEN triggers (EN + VI). Context cost depends on client discovery.      |
+| Mode              | Frontmatter                      | Who reaches it            | Description                                                                             |
+| ----------------- | -------------------------------- | ------------------------- | --------------------------------------------------------------------------------------- |
+| **User-invoked**  | `disable-model-invocation: true` | Human typing `/name` only | Human-facing one-liner + invoke hints (EN + VI). No trigger spam for auto-discovery.    |
+| **Model-invoked** | omit `disable-model-invocation`  | Model or human            | Model-facing: WHAT + WHEN triggers (EN + VI). Context cost depends on client discovery. |
 
 Test for model-invocation: _could the model usefully reach for this autonomously, or must another skill invoke it?_
 
@@ -31,8 +31,8 @@ as a reference without starting an unauthorized workflow.
 
 ## ai-kit examples
 
-| User-invoked                                                                                                            | Model-invoked                                                           |
-| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| User-invoked                                                                                                                                  | Model-invoked                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/build-feature-map`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
 
 Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing);

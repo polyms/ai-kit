@@ -97,12 +97,12 @@ Must not change:
 - Strings that stay verbatim: `Search Knowledge by topic or symptom`, `biome prettier setup`,
   `Intent`, `All`, `Incident`, `Design`, `Toolchain`, `No Knowledge articles match your search.`,
   `Knowledge retrieval for agents`, `Pick an article from the list on the left to read it, or
-  filter by intent below.`, `Deploy/CI symptom → cause → fix → verify.`, `Seams between stack
-  choices — routing, state, modules.`, `Org-wide setup recipes — formatters, tooling.`,
+filter by intent below.`, `Deploy/CI symptom → cause → fix → verify.`, `Seams between stack
+choices — routing, state, modules.`, `Org-wide setup recipes — formatters, tooling.`,
   `Knowledge article not found.`, `Back to knowledge`, `Checklist`, `Cause`, `Fix`, `Verify`,
   `Reading order`, `On this page`, `Knowledge search results`, rail title `Knowledge`, and the
   rail subtitle `Incident · design · toolchain — one retrieval model for developer, /dev,
-  /devops, /arch.`
+/devops, /arch.`
 
 ### 0.3 Levers (visual only)
 
@@ -119,17 +119,17 @@ search params, dark default plus the existing light toggle, Quicksand and JetBra
 
 ## 1. Brief
 
-| Dimension | Question | This catalog |
-| --- | --- | --- |
-| Industry | What world is the user in? | Developer tools. Published Knowledge on the Kit site. |
-| Audience | Who judges "good" in 3 seconds? | Signed-out engineer. They scan a list, then read. |
-| Mood | One adjective + one anti-mood | Engineering artifact. Not a docs theme, not a second product. |
-| Motion depth | subtle / standard / emphasis | Subtle. Color and opacity only. No hero motion. |
-| Layout family | Pick one primary family | Sticky tool rail + reading column. Not a centered hero. |
-| Focal moment | One viewport = one hero beat | Intro title, or the article title. The rail is a tool. |
-| Density | sparse / balanced / dense | Balanced-dense. Tight rows. The column is for reading, not a void. |
-| Theme default | dark-first / light-first / system | Dark-first. Existing light toggle. Tokens only. |
-| Reference tier | What "good" looks like | Kit site home, tasteskill.dev density. Do not clone a brand. |
+| Dimension      | Question                          | This catalog                                                       |
+| -------------- | --------------------------------- | ------------------------------------------------------------------ |
+| Industry       | What world is the user in?        | Developer tools. Published Knowledge on the Kit site.              |
+| Audience       | Who judges "good" in 3 seconds?   | Signed-out engineer. They scan a list, then read.                  |
+| Mood           | One adjective + one anti-mood     | Engineering artifact. Not a docs theme, not a second product.      |
+| Motion depth   | subtle / standard / emphasis      | Subtle. Color and opacity only. No hero motion.                    |
+| Layout family  | Pick one primary family           | Sticky tool rail + reading column. Not a centered hero.            |
+| Focal moment   | One viewport = one hero beat      | Intro title, or the article title. The rail is a tool.             |
+| Density        | sparse / balanced / dense         | Balanced-dense. Tight rows. The column is for reading, not a void. |
+| Theme default  | dark-first / light-first / system | Dark-first. Existing light toggle. Tokens only.                    |
+| Reference tier | What "good" looks like            | Kit site home, tasteskill.dev density. Do not clone a brand.       |
 
 **Brief lock.** The public catalog is the Kit site's reading room for published Knowledge. Success
 is a dark rail the reader can scan, and a reading column whose title is the only loud type, with
@@ -159,14 +159,14 @@ fork. No new ADR.
 
 This is one app shell, not a marketing page. No alternating full-bleed bands.
 
-| Region | Width | Surface |
-| --- | --- | --- |
-| Shell | Full viewport, `100dvh`, no `max-w-6xl` | `bg-body` |
-| Rail | 46dvh below `lg`; 22rem from `lg` | `bg-surface`, seam `border-line` |
-| Reading column | Fluid remainder, padding `.page-x` | `bg-body` |
-| Intro stack | `max-w-xl`, start-aligned | No card surface |
-| Article column | `max-w-3xl`; toc adds `14rem` from `xl` | Seams, not cards |
-| Config block | Full width of the chunk | `bg-surface` + `border-line` |
+| Region         | Width                                   | Surface                          |
+| -------------- | --------------------------------------- | -------------------------------- |
+| Shell          | Full viewport, `100dvh`, no `max-w-6xl` | `bg-body`                        |
+| Rail           | 46dvh below `lg`; 22rem from `lg`       | `bg-surface`, seam `border-line` |
+| Reading column | Fluid remainder, padding `.page-x`      | `bg-body`                        |
+| Intro stack    | `max-w-xl`, start-aligned               | No card surface                  |
+| Article column | `max-w-3xl`; toc adds `14rem` from `xl` | Seams, not cards                 |
+| Config block   | Full width of the chunk                 | `bg-surface` + `border-line`     |
 
 ### Primary viewport (no marketing hero)
 
@@ -229,20 +229,20 @@ on both screens.
 
 ### Catalog index
 
-| Field | Value |
-| --- | --- |
-| Goal | Search Knowledge, narrow by Knowledge intent, or stay on the intro. |
-| Entry | `/knowledge` or `/knowledge/` with optional `q` and `intent`. |
-| Exit | A result opens an article. The wordmark goes to `/`. A row stays here. |
+| Field | Value                                                                  |
+| ----- | ---------------------------------------------------------------------- |
+| Goal  | Search Knowledge, narrow by Knowledge intent, or stay on the intro.    |
+| Entry | `/knowledge` or `/knowledge/` with optional `q` and `intent`.          |
+| Exit  | A result opens an article. The wordmark goes to `/`. A row stays here. |
 
 **Content states:**
 
-| State | User sees | Action available |
-| --- | --- | --- |
-| Loading | Six skeleton rows. No empty sentence. | Search and intent stay usable. |
-| Empty | The empty sentence only, in the list. Intro stays. | Change `q` or `intent`. |
-| Error | No index error surface. See below. | Keep using the rail. |
-| Success | Article rows, nested chunks, and the intro. | Open a row, or set an intent. |
+| State   | User sees                                          | Action available               |
+| ------- | -------------------------------------------------- | ------------------------------ |
+| Loading | Six skeleton rows. No empty sentence.              | Search and intent stay usable. |
+| Empty   | The empty sentence only, in the list. Intro stays. | Change `q` or `intent`.        |
+| Error   | No index error surface. See below.                 | Keep using the rail.           |
+| Success | Article rows, nested chunks, and the intro.        | Open a row, or set an intent.  |
 
 Loading detail. The skeleton list is `role="status"` and its name is `Knowledge search results`.
 If the layout itself is pending, the reading pane is a title bar and two chunk seams in
@@ -260,10 +260,10 @@ CMS, or a new route.
 
 - The only `h1`: `Knowledge retrieval for agents`, class `.knowledge-title`.
 - Body, `text-sm text-muted`, max about 65 characters per line: `Pick an article from the list on
-  the left to read it, or filter by intent below.`
+the left to read it, or filter by intent below.`
 - Three rows, no All row. Each row is a link. Left column 7rem: `Incident`, `Design`, or
   `Toolchain` (`text-sm font-semibold`). Right column: the matching description, `text-sm
-  text-muted`. Row separator `border-b border-line`. The row whose value equals `intent` gets
+text-muted`. Row separator `border-b border-line`. The row whose value equals `intent` gets
   `border-s-4 border-primary-700` and `item-primary` plus `active`. No row is active when
   `intent` is unset.
 - No icon square, no `rounded-2xl`, no equal-height grid.
@@ -271,11 +271,11 @@ CMS, or a new route.
 **Rail, all states.**
 
 - Name `Knowledge` is a `p` at `text-sm font-semibold`, not a heading. Subtitle is `text-sm
-  text-muted`, two lines max, then it wraps.
+text-muted`, two lines max, then it wraps.
 - Search: `Field` named `knowledge-search`. Label is visually hidden and the control's accessible
   name is `Search Knowledge by topic or symptom`. Placeholder `biome prettier setup`.
   `type="search"`, `autoComplete="off"`, `font-mono text-sm`. Classes: `bg-surface border
-  border-line rounded-md min-h-11`, not a pill, not `border-none`. Magnifier is `aria-hidden`,
+border-line rounded-md min-h-11`, not a pill, not `border-none`. Magnifier is `aria-hidden`,
   inside the start padding. Debounce stays 300ms.
 - Toolbar `aria-label="Intent"`, `variant="inline"`. `ToggleGroup` `aria-label="Intent"`, value
   is `intent` or `all`. Buttons: `All`, `Incident`, `Design`, `Toolchain`. Labels are `text-sm`.
@@ -285,7 +285,7 @@ CMS, or a new route.
   `text-xs text-muted` truncated, reading `{Intent label} · {match}`. A 2px bar on the start edge
   uses the existing intent tones: incident `bg-danger-600`, design `bg-info-600`, toolchain
   `bg-warning-600`. No book icon. Current article: `item-primary` + `active` + `border-s-4
-  border-primary-700`. Nested chunks sit in a `border-s border-line` list, `text-xs`, with no
+border-primary-700`. Nested chunks sit in a `border-s border-line` list, `text-xs`, with no
   article row when the hit is chunk-only. Chunk link sets the hash. Title links keep `q` and
   `intent`.
 - Wordmark: existing Polyms wordmark, link to `/`, pinned to the bottom of the rail on `lg`. On
@@ -312,20 +312,20 @@ lg rail (22rem)
 
 ### Article
 
-| Field | Value |
-| --- | --- |
-| Goal | Read one Knowledge article in reading order and jump to a Knowledge chunk. |
-| Entry | A rail link to `/knowledge/$id`, optionally with a hash, keeping `q` and `intent`. |
-| Exit | Another rail link, a chunk hash, the wordmark, or `Back to knowledge` from the missing state. |
+| Field | Value                                                                                         |
+| ----- | --------------------------------------------------------------------------------------------- |
+| Goal  | Read one Knowledge article in reading order and jump to a Knowledge chunk.                    |
+| Entry | A rail link to `/knowledge/$id`, optionally with a hash, keeping `q` and `intent`.            |
+| Exit  | Another rail link, a chunk hash, the wordmark, or `Back to knowledge` from the missing state. |
 
 **Content states:**
 
-| State | User sees | Action available |
-| --- | --- | --- |
-| Loading | Rail skeletons, plus a title bar and two seams. | Search and intent stay usable. |
-| Empty | Identity only. No `On this page`. No search sentence. | Use the rail to open another article. |
-| Error | `Knowledge article not found.` and `Back to knowledge`. | Back, or keep using the rail. |
-| Success | Identity, optional checklist, chunks, toc if needed. | Jump to a chunk, or search from the rail. |
+| State   | User sees                                               | Action available                          |
+| ------- | ------------------------------------------------------- | ----------------------------------------- |
+| Loading | Rail skeletons, plus a title bar and two seams.         | Search and intent stay usable.            |
+| Empty   | Identity only. No `On this page`. No search sentence.   | Use the rail to open another article.     |
+| Error   | `Knowledge article not found.` and `Back to knowledge`. | Back, or keep using the rail.             |
+| Success | Identity, optional checklist, chunks, toc if needed.    | Jump to a chunk, or search from the rail. |
 
 Loading detail. Same rail rule as the index. The reading skeleton does not show the not-found
 sentence or the empty sentence.
@@ -341,7 +341,7 @@ results. `Back to knowledge` goes to `/knowledge` with the default search.
 
 - First line, not a heading: id as `.label-mono` plain text (not a link, not a button), then one
   `span.badge.badge-primary` whose text is `Intent: Incident`, `Intent: Design`, or `Intent:
-  Toolchain`. The existing tuning icon may stay, `aria-hidden`, at 12px. Do not put this line
+Toolchain`. The existing tuning icon may stay, `aria-hidden`, at 12px. Do not put this line
   beside the title as a hanging head. It sits above.
 - `h1.knowledge-title` is the article title. It wraps. It does not clip.
 - Axis tags, only when the article has them: `span.badge.badge-light.font-mono` reading `#{tag}`.
@@ -364,7 +364,7 @@ CHECKLIST, or PROSE. Source strings stay the existing labels. Do not invent new 
   buttons) of two `Toggle`s labeled `json` and `yaml`, each with `aria-pressed`. It renders only
   when the body parses as a JSON object or array. The pressed toggle matches the visible mode.
   The pre block is `.knowledge-config`: `bg-surface border border-line rounded-lg p-4 font-mono
-  text-xs overflow-x-auto`. Syntax colors stay the existing semantic token classes
+text-xs overflow-x-auto`. Syntax colors stay the existing semantic token classes
   (`text-primary-300`, `text-danger-300`, `text-warning-300`, `text-success-300`,
   `text-slate-500`). No `bg-slate-950`, no raw `button`, no hex.
 - Incident: a definition list. `Cause`, `Fix`, and `Verify` are `.label-mono`, and each list
@@ -406,14 +406,14 @@ for interface text, JetBrains Mono for `font-mono` and `.label-mono`.
 
 ### Type scale
 
-| Role | Class | Size | Weight |
-| --- | --- | --- | --- |
-| Reading title | `.knowledge-title` | 24px, 30px from `md` | 700 |
-| Chunk title | `.knowledge-chunk-title` | 18px | 600 |
-| Body | `text-sm leading-relaxed` | 14px | 400 |
-| Rail name, row title | `text-sm font-semibold` | 14px | 600 |
-| Meta | `.label-mono` (existing) | 12px, uppercase, tracking wide | 400 |
-| Search, config, verify | `font-mono text-sm` or `text-xs` | 14px / 12px | 400 |
+| Role                   | Class                            | Size                           | Weight |
+| ---------------------- | -------------------------------- | ------------------------------ | ------ |
+| Reading title          | `.knowledge-title`               | 24px, 30px from `md`           | 700    |
+| Chunk title            | `.knowledge-chunk-title`         | 18px                           | 600    |
+| Body                   | `text-sm leading-relaxed`        | 14px                           | 400    |
+| Rail name, row title   | `text-sm font-semibold`          | 14px                           | 600    |
+| Meta                   | `.label-mono` (existing)         | 12px, uppercase, tracking wide | 400    |
+| Search, config, verify | `font-mono text-sm` or `text-xs` | 14px / 12px                    | 400    |
 
 ```css
 @layer components {
@@ -461,15 +461,15 @@ Below `xl`, `.knowledge-article` is one column. The toc node is ordered before t
 
 ### Surfaces
 
-| Token | Use |
-| --- | --- |
-| `bg-body` | Shell and reading pane |
-| `bg-surface` | Rail, search field, config block, inline code |
-| `border-line` | Rail seam, row rules, chunk rules, config border |
-| `border-s-4 border-primary-700` | Active result row, active intro row, article checklist |
-| `text-fg` / `text-muted` | Primary and secondary text |
-| `text-primary-700` | Active row title, links |
-| `bg-danger-600` / `bg-info-600` / `bg-warning-600` | 2px intent bar only |
+| Token                                              | Use                                                    |
+| -------------------------------------------------- | ------------------------------------------------------ |
+| `bg-body`                                          | Shell and reading pane                                 |
+| `bg-surface`                                       | Rail, search field, config block, inline code          |
+| `border-line`                                      | Rail seam, row rules, chunk rules, config border       |
+| `border-s-4 border-primary-700`                    | Active result row, active intro row, article checklist |
+| `text-fg` / `text-muted`                           | Primary and secondary text                             |
+| `text-primary-700`                                 | Active row title, links                                |
+| `bg-danger-600` / `bg-info-600` / `bg-warning-600` | 2px intent bar only                                    |
 
 No gradients, no `shadow-lg`, no `rounded-xl` on rows or sections, no raw hex, no `#000` / `#fff`
 surfaces. Light mode uses the same tokens. Do not add a flash script. The Kit site root already
@@ -477,12 +477,12 @@ paints dark from the existing store before React hydrates.
 
 ### Borrow / avoid
 
-| Borrow | Apply here |
-| --- | --- |
-| Home seam: `border-line` on a 1px edge | Rail edge, chunk rules, intro rows |
-| Home accent: `border-s-4 border-primary-700` | Active row, active intent, article checklist |
-| Home terminal: `bg-surface border border-line rounded-lg font-mono` | Config block |
-| Home type: `.label-mono` for real section names | Checklist, Cause, Fix, Verify, Reading order |
+| Borrow                                                              | Apply here                                   |
+| ------------------------------------------------------------------- | -------------------------------------------- |
+| Home seam: `border-line` on a 1px edge                              | Rail edge, chunk rules, intro rows           |
+| Home accent: `border-s-4 border-primary-700`                        | Active row, active intent, article checklist |
+| Home terminal: `bg-surface border border-line rounded-lg font-mono` | Config block                                 |
+| Home type: `.label-mono` for real section names                     | Checklist, Cause, Fix, Verify, Reading order |
 
 Do not borrow the home hero, the pipeline, the principal grid, or a second theme control.
 
@@ -492,20 +492,20 @@ Primitives below are already imported on the Kit site (`Field`, `Toolbar`, `Togg
 `ToggleGroup`) or are in the ui-kit catalog the site is built with (`Toc`, `.badge`, `.skeleton`,
 `.item-primary`, `.link`, `.table`). Do not add a parallel component set.
 
-| UI element | Primitive | Notes |
-| --- | --- | --- |
-| Search | `Field` + `Field.Control` | See states below. |
-| Intent | `Toolbar` + `ToggleGroup` + `Toggle` | See states below. |
-| Intro row | Router `Link` + `item-primary` | Not a `Button`. |
-| Article and chunk row | Router `Link` + `item-primary` | Current row uses `active`. |
-| Wordmark | Existing wordmark link | Target `/`. Do not redraw it. |
-| Intent, axis, badge, file | `span.badge` | Static. Not `item-*`. |
-| Checklist mark | Existing check icon | `aria-hidden`. |
-| JSON/YAML | `ToggleGroup` + `Toggle` | Labels `json` and `yaml`. |
-| On this page | `Toc` + `Toc.List` + `Toc.Item` | Plus `Toc.Indicator`. |
-| Back to knowledge | Router `Link` + `.link.link-primary` | Not a primary `Button`. |
-| Loading rows | `.skeleton` | Six rail rows; pane seams if pending. |
-| Markdown table | `.table` | Inside the chunk body only. |
+| UI element                | Primitive                            | Notes                                 |
+| ------------------------- | ------------------------------------ | ------------------------------------- |
+| Search                    | `Field` + `Field.Control`            | See states below.                     |
+| Intent                    | `Toolbar` + `ToggleGroup` + `Toggle` | See states below.                     |
+| Intro row                 | Router `Link` + `item-primary`       | Not a `Button`.                       |
+| Article and chunk row     | Router `Link` + `item-primary`       | Current row uses `active`.            |
+| Wordmark                  | Existing wordmark link               | Target `/`. Do not redraw it.         |
+| Intent, axis, badge, file | `span.badge`                         | Static. Not `item-*`.                 |
+| Checklist mark            | Existing check icon                  | `aria-hidden`.                        |
+| JSON/YAML                 | `ToggleGroup` + `Toggle`             | Labels `json` and `yaml`.             |
+| On this page              | `Toc` + `Toc.List` + `Toc.Item`      | Plus `Toc.Indicator`.                 |
+| Back to knowledge         | Router `Link` + `.link.link-primary` | Not a primary `Button`.               |
+| Loading rows              | `.skeleton`                          | Six rail rows; pane seams if pending. |
+| Markdown table            | `.table`                             | Inside the chunk body only.           |
 
 Search states. Label is `sr-only`. Accessible name as in §3. Default: `bg-surface` and
 `border-line`. Hover: no extra chrome. Focus-visible: the ui-kit field ring. Not disabled while
@@ -540,27 +540,27 @@ component.
 
 ## 6. Motion plan
 
-| Transition | Trigger | Tier | Reduced motion |
-| --- | --- | --- | --- |
-| List opacity | `isPending` with rows still present | subtle, 150ms, to 60% | Instant opacity |
-| Skeleton to rows | `results` becomes an array | subtle, 150ms opacity | Instant swap |
-| Row and intent hover | Pointer | subtle, 150ms color | Instant color |
-| JSON/YAML body | Pressed toggle | none | Instant text swap |
-| Index to article | Route change | none | Instant. No shared move. |
+| Transition           | Trigger                             | Tier                  | Reduced motion           |
+| -------------------- | ----------------------------------- | --------------------- | ------------------------ |
+| List opacity         | `isPending` with rows still present | subtle, 150ms, to 60% | Instant opacity          |
+| Skeleton to rows     | `results` becomes an array          | subtle, 150ms opacity | Instant swap             |
+| Row and intent hover | Pointer                             | subtle, 150ms color   | Instant color            |
+| JSON/YAML body       | Pressed toggle                      | none                  | Instant text swap        |
+| Index to article     | Route change                        | none                  | Instant. No shared move. |
 
 No typing animation, no rail glow, no page transition.
 
 ## 7. Responsive and accessibility
 
-| Topic | Decision |
-| --- | --- |
-| Breakpoints | Stack below `lg`. Row from `lg`. Toc grid from `xl`. |
-| Focus order | Search, intent, results, wordmark, then the pane. |
-| ARIA | Names in the list below. |
-| prefers-reduced-motion | Every §6 row is instant. |
-| Headings | One `h1`. Chunk titles are `h2`. Rail name is not a heading. |
-| Contrast | `text-fg` and `text-muted` on `bg-body` and `bg-surface`. |
-| Target size | Toggles and rows at least 32px tall. Intro rows are full width. |
+| Topic                  | Decision                                                        |
+| ---------------------- | --------------------------------------------------------------- |
+| Breakpoints            | Stack below `lg`. Row from `lg`. Toc grid from `xl`.            |
+| Focus order            | Search, intent, results, wordmark, then the pane.               |
+| ARIA                   | Names in the list below.                                        |
+| prefers-reduced-motion | Every §6 row is instant.                                        |
+| Headings               | One `h1`. Chunk titles are `h2`. Rail name is not a heading.    |
+| Contrast               | `text-fg` and `text-muted` on `bg-body` and `bg-surface`.       |
+| Target size            | Toggles and rows at least 32px tall. Intro rows are full width. |
 
 Breakpoints. Below `lg` (1024): column stack, rail 46dvh with an internal scroller, pane fills
 the rest. From `lg`: row, rail 22rem, pane fluid. From `xl` (1280): article grid
@@ -583,17 +583,17 @@ not a solid `bg-primary-100` slab. Both themes use the same tokens.
 canvas. [tasteskill.dev](https://www.tasteskill.dev/) for density only. Acceptance screenshots are
 dark. Light is a second pass for token contrast, not the sign-off theme.
 
-| Check | Pass when |
-| --- | --- |
-| Dark-first | Sign-off shots are dark. No new theme toggle. |
-| Type scale | Title, chunk title, body, and `.label-mono` all show. |
-| Surface rhythm | Rail `bg-surface`, pane `bg-body`, seam `border-line`. |
-| Focal beat | Intro title, or the article title. One `h1`. |
-| ui-kit | `Field`, `Toolbar`, `Toggle`, `Toc`. No raw inputs. |
-| Anti-slop | No icon-card grid, no tiles, no centered void, no gradient. |
-| Small screen | At 390px the pane is below the rail and readable. |
-| Copy | §0.2 strings unchanged, including the "below" sentence. |
-| Behavior | 300ms `q`. Empty, loading, and missing stay distinct. |
+| Check          | Pass when                                                   |
+| -------------- | ----------------------------------------------------------- |
+| Dark-first     | Sign-off shots are dark. No new theme toggle.               |
+| Type scale     | Title, chunk title, body, and `.label-mono` all show.       |
+| Surface rhythm | Rail `bg-surface`, pane `bg-body`, seam `border-line`.      |
+| Focal beat     | Intro title, or the article title. One `h1`.                |
+| ui-kit         | `Field`, `Toolbar`, `Toggle`, `Toc`. No raw inputs.         |
+| Anti-slop      | No icon-card grid, no tiles, no centered void, no gradient. |
+| Small screen   | At 390px the pane is below the rail and readable.           |
+| Copy           | §0.2 strings unchanged, including the "below" sentence.     |
+| Behavior       | 300ms `q`. Empty, loading, and missing stay distinct.       |
 
 Dark-first detail. First paint follows the existing Kit site theme script.
 
@@ -660,14 +660,14 @@ Run of [PREFLIGHT.md](../../skills/design/PREFLIGHT.md):
 
 ### Craft critique
 
-| Axis | Score | Note |
-| --- | --- | --- |
-| Philosophy | 5 | Rail + reading column, same Kit site, no second product |
-| Hierarchy | 4 | One title per pane; four type steps in §4 |
-| Execution | 5 | §4 classes and §8 checks are enough to implement |
-| Specificity | 5 | Live audit, PRD strings, and result rules are named |
-| Restraint | 4 | No new chrome, no counts, eyebrows only on real labels |
-| Consistency | 5 | Tokens, fonts, and toggles stay the Kit site's |
+| Axis        | Score | Note                                                    |
+| ----------- | ----- | ------------------------------------------------------- |
+| Philosophy  | 5     | Rail + reading column, same Kit site, no second product |
+| Hierarchy   | 4     | One title per pane; four type steps in §4               |
+| Execution   | 5     | §4 classes and §8 checks are enough to implement        |
+| Specificity | 5     | Live audit, PRD strings, and result rules are named     |
+| Restraint   | 4     | No new chrome, no counts, eyebrows only on real labels  |
+| Consistency | 5     | Tokens, fonts, and toggles stay the Kit site's          |
 
 ### Motion and accessibility
 
@@ -696,48 +696,48 @@ None. The PRD left no blocking fork. Default search for `Back to knowledge` stay
 
 ### §A
 
-| ID | Apply / N/A | Note |
-| --- | --- | --- |
-| Centered hero + two buttons | Apply | Title and three rows. No hero CTAs. |
-| Equal-height card grid | Apply | Intro rows stack. Not three equal cards. |
-| Icon-tile feature cards | Apply | No icon squares on rows. |
-| Rounded card on every block | Apply | Seams, plus one accent edge. |
-| Card-in-card | Apply | Checklist chunk is a list, not a nested card. |
-| `max-w-6xl` everywhere | Apply | Full-bleed shell. Intro `max-w-xl`. Article `max-w-3xl`. |
-| Purple or blue gradient hero | Apply | No gradient. |
-| Aurora, mesh, or orbs | Apply | None. |
-| Wall of text in a void | Apply | Intro, empty, and missing id are left-aligned. |
-| Light gray on white only | Apply | Dark-first. Light uses the same tokens. |
-| Mono with no size contrast | Apply | Meta 12px. Title 24–30px. Config mono stays in the block. |
-| Pipeline as a vertical list | N/A | This surface has no pipeline. |
-| Pure `#000` / `#fff` surfaces | Apply | `bg-body` and `bg-surface` only. |
+| ID                            | Apply / N/A | Note                                                      |
+| ----------------------------- | ----------- | --------------------------------------------------------- |
+| Centered hero + two buttons   | Apply       | Title and three rows. No hero CTAs.                       |
+| Equal-height card grid        | Apply       | Intro rows stack. Not three equal cards.                  |
+| Icon-tile feature cards       | Apply       | No icon squares on rows.                                  |
+| Rounded card on every block   | Apply       | Seams, plus one accent edge.                              |
+| Card-in-card                  | Apply       | Checklist chunk is a list, not a nested card.             |
+| `max-w-6xl` everywhere        | Apply       | Full-bleed shell. Intro `max-w-xl`. Article `max-w-3xl`.  |
+| Purple or blue gradient hero  | Apply       | No gradient.                                              |
+| Aurora, mesh, or orbs         | Apply       | None.                                                     |
+| Wall of text in a void        | Apply       | Intro, empty, and missing id are left-aligned.            |
+| Light gray on white only      | Apply       | Dark-first. Light uses the same tokens.                   |
+| Mono with no size contrast    | Apply       | Meta 12px. Title 24–30px. Config mono stays in the block. |
+| Pipeline as a vertical list   | N/A         | This surface has no pipeline.                             |
+| Pure `#000` / `#fff` surfaces | Apply       | `bg-body` and `bg-surface` only.                          |
 
 ### §A2
 
-| ID | Apply / N/A | Note |
-| --- | --- | --- |
-| Italic display headers | Apply | Titles are upright. Italic only in markdown emphasis. |
-| Eyebrows on every block | Apply | `.label-mono` only on the real section names. |
-| Tag-left / heading-right | Apply | Id and intent sit above the title. |
-| Stock AI nav | N/A | No site nav on this shell. Do not add one. |
-| Stock AI footer | N/A | No sitemap. The wordmark is the rail foot. |
-| Fake browser or IDE frame | N/A | The catalog does not frame screenshots. |
-| Invented metrics | Apply | No article counts, quotes, or logos. |
-| Emoji as feature icons | Apply | Hugeicons only on controls that already have one. |
-| Mid-render hex or OKLCH | Apply | Semantic tokens only. |
-| One sans for both roles | N/A | Quicksand + JetBrains Mono. Do not add Inter. |
+| ID                        | Apply / N/A | Note                                                  |
+| ------------------------- | ----------- | ----------------------------------------------------- |
+| Italic display headers    | Apply       | Titles are upright. Italic only in markdown emphasis. |
+| Eyebrows on every block   | Apply       | `.label-mono` only on the real section names.         |
+| Tag-left / heading-right  | Apply       | Id and intent sit above the title.                    |
+| Stock AI nav              | N/A         | No site nav on this shell. Do not add one.            |
+| Stock AI footer           | N/A         | No sitemap. The wordmark is the rail foot.            |
+| Fake browser or IDE frame | N/A         | The catalog does not frame screenshots.               |
+| Invented metrics          | Apply       | No article counts, quotes, or logos.                  |
+| Emoji as feature icons    | Apply       | Hugeicons only on controls that already have one.     |
+| Mid-render hex or OKLCH   | Apply       | Semantic tokens only.                                 |
+| One sans for both roles   | N/A         | Quicksand + JetBrains Mono. Do not add Inter.         |
 
 ### §B
 
-| ID | Apply / N/A | Note |
-| --- | --- | --- |
-| One focal beat per viewport | Apply | Intro title, or the article title. |
-| Type scale of at least 3 | Apply | Title, chunk title, body, plus `.label-mono`. |
-| Asymmetry | Apply | 22rem rail against a fluid pane. About 28/72 at 1280. Not 50/50. |
-| Foreground and background | Apply | `bg-surface` rail, `bg-body` pane, `border-line` seam. |
-| Dark-first preview | Apply | §8 screenshots are dark. |
-| Designed empty space | Apply | Empty sentence and not-found copy sit in the column, not in a void. |
-| Command metaphor | N/A | Search is a filter. Do not add an invoke strip here. |
+| ID                          | Apply / N/A | Note                                                                |
+| --------------------------- | ----------- | ------------------------------------------------------------------- |
+| One focal beat per viewport | Apply       | Intro title, or the article title.                                  |
+| Type scale of at least 3    | Apply       | Title, chunk title, body, plus `.label-mono`.                       |
+| Asymmetry                   | Apply       | 22rem rail against a fluid pane. About 28/72 at 1280. Not 50/50.    |
+| Foreground and background   | Apply       | `bg-surface` rail, `bg-body` pane, `border-line` seam.              |
+| Dark-first preview          | Apply       | §8 screenshots are dark.                                            |
+| Designed empty space        | Apply       | Empty sentence and not-found copy sit in the column, not in a void. |
+| Command metaphor            | N/A         | Search is a filter. Do not add an invoke strip here.                |
 
 ### §D
 

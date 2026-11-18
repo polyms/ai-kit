@@ -20,12 +20,12 @@
 none, describe the accessible role/name and visible scope. Replace the examples below with
 selectors verified against this repo; do not assume these names or test ids exist.}
 
-| Action | Scope / target | Selector within scope | Expected matches |
-| ------ | -------------- | --------------------- | ---------------- |
-| Open item deletion | Row identified by the item's stable key or unique visible name | Button named `Delete` | 1 |
-| Delete selected items | Area toolbar | Button named `Delete selected` | 1 |
-| Confirm item deletion | Dialog named `Delete item` | Button named `Delete` | 1 |
-| Cancel item deletion | Dialog named `Delete item` | Button named `Cancel` | 1 |
+| Action                | Scope / target                                                 | Selector within scope          | Expected matches |
+| --------------------- | -------------------------------------------------------------- | ------------------------------ | ---------------- |
+| Open item deletion    | Row identified by the item's stable key or unique visible name | Button named `Delete`          | 1                |
+| Delete selected items | Area toolbar                                                   | Button named `Delete selected` | 1                |
+| Confirm item deletion | Dialog named `Delete item`                                     | Button named `Delete`          | 1                |
+| Cancel item deletion  | Dialog named `Delete item`                                     | Button named `Cancel`          | 1                |
 
 Selector rules:
 

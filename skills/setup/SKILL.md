@@ -183,10 +183,10 @@ An existing map is **Keep existing**, not a request to scaffold. Read its pointe
 exists, locate the existing package and index before drafting one. Include the Feature map
 subsection in the agent config just as for Issue tracker, even when setup creates no map files.
 
-| Choice           | When                                                     |
-| ---------------- | -------------------------------------------------------- |
+| Choice           | When                                                      |
+| ---------------- | --------------------------------------------------------- |
 | **No** (default) | Library, kit, or an app that does not need a behavior map |
-| **Yes**          | An app with screens later sessions should not re-explore |
+| **Yes**          | An app with screens later sessions should not re-explore  |
 
 If **Yes**, ask once for a harness command. No command → `Harness: none`. Slug stays
 `feature-map` unless `.agents/skills/feature-map/` already holds a different skill — then ask once

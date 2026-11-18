@@ -55,25 +55,25 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ### Catalog
 
-| Invoke               | Name                                                                                                         | Status        | Domain                                                              |
-| -------------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------------------------- |
-| `/setup`             | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline                  |
-| `/align`             | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md      |
-| `/collab`            | [`collab`](skills/collab/)                                                                                   | **Available** | One prompt → PRD, ADR if needed, UI spec (model-invoked)            |
-| `/reqs`              | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, BRD, enterprise PRD, stories (draft by default) |
-| `/to-prd`            | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)        |
-| `/to-issues`         | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                    |
-| `/triage`            | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent`     |
-| `/design`            | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, ui-kit component map, a11y       |
-| `/dev`               | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging       |
-| `/code-review`       | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes           |
-| `/docs`              | [`docs`](skills/docs/)                                                                                       | **Available** | Business and developer docs — proposals, API ref, tutorials                    |
-| `/e2e`               | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester`)                                |
-| `/build-feature-map` | [`build-feature-map`](skills/build-feature-map/)                                                             | **Available** | Author the repo `feature-map` skill (`tester`)                      |
-| `/devops`            | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem         |
-| `/craft`             | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning              |
-| `/arch-refactor`     | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates     |
-| `/arch`              | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)       |
+| Invoke               | Name                                                                                                         | Status        | Domain                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------- |
+| `/setup`             | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
+| `/align`             | [`align`](skills/align/) + [`align-loop`](skills/align-loop/) + [`domain-modeling`](skills/domain-modeling/) | **Available** | Alignment (user + auto-discovery), domain language, CONTEXT.md  |
+| `/collab`            | [`collab`](skills/collab/)                                                                                   | **Available** | One prompt → PRD, ADR if needed, UI spec (model-invoked)        |
+| `/reqs`              | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, BRD, enterprise PRD, stories (draft by default)      |
+| `/to-prd`            | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)    |
+| `/to-issues`         | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
+| `/triage`            | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
+| `/design`            | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, ui-kit component map, a11y   |
+| `/dev`               | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging   |
+| `/code-review`       | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes       |
+| `/docs`              | [`docs`](skills/docs/)                                                                                       | **Available** | Business and developer docs — proposals, API ref, tutorials     |
+| `/e2e`               | [`e2e`](skills/e2e/)                                                                                         | **Available** | E2E automation — flake/CI (`tester`)                            |
+| `/build-feature-map` | [`build-feature-map`](skills/build-feature-map/)                                                             | **Available** | Author the repo `feature-map` skill (`tester`)                  |
+| `/devops`            | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem     |
+| `/craft`             | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning          |
+| `/arch-refactor`     | [`arch-refactor`](skills/arch-refactor/)                                                                     | **Available** | Architecture maintenance — scan, HTML report, deepen candidates |
+| `/arch`              | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)   |
 
 Principal agents (`pm`, `designer`, `developer`, `tester`, `techlead`) map to **org roles** — multiple
 skills per agent OK. Use `/craft` when writing or editing any skill.
@@ -87,21 +87,21 @@ In addition to local installation, MCP-capable clients can connect to `https://a
 with Streamable HTTP and OAuth. Discover available packs via `list_skill_packs` and load workflow,
 templates and references using `get_skill_pack`. The server retrieves Markdown from GitHub main.
 
-| Pack | Scope |
-| --- | --- |
-| [research](skills/research/) | Research briefs and comparative analysis |
-| [business](skills/business/) | Business cases, pricing and decision analysis |
-| [reqs](skills/reqs/) | BRD, PRD and user stories |
-| [docs](skills/docs/) | Business and developer-facing documents |
-| [task](skills/task/) | Human-readable and AI-readable work tickets |
-| [bug](skills/bug/) | Evidence-based defect reports |
-| [design](skills/design/) | UI specifications and UI Kit references |
-| [track](skills/track/) | Ticket review, status and verified updates |
-| [plan](skills/plan/) | Effort estimates, capacity and delivery plans |
-| [qa](skills/qa/) | Test cases, requirements coverage and QA evidence |
-| [comms](skills/comms/) | Client replies, ticket comments and stakeholder communications |
-| [review](skills/review/) | Artifact review and assumption challenge |
-| [release](skills/release/) | Release readiness, go-live and rollback |
+| Pack                         | Scope                                                          |
+| ---------------------------- | -------------------------------------------------------------- |
+| [research](skills/research/) | Research briefs and comparative analysis                       |
+| [business](skills/business/) | Business cases, pricing and decision analysis                  |
+| [reqs](skills/reqs/)         | BRD, PRD and user stories                                      |
+| [docs](skills/docs/)         | Business and developer-facing documents                        |
+| [task](skills/task/)         | Human-readable and AI-readable work tickets                    |
+| [bug](skills/bug/)           | Evidence-based defect reports                                  |
+| [design](skills/design/)     | UI specifications and UI Kit references                        |
+| [track](skills/track/)       | Ticket review, status and verified updates                     |
+| [plan](skills/plan/)         | Effort estimates, capacity and delivery plans                  |
+| [qa](skills/qa/)             | Test cases, requirements coverage and QA evidence              |
+| [comms](skills/comms/)       | Client replies, ticket comments and stakeholder communications |
+| [review](skills/review/)     | Artifact review and assumption challenge                       |
+| [release](skills/release/)   | Release readiness, go-live and rollback                        |
 
 Use the catalog routing hints and `starterPaths` to choose and load the smallest relevant workflow;
 fetch additional exact paths only when needed. `[]` returns the manifest only; omission retains full-pack
@@ -125,12 +125,12 @@ Run `pnpm bootstrap codex` or `pnpm bootstrap copilot` to install only that clie
 (other targets: `cursor`, `claude`, `all`). Install dependencies with `pnpm install`
 first; the Codex/Copilot installer uses Node.js and the repo's YAML parser.
 
-| Tool            | Agents                                             | Skills                                  |
-| --------------- | -------------------------------------------------- | --------------------------------------- |
-| **Cursor**      | `~/.cursor/agents` (dir → repo)                    | `~/.cursor/skills` (dir → repo)         |
-| **Claude Code** | `~/.claude/agents` (per-file)                      | `~/.claude/skills` (per-skill symlinks) |
-| **Codex**       | `~/.codex/agents/*.toml` (generated role pointers) | `~/.agents/skills` (per-skill symlinks) |
-| **Copilot**     | `~/.copilot/agents/*.agent.md` (generated role pointers) | `~/.agents/skills` (shared with Codex) |
+| Tool            | Agents                                                   | Skills                                  |
+| --------------- | -------------------------------------------------------- | --------------------------------------- |
+| **Cursor**      | `~/.cursor/agents` (dir → repo)                          | `~/.cursor/skills` (dir → repo)         |
+| **Claude Code** | `~/.claude/agents` (per-file)                            | `~/.claude/skills` (per-skill symlinks) |
+| **Codex**       | `~/.codex/agents/*.toml` (generated role pointers)       | `~/.agents/skills` (per-skill symlinks) |
+| **Copilot**     | `~/.copilot/agents/*.agent.md` (generated role pointers) | `~/.agents/skills` (shared with Codex)  |
 
 Codex respects `CODEX_HOME` for its agent directory; user skills remain under
 `~/.agents/skills`. Skill edits and agent body edits are read from this checkout.
