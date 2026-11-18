@@ -1,3 +1,6 @@
+import { SKILL_ROUTING } from './skill-routing'
+import { compositionPaths, SKILL_CONTRACTS, type SkillContract } from './skill-composition'
+
 /** GitHub raw base for skill packs on `main`. Paths are repo-relative and have no leading slash. */
 export const SKILL_PACK_RAW_BASE = 'https://raw.githubusercontent.com/polyms/ai-kit/refs/heads/main/'
 
@@ -21,6 +24,13 @@ export const DESIGN_SKILL_PATHS = [
   'skills/design/PREFLIGHT.md',
   'skills/design/REDESIGN.md',
 ] as const
+
+export const DESIGN_REFERENCE_PATHS = [
+  'docs/agents/client-compatibility.md',
+  'skills/dev/visual-ship.md',
+] as const
+
+export const DOCS_REFERENCE_PATHS = ['docs/agents/client-compatibility.md'] as const
 
 export const UI_KIT_SKILL_PATHS = [
   '.cursor/skills/ui-kit/SKILL.md',
@@ -92,6 +102,11 @@ export type SkillPackSummary = {
   name: SkillPackName
   skillRawUrl: string
   description: string
+  useWhen: readonly string[]
+  avoidWhen: string
+  starterPaths: string[]
+  relatedSkills: readonly SkillPackName[]
+  contract: SkillContract
 }
 
 export type ReqsSkillPack = {
@@ -121,23 +136,43 @@ export function listSkillPacks(): SkillPackSummary[] {
     name,
     skillRawUrl: skillPackRawUrl(`skills/${name}/SKILL.md`),
     description: PACK_DESCRIPTIONS[name],
+    useWhen: SKILL_ROUTING[name].useWhen,
+    avoidWhen: SKILL_ROUTING[name].avoidWhen,
+    starterPaths: starterPaths(name),
+    relatedSkills: SKILL_ROUTING[name].relatedSkills,
+    contract: SKILL_CONTRACTS[name],
   }))
 }
 
 export function getSkillPack(name: string): SkillPack | null {
   if (name === 'reqs') {
-    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD]) }
+    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')]) }
   }
   if (name === 'design') {
     return {
       name: 'design',
-      files: toFiles(DESIGN_SKILL_PATHS),
+      files: toFiles([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS, ...compositionPaths('design')]),
       uiKit: toFiles(UI_KIT_SKILL_PATHS),
     }
   }
   if (Object.hasOwn(WORK_SKILL_PATHS, name)) {
     const workName = name as WorkSkillName
-    return { name: workName, files: toFiles([...WORK_SKILL_PATHS[workName], WORK_ARTIFACT_STANDARD]) }
+    const references = workName === 'docs' ? DOCS_REFERENCE_PATHS : []
+    return {
+      name: workName,
+      files: toFiles([...WORK_SKILL_PATHS[workName], ...references, WORK_ARTIFACT_STANDARD, ...compositionPaths(workName)]),
+    }
   }
   return null
+}
+
+/** First request: entry point, applicable shared standard and default template for short workflows. */
+export function starterPaths(name: SkillPackName): string[] {
+  const entry = `skills/${name}/SKILL.md`
+  if (name === 'design') return [entry]
+  const paths = [entry, WORK_ARTIFACT_STANDARD]
+  if (name !== 'reqs' && SKILL_ROUTING[name].starter === 'primary') {
+    paths.push(WORK_SKILL_PATHS[name][1])
+  }
+  return paths
 }

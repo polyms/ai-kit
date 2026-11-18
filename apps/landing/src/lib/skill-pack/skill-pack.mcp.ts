@@ -1,6 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import { getSkillPack, listSkillPacks, type SkillPackFile } from './skill-pack'
+import { compositionCatalog } from './skill-composition'
 
 const listSkillPacksInputSchema = {}
 
@@ -9,9 +10,9 @@ const getSkillPackInputSchema = {
   paths: z.array(z.string()).optional().describe('Optional exact manifest paths to load. Omit for all content; empty array for manifest only.'),
 }
 
-export const LIST_SKILL_PACKS_TOOL_DESCRIPTION = `List available ai-kit skill packs. Returns names, descriptions and raw URLs. Call get_skill_pack to load the Markdown directly; no client-side HTTP GET is required.`
+export const LIST_SKILL_PACKS_TOOL_DESCRIPTION = `Discover ai-kit workflows for relevant work requests, including research, requirements, business decisions, documents, design, task and bug drafting, tracker updates, estimation, QA, communication, review and release. Select the smallest set using description, useWhen and avoidWhen; explicit user or local client invocation rules take precedence. For each selected pack call get_skill_pack with paths equal to starterPaths. For multi-skill work, inspect contract and composition metadata. Load the shared protocol from any selected pack and an applicable recipe from its hostPack, using exact paths. Related skills and recipe stages are optional; respect completion gates and never infer write authorization. Skip irrelevant packs. No client-side HTTP GET is needed.`
 
-export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. For large packs use paths: [] to discover files without content, then request exact paths (e.g. skills/design/SKILL.md); unselected files remain metadata only. Omit paths to preserve full-pack behavior. Unregistered paths return INVALID_PATHS without fetching. Follow SKILL.md first and consult bundled templates and references only when needed. When design invokes /ui-kit, use the returned uiKit content. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.`
+export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. Prefer paths from starterPaths in list_skill_packs. This loads the entry workflow and applicable standard/template, with remaining file paths returned as metadata. Read SKILL.md first; request only referenced files needed for the selected branch, batching related paths when useful. Use paths: [] for manifest-only discovery; omit paths only for intentional full-pack loading (legacy compatible). Do not reload files already available in this session unless stale. Unregistered paths return INVALID_PATHS without fetching. Follow SKILL.md first and consult bundled templates and references only when needed. When design invokes /ui-kit, use the returned uiKit content. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.`
 
 type McpTextResult = {
   content: [{ type: 'text'; text: string }]
@@ -20,7 +21,7 @@ type McpTextResult = {
 
 export function executeListSkillPacks(): McpTextResult {
   return {
-    content: [{ type: 'text', text: JSON.stringify({ packs: listSkillPacks() }, null, 2) }],
+    content: [{ type: 'text', text: JSON.stringify({ packs: listSkillPacks(), composition: compositionCatalog() }, null, 2) }],
   }
 }
 

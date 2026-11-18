@@ -113,7 +113,7 @@ Existing paths and URLs are preserved. Cursor and Claude keep reading the same f
 
 | Tool | Returns |
 | --- | --- |
-| `list_skill_packs` | `{ packs: [{ name, skillRawUrl, description }] }`. |
+| `list_skill_packs` | `{ packs: [{ name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract }], composition: { protocol, recipes } }`. |
 | `get_skill_pack` | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. Invalid selected paths: `INVALID_PATHS`. |
 
 Any MCP-capable AI client or agent can connect to `https://ai-kit.polyms.dev/mcp` using the
@@ -121,6 +121,9 @@ supported transport and OAuth flow. Call `list_skill_packs` to discover availabl
 `get_skill_pack` to load the selected pack directly. No client-side HTTP GET is needed.
 Client-specific MCP availability, authentication, and invocation behavior may vary.
 
+- Prefer `paths: starterPaths` from the selected catalog entry, then load only needed references.
+- For multi-skill work, retrieve the composition protocol from any pack and a selected recipe via
+  its hostPack. See [skill composition](skill-composition.md).
 - Optional `paths` selects exact pack files; `[]` returns metadata only. Omit for the full pack.
 - Unselected files have no `content` field; only manifest paths may be requested.
 - Follow `SKILL.md` first; consult bundled templates and references when relevant.

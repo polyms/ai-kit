@@ -69,6 +69,9 @@ human-readable and AI-readable artifacts. Draft by default; use authorized integ
 explicitly requested. These workflows do not require a specific AI client or issue tracker.
 See [MCP skill provider](docs/agents/mcp-skill-provider.md) for architecture, pack structure,
 maintenance, verification and the rollout handoff. Read it before changing skill delivery.
+For remote routing and progressive retrieval, see `docs/agents/skill-intelligence.md`.
+For multi-skill work, follow `docs/agents/skill-composition.md` and select only relevant recipes
+in `workflows/`. Evaluate handoffs with `evals/composition/`.
 See `docs/agents/skill-capabilities.md` for tool abstraction and composition,
 `docs/agents/external-skill-references.md` for licensing, and `evals/work-skills/` for evaluations.
 
@@ -104,3 +107,9 @@ Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public su
 when/why; see CONTEXT.md **Handoff**). Each agent stays in lane; escalates gaps upstream, does not
 relitigate downstream artifacts. Subagent spawn: do not duplicate delegated search; set explore
 thoroughness — see [docs/agents/invocation.md](docs/agents/invocation.md#subagent-delegation).
+
+### Skill evaluation
+
+Run `pnpm eval:test` and `pnpm eval:run --dry-run` from the repo root. Follow `evals/README.md`
+for model comparisons; never run paid endpoints without explicit configuration and use only synthetic
+fixtures. Record actual results and limitations; do not treat fixtures as benchmark passes.

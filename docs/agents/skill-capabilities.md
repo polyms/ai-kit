@@ -28,3 +28,10 @@ needed for the user's goal. Carry the artifact, linked sources, agreed scope and
 handoffs. Do not repeat discovery or mutate prior artifacts without a requested change.
 Manual-only local skills retain existing invocation policies; use the client's explicit selection
 where required. The MCP provider delivers content, not an orchestration engine.
+
+For remote discovery, see [skill intelligence](skill-intelligence.md). Related skill metadata describes
+optional handoffs. It is not a dependency graph, a mandatory chain or automatic write authorization.
+
+See [skill composition](skill-composition.md) for shared context, handoff envelope, gate semantics,
+conditional execution and the published recipes. Contracts guide client reasoning rather than
+server-enforced artifact validation.

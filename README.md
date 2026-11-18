@@ -103,7 +103,10 @@ templates and references using `get_skill_pack`. The server retrieves Markdown f
 | [review](skills/review/) | Artifact review and assumption challenge |
 | [release](skills/release/) | Release readiness, go-live and rollback |
 
-For large packs, pass optional exact `paths` to `get_skill_pack`; `[]` returns the manifest only.
+Use the catalog routing hints and `starterPaths` to choose and load the smallest relevant workflow;
+fetch additional exact paths only when needed. `[]` returns the manifest only; omission retains full-pack
+compatibility. See [skill intelligence](docs/agents/skill-intelligence.md) and the [composition protocol](docs/agents/skill-composition.md).
+Five optional workflow recipes live in `workflows/`; use them only for relevant multi-skill requests.
 The provider only loads skills; the client uses its authorized integrations to publish artifacts.
 See [architecture and maintenance](docs/agents/mcp-skill-provider.md),
 [work artifact standard](docs/agents/work-artifact-standard.md) and
@@ -638,3 +641,9 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 ## License
 
 [MIT](LICENSE) — Copyright (c) 2026 [Polyms](https://github.com/polyms)
+
+## Skill evaluation
+
+Run `pnpm eval:test` for deterministic scoring tests and `pnpm eval:run --dry-run` to inspect
+benchmark scope without model calls. See [the evaluation runner](evals/README.md) for opt-in
+paired runs, trace scoring, model configuration and limitations.

@@ -31,7 +31,7 @@ or separate slash command is required. Otherwise, before the component map, ask 
 
 **Downstream:** `/dev` implements from `docs/design/<feature>.md`; `dev` uses `ui-kit` when writing UI code.
 
-**Prerequisites:** Soft — read `CONTEXT.md` + ADRs when present. Recommend `@polyms/ui-kit` installed and user runs `/ui-kit` before component mapping. Read `docs/agents/language.md` when present — write the spec in that language.
+**Prerequisites:** Soft — read `CONTEXT.md` + ADRs when present. For local clients, recommend `@polyms/ui-kit` installed and user runs `/ui-kit` before component mapping. Remote clients use bundled UI Kit references on demand. Read `docs/agents/language.md` when present — write the spec in that language.
 
 ## References
 
@@ -79,8 +79,8 @@ From brief lock + PRD, state mood and layout family. Pick ui-kit **theme/variant
 Read [ANTI-SLOP.md](ANTI-SLOP.md) — list which §A / §A2 bans apply; which §B composition rules
 this feature must satisfy.
 
-Ask user to invoke **`/ui-kit`** if not already attached — use its catalog when listing primitives
-for the component map. A `collab` brief skips the extra confirm (see
+For remote MCP clients, load the bundled UI Kit entry point and only the component references needed
+for the map. Otherwise ask user to invoke **`/ui-kit`** if not already attached; use its catalog. A `collab` brief skips the extra confirm (see
 [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md)); map primitives from existing `@polyms/ui-kit` imports
 when the repo already has them.
 

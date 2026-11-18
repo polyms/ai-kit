@@ -1,0 +1,234 @@
+[
+  {
+    "id": "RT-01",
+    "kind": "Route",
+    "prompt": "Viết BRD cho Community có owner, admin, member; chưa chốt quyền ban.",
+    "expected": [
+      "reqs"
+    ],
+    "avoid": [
+      "task",
+      "bug"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-02",
+    "kind": "Route",
+    "prompt": "Draft UI states and screen flow for a team invite list from an approved PRD.",
+    "expected": [
+      "design"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-03",
+    "kind": "Route",
+    "prompt": "So sánh công nghệ HRM AI-first, tìm nguồn gần đây.",
+    "expected": [
+      "research"
+    ],
+    "avoid": [
+      "business",
+      "release"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-04",
+    "kind": "Route",
+    "prompt": "Tính giá gói subscription để đạt contribution margin 40%.",
+    "expected": [
+      "business"
+    ],
+    "avoid": [
+      "research",
+      "plan"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-05",
+    "kind": "Route",
+    "prompt": "Viết tài liệu handover cho dev session mới.",
+    "expected": [
+      "docs"
+    ],
+    "avoid": [
+      "comms",
+      "task"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-06",
+    "kind": "Route",
+    "prompt": "Draft a task to resend invitations; don't publish it.",
+    "expected": [
+      "task"
+    ],
+    "avoid": [
+      "track",
+      "bug"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-07",
+    "kind": "Route",
+    "prompt": "Log lỗi Save trên staging: màn hình trắng.",
+    "expected": [
+      "bug"
+    ],
+    "avoid": [
+      "task",
+      "track"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-08",
+    "kind": "Route",
+    "prompt": "Check ticket A-42 và đổi assignee sang người đã xác định.",
+    "expected": [
+      "track"
+    ],
+    "avoid": [
+      "task",
+      "bug"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-09",
+    "kind": "Route",
+    "prompt": "Estimate 2 developers with dependencies and 5 working days per week.",
+    "expected": [
+      "plan"
+    ],
+    "avoid": [
+      "business",
+      "task"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-10",
+    "kind": "Route",
+    "prompt": "Viết test case permission và regression theo AC đã có.",
+    "expected": [
+      "qa"
+    ],
+    "avoid": [
+      "review",
+      "bug"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-11",
+    "kind": "Route",
+    "prompt": "Viết phản hồi khách hàng ngắn, song ngữ, không gửi.",
+    "expected": [
+      "comms"
+    ],
+    "avoid": [
+      "docs",
+      "track"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-12",
+    "kind": "Route",
+    "prompt": "Review proposal: tìm giả định sai, gap và rủi ro.",
+    "expected": [
+      "review"
+    ],
+    "avoid": [
+      "qa",
+      "reqs"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-13",
+    "kind": "Route",
+    "prompt": "Preview build passed, production pending. Assess go-live.",
+    "expected": [
+      "release"
+    ],
+    "avoid": [
+      "qa",
+      "track"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-14",
+    "kind": "Compose",
+    "prompt": "Đã có requirements: viết task, estimate effort và tạo test cases (chỉ draft).",
+    "expected": [
+      "task",
+      "plan",
+      "qa"
+    ],
+    "avoid": [
+      "reqs",
+      "release"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-15",
+    "kind": "Compose",
+    "prompt": "Compare current competitor pricing with sources, then recommend a plan based on unit economics.",
+    "expected": [
+      "research",
+      "business"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
+    "notes": "Routing checks only; authorization is separate."
+  },
+  {
+    "id": "RT-16",
+    "kind": "Skip",
+    "prompt": "Translate 'Good morning' into Vietnamese.",
+    "expected": [],
+    "avoid": [
+      "research",
+      "comms",
+      "docs"
+    ],
+    "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
+  },
+  {
+    "id": "RT-17",
+    "kind": "Skip",
+    "prompt": "What is the capital of France?",
+    "expected": [],
+    "avoid": [
+      "research",
+      "docs"
+    ],
+    "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
+  },
+  {
+    "id": "RT-18",
+    "kind": "Skip",
+    "prompt": "Review this TypeScript function for bugs and complexity.",
+    "expected": [],
+    "avoid": [
+      "review",
+      "bug"
+    ],
+    "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
+  }
+]
