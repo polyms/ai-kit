@@ -70,6 +70,8 @@ explicitly requested. These workflows do not require a specific AI client or iss
 See [MCP skill provider](docs/agents/mcp-skill-provider.md) for architecture, pack structure,
 maintenance, verification and the rollout handoff. Read it before changing skill delivery.
 For remote routing and progressive retrieval, see `docs/agents/skill-intelligence.md`.
+For multi-skill work, follow `docs/agents/skill-composition.md` and select only relevant recipes
+in `workflows/`. Evaluate handoffs with `evals/composition/`.
 See `docs/agents/skill-capabilities.md` for tool abstraction and composition,
 `docs/agents/external-skill-references.md` for licensing, and `evals/work-skills/` for evaluations.
 

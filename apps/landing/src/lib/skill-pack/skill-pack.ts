@@ -1,4 +1,5 @@
 import { SKILL_ROUTING } from './skill-routing'
+import { compositionPaths, SKILL_CONTRACTS, type SkillContract } from './skill-composition'
 
 /** GitHub raw base for skill packs on `main`. Paths are repo-relative and have no leading slash. */
 export const SKILL_PACK_RAW_BASE = 'https://raw.githubusercontent.com/polyms/ai-kit/refs/heads/main/'
@@ -105,6 +106,7 @@ export type SkillPackSummary = {
   avoidWhen: string
   starterPaths: string[]
   relatedSkills: readonly SkillPackName[]
+  contract: SkillContract
 }
 
 export type ReqsSkillPack = {
@@ -138,17 +140,18 @@ export function listSkillPacks(): SkillPackSummary[] {
     avoidWhen: SKILL_ROUTING[name].avoidWhen,
     starterPaths: starterPaths(name),
     relatedSkills: SKILL_ROUTING[name].relatedSkills,
+    contract: SKILL_CONTRACTS[name],
   }))
 }
 
 export function getSkillPack(name: string): SkillPack | null {
   if (name === 'reqs') {
-    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD]) }
+    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')]) }
   }
   if (name === 'design') {
     return {
       name: 'design',
-      files: toFiles([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS]),
+      files: toFiles([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS, ...compositionPaths('design')]),
       uiKit: toFiles(UI_KIT_SKILL_PATHS),
     }
   }
@@ -157,7 +160,7 @@ export function getSkillPack(name: string): SkillPack | null {
     const references = workName === 'docs' ? DOCS_REFERENCE_PATHS : []
     return {
       name: workName,
-      files: toFiles([...WORK_SKILL_PATHS[workName], ...references, WORK_ARTIFACT_STANDARD]),
+      files: toFiles([...WORK_SKILL_PATHS[workName], ...references, WORK_ARTIFACT_STANDARD, ...compositionPaths(workName)]),
     }
   }
   return null

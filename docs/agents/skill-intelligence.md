@@ -19,6 +19,10 @@ search, orchestration runtime, analytics database or a new MCP tool.
 - `avoidWhen`: boundary against neighboring skills.
 - `starterPaths`: trusted manifest paths for the first retrieval.
 - `relatedSkills`: optional handoffs, not dependency or execution authorization.
+- `contract`: accepted/produced artifact kinds and a semantic completion gate.
+
+The top-level `composition` catalog advertises a shared protocol path and optional recipe metadata
+(hostPack, path and suggested stages). Existing packs and retrieval calls stay compatible.
 
 When a relevant request arrives, select the smallest set of matching packs. Honor explicit user
 selection and the client's invocation policy. For trivial questions or out-of-catalog work, do not
@@ -52,18 +56,21 @@ links and starter-path allowlisting. These checks do not prove completeness of p
 
 ## Composition and evaluation
 
-See [capabilities](skill-capabilities.md). Use a prior artifact as the next skill's input only
-when the user requests that outcome. Do not treat related skills as a chain or duplicate accepted
-decisions. Draft by default and verify authorized writes.
+See [capabilities](skill-capabilities.md) and [composition protocol](skill-composition.md).
+For multi-skill work, load the protocol through any selected pack and only the applicable recipe
+through its hostPack. Keep a shared session-local context and use evidence-backed handoffs,
+conditional gates and bounded revision. The recipe host is only a retrieval location.
+Do not treat related skills as a chain or duplicate accepted decisions. Draft by default and verify
+authorized writes.
 
-The 13 output cases and 18 routing fixtures in `evals/work-skills/` cover work intent, overlap,
+The 13 output cases, 18 routing fixtures and 10 composition cases in `evals/work-skills/` cover work intent, overlap,
 composition and opt-out. Unit tests validate fixture integrity and retrieval behavior; actual client
 routing, quality, token consumption and latency require separate evaluation runs. Record the model,
 client, revision, chosen route, requests and evidence. See the evaluation README.
 
 ## Handoff
 
-This is the first V0.3 slice. After merge/deploy, confirm catalog metadata in actual MCP tools,
+This V0.3 slice includes composition contracts, protocol and five recipes. After merge/deploy, confirm catalog metadata in actual MCP tools,
 load starter paths for representative packs, then test real natural-language routing and multi-skill
 handoffs across compatible clients. Remaining scope: landing-site catalog, comparative eval runs
 and any measured improvement needs. Do not claim automatic invocation works on every client.

@@ -105,7 +105,8 @@ templates and references using `get_skill_pack`. The server retrieves Markdown f
 
 Use the catalog routing hints and `starterPaths` to choose and load the smallest relevant workflow;
 fetch additional exact paths only when needed. `[]` returns the manifest only; omission retains full-pack
-compatibility. See [skill intelligence](docs/agents/skill-intelligence.md).
+compatibility. See [skill intelligence](docs/agents/skill-intelligence.md) and the [composition protocol](docs/agents/skill-composition.md).
+Five optional workflow recipes live in `workflows/`; use them only for relevant multi-skill requests.
 The provider only loads skills; the client uses its authorized integrations to publish artifacts.
 See [architecture and maintenance](docs/agents/mcp-skill-provider.md),
 [work artifact standard](docs/agents/work-artifact-standard.md) and

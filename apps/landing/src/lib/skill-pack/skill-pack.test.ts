@@ -18,6 +18,7 @@ import {
   starterPaths,
   type SkillPackName,
 } from './skill-pack'
+import { ARTIFACT_KINDS, COMPOSITION_PROTOCOL, SKILL_CONTRACTS, WORKFLOW_RECIPES, compositionCatalog, compositionPaths } from './skill-composition'
 import { executeGetSkillPack, executeListSkillPacks, registerSkillPackMcpTools } from './skill-pack.mcp'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../../../../..')
@@ -48,12 +49,12 @@ describe('skill pack manifest', () => {
 
     const reqs = getSkillPack('reqs')
     const design = getSkillPack('design')
-    expect(reqs?.files.map(file => file.rawUrl)).toEqual([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD].map(skillPackRawUrl))
+    expect(reqs?.files.map(file => file.rawUrl)).toEqual([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')].map(skillPackRawUrl))
     expect(design && 'uiKit' in design ? design.uiKit.map(file => file.rawUrl) : []).toEqual(
       UI_KIT_SKILL_PATHS.map(skillPackRawUrl)
     )
     expect(JSON.stringify({ packs, reqs, design })).not.toMatch(/# Design|# Reqs/)
-    expect(design?.files.map(file => file.path)).toEqual([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS])
+    expect(design?.files.map(file => file.path)).toEqual([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS, ...compositionPaths('design')])
   })
 })
 
@@ -67,7 +68,7 @@ describe('skill pack MCP tools', () => {
   it('returns pack URLs from list_skill_packs', () => {
     const result = executeListSkillPacks()
     expect(result.isError).toBeUndefined()
-    expect(JSON.parse(result.content[0]!.text)).toEqual({ packs: listSkillPacks() })
+    expect(JSON.parse(result.content[0]!.text)).toEqual({ packs: listSkillPacks(), composition: compositionCatalog() })
   })
 
   it('returns NOT_FOUND for an unknown pack name', async () => {
@@ -97,7 +98,7 @@ describe('skill pack MCP tools', () => {
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
-      files: [...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD].map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
+      files: [...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')].map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
     })
   })
 
@@ -110,7 +111,7 @@ describe('skill pack MCP tools', () => {
       const references = name === 'docs' ? DOCS_REFERENCE_PATHS : []
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
-        files: [...paths, ...references, WORK_ARTIFACT_STANDARD].map(path => ({
+        files: [...paths, ...references, WORK_ARTIFACT_STANDARD, ...compositionPaths(name as SkillPackName)].map(path => ({
           path,
           rawUrl: skillPackRawUrl(path),
           content: '# Work artifact',
@@ -235,5 +236,87 @@ describe('skill intelligence', () => {
     for (const name of names) expect(cases.some(item => item.expected.includes(name))).toBe(true)
     expect(cases.some(item => item.expected.length === 0)).toBe(true)
     expect(cases.some(item => item.expected.length > 1)).toBe(true)
+  })
+})
+
+describe('skill composition', () => {
+  it('publishes a meaningful bounded contract for every pack', () => {
+    const kinds = new Set(ARTIFACT_KINDS)
+    const catalog = listSkillPacks()
+    expect(Object.keys(SKILL_CONTRACTS).sort()).toEqual(catalog.map(pack => pack.name).sort())
+    for (const summary of catalog) {
+      const contract = summary.contract
+      expect(contract).toEqual(SKILL_CONTRACTS[summary.name])
+      expect(contract.accepts.length).toBeGreaterThan(0)
+      expect(contract.produces.length).toBeGreaterThan(0)
+      expect(contract.readyWhen.trim().length).toBeGreaterThan(20)
+      expect([...contract.accepts, ...contract.produces].every(kind => kinds.has(kind))).toBe(true)
+      const pack = getSkillPack(summary.name)!
+      expect(pack.files.some(file => file.path === COMPOSITION_PROTOCOL)).toBe(true)
+      expect(summary.starterPaths).not.toContain(COMPOSITION_PROTOCOL)
+    }
+    expect(SKILL_CONTRACTS.qa.produces).toContain('test-plan')
+    expect(SKILL_CONTRACTS.qa.produces).toContain('test-report')
+  })
+
+  it('advertises five unique recipes with valid stages and allowlisted hosts', () => {
+    const names = new Set(listSkillPacks().map(pack => pack.name))
+    expect(WORKFLOW_RECIPES).toHaveLength(5)
+    expect(new Set(WORKFLOW_RECIPES.map(recipe => recipe.id)).size).toBe(WORKFLOW_RECIPES.length)
+    expect(new Set(WORKFLOW_RECIPES.map(recipe => recipe.path)).size).toBe(WORKFLOW_RECIPES.length)
+    for (const recipe of WORKFLOW_RECIPES) {
+      expect(names.has(recipe.hostPack)).toBe(true)
+      expect(recipe.skills.length).toBeGreaterThan(1)
+      expect(recipe.skills.every(name => names.has(name))).toBe(true)
+      expect(recipe.skills).toContain(recipe.hostPack)
+      expect(recipe.path).toBe(`workflows/${recipe.id}.md`)
+      for (const name of names) {
+        const pack = getSkillPack(name)!
+        expect(pack.files.some(file => file.path === recipe.path)).toBe(name === recipe.hostPack)
+        expect(starterPaths(name)).not.toContain(recipe.path)
+      }
+    }
+  })
+
+  it('selectively retrieves a composition protocol and recipe without loading other files', async () => {
+    const recipe = WORKFLOW_RECIPES[0]!
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Composition'))
+    const selected = [COMPOSITION_PROTOCOL, recipe.path]
+    const result = await executeGetSkillPack(recipe.hostPack, fetchFile, selected)
+    expect(result.isError).toBeUndefined()
+    expect(fetchFile.mock.calls.map(call => call[0])).toEqual(selected.map(skillPackRawUrl))
+    const body = JSON.parse(result.content[0]!.text) as { files: { path: string; content?: string }[] }
+    expect(body.files.filter(file => file.content !== undefined).map(file => file.path)).toEqual(selected)
+    fetchFile.mockClear()
+    const invalid = await executeGetSkillPack('design', fetchFile, [recipe.path])
+    expect(invalid.isError).toBe(true)
+    expect(fetchFile).not.toHaveBeenCalled()
+  })
+
+  it('keeps composition fixtures valid, covering every recipe, single and custom routes', () => {
+    const names = new Set(listSkillPacks().map(pack => pack.name))
+    const recipes = new Set(WORKFLOW_RECIPES.map(recipe => recipe.id))
+    const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/composition/cases.json'), 'utf8')) as {
+      id: string
+      recipe: string | null
+      prompt: string
+      requiredSkills: SkillPackName[]
+      skipSkills: SkillPackName[]
+      criteria: string[]
+      hardGates: string[]
+    }[]
+    expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
+    for (const item of cases) {
+      expect(item.recipe === null || recipes.has(item.recipe)).toBe(true)
+      expect(item.prompt.trim().length).toBeGreaterThan(0)
+      expect(item.requiredSkills.length).toBeGreaterThan(0)
+      expect(item.requiredSkills.every(name => names.has(name) && !item.skipSkills.includes(name))).toBe(true)
+      expect(item.skipSkills.every(name => names.has(name))).toBe(true)
+      expect(item.criteria.length).toBeGreaterThan(0)
+      expect(item.hardGates.length).toBeGreaterThan(0)
+    }
+    for (const id of recipes) expect(cases.some(item => item.recipe === id)).toBe(true)
+    expect(cases.some(item => item.recipe === null && item.requiredSkills.length === 1)).toBe(true)
+    expect(cases.some(item => item.recipe === null && item.requiredSkills.length > 1)).toBe(true)
   })
 })

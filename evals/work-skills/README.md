@@ -26,3 +26,6 @@ skills (ordered when the prompt requires a sequence), unnecessary packs and expl
 Skip cases should not trigger any remote work pack. Judge the route before judging the final output.
 Report unexpected packs, full-pack calls, unnecessary reloads and unsupported actions separately.
 Fixture validation in Vitest does not execute the LLM or score its actual behavior.
+
+For multi-skill handoffs and conditional gates, see `evals/composition/cases.json` and
+`evals/composition/rubric.md`. These supplement output and routing cases without requiring a new runner.

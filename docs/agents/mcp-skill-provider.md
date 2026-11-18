@@ -104,8 +104,8 @@ can connect or automatically invoke remote skills.
 4. Use user-supplied or authorized context. Draft the output, or publish only when requested.
 5. Return actual ticket/document IDs and links after a successful write.
 
-The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills}]}`.
-The additional routing fields are advisory and backward-compatible.
+The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract}], composition: {protocol, recipes}}`.
+The additional routing and composition fields are advisory and backward-compatible.
 The get operation returns `{name, files: [{path, rawUrl, content}]}`. For design it also returns
 `uiKit` entries of the same file shape. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
@@ -141,7 +141,11 @@ and the [work skill evaluations](../../evals/work-skills/README.md).
 ## Skill intelligence
 
 See [skill-intelligence.md](skill-intelligence.md) for routing metadata, selective retrieval policy,
-composition and regression checks. The server does not classify prompts or execute workflows.
+composition and regression checks. See [skill composition](skill-composition.md) for typed metadata,
+shared context, gates, handoffs and recipes. Load the protocol and chosen recipe on demand;
+recipe paths are scoped to their host pack, and no composition files are in starterPaths.
+Legacy full-pack loading includes the newly allowlisted references. The server does not classify
+prompts or execute workflows.
 The client chooses relevant skills using metadata and user intent, while local manual-only policy
 continues to govern native skill invocation.
 
