@@ -10,9 +10,9 @@ import {
 import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
 import { registerMeMcpTool } from './mcp-me.server'
 
-function createOpsCmsMcpServer(session: McpAuthSession): McpServer {
+function createOpsCmsMcpServer(session: McpAuthSession, accessToken: string): McpServer {
   const server = new McpServer({ name: 'ai-kit-ops-cms', version: __VERSION__ })
-  registerMeMcpTool(server, session)
+  registerMeMcpTool(server, session, accessToken)
   registerKnowledgeMcpTools(server, { session })
   registerSkillPackMcpTools(server)
   return server
@@ -29,7 +29,12 @@ export async function handleMcpRequest(request: Request): Promise<Response> {
     throw error
   }
 
-  const server = createOpsCmsMcpServer(session)
+  // Only pass the verified bearer token to the server-side UserInfo lookup.
+  // Never expose it in MCP tool output.
+  const accessToken = request.headers.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1]
+  if (!accessToken) return mcpUnauthorizedResponse(request)
+
+  const server = createOpsCmsMcpServer(session, accessToken)
   const transport = new WebStandardStreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
     enableJsonResponse: true,
