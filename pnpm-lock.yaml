@@ -1001,7 +1001,7 @@ packages:
     resolution: {integrity: sha512-J1yXrIlNDZVzE3ada310xeAw7nH8yCAyLPuUIsjKatFPmfn5bS1oW+cM+QsGOtVWd5nhSpbwZWx/rue+r5Z+PA==}
 
   '@polyms/ui-kit@1.0.5':
-    resolution: {integrity: sha512-obpdj5SSZ9Ll5GxC8ZFW/gZ1F1H9bIBJCGh4WIKA4o+D5PocJLmXhOsRMzgZYUK+fSxkV/7CDZo1TCKWepylsA==}
+    resolution: {integrity: sha512-obpdj5SSZ9Ll5GxC8ZFW/gZ1F1H9bIBJCGh4WIKA4o+D5PocJLmXhOsRMzgZYUK+fSxkV/7CDZo1TCKWepylsA==, tarball: https://registry.polyms.dev/npm/download/@polyms/ui-kit/1.0.5/baaed217ce84ae12037ea0cef0165a09538f7b7d}
     hasBin: true
     peerDependencies:
       react: '>=19.0.0'
