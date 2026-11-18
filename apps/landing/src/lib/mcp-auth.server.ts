@@ -19,6 +19,7 @@ export class McpAuthError extends Error {
 export type McpAuthSession = {
   userId: string
   role?: string
+  email?: string
 }
 
 let jwksIssuer: string | undefined
@@ -136,11 +137,12 @@ export async function verifyMcpAccessToken(request: Request): Promise<McpAuthSes
       throw new McpAuthError('UNAUTHORIZED')
     }
 
-    const claims = payload as { role?: unknown }
+    const claims = payload as { role?: unknown; email?: unknown }
 
     return {
       userId: sub,
       role: typeof claims.role === 'string' ? claims.role : undefined,
+      email: typeof claims.email === 'string' ? claims.email : undefined,
     }
   } catch (error) {
     if (error instanceof McpAuthError) throw error
