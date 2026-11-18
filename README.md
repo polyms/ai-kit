@@ -641,3 +641,9 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 ## License
 
 [MIT](LICENSE) — Copyright (c) 2026 [Polyms](https://github.com/polyms)
+
+## Skill evaluation
+
+Run `pnpm eval:test` for deterministic scoring tests and `pnpm eval:run --dry-run` to inspect
+benchmark scope without model calls. See [the evaluation runner](evals/README.md) for opt-in
+paired runs, trace scoring, model configuration and limitations.

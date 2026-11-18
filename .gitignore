@@ -154,3 +154,6 @@ vite.config.ts.timestamp-*
 /apps/landing/prisma/schema
 # Personal chat persona (symlink → ~/.claude/rules/agent-persona.md)
 .cursor/rules/agent-persona.mdc
+
+# Local skill evaluation reports
+/evals/results/

@@ -63,8 +63,10 @@ conditional gates and bounded revision. The recipe host is only a retrieval loca
 Do not treat related skills as a chain or duplicate accepted decisions. Draft by default and verify
 authorized writes.
 
-The 13 output cases, 18 routing fixtures and 10 composition cases in `evals/work-skills/` cover work intent, overlap,
-composition and opt-out. Unit tests validate fixture integrity and retrieval behavior; actual client
+The 13 output cases, 18 routing fixtures and 10 composition cases in `evals/` cover work intent,
+overlap, composition and opt-out. The [local evaluation runner](../../evals/README.md) runs paired
+baseline/assisted cases with an explicitly configured compatible model endpoint, records local
+retrieval traces and optional blind-judge scores. It does not test native client integrations. Unit tests validate fixture integrity and retrieval behavior; actual client
 routing, quality, token consumption and latency require separate evaluation runs. Record the model,
 client, revision, chosen route, requests and evidence. See the evaluation README.
 
@@ -73,4 +75,4 @@ client, revision, chosen route, requests and evidence. See the evaluation README
 This V0.3 slice includes composition contracts, protocol and five recipes. After merge/deploy, confirm catalog metadata in actual MCP tools,
 load starter paths for representative packs, then test real natural-language routing and multi-skill
 handoffs across compatible clients. Remaining scope: landing-site catalog, comparative eval runs
-and any measured improvement needs. Do not claim automatic invocation works on every client.
+on real models/native clients and any measured improvement needs. Do not claim automatic invocation works on every client.

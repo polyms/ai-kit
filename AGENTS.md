@@ -107,3 +107,9 @@ Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public su
 when/why; see CONTEXT.md **Handoff**). Each agent stays in lane; escalates gaps upstream, does not
 relitigate downstream artifacts. Subagent spawn: do not duplicate delegated search; set explore
 thoroughness — see [docs/agents/invocation.md](docs/agents/invocation.md#subagent-delegation).
+
+### Skill evaluation
+
+Run `pnpm eval:test` and `pnpm eval:run --dry-run` from the repo root. Follow `evals/README.md`
+for model comparisons; never run paid endpoints without explicit configuration and use only synthetic
+fixtures. Record actual results and limitations; do not treat fixtures as benchmark passes.

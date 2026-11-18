@@ -13,7 +13,9 @@
     "build": "nx build landing",
     "polyms": "pnpm exec ui-kit-skill --target cursor --force",
     "check": "biome check --write . && prettier -l --write .",
-    "release": "zx scripts/release.mjs"
+    "release": "zx scripts/release.mjs",
+    "eval:run": "tsx evals/run.ts",
+    "eval:test": "node --test evals/scoring.test.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",

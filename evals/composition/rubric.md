@@ -21,4 +21,5 @@ Any failed hard gate fails the case regardless of other scores. Unobservable har
 unverified, not passes. Compare repeated client runs against the same prompts without the
 composition guidance. Record response sizes, token usage and latency only when measured.
 
-These fixtures and static tests do not execute an AI client. No benchmark claim until real runs.
+The [evaluation runner](../README.md) supports local read-only tool simulation and optional judging.
+Fixture validation alone does not execute a model. Native client behavior requires separate runs.

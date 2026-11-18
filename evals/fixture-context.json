@@ -1,0 +1,11 @@
+{
+  "WS-01": "Synthetic sources, evaluated as of 2026-11-18. [S1] Product Alpha price $9/user/month, pricing snapshot dated 2024-01-01; no newer price provided. [S2] Product Beta release note dated 2026-11-10 states calendar exports only. Neither source establishes Beta's AI copilot or current price.",
+  "WS-08": "Synthetic tracker snapshot: A-1 Open, assignee Pat, priority Normal; A-2 Closed, assignee Lee. Requested new assignee for A-1: Sam. Supplied mock receipt: reassignment request for A-1 succeeded; subsequent readback unavailable. No A-2 write occurred.",
+  "CP-01": "Approved BR-01: owners can send invitations to a valid email. AC-01: valid email creates a pending invitation; AC-02: invalid email displays validation and creates nothing; AC-03: nonowners cannot send invitations. Scope excludes resend/expiry. Two developers; capacity and implementation unknown.",
+  "CP-03": "Mock tracker snapshot: BUG-7, Open, staging, Save action crashes editor; expected editor remains available and saves. Tester reports a fix; build ID, independent retest and logs are unavailable.",
+  "CP-04": "Observed Save in staging shows a blank page; expected editor remains visible and saves. Mock search returned exactly matching BUG-12, Open, same environment/action/outcome. Browser/frequency unknown.",
+  "CP-05": "Synthetic cost table dated 2026-11-18 (USD/month, same variable-cost basis; fees/taxes excluded): A $10 revenue, $6 cost; B $15 revenue, $8 cost. Usage and demand unvalidated.",
+  "CP-06": "Complete mock tracker snapshot: S-1 Open, 4 person-days; S-2 Open, 4 person-days, depends S-1; S-3 Open, 4 person-days, depends S-2. No other work in scope.",
+  "CP-08": "Synthetic prior receipts only: A-1 assignee changed to Sam and readback shows Sam; A-2 request timed out, no readback. No further action authorized in this replay.",
+  "CP-10": "Confirmed brief: BR-01 owners can invite valid email addresses; AC-01 valid email creates pending invitation, AC-02 invalid email produces inline validation and no invitation; AC-03 nonowner cannot invite. No resend, expiry or approved design system in scope. No file destination or publishing authorization."
+}

@@ -15,7 +15,7 @@ single run. Record inconsistent behavior across multiple runs when possible. An 
 criterion remains unverified; report it separately from pass rate.
 
 Use the rubric and cases as starting points. Add a regression case whenever a skill fails in real use,
-with anonymized inputs and explicit expected behavior. No automated runner is included in this change.
+with anonymized inputs and explicit expected behavior. Use the [evaluation runner](../README.md) for opt-in paired model runs and deterministic scores.
 
 ## Routing and selective retrieval
 
@@ -28,4 +28,4 @@ Report unexpected packs, full-pack calls, unnecessary reloads and unsupported ac
 Fixture validation in Vitest does not execute the LLM or score its actual behavior.
 
 For multi-skill handoffs and conditional gates, see `evals/composition/cases.json` and
-`evals/composition/rubric.md`. These supplement output and routing cases without requiring a new runner.
+`evals/composition/rubric.md`. The shared runner supports all three suites.
