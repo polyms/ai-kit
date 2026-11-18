@@ -54,7 +54,8 @@ export function summarize(rows) {
   const result = {}
   for (const row of rows) {
     const key = row.suite + ':' + row.mode
-    const group = result[key] ??= { runs:0, pass:0, fail:0, unverified:0, error:0, elapsedMs:0, usageReported:0, inputTokens:0, outputTokens:0, tracePass:0, traceFail:0, payloadBytes:0 }
+    if (!result[key]) result[key] = { runs:0, pass:0, fail:0, unverified:0, error:0, elapsedMs:0, usageReported:0, inputTokens:0, outputTokens:0, tracePass:0, traceFail:0, payloadBytes:0 }
+    const group = result[key]
     group.runs++
     group[row.status]++
     if (Number.isFinite(row.elapsedMs)) group.elapsedMs += row.elapsedMs
