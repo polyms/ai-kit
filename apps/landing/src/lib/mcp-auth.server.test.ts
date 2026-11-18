@@ -56,6 +56,7 @@ describe('mcp-auth.server', () => {
         sub: 'admin-1',
         scope: 'openid profile email',
         role: 'admin',
+        email: 'admin@example.com',
       } satisfies JWTPayload,
     })
 
@@ -67,6 +68,19 @@ describe('mcp-auth.server', () => {
     expect(session).toEqual({
       userId: 'admin-1',
       role: 'admin',
+      email: 'admin@example.com',
+    })
+  })
+
+  it('does not assume email when the JWT has no email claim', async () => {
+    jwtVerifyMock.mockResolvedValue({ payload: { sub: 'user-2' } satisfies JWTPayload })
+    const request = new Request('http://localhost:6300/mcp', {
+      headers: { Authorization: 'Bearer valid-token' },
+    })
+    await expect(verifyMcpAccessToken(request)).resolves.toEqual({
+      userId: 'user-2',
+      role: undefined,
+      email: undefined,
     })
   })
 
