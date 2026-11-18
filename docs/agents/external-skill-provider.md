@@ -5,11 +5,13 @@ No runtime GitHub requests, server-side LLM, database, or external registry are 
 
 ## Delivery and release snapshots
 
-Release 0.3.0 is frozen in registry/releases/0.3.0: original metadata modules and Markdown blobs
-from commit b94b59a78dd0704d801a7097ddd4ced19ed2d2dc. Preserve this directory unchanged.
-At build time, the generator reads local snapshot files and creates static catalog and starter,
-manifest, and full JSON bundles, plus a local snapshot for exact path selection. No build network
-requests are needed. Future releases add new immutable directories and explicit generator entries.
+Release 0.3.0 stores only a frozen metadata manifest, commit SHA and expected Git blob hashes.
+Markdown remains in its original repository paths. At build time, read the pinned revision with
+`git show`; shallow or Vercel checkouts fall back to pinned public GitHub raw URLs. Verify every
+blob against the release manifest before generating static catalog and starter, manifest, and full
+JSON bundles plus a local snapshot for exact path selection. Fail the build on missing or changed
+content. Future releases add immutable metadata and explicit generator entries. No runtime upstream
+requests are needed.
 
 - GET /skill-bundles/latest.json: current catalog alias (not immutable).
 - GET /skill-bundles/0.3.0/catalog.json: pinned catalog.

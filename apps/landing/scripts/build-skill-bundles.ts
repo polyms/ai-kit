@@ -1,12 +1,42 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
+import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { getSkillPack, listSkillPacks } from '../../../registry/releases/0.3.0/manifest/skill-pack'
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const version = '0.3.0'
-const revision = 'b94b59a78dd0704d801a7097ddd4ced19ed2d2dc'
-const source = resolve(app, '../../registry/releases', version, 'content')
+const root = resolve(app, '../..')
+const release = JSON.parse(readFileSync(resolve(root, 'registry/releases/0.3.0/release.json'), 'utf8')) as {
+  version: string; revision: string; files: Record<string, string>
+}
+const { version, revision } = release
+if (!/^[a-f0-9]{40}$/.test(revision)) throw new Error('Invalid release revision')
+const contentByPath = new Map<string, string>()
+async function load(path: string) {
+  const expected = release.files[path]
+  if (!/^[a-f0-9]{40}$/.test(expected ?? '')) throw new Error('Unregistered snapshot path: ' + path)
+  let bytes: Buffer | undefined
+  try {
+    bytes = execFileSync('git', ['show', revision + ':' + path], { cwd: root, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 2_000_000 })
+  } catch {
+    // Shallow/Vercel checkouts may not have historical Git objects. Build-time fallback only.
+    const response = await fetch('https://raw.githubusercontent.com/polyms/ai-kit/' + revision + '/' + path, {
+      signal: AbortSignal.timeout(20_000), redirect: 'error',
+    })
+    if (!response.ok) throw new Error('Release source unavailable: ' + path + ' HTTP ' + response.status)
+    bytes = Buffer.from(await response.arrayBuffer())
+  }
+  const hash = createHash('sha1').update('blob ' + bytes.length + '\\0').update(bytes).digest('hex')
+  if (hash !== expected) throw new Error('Release blob mismatch: ' + path)
+  const content = bytes.toString('utf8')
+  if (!content.trim() || content.length > 500_000) throw new Error('Invalid snapshot file: ' + path)
+  contentByPath.set(path, content)
+}
+const releasePaths = Object.keys(release.files)
+for (let i = 0; i < releasePaths.length; i += 8) {
+  await Promise.all(releasePaths.slice(i, i + 8).map(load))
+}
 const output = resolve(app, 'public/skill-bundles')
 function write(path: string, data: unknown) {
   mkdirSync(dirname(path), { recursive: true })
@@ -19,8 +49,8 @@ const bundles = Object.fromEntries(packs.map(summary => {
   const pack = getSkillPack(summary.name)
   if (!pack) throw new Error('Unknown pack: ' + summary.name)
   const files = [...pack.files, ...(pack.name === 'design' ? pack.uiKit : [])].map(({ path }) => {
-    const content = readFileSync(resolve(source, path), 'utf8')
-    if (!content.trim() || content.length > 500_000) throw new Error('Invalid snapshot file: ' + path)
+    const content = contentByPath.get(path)
+    if (!content) throw new Error('Missing release content: ' + path)
     return { path, rawUrl: raw(path), content }
   })
   const bundle = {
@@ -41,4 +71,4 @@ const bundles = Object.fromEntries(packs.map(summary => {
 write(resolve(output, version, 'catalog.json'), catalog)
 write(resolve(output, 'latest.json'), catalog)
 write(resolve(app, 'src/lib/skill-pack/release-snapshot.generated.json'), { catalog, bundles })
-console.log('Generated ' + packs.length + ' immutable skill bundles without network access')
+console.log('Generated ' + packs.length + ' immutable skill bundles from verified Git blobs')

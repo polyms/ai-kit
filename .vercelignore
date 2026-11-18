@@ -13,8 +13,6 @@
 /docs/
 *.md
 !apps/landing/**/*.md
-# Immutable public skill snapshots are required by the offline build generator.
-!registry/releases/**/content/**/*.md
 
 # CI for GitHub Pages (separate from Vercel)
 .github/
