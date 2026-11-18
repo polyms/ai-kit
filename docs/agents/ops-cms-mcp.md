@@ -1,6 +1,7 @@
 # Ops CMS MCP (agents)
 
-How agents retrieve and author **Knowledge** via MCP on the kit site. Pointer only — content lives in **Ops CMS** (Postgres).
+How agents retrieve and author **Knowledge** and retrieve reusable **skill packs** via MCP on the kit site.
+Knowledge content lives in Ops CMS (Postgres); skill files live in GitHub.
 
 **Primary pointer:** [knowledge.md](./knowledge.md) — unified retrieval workflow.
 
@@ -105,6 +106,8 @@ documents workspace files and server options.
 
 ## Skill packs (MCP clients)
 
+See [MCP skill provider](mcp-skill-provider.md) for architecture, pack catalog, maintenance and rollout.
+
 The MCP server fetches Markdown for `reqs`, `design`, `research`, `business`, `docs`, `task` and `bug` from GitHub raw URLs on `main`.
 Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
 
@@ -124,7 +127,8 @@ Client-specific MCP availability, authentication, and invocation behavior may va
 - For design, use the returned `uiKit` content when the skill invokes `/ui-kit`.
 
 Files are fetched in parallel without an application cache, with a ten-second timeout per file.
-Content edits on `main` do not require a site redeploy; GitHub CDN propagation may delay visibility.
+Content edits to already registered files on `main` do not require a site redeploy; GitHub CDN
+propagation may delay visibility. New packs or manifest changes require a deployment.
 Local MCP stays `http://localhost:6300/mcp`.
 
 ## Env
@@ -140,3 +144,5 @@ Dev sign-in on `/ops/login` is available automatically when running `pnpm dev` (
 ## Related
 
 - [knowledge.md](./knowledge.md)
+- [mcp-skill-provider.md](./mcp-skill-provider.md)
+- [work-artifact-standard.md](./work-artifact-standard.md)
