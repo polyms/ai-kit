@@ -59,21 +59,41 @@ describe('skill pack MCP tools', () => {
     expect(JSON.parse(result.content[0]!.text)).toEqual({ packs: listSkillPacks() })
   })
 
-  it('returns NOT_FOUND for an unknown pack name', () => {
-    const result = executeGetSkillPack('craft')
+  it('returns NOT_FOUND for an unknown pack name', async () => {
+    const fetchFile = vi.fn<typeof fetch>()
+    const result = await executeGetSkillPack('craft', fetchFile)
+    expect(fetchFile).not.toHaveBeenCalled()
     expect(result.isError).toBe(true)
     expect(JSON.parse(result.content[0]!.text)).toEqual({ error: 'NOT_FOUND', name: 'craft' })
   })
 
-  it('returns design files and uiKit URLs on refs/heads/main', () => {
-    const result = executeGetSkillPack('design')
+  it('returns design and uiKit Markdown with existing raw URLs', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Skill content'))
+    const result = await executeGetSkillPack('design', fetchFile)
     const body = JSON.parse(result.content[0]!.text) as {
-      files: { rawUrl: string }[]
-      uiKit: { rawUrl: string }[]
+      files: { rawUrl: string; content: string }[]
+      uiKit: { rawUrl: string; content: string }[]
     }
     expect(result.isError).toBeUndefined()
     for (const file of [...body.files, ...body.uiKit]) {
       expect(file.rawUrl.startsWith(SKILL_PACK_RAW_BASE)).toBe(true)
+      expect(file.content).toBe('# Skill content')
     }
+  })
+  it('returns reqs Markdown without uiKit', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Reqs'))
+    const result = await executeGetSkillPack('reqs', fetchFile)
+    expect(result.isError).toBeUndefined()
+    expect(JSON.parse(result.content[0]!.text)).toEqual({
+      name: 'reqs',
+      files: REQS_SKILL_PATHS.map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
+    })
+  })
+
+  it('returns FETCH_FAILED when upstream fails', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('', { status: 503 }))
+    const result = await executeGetSkillPack('reqs', fetchFile)
+    expect(result.isError).toBe(true)
+    expect(JSON.parse(result.content[0]!.text)).toEqual({ error: 'FETCH_FAILED', name: 'reqs' })
   })
 })
