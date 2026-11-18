@@ -190,13 +190,12 @@ design dependency closure, landing-site UI catalog and actual comparative evalua
 follow-up work.
 
 
-The initial work-operations expansion is tracked in [PR #3](https://github.com/polyms/ai-kit/pull/3).
-It includes server-side Markdown retrieval, the seven-pack catalog, six new templates, shared authoring
-rules and unit test changes. The PR branch is the source of these changes until merged.
-At the time of this handoff, automated tests/build and production smoke tests have not been executed,
-and the landing-site UI catalog has not been expanded for the four new skills. Check live PR and
-deployment status rather than assuming this snapshot stays current.
+The initial expansion was merged in [PR #3](https://github.com/polyms/ai-kit/pull/3). The current
+work is in [PR #5](https://github.com/polyms/ai-kit/pull/5); check its live status for the latest state.
+At this handoff, Phase 2 tests/build, production smoke tests and comparative skill evaluations have
+not been run in the authoring session.
 
-Next: review the diff; run tests/build; reconcile landing-site catalog visibility as needed; merge,
-deploy and run the smoke checks above. Optimize payload size, caching or finer-grained reference
-retrieval only if measurements show a need. No compatibility claims for untested clients.
+Next: review the diff; run targeted and full tests/build; merge and deploy; verify full-pack and
+selective retrieval; run the evaluation fixtures with representative clients. Keep the landing-site
+catalog and remaining legacy dependencies as explicit follow-ups. No compatibility claims for untested
+clients.
