@@ -81,8 +81,8 @@ function buildPathMatcher(pattern, locales) {
 	const groups = []
 	let regexStr = '^'
 	let lastIndex = 0
-	let match
-	while ((match = tokenRe.exec(normalized)) !== null) {
+	let match = tokenRe.exec(normalized)
+	while (match !== null) {
 		regexStr += escapeRegExp(normalized.slice(lastIndex, match.index))
 		if (match[1] === 'namespace') {
 			regexStr += '([^/]+)'
@@ -92,6 +92,7 @@ function buildPathMatcher(pattern, locales) {
 			groups.push('locale')
 		}
 		lastIndex = match.index + match[0].length
+		match = tokenRe.exec(normalized)
 	}
 	regexStr += `${escapeRegExp(normalized.slice(lastIndex))}$`
 	return { regex: new RegExp(regexStr), groups }
@@ -123,6 +124,7 @@ async function listNamespaceFiles(pattern, locales) {
 
 	/** @param {string} dirAbs */
 	async function walk(dirAbs) {
+		/** @type {import('node:fs').Dirent[]} */
 		let entries
 		try {
 			entries = await fs.readdir(dirAbs, { withFileTypes: true })
@@ -141,7 +143,7 @@ async function listNamespaceFiles(pattern, locales) {
 				continue
 			}
 			/** @type {string | undefined} */
-			let locale
+			let locale = undefined
 			let namespace = ''
 			groups.forEach((group, index) => {
 				const value = execResult[index + 1]
@@ -400,7 +402,8 @@ const plugin = {
 			const byNamespace = {}
 			for (const [key, value] of Object.entries(json)) {
 				const namespace = namespaceOf(key, separator, defaultNamespace)
-				;(byNamespace[namespace] ??= {})[key] = value
+				if (!byNamespace[namespace]) byNamespace[namespace] = {}
+				byNamespace[namespace][key] = value
 			}
 			for (const [namespace, group] of Object.entries(byNamespace)) {
 				result.push(
