@@ -1,5 +1,4 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js'
+import { createMcpHandler, McpServer } from '@modelcontextprotocol/server'
 import { registerKnowledgeMcpTools } from './knowledge/knowledge.mcp'
 import {
   McpAuthError,
@@ -40,11 +39,8 @@ export async function handleMcpRequest(request: Request): Promise<Response> {
   const accessToken = request.headers.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1]
   if (!accessToken) return mcpUnauthorizedResponse(request)
 
-  const server = createOpsCmsMcpServer(session, accessToken)
-  const transport = new WebStandardStreamableHTTPServerTransport({
-    sessionIdGenerator: undefined,
-    enableJsonResponse: true,
-  })
-  await server.connect(transport)
-  return transport.handleRequest(request)
+  // createMcpHandler supports both 2025-era MCP and 2026-07-28 discovery.
+  // Its factory creates a new server for each request, scoped to this verified identity.
+  const handler = createMcpHandler(() => createOpsCmsMcpServer(session, accessToken))
+  return handler.fetch(request)
 }
