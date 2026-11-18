@@ -8,9 +8,11 @@ import {
   verifyMcpAccessToken,
 } from './mcp-auth.server'
 import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
+import { registerMeMcpTool } from './mcp-me.server'
 
 function createOpsCmsMcpServer(session: McpAuthSession): McpServer {
   const server = new McpServer({ name: 'ai-kit-ops-cms', version: __VERSION__ })
+  registerMeMcpTool(server, session)
   registerKnowledgeMcpTools(server, { session })
   registerSkillPackMcpTools(server)
   return server
