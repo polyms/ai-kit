@@ -56,6 +56,15 @@ function SkillDetailPage() {
           </span>
         </div>
 
+        <div className='mt-5 rounded-2xl border border-line bg-surface p-4'>
+          <p className='mb-2 font-semibold text-sm text-fg'>{m.skill_audience_title()}</p>
+          <p className='text-sm text-muted leading-relaxed'>{pack ? m.skill_audience_both_detail() : m.skill_audience_dev_detail()}</p>
+          <div className='mt-3 flex flex-wrap gap-4 text-sm'>
+            {pack && <a className='font-semibold text-primary-700 hover:underline' href='/#chat-start'>{m.home_catalog_work()} →</a>}
+            <a className='font-semibold text-primary-700 hover:underline' href='/#dev-start'>{m.home_catalog_engineering()} →</a>
+          </div>
+        </div>
+
         <p className='mt-4 text-base text-fg leading-relaxed'>
           <SkillInvokeText text={summary} />
         </p>

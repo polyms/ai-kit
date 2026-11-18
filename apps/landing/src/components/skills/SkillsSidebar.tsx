@@ -1,11 +1,14 @@
 import { Toggle, ToggleGroup, Toolbar } from '@polyms/ui-kit'
 import { Link as RouterLink } from '@tanstack/react-router'
 import { IconCodeSquare, IconMagnifier, IconTuning2 } from '../../lib/icons'
+import { listSkillPacks } from '../../lib/skill-pack/skill-pack'
 import { domainLabel, type ResolvedSkillOverlay } from '../../lib/skills'
 import { mergeSkillsSearch, type SkillsSearch } from '../../lib/skills-search'
 import { m } from '../../paraglide/messages.js'
 import { PolymsWordmark } from '../PolymsWordmark'
 import { SkillsSearchField } from './SkillsUi'
+
+const MCP_PACK_NAMES = new Set<string>(listSkillPacks().map(pack => pack.name))
 
 const INVOCATION_TOGGLE_VALUES = ['all', 'user', 'model'] as const
 
@@ -52,6 +55,9 @@ function SkillRow({ skill }: { skill: ResolvedSkillOverlay }) {
               <span className='truncate'>{skill.name}</span>
               <span aria-hidden>·</span>
               <span className='shrink-0'>{domainLabel(skill.domain)}</span>
+            </span>
+            <span className='mt-1 block text-[11px] text-muted'>
+              {MCP_PACK_NAMES.has(skill.slug) ? m.skill_audience_both() : m.skill_audience_dev()}
             </span>
           </span>
         </>

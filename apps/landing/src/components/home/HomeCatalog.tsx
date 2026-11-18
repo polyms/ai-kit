@@ -1,7 +1,7 @@
 import { Toggle, ToggleGroup, Toolbar } from '@polyms/ui-kit'
+import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { listSkillPacks } from '../../lib/skill-pack/skill-pack'
-import { Link } from '@tanstack/react-router'
 import { SkillIcon } from '../../lib/skill-icons'
 import { getSkills } from '../../lib/skills'
 import { defaultSkillsSearch } from '../../lib/skills-search'
@@ -34,7 +34,9 @@ export function HomeCatalog() {
   const locale = useAppStore(s => s.locale)
   const skills = getSkills(locale)
   const [group, setGroup] = useState<'engineering' | 'work'>('engineering')
-  const slugs = group === 'work' ? listSkillPacks().map(pack => pack.name) : HOME_CATALOG_SLUGS
+  const chatSlugs = listSkillPacks().map(pack => pack.name)
+  const developmentSlugs = [...new Set([...HOME_CATALOG_SLUGS, ...skills.map(skill => skill.slug)])]
+  const slugs = group === 'work' ? chatSlugs : developmentSlugs
   const homeCatalogSkills = slugs.map(slug => skills.find(s => s.slug === slug)).filter(
     (s): s is NonNullable<typeof s> => s != null
   )
@@ -74,6 +76,9 @@ export function HomeCatalog() {
           {m.home_catalog_all()} →
         </Link>
       </div>
+      <p className='mb-5 text-sm text-muted'>
+        {group === 'work' ? m.home_catalog_chat_hint() : m.home_catalog_dev_hint()}
+      </p>
       <div className='app-catalog-grid'>
         {homeCatalogSkills.map((skill, i) => {
           const featured = i === 0
@@ -100,6 +105,9 @@ export function HomeCatalog() {
                 {catalogDisplayName(skill.slug, skill.name)}
               </div>
               <div className='text-[14.5px] text-muted leading-relaxed'>{skill.description}</div>
+              <div className='mt-auto pt-5 font-medium text-xs text-muted'>
+                {chatSlugs.some(name => name === skill.slug) ? m.skill_audience_both() : m.skill_audience_dev()}
+              </div>
             </Link>
           )
         })}

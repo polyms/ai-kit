@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router'
 import { CodeSquare, LinkRound, Structure } from '@solar-icons/react-perf/BoldDuotone'
-import { GITHUB_REPO } from '../../content/overlay'
 import { listSkillPacks } from '../../lib/skill-pack/skill-pack'
 import { WORKFLOW_RECIPES } from '../../lib/skill-pack/skill-composition'
 import { defaultSkillsSearch } from '../../lib/skills-search'
@@ -13,12 +12,12 @@ const FEATURES = [
   { icon: LinkRound, title: m.intelligence_composition_title, body: m.intelligence_composition_body },
 ] as const
 
-const RECIPE_TITLES: Record<string, () => string> = {
-  'product-development': m.recipe_product,
-  'bug-lifecycle': m.recipe_bug,
-  'business-decision': m.recipe_business,
-  'sprint-planning': m.recipe_sprint,
-  'release-readiness': m.recipe_release,
+const RECIPE_COPY: Record<string, { title: () => string; body: () => string }> = {
+  'product-development': { title: m.recipe_product, body: m.recipe_product_body },
+  'bug-lifecycle': { title: m.recipe_bug, body: m.recipe_bug_body },
+  'business-decision': { title: m.recipe_business, body: m.recipe_business_body },
+  'sprint-planning': { title: m.recipe_sprint, body: m.recipe_sprint_body },
+  'release-readiness': { title: m.recipe_release, body: m.recipe_release_body },
 }
 
 export function HomeIntelligence() {
@@ -69,9 +68,7 @@ export function HomeIntelligence() {
             <div><div className='font-bold font-mono text-3xl text-primary-600'>{WORKFLOW_RECIPES.length}</div><div className='text-sm text-muted'>{m.intelligence_recipes()}</div></div>
           </div>
           <p className='mt-5 mb-3 text-[13.5px] text-muted'>{m.intelligence_eval_note()}</p>
-          <a className='font-semibold text-primary-700 text-sm hover:underline' href={GITHUB_REPO + '/tree/main/evals'} target='_blank' rel='noopener noreferrer'>
-            {m.intelligence_eval_link()} ↗
-          </a>
+          <p className='mb-0 text-[13.5px] text-muted'>{m.intelligence_eval_method()}</p>
         </div>
       </div>
 
@@ -83,9 +80,8 @@ export function HomeIntelligence() {
       <div className='grid gap-4'>
         {WORKFLOW_RECIPES.map(recipe => (
           <div className='rounded-[24px] border border-line bg-body p-5 sm:p-6' key={recipe.id}>
-            <a className='font-bold text-fg hover:text-primary-700' href={GITHUB_REPO + '/blob/main/' + recipe.path} target='_blank' rel='noopener noreferrer'>
-              {RECIPE_TITLES[recipe.id]?.() ?? recipe.title} ↗
-            </a>
+            <h4 className='m-0 font-bold text-fg'>{RECIPE_COPY[recipe.id]?.title() ?? recipe.title}</h4>
+            <p className='mt-1 mb-0 text-sm text-muted'>{RECIPE_COPY[recipe.id]?.body() ?? recipe.description}</p>
             <div className='mt-3 flex flex-wrap items-center gap-2'>
               {recipe.skills.map((name, i) => (
                 <div className='flex items-center gap-2' key={name}>

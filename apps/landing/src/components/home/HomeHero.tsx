@@ -91,7 +91,23 @@ export function HomeHero() {
           </h1>
 
           <div className='app-hero__copy'>
-            <p className='m-0 mb-10 text-[19px] text-muted leading-[1.65]'>{m.hero_sub()}</p>
+            <p className='m-0 mb-6 text-[19px] text-muted leading-[1.65]'>{m.hero_sub()}</p>
+            <div className='mb-8 grid gap-3'>
+              <a className='flex items-start gap-3 rounded-2xl border border-line bg-body p-3.5 no-underline hover:border-primary-500' href='/#chat-start'>
+                <ChatRoundDots aria-hidden className='mt-0.5 shrink-0 text-primary-600' size={22} />
+                <span className='min-w-0'>
+                  <span className='block font-bold text-sm text-fg'>{m.home_catalog_work()}</span>
+                  <span className='block text-[13px] text-muted leading-relaxed'>{m.hero_chat_path()}</span>
+                </span>
+              </a>
+              <a className='flex items-start gap-3 rounded-2xl border border-line bg-body p-3.5 no-underline hover:border-primary-500' href='/#dev-start'>
+                <Code2 aria-hidden className='mt-0.5 shrink-0 text-primary-600' size={22} />
+                <span className='min-w-0'>
+                  <span className='block font-bold text-sm text-fg'>{m.home_catalog_engineering()}</span>
+                  <span className='block text-[13px] text-muted leading-relaxed'>{m.hero_dev_path()}</span>
+                </span>
+              </a>
+            </div>
             <div className='flex flex-wrap items-center gap-3.5'>
               <Button className='font-bold' render={<a href='/#start' />} rounded size='xl' variant='primary'>
                 <Rocket2 aria-hidden color='#ffffff' size={20} />
