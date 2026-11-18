@@ -4,6 +4,7 @@ export const SKILL_PACK_RAW_BASE = 'https://raw.githubusercontent.com/polyms/ai-
 export const REQS_SKILL_PATHS = [
   'skills/reqs/SKILL.md',
   'skills/reqs/enterprise-prd-template.md',
+  'skills/reqs/business-requirements-template.md',
   'skills/reqs/prd-interview.md',
   'skills/reqs/user-story-guide.md',
 ] as const
@@ -39,7 +40,28 @@ export const UI_KIT_SKILL_PATHS = [
   '.cursor/skills/ui-kit/theming.md',
 ] as const
 
-export type SkillPackName = 'reqs' | 'design'
+export const WORK_ARTIFACT_STANDARD = 'docs/agents/work-artifact-standard.md'
+
+export const WORK_SKILL_PATHS = {
+  research: ['skills/research/SKILL.md', 'skills/research/research-template.md'],
+  business: ['skills/business/SKILL.md', 'skills/business/business-case-template.md'],
+  docs: ['skills/docs/SKILL.md', 'skills/docs/business-doc-template.md'],
+  task: ['skills/task/SKILL.md', 'skills/task/task-template.md'],
+  bug: ['skills/bug/SKILL.md', 'skills/bug/bug-template.md'],
+} as const
+
+export type WorkSkillName = keyof typeof WORK_SKILL_PATHS
+export type SkillPackName = 'reqs' | 'design' | WorkSkillName
+
+const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
+  reqs: 'Business and product requirements, PRDs, user stories and acceptance criteria',
+  design: 'UI design specifications and UI Kit guidance',
+  research: 'Evidence-based research and comparative analysis',
+  business: 'Business cases, pricing, costs and decision analysis',
+  docs: 'Business and technical documentation',
+  task: 'Actionable, testable work tickets',
+  bug: 'Evidence-based and reproducible defect reports',
+}
 
 export type SkillPackFile = {
   path: string
@@ -49,6 +71,7 @@ export type SkillPackFile = {
 export type SkillPackSummary = {
   name: SkillPackName
   skillRawUrl: string
+  description: string
 }
 
 export type ReqsSkillPack = {
@@ -62,7 +85,8 @@ export type DesignSkillPack = {
   uiKit: SkillPackFile[]
 }
 
-export type SkillPack = ReqsSkillPack | DesignSkillPack
+export type WorkSkillPack = { name: WorkSkillName; files: SkillPackFile[] }
+export type SkillPack = ReqsSkillPack | DesignSkillPack | WorkSkillPack
 
 export function skillPackRawUrl(path: string): string {
   return `${SKILL_PACK_RAW_BASE}${path}`
@@ -73,15 +97,16 @@ function toFiles(paths: readonly string[]): SkillPackFile[] {
 }
 
 export function listSkillPacks(): SkillPackSummary[] {
-  return [
-    { name: 'reqs', skillRawUrl: skillPackRawUrl('skills/reqs/SKILL.md') },
-    { name: 'design', skillRawUrl: skillPackRawUrl('skills/design/SKILL.md') },
-  ]
+  return (Object.keys(PACK_DESCRIPTIONS) as SkillPackName[]).map(name => ({
+    name,
+    skillRawUrl: skillPackRawUrl(`skills/${name}/SKILL.md`),
+    description: PACK_DESCRIPTIONS[name],
+  }))
 }
 
 export function getSkillPack(name: string): SkillPack | null {
   if (name === 'reqs') {
-    return { name: 'reqs', files: toFiles(REQS_SKILL_PATHS) }
+    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, WORK_ARTIFACT_STANDARD]) }
   }
   if (name === 'design') {
     return {
@@ -89,6 +114,10 @@ export function getSkillPack(name: string): SkillPack | null {
       files: toFiles(DESIGN_SKILL_PATHS),
       uiKit: toFiles(UI_KIT_SKILL_PATHS),
     }
+  }
+  if (Object.hasOwn(WORK_SKILL_PATHS, name)) {
+    const workName = name as WorkSkillName
+    return { name: workName, files: toFiles([...WORK_SKILL_PATHS[workName], WORK_ARTIFACT_STANDARD]) }
   }
   return null
 }

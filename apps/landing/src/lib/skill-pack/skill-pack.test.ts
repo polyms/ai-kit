@@ -10,6 +10,8 @@ import {
   SKILL_PACK_RAW_BASE,
   skillPackRawUrl,
   UI_KIT_SKILL_PATHS,
+  WORK_ARTIFACT_STANDARD,
+  WORK_SKILL_PATHS,
 } from './skill-pack'
 import { executeGetSkillPack, executeListSkillPacks, registerSkillPackMcpTools } from './skill-pack.mcp'
 
@@ -31,14 +33,17 @@ describe('skill pack manifest', () => {
 
   it('builds raw URLs on refs/heads/main and does not embed file bodies', () => {
     const packs = listSkillPacks()
-    expect(packs).toEqual([
-      { name: 'reqs', skillRawUrl: `${SKILL_PACK_RAW_BASE}skills/reqs/SKILL.md` },
-      { name: 'design', skillRawUrl: `${SKILL_PACK_RAW_BASE}skills/design/SKILL.md` },
+    expect(packs.map(pack => pack.name)).toEqual([
+      'reqs', 'design', 'research', 'business', 'docs', 'task', 'bug',
     ])
+    for (const pack of packs) {
+      expect(pack.skillRawUrl).toBe(skillPackRawUrl(`skills/${pack.name}/SKILL.md`))
+      expect(pack.description.length).toBeGreaterThan(0)
+    }
 
     const reqs = getSkillPack('reqs')
     const design = getSkillPack('design')
-    expect(reqs?.files.map(file => file.rawUrl)).toEqual(REQS_SKILL_PATHS.map(skillPackRawUrl))
+    expect(reqs?.files.map(file => file.rawUrl)).toEqual([...REQS_SKILL_PATHS, WORK_ARTIFACT_STANDARD].map(skillPackRawUrl))
     expect(design && 'uiKit' in design ? design.uiKit.map(file => file.rawUrl) : []).toEqual(
       UI_KIT_SKILL_PATHS.map(skillPackRawUrl)
     )
@@ -86,8 +91,25 @@ describe('skill pack MCP tools', () => {
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
-      files: REQS_SKILL_PATHS.map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
+      files: [...REQS_SKILL_PATHS, WORK_ARTIFACT_STANDARD].map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
     })
+  })
+
+  it('bundles every work skill with its templates and shared standard', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Work artifact'))
+    for (const [name, paths] of Object.entries(WORK_SKILL_PATHS)) {
+      expect([...paths].sort()).toEqual(markdownPaths(`skills/${name}`))
+      const result = await executeGetSkillPack(name, fetchFile)
+      expect(result.isError).toBeUndefined()
+      expect(JSON.parse(result.content[0]!.text)).toEqual({
+        name,
+        files: [...paths, WORK_ARTIFACT_STANDARD].map(path => ({
+          path,
+          rawUrl: skillPackRawUrl(path),
+          content: '# Work artifact',
+        })),
+      })
+    }
   })
 
   it('returns FETCH_FAILED when upstream fails', async () => {

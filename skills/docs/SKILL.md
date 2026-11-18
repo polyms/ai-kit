@@ -1,7 +1,7 @@
 ---
 name: docs
-description: Developer-facing documentation — API reference, tutorials, integration guides,
-  migration notes. Invoke with /docs, write docs, API docs, tutorial, hướng dẫn tích hợp,
+description: Business and developer-facing documentation — proposals, policies, SOPs, reports,
+  API reference, tutorials, integration guides, migration notes. Invoke with /docs, write docs, API docs, tutorial, hướng dẫn tích hợp,
   viết tài liệu kỹ thuật, or use techlead for long doc sessions.
 disable-model-invocation: true
 ---
@@ -10,8 +10,18 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
-Write **developer-facing** docs for systems that already exist (or are shipping). Not PRDs,
-not UI specs, not marketing copy.
+Write business-facing or developer-facing docs according to the requested audience. Not PRDs or UI specs.
+
+## Business documentation workflow
+
+For proposals, policies, SOPs, reports and internal memos, read
+[business-doc-template.md](business-doc-template.md) and the shared work artifact standard
+(`docs/agents/work-artifact-standard.md`, bundled by the MCP provider). Identify audience and purpose;
+read supplied sources; select relevant headings; distinguish facts from decisions or proposals; verify
+claims and return the requested document. Draft by default. Publish only with explicit user direction
+and available document integration. For requirements or ticket drafts, use the dedicated workflows.
+
+For developer-facing documentation about existing or shipping systems, follow the workflows below.
 
 **Readable first:** A stranger (new hire, integrator, agent author) must follow the doc without opening
 Slack or guessing. Lead with purpose in full sentences; define terms once in prose. Repo paths and schema

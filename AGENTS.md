@@ -58,6 +58,14 @@ it, ask before implementation. Explicit `/align`,
 `/reqs`, `/design`, or `/dev` still wins when the user names it. Specs on issue tracker; glossary in
 `CONTEXT.md`.
 
+### Business and work operations
+
+Use `research` for evidence-based investigation, `business` for decisions and financial analysis,
+`task` for actionable work tickets, and `bug` for defect reports. `/reqs` includes a business requirements
+template; `/docs` includes business documentation. Follow `docs/agents/work-artifact-standard.md` for
+human-readable and AI-readable artifacts. Draft by default; use authorized integrations to publish when
+explicitly requested. These workflows do not require a specific AI client or issue tracker.
+
 ### Design stack
 
 `/design` — UI spec from PRD at `docs/design/`; `@polyms/ui-kit` + `/ui-kit` skill for implementation (lib repo, not ai-kit). Long sessions: `designer` in `agents/designer.md`.

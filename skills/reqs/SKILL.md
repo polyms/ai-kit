@@ -37,10 +37,21 @@ Decisions / problem statement clear?
 
 Do **not** treat "viết PRD" / "write a PRD" after `/align` as this skill — that path is `/to-prd`.
 
+## Business requirements workflow
+
+When the user explicitly requests a business-facing BRD or business requirement ticket, use
+[business-requirements-template.md](business-requirements-template.md) and the shared work artifact
+standard (`docs/agents/work-artifact-standard.md`, bundled by the MCP provider). Focus on business
+outcomes and rules; use the enterprise PRD for detailed product behavior. Do not create a second
+artifact unless requested. If project context is unavailable, use supplied inputs and flag unknowns.
+The skill drafts requirements; publishing requires explicit user direction and an authorized integration.
+The existing PRD and engineering handoff workflows below remain unchanged.
+
 ## Document types
 
-One requirements artifact: the enterprise PRD. A request for a BRD, FRD, SRS, QRD, MRD, or TRD lands in a
-section of that PRD or outside this skill — the **Other families** table in the requirements catalog (see
+Default requirements artifact: the enterprise PRD. An explicit business-facing BRD uses the business
+requirements workflow above. Other requests (FRD, SRS, QRD, MRD, TRD) land in a section of that PRD
+or outside this skill — the **Other families** table in the requirements catalog (see
 top) names which. Do not open a second document.
 
 ## Quick Router
@@ -214,7 +225,7 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 | One giant story                                | Split by user goal (INVEST)                        |
 | Solution in req before validation              | Problem + options + recommendation                 |
 | Missing error flows                            | Include failure/empty/loading states               |
-| A second BRD, FRD, MRD, TRD, QRD               | One PRD — [Document types](#document-types)        |
+| Unrequested second BRD, FRD, MRD, TRD, QRD               | One PRD — [Document types](#document-types)        |
 | Publishing PRD via `gh` here                   | Tell user to invoke `/to-prd`                      |
 | Repo/code links in body or Appendix by default | Write the requirement; omit paths unless asked     |
 | Flavor English in a Vietnamese body            | Prefer VI; keep only tech specialty tokens         |

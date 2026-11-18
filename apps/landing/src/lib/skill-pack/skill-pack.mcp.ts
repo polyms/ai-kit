@@ -5,12 +5,12 @@ import { getSkillPack, listSkillPacks, type SkillPackFile } from './skill-pack'
 const listSkillPacksInputSchema = {}
 
 const getSkillPackInputSchema = {
-  name: z.string().describe('Skill pack name: reqs or design'),
+  name: z.string().describe('Skill pack name from list_skill_packs'),
 }
 
-export const LIST_SKILL_PACKS_TOOL_DESCRIPTION = `List available ai-kit skill packs (reqs and design). Returns names and raw URLs. Call get_skill_pack to load the Markdown directly; no client-side HTTP GET is required.`
+export const LIST_SKILL_PACKS_TOOL_DESCRIPTION = `List available ai-kit skill packs. Returns names, descriptions and raw URLs. Call get_skill_pack to load the Markdown directly; no client-side HTTP GET is required.`
 
-export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Load one ai-kit skill pack: reqs or design. Returns { name, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. Follow SKILL.md first and consult sibling content only when referenced. When design invokes /ui-kit, use the returned uiKit content. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.`
+export const GET_SKILL_PACK_TOOL_DESCRIPTION = `Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. Follow SKILL.md first and consult bundled templates and references only when needed. When design invokes /ui-kit, use the returned uiKit content. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.`
 
 type McpTextResult = {
   content: [{ type: 'text'; text: string }]

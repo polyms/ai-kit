@@ -105,12 +105,12 @@ documents workspace files and server options.
 
 ## Skill packs (MCP clients)
 
-The MCP server fetches Markdown for `reqs` and `design` from GitHub raw URLs on `main`.
+The MCP server fetches Markdown for `reqs`, `design`, `research`, `business`, `docs`, `task` and `bug` from GitHub raw URLs on `main`.
 Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
 
 | Tool | Returns |
 | --- | --- |
-| `list_skill_packs` | `{ packs: [{ name, skillRawUrl }] }` for reqs and design. |
+| `list_skill_packs` | `{ packs: [{ name, skillRawUrl, description }] }`. |
 | `get_skill_pack` | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. |
 
 Any MCP-capable AI client or agent can connect to `https://ai-kit.polyms.dev/mcp` using the
@@ -118,7 +118,9 @@ supported transport and OAuth flow. Call `list_skill_packs` to discover availabl
 `get_skill_pack` to load the selected pack directly. No client-side HTTP GET is needed.
 Client-specific MCP availability, authentication, and invocation behavior may vary.
 
-- Follow `SKILL.md` first; consult sibling content only when referenced.
+- Follow `SKILL.md` first; consult bundled templates and references when relevant.
+- Work skills include the shared work artifact standard and their applicable templates.
+- Skill loading is read-only; publishing tickets or documents uses the client's authorized integrations.
 - For design, use the returned `uiKit` content when the skill invokes `/ui-kit`.
 
 Files are fetched in parallel without an application cache, with a ten-second timeout per file.
