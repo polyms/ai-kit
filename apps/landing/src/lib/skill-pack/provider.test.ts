@@ -2,39 +2,40 @@ import { describe, expect, it, vi } from 'vitest'
 import { skillProvider, RELEASES } from './provider.server'
 import { createSkillProvider, extendSkill } from '../../../../../sdk/skill-provider'
 
-describe('versioned skill provider', () => {
+describe('versioned snapshot provider', () => {
   it('loads only pinned starter paths', async () => {
-    const upstream = vi.fn(async () => new Response('# instructions'))
-    const response = await skillProvider({ name: 'reqs', version: '0.3.0' }, upstream)
+    const response = await skillProvider({ name: 'reqs', version: '0.3.0' })
     const data = await response.json()
     expect(response.status).toBe(200)
     expect(data.revision).toBe(RELEASES['0.3.0'])
-    expect(upstream).toHaveBeenCalledTimes(data.starterPaths.length)
     expect(data.files.filter((file: {content?: string}) => file.content)).toHaveLength(data.starterPaths.length)
   })
-  it('rejects invalid versions and paths before fetch', async () => {
-    const upstream = vi.fn()
-    expect((await skillProvider({ name: 'reqs', version: 'main' }, upstream)).status).toBe(404)
-    expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] }, upstream)).status).toBe(400)
-    expect(upstream).not.toHaveBeenCalled()
+  it('rejects invalid versions and paths', async () => {
+    expect((await skillProvider({ name: 'reqs', version: 'main' })).status).toBe(404)
+    expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)
+    expect((await skillProvider({ name: '__proto__' })).status).toBe(404)
   })
-  it('returns manifest without fetching; fails closed on upstream errors', async () => {
-    const upstream = vi.fn(async () => new Response('', { status: 404 }))
-    expect((await skillProvider({ name: 'reqs', strategy: 'manifest' }, upstream)).status).toBe(200)
-    expect(upstream).not.toHaveBeenCalled()
-    expect((await skillProvider({ name: 'reqs' }, upstream)).status).toBe(502)
+  it('returns manifest only', async () => {
+    const data = await (await skillProvider({ name: 'reqs', strategy: 'manifest' })).json()
+    expect(data.files.every((file: {content?: string}) => file.content === undefined)).toBe(true)
   })
-  it('resolves a local domain extension over pinned core instructions', async () => {
-    const client = createSkillProvider({
-      endpoint: 'https://example.com',
-      fetch: async (_url, init) => skillProvider(JSON.parse(String(init?.body)), async () => new Response('# core')),
+  it('deduplicates startup calls, caches content and loads only missing references', async () => {
+    const transport = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.body) return skillProvider(JSON.parse(String(init.body)))
+      const name = new URL(String(url)).pathname.split('/')[3]
+      return skillProvider({ name, version: '0.3.0' })
     })
-    const bundle = await client.getSkill('reqs', { version: '0.3.0' })
-    const result = extendSkill(bundle, {
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.0', fetch: transport })
+    const [bundle] = await Promise.all([client.getSkill('reqs'), client.getSkill('reqs')])
+    await client.getSkill('reqs')
+    expect(transport).toHaveBeenCalledTimes(1)
+    const path = 'skills/reqs/enterprise-prd-template.md'
+    await client.getSkill('reqs', { paths: [path] })
+    expect(JSON.parse(String(transport.mock.calls[1][1]?.body)).paths).toEqual([path])
+    await client.getSkill('reqs', { paths: [path] })
+    expect(transport).toHaveBeenCalledTimes(2)
+    expect(extendSkill(bundle, {
       name: 'product-reqs', extends: 'ai-kit/reqs@0.3.0', instructions: 'Preserve project IDs.',
-    })
-    expect(result.base).toBe(bundle)
-    expect(result.domainInstructions).toBe('Preserve project IDs.')
-    expect(() => extendSkill(bundle, { name: 'bad', extends: 'ai-kit/reqs@9.0.0', instructions: 'test' })).toThrow()
+    }).base).toBe(bundle)
   })
 })

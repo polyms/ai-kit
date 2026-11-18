@@ -4,10 +4,10 @@
   "type": "module",
   "version": "0.3.0",
   "scripts": {
-    "dev": "vite dev",
-    "build": "prisma generate && vite build && tsc --noEmit",
+    "dev": "tsx scripts/build-skill-bundles.ts && vite dev",
+    "build": "tsx scripts/build-skill-bundles.ts && prisma generate && vite build && tsc --noEmit",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test": "tsx scripts/build-skill-bundles.ts && vitest run",
     "i18n": "tsx scripts/compile-i18n.ts",
     "db:generate": "prisma generate",
     "db:format": "prisma format",

@@ -1,49 +1,41 @@
-# External skill provider (V0.4 foundation)
+# External skill provider (V0.4)
 
-Business MCP servers can retrieve public AI Kit skills without connecting a second MCP in the
-client. The client still performs reasoning and authorized actions. No server-side LLM is added.
+Business MCP servers reuse AI Kit skill methodology without a separate client connection.
+No runtime GitHub requests, server-side LLM, database, or external registry are needed.
 
-## HTTP contract
+## Delivery and release snapshots
 
-POST `https://ai-kit.polyms.dev/api/skills` with JSON. The route exposes only public repository
-skill content; Ops CMS and user context are excluded. No OAuth token is required for this public API.
-Do not send private project data to the provider.
+Release 0.3.0 is frozen in registry/releases/0.3.0: original metadata modules and Markdown blobs
+from commit b94b59a78dd0704d801a7097ddd4ced19ed2d2dc. Preserve this directory unchanged.
+At build time, the generator reads local snapshot files and creates static catalog and starter,
+manifest, and full JSON bundles, plus a local snapshot for exact path selection. No build network
+requests are needed. Future releases add new immutable directories and explicit generator entries.
 
-- `{ "version": "0.3.0" }`: catalog.
-- `{ "name": "reqs", "version": "0.3.0" }`: starter content and remaining file metadata.
-- `{ "name": "reqs", "strategy": "manifest" }`: metadata only.
-- `{ "name": "reqs", "paths": ["skills/reqs/enterprise-prd-template.md"] }`: selective content.
-- `strategy: "full"`: explicit full retrieval. Do not combine paths and strategy.
+- GET /skill-bundles/latest.json: current catalog alias (not immutable).
+- GET /skill-bundles/0.3.0/catalog.json: pinned catalog.
+- GET /skill-bundles/0.3.0/reqs/starter.json: entry and shared standard.
+- GET /skill-bundles/0.3.0/reqs/manifest.json or full.json: other selection modes.
+- POST /api/skills with name, version, paths: exact reference selection from local snapshot.
 
-Every response carries schemaVersion, version and immutable Git revision. The initial registry
-supports 0.3.0 only; latest resolves to that release, not main. Preserve the 0.3.0 catalog snapshot
-before changing the existing manifest in future releases; do not silently change pinned metadata.
-The legacy MCP tools are unchanged and continue fetching main.
+The public API exposes only approved repository skills, never Ops CMS or project data.
+Legacy MCP remains unchanged.
 
-## TypeScript integration
+## TypeScript SDK
 
-Copy the dependency-free source `sdk/skill-provider.ts` into the consuming server for this initial
-release (not an npm-published package). Configure the trusted endpoint server-side.
+See [SDK README](../../sdk/README.md). Create one provider per server process; pin a version and
+preload heavily used skills if appropriate. A cold pinned starter requires one static HTTP request;
+a warm hit requires none. The SDK caches successful bundles (32 entries by default), coalesces
+identical concurrent requests, and requests only missing reference content. Latest catalog
+resolution expires after 60 seconds by default. Returned content is copied to isolate callers.
+There is no persistent cache and failures are not cached. Default HTTP timeout is five seconds.
 
-```ts
-const provider = createSkillProvider({ endpoint: 'https://ai-kit.polyms.dev' })
-const base = await provider.getSkill('reqs', { version: '0.3.0' })
-const workflow = extendSkill(base, {
-  name: 'product-reqs',
-  extends: 'ai-kit/reqs@0.3.0',
-  instructions: 'Every requirement belongs to a project. Preserve existing IDs.',
-})
-// Return workflow plus authorized project context from your own MCP tool.
-```
+The SDK package is prepared for local packing, not published. Domain extensions remain trusted
+local instructions, separate from the base bundle. They neither grant write permission nor replace
+core quality gates.
 
-Return the core entry and shared standard first. Fetch additional templates using exact paths and
-the same resolved version. Domain instructions are additive and separate from core content.
-The consuming MCP validates actual business writes and obtains user authorization independently.
-An extension is not an executable plugin, arbitrary remote URL or permission grant.
+## Verification
 
-## Limits and next steps
-
-The registry is code-owned and read-only. The initial implementation supports a single trusted
-AI Kit source and local domain extensions. Multi-repository registry, published SDK, native
-MCP Skills Extension compatibility, rate limiting and release automation are follow-ups.
-Run provider tests and build, then smoke-test from an actual Business MCP before production use.
+Run the landing tests and production build, verify CDN headers and generated assets on deployment,
+then measure cold/warm p50 and p95 latency from the consuming MCP. Cache-hit latency and one-request
+cold behavior are design goals, not measured production results. Run a real integration smoke test
+before declaring stable. External repositories and native MCP skill compatibility are deferred.
