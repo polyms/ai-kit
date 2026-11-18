@@ -39,9 +39,7 @@ export async function getMcpCurrentUser(
   return {
     userId: session.userId,
     ...(optionalString(claims.email) ? { email: claims.email as string } : {}),
-    ...(typeof claims.email_verified === 'boolean'
-      ? { emailVerified: claims.email_verified }
-      : {}),
+    ...(typeof claims.email_verified === 'boolean' ? { emailVerified: claims.email_verified } : {}),
     ...(optionalString(claims.name) ? { name: claims.name as string } : {}),
     ...(optionalString(claims.picture) ? { picture: claims.picture as string } : {}),
     ...(optionalString(claims.preferred_username)
@@ -52,11 +50,7 @@ export async function getMcpCurrentUser(
   }
 }
 
-export function registerMeMcpTool(
-  server: McpServer,
-  session: McpAuthSession,
-  accessToken: string
-): void {
+export function registerMeMcpTool(server: McpServer, session: McpAuthSession, accessToken: string): void {
   server.registerTool(
     'me',
     {

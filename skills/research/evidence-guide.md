@@ -4,9 +4,9 @@ Use for consequential research, source audits, competitive analysis or recurring
 
 ## Claim-level verification
 
-| Claim | Source / date | Evidence type | Confidence / limitations |
-| --- | --- | --- | --- |
-| [Specific assertion] | [Actual URL or workspace reference] | [Primary / secondary / estimate] | [Reason] |
+| Claim                | Source / date                       | Evidence type                    | Confidence / limitations |
+| -------------------- | ----------------------------------- | -------------------------------- | ------------------------ |
+| [Specific assertion] | [Actual URL or workspace reference] | [Primary / secondary / estimate] | [Reason]                 |
 
 Check that the source supports the exact claim, not merely the same topic. Prefer original evidence
 or authoritative documentation. For material disputed claims, seek independent corroboration or explain

@@ -2,8 +2,8 @@
 
 ## Assumption register
 
-| ID | Assumption | Evidence / gap | Impact if false | Validation / status |
-| --- | --- | --- | --- | --- |
+| ID    | Assumption         | Evidence / gap      | Impact if false    | Validation / status      |
+| ----- | ------------------ | ------------------- | ------------------ | ------------------------ |
 | AS-01 | [Testable premise] | [Source or unknown] | [Affected outcome] | [Proposed test / status] |
 
 Prioritize assumptions whose failure changes the product decision, scope or feasibility.
@@ -22,6 +22,6 @@ Keep stable requirement IDs where meaning remains unchanged. Do not silently ove
 
 ## Traceability
 
-| Requirement / rule | Acceptance criteria | Related task | Test / defect | Status |
-| --- | --- | --- | --- | --- |
-| [ID and behavior] | [AC IDs] | [Real ticket ID] | [Real IDs] | [Verified or unknown] |
+| Requirement / rule | Acceptance criteria | Related task     | Test / defect | Status                |
+| ------------------ | ------------------- | ---------------- | ------------- | --------------------- |
+| [ID and behavior]  | [AC IDs]            | [Real ticket ID] | [Real IDs]    | [Verified or unknown] |

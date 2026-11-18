@@ -9,26 +9,32 @@ Parent-only. Pass this block into each principal. Do not commit it.
 **Prose language:** <docs/agents/language.md, else CONTEXT.md, else the user's language>
 
 ### Evidence
+
 - <what already exists — entity, nearest screen, who can mutate — one line each, with path>
 - <feature-map area file, user path, gotchas — only when the index has area links>
 
 ### Inferred
+
 - **User:** <role the nearest screen already serves>
 - **Actions:** <create / read / update / delete — only those the prompt or the nearest screen supports>
 - **Out of scope:** <what that screen already excludes, plus anything the prompt did not name>
 
 ### Assumptions
+
 - <behavior> — inferred from <which existing pattern>
 
 ### Blocking forks
+
 - <none>
   or
 - <decision> — options, **recommended** <option> because <repo fact>
 
 ### ADR
+
 - Write: yes | no — which of the three tests failed, if no
 
 ### Screen
+
 - yes | no
 ```
 

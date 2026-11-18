@@ -26,9 +26,9 @@
 
 ## Requirements coverage
 
-| Requirement | Cases | Execution status | Gap |
-| --- | --- | --- | --- |
-| [ID and behavior] | [TC IDs] | [Actual] | [Missing coverage or None if established] |
+| Requirement       | Cases    | Execution status | Gap                                       |
+| ----------------- | -------- | ---------------- | ----------------------------------------- |
+| [ID and behavior] | [TC IDs] | [Actual]         | [Missing coverage or None if established] |
 
 ## Test report
 

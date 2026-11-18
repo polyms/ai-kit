@@ -111,10 +111,10 @@ See [MCP skill provider](mcp-skill-provider.md) for architecture, pack catalog, 
 The MCP server fetches Markdown for `reqs`, `design`, `research`, `business`, `docs`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review` and `release` from GitHub raw URLs on `main`.
 Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
 
-| Tool | Returns |
-| --- | --- |
-| `list_skill_packs` | `{ packs: [{ name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract }], composition: { protocol, recipes } }`. |
-| `get_skill_pack` | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. Invalid selected paths: `INVALID_PATHS`. |
+| Tool               | Returns                                                                                                                                                                                         |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `list_skill_packs` | `{ packs: [{ name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract }], composition: { protocol, recipes } }`.                                               |
+| `get_skill_pack`   | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. Invalid selected paths: `INVALID_PATHS`. |
 
 Any MCP-capable AI client or agent can connect to `https://ai-kit.polyms.dev/mcp` using the
 supported transport and OAuth flow. Call `list_skill_packs` to discover available packs and

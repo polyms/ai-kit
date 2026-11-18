@@ -6,9 +6,13 @@ import {
   mcpUnauthorizedResponse,
   verifyMcpAccessToken,
 } from './mcp-auth.server'
-import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
 import { registerMeMcpTool } from './mcp-me.server'
-import { getMcpServerInfo, getMcpServerInstructions, registerServerInfoMcpTool } from './mcp-server-info.server'
+import {
+  getMcpServerInfo,
+  getMcpServerInstructions,
+  registerServerInfoMcpTool,
+} from './mcp-server-info.server'
+import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
 
 function createOpsCmsMcpServer(session: McpAuthSession, accessToken: string): McpServer {
   const serverInfo = getMcpServerInfo(__VERSION__)

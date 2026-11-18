@@ -10,15 +10,15 @@
 
 ## Findings
 
-| ID | Severity | Location / evidence | Finding and impact | Recommended change |
-| --- | --- | --- | --- | --- |
-| RV-01 | [Blocker / important / optional] | [Exact reference] | [Problem and consequence] | [Concrete fix] |
+| ID    | Severity                         | Location / evidence | Finding and impact        | Recommended change |
+| ----- | -------------------------------- | ------------------- | ------------------------- | ------------------ |
+| RV-01 | [Blocker / important / optional] | [Exact reference]   | [Problem and consequence] | [Concrete fix]     |
 
 ## Assumptions to challenge
 
-| Assumption | Evidence for / against | Consequence if wrong | Validation |
-| --- | --- | --- | --- |
-| [Claim] | [Known sources or unknown] | [Impact] | [Test or source needed] |
+| Assumption | Evidence for / against     | Consequence if wrong | Validation              |
+| ---------- | -------------------------- | -------------------- | ----------------------- |
+| [Claim]    | [Known sources or unknown] | [Impact]             | [Test or source needed] |
 
 ## Open decisions and next step
 

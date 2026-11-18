@@ -31,11 +31,11 @@ force a work pack. The client reasons about user intent; the server returns dete
 ```ts
 const catalog = await list_skill_packs()
 // After selecting design from catalog.packs:
-await get_skill_pack({ name: "design", paths: ["skills/design/SKILL.md"] })
+await get_skill_pack({ name: 'design', paths: ['skills/design/SKILL.md'] })
 // After reading the workflow, load only the references for the active branch:
 await get_skill_pack({
-  name: "design",
-  paths: ["skills/design/REDESIGN.md", "skills/design/ANTI-SLOP.md"]
+  name: 'design',
+  paths: ['skills/design/REDESIGN.md', 'skills/design/ANTI-SLOP.md'],
 })
 ```
 

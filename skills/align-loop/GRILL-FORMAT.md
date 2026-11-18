@@ -150,6 +150,7 @@ that settles the tree carries `## Next Step` and no further **Q:** (`/reqs`, `/t
 
 ```markdown
 ## Next Step
+
 → /dev — seams are clear; no open branch left
 ```
 
@@ -168,7 +169,7 @@ that settles the tree carries `## Next Step` and no further **Q:** (`/reqs`, `/t
 | Batch glossary updates at the end                   | `domain-modeling` writes each term when it resolves       |
 | Hand off with "no open questions" while gaps remain | Open-questions audit; defer only with explicit user **B** |
 | `## Next Step` instead of the next question         | Ask the next **Q:**; closer only when leaving the grill   |
-| Glossary update, then stop                          | Next **Q:**, or the leaving block if the tree settled |
+| Glossary update, then stop                          | Next **Q:**, or the leaving block if the tree settled     |
 | Terse fragments on security or irreversible ops     | Auto-clarity — full warning, explicit order               |
 
 ## Auto-clarity

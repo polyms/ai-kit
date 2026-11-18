@@ -12,15 +12,15 @@
 
 ## Evidence and assumptions
 
-| Input | Value / range | Source or assumption |
-| --- | --- | --- |
+| Input   | Value / range      | Source or assumption                 |
+| ------- | ------------------ | ------------------------------------ |
 | [Input] | [Value with units] | [Source/date or explicit assumption] |
 
 ## Options
 
-| Option | Benefit | Cost / effort | Risk | Fit |
-| --- | --- | --- | --- | --- |
-| [Option] | [Benefit] | [Estimate] | [Risk] | [Criteria] |
+| Option   | Benefit   | Cost / effort | Risk   | Fit        |
+| -------- | --------- | ------------- | ------ | ---------- |
+| [Option] | [Benefit] | [Estimate]    | [Risk] | [Criteria] |
 
 ## Financial or operational analysis
 

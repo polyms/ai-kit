@@ -231,7 +231,7 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 | One giant story                                | Split by user goal (INVEST)                        |
 | Solution in req before validation              | Problem + options + recommendation                 |
 | Missing error flows                            | Include failure/empty/loading states               |
-| Unrequested second BRD, FRD, MRD, TRD, QRD               | One PRD — [Document types](#document-types)        |
+| Unrequested second BRD, FRD, MRD, TRD, QRD     | One PRD — [Document types](#document-types)        |
 | Publishing PRD via `gh` here                   | Tell user to invoke `/to-prd`                      |
 | Repo/code links in body or Appendix by default | Write the requirement; omit paths unless asked     |
 | Flavor English in a Vietnamese body            | Prefer VI; keep only tech specialty tokens         |

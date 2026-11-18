@@ -4,6 +4,7 @@ Hard gates: no invented sources, results, approvals, ticket IDs or unauthorized 
 and confirmed decisions when updating. A hard gate failure makes the case fail regardless of score.
 
 Score applicable criteria using direct output evidence:
+
 - Correct routing and selected template.
 - Standalone context, readable structure and appropriate brevity.
 - Traceability and independent verification of expected behavior.

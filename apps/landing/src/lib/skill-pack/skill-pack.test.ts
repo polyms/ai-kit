@@ -1,24 +1,31 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { dirname, join, posix } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it, vi } from 'vitest'
 import {
-  DESIGN_SKILL_PATHS,
+  ARTIFACT_KINDS,
+  COMPOSITION_PROTOCOL,
+  compositionCatalog,
+  compositionPaths,
+  SKILL_CONTRACTS,
+  WORKFLOW_RECIPES,
+} from './skill-composition'
+import {
   DESIGN_REFERENCE_PATHS,
+  DESIGN_SKILL_PATHS,
   DOCS_REFERENCE_PATHS,
   getSkillPack,
   listSkillPacks,
-  REQS_SKILL_PATHS,
   REQS_REFERENCE_PATHS,
+  REQS_SKILL_PATHS,
   SKILL_PACK_RAW_BASE,
+  type SkillPackName,
   skillPackRawUrl,
+  starterPaths,
   UI_KIT_SKILL_PATHS,
   WORK_ARTIFACT_STANDARD,
   WORK_SKILL_PATHS,
-  starterPaths,
-  type SkillPackName,
 } from './skill-pack'
-import { ARTIFACT_KINDS, COMPOSITION_PROTOCOL, SKILL_CONTRACTS, WORKFLOW_RECIPES, compositionCatalog, compositionPaths } from './skill-composition'
 import { executeGetSkillPack, executeListSkillPacks, registerSkillPackMcpTools } from './skill-pack.mcp'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../../../../..')
@@ -40,7 +47,19 @@ describe('skill pack manifest', () => {
   it('builds raw URLs on refs/heads/main and does not embed file bodies', () => {
     const packs = listSkillPacks()
     expect(packs.map(pack => pack.name)).toEqual([
-      'reqs', 'design', 'research', 'business', 'docs', 'task', 'bug', 'track', 'plan', 'qa', 'comms', 'review', 'release',
+      'reqs',
+      'design',
+      'research',
+      'business',
+      'docs',
+      'task',
+      'bug',
+      'track',
+      'plan',
+      'qa',
+      'comms',
+      'review',
+      'release',
     ])
     for (const pack of packs) {
       expect(pack.skillRawUrl).toBe(skillPackRawUrl(`skills/${pack.name}/SKILL.md`))
@@ -49,12 +68,20 @@ describe('skill pack manifest', () => {
 
     const reqs = getSkillPack('reqs')
     const design = getSkillPack('design')
-    expect(reqs?.files.map(file => file.rawUrl)).toEqual([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')].map(skillPackRawUrl))
+    expect(reqs?.files.map(file => file.rawUrl)).toEqual(
+      [...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')].map(
+        skillPackRawUrl
+      )
+    )
     expect(design && 'uiKit' in design ? design.uiKit.map(file => file.rawUrl) : []).toEqual(
       UI_KIT_SKILL_PATHS.map(skillPackRawUrl)
     )
     expect(JSON.stringify({ packs, reqs, design })).not.toMatch(/# Design|# Reqs/)
-    expect(design?.files.map(file => file.path)).toEqual([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS, ...compositionPaths('design')])
+    expect(design?.files.map(file => file.path)).toEqual([
+      ...DESIGN_SKILL_PATHS,
+      ...DESIGN_REFERENCE_PATHS,
+      ...compositionPaths('design'),
+    ])
   })
 })
 
@@ -68,7 +95,10 @@ describe('skill pack MCP tools', () => {
   it('returns pack URLs from list_skill_packs', () => {
     const result = executeListSkillPacks()
     expect(result.isError).toBeUndefined()
-    expect(JSON.parse(result.content[0]!.text)).toEqual({ packs: listSkillPacks(), composition: compositionCatalog() })
+    expect(JSON.parse(result.content[0]!.text)).toEqual({
+      packs: listSkillPacks(),
+      composition: compositionCatalog(),
+    })
   })
 
   it('returns NOT_FOUND for an unknown pack name', async () => {
@@ -98,7 +128,12 @@ describe('skill pack MCP tools', () => {
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
-      files: [...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD, ...compositionPaths('reqs')].map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
+      files: [
+        ...REQS_SKILL_PATHS,
+        ...REQS_REFERENCE_PATHS,
+        WORK_ARTIFACT_STANDARD,
+        ...compositionPaths('reqs'),
+      ].map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
     })
   })
 
@@ -111,7 +146,12 @@ describe('skill pack MCP tools', () => {
       const references = name === 'docs' ? DOCS_REFERENCE_PATHS : []
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
-        files: [...paths, ...references, WORK_ARTIFACT_STANDARD, ...compositionPaths(name as SkillPackName)].map(path => ({
+        files: [
+          ...paths,
+          ...references,
+          WORK_ARTIFACT_STANDARD,
+          ...compositionPaths(name as SkillPackName),
+        ].map(path => ({
           path,
           rawUrl: skillPackRawUrl(path),
           content: '# Work artifact',
@@ -143,7 +183,8 @@ describe('skill pack MCP tools', () => {
   it('rejects unregistered paths before any fetch', async () => {
     const fetchFile = vi.fn<typeof fetch>()
     const result = await executeGetSkillPack('task', fetchFile, [
-      'skills/task/SKILL.md', 'https://example.com/private',
+      'skills/task/SKILL.md',
+      'https://example.com/private',
     ])
     expect(result.isError).toBe(true)
     expect(fetchFile).not.toHaveBeenCalled()
@@ -183,7 +224,11 @@ describe('skill intelligence', () => {
     }
     expect(starterPaths('design')).toEqual(['skills/design/SKILL.md'])
     expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD])
-    expect(starterPaths('task')).toEqual(['skills/task/SKILL.md', WORK_ARTIFACT_STANDARD, 'skills/task/task-template.md'])
+    expect(starterPaths('task')).toEqual([
+      'skills/task/SKILL.md',
+      WORK_ARTIFACT_STANDARD,
+      'skills/task/task-template.md',
+    ])
   })
 
   it('loads only advertised starter content and can request a design dependency afterwards', async () => {
@@ -194,7 +239,8 @@ describe('skill intelligence', () => {
     const next = await executeGetSkillPack('design', fetchFile, ['skills/dev/visual-ship.md'])
     expect(next.isError).toBeUndefined()
     expect(fetchFile.mock.calls.map(call => call[0])).toEqual([
-      skillPackRawUrl('skills/design/SKILL.md'), skillPackRawUrl('skills/dev/visual-ship.md'),
+      skillPackRawUrl('skills/design/SKILL.md'),
+      skillPackRawUrl('skills/dev/visual-ship.md'),
     ])
   })
 
@@ -221,7 +267,9 @@ describe('skill intelligence', () => {
 
   it('keeps routing evaluation fixtures valid and covers every published pack', () => {
     const names = new Set(listSkillPacks().map(pack => pack.name))
-    const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/work-skills/routing-cases.json'), 'utf8')) as {
+    const cases = JSON.parse(
+      readFileSync(join(repoRoot, 'evals/work-skills/routing-cases.json'), 'utf8')
+    ) as {
       id: string
       prompt: string
       expected: SkillPackName[]

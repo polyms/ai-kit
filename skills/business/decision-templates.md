@@ -15,9 +15,9 @@
 State currency, billing period, usage unit, cost assumptions and source dates.
 Use one consistent treatment of taxes, discounts, platform fees and fixed/variable costs.
 
-| Plan / scenario | Price | Included usage | Estimated variable cost | Contribution | Margin |
-| --- | --- | --- | --- | --- | --- |
-| [Name] | [Value] | [Units] | [Value or range] | [Value] | [% or N/A] |
+| Plan / scenario | Price   | Included usage | Estimated variable cost | Contribution | Margin     |
+| --------------- | ------- | -------------- | ----------------------- | ------------ | ---------- |
+| [Name]          | [Value] | [Units]        | [Value or range]        | [Value]      | [% or N/A] |
 
 Contribution = net revenue minus attributable variable cost.
 Contribution margin = contribution / net revenue when net revenue is positive.

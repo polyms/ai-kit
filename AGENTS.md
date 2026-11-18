@@ -98,7 +98,7 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | `pm`        | Principal product manager   | PRD, stories, acceptance criteria, scope (`/reqs`)                                 |
 | `designer`  | Principal product designer  | `docs/design/` UI specs, `@polyms/ui-kit` maps (`/design`)                         |
 | `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
-| `tester`    | Principal tester            | E2E (`/e2e`); repo feature map (`/build-feature-map`)                                  |
+| `tester`    | Principal tester            | E2E (`/e2e`); repo feature map (`/build-feature-map`)                              |
 | `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |
 
 Handoffs: `/align` → reqs/to-prd → design → dev → code-review; public surface → `/docs`
