@@ -1,5 +1,5 @@
 import { Button, Toast } from '@polyms/ui-kit'
-import { CodeSquare, Laptop, Programming, Server, Settings } from '@solar-icons/react-perf/BoldDuotone'
+import { ChatRoundDots, Laptop, Programming, Settings } from '@solar-icons/react-perf/BoldDuotone'
 import type { ClipboardEvent } from 'react'
 import { GITHUB_REPO } from '../../content/overlay'
 import { copyText } from '../../lib/copy'
@@ -9,6 +9,7 @@ import { m } from '../../paraglide/messages.js'
 import { HOME_PLAYFUL } from './brand'
 import { HomeSectionChip } from './HomeSectionChip'
 
+const MCP_URL = 'https://ai-kit.polyms.dev/mcp'
 const COMMAND = `npx skills add ${GITHUB_REPO} --skill '*' -a cursor -g`
 
 const NOTES = [
@@ -25,13 +26,6 @@ const NOTES = [
     title: m.quickstart_setup_title,
     body: m.quickstart_setup_body,
     commands: [],
-  },
-  {
-    key: 'mcp',
-    icon: Server,
-    title: m.quickstart_mcp_title,
-    body: m.quickstart_mcp_body,
-    commands: ['https://ai-kit.polyms.dev/mcp'],
   },
 ] as const
 
@@ -79,6 +73,11 @@ export function HomeQuickStart() {
     }
   }
 
+  const handleMcpCopy = async () => {
+    const ok = await copyText(MCP_URL)
+    toastManager.add({ title: ok ? m.catalog_copied() : m.catalog_copyFail(), type: ok ? 'success' : 'danger' })
+  }
+
   const handleSelectionCopy = (event: ClipboardEvent<HTMLDivElement>) => {
     const raw = window.getSelection()?.toString() ?? ''
     const cleaned = commandFromSelection(raw)
@@ -89,21 +88,42 @@ export function HomeQuickStart() {
 
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='start'>
-      <HomeSectionChip label={m.chip_quickstart()} n='04' />
-      <div className='flex flex-wrap items-center gap-14'>
+      <HomeSectionChip label={m.chip_quickstart()} n='05' />
+      <h2 className='app-install__title m-0 mb-3 font-bold font-sans text-fg'>{m.quickstart_choose()}</h2>
+      <p className='mb-8 max-w-[720px] text-muted'>{m.quickstart_choose_body()}</p>
+
+      <div className='mb-10 rounded-[24px] border border-line bg-body p-6 sm:p-8' id='chat-start'>
+        <span className='app-catalog-card__icon mb-4 flex size-11 items-center justify-center rounded-full'>
+          <ChatRoundDots aria-hidden className='text-primary-600' size={22} />
+        </span>
+        <h3 className='m-0 mb-2 font-bold font-sans text-[21px] text-fg'>{m.quickstart_mcp_title()}</h3>
+        <p className='mb-4 max-w-[720px] text-muted'>{m.quickstart_mcp_body()}</p>
+        <div className='flex flex-wrap items-center gap-3'>
+          <code className='min-w-0 max-w-full break-all rounded-lg border border-line bg-surface px-3 py-2 font-mono text-sm text-fg'>{MCP_URL}</code>
+          <Button onClick={handleMcpCopy} rounded size='sm' variant='light'>
+            <IconCopy aria-hidden size={14} />
+            {m.catalog_copy()}
+          </Button>
+        </div>
+        <ol className='mt-5 list-decimal space-y-2 ps-5 text-sm text-muted leading-relaxed'>
+          <li>{m.quickstart_chat_step1()}</li>
+          <li>{m.quickstart_chat_step2()}</li>
+          <li>{m.quickstart_chat_step3()}</li>
+        </ol>
+        <div className='mt-5 rounded-xl border border-line bg-surface px-4 py-3'>
+          <span className='mb-1 block font-mono text-xs text-muted'>{m.catalog_samplePrompt()}</span>
+          <p className='m-0 text-sm text-fg'>{m.quickstart_chat_example()}</p>
+        </div>
+      </div>
+
+      <div className='flex flex-wrap items-center gap-14' id='dev-start'>
         <div className='min-w-[280px] max-w-[460px] flex-[1_1_380px]'>
-          <h2 className='app-install__title m-0 mb-5 font-bold font-sans text-fg'>
-            {m.quickstart_titlePrefix()} <span className='font-mono text-primary-600'>/align</span>.
-          </h2>
+          <h3 className='app-install__title m-0 mb-5 font-bold font-sans text-fg'>
+            {m.quickstart_dev_title()}
+          </h3>
           <p className='m-0 mb-7 text-[17px] text-muted leading-relaxed'>{m.quickstart_body()}</p>
-          <Button
-            render={<a href={GITHUB_REPO} rel='noopener noreferrer' target='_blank' />}
-            rounded
-            size='xl'
-            variant='primary'
-          >
-            <CodeSquare aria-hidden color='#ffffff' size={18} />
-            polyms/ai-kit ↗
+          <Button render={<a href='/#catalog' />} rounded size='lg' variant='primary'>
+            {m.home_catalog_all()} →
           </Button>
         </div>
 
@@ -163,7 +183,7 @@ export function HomeQuickStart() {
           </h3>
           <span aria-hidden className='h-px flex-1 bg-line' />
         </div>
-        <ul className='m-0 grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-3'>
+        <ul className='m-0 grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-2'>
           {NOTES.map(({ key, icon: Icon, title, body, commands }) => (
             <li className='flex flex-col rounded-[24px] border border-line bg-body p-6' key={key}>
               <span className='app-catalog-card__icon mb-5 flex size-11 shrink-0 items-center justify-center rounded-full'>

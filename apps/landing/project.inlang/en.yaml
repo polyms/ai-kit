@@ -13,7 +13,7 @@ catalog_filterUser: User-invoked
 catalog_notFound: Skill not found
 catalog_samplePrompt: Sample prompt
 catalog_search: Find skill…
-catalog_sub: 15 skills — invoke, description, domain
+catalog_sub: "Explore chat-ready work packs and locally installed development skills."
 catalog_title: Skill catalog
 catalog_zeroResults: 0 results
 
@@ -47,7 +47,7 @@ domain_review: Review
 domain_triage: Triage
 
 # --- footer ---
-footer_blurb: Agent skills for real engineering — one version-controlled kit, linked globally across projects.
+footer_blurb: 'Agent skills for engineering and everyday work. One version-controlled kit, available locally and through MCP.'
 footer_col_community: Community
 footer_col_pipeline: Pipeline
 footer_col_resources: Resources
@@ -57,16 +57,16 @@ footer_link_issues: Issues
 footer_starGithub: Star on GitHub
 
 # --- hero ---
-hero_badge: Cursor-first · tool-agnostic by design
+hero_badge: "AI chat · AI development"
 hero_ctaPrimary: Get started
-hero_ctaSecondary: Read the docs →
-hero_line1: Agent skills for
-hero_line2: real engineering
-hero_sub: ai-kit is Polyms' shared brain for agentic fullstack dev — short-named skills you invoke with a slash command, from product requirements to shipped, reviewed code.
+hero_ctaSecondary: "Explore skills →"
+hero_line1: "Agent skills for"
+hero_line2: "real work"
+hero_sub: "One toolkit, two ways to work. Use AI chat for research, decisions and planning; install skills in your coding assistant to ship software. The same workflows are shared across compatible clients."
 
 # --- home ---
-home_catalog_heading: Fifteen skills. Zero ceremony.
-home_catalog_intro: Each capability is a short-named skill or agent, invoked with a slash command.
+home_catalog_heading: 'One kit. Many workflows.'
+home_catalog_intro: "Choose the skills for your kind of AI tool. Work skills can also be installed locally in supported development clients."
 
 # --- pipeline ---
 pipeline_agentsLabel: Principal agents
@@ -87,17 +87,17 @@ pipeline_stage_ship: Ship
 pipeline_title: One pipeline, start to ship.
 
 # --- quickstart ---
-quickstart_body: 'One command installs every skill into Cursor. Restart your editor and type `/` to pick one.'
+quickstart_body: "Install the local kit for Cursor, Claude Code, Codex or GitHub Copilot. Open your target repository and run setup using your client's skill picker or invocation syntax."
 quickstart_terminalComment: 'installs skills into ~/.cursor/skills'
 quickstart_titlePrefix: 'Start with'
 quickstart_invocation: 'Restart your editor or open a new chat, then select /setup in your target project. Cursor, Claude Code, and Copilot use /name; Codex CLI/IDE uses $name or /skills. Desktop clients can use their skill picker. The /name notation throughout this site names the same workflow.'
-quickstart_notes_title: 'After install'
+quickstart_notes_title: "After local installation"
 quickstart_target_title: 'Another client'
 quickstart_target_body: 'Swap -a cursor for your client. Repeat -a to install into several.'
 quickstart_setup_title: 'Run /setup'
 quickstart_setup_body: 'Restart your editor or open a new chat, then run /setup in your project.'
-quickstart_mcp_title: 'Connect Knowledge MCP'
-quickstart_mcp_body: 'Add this URL as an MCP server in your client, once per project, then sign in.'
+quickstart_mcp_title: "For AI chat tools · connect via MCP"
+quickstart_mcp_body: "For ChatGPT or other chat clients that support custom remote MCP with OAuth. Access the 13 published work packs without cloning the repo or installing skills. Client support and permissions vary."
 
 # --- nav ---
 nav_catalog: Skills
@@ -230,3 +230,66 @@ chip_principles: principles
 chip_pipeline: pipeline
 chip_catalog: catalog
 chip_quickstart: quickstart
+
+domain_work: "Work operations"
+nav_intelligence: "Intelligence"
+chip_intelligence: "intelligence"
+home_catalog_group: "Choose your AI tool type"
+home_catalog_engineering: "AI Development Tools"
+home_catalog_work: "AI Chat Tools"
+home_catalog_all: "View all skills"
+intelligence_title: "The right skill. Only what you need."
+intelligence_intro: "For AI chat tools and other compatible MCP clients: the read-only skill provider guides discovery, selective retrieval and optional handoffs. Development tools can also use the same local skill files."
+intelligence_discovery_title: "Smart discovery"
+intelligence_discovery_body: "Intent, boundaries and suggested starter paths guide the client toward a minimal set of skills. Simple requests can skip skills entirely."
+intelligence_loading_title: "Progressive loading"
+intelligence_loading_body: "Read the entry workflow first. Retrieve templates and references by exact path only when needed; reuse content already in the session."
+intelligence_composition_title: "Skill composition"
+intelligence_composition_body: "Input/output contracts, shared context and completion gates guide optional handoffs. The client stops blocked work instead of inventing decisions."
+intelligence_loading_example: "Entry first, references later"
+intelligence_loading_explain: "Example: discover the design pack, then fetch only the advertised entry file."
+intelligence_loading_note: "Other files remain manifest metadata until requested."
+intelligence_eval_title: "Built to be evaluated"
+intelligence_eval_body: "The evaluation checks whether assisted outputs preserve requirements, select relevant skills and hand off work correctly. It compares against an unassisted baseline under matched conditions."
+intelligence_packs: "MCP skill packs"
+intelligence_recipes: "workflow recipes"
+intelligence_eval_note: "41 scenarios cover output quality, routing and composition. Comparative model results are not published yet."
+intelligence_workflows_title: "Workflow recipes"
+intelligence_workflows_intro: "Start at the first missing artifact. These are suggested routes, not mandatory pipelines."
+intelligence_workflows_note: "Skip irrelevant stages, preserve approved scope and require explicit authorization for external writes. No server-side orchestration."
+recipe_product: "Product development"
+recipe_bug: "Bug lifecycle"
+recipe_business: "Business decision"
+recipe_sprint: "Sprint planning"
+recipe_release: "Release readiness"
+skillDetail_contract: "MCP skill contract"
+skillDetail_accepts: "Accepts (when relevant)"
+skillDetail_produces: "Produces"
+skillDetail_gate: "Ready when"
+skillDetail_related: "Optional handoffs"
+skillDetail_starter: "Starter paths"
+skillDetail_contract_note: "Advisory artifact identifiers and completion gate from the live catalog definition; not an execution or approval policy."
+
+hero_chat_path: "ChatGPT and compatible MCP chat clients · research, planning, business and QA"
+hero_dev_path: "Cursor, Claude Code, Codex, Copilot · repo-aware engineering workflows"
+home_catalog_chat_hint: "13 remote MCP work packs. Ask naturally in a connected chat client; follow explicit invocation rules where applicable. No repository checkout required."
+home_catalog_dev_hint: "Local skills for coding agents: engineering workflows plus reusable work skills. Install the kit, open a project and follow the client's invocation rules."
+skill_audience_both: "Chat (MCP) · Development (local)"
+skill_audience_dev: "Development tools · local"
+skill_audience_title: "Where to use this skill"
+skill_audience_both_detail: "Available through the remote MCP work catalog in supported chat clients and as a local skill in supported development tools. Chat does not need a repository checkout. Actions still depend on available tools and explicit permissions; manual-only invocation rules remain in effect."
+skill_audience_dev_detail: "Install locally in a supported development tool such as Cursor, Claude Code, Codex or Copilot. This skill is not in the published remote MCP work catalog."
+pipeline_dev_note: "This engineering pipeline is for repository-aware development tools. Chat users can use the work recipes below without a repository checkout."
+intelligence_eval_method: "Compare responses to the same synthetic task, check rubric and hard gates, and record actual retrieval separately from output quality. No uplift is claimed before independent comparison."
+quickstart_choose: "Choose how you work."
+quickstart_choose_body: "Use the remote work packs in chat, or install the full local kit for your development agent."
+quickstart_dev_title: "For AI development tools"
+quickstart_chat_step1: "Add the server URL in the client's custom MCP settings (Streamable HTTP)."
+quickstart_chat_step2: "Sign in with OAuth and enable the AI Kit connection in your session."
+quickstart_chat_step3: "Ask for the outcome you need; the client can discover and load the relevant work packs. Explicitly select workflows when required."
+quickstart_chat_example: "Estimate a team invitation feature, draft implementation tasks and QA cases. Do not publish."
+recipe_product_body: "From evidence or an approved brief to requirements, estimate, tasks and QA. Reuse existing approved artifacts."
+recipe_bug_body: "Record a defect, inspect its tracker status and verify a fix only with actual evidence."
+recipe_business_body: "Compare options, challenge assumptions and communicate a proposed or approved decision."
+recipe_sprint_body: "Use the current backlog, review scope and propose an achievable delivery plan and tasks."
+recipe_release_body: "Reconcile scope and QA evidence against release gates, then draft stakeholder communication."

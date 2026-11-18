@@ -50,7 +50,14 @@ function SkillsIndexPage() {
         <p className='mt-2 max-w-2xl text-muted text-sm leading-relaxed'>{m.skills_intro_body()}</p>
 
         <section className='mt-10'>
-          <h2 className='label-mono'>{m.skills_getStarted_stepsTitle()}</h2>
+          <h2 className='label-mono'>{m.home_catalog_work()}</h2>
+          <p className='mt-2 text-muted text-sm leading-relaxed'>{m.skill_audience_both_detail()}</p>
+          <a className='mt-3 inline-block font-medium text-primary-700 text-sm hover:underline' href='/#chat-start'>{m.quickstart_mcp_title()} →</a>
+        </section>
+
+        <section className='mt-10'>
+          <h2 className='label-mono'>{m.home_catalog_engineering()}</h2>
+          <p className='mt-2 text-muted text-sm leading-relaxed'>{m.skills_getStarted_stepsTitle()}</p>
           <ol className='mt-3 list-decimal space-y-2.5 ps-5 text-fg text-sm leading-relaxed'>
             {BOOTSTRAP_STEPS.map(step => (
               <li key={step.id}>{step.text()}</li>

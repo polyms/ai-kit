@@ -13,7 +13,7 @@ catalog_filterUser: Bạn gõ lệnh
 catalog_notFound: Không tìm thấy kỹ năng
 catalog_samplePrompt: Prompt mẫu
 catalog_search: Tìm kỹ năng…
-catalog_sub: 15 kỹ năng — lệnh gọi, mô tả, lĩnh vực
+catalog_sub: "Khám phá work pack cho AI chat và skill cài cục bộ cho công cụ phát triển."
 catalog_title: Danh mục kỹ năng
 catalog_zeroResults: 0 kết quả
 
@@ -48,7 +48,7 @@ domain_review: Rà soát
 domain_triage: Phân loại
 
 # --- footer ---
-footer_blurb: Bộ skill cho kỹ sư thực thụ — một kit quản lý phiên bản, liên kết dùng chung trên mọi dự án.
+footer_blurb: 'Bộ skill agent cho kỹ thuật và nghiệp vụ. Một kit quản lý phiên bản, dùng cục bộ hoặc qua MCP.'
 footer_col_community: Cộng đồng
 footer_col_pipeline: Luồng xử lý
 footer_col_resources: Tài nguyên
@@ -58,18 +58,16 @@ footer_link_issues: Issues
 footer_starGithub: Gắn sao trên GitHub
 
 # --- hero ---
-hero_badge: Ưu tiên Cursor · thiết kế không phụ thuộc công cụ
+hero_badge: "AI chat · AI development"
 hero_ctaPrimary: Bắt đầu
-hero_ctaSecondary: Đọc tài liệu →
-hero_line1: Bộ kỹ năng agent cho
-hero_line2: kỹ sư thực thụ
-hero_sub:
-  ai-kit là bộ não dùng chung của Polyms dành cho lập trình viên agentic fullstack — mỗi kỹ năng có tên ngắn, gọi bằng
-  lệnh `/`, từ yêu cầu sản phẩm đến bản phát hành với mã nguồn đã được rà soát.
+hero_ctaSecondary: "Khám phá skill →"
+hero_line1: "Bộ skill agent cho"
+hero_line2: "công việc thực tế"
+hero_sub: "Một toolkit, hai cách làm việc. Dùng AI chat để nghiên cứu, quyết định và lập kế hoạch; cài skill vào trợ lý lập trình để phát triển phần mềm. Các client tương thích dùng chung workflow."
 
 # --- home ---
-home_catalog_heading: Mười lăm skill. Không thủ tục thừa.
-home_catalog_intro: Mỗi năng lực là một tên kỹ năng hoặc tên agent ngắn, gọi bằng lệnh `/`.
+home_catalog_heading: 'Một kit. Nhiều workflow.'
+home_catalog_intro: "Chọn skill theo loại công cụ AI. Skill nghiệp vụ cũng có thể cài cục bộ trong công cụ phát triển tương thích."
 
 # --- pipeline ---
 pipeline_agentsLabel: Agent chuyên trách
@@ -91,17 +89,17 @@ pipeline_stage_ship: Phát hành
 pipeline_title: Một luồng xử lý, từ ý tưởng cho đến khi phát hành.
 
 # --- quickstart ---
-quickstart_body: 'Một lệnh cài toàn bộ skill vào Cursor. Khởi động lại editor rồi gõ `/` để chọn.'
+quickstart_body: "Cài kit cục bộ cho Cursor, Claude Code, Codex hoặc GitHub Copilot. Mở repo đích và chạy setup bằng bộ chọn skill hoặc cú pháp gọi của client."
 quickstart_terminalComment: 'cài skill vào ~/.cursor/skills'
 quickstart_titlePrefix: 'Bắt đầu với'
 quickstart_invocation: 'Khởi động lại editor hoặc mở chat mới, rồi chọn /setup trong dự án đích. Cursor, Claude Code và Copilot dùng /name; Codex CLI/IDE dùng $name hoặc /skills. Trên desktop, dùng bộ chọn skill. Ký hiệu /name trên site chỉ cùng một workflow.'
-quickstart_notes_title: 'Sau khi cài'
+quickstart_notes_title: "Sau khi cài cục bộ"
 quickstart_target_title: 'Client khác'
 quickstart_target_body: 'Đổi -a cursor sang client bạn dùng. Lặp lại -a để cài vào nhiều client.'
 quickstart_setup_title: 'Chạy /setup'
 quickstart_setup_body: 'Khởi động lại editor hoặc mở chat mới, rồi chạy /setup trong dự án.'
-quickstart_mcp_title: 'Kết nối Knowledge MCP'
-quickstart_mcp_body: 'Thêm URL này làm MCP server trong client bạn dùng, mỗi dự án một lần, rồi đăng nhập.'
+quickstart_mcp_title: "Cho AI chat · kết nối qua MCP"
+quickstart_mcp_body: "Cho ChatGPT hoặc công cụ chat khác hỗ trợ remote MCP tùy chỉnh với OAuth. Dùng 13 work pack đã công bố mà không cần clone repo hay cài skill. Khả năng và quyền tùy client."
 
 # --- nav ---
 nav_catalog: Kỹ năng
@@ -238,3 +236,66 @@ chip_principles: nguyên tắc
 chip_pipeline: luồng xử lý
 chip_catalog: danh mục
 chip_quickstart: khởi đầu nhanh
+
+domain_work: "Nghiệp vụ"
+nav_intelligence: "Skill thông minh"
+chip_intelligence: "skill thông minh"
+home_catalog_group: "Chọn loại công cụ AI"
+home_catalog_engineering: "AI Development Tools"
+home_catalog_work: "AI Chat Tools"
+home_catalog_all: "Xem tất cả skill"
+intelligence_title: "Đúng skill. Chỉ tải phần cần thiết."
+intelligence_intro: "Dành cho AI chat và các MCP client tương thích: bộ cung cấp skill chỉ đọc hướng dẫn tìm skill, tải chọn lọc và bàn giao tùy chọn. Công cụ phát triển cũng có thể dùng cùng file skill cục bộ."
+intelligence_discovery_title: "Tìm skill phù hợp"
+intelligence_discovery_body: "Intent, ranh giới và starter paths giúp client chọn ít skill nhất cần thiết. Yêu cầu đơn giản có thể không dùng skill."
+intelligence_loading_title: "Tải theo nhu cầu"
+intelligence_loading_body: "Đọc workflow gốc trước. Tải template và tài liệu theo đường dẫn chính xác khi cần; tái sử dụng nội dung đã có trong phiên."
+intelligence_composition_title: "Phối hợp skill"
+intelligence_composition_body: "Contract đầu vào/đầu ra, ngữ cảnh chung và completion gate hướng dẫn bàn giao tùy chọn. Client dừng phần bị chặn thay vì tự bịa quyết định."
+intelligence_loading_example: "Tải workflow trước, tham chiếu sau"
+intelligence_loading_explain: "Ví dụ: tìm pack design rồi chỉ tải file gốc được công bố."
+intelligence_loading_note: "File còn lại chỉ là metadata cho đến khi được yêu cầu."
+intelligence_eval_title: "Thiết kế để kiểm chứng"
+intelligence_eval_body: "Evaluation kiểm tra đầu ra có giữ đúng yêu cầu, chọn đúng skill và bàn giao đúng không. Phương pháp so sánh với baseline không dùng skill trong điều kiện tương đương."
+intelligence_packs: "skill pack MCP"
+intelligence_recipes: "workflow recipe"
+intelligence_eval_note: "41 scenario bao phủ chất lượng đầu ra, routing và composition. Chưa công bố kết quả đối chứng giữa model."
+intelligence_workflows_title: "Workflow recipe"
+intelligence_workflows_intro: "Bắt đầu từ kết quả còn thiếu. Đây là luồng gợi ý, không phải pipeline bắt buộc."
+intelligence_workflows_note: "Bỏ qua bước không liên quan, giữ phạm vi đã duyệt và yêu cầu quyền rõ ràng khi ghi ra hệ thống ngoài. Không điều phối ở server."
+recipe_product: "Phát triển sản phẩm"
+recipe_bug: "Vòng đời bug"
+recipe_business: "Quyết định kinh doanh"
+recipe_sprint: "Lập kế hoạch sprint"
+recipe_release: "Sẵn sàng release"
+skillDetail_contract: "Contract skill MCP"
+skillDetail_accepts: "Đầu vào (khi phù hợp)"
+skillDetail_produces: "Đầu ra"
+skillDetail_gate: "Điều kiện sẵn sàng"
+skillDetail_related: "Bàn giao tùy chọn"
+skillDetail_starter: "Starter paths"
+skillDetail_contract_note: "Định danh artifact và điều kiện hoàn thành từ định nghĩa catalog; không phải chính sách thực thi hay phê duyệt."
+
+hero_chat_path: "ChatGPT và chat client hỗ trợ MCP · nghiên cứu, kế hoạch, nghiệp vụ và QA"
+hero_dev_path: "Cursor, Claude Code, Codex, Copilot · workflow kỹ thuật theo repo"
+home_catalog_chat_hint: "13 work pack qua MCP. Mô tả yêu cầu tự nhiên trong chat client đã kết nối; tuân thủ quy tắc gọi tường minh khi áp dụng. Không cần checkout repo."
+home_catalog_dev_hint: "Skill cục bộ cho coding agent: workflow kỹ thuật và skill nghiệp vụ dùng lại. Cài kit, mở dự án và tuân thủ quy tắc gọi của client."
+skill_audience_both: "Chat (MCP) · Development (cục bộ)"
+skill_audience_dev: "Development tools · cục bộ"
+skill_audience_title: "Dùng skill ở đâu"
+skill_audience_both_detail: "Có trong catalog work pack qua remote MCP ở chat client tương thích và dưới dạng skill cục bộ ở công cụ phát triển tương thích. Chat không cần checkout repo. Thao tác phụ thuộc công cụ và quyền rõ ràng; quy tắc gọi thủ công vẫn áp dụng."
+skill_audience_dev_detail: "Cài cục bộ vào công cụ phát triển tương thích như Cursor, Claude Code, Codex hoặc Copilot. Skill này không nằm trong catalog work pack remote MCP đã công bố."
+pipeline_dev_note: "Pipeline kỹ thuật này dành cho công cụ phát triển có ngữ cảnh repo. Người dùng chat có thể dùng workflow recipe bên dưới mà không cần checkout repo."
+intelligence_eval_method: "So sánh phản hồi cùng một tác vụ giả lập, kiểm tra rubric và hard gate, ghi riêng dữ liệu tải skill thực tế và chất lượng đầu ra. Chưa tuyên bố mức cải thiện trước khi đối chứng độc lập."
+quickstart_choose: "Chọn cách anh/chị làm việc."
+quickstart_choose_body: "Dùng work pack từ xa trong chat, hoặc cài kit cục bộ đầy đủ cho development agent."
+quickstart_dev_title: "Cho AI development tools"
+quickstart_chat_step1: "Thêm URL server trong cấu hình MCP tùy chỉnh của client (Streamable HTTP)."
+quickstart_chat_step2: "Đăng nhập OAuth và bật kết nối AI Kit trong phiên."
+quickstart_chat_step3: "Mô tả kết quả cần; client có thể tìm và tải work pack liên quan. Chọn workflow tường minh khi được yêu cầu."
+quickstart_chat_example: "Estimate tính năng mời thành viên, soạn task triển khai và test case QA. Không publish."
+recipe_product_body: "Từ bằng chứng hoặc brief đã duyệt đến yêu cầu, estimate, task và QA. Dùng lại artifact đã duyệt."
+recipe_bug_body: "Ghi nhận lỗi, kiểm tra trạng thái tracker và xác minh sửa lỗi chỉ khi có bằng chứng thực tế."
+recipe_business_body: "So sánh phương án, phản biện giả định và truyền đạt quyết định đề xuất hoặc đã duyệt."
+recipe_sprint_body: "Dùng backlog hiện tại, rà phạm vi và đề xuất kế hoạch giao việc cùng task khả thi."
+recipe_release_body: "Đối chiếu phạm vi và bằng chứng QA với release gate rồi soạn thông điệp stakeholder."

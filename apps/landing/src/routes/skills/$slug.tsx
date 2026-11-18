@@ -5,6 +5,7 @@ import { SkillInvokeText } from '../../components/SkillInvokeText'
 import { TerminalPromptBlock } from '../../components/TerminalPromptBlock'
 import { AGENT_SKILL_SLUG } from '../../content/overlay'
 import { PipelineDisplay } from '../../lib/pipeline-display'
+import { listSkillPacks } from '../../lib/skill-pack/skill-pack'
 import { domainLabel, getSkillBySlug } from '../../lib/skills'
 import { mergeSkillsSearch } from '../../lib/skills-search'
 import { m } from '../../paraglide/messages.js'
@@ -37,6 +38,7 @@ function SkillDetailPage() {
   const label = domainLabel(skill.domain)
   const summary = skill.summary ?? skill.description
   const showPrompt = Boolean(skill.samplePrompt)
+  const pack = listSkillPacks().find(item => item.name === slug)
 
   return (
     <div className='px-8 py-10 md:px-10 md:py-12'>
@@ -52,6 +54,15 @@ function SkillDetailPage() {
           <span className='rounded-md border border-line px-2 py-0.5 text-muted text-xs'>
             {skill.invocation === 'user' ? m.catalog_filterUser() : m.catalog_filterModel()}
           </span>
+        </div>
+
+        <div className='mt-5 rounded-2xl border border-line bg-surface p-4'>
+          <p className='mb-2 font-semibold text-sm text-fg'>{m.skill_audience_title()}</p>
+          <p className='text-sm text-muted leading-relaxed'>{pack ? m.skill_audience_both_detail() : m.skill_audience_dev_detail()}</p>
+          <div className='mt-3 flex flex-wrap gap-4 text-sm'>
+            {pack && <a className='font-semibold text-primary-700 hover:underline' href='/#chat-start'>{m.home_catalog_work()} →</a>}
+            <a className='font-semibold text-primary-700 hover:underline' href='/#dev-start'>{m.home_catalog_engineering()} →</a>
+          </div>
         </div>
 
         <p className='mt-4 text-base text-fg leading-relaxed'>
@@ -113,6 +124,45 @@ function SkillDetailPage() {
             <p>
               <SkillInvokeText text={skill.boundaries} />
             </p>
+          </SkillDetailSection>
+        )}
+
+        {pack && (
+          <SkillDetailSection label={m.skillDetail_contract()}>
+            <p className='mb-4 text-sm text-muted'>{m.skillDetail_contract_note()}</p>
+            <div className='space-y-4 rounded-2xl border border-line bg-surface p-4'>
+              {[
+                { label: m.skillDetail_accepts(), values: pack.contract.accepts },
+                { label: m.skillDetail_produces(), values: pack.contract.produces },
+              ].map(({ label, values }) => (
+                <div key={label}>
+                  <p className='mb-2 font-semibold text-sm text-fg'>{label}</p>
+                  <div className='flex flex-wrap gap-1.5'>
+                    {values.map(value => (
+                      <code className='rounded-md border border-line bg-body px-2 py-1 font-mono text-xs text-primary-700' key={value}>{value}</code>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <div>
+                <p className='mb-1 font-semibold text-sm text-fg'>{m.skillDetail_gate()}</p>
+                <p lang='en' className='text-sm text-muted'>{pack.contract.readyWhen}</p>
+              </div>
+              <div>
+                <p className='mb-1 font-semibold text-sm text-fg'>{m.skillDetail_starter()}</p>
+                {pack.starterPaths.map(path => (
+                  <code className='block break-all font-mono text-xs text-muted' key={path}>{path}</code>
+                ))}
+              </div>
+              <div>
+                <p className='mb-2 font-semibold text-sm text-fg'>{m.skillDetail_related()}</p>
+                <div className='flex flex-wrap gap-3'>
+                  {pack.relatedSkills.map(name => (
+                    <Link className='font-invoke text-sm text-primary-700 hover:underline' key={name} params={{slug: name}} search={mergeSkillsSearch} to='/skills/$slug'>/{name}</Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </SkillDetailSection>
         )}
 

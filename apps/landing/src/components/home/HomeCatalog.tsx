@@ -1,4 +1,7 @@
+import { Toggle, ToggleGroup, Toolbar } from '@polyms/ui-kit'
 import { Link } from '@tanstack/react-router'
+import { useState } from 'react'
+import { listSkillPacks } from '../../lib/skill-pack/skill-pack'
 import { SkillIcon } from '../../lib/skill-icons'
 import { getSkills } from '../../lib/skills'
 import { defaultSkillsSearch } from '../../lib/skills-search'
@@ -30,7 +33,11 @@ const HOME_CATALOG_SLUGS = [
 export function HomeCatalog() {
   const locale = useAppStore(s => s.locale)
   const skills = getSkills(locale)
-  const homeCatalogSkills = HOME_CATALOG_SLUGS.map(slug => skills.find(s => s.slug === slug)).filter(
+  const [group, setGroup] = useState<'engineering' | 'work'>('engineering')
+  const chatSlugs = listSkillPacks().map(pack => pack.name)
+  const developmentSlugs = [...new Set([...HOME_CATALOG_SLUGS, ...skills.map(skill => skill.slug)])]
+  const slugs = group === 'work' ? chatSlugs : developmentSlugs
+  const homeCatalogSkills = slugs.map(slug => skills.find(s => s.slug === slug)).filter(
     (s): s is NonNullable<typeof s> => s != null
   )
 
@@ -39,14 +46,39 @@ export function HomeCatalog() {
       className='app-home-section app-home-section--catalog app-shell mx-auto max-w-[1080px]'
       id='catalog'
     >
-      <HomeSectionChip label={m.chip_catalog()} n='03' />
+      <HomeSectionChip label={m.chip_catalog()} n='04' />
       <div className='mb-3 flex items-baseline gap-3.5'>
         <h2 className='app-catalog__title m-0 font-bold font-sans tracking-tight'>
           {m.home_catalog_heading()}
         </h2>
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
-      <p className='mb-8 text-muted'>{m.home_catalog_intro()}</p>
+      <p className='mb-6 text-muted'>{m.home_catalog_intro()}</p>
+      <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
+        <Toolbar aria-label={m.home_catalog_group()} rounded variant='inline'>
+          <ToggleGroup
+            aria-label={m.home_catalog_group()}
+            onValueChange={values => {
+              const next = values[0]
+              if (next === 'engineering' || next === 'work') setGroup(next)
+            }}
+            value={[group]}
+          >
+            <Toolbar.Button render={<Toggle className='toggle' />} value='engineering'>
+              {m.home_catalog_engineering()}
+            </Toolbar.Button>
+            <Toolbar.Button render={<Toggle className='toggle' />} value='work'>
+              {m.home_catalog_work()}
+            </Toolbar.Button>
+          </ToggleGroup>
+        </Toolbar>
+        <Link className='font-semibold text-primary-700 text-sm hover:underline' search={defaultSkillsSearch} to='/skills'>
+          {m.home_catalog_all()} →
+        </Link>
+      </div>
+      <p className='mb-5 text-sm text-muted'>
+        {group === 'work' ? m.home_catalog_chat_hint() : m.home_catalog_dev_hint()}
+      </p>
       <div className='app-catalog-grid'>
         {homeCatalogSkills.map((skill, i) => {
           const featured = i === 0
@@ -73,6 +105,9 @@ export function HomeCatalog() {
                 {catalogDisplayName(skill.slug, skill.name)}
               </div>
               <div className='text-[14.5px] text-muted leading-relaxed'>{skill.description}</div>
+              <div className='mt-auto pt-5 font-medium text-xs text-muted'>
+                {chatSlugs.some(name => name === skill.slug) ? m.skill_audience_both() : m.skill_audience_dev()}
+              </div>
             </Link>
           )
         })}

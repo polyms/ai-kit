@@ -4,6 +4,7 @@ import {
   HomeFooter,
   HomeHeader,
   HomeHero,
+  HomeIntelligence,
   HomePipeline,
   HomePrinciples,
   HomeQuickStart,
@@ -24,6 +25,7 @@ function HomePage() {
       <HomeHero />
       <HomePrinciples />
       <HomePipeline />
+      <HomeIntelligence />
       <HomeCatalog />
       <HomeTicker />
       <HomeQuickStart />
