@@ -1,4 +1,4 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import type { McpServer } from '@modelcontextprotocol/server'
 import { z } from 'zod'
 import { isMcpAdmin, type McpAuthSession } from '../mcp-auth.server'
 import { type ComputeKnowledgeCoverageParams, KnowledgeCoverageValidationError } from './knowledge.coverage'
@@ -191,7 +191,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
     'search_knowledge',
     {
       description: SEARCH_KNOWLEDGE_TOOL_DESCRIPTION,
-      inputSchema: searchInputSchema,
+      inputSchema: z.object(searchInputSchema),
     },
     async ({ q, intent, axes, limit }) => {
       const { searchKnowledge } = await import('./knowledge.service.server')
@@ -206,7 +206,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
     'get_knowledge_coverage',
     {
       description: GET_KNOWLEDGE_COVERAGE_TOOL_DESCRIPTION,
-      inputSchema: coverageInputSchema,
+      inputSchema: z.object(coverageInputSchema),
     },
     async ({ axes, intents }) => executeGetKnowledgeCoverage({ axes, intents })
   )
@@ -215,7 +215,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
     'get_knowledge',
     {
       description: GET_KNOWLEDGE_TOOL_DESCRIPTION,
-      inputSchema: idInputSchema,
+      inputSchema: z.object(idInputSchema),
     },
     async ({ id }) => {
       const { getKnowledgeArticle } = await import('./knowledge.service.server')
@@ -236,7 +236,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
     'get_knowledge_chunk',
     {
       description: GET_KNOWLEDGE_CHUNK_TOOL_DESCRIPTION,
-      inputSchema: chunkIdInputSchema,
+      inputSchema: z.object(chunkIdInputSchema),
     },
     async ({ chunkId }) => {
       const { getKnowledgeChunk } = await import('./knowledge.service.server')
@@ -257,7 +257,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
     'upsert_knowledge',
     {
       description: UPSERT_KNOWLEDGE_TOOL_DESCRIPTION,
-      inputSchema: upsertInputSchema,
+      inputSchema: z.object(upsertInputSchema),
     },
     async input => executeUpsertKnowledge(session, input)
   )
@@ -266,7 +266,7 @@ export function registerKnowledgeMcpTools(server: McpServer, context: KnowledgeM
     'delete_knowledge',
     {
       description: DELETE_KNOWLEDGE_TOOL_DESCRIPTION,
-      inputSchema: deleteInputSchema,
+      inputSchema: z.object(deleteInputSchema),
     },
     async input => executeDeleteKnowledge(session, input)
   )
