@@ -62,12 +62,15 @@ it, ask before implementation. Explicit `/align`,
 
 Use `research` for evidence-based investigation, `business` for decisions and financial analysis,
 `task` for actionable work tickets, and `bug` for defect reports. Use `track` for existing work items,
-`plan` for estimates and delivery, `qa` for functional coverage, and `comms` for stakeholder messages. `/reqs` includes a business requirements
+`plan` for estimates and delivery, `qa` for functional coverage, and `comms` for stakeholder messages. Use `review` for non-code artifact critique and `release`
+for readiness and go-live planning. `/reqs` includes a business requirements
 template; `/docs` includes business documentation. Follow `docs/agents/work-artifact-standard.md` for
 human-readable and AI-readable artifacts. Draft by default; use authorized integrations to publish when
 explicitly requested. These workflows do not require a specific AI client or issue tracker.
 See [MCP skill provider](docs/agents/mcp-skill-provider.md) for architecture, pack structure,
 maintenance, verification and the rollout handoff. Read it before changing skill delivery.
+See `docs/agents/skill-capabilities.md` for tool abstraction and composition,
+`docs/agents/external-skill-references.md` for licensing, and `evals/work-skills/` for evaluations.
 
 ### Design stack
 

@@ -2,7 +2,7 @@
 name: reqs
 description: Requirements — discovery interview, enterprise PRD, user stories, acceptance criteria, scope,
   MVP, MoSCoW, RICE. Invoke with /reqs, requirements, user stories, PRD generator, FRD, functional
-  requirements, đặc tả chức năng, ưu tiên backlog, or stakeholder alignment.
+  requirements, đặc tả chức năng, ưu tiên backlog, or stakeholder alignment, BRD, business requirements.
   After align to publish lean PRD → /to-prd. Plan grill → /align.
 disable-model-invocation: true
 ---
@@ -36,6 +36,12 @@ Decisions / problem statement clear?
 ```
 
 Do **not** treat "viết PRD" / "write a PRD" after `/align` as this skill — that path is `/to-prd`.
+
+## Assumptions and changes
+
+Use [assumptions-and-change.md](assumptions-and-change.md) when the request involves validating
+premises, revising approved requirements, or tracing requirements to tasks and QA. Preserve agreed
+scope and identifiers; do not treat unvalidated assertions as accepted requirements.
 
 ## Business requirements workflow
 

@@ -33,7 +33,7 @@ as a reference without starting an unauthorized workflow.
 
 | User-invoked                                                                                                            | Model-invoked                                                           |
 | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/build-feature-map`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms` |
+| `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/build-feature-map`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
 
 Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing);
 `/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch`

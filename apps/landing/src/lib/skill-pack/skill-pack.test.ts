@@ -7,6 +7,7 @@ import {
   getSkillPack,
   listSkillPacks,
   REQS_SKILL_PATHS,
+  REQS_REFERENCE_PATHS,
   SKILL_PACK_RAW_BASE,
   skillPackRawUrl,
   UI_KIT_SKILL_PATHS,
@@ -34,7 +35,7 @@ describe('skill pack manifest', () => {
   it('builds raw URLs on refs/heads/main and does not embed file bodies', () => {
     const packs = listSkillPacks()
     expect(packs.map(pack => pack.name)).toEqual([
-      'reqs', 'design', 'research', 'business', 'docs', 'task', 'bug', 'track', 'plan', 'qa', 'comms',
+      'reqs', 'design', 'research', 'business', 'docs', 'task', 'bug', 'track', 'plan', 'qa', 'comms', 'review', 'release',
     ])
     for (const pack of packs) {
       expect(pack.skillRawUrl).toBe(skillPackRawUrl(`skills/${pack.name}/SKILL.md`))
@@ -43,7 +44,7 @@ describe('skill pack manifest', () => {
 
     const reqs = getSkillPack('reqs')
     const design = getSkillPack('design')
-    expect(reqs?.files.map(file => file.rawUrl)).toEqual([...REQS_SKILL_PATHS, WORK_ARTIFACT_STANDARD].map(skillPackRawUrl))
+    expect(reqs?.files.map(file => file.rawUrl)).toEqual([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD].map(skillPackRawUrl))
     expect(design && 'uiKit' in design ? design.uiKit.map(file => file.rawUrl) : []).toEqual(
       UI_KIT_SKILL_PATHS.map(skillPackRawUrl)
     )
@@ -91,7 +92,7 @@ describe('skill pack MCP tools', () => {
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
-      files: [...REQS_SKILL_PATHS, WORK_ARTIFACT_STANDARD].map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
+      files: [...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD].map(path => ({ path, rawUrl: skillPackRawUrl(path), content: '# Reqs' })),
     })
   })
 
@@ -110,6 +111,43 @@ describe('skill pack MCP tools', () => {
         })),
       })
     }
+  })
+
+  it('returns a manifest without fetching when paths is empty', async () => {
+    const fetchFile = vi.fn<typeof fetch>()
+    const result = await executeGetSkillPack('design', fetchFile, [])
+    expect(result.isError).toBeUndefined()
+    expect(fetchFile).not.toHaveBeenCalled()
+    expect(JSON.parse(result.content[0]!.text)).toEqual(getSkillPack('design'))
+  })
+
+  it('fetches only selected paths including uiKit and retains other metadata', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Selected'))
+    const paths = [DESIGN_SKILL_PATHS[0], UI_KIT_SKILL_PATHS[0]]
+    const result = await executeGetSkillPack('design', fetchFile, [...paths, paths[0]])
+    expect(result.isError).toBeUndefined()
+    expect(fetchFile).toHaveBeenCalledTimes(2)
+    const body = JSON.parse(result.content[0]!.text)
+    for (const file of [...body.files, ...body.uiKit]) {
+      expect(file.content).toBe(paths.some(path => path === file.path) ? '# Selected' : undefined)
+    }
+  })
+
+  it('rejects unregistered paths before any fetch', async () => {
+    const fetchFile = vi.fn<typeof fetch>()
+    const result = await executeGetSkillPack('task', fetchFile, [
+      'skills/task/SKILL.md', 'https://example.com/private',
+    ])
+    expect(result.isError).toBe(true)
+    expect(fetchFile).not.toHaveBeenCalled()
+    expect(JSON.parse(result.content[0]!.text)).toMatchObject({ error: 'INVALID_PATHS' })
+  })
+
+  it('rejects empty upstream content', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response(' '))
+    const result = await executeGetSkillPack('task', fetchFile)
+    expect(result.isError).toBe(true)
+    expect(JSON.parse(result.content[0]!.text)).toMatchObject({ error: 'FETCH_FAILED' })
   })
 
   it('returns FETCH_FAILED when upstream fails', async () => {

@@ -12,6 +12,9 @@ disable-model-invocation: true
 
 Write business-facing or developer-facing docs according to the requested audience. Not PRDs or UI specs.
 
+For meeting minutes, knowledge capture, session handover and data analysis briefs, select the relevant
+format from [work-records.md](work-records.md).
+
 ## Business documentation workflow
 
 For proposals, policies, SOPs, reports and internal memos, read

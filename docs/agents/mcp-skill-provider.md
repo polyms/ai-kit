@@ -4,7 +4,7 @@
 
 AI Kit extends its existing engineering workflows with reusable research, business, requirements,
 documentation and ticket-authoring capabilities. The same skill source serves local coding assistants
-and remote MCP clients, without client-specific workflow forks. The eleven registered packs are
+and remote MCP clients, without client-specific workflow forks. The thirteen registered packs are
 listed below. Other local skills remain local until explicitly registered for remote delivery.
 
 This document is the maintainer and new-session entry point for the skill provider. For authentication
@@ -40,10 +40,10 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 
 | Pack | Intended output | Bundled references |
 | --- | --- | --- |
-| research | Evidence-based research brief or comparison | research-template.md |
-| business | Business case, pricing or decision analysis | business-case-template.md |
-| reqs | Explicit BRD or detailed PRD, user stories | business-requirements-template.md, existing PRD references |
-| docs | Business documents or developer documentation | business-doc-template.md |
+| research | Evidence-based research brief or comparison | research-template.md, evidence-guide.md |
+| business | Business case, pricing or decision analysis | business-case-template.md, decision-templates.md |
+| reqs | Explicit BRD or detailed PRD, user stories | business-requirements-template.md, assumptions-and-change.md, PRD references |
+| docs | Business documents or developer documentation | business-doc-template.md, work-records.md |
 | task | Actionable standalone task ticket | task-template.md |
 | bug | Evidence-based defect report | bug-template.md |
 | design | UI specification | Existing design references and uiKit files |
@@ -51,6 +51,8 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 | plan | Effort estimate and delivery plan | delivery-plan-template.md |
 | qa | Test plan, cases, coverage and report | qa-templates.md |
 | comms | Client replies, comments and stakeholder messages | communication-templates.md |
+| review | Artifact review, assumption challenge and gap analysis | review-template.md |
+| release | Readiness, go-live and release notes | release-templates.md |
 
 All packs except design include `docs/agents/work-artifact-standard.md`. Design retains its
 existing specialized quality guidance. The manifest, not this table, determines what MCP serves.
@@ -77,6 +79,8 @@ skills/
   plan/      SKILL.md, delivery-plan-template.md
   qa/        SKILL.md, qa-templates.md
   comms/     SKILL.md, communication-templates.md
+  review/    SKILL.md, review-template.md
+  release/   SKILL.md, release-templates.md
 docs/agents/
   mcp-skill-provider.md       architecture, maintenance, verification
   work-artifact-standard.md  shared authoring and publishing rules
@@ -112,6 +116,21 @@ parallel reads. A Markdown-only edit to an already registered file does not requ
 landing app after it reaches main. New packs, changed file lists and server changes do require
 deployment. Preview/local servers also fetch from main, not the PR branch; mocked tests or a
 controlled test fixture are needed for pre-merge content checks.
+
+## Progressive retrieval
+
+Existing clients may continue to omit paths and receive complete packs. For large packs:
+- Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.
+- Fetch the entry point using `paths: ["skills/design/SKILL.md"]`, then request referenced files as needed.
+- Unselected files retain path and rawUrl but omit content. The design uiKit group is preserved.
+- All paths must match the selected pack manifest; INVALID_PATHS fails before external fetch.
+- For work packs, load the shared work artifact standard and relevant templates with the entry point.
+
+The provider has no arbitrary URL endpoint, cache or orchestration engine. Optional selection is a
+backward-compatible field; it does not change the default full-pack behavior.
+
+See [capabilities and composition](skill-capabilities.md), [external references](external-skill-references.md)
+and the [work skill evaluations](../../evals/work-skills/README.md).
 
 ## Human-readable and AI-readable artifacts
 
@@ -151,7 +170,7 @@ pnpm build
 
 After merge and Vercel deployment, smoke-test with an authenticated MCP client:
 
-- Discover eleven packs and confirm descriptions; fetch each and verify every expected file is populated.
+- Discover thirteen packs and confirm descriptions; fetch each and verify every expected file is populated.
 - Confirm unknown pack handling; verify design still includes uiKit and no raw-URL follow-up is needed.
 - Draft a task, bug and BRD using their templates; check standalone context, testable criteria and unknowns.
 - Test at least two client implementations that support the endpoint's transport and OAuth.
@@ -161,11 +180,14 @@ After merge and Vercel deployment, smoke-test with an authenticated MCP client:
 
 Phase 1 was merged in PR #3. Production Vercel status succeeded and authenticated MCP retrieval
 returned nonempty Markdown for all seven initial packs. This verifies retrieval only, not workflow
-quality. Phase 2 adds track, plan, qa and comms, preserving the MCP contract and using the same
+quality. Phase 2 adds track, plan, qa and comms, extending the MCP contract without breaking full-pack retrieval and using the same
 manifest and shared standard. Verify the expanded catalog and test each new workflow after deployment.
 
-Known Phase 2 scope exclusions: release/review skills, progressive or selective retrieval, full legacy
-reqs/design dependency closure, and landing-site UI catalog updates. These remain follow-up work.
+PR #5 also adds review/release, evidence and decision references, assumption/change templates,
+work records, opt-in selective retrieval, and evaluation fixtures. REQS_REFERENCE_PATHS includes
+known kit-owned reqs dependencies. Project-specific context remains client-provided. Full legacy
+design dependency closure, landing-site UI catalog and actual comparative evaluation runs remain
+follow-up work.
 
 
 The initial work-operations expansion is tracked in [PR #3](https://github.com/polyms/ai-kit/pull/3).

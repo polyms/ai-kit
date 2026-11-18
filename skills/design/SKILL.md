@@ -20,7 +20,8 @@ Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/d
 | **`/design`** | ai-kit           | _What_ — flows, screens, states, component map, motion intent |
 | **`/ui-kit`** | `@polyms/ui-kit` | _How_ — compose primitives, tokens, motion API when coding    |
 
-`/design` does **not** duplicate ui-kit API docs. **User-invoked** — you cannot agent-fire `/ui-kit`. Before the component map, ask the user to invoke **`/ui-kit`** in this chat (skill ships with the lib — symlink or `npx skills add`), or follow it if the user already attached it.
+`/design` does **not** duplicate ui-kit API docs. **User-invoked** — you cannot agent-fire `/ui-kit`. When the MCP pack supplies UI Kit references, use those files for component mapping; no local install
+or separate slash command is required. Otherwise, before the component map, ask the user to invoke **`/ui-kit`** in this chat (skill ships with the lib — symlink or `npx skills add`), or follow it if the user already attached it.
 
 **Boundary vs `/reqs`:** `/reqs` writes requirements and PRD — `/design` consumes PRD and produces UI spec. Do not rewrite product scope.
 

@@ -5,6 +5,7 @@ export const REQS_SKILL_PATHS = [
   'skills/reqs/SKILL.md',
   'skills/reqs/enterprise-prd-template.md',
   'skills/reqs/business-requirements-template.md',
+  'skills/reqs/assumptions-and-change.md',
   'skills/reqs/prd-interview.md',
   'skills/reqs/user-story-guide.md',
 ] as const
@@ -40,18 +41,27 @@ export const UI_KIT_SKILL_PATHS = [
   '.cursor/skills/ui-kit/theming.md',
 ] as const
 
+export const REQS_REFERENCE_PATHS = [
+  'skills/to-prd/lean-prd-template.md',
+  'skills/setup/requirements.md',
+  'skills/setup/language.md',
+  'docs/agents/client-compatibility.md',
+] as const
+
 export const WORK_ARTIFACT_STANDARD = 'docs/agents/work-artifact-standard.md'
 
 export const WORK_SKILL_PATHS = {
-  research: ['skills/research/SKILL.md', 'skills/research/research-template.md'],
-  business: ['skills/business/SKILL.md', 'skills/business/business-case-template.md'],
-  docs: ['skills/docs/SKILL.md', 'skills/docs/business-doc-template.md'],
+  research: ['skills/research/SKILL.md', 'skills/research/research-template.md', 'skills/research/evidence-guide.md'],
+  business: ['skills/business/SKILL.md', 'skills/business/business-case-template.md', 'skills/business/decision-templates.md'],
+  docs: ['skills/docs/SKILL.md', 'skills/docs/business-doc-template.md', 'skills/docs/work-records.md'],
   task: ['skills/task/SKILL.md', 'skills/task/task-template.md'],
   bug: ['skills/bug/SKILL.md', 'skills/bug/bug-template.md'],
   track: ['skills/track/SKILL.md', 'skills/track/tracking-templates.md'],
   plan: ['skills/plan/SKILL.md', 'skills/plan/delivery-plan-template.md'],
   qa: ['skills/qa/SKILL.md', 'skills/qa/qa-templates.md'],
   comms: ['skills/comms/SKILL.md', 'skills/comms/communication-templates.md'],
+  review: ['skills/review/SKILL.md', 'skills/review/review-template.md'],
+  release: ['skills/release/SKILL.md', 'skills/release/release-templates.md'],
 } as const
 
 export type WorkSkillName = keyof typeof WORK_SKILL_PATHS
@@ -69,6 +79,8 @@ const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   plan: 'Effort estimation, delivery planning, capacity and dependencies',
   qa: 'Functional test design, requirements coverage and QA evidence',
   comms: 'Professional messages, client replies and stakeholder updates',
+  review: 'Evidence-based artifact review, gap analysis and assumption challenge',
+  release: 'Go-live readiness, rollout, rollback and release notes',
 }
 
 export type SkillPackFile = {
@@ -114,7 +126,7 @@ export function listSkillPacks(): SkillPackSummary[] {
 
 export function getSkillPack(name: string): SkillPack | null {
   if (name === 'reqs') {
-    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, WORK_ARTIFACT_STANDARD]) }
+    return { name: 'reqs', files: toFiles([...REQS_SKILL_PATHS, ...REQS_REFERENCE_PATHS, WORK_ARTIFACT_STANDARD]) }
   }
   if (name === 'design') {
     return {
