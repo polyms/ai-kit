@@ -9,9 +9,15 @@ import {
 } from './mcp-auth.server'
 import { registerSkillPackMcpTools } from './skill-pack/skill-pack.mcp'
 import { registerMeMcpTool } from './mcp-me.server'
+import { getMcpServerInfo, getMcpServerInstructions, registerServerInfoMcpTool } from './mcp-server-info.server'
 
 function createOpsCmsMcpServer(session: McpAuthSession, accessToken: string): McpServer {
-  const server = new McpServer({ name: 'ai-kit-ops-cms', version: __VERSION__ })
+  const serverInfo = getMcpServerInfo(__VERSION__)
+  const server = new McpServer(
+    { name: serverInfo.name, version: serverInfo.version },
+    { instructions: getMcpServerInstructions(serverInfo) }
+  )
+  registerServerInfoMcpTool(server, __VERSION__)
   registerMeMcpTool(server, session, accessToken)
   registerKnowledgeMcpTools(server, { session })
   registerSkillPackMcpTools(server)
