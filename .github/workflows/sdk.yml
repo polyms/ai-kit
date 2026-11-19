@@ -1,0 +1,81 @@
+name: Build and Publish SDK
+
+on:
+  pull_request:
+  push:
+    tags:
+      - 'sdk-v[0-9]*'
+
+env:
+  NODE_VERSION: '24'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build, test and pack SDK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          cache: true
+          run_install: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build SDK
+        run: pnpm exec tsc -p sdk/tsconfig.json
+      - name: Test provider and SDK
+        run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts
+      - name: Verify release tag
+        if: github.event_name == 'push'
+        run: |
+          version=$(node -p "require('./sdk/package.json').version")
+          test "$GITHUB_REF_NAME" = "sdk-v$version"
+      - name: Pack SDK
+        run: |
+          mkdir -p "$RUNNER_TEMP/sdk-package"
+          npm pack ./sdk --ignore-scripts --pack-destination "$RUNNER_TEMP/sdk-package"
+          node --input-type=module -e "import('./sdk/dist/skill-provider.js').then(m => { if (typeof m.createSkillProvider !== 'function') throw new Error('Missing SDK export') })"
+      - name: Upload SDK package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-kit-sdk
+          path: ${{ runner.temp }}/sdk-package/*.tgz
+          if-no-files-found: error
+
+  publish:
+    name: Publish to GitHub Packages
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/sdk-v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://npm.pkg.github.com
+          scope: '@polyms'
+      - name: Download tested SDK package
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-kit-sdk
+          path: ${{ runner.temp }}/sdk-package
+      - name: Publish to GitHub Packages
+        working-directory: ${{ runner.temp }}/sdk-package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm publish ./*.tgz --registry=https://npm.pkg.github.com --tag latest --ignore-scripts

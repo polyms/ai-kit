@@ -1,7 +1,7 @@
 ---
 name: track
 description: Inspect, summarize and update existing work items across issue trackers. Use for ticket
-  reviews, backlog queries, bulk assignments, status changes, deadlines, kiểm tra và cập nhật ticket.
+  reviews, backlog queries, bulk assignments, status changes, deadlines, kiểm tra và cập nhật ticket. Unaccented Vietnamese examples include check ticket qua han, doi assignee.
 ---
 
 # Track

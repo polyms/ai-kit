@@ -3,120 +3,198 @@
     "id": "RT-01",
     "kind": "Route",
     "prompt": "Viết BRD cho Community có owner, admin, member; chưa chốt quyền ban.",
-    "expected": ["reqs"],
-    "avoid": ["task", "bug"],
+    "expected": [
+      "reqs"
+    ],
+    "avoid": [
+      "task",
+      "bug"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-02",
     "kind": "Route",
     "prompt": "Draft UI states and screen flow for a team invite list from an approved PRD.",
-    "expected": ["design"],
-    "avoid": ["reqs", "task"],
+    "expected": [
+      "design"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-03",
     "kind": "Route",
     "prompt": "So sánh công nghệ HRM AI-first, tìm nguồn gần đây.",
-    "expected": ["research"],
-    "avoid": ["business", "release"],
+    "expected": [
+      "research"
+    ],
+    "avoid": [
+      "business",
+      "release"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-04",
     "kind": "Route",
     "prompt": "Tính giá gói subscription để đạt contribution margin 40%.",
-    "expected": ["business"],
-    "avoid": ["research", "plan"],
+    "expected": [
+      "business"
+    ],
+    "avoid": [
+      "research",
+      "plan"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-05",
     "kind": "Route",
     "prompt": "Viết tài liệu handover cho dev session mới.",
-    "expected": ["docs"],
-    "avoid": ["comms", "task"],
+    "expected": [
+      "docs"
+    ],
+    "avoid": [
+      "comms",
+      "task"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-06",
     "kind": "Route",
     "prompt": "Draft a task to resend invitations; don't publish it.",
-    "expected": ["task"],
-    "avoid": ["track", "bug"],
+    "expected": [
+      "task"
+    ],
+    "avoid": [
+      "track",
+      "bug"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-07",
     "kind": "Route",
     "prompt": "Log lỗi Save trên staging: màn hình trắng.",
-    "expected": ["bug"],
-    "avoid": ["task", "track"],
+    "expected": [
+      "bug"
+    ],
+    "avoid": [
+      "task",
+      "track"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-08",
     "kind": "Route",
     "prompt": "Check ticket A-42 và đổi assignee sang người đã xác định.",
-    "expected": ["track"],
-    "avoid": ["task", "bug"],
+    "expected": [
+      "track"
+    ],
+    "avoid": [
+      "task",
+      "bug"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-09",
     "kind": "Route",
     "prompt": "Estimate 2 developers with dependencies and 5 working days per week.",
-    "expected": ["plan"],
-    "avoid": ["business", "task"],
+    "expected": [
+      "plan"
+    ],
+    "avoid": [
+      "business",
+      "task"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-10",
     "kind": "Route",
     "prompt": "Viết test case permission và regression theo AC đã có.",
-    "expected": ["qa"],
-    "avoid": ["review", "bug"],
+    "expected": [
+      "qa"
+    ],
+    "avoid": [
+      "review",
+      "bug"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-11",
     "kind": "Route",
     "prompt": "Viết phản hồi khách hàng ngắn, song ngữ, không gửi.",
-    "expected": ["comms"],
-    "avoid": ["docs", "track"],
+    "expected": [
+      "comms"
+    ],
+    "avoid": [
+      "docs",
+      "track"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-12",
     "kind": "Route",
     "prompt": "Review proposal: tìm giả định sai, gap và rủi ro.",
-    "expected": ["review"],
-    "avoid": ["qa", "reqs"],
+    "expected": [
+      "review"
+    ],
+    "avoid": [
+      "qa",
+      "reqs"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-13",
     "kind": "Route",
     "prompt": "Preview build passed, production pending. Assess go-live.",
-    "expected": ["release"],
-    "avoid": ["qa", "track"],
+    "expected": [
+      "release"
+    ],
+    "avoid": [
+      "qa",
+      "track"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-14",
     "kind": "Compose",
     "prompt": "Đã có requirements: viết task, estimate effort và tạo test cases (chỉ draft).",
-    "expected": ["task", "plan", "qa"],
-    "avoid": ["reqs", "release"],
+    "expected": [
+      "task",
+      "plan",
+      "qa"
+    ],
+    "avoid": [
+      "reqs",
+      "release"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
     "id": "RT-15",
     "kind": "Compose",
     "prompt": "Compare current competitor pricing with sources, then recommend a plan based on unit economics.",
-    "expected": ["research", "business"],
-    "avoid": ["reqs", "task"],
+    "expected": [
+      "research",
+      "business"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
     "notes": "Routing checks only; authorization is separate."
   },
   {
@@ -124,7 +202,11 @@
     "kind": "Skip",
     "prompt": "Translate 'Good morning' into Vietnamese.",
     "expected": [],
-    "avoid": ["research", "comms", "docs"],
+    "avoid": [
+      "research",
+      "comms",
+      "docs"
+    ],
     "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
   },
   {
@@ -132,7 +214,10 @@
     "kind": "Skip",
     "prompt": "What is the capital of France?",
     "expected": [],
-    "avoid": ["research", "docs"],
+    "avoid": [
+      "research",
+      "docs"
+    ],
     "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
   },
   {
@@ -140,7 +225,206 @@
     "kind": "Skip",
     "prompt": "Review this TypeScript function for bugs and complexity.",
     "expected": [],
-    "avoid": ["review", "bug"],
+    "avoid": [
+      "review",
+      "bug"
+    ],
     "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
+  },
+  {
+    "id": "RT-19",
+    "kind": "Route",
+    "prompt": "Chốt giúp a quyền owner, member và điều kiện nghiệm thu cho team mới.",
+    "expected": [
+      "reqs"
+    ],
+    "avoid": [
+      "task",
+      "review"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-20",
+    "kind": "Route",
+    "prompt": "len luong man hinh invite, co loading va empty state, PRD da duyet",
+    "expected": [
+      "design"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-21",
+    "kind": "Route",
+    "prompt": "tim hieu cac giai phap HRM AI, can nguon moi",
+    "expected": [
+      "research"
+    ],
+    "avoid": [
+      "business"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-22",
+    "kind": "Route",
+    "prompt": "tinh gia goi nay giup a de margin 40%",
+    "expected": [
+      "business"
+    ],
+    "avoid": [
+      "plan"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-23",
+    "kind": "Route",
+    "prompt": "soan tai lieu ban giao cho dev moi",
+    "expected": [
+      "docs"
+    ],
+    "avoid": [
+      "comms"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-24",
+    "kind": "Route",
+    "prompt": "viết task mới cho tính năng resend invite, draft thôi",
+    "expected": [
+      "task"
+    ],
+    "avoid": [
+      "track",
+      "bug"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-25",
+    "kind": "Route",
+    "prompt": "bao loi Save tren staging: trang trang sau khi click",
+    "expected": [
+      "bug"
+    ],
+    "avoid": [
+      "task"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-26",
+    "kind": "Route",
+    "prompt": "check giúp a mấy ticket quá hạn",
+    "expected": [
+      "track"
+    ],
+    "avoid": [
+      "task"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-27",
+    "kind": "Route",
+    "prompt": "chia phase cho 2 dev, est ngay cong va dependency",
+    "expected": [
+      "plan"
+    ],
+    "avoid": [
+      "business",
+      "task"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-28",
+    "kind": "Route",
+    "prompt": "Còn thiếu case nào ko? AC đã có, rà coverage giúp a",
+    "expected": [
+      "qa"
+    ],
+    "avoid": [
+      "review"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-29",
+    "kind": "Route",
+    "prompt": "soan cmt tra loi KH, ngan gon, ko gui",
+    "expected": [
+      "comms"
+    ],
+    "avoid": [
+      "docs",
+      "track"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-30",
+    "kind": "Route",
+    "prompt": "Cái proposal này có gì chưa ổn? rà giả định và rủi ro",
+    "expected": [
+      "review"
+    ],
+    "avoid": [
+      "qa"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-31",
+    "kind": "Route",
+    "prompt": "kiem tra readiness go live, QA chua chot, chi danh gia",
+    "expected": [
+      "release"
+    ],
+    "avoid": [
+      "track"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-32",
+    "kind": "Compose",
+    "prompt": "PRD đã duyệt, est effort rồi viết task và test case",
+    "expected": [
+      "plan",
+      "task",
+      "qa"
+    ],
+    "avoid": [
+      "reqs"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-33",
+    "kind": "Skip",
+    "prompt": "dịch 'hello' sang tiếng Việt",
+    "expected": [],
+    "avoid": [
+      "comms",
+      "docs"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-34",
+    "kind": "Skip",
+    "prompt": "hom nay thu may?",
+    "expected": [],
+    "avoid": [
+      "research"
+    ],
+    "notes": "Vietnamese semantic routing; no write authorization."
   }
 ]

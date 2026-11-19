@@ -5,7 +5,7 @@ description: >-
   to reverse, and a UI spec when there is a screen. Use for a new feature when the user
   says build a page, tạo trang mới, add CRUD, or thêm CRUD without naming a skill.
   Do NOT use when the user named a skill or principal, or asks for a bugfix, review,
-  deploy incident, or docs-only work.
+  deploy incident, or docs-only work. Unaccented Vietnamese examples include tao trang moi, them CRUD.
 ---
 
 # Collab

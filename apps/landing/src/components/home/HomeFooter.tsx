@@ -68,6 +68,7 @@ export function HomeFooter() {
             <a className='link font-medium no-underline' href='/skills'>
               {m.nav_docs()}
             </a>
+            <a className='link font-medium no-underline' href='/sdk'>{m.nav_sdk()}</a>
             <a className='link font-medium no-underline' href='/knowledge'>
               {m.nav_knowledge()}
             </a>

@@ -1,0 +1,32 @@
+{
+  "name": "@polyms/ai-kit-sdk",
+  "version": "0.4.0-alpha.1",
+  "type": "module",
+  "description": "Dependency-free AI Kit skill delivery client",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/skill-provider.d.ts",
+      "import": "./dist/skill-provider.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polyms/ai-kit.git",
+    "directory": "sdk"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

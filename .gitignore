@@ -157,3 +157,7 @@ vite.config.ts.timestamp-*
 
 # Local skill evaluation reports
 /evals/results/
+
+# Generated immutable skill delivery assets
+/apps/landing/public/skill-bundles/
+/apps/landing/src/lib/skill-pack/release-snapshot.generated.json

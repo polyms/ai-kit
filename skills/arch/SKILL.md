@@ -1,6 +1,6 @@
 ---
 name: arch
-description: Architecture vocabulary for deep modules — seam, depth, leverage, locality, design-it-twice. Use when designing or deepening a module interface, placing a seam, improving testability, when another skill needs arch vocabulary, or user mentions deep module, seam, design it twice, thiết kế module, tìm seam, module sâu.
+description: Architecture vocabulary for deep modules — seam, depth, leverage, locality, design-it-twice. Use when designing or deepening a module interface, placing a seam, improving testability, when another skill needs arch vocabulary, or user mentions deep module, seam, design it twice, thiết kế module, tìm seam, module sâu. Unaccented Vietnamese examples include thiet ke module, tach interface.
 ---
 
 # Arch

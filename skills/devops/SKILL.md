@@ -1,6 +1,6 @@
 ---
 name: devops
-description: Deploy, CI, and infra — symptom → fix via Knowledge retrieval. Use when a deploy/CI/infra symptom is reported cold (no `/dev` slice in progress) — deploy failure, Vercel build failed, CI broken, sửa deploy, lỗi build, infra fix. Invoke with /devops, or use developer (executor) / techlead (SEV) for long incident sessions.
+description: Deploy, CI, and infra — symptom → fix via Knowledge retrieval. Use when a deploy/CI/infra symptom is reported cold (no `/dev` slice in progress) — deploy failure, Vercel build failed, CI broken, sửa deploy, lỗi build, infra fix. Invoke with /devops, or use developer (executor) / techlead (SEV) for long incident sessions. Unaccented Vietnamese examples include loi build, sua deploy.
 ---
 
 # DevOps — Deploy, CI & Infra
