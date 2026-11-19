@@ -54,3 +54,6 @@ read-packages credential using its existing secret management:
 ```sh
 pnpm add @polyms/ai-kit-sdk@0.4.0-alpha.1
 ```
+
+The latest catalog is refreshed on demand after 30 minutes by default; override with `latestTtlMs`.
+Pinned bundles remain cached until eviction or explicit clearing.

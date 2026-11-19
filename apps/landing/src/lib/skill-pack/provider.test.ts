@@ -53,4 +53,21 @@ describe('versioned snapshot provider', () => {
     expect(second.files[0].content).not.toBe('changed by caller')
     expect(transport).toHaveBeenCalledTimes(2)
   })
+  it('refreshes latest catalog on demand after 30 minutes', async () => {
+    let now = 1000
+    const clock = vi.spyOn(Date, 'now').mockImplementation(() => now)
+    const transport = vi.fn(async () => skillProvider({ version: 'latest' }))
+    try {
+      const client = createSkillProvider({ endpoint: 'https://example.com', fetch: transport })
+      await client.list()
+      now += 30 * 60_000 - 1
+      await client.list()
+      expect(transport).toHaveBeenCalledTimes(1)
+      now += 1
+      await client.list()
+      expect(transport).toHaveBeenCalledTimes(2)
+    } finally {
+      clock.mockRestore()
+    }
+  })
 })

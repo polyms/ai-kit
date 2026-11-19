@@ -38,7 +38,7 @@ export function createSkillProvider(options: ProviderOptions) {
   if ((endpoint.protocol !== 'https:' && !(endpoint.protocol === 'http:' && endpoint.hostname === 'localhost')) ||
       endpoint.username || endpoint.password) throw new Error('Invalid skill provider endpoint')
   const limit = options.maxEntries ?? 32
-  const ttl = options.latestTtlMs ?? 60_000
+  const ttl = options.latestTtlMs ?? 30 * 60_000
   const timeout = options.timeoutMs ?? 5000
   if (!Number.isInteger(limit) || limit < 1 || limit > 256 || !Number.isFinite(ttl) || ttl < 0 ||
       !Number.isFinite(timeout) || timeout < 1) throw new Error('Invalid cache or timeout options')

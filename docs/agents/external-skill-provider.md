@@ -28,7 +28,7 @@ See [SDK README](../../sdk/README.md). Create one provider per server process; p
 preload heavily used skills if appropriate. A cold pinned starter requires one static HTTP request;
 a warm hit requires none. The SDK caches successful bundles (32 entries by default), coalesces
 identical concurrent requests, and requests only missing reference content. Latest catalog
-resolution expires after 60 seconds by default. Returned content is copied to isolate callers.
+resolution expires after 30 minutes by default. Returned content is copied to isolate callers.
 There is no persistent cache and failures are not cached. Default HTTP timeout is five seconds.
 
 The SDK package is prepared for local packing, not published. Domain extensions remain trusted
