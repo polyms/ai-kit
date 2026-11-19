@@ -4,10 +4,10 @@ import { createSkillProvider, extendSkill } from '../../../../../sdk/skill-provi
 
 describe('versioned snapshot provider', () => {
   it('loads only pinned starter paths', async () => {
-    const response = await skillProvider({ name: 'reqs', version: '0.3.0' })
+    const response = await skillProvider({ name: 'reqs', version: '0.3.1' })
     const data = await response.json()
     expect(response.status).toBe(200)
-    expect(data.revision).toBe(RELEASES['0.3.0'])
+    expect(data.revision).toBe(RELEASES['0.3.1'])
     expect(data.files.filter((file: {content?: string}) => file.content)).toHaveLength(data.starterPaths.length)
   })
   it('rejects invalid versions and paths', async () => {
@@ -15,15 +15,17 @@ describe('versioned snapshot provider', () => {
     expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)
     expect((await skillProvider({ name: '__proto__' })).status).toBe(404)
   })
-  it('resolves latest to Vietnamese routing release while preserving the old version', async () => {
+  it('resolves latest to the sole registered release and rejects unreleased versions', async () => {
     const latest = await (await skillProvider({ version: 'latest' })).json()
-    const pinned = await (await skillProvider({ version: '0.3.0' })).json()
+    const pinned = await (await skillProvider({ version: '0.3.1' })).json()
     expect(latest.version).toBe('0.3.1')
-    expect(pinned.version).toBe('0.3.0')
+    expect(pinned.version).toBe('0.3.1')
     expect(latest.packs.find((p: { name: string }) => p.name === 'track').useWhen).toContain(
       'Check giúp a ticket quá hạn, đổi assignee; check ticket qua han'
     )
-    expect(pinned.packs.find((p: { name: string }) => p.name === 'track').useWhen).toHaveLength(2)
+    expect(pinned).toEqual(latest)
+    expect(Object.keys(RELEASES)).toEqual(['0.3.1'])
+    expect((await skillProvider({ version: '0.3.0' })).status).toBe(404)
   })
   it('returns manifest only', async () => {
     const data = await (await skillProvider({ name: 'reqs', strategy: 'manifest' })).json()
@@ -33,9 +35,9 @@ describe('versioned snapshot provider', () => {
     const transport = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
       if (init?.body) return skillProvider(JSON.parse(String(init.body)))
       const name = new URL(String(url)).pathname.split('/')[3]
-      return skillProvider({ name, version: '0.3.0' })
+      return skillProvider({ name, version: '0.3.1' })
     })
-    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.0', fetch: transport })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.1', fetch: transport })
     const [bundle] = await Promise.all([client.getSkill('reqs'), client.getSkill('reqs')])
     await client.getSkill('reqs')
     expect(transport).toHaveBeenCalledTimes(1)
@@ -45,7 +47,7 @@ describe('versioned snapshot provider', () => {
     await client.getSkill('reqs', { paths: [path] })
     expect(transport).toHaveBeenCalledTimes(2)
     expect(extendSkill(bundle, {
-      name: 'product-reqs', extends: 'ai-kit/reqs@0.3.0', instructions: 'Preserve project IDs.',
+      name: 'product-reqs', extends: 'ai-kit/reqs@0.3.1', instructions: 'Preserve project IDs.',
     }).base).toBe(bundle)
   })
   it('does not cache errors and isolates returned bundles', async () => {
@@ -53,9 +55,9 @@ describe('versioned snapshot provider', () => {
     const transport = vi.fn(async () => {
       attempts++
       return attempts === 1 ? new Response('', { status: 503 }) :
-        skillProvider({ name: 'reqs', version: '0.3.0' })
+        skillProvider({ name: 'reqs', version: '0.3.1' })
     })
-    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.0', fetch: transport })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.1', fetch: transport })
     await expect(client.getSkill('reqs')).rejects.toThrow('503')
     const first = await client.getSkill('reqs')
     first.files[0].content = 'changed by caller'

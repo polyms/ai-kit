@@ -2,7 +2,7 @@ import { performance } from 'node:perf_hooks'
 import { createSkillProvider } from './dist/skill-provider.js'
 
 const endpoint = process.argv[2] ?? 'https://ai-kit.polyms.dev'
-const version = process.argv[3] ?? '0.3.0'
+const version = process.argv[3] ?? '0.3.1'
 const count = Number(process.argv[4] ?? 20)
 if (!Number.isInteger(count) || count < 2 || count > 100) throw new Error('Sample count must be 2–100')
 if (version === 'latest') throw new Error('Pin a release for comparable timings')

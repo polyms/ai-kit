@@ -32,11 +32,11 @@ const workflow = extendSkill(base, {
 const REFERENCE = `const template = await provider.getSkill('reqs', {
   paths: ['skills/reqs/enterprise-prd-template.md'],
 })`
-const HTTP = `curl https://ai-kit.polyms.dev/skill-bundles/0.3.0/reqs/starter.json
+const HTTP = `curl https://ai-kit.polyms.dev/skill-bundles/0.3.1/reqs/starter.json
 
 curl -X POST https://ai-kit.polyms.dev/api/skills \\
   -H 'Content-Type: application/json' \\
-  -d '{"name":"reqs","version":"0.3.0","paths":["skills/reqs/enterprise-prd-template.md"]}'`
+  -d '{"name":"reqs","version":"0.3.1","paths":["skills/reqs/enterprise-prd-template.md"]}'`
 
 function CodeSample({ label, code }: { label: string; code: string }) {
   const toast = Toast.useToastManager()

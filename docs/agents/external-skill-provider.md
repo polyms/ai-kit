@@ -10,14 +10,14 @@ Markdown remains in its original repository paths. At build time, read the pinne
 `git show`; shallow or Vercel checkouts fall back to pinned public GitHub raw URLs. Verify every
 blob against the release manifest before generating static catalog and starter, manifest, and full
 JSON bundles plus a local snapshot for exact path selection. Fail the build on missing or changed
-content. The latest release is 0.3.1 (Vietnamese routing); 0.3.0 remains available. Future releases add
+content. The sole initial registry release is 0.3.1 (Vietnamese routing). Future releases add
 immutable metadata and explicit generator entries. No runtime upstream
 requests are needed.
 
 - GET /skill-bundles/latest.json: current catalog alias (not immutable).
-- GET /skill-bundles/0.3.0/catalog.json: pinned catalog.
-- GET /skill-bundles/0.3.0/reqs/starter.json: entry and shared standard.
-- GET /skill-bundles/0.3.0/reqs/manifest.json or full.json: other selection modes.
+- GET /skill-bundles/0.3.1/catalog.json: pinned catalog.
+- GET /skill-bundles/0.3.1/reqs/starter.json: entry and shared standard.
+- GET /skill-bundles/0.3.1/reqs/manifest.json or full.json: other selection modes.
 - POST /api/skills with name, version, paths: exact reference selection from local snapshot.
 
 The public API exposes only approved repository skills, never Ops CMS or project data.

@@ -3,13 +3,12 @@ import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import * as v030 from '../../../registry/releases/0.3.0/manifest/skill-pack'
 import * as v031 from '../../../registry/releases/0.3.1/manifest/skill-pack'
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const root = resolve(app, '../..')
 const output = resolve(app, 'public/skill-bundles')
-const registry = { '0.3.0': v030, '0.3.1': v031 }
+const registry = { '0.3.1': v031 }
 const latest = '0.3.1'
 
 async function buildRelease(releaseVersion: keyof typeof registry) {

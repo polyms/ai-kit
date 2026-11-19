@@ -33,7 +33,7 @@ Install that tarball in your Business MCP. No new workspace dependencies or runt
 Run from the host that will consume the provider, after building the SDK and deploying the API:
 
 ```sh
-node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.0 20
+node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.1 20
 ```
 
 The report includes cold/warm p50 and p95, reference fetch timing and network call counts.
