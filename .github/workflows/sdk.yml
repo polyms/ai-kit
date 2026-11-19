@@ -78,7 +78,4 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          version="${GITHUB_REF_NAME#sdk-v}"
-          tag=latest
-          case "$version" in *-*) tag=next ;; esac
-          npm publish ./*.tgz --registry=https://npm.pkg.github.com --tag "$tag" --ignore-scripts
+          npm publish ./*.tgz --registry=https://npm.pkg.github.com --tag latest --ignore-scripts

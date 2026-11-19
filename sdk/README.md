@@ -1,6 +1,6 @@
 # AI Kit SDK
 
-Dependency-free server-side TypeScript client. Create one provider per process, pin a version and
+Dependency-free server-side TypeScript client. Create one provider per process, use the latest skill release by default and
 optionally preload frequently used skills. Starter bundles use a static GET; exact reference paths
 use the local snapshot API. Successful results are cached in memory, identical concurrent requests
 are coalesced and errors are not cached. No project data is sent to AI Kit.
@@ -10,21 +10,19 @@ import { createSkillProvider, extendSkill } from '@polyms/ai-kit-sdk'
 
 const provider = createSkillProvider({
   endpoint: 'https://ai-kit.polyms.dev',
-  version: '0.3.0',
 })
 await provider.preload(['reqs'])
 const base = await provider.getSkill('reqs')
 const skill = extendSkill(base, {
   name: 'product-reqs',
-  extends: 'ai-kit/reqs@0.3.0',
+  extends: `ai-kit/reqs@${base.version}`,
   instructions: 'Preserve existing requirement IDs.',
 })
 ```
 
 GitHub Actions builds and tests pull requests. Push a dedicated SDK tag matching the SDK package
-version to publish to GitHub Packages (for example, sdk-v0.4.0-alpha.1). Prereleases use the next
-dist-tag; stable releases use latest. Installation requires GitHub Packages read access or the
-Polyms registry proxy if configured to serve this package.
+version to publish to GitHub Packages (for example, sdk-v0.4.0-alpha.1). The SDK is published with the latest dist-tag. Consumers install through the public Polyms npm
+registry without authentication.
 
 For local testing before publication, after workspace install, run
 `pnpm exec tsc -p sdk/tsconfig.json` and `npm pack ./sdk --ignore-scripts` to create a local tarball.
@@ -43,16 +41,14 @@ Cold means a new SDK instance, not an empty CDN, DNS or connection cache. Use th
 version for comparisons. Initial targets for `reqs` are cold p95 under 500 ms and warm p95 under
 5 ms, subject to network and runtime conditions. These are targets, not measured results.
 
-For direct GitHub Packages installation, configure the consuming repository's npm scope and a
-read-packages credential using its existing secret management:
+For installation, configure the consuming repository's npm scope:
 
 ```ini
-@polyms:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+@polyms:registry=https://registry.polyms.dev/npm
 ```
 
 ```sh
-pnpm add @polyms/ai-kit-sdk@0.4.0-alpha.1
+pnpm add @polyms/ai-kit-sdk
 ```
 
 The latest catalog is refreshed on demand after 30 minutes by default; override with `latestTtlMs`.

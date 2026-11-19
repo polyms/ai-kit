@@ -7,13 +7,12 @@ import { copyText } from '../lib/copy'
 import { IconCopy } from '../lib/icons'
 import { m } from '../paraglide/messages.js'
 
-const INSTALL = 'pnpm add @polyms/ai-kit-sdk@0.4.0-alpha.1'
-const CONFIG = '@polyms:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}'
+const INSTALL = 'pnpm add @polyms/ai-kit-sdk'
+const CONFIG = '@polyms:registry=https://registry.polyms.dev/npm'
 const SETUP = `import { createSkillProvider } from '@polyms/ai-kit-sdk'
 
 const provider = createSkillProvider({
   endpoint: 'https://ai-kit.polyms.dev',
-  version: '0.3.0',
 })
 
 // Optional warm-up; reuse provider across requests.
@@ -27,7 +26,7 @@ const EXTEND = `import { extendSkill } from '@polyms/ai-kit-sdk'
 const base = await provider.getSkill('reqs')
 const workflow = extendSkill(base, {
   name: 'product-reqs',
-  extends: 'ai-kit/reqs@0.3.0',
+  extends: 'ai-kit/reqs@' + base.version,
   instructions: 'Preserve project IDs.',
 })`
 const REFERENCE = `const template = await provider.getSkill('reqs', {
