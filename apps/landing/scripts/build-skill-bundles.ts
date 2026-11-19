@@ -27,8 +27,8 @@ async function load(path: string) {
     if (!response.ok) throw new Error('Release source unavailable: ' + path + ' HTTP ' + response.status)
     bytes = Buffer.from(await response.arrayBuffer())
   }
-  const hash = createHash('sha1').update('blob ' + bytes.length + '\\0').update(bytes).digest('hex')
-  if (hash !== expected) throw new Error('Release blob mismatch: ' + path)
+  const hash = createHash('sha1').update('blob ' + bytes.length).update(Buffer.from([0])).update(bytes).digest('hex')
+  if (hash !== expected) throw new Error('Release blob mismatch: ' + path + ' expected=' + expected + ' actual=' + hash)
   const content = bytes.toString('utf8')
   if (!content.trim() || content.length > 500_000) throw new Error('Invalid snapshot file: ' + path)
   contentByPath.set(path, content)
