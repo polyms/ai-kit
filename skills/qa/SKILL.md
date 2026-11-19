@@ -1,7 +1,7 @@
 ---
 name: qa
 description: Derive test coverage from requirements and assess manual QA, UAT and regression
-  evidence. Use for test cases, test plans, acceptance verification, kiểm thử, kiểm tra chất lượng.
+  evidence. Use for test cases, test plans, acceptance verification, kiểm thử, kiểm tra chất lượng. Unaccented Vietnamese examples include viet test case, ra coverage.
 ---
 
 # QA

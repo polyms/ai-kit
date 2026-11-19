@@ -1,7 +1,7 @@
 ---
 name: review
 description: Challenge product requirements, business decisions, delivery plans and other work artifacts
-  against evidence. Use for adversarial review, gap analysis, risk review, rà soát tài liệu, phản biện.
+  against evidence. Use for adversarial review, gap analysis, risk review, rà soát tài liệu, phản biện. Unaccented Vietnamese examples include ra soat proposal, phan bien.
 ---
 
 # Review

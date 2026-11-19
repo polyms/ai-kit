@@ -1,7 +1,7 @@
 ---
 name: bug
 description: Record and triage observed defects with reproducible steps, evidence, impact and expected
-  behavior. Use for bug reports, log bug, report defect, ghi nhận lỗi, báo lỗi.
+  behavior. Use for bug reports, log bug, report defect, ghi nhận lỗi, báo lỗi. Unaccented Vietnamese examples include bao loi, ghi nhan loi.
 ---
 
 # Bug

@@ -1,7 +1,7 @@
 ---
 name: business
 description: Analyze business decisions, pricing, costs, feasibility, ROI and operating models.
-  Use for business cases, decision memos, pricing, phân tích nghiệp vụ, tính chi phí.
+  Use for business cases, decision memos, pricing, phân tích nghiệp vụ, tính chi phí. Unaccented Vietnamese examples include tinh gia, tinh chi phi.
 ---
 
 # Business analysis

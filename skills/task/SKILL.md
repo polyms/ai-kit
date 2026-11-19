@@ -1,7 +1,7 @@
 ---
 name: task
 description: Draft or create actionable work tickets for features, technical work, operations and
-  follow-ups. Use for task creation, task breakdown, acceptance criteria, viết task, tạo ticket.
+  follow-ups. Use for task creation, task breakdown, acceptance criteria, viết task, tạo ticket. Unaccented Vietnamese examples include viet task, tao ticket.
 ---
 
 # Task

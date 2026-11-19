@@ -1,6 +1,6 @@
 ---
 name: align-loop
-description: Relentless grill of a plan or design — walk the design tree one decision at a time, lettered options with a recommended pick, codebase-first when possible. Use when user stress-tests a plan before building, clarifies decision branches, aligns before PRD, or mentions grill, làm rõ, chốt hướng, thống nhất hiểu biết.
+description: Relentless grill of a plan or design — walk the design tree one decision at a time, lettered options with a recommended pick, codebase-first when possible. Use when user stress-tests a plan before building, clarifies decision branches, aligns before PRD, or mentions grill, làm rõ, chốt hướng, thống nhất hiểu biết. Unaccented Vietnamese examples include chot huong, hoi tung quyet dinh.
 ---
 
 # Align Loop

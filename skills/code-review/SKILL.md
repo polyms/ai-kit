@@ -2,7 +2,7 @@
 name: code-review
 description: Review code changes since a pinned git fixed point — Standards, Spec, and
   Simplify axes. Use when user mentions review code, review PR, review diff, rà soát code,
-  xem diff, over-engineered, simplify review, or cắt bớt.
+  xem diff, over-engineered, simplify review, or cắt bớt. Unaccented Vietnamese examples include ra soat code, xem diff.
 ---
 
 # Code Review

@@ -2,7 +2,7 @@
 name: dev
 description: Fullstack implementation with TDD and disciplined debugging. Use when user mentions /dev,
   implement from spec, fix bug, sửa lỗi, red-green-refactor, test-first, triển khai, or ship from
-  spec. Do NOT start a new page or CRUD that has no PRD and no design spec — that is collab.
+  spec. Do NOT start a new page or CRUD that has no PRD and no design spec — that is collab. Unaccented Vietnamese examples include sua loi, trien khai theo spec.
 ---
 
 # Dev — Fullstack Implementation

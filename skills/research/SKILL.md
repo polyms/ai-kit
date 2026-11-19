@@ -1,7 +1,7 @@
 ---
 name: research
 description: Investigate questions using credible sources and synthesize verifiable findings for
-  market, product, business or technical research. Use for research, comparison, nghiên cứu, tìm hiểu.
+  market, product, business or technical research. Use for research, comparison, nghiên cứu, tìm hiểu. Unaccented Vietnamese examples include tim hieu, tim nguon.
 ---
 
 # Research

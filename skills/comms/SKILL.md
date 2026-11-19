@@ -1,7 +1,7 @@
 ---
 name: comms
 description: Draft concise professional messages, client replies, ticket comments and stakeholder
-  updates. Use for email, bilingual replies, escalation, phản hồi khách hàng, viết comment.
+  updates. Use for email, bilingual replies, escalation, phản hồi khách hàng, viết comment. Unaccented Vietnamese examples include soan cmt tra loi KH.
 ---
 
 # Comms

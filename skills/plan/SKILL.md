@@ -1,7 +1,7 @@
 ---
 name: plan
 description: Estimate effort and plan delivery using scope, dependencies, capacity and risks.
-  Use for delivery plans, estimates, milestones, man-days, lập kế hoạch, ước lượng.
+  Use for delivery plans, estimates, milestones, man-days, lập kế hoạch, ước lượng. Unaccented Vietnamese examples include uoc luong effort, chia phase.
 ---
 
 # Plan

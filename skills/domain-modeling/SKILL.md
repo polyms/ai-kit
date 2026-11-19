@@ -1,6 +1,6 @@
 ---
 name: domain-modeling
-description: Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology, thống nhất thuật ngữ, maintain CONTEXT.md, record an ADR, or when another skill needs to update the domain model.
+description: Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology, thống nhất thuật ngữ, maintain CONTEXT.md, record an ADR, or when another skill needs to update the domain model. Unaccented Vietnamese examples include thong nhat thuat ngu nghiep vu.
 ---
 
 # Domain Modeling

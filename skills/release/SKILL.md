@@ -1,7 +1,7 @@
 ---
 name: release
 description: Prepare and evaluate release readiness, go-live checks, rollout and rollback plans.
-  Use for release notes, launch checklist, production verification, triển khai release, go-live.
+  Use for release notes, launch checklist, production verification, triển khai release, go-live. Unaccented Vietnamese examples include kiem tra go live, rollout.
 ---
 
 # Release management
