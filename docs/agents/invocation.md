@@ -29,6 +29,15 @@ User-invoked skills may invoke model-invoked skills, but must not implicitly sel
 another user-invoked workflow. An explicitly delegated principal may read its playbook
 as a reference without starting an unauthorized workflow.
 
+## Vietnamese-first semantic routing
+
+Interpret natural Vietnamese, unaccented Vietnamese and mixed English/Vietnamese by intent and
+conversation context, not exact trigger matching. Abbreviations (a, e, KH, cmt, ko, req, est) are
+contextual, not standalone triggers. Distinguish new work, existing-ticket updates, communication,
+effort estimates and artifact critique. Simple translations and factual questions need no skill.
+Preserve explicit invocation and local manual-only policies. Match the requested conversational
+language and the confirmed destination language for artifacts; preserve technical identifiers.
+
 ## ai-kit examples
 
 | User-invoked                                                                                                                                  | Model-invoked                                                                                                                                                                 |

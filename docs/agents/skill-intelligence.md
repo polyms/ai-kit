@@ -63,7 +63,7 @@ conditional gates and bounded revision. The recipe host is only a retrieval loca
 Do not treat related skills as a chain or duplicate accepted decisions. Draft by default and verify
 authorized writes.
 
-The 13 output cases, 18 routing fixtures and 10 composition cases in `evals/` cover work intent,
+The 13 output cases, 34 routing fixtures and 10 composition cases in `evals/` cover work intent,
 overlap, composition and opt-out. The [local evaluation runner](../../evals/README.md) runs paired
 baseline/assisted cases with an explicitly configured compatible model endpoint, records local
 retrieval traces and optional blind-judge scores. It does not test native client integrations. Unit tests validate fixture integrity and retrieval behavior; actual client
