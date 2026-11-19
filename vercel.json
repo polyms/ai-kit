@@ -9,6 +9,15 @@
   },
   "headers": [
     {
+      "source": "/skill-bundles/0.3.1/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/skill-bundles/0.3.0/:path*",
       "headers": [
         {

@@ -15,6 +15,16 @@ describe('versioned snapshot provider', () => {
     expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)
     expect((await skillProvider({ name: '__proto__' })).status).toBe(404)
   })
+  it('resolves latest to Vietnamese routing release while preserving the old version', async () => {
+    const latest = await (await skillProvider({ version: 'latest' })).json()
+    const pinned = await (await skillProvider({ version: '0.3.0' })).json()
+    expect(latest.version).toBe('0.3.1')
+    expect(pinned.version).toBe('0.3.0')
+    expect(latest.packs.find((p: { name: string }) => p.name === 'track').useWhen).toContain(
+      'Check giúp a ticket quá hạn, đổi assignee; check ticket qua han'
+    )
+    expect(pinned.packs.find((p: { name: string }) => p.name === 'track').useWhen).toHaveLength(2)
+  })
   it('returns manifest only', async () => {
     const data = await (await skillProvider({ name: 'reqs', strategy: 'manifest' })).json()
     expect(data.files.every((file: {content?: string}) => file.content === undefined)).toBe(true)

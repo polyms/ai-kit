@@ -5,12 +5,13 @@ No runtime GitHub requests, server-side LLM, database, or external registry are 
 
 ## Delivery and release snapshots
 
-Release 0.3.0 stores only a frozen metadata manifest, commit SHA and expected Git blob hashes.
+Each release stores only a frozen metadata manifest, commit SHA and expected Git blob hashes.
 Markdown remains in its original repository paths. At build time, read the pinned revision with
 `git show`; shallow or Vercel checkouts fall back to pinned public GitHub raw URLs. Verify every
 blob against the release manifest before generating static catalog and starter, manifest, and full
 JSON bundles plus a local snapshot for exact path selection. Fail the build on missing or changed
-content. Future releases add immutable metadata and explicit generator entries. No runtime upstream
+content. The latest release is 0.3.1 (Vietnamese routing); 0.3.0 remains available. Future releases add
+immutable metadata and explicit generator entries. No runtime upstream
 requests are needed.
 
 - GET /skill-bundles/latest.json: current catalog alias (not immutable).
