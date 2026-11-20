@@ -111,7 +111,6 @@ pipeline_agent_pm_owns: PRD, story, tiêu chí chấp nhận, phạm vi
 pipeline_agent_tester_owns: Bộ E2E, flake, chia nhỏ CI, kiểm thử theo hành trình
 pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; SEV của /devops
 pipeline_intro: "Coding assistant có thể kết hợp skill để thống nhất phạm vi, viết yêu cầu, thiết kế, triển khai và review dựa trên ngữ cảnh repo. Host AI chọn và áp dụng từng bước."
-  minh và viết tóm tắt trước khi tới /dev.
 pipeline_stage_align: Thống nhất
 pipeline_stage_design: Thiết kế
 pipeline_stage_dev: Lập trình
