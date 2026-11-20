@@ -70,12 +70,12 @@ positioning_label: "AI Kit là gì?"
 positioning_title: "AI của bạn, thêm phương pháp và kiến thức."
 positioning_intro: "AI Kit là AI Augmentation Layer, cung cấp kỹ năng và quy trình dùng lại cho công cụ AI tương thích mà không thay thế AI hiện có."
 positioning_host_title: "AI client của bạn"
-positioning_host_body: "Suy luận, quản lý hội thoại và ngữ cảnh, chọn skill và gọi công cụ theo năng lực và quyền được cấp."
+positioning_host_body: "Suy luận, quản lý hội thoại, ngữ cảnh và bộ nhớ sẵn có, chọn skill và gọi công cụ theo năng lực và quyền được cấp."
 positioning_kit_title: "AI Kit"
 positioning_kit_body: "Cung cấp skill, phương pháp, template, context contract, hướng dẫn workflow và Knowledge tham chiếu."
 positioning_tools_title: "Công cụ đã kết nối"
-positioning_tools_body: "Tracker, tài liệu, source code và các dịch vụ khác vẫn nằm trong các integration được AI client cấp quyền."
-positioning_note: "MCP, SDK, native skills và plugin chỉ là cách phân phối cùng một lớp mở rộng khi client hỗ trợ. AI Kit không chạy LLM ở server hay agent runtime thực thi thay AI client."
+positioning_tools_body: "Tracker, tài liệu, source code và bộ nhớ nghiệp vụ vẫn do hệ thống sở hữu quản lý, chỉ được truy cập qua integration có quyền."
+positioning_note: "MCP, SDK, native skills và plugin chỉ là cách phân phối cùng một lớp mở rộng khi client hỗ trợ. AI Kit không chạy LLM ở server, không thực thi thay AI client và không lưu trữ bộ nhớ của bạn."
 
 # --- home ---
 home_catalog_heading: 'Một kit. Nhiều workflow.'

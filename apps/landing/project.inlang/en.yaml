@@ -69,12 +69,12 @@ positioning_label: "What AI Kit is"
 positioning_title: "Your AI, with a better playbook."
 positioning_intro: "AI Kit extends compatible AI tools with reusable skills, methodologies and knowledge. It does not replace the AI you already use."
 positioning_host_title: "Your AI client"
-positioning_host_body: "Handles reasoning, conversation, context, skill selection and tool calls within its own capabilities and permissions."
+positioning_host_body: "Handles reasoning, conversation, context, available memory, skill selection and tool calls within its own capabilities and permissions."
 positioning_kit_title: "AI Kit"
 positioning_kit_body: "Supplies skills, playbooks, templates, context contracts, workflow guidance and Knowledge references."
 positioning_tools_title: "Your connected tools"
-positioning_tools_body: "Project trackers, documents, source control and other services remain under your AI client's authorized integrations."
-positioning_note: "MCP, SDK, native skills and plugins are ways to deliver the same augmentation layer where supported. AI Kit runs no server-side LLM inference or agent execution runtime."
+positioning_tools_body: "Project trackers, documents, source control and business memory stay with their owners and are accessed only through authorized integrations."
+positioning_note: "MCP, SDK, native skills and plugins are ways to deliver the same augmentation layer where supported. AI Kit runs no server-side LLM inference or agent execution runtime and does not store your memory."
 
 # --- home ---
 home_catalog_heading: 'One kit. Many workflows.'

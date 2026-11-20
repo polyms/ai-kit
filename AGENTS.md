@@ -7,9 +7,11 @@ Polyms AI Augmentation Layer for existing LLMs and AI tools.
 Read [canonical product positioning](docs/product/positioning.md) before changing the landing page,
 MCP, SDK, skills, composition, or architecture. AI Kit extends the host AI with skills, methodology,
 Knowledge and guidance. The **host** owns inference, reasoning, conversation, context and authorized
-tool execution. Do not propose a server-side LLM, agent runtime, model router, conversation memory
-service or AI orchestration engine as part of AI Kit. Metadata delivery, static retrieval,
-versioning and deterministic checks are in scope. Product copy must address end-user benefit without
+tool execution. Memory remains owned by the agent, business or external provider. AI Kit may define
+memory-use methodology, not memory storage, an API, provider engine or synchronization service.
+Do not propose a server-side LLM, agent runtime, model router or AI orchestration engine. Metadata delivery, static retrieval,
+versioning and deterministic checks are in scope. See the [augmentation roadmap](docs/product/augmentation-roadmap.md)
+for planned capabilities; planned work is not implementation authorization. Product copy must address end-user benefit without
 claiming that AI Kit independently reasons, executes or has verified compatibility it has not tested.
 
 ## Agent skills
