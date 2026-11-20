@@ -30,7 +30,8 @@ AI Kit's server may deliver skill content and Knowledge, but does **not** perfor
 end-user work. See [canonical product positioning](docs/product/positioning.md) before changing
 architecture or product messaging. The [augmentation roadmap](docs/product/augmentation-roadmap.md)
 records current and planned capabilities. AI Kit does not store or manage agent or business memory;
-its planned Memory Protocol guides effective use of existing memory sources.
+its planned Memory Protocol guides effective use of existing memory sources. The roadmap links the
+architecture, memory, Knowledge and quality strategies; these describe direction, not shipped features.
 
 ## Real engineering
 

@@ -3,6 +3,13 @@
 Status: product and architecture direction, not an implementation specification or release promise.
 [Product positioning](positioning.md) is the canonical ownership boundary.
 
+## Strategy references
+
+- [Architecture principles](architecture-principles.md)
+- [Memory strategy and research rationale](memory-strategy.md)
+- [Knowledge strategy and continuous improvement](knowledge-strategy.md)
+- [Quality strategy: evaluation, governance and observability](quality-strategy.md)
+
 ## Product outcomes
 
 - Consistency: apply the right skill and preserve agreed requirements, evidence and quality gates.
@@ -69,6 +76,10 @@ evaluation cases for relevance, absence of memory, stale evidence, privacy and c
 Exact types, file placement, distribution and compatibility requirements are deferred to P2 design.
 
 ## Later directions
+
+The earlier product vision considered expanding Skills, Knowledge, Memory awareness, Reflection,
+Governance, Evaluation and Observability while preserving external execution. These directions are
+captured in the strategy documents, not assigned release numbers or a fixed delivery sequence.
 
 - Reflection and Knowledge contribution: host identifies candidate lessons from evidence. Only
   generalized, verified, authorized material may be proposed for the existing Knowledge catalog.

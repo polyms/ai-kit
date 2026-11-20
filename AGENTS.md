@@ -11,7 +11,7 @@ tool execution. Memory remains owned by the agent, business or external provider
 memory-use methodology, not memory storage, an API, provider engine or synchronization service.
 Do not propose a server-side LLM, agent runtime, model router or AI orchestration engine. Metadata delivery, static retrieval,
 versioning and deterministic checks are in scope. See the [augmentation roadmap](docs/product/augmentation-roadmap.md)
-for planned capabilities; planned work is not implementation authorization. Product copy must address end-user benefit without
+for planned capabilities and linked strategy documents; planned work is not implementation authorization. Product copy must address end-user benefit without
 claiming that AI Kit independently reasons, executes or has verified compatibility it has not tested.
 
 ## Agent skills

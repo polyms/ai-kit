@@ -95,6 +95,18 @@ The host client uses its own authorized tools, follows the user's scope, and ver
 If a tool or data source is unavailable, a skill may produce a bounded draft instead of claiming an
 action occurred.
 
+## Strategy documents
+
+- [Architecture principles](architecture-principles.md): context, composition, local/remote skills,
+  integrations and ownership.
+- [Memory strategy](memory-strategy.md): research rationale and planned provider-neutral usage.
+- [Knowledge strategy](knowledge-strategy.md): catalog evolution and reviewed improvement.
+- [Quality strategy](quality-strategy.md): evaluation, governance and bounded observability.
+- [Augmentation roadmap](augmentation-roadmap.md): completed foundation and planned priorities.
+
+The strategy documents describe direction, not implementation authorization. Where early proposals
+conflict with the agreed ownership boundary, this positioning takes precedence.
+
 ## Product language
 
 **Use:** "AI Augmentation Layer", "extend the AI tools you already use",
