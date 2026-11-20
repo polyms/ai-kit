@@ -18,6 +18,16 @@ const PIPELINE_LINKS = [
   { invoke: '/code-review' },
 ] as const
 
+/** Chat-ready skill packs; kept separate from engineering pipeline links. */
+const WORK_LINKS = [
+  { invoke: '/research' },
+  { invoke: '/business' },
+  { invoke: '/reqs' },
+  { invoke: '/plan' },
+  { invoke: '/qa' },
+  { invoke: '/release' },
+] as const
+
 export function HomeFooter() {
   useEffect(() => {
     injectUmami()
@@ -41,6 +51,23 @@ export function HomeFooter() {
             <Code2BoldDuotone className='size-4' />
             {m.footer_starGithub()}
           </Button>
+        </div>
+
+        <div className='min-w-35'>
+          <div className='mb-3.5 font-mono font-normal text-[#7d8290] text-[11px] uppercase tracking-[0.08em]'>
+            {m.footer_col_workflows()}
+          </div>
+          <div className='flex flex-col gap-1'>
+            {WORK_LINKS.map(link => (
+              <a
+                className='link font-medium no-underline'
+                href={`/skills?q=${encodeURIComponent(link.invoke)}`}
+                key={link.invoke}
+              >
+                {link.invoke}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className='min-w-35'>
