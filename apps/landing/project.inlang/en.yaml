@@ -75,7 +75,7 @@ usecases_engineering_body: "Use local skills in coding assistants to support des
 usecases_engineering_outcome: "Example outcome: scoped changes with verification steps."
 usecases_note: "AI Kit provides the methodology. Your host AI chooses the relevant skills and uses only context and tools it is authorized to access."
 hero_badge: "AI Augmentation Layer"
-hero_ctaPrimary: "Connect to AI chat"
+hero_ctaPrimary: "Set up AI Kit for chat"
 hero_ctaSecondary: "Explore skills →"
 hero_line1: "Extend the AI"
 hero_line2: "you already use"
@@ -103,27 +103,27 @@ hero_example_request: "Plan our team invitation feature."
 hero_example_plan: "Draft effort and implementation tasks"
 hero_example_qa: "Draft QA scenarios and edge cases"
 hero_example_draft: "Illustrative draft · no external actions"
-home_catalog_heading: 'One kit. Many workflows.'
-home_catalog_intro: "Explore work skills for AI chat first, or switch to development skills for repository-aware coding assistants."
+home_catalog_heading: "Featured skills, practical results."
+home_catalog_intro: "Explore six useful skills for everyday work, or switch to six starter skills for repository-aware development. Browse the full catalog for more."
 
 # --- pipeline ---
-pipeline_agentsLabel: Principal agents
-pipeline_agent_design_owns: docs/design/ UI specs, @polyms/ui-kit maps
-pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
-pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
-pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys
-pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; /devops SEV
+pipeline_agentsLabel: "Engineering role guides"
+pipeline_agent_design_owns: "UI specifications, interaction states and alignment with your design system"
+pipeline_agent_dev_owns: "Scoped implementation, tests, debugging and verification"
+pipeline_agent_pm_owns: "Requirements, user stories, acceptance criteria and scope"
+pipeline_agent_tester_owns: "QA scenarios, E2E coverage, reproducible defects and CI evidence"
+pipeline_agent_techlead_owns: "Architecture trade-offs, technical risks, reviews and operational guidance"
 pipeline_intro: "Coding assistants can combine skills for alignment, requirements, design, development and review using repository context. The host selects and applies each step."
 pipeline_stage_align: Align
 pipeline_stage_design: Design
 pipeline_stage_dev: Dev
 pipeline_stage_idea: Idea
-pipeline_stage_issues: To issues
+pipeline_stage_issues: "Tasks and issues"
 pipeline_stage_reqs: Reqs / To PRD
 pipeline_stage_review: Code review
 pipeline_stage_ship: Ship
 pipeline_title: "Engineering workflows, when you need them."
-pipeline_agents_note: "These are optional role guides for coding assistants, not AI Kit-hosted agents or a team that autonomously executes your project."
+pipeline_agents_note: "Optional guidance for coding assistants. AI Kit does not operate an autonomous team of agents."
 
 # --- quickstart ---
 quickstart_body: "Install the local kit for Cursor, Claude Code, Codex or GitHub Copilot. Open your target repository and run setup using your client's skill picker or invocation syntax."
@@ -158,16 +158,16 @@ palette_placeholder: Type to filter skills…
 palette_title: Command palette
 
 # --- principles ---
-principles_1_body: /align closes the communication gap — grill decisions before /reqs or /to-prd.
+principles_1_body: "Clarify important decisions before drafting requirements, using /align when needed."
 principles_1_title: Align before you build
-principles_2_body: Short-named skills (/reqs, /design, /dev) you combine per task — no heavyweight process.
+principles_2_body: "Combine focused skills for each task. The stages are guidance, not a mandatory process."
 principles_2_title: Small and composable
-principles_3_body: /dev encodes TDD, types, and debugging discipline — fast signal, not blind codegen.
+principles_3_body: "Use tests, type checks and debugging evidence rather than generating code blindly."
 principles_3_title: Feedback loops
-principles_4_body: Specs name modules and seams; code skills resist the ball of mud agents accelerate.
+principles_4_body: "Document important boundaries and design decisions before changes spread."
 principles_4_title: Design every day
-principles_5_body: Fork, adapt, commit back — skills are yours, not black-box prompts.
-principles_5_title: Hack and own them
+principles_5_body: "Inspect, adapt and version local skills to fit your team's standards."
+principles_5_title: "Open and adaptable"
 principles_titleAccent: "principles."
 principles_titlePrefix: "Engineering"
 
@@ -361,3 +361,34 @@ sdk_http_title: "HTTP API"
 sdk_http_body: "Use the static JSON endpoints without the TypeScript SDK; use the read-only POST endpoint for exact path selection."
 sdk_security: "Public skill delivery requires no user credentials. Keep business data and write authorization inside your own MCP; instructions are not authorization."
 sdk_performance_note: "Production latency is not yet benchmarked. The request counts describe the design, not measured response times."
+
+hero_example_link: "View sample requirements and QA"
+pipeline_role_pm: "Product planning"
+pipeline_role_designer: "UI and UX design"
+pipeline_role_developer: "Implementation"
+pipeline_role_tester: "QA verification"
+pipeline_role_techlead: "Technical review"
+footer_start_guide: "Getting started"
+seo_title: "AI Kit | Skills and methods for the AI you use"
+seo_description: "AI Kit adds reusable skills and structured working methods to compatible AI chat and coding tools for research, requirements, planning, QA and software development."
+example_back: "Back to use cases"
+example_badge: "Illustrative example · draft only"
+example_title: "Team Invitation: from requirements to QA"
+example_intro: "A fictional sample of a draft that a compatible AI client can produce using AI Kit methods. It is not a transcript or proof of a live AI Kit session."
+example_reqs_heading: "Requirements and acceptance criteria"
+example_br01: "Only a team Owner may send an invitation."
+example_ac01: "A valid email creates one pending invitation."
+example_ac02: "An invalid email shows a validation error and creates no invitation."
+example_ac03: "Non-owners cannot send invitations; no record is created."
+example_scope: "Out of scope: resend, expiry and sending invitation emails."
+example_plan_heading: "Implementation task draft"
+example_task1: "Check Owner authorization at the API boundary and in the UI."
+example_task2: "Validate email input and persist a pending invitation for valid requests."
+example_task3: "Cover success, validation errors and forbidden requests with automated tests."
+example_effort: "Effort: not yet estimated. Review repository interfaces and data constraints first. This sample is not a delivery commitment."
+example_qa_heading: "QA test cases"
+example_tc01: "Owner submits a valid email → exactly one pending invitation appears."
+example_tc02: "Owner submits an invalid email → error appears; no invitation is created."
+example_tc03: "Non-owner submits an email → request is blocked; no invitation is created."
+example_boundary: "No invitations were sent, no external records were changed, and no product behavior was verified for this illustration."
+example_setup: "Set up AI Kit for chat"
