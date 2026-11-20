@@ -60,6 +60,9 @@ function WorkExampleCard() {
       <p className='mb-0 mt-3 border-t border-line pt-2 font-mono text-[11px] text-muted'>
         {m.hero_example_draft()}
       </p>
+      <a className='mt-3 inline-block font-semibold text-[12.5px] text-primary-700 hover:underline' href='/examples/team-invitation'>
+        {m.hero_example_link()} →
+      </a>
     </div>
   )
 }
