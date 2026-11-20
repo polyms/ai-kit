@@ -48,9 +48,10 @@ domain_review: Rà soát
 domain_triage: Phân loại
 
 # --- footer ---
+footer_col_workflows: "Skill nghiệp vụ"
 footer_blurb: "Lớp mở rộng năng lực cho AI bạn đang dùng. Skill dùng chung cho AI chat và công cụ phát triển."
 footer_col_community: Cộng đồng
-footer_col_pipeline: Luồng xử lý
+footer_col_pipeline: "Phát triển phần mềm"
 footer_col_resources: Tài nguyên
 footer_copyright: MIT © 2026 Polyms
 footer_link_catalog: Danh mục skill
@@ -58,28 +59,49 @@ footer_link_issues: Issues
 footer_starGithub: Gắn sao trên GitHub
 
 # --- hero ---
+chip_usecases: "ứng dụng"
+usecases_title: "Giúp AI của bạn làm việc hiệu quả hơn."
+usecases_intro: "Áp dụng phương pháp nhất quán cho nghiệp vụ hằng ngày và phát triển phần mềm có ngữ cảnh repo, ngay trong trợ lý AI quen thuộc."
+usecases_research_title: "Nghiên cứu và so sánh"
+usecases_research_body: "Phân tích các phương án, tách bằng chứng khỏi giả định và chuẩn bị nội dung ra quyết định."
+usecases_research_outcome: "Ví dụ đầu ra: bản so sánh có nguồn và đề xuất quyết định."
+usecases_reqs_title: "Biến ý tưởng thành yêu cầu"
+usecases_reqs_body: "Làm rõ phạm vi và tiêu chí chấp nhận, sau đó soạn bản đặc tả để nhóm có thể review."
+usecases_reqs_outcome: "Ví dụ đầu ra: yêu cầu có truy vết và danh sách câu hỏi còn mở."
+usecases_delivery_title: "Lập kế hoạch, tổ chức và kiểm thử"
+usecases_delivery_body: "Ước lượng effort, chia task triển khai và xây dựng phạm vi QA từ yêu cầu đã thống nhất."
+usecases_delivery_outcome: "Ví dụ đầu ra: bản nháp estimate, task và test case."
+usecases_engineering_title: "Phát triển phần mềm có kỷ luật"
+usecases_engineering_body: "Dùng skill cục bộ trong coding assistant để hỗ trợ design, implementation, review và E2E."
+usecases_engineering_outcome: "Ví dụ đầu ra: thay đổi đúng phạm vi kèm bước xác minh."
+usecases_note: "AI Kit cung cấp phương pháp. Host AI chọn skill liên quan và chỉ sử dụng ngữ cảnh, công cụ mà nó được cấp quyền truy cập."
 hero_badge: "AI Augmentation Layer"
 hero_ctaPrimary: Bắt đầu
 hero_ctaSecondary: "Khám phá skill →"
 hero_line1: "Mở rộng năng lực AI"
 hero_line2: "bạn đang dùng"
-hero_sub: "AI Kit bổ sung skill, phương pháp làm việc và Knowledge cho các trợ lý AI tương thích. AI bạn dùng vẫn suy luận, quản lý ngữ cảnh và gọi công cụ; AI Kit cung cấp hướng dẫn."
+hero_sub: "Bổ sung cho AI bạn đang dùng các skill, phương pháp làm việc và tri thức kỹ thuật được tuyển chọn, từ nghiên cứu và đặc tả đến lập kế hoạch và phát triển phần mềm. Không cần một trợ lý AI mới."
 
 # --- positioning ---
-positioning_label: "AI Kit là gì?"
+positioning_ask_title: "Yêu cầu AI của bạn"
+positioning_ask_body: "“Ước lượng tính năng mời thành viên, soạn task triển khai và test case QA. Chỉ tạo bản nháp.”"
+positioning_method_title: "AI Kit cung cấp phương pháp"
+positioning_method_body: "Các skill plan, task và qa cung cấp các bước làm việc, tiêu chuẩn đầu ra và kiểm tra chất lượng phù hợp."
+positioning_apply_title: "AI của bạn áp dụng"
+positioning_apply_body: "Host AI sử dụng ngữ cảnh và công cụ được cấp quyền để soạn bản nháp có thể truy vết. Hành động ghi ra ngoài vẫn cần quyền phù hợp."
+positioning_label: "Cách hoạt động"
 positioning_title: "AI của bạn, thêm phương pháp và kiến thức."
-positioning_intro: "AI Kit là AI Augmentation Layer, cung cấp kỹ năng và quy trình dùng lại cho công cụ AI tương thích mà không thay thế AI hiện có."
-positioning_host_title: "AI client của bạn"
-positioning_host_body: "Suy luận, quản lý hội thoại, ngữ cảnh và bộ nhớ sẵn có, chọn skill và gọi công cụ theo năng lực và quyền được cấp."
-positioning_kit_title: "AI Kit"
-positioning_kit_body: "Cung cấp skill, phương pháp, template, context contract, hướng dẫn workflow và Knowledge tham chiếu."
-positioning_tools_title: "Công cụ đã kết nối"
-positioning_tools_body: "Tracker, tài liệu, source code và bộ nhớ nghiệp vụ vẫn do hệ thống sở hữu quản lý, chỉ được truy cập qua integration có quyền."
-positioning_note: "MCP, SDK, native skills và plugin chỉ là cách phân phối cùng một lớp mở rộng khi client hỗ trợ. AI Kit không chạy LLM ở server, không thực thi thay AI client và không lưu trữ bộ nhớ của bạn."
+positioning_intro: "Ví dụ minh họa một yêu cầu trong AI client tương thích. Host AI tự chọn hướng dẫn phù hợp; AI Kit không chạy workflow ở server."
+positioning_note: "AI Kit cung cấp phương pháp và tài liệu tham chiếu, không phải một model hay agent runtime mới. Memory và dữ liệu nghiệp vụ riêng vẫn thuộc hệ thống sở hữu. MCP, SDK, native skills và plugin là các cách phân phối khi được hỗ trợ."
 
 # --- home ---
+hero_example_label: "Ví dụ · AI Chat Tools"
+hero_example_request: "Lập kế hoạch tính năng mời thành viên."
+hero_example_plan: "Bản nháp effort và task triển khai"
+hero_example_qa: "Bản nháp test case và trường hợp biên"
+hero_example_draft: "Chỉ minh họa · không ghi dữ liệu ra ngoài"
 home_catalog_heading: 'Một kit. Nhiều workflow.'
-home_catalog_intro: "Chọn skill theo loại công cụ AI. Skill nghiệp vụ cũng có thể cài cục bộ trong công cụ phát triển tương thích."
+home_catalog_intro: "Khám phá skill nghiệp vụ cho AI chat trước, hoặc chuyển sang skill phát triển phần mềm cho coding assistant có ngữ cảnh repo."
 
 # --- pipeline ---
 pipeline_agentsLabel: Agent chuyên trách
@@ -88,7 +110,7 @@ pipeline_agent_dev_owns: Lập trình, TDD, /devops (vai trò chính)
 pipeline_agent_pm_owns: PRD, story, tiêu chí chấp nhận, phạm vi
 pipeline_agent_tester_owns: Bộ E2E, flake, chia nhỏ CI, kiểm thử theo hành trình
 pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; SEV của /devops
-pipeline_intro: Mỗi giai đoạn tạo đầu ra để agent kế tiếp dùng. Vấn đề thô đi riêng qua /triage — được xác
+pipeline_intro: "Coding assistant có thể kết hợp skill để thống nhất phạm vi, viết yêu cầu, thiết kế, triển khai và review dựa trên ngữ cảnh repo. Host AI chọn và áp dụng từng bước."
   minh và viết tóm tắt trước khi tới /dev.
 pipeline_stage_align: Thống nhất
 pipeline_stage_design: Thiết kế
@@ -98,7 +120,7 @@ pipeline_stage_issues: Gửi vấn đề
 pipeline_stage_reqs: Yêu cầu / Tạo PRD
 pipeline_stage_review: Đánh giá code
 pipeline_stage_ship: Phát hành
-pipeline_title: Một luồng xử lý, từ ý tưởng cho đến khi phát hành.
+pipeline_title: "Luồng làm việc kỹ thuật, khi cần."
 
 # --- quickstart ---
 quickstart_body: "Cài kit cục bộ cho Cursor, Claude Code, Codex hoặc GitHub Copilot. Mở repo đích và chạy setup bằng bộ chọn skill hoặc cú pháp gọi của client."
@@ -147,8 +169,8 @@ principles_4_body:
 principles_4_title: Thiết kế mỗi ngày
 principles_5_body: Fork, chỉnh sửa, rồi commit lại — kỹ năng là của bạn, không phải prompt hộp đen.
 principles_5_title: Tự sửa và sở hữu
-principles_titleAccent: thực thụ
-principles_titlePrefix: Kỹ sư
+principles_titleAccent: "phát triển phần mềm."
+principles_titlePrefix: "Nguyên tắc"
 
 # --- knowledge ---
 knowledge_backToIndex: Quay lại Tri thức
@@ -230,10 +252,10 @@ skillDetail_upstream: Giai đoạn trước
 skillDetail_whenToUse: Khi nào dùng
 
 # --- ticker ---
-ticker_specBeforeCode: viết spec trước, code sau
-ticker_citeFile: trích dẫn đúng file
-ticker_noVibeCoding: không code theo cảm tính
-ticker_cursorFirst: ưu tiên Cursor
+ticker_evidenceFirst: "bằng chứng trước giả định"
+ticker_traceableWork: "quyết định có truy vết"
+ticker_contextMatters: "ngữ cảnh rõ nguồn"
+ticker_reviewedKnowledge: "tri thức đã review"
 ticker_toolAgnostic: không phụ thuộc công cụ
 ticker_mitLicensed: giấy phép MIT
 ticker_reviewDiff: rà soát diff
@@ -271,7 +293,7 @@ intelligence_eval_title: "Thiết kế để kiểm chứng"
 intelligence_eval_body: "Evaluation kiểm tra đầu ra có giữ đúng yêu cầu, chọn đúng skill và bàn giao đúng không. Phương pháp so sánh với baseline không dùng skill trong điều kiện tương đương."
 intelligence_packs: "skill pack MCP"
 intelligence_recipes: "workflow recipe"
-intelligence_eval_note: "57 scenario bao phủ chất lượng đầu ra, routing và composition. Chưa công bố kết quả đối chứng giữa model."
+intelligence_eval_note: "68 kịch bản giả lập bao phủ chất lượng đầu ra, routing và composition. Chưa xác lập kết quả đối chứng giữa các model hay native client."
 intelligence_workflows_title: "Workflow recipe"
 intelligence_workflows_intro: "Bắt đầu từ kết quả còn thiếu. Đây là luồng gợi ý, không phải pipeline bắt buộc."
 intelligence_workflows_note: "Bỏ qua bước không liên quan, giữ phạm vi đã duyệt và yêu cầu quyền rõ ràng khi ghi ra hệ thống ngoài. Không điều phối ở server."
@@ -297,7 +319,7 @@ skill_audience_dev: "Development tools · cục bộ"
 skill_audience_title: "Dùng skill ở đâu"
 skill_audience_both_detail: "Có trong catalog work pack qua remote MCP ở chat client tương thích và dưới dạng skill cục bộ ở công cụ phát triển tương thích. Chat không cần checkout repo. Thao tác phụ thuộc công cụ và quyền rõ ràng; quy tắc gọi thủ công vẫn áp dụng."
 skill_audience_dev_detail: "Cài cục bộ vào công cụ phát triển tương thích như Cursor, Claude Code, Codex hoặc Copilot. Skill này không nằm trong catalog work pack remote MCP đã công bố."
-pipeline_dev_note: "Pipeline kỹ thuật này dành cho công cụ phát triển có ngữ cảnh repo. Người dùng chat có thể dùng workflow recipe bên dưới mà không cần checkout repo."
+pipeline_dev_note: "Các giai đoạn chỉ là hướng dẫn tùy chọn, không phải orchestration engine của AI Kit. Người dùng chat có thể dùng workflow nghiệp vụ mà không cần checkout repo."
 intelligence_eval_method: "So sánh phản hồi cùng một tác vụ giả lập, kiểm tra rubric và hard gate, ghi riêng dữ liệu tải skill thực tế và chất lượng đầu ra. Chưa tuyên bố mức cải thiện trước khi đối chứng độc lập."
 quickstart_choose: "Chọn cách anh/chị làm việc."
 quickstart_choose_body: "Dùng work pack từ xa trong chat, hoặc cài kit cục bộ đầy đủ cho development agent."
