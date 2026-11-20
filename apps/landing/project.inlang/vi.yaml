@@ -124,6 +124,7 @@ pipeline_stage_reqs: Yêu cầu / Tạo PRD
 pipeline_stage_review: Đánh giá code
 pipeline_stage_ship: Phát hành
 pipeline_title: "Luồng làm việc kỹ thuật, khi cần."
+pipeline_agents_note: "Đây là hướng dẫn vai trò tùy chọn cho coding assistant, không phải các agent do AI Kit vận hành hoặc một nhóm tự động thực thi dự án."
 
 # --- quickstart ---
 quickstart_body: "Cài kit cục bộ cho Cursor, Claude Code, Codex hoặc GitHub Copilot. Mở repo đích và chạy setup bằng bộ chọn skill hoặc cú pháp gọi của client."
