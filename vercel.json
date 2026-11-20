@@ -9,7 +9,7 @@
   },
   "headers": [
     {
-      "source": "/skill-bundles/0.3.1/:path*",
+      "source": "/skill-bundles/0.3.2/:path*",
       "headers": [
         {
           "key": "Cache-Control",

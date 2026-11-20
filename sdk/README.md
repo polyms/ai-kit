@@ -33,7 +33,7 @@ Install that tarball in your Business MCP. No new workspace dependencies or runt
 Run from the host that will consume the provider, after building the SDK and deploying the API:
 
 ```sh
-node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.1 20
+node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.2 20
 ```
 
 The report includes cold/warm p50 and p95, reference fetch timing and network call counts.
@@ -60,5 +60,5 @@ From skill release 0.3.2, `bundle.contract` includes context requirements and th
 include shared context guidance. Forward both the contract and selected file contents to the AI
 client, together with trusted domain instructions. The client reuses conversation context and
 retrieves missing information through authorized tools; do not send workspace data to the skill
-provider. Pinned 0.3.1 consumers retain their existing payloads. No SDK upgrade is required to
-receive additive metadata when using the latest release.
+provider. Release 0.3.2 replaces the experimental 0.3.1 snapshot. Use latest or pin 0.3.2;
+no SDK upgrade is required to receive the new metadata.

@@ -1,16 +1,14 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import * as v031 from '../../../registry/releases/0.3.1/manifest/skill-pack'
-
 import * as v032 from '../../../registry/releases/0.3.2/manifest/skill-pack'
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const root = resolve(app, '../..')
 const output = resolve(app, 'public/skill-bundles')
-const registry = { '0.3.1': v031, '0.3.2': v032 }
+const registry = { '0.3.2': v032 }
 const latest = '0.3.2'
 
 async function buildRelease(releaseVersion: keyof typeof registry) {
@@ -81,6 +79,8 @@ async function buildRelease(releaseVersion: keyof typeof registry) {
   return { catalog, bundles }
 }
 
+// The output directory contains generated assets only. Remove retired releases on rebuild.
+rmSync(output, { recursive: true, force: true })
 const releases = Object.fromEntries(await Promise.all((Object.keys(registry) as (keyof typeof registry)[])
   .map(async version => [version, await buildRelease(version)])))
 writeFileSync(resolve(app, 'src/lib/skill-pack/release-snapshot.generated.json'), JSON.stringify({ latest, releases }))
