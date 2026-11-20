@@ -33,7 +33,7 @@ const HOME_CATALOG_SLUGS = [
 export function HomeCatalog() {
   const locale = useAppStore(s => s.locale)
   const skills = getSkills(locale)
-  const [group, setGroup] = useState<'engineering' | 'work'>('engineering')
+  const [group, setGroup] = useState<'engineering' | 'work'>('work')
   const chatSlugs = listSkillPacks().map(pack => pack.name)
   const developmentSlugs = [...new Set([...HOME_CATALOG_SLUGS, ...skills.map(skill => skill.slug)])]
   const slugs = group === 'work' ? chatSlugs : developmentSlugs
@@ -46,7 +46,7 @@ export function HomeCatalog() {
       className='app-home-section app-home-section--catalog app-shell mx-auto max-w-[1080px]'
       id='catalog'
     >
-      <HomeSectionChip label={m.chip_catalog()} n='04' />
+      <HomeSectionChip label={m.chip_catalog()} n='03' />
       <div className='mb-3 flex items-baseline gap-3.5'>
         <h2 className='app-catalog__title m-0 font-bold font-sans tracking-tight'>
           {m.home_catalog_heading()}
@@ -64,11 +64,11 @@ export function HomeCatalog() {
             }}
             value={[group]}
           >
-            <Toolbar.Button render={<Toggle className='toggle' />} value='engineering'>
-              {m.home_catalog_engineering()}
-            </Toolbar.Button>
             <Toolbar.Button render={<Toggle className='toggle' />} value='work'>
               {m.home_catalog_work()}
+            </Toolbar.Button>
+            <Toolbar.Button render={<Toggle className='toggle' />} value='engineering'>
+              {m.home_catalog_engineering()}
             </Toolbar.Button>
           </ToggleGroup>
         </Toolbar>
