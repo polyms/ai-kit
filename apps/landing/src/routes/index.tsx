@@ -10,6 +10,7 @@ import {
   HomePositioning,
   HomeQuickStart,
   HomeTicker,
+  HomeUseCases,
 } from '../components/home'
 import { m } from '../paraglide/messages.js'
 
@@ -24,11 +25,12 @@ function HomePage() {
       </a>
       <HomeHeader />
       <HomeHero />
+      <HomeUseCases />
       <HomePositioning />
-      <HomePrinciples />
-      <HomePipeline />
-      <HomeIntelligence />
       <HomeCatalog />
+      <HomePipeline />
+      <HomePrinciples />
+      <HomeIntelligence />
       <HomeTicker />
       <HomeQuickStart />
       <HomeFooter />
