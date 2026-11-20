@@ -61,7 +61,6 @@ export function HomeCatalog() {
             const next = values[0]
             if (next === 'engineering' || next === 'work') setGroup(next)
           }}
-          rounded
           value={[group]}
         >
           <Toggle value='work'>{m.home_catalog_work()}</Toggle>
