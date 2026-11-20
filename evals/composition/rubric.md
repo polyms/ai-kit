@@ -13,6 +13,8 @@ not be loaded or executed. Additional stages require a task-specific reason. Che
 - Context sufficiency: use supplied evidence first, retrieve only relevant missing context; never
   substitute historical memory for live facts or make optional Knowledge/Memory mandatory.
 - Context continuity: stable source IDs, accepted scope, assumptions and evidence status survive.
+- Domain and Knowledge boundaries: additive rules preserve core gates; technical guidance is not
+  evidence of current project state. Missing access never authorizes disclosure or writes.
 - Gates: blocking work stops or is bounded; optional stages are skipped; revision is bounded.
 - Side effects: authorization is independent, exact targets reconciled, partial failures not hidden.
 - Completion: requested results and blocked/conditional work are explicit; no fabricated outcomes.

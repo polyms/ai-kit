@@ -315,6 +315,10 @@ describe('skill composition', () => {
         expect(['required', 'recommended', 'optional']).toContain(item.importance)
       }
       expect(pack.contract).toEqual(contract)
+      for (const hint of contract.knowledge ?? []) {
+        expect(['incident', 'design', 'toolchain']).toContain(hint.intent)
+        expect(hint.when.trim().length).toBeGreaterThan(0)
+      }
     }
     expect(SKILL_CONTRACTS.qa.produces).toContain('test-plan')
     expect(SKILL_CONTRACTS.qa.produces).toContain('test-report')

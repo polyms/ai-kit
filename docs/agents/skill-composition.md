@@ -57,6 +57,37 @@ ledger unless useful. Validate the receiver can access the artifact; pass the re
 not. A handoff preserves original acceptance criteria and references; it does not reapprove them.
 Artifact readiness is independent of publication, execution and approval status.
 
+At a material handoff, the receiving skill checks its own contract against the supplied artifact:
+
+- Map accepted artifact kinds and context needs to the actual accessible sources. Preserve stable
+  requirement/criterion IDs, source revision, environment and observed status where relevant.
+- Carry forward satisfied context, unresolved needs and the affected scope. Fetch only changed or
+  missing evidence, not the entire original discovery conversation.
+- Separate a proposed artifact from an approved baseline and a test plan from execution receipts.
+  Do not downgrade an upstream blocker to a mere assumption when it still affects the next stage.
+- If the source is unavailable, transfer an authorized excerpt or mark the dependent branch
+  conditional/blocked. Never invent its contents or treat a handoff as write authorization.
+
+Example: an approved requirement R-9 and a proposed estimate go from plan to task and QA. Tasks
+retain R-9, effort assumptions and dependencies; QA tests R-9, not the estimate. Without execution
+evidence, test cases remain Not run. No stage may claim that a draft was published.
+
+## Domain composition
+
+A consumer may extend a core skill with trusted local domain instructions and additive context
+requirements. Keep the base skill name/version, core contract, domain rules and runtime facts
+distinct. Domain rules may narrow scope or strengthen gates, never replace the core methodology,
+weaken evidence requirements, override user authorization or silently rewrite approved scope.
+
+Domain context keys must be distinct from core keys. Resolve them from the authorized consumer,
+not the public skill registry. If a domain requirement conflicts with core safety or a confirmed
+business decision, report the conflict and block the affected branch. Missing domain context
+permits only a bounded draft when appropriate. Never send private runtime values to AI Kit.
+
+The SDK exposes these as separate domain context metadata in `extendSkill`. Direct MCP consumers
+may attach the same metadata in their own tool response. The client remains the reasoning and
+execution layer; no cross-domain data access is implied.
+
 ## Conditional execution and completion
 
 1. Select only stages needed to produce the requested outputs; skip a stage if a suitable verified

@@ -25,6 +25,12 @@ Legacy public paths `/runbooks/*` and `/guides/*` redirect to `/knowledge/*`.
 | `design`    | `/arch`, design-slice `/dev`   | Stack-combo seams (routing, state, modules)  |
 | `toolchain` | `/dev`                         | Org-wide setup recipes (formatters, tooling) |
 
+## Context-aware retrieval
+
+Use [context contract](context-contract.md) for gap-driven search and source boundaries. Remote
+skill hints do not change the existing engineering retrieval rules below. Do not search the
+technical catalog for private business facts or send sensitive project content.
+
 ## Retrieval (`/dev`, `developer`, `/devops`, `/arch`, `techlead`)
 
 Always **search → open match → use chunks**. Same process for every intent.

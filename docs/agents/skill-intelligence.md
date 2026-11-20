@@ -19,7 +19,8 @@ search, orchestration runtime, analytics database or a new MCP tool.
 - `avoidWhen`: boundary against neighboring skills.
 - `starterPaths`: trusted manifest paths for the first retrieval.
 - `relatedSkills`: optional handoffs, not dependency or execution authorization.
-- `contract`: accepted/produced artifact kinds, a semantic completion gate and context needs.
+- `contract`: accepted/produced artifact kinds, a semantic completion gate, context needs and
+  optional Knowledge search hints. SDK catalogs also expose composition recipes.
 
 The top-level `composition` catalog advertises a shared protocol path and optional recipe metadata
 (hostPack, path and suggested stages). Existing packs and retrieval calls stay compatible.
@@ -65,7 +66,7 @@ conditional gates and bounded revision. The recipe host is only a retrieval loca
 Do not treat related skills as a chain or duplicate accepted decisions. Draft by default and verify
 authorized writes.
 
-The 13 output cases, 34 routing fixtures and 14 composition cases in `evals/` cover work intent,
+The 13 output cases, 38 routing fixtures and 17 composition cases in `evals/` cover work intent,
 overlap, composition and opt-out. The [local evaluation runner](../../evals/README.md) runs paired
 baseline/assisted cases with an explicitly configured compatible model endpoint, records local
 retrieval traces and optional blind-judge scores. It does not test native client integrations. Unit tests validate fixture integrity and retrieval behavior; actual client
