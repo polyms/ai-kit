@@ -17,27 +17,27 @@ const STAGES = [
 const AGENTS = [
   {
     name: 'pm',
-    role: 'Principal Product Manager',
+    role: m.pipeline_role_pm,
     owns: m.pipeline_agent_pm_owns,
   },
   {
     name: 'designer',
-    role: 'Principal Product Designer',
+    role: m.pipeline_role_designer,
     owns: m.pipeline_agent_design_owns,
   },
   {
     name: 'developer',
-    role: 'Principal Software Engineer',
+    role: m.pipeline_role_developer,
     owns: m.pipeline_agent_dev_owns,
   },
   {
     name: 'tester',
-    role: 'Principal Tester',
+    role: m.pipeline_role_tester,
     owns: m.pipeline_agent_tester_owns,
   },
   {
     name: 'techlead',
-    role: 'Principal Tech Lead',
+    role: m.pipeline_role_techlead,
     owns: m.pipeline_agent_techlead_owns,
   },
 ] as const
@@ -96,7 +96,7 @@ export function HomePipeline() {
               key={agent.name}
             >
               <div className='mb-2 font-bold font-mono text-[15px] text-primary-600'>{agent.name}</div>
-              <div className='mb-1.5 font-bold text-fg'>{agent.role}</div>
+              <div className='mb-1.5 font-bold text-fg'>{agent.role()}</div>
               <div className='text-[13.5px] text-muted leading-snug'>{agent.owns()}</div>
             </div>
           )
