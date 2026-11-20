@@ -47,9 +47,10 @@ domain_review: Review
 domain_triage: Triage
 
 # --- footer ---
+footer_col_workflows: "Work skills"
 footer_blurb: "An AI Augmentation Layer for the assistants you already use. Reusable skills for chat and development tools."
 footer_col_community: Community
-footer_col_pipeline: Pipeline
+footer_col_pipeline: "Engineering"
 footer_col_resources: Resources
 footer_copyright: MIT © 2026 Polyms
 footer_link_catalog: Skill catalog
@@ -57,28 +58,49 @@ footer_link_issues: Issues
 footer_starGithub: Star on GitHub
 
 # --- hero ---
+chip_usecases: "use cases"
+usecases_title: "Make your AI more useful for real work."
+usecases_intro: "Use consistent methods for everyday business tasks and repository-aware engineering, without switching to a different assistant."
+usecases_research_title: "Research and compare"
+usecases_research_body: "Evaluate alternatives, distinguish evidence from assumptions and prepare a decision brief."
+usecases_research_outcome: "Example outcome: a sourced comparison and decision draft."
+usecases_reqs_title: "Turn ideas into requirements"
+usecases_reqs_body: "Clarify scope and acceptance criteria, then draft a specification that people can review."
+usecases_reqs_outcome: "Example outcome: traceable requirements and open questions."
+usecases_delivery_title: "Plan, organize and test"
+usecases_delivery_body: "Estimate effort, break work into implementation tasks and derive QA coverage from agreed scope."
+usecases_delivery_outcome: "Example outcome: effort draft, task list and test cases."
+usecases_engineering_title: "Build with engineering discipline"
+usecases_engineering_body: "Use local skills in coding assistants to support design, implementation, review and E2E work."
+usecases_engineering_outcome: "Example outcome: scoped changes with verification steps."
+usecases_note: "AI Kit provides the methodology. Your host AI chooses the relevant skills and uses only context and tools it is authorized to access."
 hero_badge: "AI Augmentation Layer"
 hero_ctaPrimary: Get started
 hero_ctaSecondary: "Explore skills →"
 hero_line1: "Extend the AI"
 hero_line2: "you already use"
-hero_sub: "AI Kit adds reusable skills, structured methods and domain knowledge to compatible AI assistants. Your AI handles reasoning, context and tools; AI Kit provides the guidance."
+hero_sub: "Give your AI reusable skills, clear working methods and curated technical knowledge for research, requirements, planning and software delivery. Work inside compatible AI tools, without a new assistant."
 
 # --- positioning ---
-positioning_label: "What AI Kit is"
+positioning_ask_title: "Ask your AI"
+positioning_ask_body: "“Estimate our team invitation feature, draft implementation tasks and QA test cases. Do not publish.”"
+positioning_method_title: "AI Kit provides guidance"
+positioning_method_body: "Planning, task and QA skills offer methods, quality checks and artifact standards relevant to the request."
+positioning_apply_title: "Your AI applies it"
+positioning_apply_body: "The host uses authorized context and tools to produce drafts with traceable scope and evidence. External actions still require permission."
+positioning_label: "How it works"
 positioning_title: "Your AI, with a better playbook."
-positioning_intro: "AI Kit extends compatible AI tools with reusable skills, methodologies and knowledge. It does not replace the AI you already use."
-positioning_host_title: "Your AI client"
-positioning_host_body: "Handles reasoning, conversation, context, available memory, skill selection and tool calls within its own capabilities and permissions."
-positioning_kit_title: "AI Kit"
-positioning_kit_body: "Supplies skills, playbooks, templates, context contracts, workflow guidance and Knowledge references."
-positioning_tools_title: "Your connected tools"
-positioning_tools_body: "Project trackers, documents, source control and business memory stay with their owners and are accessed only through authorized integrations."
-positioning_note: "MCP, SDK, native skills and plugins are ways to deliver the same augmentation layer where supported. AI Kit runs no server-side LLM inference or agent execution runtime and does not store your memory."
+positioning_intro: "An illustrative task in a compatible AI client. The host selects useful guidance; AI Kit does not run a server-side workflow."
+positioning_note: "AI Kit supplies methodology and references, not another model or agent runtime. Memory and private business data stay with their owners. MCP, SDK, native skills and plugins are delivery options where supported."
 
 # --- home ---
+hero_example_label: "Example · AI Chat Tools"
+hero_example_request: "Plan our team invitation feature."
+hero_example_plan: "Draft effort and implementation tasks"
+hero_example_qa: "Draft QA scenarios and edge cases"
+hero_example_draft: "Illustration only · no external writes"
 home_catalog_heading: 'One kit. Many workflows.'
-home_catalog_intro: "Choose the skills for your kind of AI tool. Work skills can also be installed locally in supported development clients."
+home_catalog_intro: "Explore work skills for AI chat first, or switch to development skills for repository-aware coding assistants."
 
 # --- pipeline ---
 pipeline_agentsLabel: Principal agents
@@ -87,7 +109,7 @@ pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
 pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
 pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys
 pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; /devops SEV
-pipeline_intro: Each stage produces artifacts the next agent consumes. Raw issues route in separately via /triage — verified and briefed before they reach /dev.
+pipeline_intro: "Coding assistants can combine skills for alignment, requirements, design, development and review using repository context. The host selects and applies each step."
 pipeline_stage_align: Align
 pipeline_stage_design: Design
 pipeline_stage_dev: Dev
@@ -96,7 +118,7 @@ pipeline_stage_issues: To issues
 pipeline_stage_reqs: Reqs / To PRD
 pipeline_stage_review: Code review
 pipeline_stage_ship: Ship
-pipeline_title: One pipeline, start to ship.
+pipeline_title: "Engineering workflows, when you need them."
 
 # --- quickstart ---
 quickstart_body: "Install the local kit for Cursor, Claude Code, Codex or GitHub Copilot. Open your target repository and run setup using your client's skill picker or invocation syntax."
@@ -141,8 +163,8 @@ principles_4_body: Specs name modules and seams; code skills resist the ball of 
 principles_4_title: Design every day
 principles_5_body: Fork, adapt, commit back — skills are yours, not black-box prompts.
 principles_5_title: Hack and own them
-principles_titleAccent: engineering.
-principles_titlePrefix: Real
+principles_titleAccent: "principles."
+principles_titlePrefix: "Engineering"
 
 # --- knowledge ---
 knowledge_backToIndex: Back to knowledge
@@ -224,10 +246,10 @@ skillDetail_upstream: Upstream
 skillDetail_whenToUse: When to use
 
 # --- ticker ---
-ticker_specBeforeCode: spec before code
-ticker_citeFile: cite the file
-ticker_noVibeCoding: no vibe coding
-ticker_cursorFirst: cursor-first
+ticker_evidenceFirst: "evidence before assumptions"
+ticker_traceableWork: "traceable decisions"
+ticker_contextMatters: "context with provenance"
+ticker_reviewedKnowledge: "reviewed knowledge"
 ticker_toolAgnostic: tool-agnostic
 ticker_mitLicensed: MIT licensed
 ticker_reviewDiff: review the diff
@@ -265,7 +287,7 @@ intelligence_eval_title: "Built to be evaluated"
 intelligence_eval_body: "The evaluation checks whether assisted outputs preserve requirements, select relevant skills and hand off work correctly. It compares against an unassisted baseline under matched conditions."
 intelligence_packs: "MCP skill packs"
 intelligence_recipes: "workflow recipes"
-intelligence_eval_note: "57 scenarios cover output quality, routing and composition. Comparative model results are not published yet."
+intelligence_eval_note: "68 synthetic scenarios cover output quality, routing and composition. Comparative model quality and native-client results are not yet established."
 intelligence_workflows_title: "Workflow recipes"
 intelligence_workflows_intro: "Start at the first missing artifact. These are suggested routes, not mandatory pipelines."
 intelligence_workflows_note: "Skip irrelevant stages, preserve approved scope and require explicit authorization for external writes. No server-side orchestration."
@@ -291,7 +313,7 @@ skill_audience_dev: "Development tools · local"
 skill_audience_title: "Where to use this skill"
 skill_audience_both_detail: "Available through the remote MCP work catalog in supported chat clients and as a local skill in supported development tools. Chat does not need a repository checkout. Actions still depend on available tools and explicit permissions; manual-only invocation rules remain in effect."
 skill_audience_dev_detail: "Install locally in a supported development tool such as Cursor, Claude Code, Codex or Copilot. This skill is not in the published remote MCP work catalog."
-pipeline_dev_note: "This engineering pipeline is for repository-aware development tools. Chat users can use the work recipes below without a repository checkout."
+pipeline_dev_note: "Stages are optional guidance, not an AI Kit orchestration engine. Chat users can use business workflows without checking out a repository."
 intelligence_eval_method: "Compare responses to the same synthetic task, check rubric and hard gates, and record actual retrieval separately from output quality. No uplift is claimed before independent comparison."
 quickstart_choose: "Choose how you work."
 quickstart_choose_body: "Use the remote work packs in chat, or install the full local kit for your development agent."
