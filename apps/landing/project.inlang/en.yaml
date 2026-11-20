@@ -47,7 +47,7 @@ domain_review: Review
 domain_triage: Triage
 
 # --- footer ---
-footer_blurb: 'Agent skills for engineering and everyday work. One version-controlled kit, available locally and through MCP.'
+footer_blurb: "An AI Augmentation Layer for the assistants you already use. Reusable skills for chat and development tools."
 footer_col_community: Community
 footer_col_pipeline: Pipeline
 footer_col_resources: Resources
@@ -57,12 +57,24 @@ footer_link_issues: Issues
 footer_starGithub: Star on GitHub
 
 # --- hero ---
-hero_badge: "AI chat · AI development"
+hero_badge: "AI Augmentation Layer"
 hero_ctaPrimary: Get started
 hero_ctaSecondary: "Explore skills →"
-hero_line1: "Agent skills for"
-hero_line2: "real work"
-hero_sub: "One toolkit, two ways to work. Use AI chat for research, decisions and planning; install skills in your coding assistant to ship software. The same workflows are shared across compatible clients."
+hero_line1: "Extend the AI"
+hero_line2: "you already use"
+hero_sub: "AI Kit adds reusable skills, structured methods and domain knowledge to compatible AI assistants. Your AI handles reasoning, context and tools; AI Kit provides the guidance."
+
+# --- positioning ---
+positioning_label: "What AI Kit is"
+positioning_title: "Your AI, with a better playbook."
+positioning_intro: "AI Kit extends compatible AI tools with reusable skills, methodologies and knowledge. It does not replace the AI you already use."
+positioning_host_title: "Your AI client"
+positioning_host_body: "Handles reasoning, conversation, context, skill selection and tool calls within its own capabilities and permissions."
+positioning_kit_title: "AI Kit"
+positioning_kit_body: "Supplies skills, playbooks, templates, context contracts, workflow guidance and Knowledge references."
+positioning_tools_title: "Your connected tools"
+positioning_tools_body: "Project trackers, documents, source control and other services remain under your AI client's authorized integrations."
+positioning_note: "MCP, SDK, native skills and plugins are ways to deliver the same augmentation layer where supported. AI Kit runs no server-side LLM inference or agent execution runtime."
 
 # --- home ---
 home_catalog_heading: 'One kit. Many workflows.'
