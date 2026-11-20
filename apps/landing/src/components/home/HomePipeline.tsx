@@ -63,7 +63,7 @@ function StageChip({ label, invoke, last }: { label: string; invoke?: string; la
 export function HomePipeline() {
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='pipeline'>
-      <HomeSectionChip label={m.chip_pipeline()} n='02' />
+      <HomeSectionChip label={m.chip_pipeline()} n='04' />
       <h2 className='app-pipeline__title m-0 mb-3 font-bold font-sans text-fg'>{m.pipeline_title()}</h2>
       <p className='mb-3 max-w-[640px] text-muted'>{m.pipeline_intro()}</p>
       <p className='mb-9 text-sm text-muted'>{m.pipeline_dev_note()}</p>
