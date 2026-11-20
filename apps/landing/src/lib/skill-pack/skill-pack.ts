@@ -1,4 +1,4 @@
-import { compositionPaths, SKILL_CONTRACTS, type SkillContract } from './skill-composition'
+import { CONTEXT_PROTOCOL, compositionPaths, SKILL_CONTRACTS, type SkillContract } from './skill-composition'
 import { SKILL_ROUTING } from './skill-routing'
 
 /** GitHub raw base for skill packs on `main`. Paths are repo-relative and have no leading slash. */
@@ -119,16 +119,18 @@ export type SkillPackSummary = {
 
 export type ReqsSkillPack = {
   name: 'reqs'
+  contract: SkillContract
   files: SkillPackFile[]
 }
 
 export type DesignSkillPack = {
   name: 'design'
+  contract: SkillContract
   files: SkillPackFile[]
   uiKit: SkillPackFile[]
 }
 
-export type WorkSkillPack = { name: WorkSkillName; files: SkillPackFile[] }
+export type WorkSkillPack = { name: WorkSkillName; contract: SkillContract; files: SkillPackFile[] }
 export type SkillPack = ReqsSkillPack | DesignSkillPack | WorkSkillPack
 
 export function skillPackRawUrl(path: string): string {
@@ -156,6 +158,7 @@ export function getSkillPack(name: string): SkillPack | null {
   if (name === 'reqs') {
     return {
       name: 'reqs',
+      contract: SKILL_CONTRACTS.reqs,
       files: toFiles([
         ...REQS_SKILL_PATHS,
         ...REQS_REFERENCE_PATHS,
@@ -167,6 +170,7 @@ export function getSkillPack(name: string): SkillPack | null {
   if (name === 'design') {
     return {
       name: 'design',
+      contract: SKILL_CONTRACTS.design,
       files: toFiles([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS, ...compositionPaths('design')]),
       uiKit: toFiles(UI_KIT_SKILL_PATHS),
     }
@@ -176,6 +180,7 @@ export function getSkillPack(name: string): SkillPack | null {
     const references = workName === 'docs' ? DOCS_REFERENCE_PATHS : []
     return {
       name: workName,
+      contract: SKILL_CONTRACTS[workName],
       files: toFiles([
         ...WORK_SKILL_PATHS[workName],
         ...references,
@@ -190,8 +195,8 @@ export function getSkillPack(name: string): SkillPack | null {
 /** First request: entry point, applicable shared standard and default template for short workflows. */
 export function starterPaths(name: SkillPackName): string[] {
   const entry = `skills/${name}/SKILL.md`
-  if (name === 'design') return [entry]
-  const paths = [entry, WORK_ARTIFACT_STANDARD]
+  if (name === 'design') return [entry, CONTEXT_PROTOCOL]
+  const paths = [entry, WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL]
   if (name !== 'reqs' && SKILL_ROUTING[name].starter === 'primary') {
     paths.push(WORK_SKILL_PATHS[name][1])
   }

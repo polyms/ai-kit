@@ -21,36 +21,114 @@ export const ARTIFACT_KINDS = [
 ] as const
 export type ArtifactKind = (typeof ARTIFACT_KINDS)[number]
 
+export type ContextRequirement = {
+  key: string
+  importance: 'required' | 'recommended' | 'optional'
+  description: string
+}
+
+export const CONTEXT_PROTOCOL = 'docs/agents/context-contract.md'
+
 export type SkillContract = {
   /** Alternative usable input kinds; the selected workflow determines actual prerequisites. */
   accepts: readonly ArtifactKind[]
   produces: readonly ArtifactKind[]
   readyWhen: string
+  /** Advisory context needs; actual blockers depend on the requested outcome. */
+  context: readonly ContextRequirement[]
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
   research: {
+    context: [
+      { key: 'research-question', importance: 'required', description: 'Question and scope.' },
+      {
+        key: 'source-evidence',
+        importance: 'recommended',
+        description: 'Relevant sources, dates and existing evidence.',
+      },
+      {
+        key: 'constraints',
+        importance: 'recommended',
+        description: 'Research boundaries and comparison criteria.',
+      },
+    ],
     accepts: ['context', 'requirements', 'decision', 'review-findings'],
     produces: ['evidence'],
     readyWhen: 'Material claims have sources, dates and explicit evidence gaps.',
   },
   business: {
+    context: [
+      { key: 'decision-goal', importance: 'required', description: 'Decision or business question.' },
+      { key: 'business-rules', importance: 'recommended', description: 'Commercial rules and constraints.' },
+      {
+        key: 'cost-evidence',
+        importance: 'recommended',
+        description: 'Comparable cost, revenue or market evidence.',
+      },
+      { key: 'prior-decisions', importance: 'optional', description: 'Previous decisions and rationale.' },
+    ],
     accepts: ['context', 'evidence', 'requirements', 'review-findings'],
     produces: ['decision'],
     readyWhen: 'Options and assumptions are comparable; proposed and approved decisions are distinguished.',
   },
   reqs: {
+    context: [
+      { key: 'goal', importance: 'required', description: 'Requested outcome and affected actors.' },
+      {
+        key: 'scope',
+        importance: 'recommended',
+        description: 'Boundaries, business rules and known requirements.',
+      },
+      {
+        key: 'prior-decisions',
+        importance: 'recommended',
+        description: 'Approved decisions and unresolved forks.',
+      },
+      {
+        key: 'existing-artifacts',
+        importance: 'optional',
+        description: 'Existing requirements and evidence.',
+      },
+    ],
     accepts: ['context', 'evidence', 'decision', 'review-findings', 'requirements'],
     produces: ['requirements'],
     readyWhen: 'Scope, rules and acceptance criteria are traceable; unresolved decisions are explicit.',
   },
   design: {
+    context: [
+      { key: 'goal', importance: 'required', description: 'Screen or interaction and its purpose.' },
+      {
+        key: 'requirements',
+        importance: 'recommended',
+        description: 'Approved behavior, states and acceptance criteria.',
+      },
+      {
+        key: 'design-system',
+        importance: 'recommended',
+        description: 'Component library, visual constraints and brand.',
+      },
+      {
+        key: 'existing-artifacts',
+        importance: 'optional',
+        description: 'Current screens and UI specifications.',
+      },
+    ],
     accepts: ['context', 'requirements', 'ui-spec', 'review-findings'],
     produces: ['ui-spec', 'review-findings'],
     readyWhen:
       'Required screen states, constraints and handoff evidence are stated; unapproved design changes are flagged.',
   },
   docs: {
+    context: [
+      { key: 'goal', importance: 'required', description: 'Document purpose, audience and format.' },
+      {
+        key: 'source-material',
+        importance: 'recommended',
+        description: 'Facts, artifacts and current documentation.',
+      },
+      { key: 'constraints', importance: 'optional', description: 'Destination conventions and language.' },
+    ],
     accepts: [
       'context',
       'evidence',
@@ -65,33 +143,145 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'The artifact is standalone and separates confirmed facts, decisions and pending work.',
   },
   task: {
+    context: [
+      { key: 'goal', importance: 'required', description: 'Requested work and expected outcome.' },
+      {
+        key: 'scope',
+        importance: 'recommended',
+        description: 'Boundaries, parent requirements and constraints.',
+      },
+      {
+        key: 'dependencies',
+        importance: 'recommended',
+        description: 'Known dependencies, blockers and acceptance evidence.',
+      },
+      { key: 'prior-decisions', importance: 'optional', description: 'Relevant agreed decisions.' },
+    ],
     accepts: ['context', 'requirements', 'ui-spec', 'delivery-plan', 'review-findings', 'defect'],
     produces: ['work-item'],
     readyWhen: 'Each item has bounded scope, testable outcome and dependencies; write status is explicit.',
   },
   bug: {
+    context: [
+      {
+        key: 'observed-behavior',
+        importance: 'required',
+        description: 'Reported symptom or actual behavior.',
+      },
+      {
+        key: 'expected-behavior',
+        importance: 'recommended',
+        description: 'Expected behavior and its source, if known.',
+      },
+      {
+        key: 'source-evidence',
+        importance: 'recommended',
+        description: 'Reproduction, environment, frequency and impact evidence.',
+      },
+      {
+        key: 'prior-incidents',
+        importance: 'optional',
+        description: 'Relevant past defects or incident knowledge.',
+      },
+    ],
     accepts: ['context', 'test-report', 'requirements', 'tracker-snapshot'],
     produces: ['defect'],
     readyWhen:
       'Observed and expected behaviors are separate; reproduction and impact are evidence-backed or unknown.',
   },
   track: {
+    context: [
+      { key: 'goal', importance: 'required', description: 'Requested tracker operation or reporting scope.' },
+      {
+        key: 'current-state',
+        importance: 'required',
+        description: 'Current target records for reporting or mutation; otherwise bounded draft only.',
+      },
+      { key: 'constraints', importance: 'recommended', description: 'Workflow rules and requested filters.' },
+    ],
     accepts: ['context', 'work-item', 'defect', 'tracker-snapshot', 'delivery-plan'],
     produces: ['tracker-snapshot', 'change-receipt'],
     readyWhen:
       'Targets and current fields are resolved; requested changes and verification are reported separately.',
   },
   plan: {
+    context: [
+      {
+        key: 'goal',
+        importance: 'required',
+        description: 'Delivery objective and requested estimate or plan.',
+      },
+      {
+        key: 'scope',
+        importance: 'required',
+        description: 'Work boundaries or a bounded set of requirements.',
+      },
+      {
+        key: 'dependencies',
+        importance: 'recommended',
+        description: 'Known dependencies and delivery constraints.',
+      },
+      {
+        key: 'team-capacity',
+        importance: 'recommended',
+        description: 'Required for a feasible sprint or committed date, not effort-only estimates.',
+      },
+      {
+        key: 'historical-effort',
+        importance: 'optional',
+        description: 'Relevant historical estimates or actual effort.',
+      },
+      {
+        key: 'prior-decisions',
+        importance: 'optional',
+        description: 'Confirmed decisions and lessons affecting delivery.',
+      },
+    ],
     accepts: ['context', 'requirements', 'work-item', 'tracker-snapshot', 'review-findings', 'decision'],
     produces: ['delivery-plan'],
     readyWhen: 'Effort and elapsed time reconcile with dependencies, capacity and uncertainty.',
   },
   qa: {
+    context: [
+      {
+        key: 'goal',
+        importance: 'required',
+        description: 'Requested test design, coverage or verification target.',
+      },
+      {
+        key: 'requirements',
+        importance: 'recommended',
+        description: 'Expected behavior and acceptance criteria.',
+      },
+      {
+        key: 'source-evidence',
+        importance: 'recommended',
+        description: 'Actual execution evidence is required to report a test result.',
+      },
+      {
+        key: 'prior-incidents',
+        importance: 'optional',
+        description: 'Relevant regressions and past defects.',
+      },
+    ],
     accepts: ['context', 'requirements', 'ui-spec', 'work-item', 'defect', 'test-plan', 'test-report'],
     produces: ['test-plan', 'test-report'],
     readyWhen: 'Coverage gaps and execution evidence are distinct; unrun tests are never marked passed.',
   },
   comms: {
+    context: [
+      { key: 'goal', importance: 'required', description: 'Message purpose and audience.' },
+      {
+        key: 'source-material',
+        importance: 'recommended',
+        description: 'Facts, agreed decisions and actual status.',
+      },
+      {
+        key: 'constraints',
+        importance: 'recommended',
+        description: 'Tone, channel, language and approved commitments.',
+      },
+    ],
     accepts: [
       'context',
       'evidence',
@@ -109,6 +299,20 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       'The message preserves factual status, commitments and authorization; send status is explicit.',
   },
   review: {
+    context: [
+      { key: 'review-target', importance: 'required', description: 'Artifact or behavior being reviewed.' },
+      {
+        key: 'review-criteria',
+        importance: 'recommended',
+        description: 'Applicable requirements, standards and expected outcomes.',
+      },
+      { key: 'source-evidence', importance: 'recommended', description: 'Evidence supporting findings.' },
+      {
+        key: 'prior-decisions',
+        importance: 'optional',
+        description: 'Approved scope and relevant decisions.',
+      },
+    ],
     accepts: [
       'context',
       'evidence',
@@ -125,6 +329,24 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Findings have evidence, severity, impact and actionable fixes; review is not approval.',
   },
   release: {
+    context: [
+      { key: 'goal', importance: 'required', description: 'Release target, scope and environment.' },
+      {
+        key: 'current-state',
+        importance: 'recommended',
+        description: 'Current build, deployment and rollout state.',
+      },
+      {
+        key: 'source-evidence',
+        importance: 'recommended',
+        description: 'QA, readiness and rollback evidence is required to claim a gate passed.',
+      },
+      {
+        key: 'constraints',
+        importance: 'recommended',
+        description: 'Release gates, dependencies and approvals.',
+      },
+    ],
     accepts: ['context', 'tracker-snapshot', 'test-report', 'delivery-plan', 'review-findings'],
     produces: ['release-readiness'],
     readyWhen:
@@ -193,6 +415,7 @@ export const WORKFLOW_RECIPES: readonly WorkflowRecipe[] = [
 export function compositionPaths(name: SkillPackName): string[] {
   return [
     COMPOSITION_PROTOCOL,
+    CONTEXT_PROTOCOL,
     ...WORKFLOW_RECIPES.filter(recipe => recipe.hostPack === name).map(recipe => recipe.path),
   ]
 }

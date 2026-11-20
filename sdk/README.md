@@ -53,3 +53,12 @@ pnpm add @polyms/ai-kit-sdk
 
 The latest catalog is refreshed on demand after 30 minutes by default; override with `latestTtlMs`.
 Pinned bundles remain cached until eviction or explicit clearing.
+
+## Context-aware consumers
+
+From skill release 0.3.2, `bundle.contract` includes context requirements and the starter files
+include shared context guidance. Forward both the contract and selected file contents to the AI
+client, together with trusted domain instructions. The client reuses conversation context and
+retrieves missing information through authorized tools; do not send workspace data to the skill
+provider. Pinned 0.3.1 consumers retain their existing payloads. No SDK upgrade is required to
+receive additive metadata when using the latest release.

@@ -18,6 +18,12 @@ integrations at runtime. These names are capability concepts, not new MCP tools 
 Resolve the actual destination and supported actions from the client. Read before write. Missing
 capabilities degrade to a draft, a partial report or explicit inability to verify, never a fabricated result.
 
+## Context
+
+Use [context contract](context-contract.md) to resolve semantic information needs from available,
+authorized sources. Knowledge and Memory are not prerequisites for every skill. Local invocation and
+workspace rules remain unchanged; no new provider or runtime is required.
+
 ## Composition
 
 Use handoffs when an output is a meaningful input to another skill. Example: research evidence ->

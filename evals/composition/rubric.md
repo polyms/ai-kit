@@ -10,6 +10,8 @@ be used for the requested branch (or an explicit client-policy blocker reported)
 not be loaded or executed. Additional stages require a task-specific reason. Check:
 
 - Contract fit and minimal route: upstream outputs satisfy actual downstream prerequisites.
+- Context sufficiency: use supplied evidence first, retrieve only relevant missing context; never
+  substitute historical memory for live facts or make optional Knowledge/Memory mandatory.
 - Context continuity: stable source IDs, accepted scope, assumptions and evidence status survive.
 - Gates: blocking work stops or is bounded; optional stages are skipped; revision is bounded.
 - Side effects: authorization is independent, exact targets reconciled, partial failures not hidden.

@@ -13,7 +13,9 @@ Use catalog contracts to select a route: accepts lists alternative useful input 
 possible outputs; readyWhen describes a completion gate. These are semantic hints, not all mandatory
 inputs or a data validator. Read the selected workflow to determine actual prerequisites.
 
-For multi-skill work, read this protocol once. Choose a relevant recipe only if it helps; use a
+Use [context contract](context-contract.md) to identify material gaps before each stage. Reuse the
+shared context and source-backed artifacts; do not reload or retrieve unrelated context. For multi-skill
+work, read this protocol once. Choose a relevant recipe only if it helps; use a
 custom minimal route otherwise. In remote MCP, the catalog lists each recipe's hostPack and path.
 Request the protocol through any selected pack, and the recipe through its hostPack using exact
 paths. The host is only a retrieval location, not a required first stage. Load starterPaths of
