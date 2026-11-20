@@ -2,10 +2,10 @@ import { m } from '../../paraglide/messages.js'
 
 export function HomeTicker() {
   const words = [
-    m.ticker_specBeforeCode(),
-    m.ticker_citeFile(),
-    m.ticker_noVibeCoding(),
-    m.ticker_cursorFirst(),
+    m.ticker_evidenceFirst(),
+    m.ticker_traceableWork(),
+    m.ticker_contextMatters(),
+    m.ticker_reviewedKnowledge(),
     m.ticker_toolAgnostic(),
     m.ticker_mitLicensed(),
     m.ticker_reviewDiff(),
