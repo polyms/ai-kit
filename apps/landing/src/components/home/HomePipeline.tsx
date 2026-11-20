@@ -85,6 +85,7 @@ export function HomePipeline() {
         </span>
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
+      <p className='mb-5 max-w-[760px] text-sm text-muted'>{m.pipeline_agents_note()}</p>
       <div className='flex flex-wrap gap-6'>
         {AGENTS.map((agent, i) => {
           const playfulRotate =
