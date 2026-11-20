@@ -110,7 +110,7 @@ export function HomeHero() {
               </a>
             </div>
             <div className='flex flex-wrap items-center gap-3.5'>
-              <Button className='font-bold' render={<a href='/#start' />} rounded size='xl' variant='primary'>
+              <Button className='font-bold' render={<a href='/#chat-start' />} rounded size='xl' variant='primary'>
                 <Rocket2 aria-hidden color='#ffffff' size={20} />
                 {m.hero_ctaPrimary()}
               </Button>
