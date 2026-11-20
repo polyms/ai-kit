@@ -18,9 +18,9 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
       {
         name: 'description',
-        content: 'ai-kit — Polyms agent skills for real engineering: align, spec, then ship.',
+        content: 'AI Kit is an AI Augmentation Layer for existing AI assistants, providing reusable skills, work methods and curated technical knowledge.',
       },
-      { title: 'ai-kit — Polyms' },
+      { title: 'AI Kit | AI Augmentation Layer by Polyms' },
       { name: 'theme-color', content: __THEME_COLOR__ },
       { name: 'version', content: __VERSION__ },
     ],
