@@ -5,11 +5,13 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as v031 from '../../../registry/releases/0.3.1/manifest/skill-pack'
 
+import * as v032 from '../../../registry/releases/0.3.2/manifest/skill-pack'
+
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const root = resolve(app, '../..')
 const output = resolve(app, 'public/skill-bundles')
-const registry = { '0.3.1': v031 }
-const latest = '0.3.1'
+const registry = { '0.3.1': v031, '0.3.2': v032 }
+const latest = '0.3.2'
 
 async function buildRelease(releaseVersion: keyof typeof registry) {
   const { getSkillPack, listSkillPacks } = registry[releaseVersion]

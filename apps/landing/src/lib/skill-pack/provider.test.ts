@@ -15,17 +15,42 @@ describe('versioned snapshot provider', () => {
     expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)
     expect((await skillProvider({ name: '__proto__' })).status).toBe(404)
   })
-  it('resolves latest to the sole registered release and rejects unreleased versions', async () => {
+  it('resolves latest to the new release and preserves the pinned release', async () => {
     const latest = await (await skillProvider({ version: 'latest' })).json()
     const pinned = await (await skillProvider({ version: '0.3.1' })).json()
-    expect(latest.version).toBe('0.3.1')
+    expect(latest.version).toBe('0.3.2')
+    expect(pinned.version).toBe('0.3.1')
     expect(pinned.version).toBe('0.3.1')
     expect(latest.packs.find((p: { name: string }) => p.name === 'track').useWhen).toContain(
       'Check giúp a ticket quá hạn, đổi assignee; check ticket qua han'
     )
-    expect(pinned).toEqual(latest)
-    expect(Object.keys(RELEASES)).toEqual(['0.3.1'])
+    expect(pinned.packs.every((p: { contract: { context?: unknown } }) => p.contract.context === undefined)).toBe(true)
+    expect(latest.packs.every((p: { contract: { context?: unknown } }) => Array.isArray(p.contract.context))).toBe(true)
+    expect(Object.keys(RELEASES)).toEqual(['0.3.1', '0.3.2'])
     expect((await skillProvider({ version: '0.3.0' })).status).toBe(404)
+  })
+  it('passes new context metadata and guidance through the SDK and exact selection', async () => {
+    const transport = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.body) return skillProvider(JSON.parse(String(init.body)))
+      const [, , version, name, file] = new URL(String(url)).pathname.split('/')
+      if (version === 'latest.json') return skillProvider({ version: 'latest' })
+      return skillProvider({ version, name, strategy: file?.replace('.json', '') })
+    })
+    const client = createSkillProvider({ endpoint: 'https://example.com', fetch: transport })
+    const bundle = await client.getSkill('plan')
+    expect(bundle.version).toBe('0.3.2')
+    expect(bundle.contract).toMatchObject({
+      context: expect.arrayContaining([{ key: 'scope', importance: 'required', description: expect.any(String) }]),
+    })
+    const guidance = 'docs/agents/context-contract.md'
+    expect(bundle.starterPaths).toContain(guidance)
+    expect(bundle.files.find(file => file.path === guidance)?.content).toContain('# Context contract')
+    const selected = await client.getSkill('plan', { paths: ['docs/agents/skill-composition.md'] })
+    expect(selected.contract).toEqual(bundle.contract)
+    expect(selected.files.filter(file => file.content)).toHaveLength(1)
+    const legacy = await client.getSkill('plan', { version: '0.3.1' })
+    expect(legacy.contract).not.toHaveProperty('context')
+    expect(legacy.starterPaths).not.toContain(guidance)
   })
   it('returns manifest only', async () => {
     const data = await (await skillProvider({ name: 'reqs', strategy: 'manifest' })).json()
