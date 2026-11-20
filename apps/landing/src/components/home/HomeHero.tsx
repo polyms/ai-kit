@@ -40,7 +40,7 @@ function FloatingIcon({
   )
 }
 
-function AlignCard() {
+function WorkExampleCard() {
   return (
     <div
       className={`relative w-full max-w-95 rounded-[20px] border border-line bg-body p-5 shadow-popout ${HOME_PLAYFUL ? 'rotate-[0.8deg]' : ''}`}
@@ -50,15 +50,16 @@ function AlignCard() {
           aria-hidden
           className='size-2 rounded-full bg-primary-600 shadow-[0_0_0_3px_var(--accent-glow)]'
         />
-        <span className='font-mono text-[12.5px] text-muted'>polyms/ai-kit · main</span>
+        <span className='font-mono text-[12.5px] text-muted'>{m.hero_example_label()}</span>
       </div>
-      <div className='mb-3 font-bold font-mono text-[15px] text-primary-600'>/align checkout refactor</div>
+      <p className='mb-3 font-bold text-[15px] text-fg'>{m.hero_example_request()}</p>
       <div className='font-mono text-[12.5px] text-muted leading-[1.9]'>
-        <div>→ {m.hero_alignCard_clarify()}</div>
-        <div>
-          → {m.hero_alignCard_wrote()} <span className='font-semibold text-fg'>docs/adr/0007.md</span>
-        </div>
+        <div>→ {m.hero_example_plan()}</div>
+        <div>→ {m.hero_example_qa()}</div>
       </div>
+      <p className='mb-0 mt-3 border-t border-line pt-2 font-mono text-[11px] text-muted'>
+        {m.hero_example_draft()}
+      </p>
     </div>
   )
 }
@@ -107,13 +108,6 @@ export function HomeHero() {
                   <span className='block text-[13px] text-muted leading-relaxed'>{m.hero_dev_path()}</span>
                 </span>
               </a>
-              <a className='flex items-start gap-3 rounded-2xl border border-line bg-body p-3.5 no-underline hover:border-primary-500' href='/sdk'>
-                <Code2 aria-hidden className='mt-0.5 shrink-0 text-primary-600' size={22} />
-                <span className='min-w-0'>
-                  <span className='block font-bold text-sm text-fg'>{m.nav_sdk()}</span>
-                  <span className='block text-[13px] text-muted leading-relaxed'>{m.sdk_hero_path()}</span>
-                </span>
-              </a>
             </div>
             <div className='flex flex-wrap items-center gap-3.5'>
               <Button className='font-bold' render={<a href='/#start' />} rounded size='xl' variant='primary'>
@@ -134,7 +128,7 @@ export function HomeHero() {
           </div>
 
           <div className='app-hero__align-float'>
-            <AlignCard />
+            <WorkExampleCard />
           </div>
         </div>
       </div>
