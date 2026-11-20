@@ -40,7 +40,7 @@ export function HomeCatalog() {
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
       <p className='mb-6 text-muted'>{m.home_catalog_intro()}</p>
-      <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
+      <div className='mb-8 flex flex-wrap items-center gap-4'>
         <Toolbar aria-label={m.home_catalog_group()} rounded variant='inline'>
           <ToggleGroup
             aria-label={m.home_catalog_group()}
@@ -59,9 +59,7 @@ export function HomeCatalog() {
             </Toggle>
           </ToggleGroup>
         </Toolbar>
-        <Link className='font-semibold text-primary-700 text-sm hover:underline' search={defaultSkillsSearch} to='/skills'>
-          {m.home_catalog_all()} →
-        </Link>
+
       </div>
       <p className='mb-5 text-sm text-muted'>
         {group === 'work' ? m.home_catalog_chat_hint() : m.home_catalog_dev_hint()}
