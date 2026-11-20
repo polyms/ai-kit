@@ -1,4 +1,4 @@
-import { Toggle, ToggleGroup } from '@polyms/ui-kit'
+import { Toggle, ToggleGroup, Toolbar } from '@polyms/ui-kit'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { listSkillPacks } from '../../lib/skill-pack/skill-pack'
@@ -55,17 +55,24 @@ export function HomeCatalog() {
       </div>
       <p className='mb-6 text-muted'>{m.home_catalog_intro()}</p>
       <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
-        <ToggleGroup
-          aria-label={m.home_catalog_group()}
-          onValueChange={values => {
-            const next = values[0]
-            if (next === 'engineering' || next === 'work') setGroup(next)
-          }}
-          value={[group]}
-        >
-          <Toggle value='work'>{m.home_catalog_work()}</Toggle>
-          <Toggle value='engineering'>{m.home_catalog_engineering()}</Toggle>
-        </ToggleGroup>
+        <Toolbar aria-label={m.home_catalog_group()} rounded variant='inline'>
+          <ToggleGroup
+            aria-label={m.home_catalog_group()}
+            className='toolbar-group'
+            onValueChange={values => {
+              const next = values[0]
+              if (next === 'engineering' || next === 'work') setGroup(next)
+            }}
+            value={[group]}
+          >
+            <Toggle className='toolbar-button' value='work'>
+              {m.home_catalog_work()}
+            </Toggle>
+            <Toggle className='toolbar-button' value='engineering'>
+              {m.home_catalog_engineering()}
+            </Toggle>
+          </ToggleGroup>
+        </Toolbar>
         <Link className='font-semibold text-primary-700 text-sm hover:underline' search={defaultSkillsSearch} to='/skills'>
           {m.home_catalog_all()} →
         </Link>
