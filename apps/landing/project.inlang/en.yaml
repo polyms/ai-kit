@@ -123,6 +123,7 @@ pipeline_stage_reqs: Reqs / To PRD
 pipeline_stage_review: Code review
 pipeline_stage_ship: Ship
 pipeline_title: "Engineering workflows, when you need them."
+pipeline_agents_note: "These are optional role guides for coding assistants, not AI Kit-hosted agents or a team that autonomously executes your project."
 
 # --- quickstart ---
 quickstart_body: "Install the local kit for Cursor, Claude Code, Codex or GitHub Copilot. Open your target repository and run setup using your client's skill picker or invocation syntax."
