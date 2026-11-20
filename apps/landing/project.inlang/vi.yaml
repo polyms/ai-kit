@@ -76,7 +76,7 @@ usecases_engineering_body: "Dùng skill cục bộ trong coding assistant để 
 usecases_engineering_outcome: "Ví dụ đầu ra: thay đổi đúng phạm vi kèm bước xác minh."
 usecases_note: "AI Kit cung cấp phương pháp. Host AI chọn skill liên quan và chỉ sử dụng ngữ cảnh, công cụ mà nó được cấp quyền truy cập."
 hero_badge: "AI Augmentation Layer"
-hero_ctaPrimary: "Kết nối với AI chat"
+hero_ctaPrimary: "Thiết lập AI Kit cho AI chat"
 hero_ctaSecondary: "Khám phá skill →"
 hero_line1: "Mở rộng năng lực AI"
 hero_line2: "bạn đang dùng"
@@ -104,27 +104,27 @@ hero_example_request: "Lập kế hoạch tính năng mời thành viên."
 hero_example_plan: "Bản nháp effort và task triển khai"
 hero_example_qa: "Bản nháp test case và trường hợp biên"
 hero_example_draft: "Bản nháp minh họa · không ghi ra hệ thống ngoài"
-home_catalog_heading: 'Một kit. Nhiều workflow.'
-home_catalog_intro: "Khám phá skill nghiệp vụ cho AI chat trước, hoặc chuyển sang skill phát triển phần mềm cho coding assistant có ngữ cảnh repo."
+home_catalog_heading: "Skill nổi bật, kết quả thiết thực."
+home_catalog_intro: "Khám phá sáu skill tiêu biểu cho công việc hằng ngày, hoặc chọn sáu skill khởi đầu dành cho lập trình theo repo. Xem thêm trong danh mục đầy đủ."
 
 # --- pipeline ---
-pipeline_agentsLabel: Agent chuyên trách
-pipeline_agent_design_owns: Spec UI tại docs/design/, ánh xạ @polyms/ui-kit
-pipeline_agent_dev_owns: Lập trình, TDD, /devops (vai trò chính)
-pipeline_agent_pm_owns: PRD, story, tiêu chí chấp nhận, phạm vi
-pipeline_agent_tester_owns: Bộ E2E, flake, chia nhỏ CI, kiểm thử theo hành trình
-pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; SEV của /devops
+pipeline_agentsLabel: "Hướng dẫn vai trò kỹ thuật"
+pipeline_agent_design_owns: "Đặc tả giao diện, các trạng thái tương tác và tuân thủ design system của dự án"
+pipeline_agent_dev_owns: "Triển khai đúng phạm vi, viết test, gỡ lỗi và xác minh"
+pipeline_agent_pm_owns: "Yêu cầu, user story, tiêu chí chấp nhận và phạm vi"
+pipeline_agent_tester_owns: "Kịch bản QA, kiểm thử E2E, tái hiện lỗi và bằng chứng CI"
+pipeline_agent_techlead_owns: "Quyết định kiến trúc, rủi ro kỹ thuật, review và hướng dẫn vận hành"
 pipeline_intro: "Coding assistant có thể kết hợp skill để thống nhất phạm vi, viết yêu cầu, thiết kế, triển khai và review dựa trên ngữ cảnh repo. Host AI chọn và áp dụng từng bước."
 pipeline_stage_align: Thống nhất
 pipeline_stage_design: Thiết kế
 pipeline_stage_dev: Lập trình
 pipeline_stage_idea: Ý tưởng
-pipeline_stage_issues: Gửi vấn đề
+pipeline_stage_issues: "Tạo task và issue"
 pipeline_stage_reqs: Yêu cầu / Tạo PRD
 pipeline_stage_review: Đánh giá code
 pipeline_stage_ship: Phát hành
 pipeline_title: "Luồng làm việc kỹ thuật, khi cần."
-pipeline_agents_note: "Đây là hướng dẫn vai trò tùy chọn cho coding assistant, không phải các agent do AI Kit vận hành hoặc một nhóm tự động thực thi dự án."
+pipeline_agents_note: "Hướng dẫn vai trò tùy chọn cho coding assistant. AI Kit không vận hành một đội agent tự động."
 
 # --- quickstart ---
 quickstart_body: "Cài kit cục bộ cho Cursor, Claude Code, Codex hoặc GitHub Copilot. Mở repo đích và chạy setup bằng bộ chọn skill hoặc cú pháp gọi của client."
@@ -159,20 +159,16 @@ palette_placeholder: Gõ để lọc skill…
 palette_title: Bảng lệnh
 
 # --- principles ---
-principles_1_body: /align thu hẹp khoảng cách giao tiếp — hỏi xoáy quyết định trước khi vào /reqs hoặc /to-prd.
+principles_1_body: "Làm rõ các quyết định quan trọng trước khi viết yêu cầu, dùng /align khi cần."
 principles_1_title: Thống nhất trước khi bắt đầu dựng
-principles_2_body: Kết hợp theo từng việc với các kỹ năng có tên ngắn (/reqs, /design, /dev) — không cần quy trình nặng nề.
+principles_2_body: "Kết hợp skill nhỏ cho từng việc. Các bước là hướng dẫn, không phải quy trình bắt buộc."
 principles_2_title: Nhỏ và dễ kết hợp
-principles_3_body:
-  /dev đưa TDD, kiểm soát kiểu, và debug có kỷ luật vào quy trình — tín hiệu nhanh, không sinh
-  code mù quáng.
+principles_3_body: "Dựa vào test, kiểm tra kiểu dữ liệu và bằng chứng gỡ lỗi thay vì sinh code một cách mù quáng."
 principles_3_title: Vòng phản hồi
-principles_4_body:
-  Spec đặt tên rõ cho module và seam; kỹ năng giữ code khỏi rối thành khối bùn mà agent dễ tạo ra
-  khi code nhanh.
+principles_4_body: "Ghi rõ ranh giới module và quyết định thiết kế quan trọng trước khi thay đổi lan rộng."
 principles_4_title: Thiết kế mỗi ngày
-principles_5_body: Fork, chỉnh sửa, rồi commit lại — kỹ năng là của bạn, không phải prompt hộp đen.
-principles_5_title: Tự sửa và sở hữu
+principles_5_body: "Xem, tùy chỉnh và quản lý phiên bản skill cục bộ theo tiêu chuẩn của nhóm."
+principles_5_title: "Mở và dễ tùy chỉnh"
 principles_titleAccent: "phát triển phần mềm."
 principles_titlePrefix: "Nguyên tắc"
 
@@ -366,3 +362,34 @@ sdk_http_title: "HTTP API"
 sdk_http_body: "Dùng static JSON trực tiếp nếu không dùng SDK TypeScript; dùng POST chỉ đọc để chọn đúng đường dẫn file."
 sdk_security: "Phân phối public skill không yêu cầu credential người dùng. Giữ dữ liệu nghiệp vụ và quyền ghi trong MCP của bạn; hướng dẫn skill không cấp quyền."
 sdk_performance_note: "Chưa benchmark latency production. Số request mô tả thiết kế, không phải thời gian phản hồi đã đo."
+
+hero_example_link: "Xem mẫu yêu cầu và test case"
+pipeline_role_pm: "Lập kế hoạch sản phẩm"
+pipeline_role_designer: "Thiết kế UI/UX"
+pipeline_role_developer: "Triển khai"
+pipeline_role_tester: "Xác minh QA"
+pipeline_role_techlead: "Review kỹ thuật"
+footer_start_guide: "Hướng dẫn bắt đầu"
+seo_title: "AI Kit | Bổ sung kỹ năng và phương pháp cho AI"
+seo_description: "AI Kit bổ sung skill và phương pháp có cấu trúc cho AI chat và công cụ lập trình tương thích, từ nghiên cứu, yêu cầu và lập kế hoạch đến QA và phát triển phần mềm."
+example_back: "Quay lại các ứng dụng"
+example_badge: "Ví dụ minh họa · chỉ là bản nháp"
+example_title: "Mời thành viên: từ yêu cầu đến QA"
+example_intro: "Ví dụ giả định về bản nháp mà AI client tương thích có thể soạn nhờ phương pháp AI Kit. Đây không phải bản ghi hoặc bằng chứng từ một lần chạy AI Kit thực tế."
+example_reqs_heading: "Yêu cầu và tiêu chí chấp nhận"
+example_br01: "Chỉ Owner của nhóm được gửi lời mời."
+example_ac01: "Email hợp lệ tạo một invitation ở trạng thái pending."
+example_ac02: "Email không hợp lệ hiển thị lỗi và không tạo invitation."
+example_ac03: "Người không phải Owner không thể gửi lời mời; không có bản ghi mới."
+example_scope: "Ngoài phạm vi: gửi lại lời mời, hết hạn lời mời và gửi email."
+example_plan_heading: "Bản nháp task triển khai"
+example_task1: "Kiểm tra quyền Owner ở API và trên giao diện."
+example_task2: "Kiểm tra email đầu vào và lưu pending invitation nếu yêu cầu hợp lệ."
+example_task3: "Thêm test tự động cho thành công, lỗi dữ liệu và truy cập không đủ quyền."
+example_effort: "Effort: chưa ước lượng. Cần kiểm tra giao diện repo và ràng buộc dữ liệu trước. Đây không phải cam kết tiến độ."
+example_qa_heading: "Test case QA"
+example_tc01: "Owner nhập email hợp lệ → xuất hiện đúng một pending invitation."
+example_tc02: "Owner nhập email không hợp lệ → hiển thị lỗi; không tạo invitation."
+example_tc03: "Non-owner nhập email → yêu cầu bị chặn; không tạo invitation."
+example_boundary: "Ví dụ này không gửi lời mời, không ghi dữ liệu ra hệ thống ngoài và chưa xác minh hành vi của sản phẩm."
+example_setup: "Thiết lập AI Kit cho AI chat"
