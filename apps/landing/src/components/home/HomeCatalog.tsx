@@ -11,32 +11,18 @@ import { HOME_PLAYFUL } from './brand'
 import { catalogCategory, catalogDisplayName } from './catalogCategory'
 import { HomeSectionChip } from './HomeSectionChip'
 
-/** Order + membership aligned with ui_kits/ai-kit-landing/Catalog.jsx */
-const HOME_CATALOG_SLUGS = [
-  'setup',
-  'align',
-  'reqs',
-  'to-prd',
-  'to-issues',
-  'triage',
-  'design',
-  'dev',
-  'code-review',
-  'docs',
-  'e2e',
-  'craft',
-  'arch-refactor',
-  'arch',
-  'devops',
-] as const
+/** Six representative entries per audience; the full catalog remains at /skills. */
+const FEATURED_SKILL_SLUGS = {
+  work: ['research', 'business', 'reqs', 'plan', 'qa', 'release'],
+  engineering: ['setup', 'align', 'reqs', 'design', 'dev', 'code-review'],
+} as const
 
 export function HomeCatalog() {
   const locale = useAppStore(s => s.locale)
   const skills = getSkills(locale)
   const [group, setGroup] = useState<'engineering' | 'work'>('work')
   const chatSlugs = listSkillPacks().map(pack => pack.name)
-  const developmentSlugs = [...new Set([...HOME_CATALOG_SLUGS, ...skills.map(skill => skill.slug)])]
-  const slugs = group === 'work' ? chatSlugs : developmentSlugs
+  const slugs = FEATURED_SKILL_SLUGS[group]
   const homeCatalogSkills = slugs.map(slug => skills.find(s => s.slug === slug)).filter(
     (s): s is NonNullable<typeof s> => s != null
   )
@@ -112,6 +98,11 @@ export function HomeCatalog() {
             </Link>
           )
         })}
+      </div>
+      <div className='mt-7 text-center'>
+        <Link className='inline-flex rounded-full border border-line px-5 py-2.5 font-semibold text-primary-700 no-underline hover:bg-surface' search={defaultSkillsSearch} to='/skills'>
+          {m.home_catalog_all()} →
+        </Link>
       </div>
     </section>
   )
