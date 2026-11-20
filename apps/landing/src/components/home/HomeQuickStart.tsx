@@ -88,7 +88,7 @@ export function HomeQuickStart() {
 
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='start'>
-      <HomeSectionChip label={m.chip_quickstart()} n='05' />
+      <HomeSectionChip label={m.chip_quickstart()} n='07' />
       <h2 className='app-install__title m-0 mb-3 font-bold font-sans text-fg'>{m.quickstart_choose()}</h2>
       <p className='mb-8 max-w-[720px] text-muted'>{m.quickstart_choose_body()}</p>
 
