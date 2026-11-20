@@ -9,9 +9,9 @@ import { type NavId, useNavActive } from './useNavActive'
 
 const HOME_NAV: { id: NavId; href: string }[] = [
   { id: 'overview', href: '/#main' },
+  { id: 'catalog', href: '/#catalog' },
   { id: 'pipeline', href: '/#pipeline' },
   { id: 'intelligence', href: '/#intelligence' },
-  { id: 'catalog', href: '/#catalog' },
   { id: 'start', href: '/#start' },
 ]
 
