@@ -92,8 +92,8 @@ export function HomeFooter() {
             {m.footer_col_resources()}
           </div>
           <div className='flex flex-col gap-2.5'>
-            <a className='link font-medium no-underline' href='/skills'>
-              {m.nav_docs()}
+            <a className='link font-medium no-underline' href='/#start'>
+              {m.footer_start_guide()}
             </a>
             <a className='link font-medium no-underline' href='/sdk'>{m.nav_sdk()}</a>
             <a className='link font-medium no-underline' href='/knowledge'>
