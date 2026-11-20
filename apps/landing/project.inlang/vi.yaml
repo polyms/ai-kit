@@ -48,7 +48,7 @@ domain_review: Rà soát
 domain_triage: Phân loại
 
 # --- footer ---
-footer_blurb: 'Bộ skill agent cho kỹ thuật và nghiệp vụ. Một kit quản lý phiên bản, dùng cục bộ hoặc qua MCP.'
+footer_blurb: "Lớp mở rộng năng lực cho AI bạn đang dùng. Skill dùng chung cho AI chat và công cụ phát triển."
 footer_col_community: Cộng đồng
 footer_col_pipeline: Luồng xử lý
 footer_col_resources: Tài nguyên
@@ -58,12 +58,24 @@ footer_link_issues: Issues
 footer_starGithub: Gắn sao trên GitHub
 
 # --- hero ---
-hero_badge: "AI chat · AI development"
+hero_badge: "AI Augmentation Layer"
 hero_ctaPrimary: Bắt đầu
 hero_ctaSecondary: "Khám phá skill →"
-hero_line1: "Bộ skill agent cho"
-hero_line2: "công việc thực tế"
-hero_sub: "Một toolkit, hai cách làm việc. Dùng AI chat để nghiên cứu, quyết định và lập kế hoạch; cài skill vào trợ lý lập trình để phát triển phần mềm. Các client tương thích dùng chung workflow."
+hero_line1: "Mở rộng năng lực AI"
+hero_line2: "bạn đang dùng"
+hero_sub: "AI Kit bổ sung skill, phương pháp làm việc và Knowledge cho các trợ lý AI tương thích. AI bạn dùng vẫn suy luận, quản lý ngữ cảnh và gọi công cụ; AI Kit cung cấp hướng dẫn."
+
+# --- positioning ---
+positioning_label: "AI Kit là gì?"
+positioning_title: "AI của bạn, thêm phương pháp và kiến thức."
+positioning_intro: "AI Kit là AI Augmentation Layer, cung cấp kỹ năng và quy trình dùng lại cho công cụ AI tương thích mà không thay thế AI hiện có."
+positioning_host_title: "AI client của bạn"
+positioning_host_body: "Suy luận, quản lý hội thoại và ngữ cảnh, chọn skill và gọi công cụ theo năng lực và quyền được cấp."
+positioning_kit_title: "AI Kit"
+positioning_kit_body: "Cung cấp skill, phương pháp, template, context contract, hướng dẫn workflow và Knowledge tham chiếu."
+positioning_tools_title: "Công cụ đã kết nối"
+positioning_tools_body: "Tracker, tài liệu, source code và các dịch vụ khác vẫn nằm trong các integration được AI client cấp quyền."
+positioning_note: "MCP, SDK, native skills và plugin chỉ là cách phân phối cùng một lớp mở rộng khi client hỗ trợ. AI Kit không chạy LLM ở server hay agent runtime thực thi thay AI client."
 
 # --- home ---
 home_catalog_heading: 'Một kit. Nhiều workflow.'
