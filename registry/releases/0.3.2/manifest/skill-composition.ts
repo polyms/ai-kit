@@ -29,6 +29,11 @@ export type ContextRequirement = {
 
 export const CONTEXT_PROTOCOL = 'docs/agents/context-contract.md'
 
+export type KnowledgeHint = {
+  intent: 'incident' | 'design' | 'toolchain'
+  when: string
+}
+
 export type SkillContract = {
   /** Alternative usable input kinds; the selected workflow determines actual prerequisites. */
   accepts: readonly ArtifactKind[]
@@ -36,6 +41,8 @@ export type SkillContract = {
   readyWhen: string
   /** Advisory context needs; actual blockers depend on the requested outcome. */
   context: readonly ContextRequirement[]
+  /** Conditional search hints for the existing Knowledge catalog, never mandatory calls. */
+  knowledge?: readonly KnowledgeHint[]
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
@@ -96,6 +103,12 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Scope, rules and acceptance criteria are traceable; unresolved decisions are explicit.',
   },
   design: {
+    knowledge: [
+      {
+        intent: 'design',
+        when: 'A technical stack seam affects the requested UI behavior; not generic visual design.',
+      },
+    ],
     context: [
       { key: 'goal', importance: 'required', description: 'Screen or interaction and its purpose.' },
       {
@@ -143,6 +156,16 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'The artifact is standalone and separates confirmed facts, decisions and pending work.',
   },
   task: {
+    knowledge: [
+      {
+        intent: 'toolchain',
+        when: 'A task depends on an unknown organization-wide tooling recipe.',
+      },
+      {
+        intent: 'design',
+        when: 'A technical seam is material to the implementation scope.',
+      },
+    ],
     context: [
       { key: 'goal', importance: 'required', description: 'Requested work and expected outcome.' },
       {
@@ -162,6 +185,12 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Each item has bounded scope, testable outcome and dependencies; write status is explicit.',
   },
   bug: {
+    knowledge: [
+      {
+        intent: 'incident',
+        when: 'An observed deploy or CI symptom matches an unresolved diagnostic question.',
+      },
+    ],
     context: [
       {
         key: 'observed-behavior',
@@ -205,6 +234,12 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       'Targets and current fields are resolved; requested changes and verification are reported separately.',
   },
   plan: {
+    knowledge: [
+      {
+        intent: 'design',
+        when: 'Unknown stack integration constraints materially affect the estimate.',
+      },
+    ],
     context: [
       {
         key: 'goal',
@@ -242,6 +277,12 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Effort and elapsed time reconcile with dependencies, capacity and uncertainty.',
   },
   qa: {
+    knowledge: [
+      {
+        intent: 'incident',
+        when: 'A relevant incident verification recipe is needed for a deploy or CI regression.',
+      },
+    ],
     context: [
       {
         key: 'goal',
@@ -329,6 +370,16 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Findings have evidence, severity, impact and actionable fixes; review is not approval.',
   },
   release: {
+    knowledge: [
+      {
+        intent: 'incident',
+        when: 'An unresolved deploy or CI symptom affects readiness.',
+      },
+      {
+        intent: 'toolchain',
+        when: 'A missing deployment tooling recipe affects a release gate.',
+      },
+    ],
     context: [
       { key: 'goal', importance: 'required', description: 'Release target, scope and environment.' },
       {

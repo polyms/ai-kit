@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as v032 from '../../../registry/releases/0.3.2/manifest/skill-pack'
+import { compositionCatalog as composition032 } from '../../../registry/releases/0.3.2/manifest/skill-composition'
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const root = resolve(app, '../..')
@@ -49,7 +50,7 @@ async function buildRelease(releaseVersion: keyof typeof registry) {
   }
   const raw = (path: string) => 'https://raw.githubusercontent.com/polyms/ai-kit/' + revision + '/' + path
   const packs = listSkillPacks().map(pack => ({ ...pack, skillRawUrl: raw('skills/' + pack.name + '/SKILL.md') }))
-  const catalog = { schemaVersion: 1, version, revision, packs }
+  const catalog = { schemaVersion: 1, version, revision, packs, composition: composition032() }
   const bundles = Object.fromEntries(packs.map(summary => {
     const pack = getSkillPack(summary.name)
     if (!pack) throw new Error('Unknown pack: ' + summary.name)

@@ -20,6 +20,8 @@ describe('versioned snapshot provider', () => {
     const pinned = await (await skillProvider({ version: '0.3.2' })).json()
     expect(latest.version).toBe('0.3.2')
     expect(pinned).toEqual(latest)
+    expect(latest.composition.recipes).toHaveLength(5)
+    expect(latest.composition.protocol.path).toBe('docs/agents/skill-composition.md')
     expect(latest.packs.find((p: { name: string }) => p.name === 'track').useWhen).toContain(
       'Check giúp a ticket quá hạn, đổi assignee; check ticket qua han'
     )
@@ -37,6 +39,8 @@ describe('versioned snapshot provider', () => {
       return skillProvider({ version, name, strategy: file?.replace('.json', '') })
     })
     const client = createSkillProvider({ endpoint: 'https://example.com', fetch: transport })
+    const catalog = await client.list()
+    expect(catalog.composition?.recipes.some(recipe => recipe.id === 'sprint-planning')).toBe(true)
     const bundle = await client.getSkill('plan')
     expect(bundle.version).toBe('0.3.2')
     expect(bundle.contract).toMatchObject({
@@ -49,6 +53,26 @@ describe('versioned snapshot provider', () => {
     expect(selected.contract).toEqual(bundle.contract)
     expect(selected.files.filter(file => file.content)).toHaveLength(1)
     await expect(client.getSkill('plan', { version: '0.3.1' })).rejects.toThrow('404')
+  })
+  it('extends domain context additively without mutating core metadata', async () => {
+    const bundle = await (await skillProvider({ name: 'plan' })).json()
+    const original = structuredClone(bundle.contract)
+    const context = [{ key: 'project-policy', importance: 'required' as const, description: 'Local policy.' }]
+    const extension = {
+      name: 'project-plan',
+      extends: 'ai-kit/plan@0.3.2' as const,
+      instructions: 'Use local policy.',
+      context,
+    }
+    const result = extendSkill(bundle, extension)
+    expect(result.domainContext).toEqual(context)
+    expect(result.domainContext).not.toBe(context)
+    expect(result.base.contract).toEqual(original)
+    expect(bundle.contract).toEqual(original)
+    expect(() => extendSkill(bundle, { ...extension, context: [{ ...context[0], key: 'scope' }] })).toThrow('conflicting')
+    expect(() => extendSkill(bundle, { ...extension, context: [...context, ...context] })).toThrow('conflicting')
+    expect(() => extendSkill(bundle, { ...extension, context: [{ ...context[0], description: ' ' }] })).toThrow('conflicting')
+    expect(() => extendSkill({ ...bundle, contract: {} }, extension)).toThrow('Core context contract unavailable')
   })
   it('returns manifest only', async () => {
     const data = await (await skillProvider({ name: 'reqs', strategy: 'manifest' })).json()

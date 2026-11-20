@@ -1,6 +1,6 @@
 {
   "version": "0.3.2",
-  "revision": "6aa922fbbacb1cfcd2c2efddd9a2c5b1115468a1",
+  "revision": "27eb117205abdbe626706e7530512534735e7778",
   "files": {
     "skills/reqs/SKILL.md": "e686bf7f41ee108b3f7c26ee14d99f779062fa69",
     "skills/reqs/enterprise-prd-template.md": "668c26735be47fc8ef31d9c089b1db758a5ad67f",
@@ -64,12 +64,12 @@
     "skills/review/review-template.md": "83ec6cfa5157236d0a2db2acfefd51563c7a654f",
     "skills/release/SKILL.md": "21e9a026689c9a2449ff40fdd31d5ed57a3aee18",
     "skills/release/release-templates.md": "d99949e4f926f0da9a1bde9b184b5368d8d7d892",
-    "docs/agents/skill-composition.md": "1075781a887412d4cc221c55946d88134b07456d",
+    "docs/agents/skill-composition.md": "e1f0e3e42a706a5a1202c5669064d5c1efdc4a61",
     "workflows/product-development.md": "6fe3a9738fb3004eb8b083cde2f7e2e0f5342543",
     "workflows/bug-lifecycle.md": "b7bcdf5da191189ff9f2d2714c0d02d699b7d0bd",
     "workflows/business-decision.md": "4c67bab05eb5248fda3d00030b21da5334453433",
     "workflows/sprint-planning.md": "52b1683ebb7a2d729ae32dee26d95fe98537ae7f",
     "workflows/release-readiness.md": "62ac995bec4f20b0ca514124435a760951785f6b",
-    "docs/agents/context-contract.md": "9578264f3dae59f973fc7e822879f5da813d3921"
+    "docs/agents/context-contract.md": "1561f1d853e218f45ef115335bca5902be1d422e"
   }
 }

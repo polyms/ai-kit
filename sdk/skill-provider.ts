@@ -15,13 +15,29 @@ export type SkillSelection = { version?: string } & (
   { strategy?: 'starter' | 'full' | 'manifest'; paths?: never } |
   { paths: string[]; strategy?: never }
 )
+export type ContextRequirement = {
+  key: string
+  importance: 'required' | 'recommended' | 'optional'
+  description: string
+}
+
 export type DomainExtension = {
   name: string
   extends: `ai-kit/${string}@${string}`
   instructions: string
+  /** Additive semantic needs only, not resolved business data. */
+  context?: readonly ContextRequirement[]
 }
 
-type Catalog = { schemaVersion: 1; version: string; revision: string; packs: unknown[] }
+export type CompositionCatalog = {
+  protocol: { path: string }
+  recipes: readonly {
+    id: string; title: string; description: string; hostPack: string; path: string; skills: readonly string[]
+  }[]
+}
+type Catalog = {
+  schemaVersion: 1; version: string; revision: string; packs: unknown[]; composition?: CompositionCatalog
+}
 type ProviderOptions = {
   endpoint: string
   version?: string
@@ -150,10 +166,25 @@ export function extendSkill(bundle: SkillBundle, extension: DomainExtension) {
   if (!bundle.starterPaths.every(path => bundle.files.some(file => file.path === path && file.content?.trim()))) {
     throw new Error('Load starter content before extending')
   }
+  const domainContext = extension.context ?? []
+  if (!Array.isArray(domainContext)) throw new Error('Invalid domain context requirements')
+  const core = bundle.contract as { context?: unknown } | null | undefined
+  const coreContext = core?.context
+  if (domainContext.length && !Array.isArray(coreContext)) throw new Error('Core context contract unavailable')
+  const keys = new Set(Array.isArray(coreContext) ? coreContext.map(item => item?.key) : [])
+  for (const item of domainContext) {
+    if (!item || typeof item.key !== 'string' || !validName.test(item.key) || keys.has(item.key) ||
+        !['required', 'recommended', 'optional'].includes(item.importance) ||
+        typeof item.description !== 'string' || !item.description.trim()) {
+      throw new Error('Invalid or conflicting domain context requirement')
+    }
+    keys.add(item.key)
+  }
   return {
     name: extension.name,
     base: bundle,
+    domainContext: structuredClone(domainContext),
     domainInstructions: extension.instructions,
-    policy: 'Apply core methodology and additive domain rules; do not override safety, core quality gates or user authorization. Report conflicts. No write permission is implied.',
+    policy: 'Apply core methodology and additive domain rules/context; do not override safety, core requirements, quality gates or user authorization. Resolve private domain context locally. Report conflicts. No write permission is implied.',
   }
 }
