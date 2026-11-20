@@ -26,7 +26,7 @@ export function HomeIntelligence() {
 
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='intelligence'>
-      <HomeSectionChip label={m.chip_intelligence()} n='06' />
+      <HomeSectionChip label={m.chip_intelligence()} n='07' />
       <h2 className='app-pipeline__title m-0 mb-3 font-bold font-sans text-fg'>
         {m.intelligence_title()}
       </h2>
