@@ -7,6 +7,7 @@ import {
   HomeIntelligence,
   HomePipeline,
   HomePrinciples,
+  HomePositioning,
   HomeQuickStart,
   HomeTicker,
 } from '../components/home'
@@ -23,6 +24,7 @@ function HomePage() {
       </a>
       <HomeHeader />
       <HomeHero />
+      <HomePositioning />
       <HomePrinciples />
       <HomePipeline />
       <HomeIntelligence />
