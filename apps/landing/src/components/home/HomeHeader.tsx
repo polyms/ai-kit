@@ -10,9 +10,9 @@ import { type NavId, useNavActive } from './useNavActive'
 const HOME_NAV: { id: NavId; href: string }[] = [
   { id: 'overview', href: '/#use-cases' },
   { id: 'catalog', href: '/#catalog' },
+  { id: 'start', href: '/#start' },
   { id: 'pipeline', href: '/#pipeline' },
   { id: 'intelligence', href: '/#intelligence' },
-  { id: 'start', href: '/#start' },
 ]
 
 const SITE_NAV: { id: NavId | 'knowledge' | 'sdk'; href: string }[] = [
