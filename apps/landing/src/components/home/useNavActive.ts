@@ -17,7 +17,7 @@ export function useNavActive() {
   return (id: NavId): boolean => {
     if (pathname !== '/') return false
     if (id === 'overview') return !hash || hash === '#' || hash === '#use-cases'
-    if (id === 'start') return hash === '#start'
+    if (id === 'start') return hash === '#start' || hash === '#chat-start' || hash === '#dev-start'
     if (id === 'catalog') return hash === '#catalog'
     if (id === 'intelligence') return hash === '#intelligence'
     if (id === 'pipeline') return hash === '#pipeline'
