@@ -33,7 +33,7 @@ Install that tarball in your Business MCP. No new workspace dependencies or runt
 Run from the host that will consume the provider, after building the SDK and deploying the API:
 
 ```sh
-node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.1 20
+node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.2 20
 ```
 
 The report includes cold/warm p50 and p95, reference fetch timing and network call counts.
@@ -53,3 +53,32 @@ pnpm add @polyms/ai-kit-sdk
 
 The latest catalog is refreshed on demand after 30 minutes by default; override with `latestTtlMs`.
 Pinned bundles remain cached until eviction or explicit clearing.
+
+## Context-aware consumers
+
+From skill release 0.3.2, `bundle.contract` includes context requirements and the starter files
+include shared context guidance. Forward both the contract and selected file contents to the AI
+client, together with trusted domain instructions. The client reuses conversation context and
+retrieves missing information through authorized tools; do not send workspace data to the skill
+provider. Release 0.3.2 replaces the experimental 0.3.1 snapshot. Use latest or pin 0.3.2;
+no SDK upgrade is required to receive the new metadata.
+
+For multi-skill discovery, `provider.list()` includes optional `composition` metadata (recipes and
+protocol path). Load only relevant stage bundles; retain already loaded shared paths in the current
+session and select missing paths when needed. Context-aware extensions may add domain needs:
+
+```ts
+const base = await provider.getSkill('plan')
+const skill = extendSkill(base, {
+  name: 'project-plan',
+  extends: `ai-kit/${base.name}@${base.version}`,
+  instructions: 'Use authorized project planning rules.',
+  context: [{
+    key: 'project-policy', importance: 'required', description: 'Applicable planning policy.',
+  }],
+})
+// Forward skill.base.contract, skill.base.files, skill.domainInstructions and skill.domainContext.
+```
+
+Duplicate keys and collisions with the core contract are rejected. The SDK does not resolve context,
+call Knowledge tools or execute recipes. Keep actual project data within authorized consumer tools.

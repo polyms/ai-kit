@@ -426,5 +426,59 @@
       "research"
     ],
     "notes": "Vietnamese semantic routing; no write authorization."
+  },
+  {
+    "id": "RT-35",
+    "kind": "Route",
+    "prompt": "bao loi Save trang trang, chua co log, draft thoi",
+    "expected": [
+      "bug"
+    ],
+    "avoid": [
+      "task",
+      "track",
+      "qa"
+    ],
+    "notes": "Context-aware routing; use local engineering workflow when applicable."
+  },
+  {
+    "id": "RT-36",
+    "kind": "Route",
+    "prompt": "Scope da ro, est effort thoi, chua biet team capacity",
+    "expected": [
+      "plan"
+    ],
+    "avoid": [
+      "reqs",
+      "track",
+      "business"
+    ],
+    "notes": "Context-aware routing; use local engineering workflow when applicable."
+  },
+  {
+    "id": "RT-37",
+    "kind": "Compose",
+    "prompt": "AC da duyet, draft task va test case, dung viet lai req",
+    "expected": [
+      "task",
+      "qa"
+    ],
+    "avoid": [
+      "reqs",
+      "plan"
+    ],
+    "notes": "Context-aware routing; use local engineering workflow when applicable."
+  },
+  {
+    "id": "RT-38",
+    "kind": "Skip",
+    "prompt": "Fix loi build Vercel trong repo local, run lai build",
+    "expected": [],
+    "avoid": [
+      "release",
+      "bug",
+      "track"
+    ],
+    "notes": "Context-aware routing; use local engineering workflow when applicable."
   }
 ]

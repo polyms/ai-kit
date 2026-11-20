@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   ARTIFACT_KINDS,
   COMPOSITION_PROTOCOL,
+  CONTEXT_PROTOCOL,
   compositionCatalog,
   compositionPaths,
   SKILL_CONTRACTS,
@@ -128,6 +129,7 @@ describe('skill pack MCP tools', () => {
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
+      contract: SKILL_CONTRACTS.reqs,
       files: [
         ...REQS_SKILL_PATHS,
         ...REQS_REFERENCE_PATHS,
@@ -146,6 +148,7 @@ describe('skill pack MCP tools', () => {
       const references = name === 'docs' ? DOCS_REFERENCE_PATHS : []
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
+        contract: SKILL_CONTRACTS[name as SkillPackName],
         files: [
           ...paths,
           ...references,
@@ -222,11 +225,12 @@ describe('skill intelligence', () => {
       if (summary.name !== 'design') expect(summary.starterPaths).toContain(WORK_ARTIFACT_STANDARD)
       expect(summary.relatedSkills.every(name => name !== summary.name && names.has(name))).toBe(true)
     }
-    expect(starterPaths('design')).toEqual(['skills/design/SKILL.md'])
-    expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD])
+    expect(starterPaths('design')).toEqual(['skills/design/SKILL.md', CONTEXT_PROTOCOL])
+    expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL])
     expect(starterPaths('task')).toEqual([
       'skills/task/SKILL.md',
       WORK_ARTIFACT_STANDARD,
+      CONTEXT_PROTOCOL,
       'skills/task/task-template.md',
     ])
   })
@@ -235,11 +239,11 @@ describe('skill intelligence', () => {
     const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Starter'))
     const initial = await executeGetSkillPack('design', fetchFile, starterPaths('design'))
     expect(initial.isError).toBeUndefined()
-    expect(fetchFile.mock.calls.map(call => call[0])).toEqual([skillPackRawUrl('skills/design/SKILL.md')])
+    expect(fetchFile.mock.calls.map(call => call[0])).toEqual(starterPaths('design').map(skillPackRawUrl))
     const next = await executeGetSkillPack('design', fetchFile, ['skills/dev/visual-ship.md'])
     expect(next.isError).toBeUndefined()
     expect(fetchFile.mock.calls.map(call => call[0])).toEqual([
-      skillPackRawUrl('skills/design/SKILL.md'),
+      ...starterPaths('design').map(skillPackRawUrl),
       skillPackRawUrl('skills/dev/visual-ship.md'),
     ])
   })
@@ -302,6 +306,19 @@ describe('skill composition', () => {
       const pack = getSkillPack(summary.name)!
       expect(pack.files.some(file => file.path === COMPOSITION_PROTOCOL)).toBe(true)
       expect(summary.starterPaths).not.toContain(COMPOSITION_PROTOCOL)
+      expect(summary.starterPaths).toContain(CONTEXT_PROTOCOL)
+      expect(contract.context.some(item => item.importance === 'required')).toBe(true)
+      expect(new Set(contract.context.map(item => item.key)).size).toBe(contract.context.length)
+      for (const item of contract.context) {
+        expect(item.key).toMatch(/^[a-z][a-z0-9-]*$/)
+        expect(item.description.trim().length).toBeGreaterThan(0)
+        expect(['required', 'recommended', 'optional']).toContain(item.importance)
+      }
+      expect(pack.contract).toEqual(contract)
+      for (const hint of contract.knowledge ?? []) {
+        expect(['incident', 'design', 'toolchain']).toContain(hint.intent)
+        expect(hint.when.trim().length).toBeGreaterThan(0)
+      }
     }
     expect(SKILL_CONTRACTS.qa.produces).toContain('test-plan')
     expect(SKILL_CONTRACTS.qa.produces).toContain('test-report')

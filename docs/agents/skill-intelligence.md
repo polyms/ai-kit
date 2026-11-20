@@ -19,7 +19,8 @@ search, orchestration runtime, analytics database or a new MCP tool.
 - `avoidWhen`: boundary against neighboring skills.
 - `starterPaths`: trusted manifest paths for the first retrieval.
 - `relatedSkills`: optional handoffs, not dependency or execution authorization.
-- `contract`: accepted/produced artifact kinds and a semantic completion gate.
+- `contract`: accepted/produced artifact kinds, a semantic completion gate, context needs and
+  optional Knowledge search hints. SDK catalogs also expose composition recipes.
 
 The top-level `composition` catalog advertises a shared protocol path and optional recipe metadata
 (hostPack, path and suggested stages). Existing packs and retrieval calls stay compatible.
@@ -40,8 +41,9 @@ await get_skill_pack({
 ```
 
 The first call already returns other files' metadata; a separate manifest-only call is usually
-unnecessary. Short work packs start with workflow, shared standard and default template; reqs/docs
-start with workflow and standard, design starts with workflow. Load additional templates/references
+unnecessary. Short work packs start with workflow, shared standard, context guidance and default template;
+reqs/docs start with workflow, standard and context guidance; design starts with workflow and context
+guidance. Load additional templates/references
 before the step that needs them. Reuse files within the current session. No server-side session state.
 Omitted paths preserve legacy full-pack retrieval; empty arrays remain manifest-only.
 
@@ -56,14 +58,15 @@ links and starter-path allowlisting. These checks do not prove completeness of p
 
 ## Composition and evaluation
 
-See [capabilities](skill-capabilities.md) and [composition protocol](skill-composition.md).
+See [capabilities](skill-capabilities.md), [context contract](context-contract.md) and
+[composition protocol](skill-composition.md).
 For multi-skill work, load the protocol through any selected pack and only the applicable recipe
 through its hostPack. Keep a shared session-local context and use evidence-backed handoffs,
 conditional gates and bounded revision. The recipe host is only a retrieval location.
 Do not treat related skills as a chain or duplicate accepted decisions. Draft by default and verify
 authorized writes.
 
-The 13 output cases, 34 routing fixtures and 10 composition cases in `evals/` cover work intent,
+The 13 output cases, 38 routing fixtures and 17 composition cases in `evals/` cover work intent,
 overlap, composition and opt-out. The [local evaluation runner](../../evals/README.md) runs paired
 baseline/assisted cases with an explicitly configured compatible model endpoint, records local
 retrieval traces and optional blind-judge scores. It does not test native client integrations. Unit tests validate fixture integrity and retrieval behavior; actual client

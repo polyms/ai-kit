@@ -1,6 +1,6 @@
 # Evaluation runner
 
-V0.3 adds a local, opt-in benchmark for the 13 output, 34 routing and 10 composition cases.
+V0.3 adds a local, opt-in benchmark for the 13 output, 38 routing and 17 composition cases.
 The runner is separate from the deployed MCP server and does not introduce a provider dependency.
 It uses the repository's existing tsx and MCP functions; a configurable OpenAI-compatible chat
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted

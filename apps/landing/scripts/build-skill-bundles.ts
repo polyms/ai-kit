@@ -1,15 +1,16 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import * as v031 from '../../../registry/releases/0.3.1/manifest/skill-pack'
+import * as v032 from '../../../registry/releases/0.3.2/manifest/skill-pack'
+import { compositionCatalog as composition032 } from '../../../registry/releases/0.3.2/manifest/skill-composition'
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const root = resolve(app, '../..')
 const output = resolve(app, 'public/skill-bundles')
-const registry = { '0.3.1': v031 }
-const latest = '0.3.1'
+const registry = { '0.3.2': v032 }
+const latest = '0.3.2'
 
 async function buildRelease(releaseVersion: keyof typeof registry) {
   const { getSkillPack, listSkillPacks } = registry[releaseVersion]
@@ -49,7 +50,7 @@ async function buildRelease(releaseVersion: keyof typeof registry) {
   }
   const raw = (path: string) => 'https://raw.githubusercontent.com/polyms/ai-kit/' + revision + '/' + path
   const packs = listSkillPacks().map(pack => ({ ...pack, skillRawUrl: raw('skills/' + pack.name + '/SKILL.md') }))
-  const catalog = { schemaVersion: 1, version, revision, packs }
+  const catalog = { schemaVersion: 1, version, revision, packs, composition: composition032() }
   const bundles = Object.fromEntries(packs.map(summary => {
     const pack = getSkillPack(summary.name)
     if (!pack) throw new Error('Unknown pack: ' + summary.name)
@@ -79,6 +80,8 @@ async function buildRelease(releaseVersion: keyof typeof registry) {
   return { catalog, bundles }
 }
 
+// The output directory contains generated assets only. Remove retired releases on rebuild.
+rmSync(output, { recursive: true, force: true })
 const releases = Object.fromEntries(await Promise.all((Object.keys(registry) as (keyof typeof registry)[])
   .map(async version => [version, await buildRelease(version)])))
 writeFileSync(resolve(app, 'src/lib/skill-pack/release-snapshot.generated.json'), JSON.stringify({ latest, releases }))

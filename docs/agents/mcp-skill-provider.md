@@ -106,7 +106,8 @@ can connect or automatically invoke remote skills.
 
 The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract}], composition: {protocol, recipes}}`.
 The additional routing and composition fields are advisory and backward-compatible.
-The get operation returns `{name, files: [{path, rawUrl, content}]}`. For design it also returns
+The get operation returns `{name, contract, files: [{path, rawUrl, content}]}`.
+The contract includes advisory context requirements; starter content includes shared context guidance. For design it also returns
 `uiKit` entries of the same file shape. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
 A failed fetch fails the whole pack rather than silently returning incomplete instructions.
