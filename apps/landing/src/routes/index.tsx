@@ -28,11 +28,11 @@ function HomePage() {
       <HomeUseCases />
       <HomePositioning />
       <HomeCatalog />
+      <HomeQuickStart />
       <HomePipeline />
       <HomePrinciples />
       <HomeIntelligence />
       <HomeTicker />
-      <HomeQuickStart />
       <HomeFooter />
     </main>
   )
