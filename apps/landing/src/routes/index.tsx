@@ -25,6 +25,7 @@ function HomePage() {
       </a>
       <HomeHeader />
       <HomeHero />
+      <HomeTicker />
       <HomeUseCases />
       <HomePositioning />
       <HomeCatalog />
@@ -32,7 +33,6 @@ function HomePage() {
       <HomePipeline />
       <HomePrinciples />
       <HomeIntelligence />
-      <HomeTicker />
       <HomeFooter />
     </main>
   )
