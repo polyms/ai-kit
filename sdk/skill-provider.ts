@@ -135,54 +135,58 @@ const validPack = (value: unknown): value is SkillPackSummary =>
   value.skillRawUrl === rawUrl(String(value.revision ?? ''), 'skills/' + value.name + '/SKILL.md') // validated with catalog revision below
 
 function parseCatalog(data: unknown): SkillCatalog {
-  if (!record(data) || data.schemaVersion !== 1 || !validVersion.test(String(data.version)) ||
+  if (!record(data) || data.schemaVersion !== 1 ||
+    typeof data.version !== 'string' || !validVersion.test(data.version) ||
     typeof data.revision !== 'string' || !validSha.test(data.revision) ||
-    !Array.isArray(data.packs) || !data.packs.length ||
-    !data.packs.every(pack => {
-      if (!record(pack)) return false
-      const projected = { ...pack, revision: data.revision }
-      return validPack(projected)
-    }) ||
-    !unique(data.packs.map((pack: SkillPackSummary) => pack.name))) {
+    !Array.isArray(data.packs) || data.packs.length === 0) throw new Error('Invalid skill catalog')
+  const revision = data.revision
+  const packs: unknown[] = data.packs
+  if (!packs.every(pack => record(pack) && validPack({ ...pack, revision }))) {
     throw new Error('Invalid skill catalog')
   }
-  for (const pack of data.packs as SkillPackSummary[]) {
-    if (pack.starterPaths[0] !== 'skills/' + pack.name + '/SKILL.md' ||
-      pack.relatedSkills.some(name => !data.packs.some((other: SkillPackSummary) => other.name === name))) {
-      throw new Error('Invalid skill catalog')
-    }
+  const named = packs as SkillPackSummary[]
+  if (!unique(named.map(pack => pack.name)) ||
+    named.some(pack => pack.starterPaths[0] !== 'skills/' + pack.name + '/SKILL.md' ||
+      pack.relatedSkills.some(name => !named.some(other => other.name === name)))) {
+    throw new Error('Invalid skill catalog')
   }
   if (data.composition !== undefined) {
     const c = data.composition
     if (!record(c) || !record(c.protocol) || !pathAllowed(c.protocol.path) ||
-      !Array.isArray(c.recipes) || !c.recipes.every(recipe =>
-        record(recipe) && typeof recipe.id === 'string' && validName.test(recipe.id) &&
-        nonempty(recipe.title) && nonempty(recipe.description) &&
-        typeof recipe.hostPack === 'string' &&
-        data.packs.some((pack: SkillPackSummary) => pack.name === recipe.hostPack) &&
+      !Array.isArray(c.recipes) ||
+      !c.recipes.every(recipe => record(recipe) && typeof recipe.id === 'string' &&
+        validName.test(recipe.id) && nonempty(recipe.title) && nonempty(recipe.description) &&
+        typeof recipe.hostPack === 'string' && named.some(pack => pack.name === recipe.hostPack) &&
         pathAllowed(recipe.path) && strings(recipe.skills) && recipe.skills.length > 0 &&
-        recipe.skills.every((name: string) => data.packs.some((pack: SkillPackSummary) => pack.name === name)))) {
+        recipe.skills.every((name: string) => named.some(pack => pack.name === name)))) {
       throw new Error('Invalid skill catalog')
     }
   }
-  return data as SkillCatalog
+  return data as unknown as SkillCatalog
 }
 function parseBundle(data: unknown, name: string, version: string): SkillBundle {
   if (!record(data) || data.schemaVersion !== 1 || data.namespace !== 'ai-kit' ||
     data.name !== name || data.version !== version ||
     typeof data.revision !== 'string' || !validSha.test(data.revision) ||
     data.entry !== 'skills/' + name + '/SKILL.md' ||
-    !validPaths(data.starterPaths) || !data.starterPaths.length ||
+    !validPaths(data.starterPaths) || data.starterPaths.length === 0 ||
     data.starterPaths[0] !== data.entry || !validContract(data.contract) ||
-    !Array.isArray(data.files) || !data.files.length ||
-    !data.files.every(file => record(file) && pathAllowed(file.path) &&
-      file.rawUrl === rawUrl(data.revision as string, file.path as string) &&
-      (file.content === undefined || nonempty(file.content))) ||
-    !unique(data.files.map((file: SkillFile) => file.path)) ||
-    !data.starterPaths.every((path: string) => data.files.some((file: SkillFile) => file.path === path))) {
+    !Array.isArray(data.files) || data.files.length === 0) {
     throw new Error('Invalid skill bundle identity or structure')
   }
-  return data as SkillBundle
+  const revision = data.revision
+  const files: unknown[] = data.files
+  if (!files.every(file => record(file) && pathAllowed(file.path) &&
+      file.rawUrl === rawUrl(revision, file.path) &&
+      (file.content === undefined || nonempty(file.content)))) {
+    throw new Error('Invalid skill bundle identity or structure')
+  }
+  const named = files as SkillFile[]
+  if (!unique(named.map(file => file.path)) ||
+    !data.starterPaths.every(path => named.some(file => file.path === path))) {
+    throw new Error('Invalid skill bundle identity or structure')
+  }
+  return data as unknown as SkillBundle
 }
 function sameManifest(a: SkillBundle, b: SkillBundle) {
   return a.revision === b.revision && a.entry === b.entry &&
