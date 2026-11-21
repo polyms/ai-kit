@@ -78,7 +78,7 @@ export type SkillProviderOptions = {
   timeoutMs?: number
 }
 
-const validVersion = /^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[a-zA-Z0-9.-]+)?$/
+const validVersion = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-[a-zA-Z0-9.-]+)?$/
 const validName = /^[a-z][a-z0-9-]{0,63}$/
 const validSha = /^[a-f0-9]{40}$/
 const validArtifact = new Set<string>([
@@ -93,7 +93,7 @@ const strings = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every(nonempty)
 const unique = (items: readonly string[]) => new Set(items).size === items.length
 const pathAllowed = (value: unknown): value is string =>
-  nonempty(value) && value.length <= 512 && !value.includes('\\\\') &&
+  nonempty(value) && value.length <= 512 && !value.includes('\\') &&
   !value.startsWith('/') && value.split('/').every(part => !!part && part !== '.' && part !== '..')
 const validPaths = (value: unknown): value is string[] =>
   strings(value) && value.every(pathAllowed) && unique(value)
@@ -230,7 +230,7 @@ export function createSkillProvider(options: SkillProviderOptions) {
     if (data.schemaVersion !== 1) throw new Error('Unsupported skill provider schema')
     return data as T
   }
-  async function list(version = options.version ?? 'latest'): Promise<Catalog> {
+  async function list(version = options.version ?? 'latest'): Promise<SkillCatalog> {
     if (version !== 'latest' && !validVersion.test(version)) throw new Error('Invalid version')
     const startedGeneration = generation
     const hit = catalogs.get(version)
