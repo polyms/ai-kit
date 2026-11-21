@@ -1,10 +1,11 @@
 # Evaluation runner
 
-V0.3 adds a local, opt-in benchmark for the 13 output, 38 routing and 17 composition cases.
+The local, opt-in benchmark includes 13 output, 38 routing, 17 composition and 15 memory cases
+(83 scenarios total).
 The runner is separate from the deployed MCP server and does not introduce a provider dependency.
 It uses the repository's existing tsx and MCP functions; a configurable OpenAI-compatible chat
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted
-output/composition. Native client testing (ChatGPT, Claude, Codex, etc.) remains a separate exercise.
+output/composition and the four memory cases that simulate recall. Native client testing (ChatGPT, Claude, Codex, etc.) remains a separate exercise.
 
 ## Memory Protocol pilot
 
@@ -69,8 +70,8 @@ a clean checkout and the same options for reproducibility. Scores are descriptiv
 review paired runs before drawing conclusions. Do not use the result as a release gate until
 thresholds and an independent reviewer are agreed. Error runs return a nonzero exit code.
 
-The dry run prints case count and upper bounds on model/judge requests (16 rounds per assisted
-output, one baseline request; counts are deliberately conservative). Actual token/cost totals
+The dry run prints case count and upper bounds on model/judge requests (up to 16 rounds per
+assisted output or memory arm with tools, one request for tool-free arms). Actual token/cost totals
 depend on the selected endpoint. Tool requests are read-only and allowlisted; max generation rounds
 are 16, per request timeout 120s and output cap 4096 tokens. No automatic retries or real mutations.
 Use a trusted endpoint and synthetic fixtures only; inputs and selected skill Markdown are sent there.
