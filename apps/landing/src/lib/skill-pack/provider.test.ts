@@ -22,10 +22,10 @@ describe('versioned snapshot provider', () => {
     expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)
     expect((await skillProvider({ name: '__proto__' })).status).toBe(404)
   })
-  it('resolves latest to the sole supported release and rejects retired versions', async () => {
+  it('resolves latest to the memory release and preserves the previous pinned release', async () => {
     const latest = await (await skillProvider({ version: 'latest' })).json()
-    const pinned = await (await skillProvider({ version: '0.3.2' })).json()
-    expect(latest.version).toBe('0.3.2')
+    const pinned = await (await skillProvider({ version: '0.3.3' })).json()
+    expect(latest.version).toBe('0.3.3')
     expect(pinned).toEqual(latest)
     expect(latest.composition.recipes).toHaveLength(5)
     expect(latest.composition.protocol.path).toBe('docs/agents/skill-composition.md')
@@ -33,7 +33,7 @@ describe('versioned snapshot provider', () => {
       'Check giúp a ticket quá hạn, đổi assignee; check ticket qua han'
     )
     expect(latest.packs.every((p: { contract: { context?: unknown } }) => Array.isArray(p.contract.context))).toBe(true)
-    expect(Object.keys(RELEASES)).toEqual(['0.3.2'])
+    expect(Object.keys(RELEASES).sort()).toEqual(['0.3.2', '0.3.3'])
     expect((await skillProvider({ version: '0.3.0' })).status).toBe(404)
     expect((await skillProvider({ version: '0.3.1' })).status).toBe(404)
     expect((await skillProvider({ name: 'reqs', version: '0.3.1' })).status).toBe(404)
@@ -49,7 +49,7 @@ describe('versioned snapshot provider', () => {
     const catalog = await client.list()
     expect(catalog.composition?.recipes.some(recipe => recipe.id === 'sprint-planning')).toBe(true)
     const bundle = await client.getSkill('plan')
-    expect(bundle.version).toBe('0.3.2')
+    expect(bundle.version).toBe('0.3.3')
     expect(bundle.contract).toMatchObject({
       context: expect.arrayContaining([{ key: 'scope', importance: 'required', description: expect.any(String) }]),
     })
@@ -61,8 +61,45 @@ describe('versioned snapshot provider', () => {
     expect(selected.files.filter(file => file.content)).toHaveLength(1)
     await expect(client.getSkill('plan', { version: '0.3.1' })).rejects.toThrow('404')
   })
+  it('delivers optional P2 metadata and a lazy reference through the existing SDK', async () => {
+    const transport = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.body) return skillProvider(JSON.parse(String(init.body)))
+      const [, , version, name, file] = new URL(String(url)).pathname.split('/')
+      if (version === 'latest.json') return skillProvider({ version: 'latest' })
+      return skillProvider({ version, name, strategy: file?.replace('.json', '') })
+    })
+    const client = createSkillProvider({ endpoint: 'https://example.com', fetch: transport })
+    const catalog = await client.list()
+    const pack = (catalog.packs as { name: string; contract: unknown }[]).find(item => item.name === 'plan')
+    const base = await client.getSkill('plan')
+    expect(base.version).toBe('0.3.3')
+    expect(base.contract).toEqual(pack?.contract)
+    expect(base.contract).toMatchObject({
+      memory: {
+        recall: expect.arrayContaining([{ topic: 'actual-effort', when: expect.any(String) }]),
+        capture: expect.arrayContaining([{ topic: 'estimation-corrections', when: expect.any(String) }]),
+      },
+    })
+    const path = 'docs/agents/memory-protocol.md'
+    expect(base.starterPaths).not.toContain(path)
+    expect(base.files.find(file => file.path === path)?.content).toBeUndefined()
+    const selected = await client.getSkill('plan', { paths: [path] })
+    expect(selected.files.find(file => file.path === path)?.content).toContain('# Memory Protocol')
+    expect(selected.files.filter(file => file.content)).toHaveLength(1)
+    expect(selected.contract).toEqual(base.contract)
+    const calls = transport.mock.calls.length
+    await client.getSkill('plan', { paths: [path] })
+    expect(transport).toHaveBeenCalledTimes(calls)
+    expect(extendSkill(base, {
+      name: 'project-plan', extends: 'ai-kit/plan@0.3.3', instructions: 'Apply local planning policy.',
+    }).base.contract).toEqual(base.contract)
+    const old = await client.getSkill('plan', { version: '0.3.2' })
+    expect(old.contract).not.toHaveProperty('memory')
+    expect(old.files.some(file => file.path === path)).toBe(false)
+  })
+
   it('extends domain context additively without mutating core metadata', async () => {
-    const bundle = await (await skillProvider({ name: 'plan' })).json()
+    const bundle = await (await skillProvider({ name: 'plan', version: '0.3.2' })).json()
     const original = structuredClone(bundle.contract)
     const context = [{ key: 'project-policy', importance: 'required' as const, description: 'Local policy.' }]
     const extension = {

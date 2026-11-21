@@ -82,3 +82,14 @@ const skill = extendSkill(base, {
 
 Duplicate keys and collisions with the core contract are rejected. The SDK does not resolve context,
 call Knowledge tools or execute recipes. Keep actual project data within authorized consumer tools.
+
+## Memory-aware consumers
+
+Skill release 0.3.3 adds optional `contract.memory` recall/capture hints and an allowlisted shared
+`docs/agents/memory-protocol.md` reference. The SDK keeps the same wire schema and forwards the
+contract unchanged; no SDK upgrade or provider integration is required. Pin 0.3.2 to retain the
+previous behavior. Forward selected contracts and paths to the host. When memory guidance is
+materially helpful, request the reference using the existing exact-path selection and the same
+resolved release version. Reuse it within the session. Starter-only consumers still receive the
+core context rules and hints; consumers must expose the reference to enable full guidance.
+The SDK only retrieves public methodology, never memory contents or business data.
