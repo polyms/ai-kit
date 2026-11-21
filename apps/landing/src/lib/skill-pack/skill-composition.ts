@@ -34,6 +34,19 @@ export type KnowledgeHint = {
   when: string
 }
 
+export const MEMORY_PROTOCOL = 'docs/agents/memory-protocol.md'
+
+/** Semantic topic and applicability condition; not a provider query or permission. */
+export type MemoryHint = {
+  topic: string
+  when: string
+}
+
+export type MemoryHints = {
+  recall?: readonly MemoryHint[]
+  capture?: readonly MemoryHint[]
+}
+
 export type SkillContract = {
   /** Alternative usable input kinds; the selected workflow determines actual prerequisites. */
   accepts: readonly ArtifactKind[]
@@ -43,6 +56,8 @@ export type SkillContract = {
   context: readonly ContextRequirement[]
   /** Conditional search hints for the existing Knowledge catalog, never mandatory calls. */
   knowledge?: readonly KnowledgeHint[]
+  /** Optional experience-use hints. Never a prerequisite or automatic persistence. */
+  memory?: MemoryHints
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
@@ -80,6 +95,20 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Options and assumptions are comparable; proposed and approved decisions are distinguished.',
   },
   reqs: {
+    memory: {
+      recall: [
+        {
+          topic: 'prior-approved-decisions',
+          when: 'Existing decisions or constraints may materially affect scope or acceptance criteria.',
+        },
+      ],
+      capture: [
+        {
+          topic: 'confirmed-requirements-decisions',
+          when: 'A durable decision is explicitly approved and not already recorded by its owner.',
+        },
+      ],
+    },
     context: [
       { key: 'goal', importance: 'required', description: 'Requested outcome and affected actors.' },
       {
@@ -185,6 +214,20 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Each item has bounded scope, testable outcome and dependencies; write status is explicit.',
   },
   bug: {
+    memory: {
+      recall: [
+        {
+          topic: 'similar-incidents',
+          when: 'An observed symptom makes a past incident materially relevant to investigation.',
+        },
+      ],
+      capture: [
+        {
+          topic: 'confirmed-reproduction-insights',
+          when: 'Reproduction or root cause is verified and useful beyond this report.',
+        },
+      ],
+    },
     knowledge: [
       {
         intent: 'incident',
@@ -234,6 +277,32 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       'Targets and current fields are resolved; requested changes and verification are reported separately.',
   },
   plan: {
+    memory: {
+      recall: [
+        {
+          topic: 'historical-estimates',
+          when: 'Estimating comparable work with unresolved effort assumptions.',
+        },
+        {
+          topic: 'actual-effort',
+          when: 'Calibrating an estimate using comparable, verified delivery outcomes.',
+        },
+        {
+          topic: 'previous-delivery-decisions',
+          when: 'Prior decisions may constrain the current plan.',
+        },
+      ],
+      capture: [
+        {
+          topic: 'estimation-corrections',
+          when: 'Comparable actual effort is verified against an earlier estimate.',
+        },
+        {
+          topic: 'planning-lessons',
+          when: 'Observed outcomes support a reusable, scoped delivery lesson.',
+        },
+      ],
+    },
     knowledge: [
       {
         intent: 'design',
@@ -277,6 +346,20 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     readyWhen: 'Effort and elapsed time reconcile with dependencies, capacity and uncertainty.',
   },
   qa: {
+    memory: {
+      recall: [
+        {
+          topic: 'regression-history',
+          when: 'Designing coverage for comparable affected behavior or a known regression risk.',
+        },
+      ],
+      capture: [
+        {
+          topic: 'missed-coverage-lessons',
+          when: 'Observed execution or defect evidence confirms a reusable coverage gap.',
+        },
+      ],
+    },
     knowledge: [
       {
         intent: 'incident',
@@ -340,6 +423,20 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       'The message preserves factual status, commitments and authorization; send status is explicit.',
   },
   review: {
+    memory: {
+      recall: [
+        {
+          topic: 'prior-review-findings',
+          when: 'Prior findings may reveal a relevant recurring defect or constraint.',
+        },
+      ],
+      capture: [
+        {
+          topic: 'preventive-review-lessons',
+          when: 'Evidence supports a scoped preventive lesson, not merely an untested suggestion.',
+        },
+      ],
+    },
     context: [
       { key: 'review-target', importance: 'required', description: 'Artifact or behavior being reviewed.' },
       {
@@ -467,6 +564,7 @@ export function compositionPaths(name: SkillPackName): string[] {
   return [
     COMPOSITION_PROTOCOL,
     CONTEXT_PROTOCOL,
+    MEMORY_PROTOCOL,
     ...WORKFLOW_RECIPES.filter(recipe => recipe.hostPack === name).map(recipe => recipe.path),
   ]
 }

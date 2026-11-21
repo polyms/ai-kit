@@ -19,10 +19,11 @@ AI Kit provides methodology and references, not an inference or orchestration ru
 Historical experience, decisions, preferences and lessons owned by the host, business or external
 provider. Distinct from curated AI Kit **Knowledge**, current business state and session context.
 
-**Memory Protocol** (planned):
+**Memory Protocol** (source pilot):
 Provider-agnostic guidance for using relevant Memory with skills: recall, apply, reflect and
 authorized capture. Not a storage format, API, provider engine or synchronization service.
-See [augmentation roadmap](docs/product/augmentation-roadmap.md).
+See [Memory Protocol](docs/agents/memory-protocol.md) and the
+[augmentation roadmap](docs/product/augmentation-roadmap.md).
 
 **Context contract**:
 Advisory information requirements for a skill. The host resolves material gaps through available,

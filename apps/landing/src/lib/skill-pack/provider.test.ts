@@ -1,24 +1,29 @@
 import { describe, expect, it, vi } from 'vitest'
 import { skillProvider, RELEASES } from './provider.server'
 import { createSkillProvider, extendSkill } from '../../../../../sdk/skill-provider'
+import type { SkillBundle, SkillCatalog, SkillContract } from '../../../../../sdk/skill-provider'
 
 describe('versioned snapshot provider', () => {
   it('loads only pinned starter paths', async () => {
-    const response = await skillProvider({ name: 'reqs', version: '0.3.2' })
+    const response = await skillProvider({ name: 'reqs', version: '0.3.3' })
     const data = await response.json()
     expect(response.status).toBe(200)
-    expect(data.revision).toBe(RELEASES['0.3.2'])
+    expect(data.revision).toBe(RELEASES['0.3.3'])
     expect(data.files.filter((file: {content?: string}) => file.content)).toHaveLength(data.starterPaths.length)
+  })
+  it('retires the experimental skill snapshot', async () => {
+    expect((await skillProvider({ version: '0.3.2' })).status).toBe(404)
+    expect((await skillProvider({ name: 'plan', version: '0.3.2' })).status).toBe(404)
   })
   it('rejects invalid versions and paths', async () => {
     expect((await skillProvider({ name: 'reqs', version: 'main' })).status).toBe(404)
     expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)
     expect((await skillProvider({ name: '__proto__' })).status).toBe(404)
   })
-  it('resolves latest to the sole supported release and rejects retired versions', async () => {
+  it('resolves latest to the memory release and preserves the previous pinned release', async () => {
     const latest = await (await skillProvider({ version: 'latest' })).json()
-    const pinned = await (await skillProvider({ version: '0.3.2' })).json()
-    expect(latest.version).toBe('0.3.2')
+    const pinned = await (await skillProvider({ version: '0.3.3' })).json()
+    expect(latest.version).toBe('0.3.3')
     expect(pinned).toEqual(latest)
     expect(latest.composition.recipes).toHaveLength(5)
     expect(latest.composition.protocol.path).toBe('docs/agents/skill-composition.md')
@@ -26,7 +31,7 @@ describe('versioned snapshot provider', () => {
       'Check giúp a ticket quá hạn, đổi assignee; check ticket qua han'
     )
     expect(latest.packs.every((p: { contract: { context?: unknown } }) => Array.isArray(p.contract.context))).toBe(true)
-    expect(Object.keys(RELEASES)).toEqual(['0.3.2'])
+    expect(Object.keys(RELEASES)).toEqual(['0.3.3'])
     expect((await skillProvider({ version: '0.3.0' })).status).toBe(404)
     expect((await skillProvider({ version: '0.3.1' })).status).toBe(404)
     expect((await skillProvider({ name: 'reqs', version: '0.3.1' })).status).toBe(404)
@@ -42,7 +47,7 @@ describe('versioned snapshot provider', () => {
     const catalog = await client.list()
     expect(catalog.composition?.recipes.some(recipe => recipe.id === 'sprint-planning')).toBe(true)
     const bundle = await client.getSkill('plan')
-    expect(bundle.version).toBe('0.3.2')
+    expect(bundle.version).toBe('0.3.3')
     expect(bundle.contract).toMatchObject({
       context: expect.arrayContaining([{ key: 'scope', importance: 'required', description: expect.any(String) }]),
     })
@@ -54,13 +59,48 @@ describe('versioned snapshot provider', () => {
     expect(selected.files.filter(file => file.content)).toHaveLength(1)
     await expect(client.getSkill('plan', { version: '0.3.1' })).rejects.toThrow('404')
   })
+  it('delivers optional P2 metadata and a lazy reference through the existing SDK', async () => {
+    const transport = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.body) return skillProvider(JSON.parse(String(init.body)))
+      const [, , version, name, file] = new URL(String(url)).pathname.split('/')
+      if (version === 'latest.json') return skillProvider({ version: 'latest' })
+      return skillProvider({ version, name, strategy: file?.replace('.json', '') })
+    })
+    const client = createSkillProvider({ endpoint: 'https://example.com', fetch: transport })
+    const catalog = await client.list()
+    const pack = (catalog.packs as { name: string; contract: unknown }[]).find(item => item.name === 'plan')
+    const base = await client.getSkill('plan')
+    expect(base.version).toBe('0.3.3')
+    expect(base.contract).toEqual(pack?.contract)
+    expect(base.contract).toMatchObject({
+      memory: {
+        recall: expect.arrayContaining([{ topic: 'actual-effort', when: expect.any(String) }]),
+        capture: expect.arrayContaining([{ topic: 'estimation-corrections', when: expect.any(String) }]),
+      },
+    })
+    const path = 'docs/agents/memory-protocol.md'
+    expect(base.starterPaths).not.toContain(path)
+    expect(base.files.find(file => file.path === path)?.content).toBeUndefined()
+    const selected = await client.getSkill('plan', { paths: [path] })
+    expect(selected.files.find(file => file.path === path)?.content).toContain('# Memory Protocol')
+    expect(selected.files.filter(file => file.content)).toHaveLength(1)
+    expect(selected.contract).toEqual(base.contract)
+    const calls = transport.mock.calls.length
+    await client.getSkill('plan', { paths: [path] })
+    expect(transport).toHaveBeenCalledTimes(calls)
+    expect(extendSkill(base, {
+      name: 'project-plan', extends: 'ai-kit/plan@0.3.3', instructions: 'Apply local planning policy.',
+    }).base.contract).toEqual(base.contract)
+    await expect(client.getSkill('plan', { version: '0.3.2' })).rejects.toThrow('404')
+  })
+
   it('extends domain context additively without mutating core metadata', async () => {
-    const bundle = await (await skillProvider({ name: 'plan' })).json()
+    const bundle = await (await skillProvider({ name: 'plan', version: '0.3.3' })).json()
     const original = structuredClone(bundle.contract)
     const context = [{ key: 'project-policy', importance: 'required' as const, description: 'Local policy.' }]
     const extension = {
       name: 'project-plan',
-      extends: 'ai-kit/plan@0.3.2' as const,
+      extends: 'ai-kit/plan@0.3.3' as const,
       instructions: 'Use local policy.',
       context,
     }
@@ -82,9 +122,9 @@ describe('versioned snapshot provider', () => {
     const transport = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
       if (init?.body) return skillProvider(JSON.parse(String(init.body)))
       const name = new URL(String(url)).pathname.split('/')[3]
-      return skillProvider({ name, version: '0.3.2' })
+      return skillProvider({ name, version: '0.3.3' })
     })
-    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.2', fetch: transport })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.3', fetch: transport })
     const [bundle] = await Promise.all([client.getSkill('reqs'), client.getSkill('reqs')])
     await client.getSkill('reqs')
     expect(transport).toHaveBeenCalledTimes(1)
@@ -94,7 +134,7 @@ describe('versioned snapshot provider', () => {
     await client.getSkill('reqs', { paths: [path] })
     expect(transport).toHaveBeenCalledTimes(2)
     expect(extendSkill(bundle, {
-      name: 'product-reqs', extends: 'ai-kit/reqs@0.3.2', instructions: 'Preserve project IDs.',
+      name: 'product-reqs', extends: 'ai-kit/reqs@0.3.3', instructions: 'Preserve project IDs.',
     }).base).toBe(bundle)
   })
   it('does not cache errors and isolates returned bundles', async () => {
@@ -102,9 +142,9 @@ describe('versioned snapshot provider', () => {
     const transport = vi.fn(async () => {
       attempts++
       return attempts === 1 ? new Response('', { status: 503 }) :
-        skillProvider({ name: 'reqs', version: '0.3.2' })
+        skillProvider({ name: 'reqs', version: '0.3.3' })
     })
-    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.2', fetch: transport })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.3', fetch: transport })
     await expect(client.getSkill('reqs')).rejects.toThrow('503')
     const first = await client.getSkill('reqs')
     first.files[0].content = 'changed by caller'
@@ -128,5 +168,200 @@ describe('versioned snapshot provider', () => {
     } finally {
       clock.mockRestore()
     }
+  })
+})
+
+describe('SDK wire contract and resilience', () => {
+  const version = '0.3.3'
+  const endpoint = 'https://example.com'
+
+  it('exposes concrete public contract and catalog types', async () => {
+    const catalog: SkillCatalog = await createSkillProvider({
+      endpoint, fetch: async () => skillProvider({ version }),
+    }).list(version)
+    const plan = catalog.packs.find(pack => pack.name === 'plan')
+    expect(plan?.contract.context.find(item => item.key === 'scope')?.importance).toBe('required')
+    const contract: SkillContract = plan!.contract
+    expect(contract.memory?.recall?.find(hint => hint.topic === 'actual-effort')?.when).toBeTruthy()
+  })
+
+  it('rejects catalog corruption and never caches invalid responses', async () => {
+    const source = await (await skillProvider({ version })).json() as SkillCatalog
+    const invalid = [
+      null,
+      [],
+      { ...source, packs: null },
+      { ...source, packs: [...source.packs, source.packs[0]] },
+      { ...source, packs: [{ ...source.packs[0], skillRawUrl: 'https://other.example/skill.md' }] },
+      { ...source, packs: source.packs.map(pack => pack.name === 'plan'
+        ? { ...pack, contract: { ...pack.contract, context: 'not-an-array' } } : pack) },
+      { ...source, composition: { protocol: { path: '../escape.md' }, recipes: [] } },
+    ]
+    for (const body of invalid) {
+      const client = createSkillProvider({ endpoint, fetch: async () => Response.json(body) })
+      await expect(client.list(version)).rejects.toThrow()
+    }
+    let count = 0
+    const client = createSkillProvider({ endpoint, fetch: async () => {
+      count++
+      return Response.json(count === 1 ? { ...source, packs: [] } : source)
+    } })
+    await expect(client.list(version)).rejects.toThrow('Invalid skill catalog')
+    expect((await client.list(version)).version).toBe(version)
+    expect(count).toBe(2)
+  })
+
+  it('rejects malformed bundles and untrusted reference URLs before returning data', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const invalid = [
+      { ...source, name: 'review' },
+      { ...source, contract: {} },
+      { ...source, starterPaths: ['../secret.md'] },
+      { ...source, files: 'not-an-array' },
+      { ...source, files: [...source.files, source.files[0]] },
+      { ...source, files: source.files.map((file, i) => i === 0
+        ? { ...file, rawUrl: 'https://attacker.invalid/private' } : file) },
+      { ...source, files: source.files.map((file, i) => i === 0
+        ? { ...file, content: 42 } : file) },
+    ]
+    for (const body of invalid) {
+      const client = createSkillProvider({ endpoint, version, fetch: async () => Response.json(body) })
+      await expect(client.getSkill('plan')).rejects.toThrow()
+    }
+    const empty = { ...source, files: source.files.map(({ path, rawUrl }) => ({ path, rawUrl })) }
+    await expect(createSkillProvider({ endpoint, version, fetch: async () => Response.json(empty) })
+      .getSkill('plan')).rejects.toThrow('Incomplete skill bundle')
+  })
+
+  it('validates selections and endpoint configuration without sending a request', async () => {
+    for (const url of ['http://example.com', 'https://alice:secret@example.com',
+      'https://example.com/path', 'https://example.com/?token=secret']) {
+      expect(() => createSkillProvider({ endpoint: url })).toThrow('Invalid skill provider endpoint')
+    }
+    const fetchFile = vi.fn(async () => new Response('', { status: 503 }))
+    const client = createSkillProvider({ endpoint, version, fetch: fetchFile })
+    await expect(client.getSkill('plan', { paths: ['../secret.md'] })).rejects.toThrow('Invalid skill path')
+    await expect(client.getSkill('plan', { paths: ['a.md', 'a.md'] })).rejects.toThrow('Invalid skill path')
+    await expect(client.getSkill('plan', { strategy: 'unknown' as 'starter' })).rejects.toThrow('Invalid skill path')
+    expect(fetchFile).not.toHaveBeenCalled()
+    expect(() => createSkillProvider({ endpoint, maxEntries: 0 })).toThrow('Invalid cache')
+    expect(() => createSkillProvider({ endpoint, timeoutMs: 0 })).toThrow('Invalid cache')
+  })
+
+  it('handles HTTP and non-JSON failures without caching them', async () => {
+    let calls = 0
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json()
+    const transport = vi.fn(async () => {
+      calls++
+      if (calls === 1) return new Response('bad gateway', { status: 502 })
+      if (calls === 2) return new Response('{oops', { headers: { 'content-type': 'application/json' } })
+      return Response.json(source)
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    await expect(client.getSkill('plan')).rejects.toThrow('HTTP 502')
+    await expect(client.getSkill('plan')).rejects.toThrow('Invalid skill provider JSON')
+    expect((await client.getSkill('plan')).name).toBe('plan')
+    expect(calls).toBe(3)
+  })
+
+  it('does not silently mix different manifests for the same immutable release', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    const b = 'docs/agents/memory-protocol.md'
+    let calls = 0
+    const transport = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+      calls++
+      const paths: string[] = JSON.parse(String(init?.body)).paths
+      const bundle = {
+        ...source,
+        contract: calls === 2 ? { ...source.contract, readyWhen: 'Tampered readiness' } : source.contract,
+        files: source.files.map(file => paths.includes(file.path) ? file :
+          { path: file.path, rawUrl: file.rawUrl }),
+      }
+      return Response.json(bundle)
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    await client.getSkill('plan', { paths: [a] })
+    await expect(client.getSkill('plan', { paths: [b] })).rejects.toThrow('Immutable release changed')
+  })
+
+  it('merges simultaneously fetched references instead of losing the first completion', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    const b = 'docs/agents/memory-protocol.md'
+    let releaseFirst: (() => void) | undefined
+    const waitFirst = new Promise<void>(resolve => { releaseFirst = resolve })
+    const transport = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+      const paths: string[] = JSON.parse(String(init?.body)).paths
+      if (paths.includes(a)) await waitFirst
+      return Response.json({
+        ...source,
+        files: source.files.map(file => paths.includes(file.path) ? file :
+          { path: file.path, rawUrl: file.rawUrl }),
+      })
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    const first = client.getSkill('plan', { paths: [a] })
+    const second = client.getSkill('plan', { paths: [b] })
+    await second
+    releaseFirst!()
+    await first
+    const both = await client.getSkill('plan', { paths: [a, b] })
+    expect(both.files.find(file => file.path === a)?.content).toContain('# Context contract')
+    expect(both.files.find(file => file.path === b)?.content).toContain('# Memory Protocol')
+    expect(transport).toHaveBeenCalledTimes(2)
+  })
+
+  it('rejects conflicting repeated content for the same release and path', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    const b = 'docs/agents/memory-protocol.md'
+    let requests = 0
+    const transport = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+      requests++
+      const paths: string[] = JSON.parse(String(init?.body)).paths
+      return Response.json({
+        ...source,
+        files: source.files.map(file =>
+          file.path === a && requests === 2 ? { ...file, content: '# Tampered content' } :
+            paths.includes(file.path) ? file : { path: file.path, rawUrl: file.rawUrl }),
+      })
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    await client.getSkill('plan', { paths: [a] })
+    await expect(client.getSkill('plan', { paths: [b] })).rejects.toThrow('Immutable release content changed')
+  })
+})
+
+// Release candidate smoke: clearing cache must not let an old request overwrite a fresh result.
+describe('SDK clearCache in-flight isolation', () => {
+  it('discards stale pending cache writes without discarding new results', async () => {
+    const version = '0.3.3'
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    let finishOld: (() => void) | undefined
+    const gate = new Promise<void>(resolve => { finishOld = resolve })
+    let calls = 0
+    const transport = vi.fn(async () => {
+      calls++
+      const call = calls
+      if (call === 1) await gate
+      return Response.json({
+        ...source,
+        files: source.files.map(file => file.path === a
+          ? { ...file, content: call === 1 ? '# Old content' : '# Fresh content' }
+          : { path: file.path, rawUrl: file.rawUrl }),
+      })
+    })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version, fetch: transport })
+    const pending = client.getSkill('plan', { paths: [a] })
+    client.clearCache()
+    const fresh = await client.getSkill('plan', { paths: [a] })
+    expect(fresh.files.find(file => file.path === a)?.content).toBe('# Fresh content')
+    finishOld!()
+    await pending
+    const again = await client.getSkill('plan', { paths: [a] })
+    expect(again.files.find(file => file.path === a)?.content).toBe('# Fresh content')
+    expect(calls).toBe(2)
   })
 })

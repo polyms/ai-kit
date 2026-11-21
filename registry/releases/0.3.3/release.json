@@ -1,6 +1,6 @@
 {
-  "version": "0.3.2",
-  "revision": "27eb117205abdbe626706e7530512534735e7778",
+  "version": "0.3.3",
+  "revision": "2617cd6fe5da37fab39619ba80ba0a7d3a2e418c",
   "files": {
     "skills/reqs/SKILL.md": "e686bf7f41ee108b3f7c26ee14d99f779062fa69",
     "skills/reqs/enterprise-prd-template.md": "668c26735be47fc8ef31d9c089b1db758a5ad67f",
@@ -70,6 +70,7 @@
     "workflows/business-decision.md": "4c67bab05eb5248fda3d00030b21da5334453433",
     "workflows/sprint-planning.md": "52b1683ebb7a2d729ae32dee26d95fe98537ae7f",
     "workflows/release-readiness.md": "62ac995bec4f20b0ca514124435a760951785f6b",
-    "docs/agents/context-contract.md": "1561f1d853e218f45ef115335bca5902be1d422e"
+    "docs/agents/context-contract.md": "8c0fdd64e41b0dac9a5a7a311a4f81cb6af9a50a",
+    "docs/agents/memory-protocol.md": "583629e31a26a0e45713e82376a8e971ba8af76a"
   }
 }

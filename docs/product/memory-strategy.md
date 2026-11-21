@@ -1,6 +1,7 @@
 # Memory strategy: provider-neutral usage
 
-Status: ownership decision agreed; protocol design and implementation remain planned.
+Status: ownership decision agreed. The P2 branch defines shared guidance, optional hints and
+versioned delivery; deployment, measured behavior and native-client compatibility remain unverified.
 AI Kit does not own, implement or operate memory. See [positioning](positioning.md).
 
 ## Research rationale
@@ -115,7 +116,9 @@ A shared external source can enable continuity between clients only if each has 
 - Keep outcome evidence separate from interpretation; only reviewed, generalized, authorized
   lessons may enter [Knowledge contribution](knowledge-strategy.md).
 
-P2 design should define the guidance, optional contract metadata, local/remote distribution and
-evaluation cases. Exact file locations, schema, SDK changes and release versions are not decided.
-No memory storage, ingestion, embedding, retrieval engine, or host-side hooks are implemented
-by these documents.
+See [Memory Protocol](../agents/memory-protocol.md) for the source pilot guidance. Optional
+`contract.memory` hints use `topic` and `when`; the five pilot skills are reqs, plan, bug, qa and
+review. The existing live MCP source manifest exposes the guidance as an optional reference.
+Only experimental skill release 0.3.3 is distributed; the runner includes
+paired memory scenarios. Model results, deployment and native-client validation are separate gates.
+No memory storage, ingestion, embedding, retrieval engine or host-side hooks.

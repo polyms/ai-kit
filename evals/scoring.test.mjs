@@ -73,3 +73,28 @@ test('summary records unknown usage and unresolved scores separately', () => {
   assert.equal(s['output:assisted'].inputTokens, 10)
   assert.equal(s['output:assisted'].payloadBytes, 22)
 })
+
+import { memoryCase, memoryTraceScore, invokeMemoryLookup } from './memory/scoring.mjs'
+
+test('memory suite distinguishes observable retrieval from unavailable capability', () => {
+  const item = memoryCase({
+    id: 'MP-X', skills: ['plan'], prompt: 'Estimate', context: 'Synthetic context',
+    expected: 'Use evidence', forbidden: 'Invent effort',
+    memoryLookup: { scope: 'A', topic: 'effort', result: 'verified actual 5 days', expectedCalls: 1 },
+  })
+  assert.equal(item.suite, 'memory')
+  assert.equal(item.hardGates.length, 1)
+  const allowed = invokeMemoryLookup(item, 'recall_memory', { scope: 'A', topic: 'effort' })
+  assert.equal(allowed.trace.ok, true)
+  assert.equal(memoryTraceScore(item, [allowed.trace]).status, 'pass')
+  assert.equal(memoryTraceScore(item, []).status, 'fail')
+  assert.equal(memoryTraceScore(item, [allowed.trace, allowed.trace]).status, 'fail')
+  const denied = invokeMemoryLookup(item, 'recall_memory', { scope: 'B', topic: 'effort' })
+  assert.equal(denied.trace.ok, false)
+  assert.doesNotMatch(denied.result, /verified actual/)
+  assert.equal(memoryTraceScore(item, [denied.trace]).status, 'fail')
+  const noLookup = { ...item, memoryLookup: undefined }
+  assert.equal(memoryTraceScore(noLookup, []).status, 'not-applicable')
+  assert.equal(invokeMemoryLookup(noLookup, 'recall_memory', {}).trace.ok, false)
+  assert.throws(() => memoryCase({ ...item, memoryLookup: { ...item.memoryLookup, expectedCalls: 2 } }))
+})
