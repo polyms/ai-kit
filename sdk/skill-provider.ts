@@ -1,5 +1,52 @@
-/** Dependency-free server-side TypeScript client. Requires fetch (Node 22+). */
+/** Dependency-free server-side TypeScript client. Requires Node 22+ fetch. */
 export type SkillFile = { path: string; rawUrl: string; content?: string }
+export type ArtifactKind =
+  | 'context' | 'requirements' | 'decision' | 'review-findings' | 'evidence'
+  | 'ui-spec' | 'delivery-plan' | 'test-report' | 'release-readiness'
+  | 'tracker-snapshot' | 'document' | 'defect' | 'work-item'
+  | 'change-receipt' | 'test-plan' | 'message'
+
+export type ContextRequirement = {
+  key: string
+  importance: 'required' | 'recommended' | 'optional'
+  description: string
+}
+export type KnowledgeHint = { intent: 'incident' | 'design' | 'toolchain'; when: string }
+export type MemoryHint = { topic: string; when: string }
+export type MemoryHints = { recall?: readonly MemoryHint[]; capture?: readonly MemoryHint[] }
+export type SkillContract = {
+  accepts: readonly ArtifactKind[]
+  produces: readonly ArtifactKind[]
+  readyWhen: string
+  context: readonly ContextRequirement[]
+  knowledge?: readonly KnowledgeHint[]
+  /** Semantic hints only; never memory storage, permission or a tool-call requirement. */
+  memory?: MemoryHints
+}
+export type SkillPackSummary = {
+  name: string
+  skillRawUrl: string
+  description: string
+  useWhen: readonly string[]
+  avoidWhen: string
+  starterPaths: string[]
+  relatedSkills: readonly string[]
+  contract: SkillContract
+}
+export type CompositionCatalog = {
+  protocol: { path: string }
+  recipes: readonly {
+    id: string; title: string; description: string; hostPack: string; path: string
+    skills: readonly string[]
+  }[]
+}
+export type SkillCatalog = {
+  schemaVersion: 1
+  version: string
+  revision: string
+  packs: SkillPackSummary[]
+  composition?: CompositionCatalog
+}
 export type SkillBundle = {
   schemaVersion: 1
   namespace: 'ai-kit'
@@ -8,19 +55,13 @@ export type SkillBundle = {
   revision: string
   entry: string
   starterPaths: string[]
-  contract: unknown
+  contract: SkillContract
   files: SkillFile[]
 }
 export type SkillSelection = { version?: string } & (
   { strategy?: 'starter' | 'full' | 'manifest'; paths?: never } |
   { paths: string[]; strategy?: never }
 )
-export type ContextRequirement = {
-  key: string
-  importance: 'required' | 'recommended' | 'optional'
-  description: string
-}
-
 export type DomainExtension = {
   name: string
   extends: `ai-kit/${string}@${string}`
@@ -28,17 +69,7 @@ export type DomainExtension = {
   /** Additive semantic needs only, not resolved business data. */
   context?: readonly ContextRequirement[]
 }
-
-export type CompositionCatalog = {
-  protocol: { path: string }
-  recipes: readonly {
-    id: string; title: string; description: string; hostPack: string; path: string; skills: readonly string[]
-  }[]
-}
-type Catalog = {
-  schemaVersion: 1; version: string; revision: string; packs: unknown[]; composition?: CompositionCatalog
-}
-type ProviderOptions = {
+export type SkillProviderOptions = {
   endpoint: string
   version?: string
   fetch?: typeof fetch
@@ -46,9 +77,120 @@ type ProviderOptions = {
   latestTtlMs?: number
   timeoutMs?: number
 }
-const validVersion = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-[a-zA-Z0-9.-]+)?$/
-const validName = /^[a-z][a-z0-9-]{0,63}$/
 
+const validVersion = /^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[a-zA-Z0-9.-]+)?$/
+const validName = /^[a-z][a-z0-9-]{0,63}$/
+const validSha = /^[a-f0-9]{40}$/
+const validArtifact = new Set<string>([
+  'context', 'requirements', 'decision', 'review-findings', 'evidence', 'ui-spec',
+  'delivery-plan', 'test-report', 'release-readiness', 'tracker-snapshot',
+  'document', 'defect', 'work-item', 'change-receipt', 'test-plan', 'message',
+])
+const nonempty = (value: unknown): value is string => typeof value === 'string' && !!value.trim()
+const record = (value: unknown): value is Record<string, unknown> =>
+  value !== null && typeof value === 'object' && !Array.isArray(value)
+const strings = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every(nonempty)
+const unique = (items: readonly string[]) => new Set(items).size === items.length
+const pathAllowed = (value: unknown): value is string =>
+  nonempty(value) && value.length <= 512 && !value.includes('\\\\') &&
+  !value.startsWith('/') && value.split('/').every(part => !!part && part !== '.' && part !== '..')
+const validPaths = (value: unknown): value is string[] =>
+  strings(value) && value.every(pathAllowed) && unique(value)
+const rawUrl = (revision: string, path: string) =>
+  'https://raw.githubusercontent.com/polyms/ai-kit/' + revision + '/' + path
+const validContext = (value: unknown): value is ContextRequirement =>
+  record(value) && typeof value.key === 'string' && validName.test(value.key) &&
+  ['required', 'recommended', 'optional'].includes(String(value.importance)) &&
+  nonempty(value.description)
+const validHint = (value: unknown): value is MemoryHint =>
+  record(value) && typeof value.topic === 'string' && validName.test(value.topic) &&
+  nonempty(value.when)
+const validContract = (value: unknown): value is SkillContract => {
+  if (!record(value) || !strings(value.accepts) || !strings(value.produces) ||
+    !value.accepts.length || !value.produces.length ||
+    ![...value.accepts, ...value.produces].every(x => validArtifact.has(x)) ||
+    !nonempty(value.readyWhen) || !Array.isArray(value.context) ||
+    !value.context.length || !value.context.every(validContext) ||
+    !unique(value.context.map(x => x.key))) return false
+  if (value.knowledge !== undefined && (!Array.isArray(value.knowledge) ||
+    !value.knowledge.every(x => record(x) &&
+      ['incident', 'design', 'toolchain'].includes(String(x.intent)) && nonempty(x.when)))) return false
+  if (value.memory !== undefined) {
+    if (!record(value.memory)) return false
+    for (const kind of ['recall', 'capture'] as const) {
+      const hints = value.memory[kind]
+      if (hints !== undefined && (!Array.isArray(hints) || !hints.every(validHint) ||
+        !unique(hints.map((x: MemoryHint) => x.topic)))) return false
+    }
+  }
+  return true
+}
+const validPack = (value: unknown): value is SkillPackSummary =>
+  record(value) && typeof value.name === 'string' && validName.test(value.name) &&
+  nonempty(value.description) && strings(value.useWhen) && value.useWhen.length > 0 &&
+  nonempty(value.avoidWhen) && validPaths(value.starterPaths) && value.starterPaths.length > 0 &&
+  strings(value.relatedSkills) && value.relatedSkills.every(x => validName.test(x)) &&
+  validContract(value.contract) &&
+  value.skillRawUrl === rawUrl(String(value.revision ?? ''), 'skills/' + value.name + '/SKILL.md') // validated with catalog revision below
+
+function parseCatalog(data: unknown): SkillCatalog {
+  if (!record(data) || data.schemaVersion !== 1 || !validVersion.test(String(data.version)) ||
+    typeof data.revision !== 'string' || !validSha.test(data.revision) ||
+    !Array.isArray(data.packs) || !data.packs.length ||
+    !data.packs.every(pack => {
+      if (!record(pack)) return false
+      const projected = { ...pack, revision: data.revision }
+      return validPack(projected)
+    }) ||
+    !unique(data.packs.map((pack: SkillPackSummary) => pack.name))) {
+    throw new Error('Invalid skill catalog')
+  }
+  for (const pack of data.packs as SkillPackSummary[]) {
+    if (pack.starterPaths[0] !== 'skills/' + pack.name + '/SKILL.md' ||
+      pack.relatedSkills.some(name => !data.packs.some((other: SkillPackSummary) => other.name === name))) {
+      throw new Error('Invalid skill catalog')
+    }
+  }
+  if (data.composition !== undefined) {
+    const c = data.composition
+    if (!record(c) || !record(c.protocol) || !pathAllowed(c.protocol.path) ||
+      !Array.isArray(c.recipes) || !c.recipes.every(recipe =>
+        record(recipe) && typeof recipe.id === 'string' && validName.test(recipe.id) &&
+        nonempty(recipe.title) && nonempty(recipe.description) &&
+        typeof recipe.hostPack === 'string' &&
+        data.packs.some((pack: SkillPackSummary) => pack.name === recipe.hostPack) &&
+        pathAllowed(recipe.path) && strings(recipe.skills) && recipe.skills.length > 0 &&
+        recipe.skills.every((name: string) => data.packs.some((pack: SkillPackSummary) => pack.name === name)))) {
+      throw new Error('Invalid skill catalog')
+    }
+  }
+  return data as SkillCatalog
+}
+function parseBundle(data: unknown, name: string, version: string): SkillBundle {
+  if (!record(data) || data.schemaVersion !== 1 || data.namespace !== 'ai-kit' ||
+    data.name !== name || data.version !== version ||
+    typeof data.revision !== 'string' || !validSha.test(data.revision) ||
+    data.entry !== 'skills/' + name + '/SKILL.md' ||
+    !validPaths(data.starterPaths) || !data.starterPaths.length ||
+    data.starterPaths[0] !== data.entry || !validContract(data.contract) ||
+    !Array.isArray(data.files) || !data.files.length ||
+    !data.files.every(file => record(file) && pathAllowed(file.path) &&
+      file.rawUrl === rawUrl(data.revision as string, file.path as string) &&
+      (file.content === undefined || nonempty(file.content))) ||
+    !unique(data.files.map((file: SkillFile) => file.path)) ||
+    !data.starterPaths.every((path: string) => data.files.some((file: SkillFile) => file.path === path))) {
+    throw new Error('Invalid skill bundle identity or structure')
+  }
+  return data as SkillBundle
+}
+function sameManifest(a: SkillBundle, b: SkillBundle) {
+  return a.revision === b.revision && a.entry === b.entry &&
+    JSON.stringify(a.contract) === JSON.stringify(b.contract) &&
+    JSON.stringify(a.starterPaths) === JSON.stringify(b.starterPaths) &&
+    JSON.stringify(a.files.map(({ path, rawUrl: url }) => [path, url])) ===
+      JSON.stringify(b.files.map(({ path, rawUrl: url }) => [path, url]))
+}
 export function createSkillProvider(options: ProviderOptions) {
   const endpoint = new URL(options.endpoint)
   if ((endpoint.protocol !== 'https:' && !(endpoint.protocol === 'http:' && endpoint.hostname === 'localhost')) ||
