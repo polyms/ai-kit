@@ -119,6 +119,6 @@ A shared external source can enable continuity between clients only if each has 
 See [Memory Protocol](../agents/memory-protocol.md) for the source pilot guidance. Optional
 `contract.memory` hints use `topic` and `when`; the five pilot skills are reqs, plan, bug, qa and
 review. The existing live MCP source manifest exposes the guidance as an optional reference.
-The immutable skill release 0.3.2 remains unchanged; 0.3.3 adds the P2 pilot and the runner includes
+Only experimental skill release 0.3.3 is distributed; the runner includes
 paired memory scenarios. Model results, deployment and native-client validation are separate gates.
 No memory storage, ingestion, embedding, retrieval engine or host-side hooks.

@@ -85,8 +85,7 @@ required context keys, a storage schema or authority to act.
 
 The live source manifest makes this reference available to every remote pack; it is not a
 starter file. Load it only if historical experience or reflection is materially useful. Local
-engineering clients can read the same guidance without changing their pipeline. Versioned SDK
-snapshots remain immutable; a separate release must explicitly include this reference and hints.
+engineering clients can read the same guidance without changing their pipeline. Versioned skill snapshots remain immutable; release 0.3.3 includes this reference and hints.
 No private data is needed to retrieve the protocol.
 
 See also [Context Contract](context-contract.md) and [Skill Composition](skill-composition.md).

@@ -1,0 +1,20 @@
+{
+  "purpose": "P0/P1 historical test baseline (not a published skill release)",
+  "revision": "6bab27c44a699cf7c19fc658ca6f12e443affb92",
+  "files": {
+    "docs/agents/context-contract.md": "1561f1d853e218f45ef115335bca5902be1d422e",
+    "docs/agents/skill-composition.md": "e1f0e3e42a706a5a1202c5669064d5c1efdc4a61",
+    "docs/agents/work-artifact-standard.md": "1b368f795b089d2be49a7416df6bdb81907e8b03",
+    "skills/bug/SKILL.md": "3f81ea7756e6b50bef40002d9a4874ef4acddff7",
+    "skills/bug/bug-template.md": "1a0124e39b69c371624ddd0a4f46b5dcb3c4fb08",
+    "skills/plan/SKILL.md": "5469cf105516f028f2b7eaf1d38feb0d6045bcf6",
+    "skills/plan/delivery-plan-template.md": "efdac96ef1d45fb65eb358e08c689bc84db7a969",
+    "skills/qa/SKILL.md": "7a6daaf022479ef9056af3b9be011ca574c7b673",
+    "skills/qa/qa-templates.md": "abe5528f7908d2ac01838b3ed7a8635ea7c79a3f",
+    "skills/reqs/SKILL.md": "e686bf7f41ee108b3f7c26ee14d99f779062fa69",
+    "skills/review/SKILL.md": "0c0d8808c28c3c9265a8b81682b7faad052bfea0",
+    "skills/review/review-template.md": "83ec6cfa5157236d0a2db2acfefd51563c7a654f",
+    "skills/task/SKILL.md": "02eff13dfa51f2161e5c3a4bd1d4ac49c6a77b65",
+    "skills/task/task-template.md": "7f1c5b5cc8f03cf78559406e4ee656089a6342d2"
+  }
+}

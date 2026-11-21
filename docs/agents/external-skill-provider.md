@@ -10,14 +10,14 @@ Markdown remains in its original repository paths. At build time, read the pinne
 `git show`; shallow or Vercel checkouts fall back to pinned public GitHub raw URLs. Verify every
 blob against the release manifest before generating static catalog and starter, manifest, and full
 JSON bundles plus a local snapshot for exact path selection. Fail the build on missing or changed
-content. The registry contains 0.3.2 (context-aware composition) and 0.3.3 (Memory Protocol pilot).
-The latest alias resolves to 0.3.3 in this branch; 0.3.2 remains immutable and selectable.
-The experimental 0.3.1 snapshot remains retired. No runtime upstream requests are needed.
+content. Only experimental skill release 0.3.3 (Memory Protocol pilot) is distributed.
+The latest alias resolves to 0.3.3 in this branch. Older pre-stable snapshots are retired and
+return VERSION_NOT_FOUND. No runtime upstream requests are needed.
 
 - GET /skill-bundles/latest.json: current catalog alias (not immutable).
-- GET /skill-bundles/0.3.3/catalog.json: pinned memory-aware catalog; 0.3.2 remains available.
-- GET /skill-bundles/0.3.2/reqs/starter.json: entry, shared standard and context guidance.
-- GET /skill-bundles/0.3.2/reqs/manifest.json or full.json: other selection modes.
+- GET /skill-bundles/0.3.3/catalog.json: pinned memory-aware catalog.
+- GET /skill-bundles/0.3.3/reqs/starter.json: entry, shared standard and context guidance.
+- GET /skill-bundles/0.3.3/reqs/manifest.json or full.json: other selection modes.
 - POST /api/skills with name, version, paths: exact reference selection from local snapshot.
 
 The public API exposes only approved repository skills, never Ops CMS or project data.
@@ -32,7 +32,7 @@ identical concurrent requests, and requests only missing reference content. Late
 resolution expires after 30 minutes by default. Returned content is copied to isolate callers.
 There is no persistent cache and failures are not cached. Default HTTP timeout is five seconds.
 
-The SDK package is prepared for local packing, not published. Domain extensions remain trusted
+The SDK package builds and packs in CI; published package install remains unverified. Domain extensions remain trusted
 local instructions, separate from the base bundle. They neither grant write permission nor replace
 core quality gates.
 

@@ -33,7 +33,7 @@ Install that tarball in your Business MCP. No new workspace dependencies or runt
 Run from the host that will consume the provider, after building the SDK and deploying the API:
 
 ```sh
-node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.2 20
+node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.3 20
 ```
 
 The report includes cold/warm p50 and p95, reference fetch timing and network call counts.
@@ -56,12 +56,12 @@ Pinned bundles remain cached until eviction or explicit clearing.
 
 ## Context-aware consumers
 
-From skill release 0.3.2, `bundle.contract` includes context requirements and the starter files
-include shared context guidance. Forward both the contract and selected file contents to the AI
-client, together with trusted domain instructions. The client reuses conversation context and
-retrieves missing information through authorized tools; do not send workspace data to the skill
-provider. Release 0.3.2 replaces the experimental 0.3.1 snapshot. Use latest or pin 0.3.2;
-no SDK upgrade is required to receive the new metadata.
+Skill release 0.3.3 includes context requirements and the starter files include shared
+context guidance. Forward both the contract and selected file contents to the AI client,
+together with trusted domain instructions. The client resolves context through authorized
+tools; do not send workspace data to the skill provider. Earlier experimental skill releases
+are retired: consumers pinning them must switch to 0.3.3 or `latest`. SDK and skill versions
+are independent.
 
 For multi-skill discovery, `provider.list()` includes optional `composition` metadata (recipes and
 protocol path). Load only relevant stage bundles; retain already loaded shared paths in the current
@@ -87,9 +87,12 @@ call Knowledge tools or execute recipes. Keep actual project data within authori
 
 Skill release 0.3.3 adds optional `contract.memory` recall/capture hints and an allowlisted shared
 `docs/agents/memory-protocol.md` reference. The SDK keeps the same wire schema and forwards the
-contract unchanged; no SDK upgrade or provider integration is required. Pin 0.3.2 to retain the
-previous behavior. Forward selected contracts and paths to the host. When memory guidance is
+contract unchanged; no SDK upgrade or provider integration is required. Forward selected contracts
+and paths to the host. When memory guidance is
 materially helpful, request the reference using the existing exact-path selection and the same
 resolved release version. Reuse it within the session. Starter-only consumers still receive the
 core context rules and hints; consumers must expose the reference to enable full guidance.
 The SDK only retrieves public methodology, never memory contents or business data.
+
+The SDK package remains prerelease pending the gates in
+[SDK stability review](../docs/agents/sdk-stability.md).

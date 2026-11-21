@@ -12,8 +12,7 @@ import {
 } from '../apps/landing/src/lib/skill-pack/skill-pack'
 import { executeGetSkillPack, executeListSkillPacks } from '../apps/landing/src/lib/skill-pack/skill-pack.mcp'
 import { scoreRoute, gradeOutput, scoreTrace, summarize } from './scoring.mjs'
-import { getSkillPack as getBaselinePack, listSkillPacks as listBaselinePacks } from '../registry/releases/0.3.2/manifest/skill-pack'
-import { listSkillPacks as listMemoryPacks } from '../registry/releases/0.3.3/manifest/skill-pack'
+import { getSkillPack as getSnapshotPack, listSkillPacks as listSnapshotPacks } from '../registry/releases/0.3.3/manifest/skill-pack'
 import { memoryCase, memoryTraceScore, invokeMemoryLookup } from './memory/scoring.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -93,7 +92,7 @@ hash.update(JSON.stringify(cases)).update(JSON.stringify(fixtureContext))
 // contracts and starter content, and only the assisted arm gets the P2 additions.
 const memoryInputs = new Map<string, { baseline: string; assisted: string }>()
 if (cases.some(item => item.suite === 'memory')) {
-  const release = await readJson('registry/releases/0.3.2/release.json')
+  const baselineSource = await readJson('evals/memory/baseline.json')
   const p2Release = await readJson('registry/releases/0.3.3/release.json')
   const readPinned = (snapshot: { revision: string; files: Record<string, string> }, path: string) => {
     const bytes = execFileSync('git', ['show', snapshot.revision + ':' + path], {
@@ -104,25 +103,26 @@ if (cases.some(item => item.suite === 'memory')) {
     return bytes.toString('utf8')
   }
   const protocol = readPinned(p2Release, 'docs/agents/memory-protocol.md')
-  const baselinePacks = listBaselinePacks()
-  const memoryPacks = listMemoryPacks()
+  const memoryPacks = listSnapshotPacks()
   for (const item of cases.filter(item => item.suite === 'memory')) {
     const selected = item.skills!
     const contracts: Record<string, unknown> = {}
     const hints: Record<string, unknown> = {}
     const paths = new Set<string>()
     for (const name of selected) {
-      const base = getBaselinePack(name)
-      if (!base) throw new Error('Unknown baseline skill: ' + name)
-      contracts[name] = base.contract
-      const baselineSummary = baselinePacks.find(pack => pack.name === name)!
+      const snapshot = getSnapshotPack(name)
+      if (!snapshot) throw new Error('Unknown skill: ' + name)
+      // Preserve P0/P1 contract fields without keeping an old public release.
+      const baseContract = { ...snapshot.contract }
+      delete baseContract.memory
+      contracts[name] = baseContract
       const memorySummary = memoryPacks.find(pack => pack.name === name)!
-      for (const path of baselineSummary.starterPaths) paths.add(path)
+      for (const path of memorySummary.starterPaths) paths.add(path)
       if (memorySummary.contract.memory) hints[name] = memorySummary.contract.memory
     }
     if (selected.length > 1) paths.add('docs/agents/skill-composition.md')
     const baseline = 'Selected P0/P1 skill contracts: ' + JSON.stringify(contracts) +
-      '\n\n' + [...paths].map(path => 'FILE ' + path + '\n' + readPinned(release, path)).join('\n\n')
+      '\n\n' + [...paths].map(path => 'FILE ' + path + '\n' + readPinned(baselineSource, path)).join('\n\n')
     const assisted = baseline + '\n\nP2 optional memory hints: ' + JSON.stringify(hints) +
       '\n\n' + protocol
     memoryInputs.set(item.id, { baseline, assisted })
