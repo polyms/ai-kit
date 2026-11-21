@@ -305,7 +305,9 @@ export function createSkillProvider(options: SkillProviderOptions) {
       if (expected.some(path => !data.files.some(f => f.path === path && f.content?.trim()))) {
         throw new Error('Incomplete skill bundle')
       }
-      const previous = cache.get(key)
+      // A request started before clearCache() may resolve to its caller, but it
+      // must not compare against or overwrite the new cache generation.
+      const previous = startedGeneration === generation ? cache.get(key) : undefined
       if (previous && !sameManifest(previous, data)) throw new Error('Immutable release changed')
       const merged: SkillBundle = { ...data, files: data.files.map(file => {
         const old = previous?.files.find(item => item.path === file.path)
