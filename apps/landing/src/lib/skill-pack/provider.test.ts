@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { skillProvider, RELEASES } from './provider.server'
 import { createSkillProvider, extendSkill } from '../../../../../sdk/skill-provider'
+import type { SkillBundle, SkillCatalog, SkillContract } from '../../../../../sdk/skill-provider'
 
 describe('versioned snapshot provider', () => {
   it('loads only pinned starter paths', async () => {
@@ -167,5 +168,167 @@ describe('versioned snapshot provider', () => {
     } finally {
       clock.mockRestore()
     }
+  })
+})
+
+describe('SDK wire contract and resilience', () => {
+  const version = '0.3.3'
+  const endpoint = 'https://example.com'
+
+  it('exposes concrete public contract and catalog types', async () => {
+    const catalog: SkillCatalog = await createSkillProvider({
+      endpoint, fetch: async () => skillProvider({ version }),
+    }).list(version)
+    const plan = catalog.packs.find(pack => pack.name === 'plan')
+    expect(plan?.contract.context.find(item => item.key === 'scope')?.importance).toBe('required')
+    const contract: SkillContract = plan!.contract
+    expect(contract.memory?.recall?.find(hint => hint.topic === 'actual-effort')?.when).toBeTruthy()
+  })
+
+  it('rejects catalog corruption and never caches invalid responses', async () => {
+    const source = await (await skillProvider({ version })).json() as SkillCatalog
+    const invalid = [
+      null,
+      [],
+      { ...source, packs: null },
+      { ...source, packs: [...source.packs, source.packs[0]] },
+      { ...source, packs: [{ ...source.packs[0], skillRawUrl: 'https://other.example/skill.md' }] },
+      { ...source, packs: source.packs.map(pack => pack.name === 'plan'
+        ? { ...pack, contract: { ...pack.contract, context: 'not-an-array' } } : pack) },
+      { ...source, composition: { protocol: { path: '../escape.md' }, recipes: [] } },
+    ]
+    for (const body of invalid) {
+      const client = createSkillProvider({ endpoint, fetch: async () => Response.json(body) })
+      await expect(client.list(version)).rejects.toThrow()
+    }
+    let count = 0
+    const client = createSkillProvider({ endpoint, fetch: async () => {
+      count++
+      return Response.json(count === 1 ? { ...source, packs: [] } : source)
+    } })
+    await expect(client.list(version)).rejects.toThrow('Invalid skill catalog')
+    expect((await client.list(version)).version).toBe(version)
+    expect(count).toBe(2)
+  })
+
+  it('rejects malformed bundles and untrusted reference URLs before returning data', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const invalid = [
+      { ...source, name: 'review' },
+      { ...source, contract: {} },
+      { ...source, starterPaths: ['../secret.md'] },
+      { ...source, files: 'not-an-array' },
+      { ...source, files: [...source.files, source.files[0]] },
+      { ...source, files: source.files.map((file, i) => i === 0
+        ? { ...file, rawUrl: 'https://attacker.invalid/private' } : file) },
+      { ...source, files: source.files.map((file, i) => i === 0
+        ? { ...file, content: 42 } : file) },
+    ]
+    for (const body of invalid) {
+      const client = createSkillProvider({ endpoint, version, fetch: async () => Response.json(body) })
+      await expect(client.getSkill('plan')).rejects.toThrow()
+    }
+    const empty = { ...source, files: source.files.map(({ path, rawUrl }) => ({ path, rawUrl })) }
+    await expect(createSkillProvider({ endpoint, version, fetch: async () => Response.json(empty) })
+      .getSkill('plan')).rejects.toThrow('Incomplete skill bundle')
+  })
+
+  it('validates selections and endpoint configuration without sending a request', async () => {
+    for (const url of ['http://example.com', 'https://alice:secret@example.com',
+      'https://example.com/path', 'https://example.com/?token=secret']) {
+      expect(() => createSkillProvider({ endpoint: url })).toThrow('Invalid skill provider endpoint')
+    }
+    const fetchFile = vi.fn(async () => new Response('', { status: 503 }))
+    const client = createSkillProvider({ endpoint, version, fetch: fetchFile })
+    await expect(client.getSkill('plan', { paths: ['../secret.md'] })).rejects.toThrow('Invalid skill path')
+    await expect(client.getSkill('plan', { paths: ['a.md', 'a.md'] })).rejects.toThrow('Invalid skill path')
+    await expect(client.getSkill('plan', { strategy: 'unknown' as 'starter' })).rejects.toThrow('Invalid skill path')
+    expect(fetchFile).not.toHaveBeenCalled()
+    expect(() => createSkillProvider({ endpoint, maxEntries: 0 })).toThrow('Invalid cache')
+    expect(() => createSkillProvider({ endpoint, timeoutMs: 0 })).toThrow('Invalid cache')
+  })
+
+  it('handles HTTP and non-JSON failures without caching them', async () => {
+    let calls = 0
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json()
+    const transport = vi.fn(async () => {
+      calls++
+      if (calls === 1) return new Response('bad gateway', { status: 502 })
+      if (calls === 2) return new Response('{oops', { headers: { 'content-type': 'application/json' } })
+      return Response.json(source)
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    await expect(client.getSkill('plan')).rejects.toThrow('HTTP 502')
+    await expect(client.getSkill('plan')).rejects.toThrow('Invalid skill provider JSON')
+    expect((await client.getSkill('plan')).name).toBe('plan')
+    expect(calls).toBe(3)
+  })
+
+  it('does not silently mix different manifests for the same immutable release', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    const b = 'docs/agents/memory-protocol.md'
+    let calls = 0
+    const transport = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+      calls++
+      const paths: string[] = JSON.parse(String(init?.body)).paths
+      const bundle = {
+        ...source,
+        contract: calls === 2 ? { ...source.contract, readyWhen: 'Tampered readiness' } : source.contract,
+        files: source.files.map(file => paths.includes(file.path) ? file :
+          { path: file.path, rawUrl: file.rawUrl }),
+      }
+      return Response.json(bundle)
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    await client.getSkill('plan', { paths: [a] })
+    await expect(client.getSkill('plan', { paths: [b] })).rejects.toThrow('Immutable release changed')
+  })
+
+  it('merges simultaneously fetched references instead of losing the first completion', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    const b = 'docs/agents/memory-protocol.md'
+    let releaseFirst: (() => void) | undefined
+    const waitFirst = new Promise<void>(resolve => { releaseFirst = resolve })
+    const transport = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+      const paths: string[] = JSON.parse(String(init?.body)).paths
+      if (paths.includes(a)) await waitFirst
+      return Response.json({
+        ...source,
+        files: source.files.map(file => paths.includes(file.path) ? file :
+          { path: file.path, rawUrl: file.rawUrl }),
+      })
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    const first = client.getSkill('plan', { paths: [a] })
+    const second = client.getSkill('plan', { paths: [b] })
+    await second
+    releaseFirst!()
+    await first
+    const both = await client.getSkill('plan', { paths: [a, b] })
+    expect(both.files.find(file => file.path === a)?.content).toContain('# Context contract')
+    expect(both.files.find(file => file.path === b)?.content).toContain('# Memory Protocol')
+    expect(transport).toHaveBeenCalledTimes(2)
+  })
+
+  it('rejects conflicting repeated content for the same release and path', async () => {
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    const b = 'docs/agents/memory-protocol.md'
+    let requests = 0
+    const transport = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+      requests++
+      const paths: string[] = JSON.parse(String(init?.body)).paths
+      return Response.json({
+        ...source,
+        files: source.files.map(file =>
+          file.path === a && requests === 2 ? { ...file, content: '# Tampered content' } :
+            paths.includes(file.path) ? file : { path: file.path, rawUrl: file.rawUrl }),
+      })
+    })
+    const client = createSkillProvider({ endpoint, version, fetch: transport })
+    await client.getSkill('plan', { paths: [a] })
+    await expect(client.getSkill('plan', { paths: [b] })).rejects.toThrow('Immutable release content changed')
   })
 })
