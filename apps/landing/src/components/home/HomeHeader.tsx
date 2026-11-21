@@ -8,11 +8,11 @@ import { HOME_PLAYFUL } from './brand'
 import { type NavId, useNavActive } from './useNavActive'
 
 const HOME_NAV: { id: NavId; href: string }[] = [
-  { id: 'overview', href: '/#main' },
-  { id: 'pipeline', href: '/#pipeline' },
-  { id: 'intelligence', href: '/#intelligence' },
+  { id: 'overview', href: '/#use-cases' },
   { id: 'catalog', href: '/#catalog' },
   { id: 'start', href: '/#start' },
+  { id: 'pipeline', href: '/#pipeline' },
+  { id: 'intelligence', href: '/#intelligence' },
 ]
 
 const SITE_NAV: { id: NavId | 'knowledge' | 'sdk'; href: string }[] = [

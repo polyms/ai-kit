@@ -5,6 +5,7 @@ import { getLocale } from '~/paraglide/runtime'
 import { CommandPalette } from '../components/CommandPalette'
 import { GlobalActionFlyout } from '../components/GlobalActionFlyout'
 import homeCss from '../components/home/home.css?url'
+import { m } from '../paraglide/messages.js'
 import type { Locale } from '../stores/useAppStore'
 import { useAppStore } from '../stores/useAppStore'
 import globalsCss from '../styles/globals.css?url'
@@ -18,9 +19,9 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
       {
         name: 'description',
-        content: 'ai-kit — Polyms agent skills for real engineering: align, spec, then ship.',
+        content: m.seo_description(),
       },
-      { title: 'ai-kit — Polyms' },
+      { title: m.seo_title() },
       { name: 'theme-color', content: __THEME_COLOR__ },
       { name: 'version', content: __VERSION__ },
     ],

@@ -47,9 +47,10 @@ domain_review: Review
 domain_triage: Triage
 
 # --- footer ---
-footer_blurb: 'Agent skills for engineering and everyday work. One version-controlled kit, available locally and through MCP.'
+footer_col_workflows: "Work skills"
+footer_blurb: "An AI Augmentation Layer for the assistants you already use. Reusable skills for chat and development tools."
 footer_col_community: Community
-footer_col_pipeline: Pipeline
+footer_col_pipeline: "Engineering"
 footer_col_resources: Resources
 footer_copyright: MIT © 2026 Polyms
 footer_link_catalog: Skill catalog
@@ -57,34 +58,72 @@ footer_link_issues: Issues
 footer_starGithub: Star on GitHub
 
 # --- hero ---
-hero_badge: "AI chat · AI development"
-hero_ctaPrimary: Get started
+chip_usecases: "use cases"
+usecases_title: "Give your AI a structured way to work."
+usecases_intro: "Use consistent methods for everyday business tasks and repository-aware engineering, without switching to a different assistant."
+usecases_research_title: "Research and compare"
+usecases_research_body: "Evaluate alternatives, distinguish evidence from assumptions and prepare a decision brief."
+usecases_research_outcome: "Example: two vendor proposals → comparison table, evidence gaps and decision draft."
+usecases_reqs_title: "Turn ideas into requirements"
+usecases_reqs_body: "Clarify scope and acceptance criteria, then draft a specification that people can review."
+usecases_reqs_outcome: "Example outcome: traceable requirements and open questions."
+usecases_delivery_title: "Plan, organize and test"
+usecases_delivery_body: "Estimate effort, break work into implementation tasks and derive QA coverage from agreed scope."
+usecases_delivery_outcome: "Example outcome: effort draft, task list and test cases."
+usecases_engineering_title: "Build with engineering discipline"
+usecases_engineering_body: "Use local skills in coding assistants to support design, implementation, review and E2E work."
+usecases_engineering_outcome: "Example outcome: scoped changes with verification steps."
+usecases_note: "AI Kit provides the methodology. Your host AI chooses the relevant skills and uses only context and tools it is authorized to access."
+hero_badge: "AI Augmentation Layer"
+hero_ctaPrimary: "Set up AI Kit for chat"
 hero_ctaSecondary: "Explore skills →"
-hero_line1: "Agent skills for"
-hero_line2: "real work"
-hero_sub: "One toolkit, two ways to work. Use AI chat for research, decisions and planning; install skills in your coding assistant to ship software. The same workflows are shared across compatible clients."
+hero_line1: "Extend the AI"
+hero_line2: "you already use"
+hero_sub: "Equip the AI tools you already use with reusable skills and structured methods for research, business requirements, planning, QA and software development. AI Kit supplies guidance; your AI handles reasoning and authorized actions."
+
+# --- positioning ---
+positioning_ask_title: "Ask your AI"
+positioning_ask_body: "“Review our release scope and QA evidence. Draft a readiness checklist and identify blockers; do not publish.”"
+positioning_method_title: "Your AI selects AI Kit guidance"
+positioning_method_body: "When supported, the host selects relevant release and QA skills, templates and quality checks for the task."
+positioning_apply_title: "Your AI applies it"
+positioning_apply_body: "Your AI checks available authorized evidence, flags unverified items and drafts the checklist. AI Kit neither runs the workflow nor approves a release."
+positioning_label: "How it works"
+positioning_title: "Your AI, with a better playbook."
+positioning_intro: "Your AI chooses and applies the relevant guidance in a compatible client. AI Kit provides the methodology, not a separate execution engine."
+positioning_note: "AI Kit supplies methodology and references, not another model or agent runtime. Memory and private business data stay with their owners. MCP, SDK, native skills and plugins are delivery options where supported."
+
+intelligence_technical_details: "View technical MCP retrieval example"
+
+intelligence_eval_details: "How evaluation is assessed"
 
 # --- home ---
-home_catalog_heading: 'One kit. Many workflows.'
-home_catalog_intro: "Choose the skills for your kind of AI tool. Work skills can also be installed locally in supported development clients."
+hero_example_label: "Example · AI Chat Tools"
+hero_example_request: "Plan our team invitation feature."
+hero_example_plan: "Draft effort and implementation tasks"
+hero_example_qa: "Draft QA scenarios and edge cases"
+hero_example_draft: "Illustrative draft · no external actions"
+home_catalog_heading: "Featured skills, practical results."
+home_catalog_intro: "Explore six useful skills for everyday work, or switch to six starter skills for repository-aware development. Browse the full catalog for more."
 
 # --- pipeline ---
-pipeline_agentsLabel: Principal agents
-pipeline_agent_design_owns: docs/design/ UI specs, @polyms/ui-kit maps
-pipeline_agent_dev_owns: Implementation, TDD, /devops (primary)
-pipeline_agent_pm_owns: PRD, stories, acceptance criteria, scope
-pipeline_agent_tester_owns: E2E harness, flake, CI sharding, journeys
-pipeline_agent_techlead_owns: /docs, arch, code-review, arch-refactor; /devops SEV
-pipeline_intro: Each stage produces artifacts the next agent consumes. Raw issues route in separately via /triage — verified and briefed before they reach /dev.
+pipeline_agentsLabel: "Engineering role guides"
+pipeline_agent_design_owns: "UI specifications, interaction states and alignment with your design system"
+pipeline_agent_dev_owns: "Scoped implementation, tests, debugging and verification"
+pipeline_agent_pm_owns: "Requirements, user stories, acceptance criteria and scope"
+pipeline_agent_tester_owns: "QA scenarios, E2E coverage, reproducible defects and CI evidence"
+pipeline_agent_techlead_owns: "Architecture trade-offs, technical risks, reviews and operational guidance"
+pipeline_intro: "Coding assistants can combine skills for alignment, requirements, design, development and review using repository context. The host selects and applies each step."
 pipeline_stage_align: Align
 pipeline_stage_design: Design
 pipeline_stage_dev: Dev
 pipeline_stage_idea: Idea
-pipeline_stage_issues: To issues
+pipeline_stage_issues: "Tasks and issues"
 pipeline_stage_reqs: Reqs / To PRD
 pipeline_stage_review: Code review
 pipeline_stage_ship: Ship
-pipeline_title: One pipeline, start to ship.
+pipeline_title: "Engineering workflows, when you need them."
+pipeline_agents_note: "Optional guidance for coding assistants. AI Kit does not operate an autonomous team of agents."
 
 # --- quickstart ---
 quickstart_body: "Install the local kit for Cursor, Claude Code, Codex or GitHub Copilot. Open your target repository and run setup using your client's skill picker or invocation syntax."
@@ -104,7 +143,7 @@ nav_catalog: Skills
 nav_docs: Docs
 nav_github: GitHub
 nav_locale: Interface language
-nav_overview: Overview
+nav_overview: Use cases
 nav_pipeline: Pipeline
 nav_knowledge: Knowledge
 nav_skip: Skip navigation
@@ -119,18 +158,18 @@ palette_placeholder: Type to filter skills…
 palette_title: Command palette
 
 # --- principles ---
-principles_1_body: /align closes the communication gap — grill decisions before /reqs or /to-prd.
+principles_1_body: "Clarify important decisions before drafting requirements, using /align when needed."
 principles_1_title: Align before you build
-principles_2_body: Short-named skills (/reqs, /design, /dev) you combine per task — no heavyweight process.
+principles_2_body: "Combine focused skills for each task. The stages are guidance, not a mandatory process."
 principles_2_title: Small and composable
-principles_3_body: /dev encodes TDD, types, and debugging discipline — fast signal, not blind codegen.
+principles_3_body: "Use tests, type checks and debugging evidence rather than generating code blindly."
 principles_3_title: Feedback loops
-principles_4_body: Specs name modules and seams; code skills resist the ball of mud agents accelerate.
+principles_4_body: "Document important boundaries and design decisions before changes spread."
 principles_4_title: Design every day
-principles_5_body: Fork, adapt, commit back — skills are yours, not black-box prompts.
-principles_5_title: Hack and own them
-principles_titleAccent: engineering.
-principles_titlePrefix: Real
+principles_5_body: "Inspect, adapt and version local skills to fit your team's standards."
+principles_5_title: "Open and adaptable"
+principles_titleAccent: "principles."
+principles_titlePrefix: "Engineering"
 
 # --- knowledge ---
 knowledge_backToIndex: Back to knowledge
@@ -212,10 +251,10 @@ skillDetail_upstream: Upstream
 skillDetail_whenToUse: When to use
 
 # --- ticker ---
-ticker_specBeforeCode: spec before code
-ticker_citeFile: cite the file
-ticker_noVibeCoding: no vibe coding
-ticker_cursorFirst: cursor-first
+ticker_evidenceFirst: "evidence before assumptions"
+ticker_traceableWork: "traceable decisions"
+ticker_contextMatters: "context with provenance"
+ticker_reviewedKnowledge: "reviewed knowledge"
 ticker_toolAgnostic: tool-agnostic
 ticker_mitLicensed: MIT licensed
 ticker_reviewDiff: review the diff
@@ -232,28 +271,28 @@ chip_catalog: catalog
 chip_quickstart: quickstart
 
 domain_work: "Work operations"
-nav_intelligence: "Intelligence"
-chip_intelligence: "intelligence"
+nav_intelligence: "Under the hood"
+chip_intelligence: "under the hood"
 home_catalog_group: "Choose your AI tool type"
 home_catalog_engineering: "AI Development Tools"
 home_catalog_work: "AI Chat Tools"
 home_catalog_all: "View all skills"
-intelligence_title: "The right skill. Only what you need."
-intelligence_intro: "For AI chat tools and other compatible MCP clients: the read-only skill provider guides discovery, selective retrieval and optional handoffs. Development tools can also use the same local skill files."
-intelligence_discovery_title: "Smart discovery"
-intelligence_discovery_body: "Intent, boundaries and suggested starter paths guide the client toward a minimal set of skills. Simple requests can skip skills entirely."
-intelligence_loading_title: "Progressive loading"
-intelligence_loading_body: "Read the entry workflow first. Retrieve templates and references by exact path only when needed; reuse content already in the session."
-intelligence_composition_title: "Skill composition"
-intelligence_composition_body: "Input/output contracts, shared context and completion gates guide optional handoffs. The client stops blocked work instead of inventing decisions."
-intelligence_loading_example: "Entry first, references later"
-intelligence_loading_explain: "Example: discover the design pack, then fetch only the advertised entry file."
+intelligence_title: "The right guidance, when your AI needs it."
+intelligence_intro: "AI Kit delivers reusable methods and references. Compatible AI clients decide which skills to use, retrieve only what is relevant and handle any handoffs themselves."
+intelligence_discovery_title: "Find relevant skills"
+intelligence_discovery_body: "Pack descriptions and boundaries help the host choose suitable guidance. Simple requests need not load any skills."
+intelligence_loading_title: "Load only what matters"
+intelligence_loading_body: "Start with a skill's core instructions; fetch templates or references only if the task needs them."
+intelligence_composition_title: "Combine skills when useful"
+intelligence_composition_body: "Optional handoff guidance helps the host preserve scope and evidence across tasks. AI Kit does not run or approve the workflow."
+intelligence_loading_example: "Selective guidance, not a full catalog"
+intelligence_loading_explain: "A compatible client can request only the needed entry workflow and relevant references."
 intelligence_loading_note: "Other files remain manifest metadata until requested."
-intelligence_eval_title: "Built to be evaluated"
-intelligence_eval_body: "The evaluation checks whether assisted outputs preserve requirements, select relevant skills and hand off work correctly. It compares against an unassisted baseline under matched conditions."
+intelligence_eval_title: "Designed for evaluation"
+intelligence_eval_body: "Synthetic fixtures test skill routing, output quality and handoff rules. They are checks, not evidence of measured model improvement."
 intelligence_packs: "MCP skill packs"
 intelligence_recipes: "workflow recipes"
-intelligence_eval_note: "57 scenarios cover output quality, routing and composition. Comparative model results are not published yet."
+intelligence_eval_note: "68 synthetic scenarios span output, routing and composition. No comparative quality uplift or native-client results are claimed."
 intelligence_workflows_title: "Workflow recipes"
 intelligence_workflows_intro: "Start at the first missing artifact. These are suggested routes, not mandatory pipelines."
 intelligence_workflows_note: "Skip irrelevant stages, preserve approved scope and require explicit authorization for external writes. No server-side orchestration."
@@ -272,22 +311,22 @@ skillDetail_contract_note: "Advisory artifact identifiers and completion gate fr
 
 hero_chat_path: "ChatGPT and compatible MCP chat clients · research, planning, business and QA"
 hero_dev_path: "Cursor, Claude Code, Codex, Copilot · repo-aware engineering workflows"
-home_catalog_chat_hint: "13 remote MCP work packs. Ask naturally in a connected chat client; follow explicit invocation rules where applicable. No repository checkout required."
-home_catalog_dev_hint: "Local skills for coding agents: engineering workflows plus reusable work skills. Install the kit, open a project and follow the client's invocation rules."
+home_catalog_chat_hint: "13 remote MCP skill packs. Labels like /research identify skills, not commands you must type. In a compatible connected chat, describe your goal naturally; invocation and permissions depend on the client."
+home_catalog_dev_hint: "Install local skills for coding agents, open a repository and follow that client's invocation rules. Slash-style labels identify workflows; their exact invocation differs by client."
 skill_audience_both: "Chat (MCP) · Development (local)"
 skill_audience_dev: "Development tools · local"
 skill_audience_title: "Where to use this skill"
 skill_audience_both_detail: "Available through the remote MCP work catalog in supported chat clients and as a local skill in supported development tools. Chat does not need a repository checkout. Actions still depend on available tools and explicit permissions; manual-only invocation rules remain in effect."
 skill_audience_dev_detail: "Install locally in a supported development tool such as Cursor, Claude Code, Codex or Copilot. This skill is not in the published remote MCP work catalog."
-pipeline_dev_note: "This engineering pipeline is for repository-aware development tools. Chat users can use the work recipes below without a repository checkout."
-intelligence_eval_method: "Compare responses to the same synthetic task, check rubric and hard gates, and record actual retrieval separately from output quality. No uplift is claimed before independent comparison."
-quickstart_choose: "Choose how you work."
-quickstart_choose_body: "Use the remote work packs in chat, or install the full local kit for your development agent."
+pipeline_dev_note: "Stages are optional guidance, not an AI Kit orchestration engine. Chat users can use business workflows without checking out a repository."
+intelligence_eval_method: "Compare equivalent synthetic tasks with and without skill guidance; score hard gates and output quality separately from retrieval traces. Model uplift requires measured results."
+quickstart_choose: "Choose your AI tool"
+quickstart_choose_body: "Connect published work skills to a compatible AI chat client, or install local skills for your development assistant."
 quickstart_dev_title: "For AI development tools"
 quickstart_chat_step1: "Add the server URL in the client's custom MCP settings (Streamable HTTP)."
 quickstart_chat_step2: "Sign in with OAuth and enable the AI Kit connection in your session."
 quickstart_chat_step3: "Ask for the outcome you need; the client can discover and load the relevant work packs. Explicitly select workflows when required."
-quickstart_chat_example: "Estimate a team invitation feature, draft implementation tasks and QA cases. Do not publish."
+quickstart_chat_example: "Compare two onboarding approaches, list trade-offs and open questions, and draft a recommendation for stakeholder review. Do not publish."
 recipe_product_body: "From evidence or an approved brief to requirements, estimate, tasks and QA. Reuse existing approved artifacts."
 recipe_bug_body: "Record a defect, inspect its tracker status and verify a fix only with actual evidence."
 recipe_business_body: "Compare options, challenge assumptions and communicate a proposed or approved decision."
@@ -322,3 +361,34 @@ sdk_http_title: "HTTP API"
 sdk_http_body: "Use the static JSON endpoints without the TypeScript SDK; use the read-only POST endpoint for exact path selection."
 sdk_security: "Public skill delivery requires no user credentials. Keep business data and write authorization inside your own MCP; instructions are not authorization."
 sdk_performance_note: "Production latency is not yet benchmarked. The request counts describe the design, not measured response times."
+
+hero_example_link: "View sample requirements and QA"
+pipeline_role_pm: "Product planning"
+pipeline_role_designer: "UI and UX design"
+pipeline_role_developer: "Implementation"
+pipeline_role_tester: "QA verification"
+pipeline_role_techlead: "Technical review"
+footer_start_guide: "Getting started"
+seo_title: "AI Kit | Skills and methods for the AI you use"
+seo_description: "AI Kit adds reusable skills and structured working methods to compatible AI chat and coding tools for research, requirements, planning, QA and software development."
+example_back: "Back to use cases"
+example_badge: "Illustrative example · draft only"
+example_title: "Team Invitation: from requirements to QA"
+example_intro: "A fictional sample of a draft that a compatible AI client can produce using AI Kit methods. It is not a transcript or proof of a live AI Kit session."
+example_reqs_heading: "Requirements and acceptance criteria"
+example_br01: "Only a team Owner may send an invitation."
+example_ac01: "A valid email creates one pending invitation."
+example_ac02: "An invalid email shows a validation error and creates no invitation."
+example_ac03: "Non-owners cannot send invitations; no record is created."
+example_scope: "Out of scope: resend, expiry and sending invitation emails."
+example_plan_heading: "Implementation task draft"
+example_task1: "Check Owner authorization at the API boundary and in the UI."
+example_task2: "Validate email input and persist a pending invitation for valid requests."
+example_task3: "Cover success, validation errors and forbidden requests with automated tests."
+example_effort: "Effort: not yet estimated. Review repository interfaces and data constraints first. This sample is not a delivery commitment."
+example_qa_heading: "QA test cases"
+example_tc01: "Owner submits a valid email → exactly one pending invitation appears."
+example_tc02: "Owner submits an invalid email → error appears; no invitation is created."
+example_tc03: "Non-owner submits an email → request is blocked; no invitation is created."
+example_boundary: "No invitations were sent, no external records were changed, and no product behavior was verified for this illustration."
+example_setup: "Set up AI Kit for chat"

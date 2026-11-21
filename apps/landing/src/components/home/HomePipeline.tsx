@@ -17,27 +17,27 @@ const STAGES = [
 const AGENTS = [
   {
     name: 'pm',
-    role: 'Principal Product Manager',
+    role: m.pipeline_role_pm,
     owns: m.pipeline_agent_pm_owns,
   },
   {
     name: 'designer',
-    role: 'Principal Product Designer',
+    role: m.pipeline_role_designer,
     owns: m.pipeline_agent_design_owns,
   },
   {
     name: 'developer',
-    role: 'Principal Software Engineer',
+    role: m.pipeline_role_developer,
     owns: m.pipeline_agent_dev_owns,
   },
   {
     name: 'tester',
-    role: 'Principal Tester',
+    role: m.pipeline_role_tester,
     owns: m.pipeline_agent_tester_owns,
   },
   {
     name: 'techlead',
-    role: 'Principal Tech Lead',
+    role: m.pipeline_role_techlead,
     owns: m.pipeline_agent_techlead_owns,
   },
 ] as const
@@ -63,7 +63,7 @@ function StageChip({ label, invoke, last }: { label: string; invoke?: string; la
 export function HomePipeline() {
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='pipeline'>
-      <HomeSectionChip label={m.chip_pipeline()} n='02' />
+      <HomeSectionChip label={m.chip_pipeline()} n='05' />
       <h2 className='app-pipeline__title m-0 mb-3 font-bold font-sans text-fg'>{m.pipeline_title()}</h2>
       <p className='mb-3 max-w-[640px] text-muted'>{m.pipeline_intro()}</p>
       <p className='mb-9 text-sm text-muted'>{m.pipeline_dev_note()}</p>
@@ -85,6 +85,7 @@ export function HomePipeline() {
         </span>
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
+      <p className='mb-5 max-w-[760px] text-sm text-muted'>{m.pipeline_agents_note()}</p>
       <div className='flex flex-wrap gap-6'>
         {AGENTS.map((agent, i) => {
           const playfulRotate =
@@ -95,7 +96,7 @@ export function HomePipeline() {
               key={agent.name}
             >
               <div className='mb-2 font-bold font-mono text-[15px] text-primary-600'>{agent.name}</div>
-              <div className='mb-1.5 font-bold text-fg'>{agent.role}</div>
+              <div className='mb-1.5 font-bold text-fg'>{agent.role()}</div>
               <div className='text-[13.5px] text-muted leading-snug'>{agent.owns()}</div>
             </div>
           )

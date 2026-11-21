@@ -26,7 +26,7 @@ export function HomeIntelligence() {
 
   return (
     <section className='app-home-section app-shell mx-auto max-w-[1080px]' id='intelligence'>
-      <HomeSectionChip label={m.chip_intelligence()} n='03' />
+      <HomeSectionChip label={m.chip_intelligence()} n='07' />
       <h2 className='app-pipeline__title m-0 mb-3 font-bold font-sans text-fg'>
         {m.intelligence_title()}
       </h2>
@@ -47,18 +47,23 @@ export function HomeIntelligence() {
         <div className='min-w-0 rounded-[24px] border border-line bg-body p-6'>
           <h3 className='m-0 mb-2 font-bold text-[18px] text-fg'>{m.intelligence_loading_example()}</h3>
           <p className='mb-4 text-sm text-muted'>{m.intelligence_loading_explain()}</p>
-          <div className='app-terminal overflow-hidden rounded-2xl'>
-            <div className='app-terminal__bar px-4 py-2 font-mono text-[11px]'>
-              <span className='app-terminal__title'>MCP · selective retrieval</span>
-            </div>
-            <div className='space-y-3 px-4 py-4 font-mono text-[12.5px] leading-relaxed'>
-              <div className='app-terminal__prompt'>list_skill_packs()</div>
-              <div className='app-terminal__text break-all'>
-                get_skill_pack({JSON.stringify({name: example.name, paths: example.starterPaths})})
+          <details className='rounded-xl border border-line bg-surface p-4'>
+            <summary className='cursor-pointer font-semibold text-sm text-primary-700'>
+              {m.intelligence_technical_details()}
+            </summary>
+            <div className='app-terminal mt-4 overflow-hidden rounded-2xl'>
+              <div className='app-terminal__bar px-4 py-2 font-mono text-[11px]'>
+                <span className='app-terminal__title'>MCP · selective retrieval</span>
               </div>
-              <div className='app-terminal__dim'>{m.intelligence_loading_note()}</div>
+              <div className='space-y-3 px-4 py-4 font-mono text-[12.5px] leading-relaxed'>
+                <div className='app-terminal__prompt'>list_skill_packs()</div>
+                <div className='app-terminal__text break-all'>
+                  get_skill_pack({JSON.stringify({name: example.name, paths: example.starterPaths})})
+                </div>
+                <div className='app-terminal__dim'>{m.intelligence_loading_note()}</div>
+              </div>
             </div>
-          </div>
+          </details>
         </div>
         <div className='app-catalog-card--featured rounded-[24px] border p-6'>
           <h3 className='m-0 mb-2 font-bold text-[18px] text-fg'>{m.intelligence_eval_title()}</h3>
@@ -68,7 +73,10 @@ export function HomeIntelligence() {
             <div><div className='font-bold font-mono text-3xl text-primary-600'>{WORKFLOW_RECIPES.length}</div><div className='text-sm text-muted'>{m.intelligence_recipes()}</div></div>
           </div>
           <p className='mt-5 mb-3 text-[13.5px] text-muted'>{m.intelligence_eval_note()}</p>
-          <p className='mb-0 text-[13.5px] text-muted'>{m.intelligence_eval_method()}</p>
+          <details className='text-[13.5px] text-muted'>
+            <summary className='cursor-pointer font-semibold text-primary-700'>{m.intelligence_eval_details()}</summary>
+            <p className='mt-2 mb-0'>{m.intelligence_eval_method()}</p>
+          </details>
         </div>
       </div>
 

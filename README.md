@@ -1,13 +1,37 @@
 # ai-kit
 
-**Polyms** agent skills for **real engineering** — not vibe coding.
+**AI Kit is an AI Augmentation Layer for the AI tools you already use.**
 
-Agents and skills for business operations and agentic fullstack development: research, requirements,
-documentation, work tickets, design and production code. One version-controlled kit for local and remote AI clients.
+It extends existing LLMs and AI clients with reusable skills, structured methodologies, domain knowledge,
+templates, context contracts and composable workflow guidance. The **host AI** remains responsible for
+reasoning, conversation, context, tool calls and authorized execution. AI Kit does not run a
+server-side LLM or autonomous agent workflow engine.
 
-Use local skill installation or the client-agnostic MCP skill provider.
+For end users, this means better-supported research, requirements, decisions, planning, documentation
+and QA inside compatible AI chat tools. For engineers, the same methodology supports repo-aware work
+in coding assistants. Client capabilities and invocation methods vary.
+
+Use native/local skill installation, MCP or the SDK to deliver the same version-controlled methodology.
 
 **Kit site:** [ai-kit.polyms.dev](https://ai-kit.polyms.dev) — browse skills, copy sample prompts, quick start. Source in `apps/landing/`.
+
+## Product boundary
+
+AI Kit **augments** host assistants; it does not replace them or take over user work.
+
+| AI Kit supplies | The host AI/client owns |
+| --- | --- |
+| Skills, standards, templates and Knowledge | Model inference, reasoning and conversation |
+| Context contracts and optional workflow recipes | Skill selection, context and orchestration |
+| Planned memory-use and reflection guidance | Agent or business memory; authorized recall and capture |
+| MCP, SDK and local skill delivery | Authenticated tools, actions, approvals and verification |
+
+AI Kit's server may deliver skill content and Knowledge, but does **not** perform LLM inference for
+end-user work. See [canonical product positioning](docs/product/positioning.md) before changing
+architecture or product messaging. The [augmentation roadmap](docs/product/augmentation-roadmap.md)
+records current and planned capabilities. AI Kit does not store or manage agent or business memory;
+its planned Memory Protocol guides effective use of existing memory sources. The roadmap links the
+architecture, memory, Knowledge and quality strategies; these describe direction, not shipped features.
 
 ## Real engineering
 
@@ -25,7 +49,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 
 ## Vision
 
-`ai-kit` is the shared brain for **business operations and agentic fullstack development** at Polyms. Each capability is a short-named skill or agent you invoke with a slash command:
+`ai-kit` is Polyms' shared **augmentation methodology** for business operations and agentic fullstack development. In supported coding clients, capabilities may be explicitly invoked as short-named skills or delivered through host-specific discovery:
 
 ```
 /setup         → configure repo for ai-kit pipeline (run once)

@@ -1,6 +1,18 @@
 # ai-kit
 
-Polyms agent skills for real engineering — align, spec, ship.
+Polyms AI Augmentation Layer for existing LLMs and AI tools.
+
+## Product positioning (required for all changes)
+
+Read [canonical product positioning](docs/product/positioning.md) before changing the landing page,
+MCP, SDK, skills, composition, or architecture. AI Kit extends the host AI with skills, methodology,
+Knowledge and guidance. The **host** owns inference, reasoning, conversation, context and authorized
+tool execution. Memory remains owned by the agent, business or external provider. AI Kit may define
+memory-use methodology, not memory storage, an API, provider engine or synchronization service.
+Do not propose a server-side LLM, agent runtime, model router or AI orchestration engine. Metadata delivery, static retrieval,
+versioning and deterministic checks are in scope. See the [augmentation roadmap](docs/product/augmentation-roadmap.md)
+for planned capabilities and linked strategy documents; planned work is not implementation authorization. Product copy must address end-user benefit without
+claiming that AI Kit independently reasons, executes or has verified compatibility it has not tested.
 
 ## Agent skills
 

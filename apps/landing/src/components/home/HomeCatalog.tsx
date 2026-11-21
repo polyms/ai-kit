@@ -11,32 +11,18 @@ import { HOME_PLAYFUL } from './brand'
 import { catalogCategory, catalogDisplayName } from './catalogCategory'
 import { HomeSectionChip } from './HomeSectionChip'
 
-/** Order + membership aligned with ui_kits/ai-kit-landing/Catalog.jsx */
-const HOME_CATALOG_SLUGS = [
-  'setup',
-  'align',
-  'reqs',
-  'to-prd',
-  'to-issues',
-  'triage',
-  'design',
-  'dev',
-  'code-review',
-  'docs',
-  'e2e',
-  'craft',
-  'arch-refactor',
-  'arch',
-  'devops',
-] as const
+/** Six representative entries per audience; the full catalog remains at /skills. */
+const FEATURED_SKILL_SLUGS = {
+  work: ['research', 'business', 'reqs', 'plan', 'qa', 'release'],
+  engineering: ['setup', 'align', 'reqs', 'design', 'dev', 'code-review'],
+} as const
 
 export function HomeCatalog() {
   const locale = useAppStore(s => s.locale)
   const skills = getSkills(locale)
-  const [group, setGroup] = useState<'engineering' | 'work'>('engineering')
+  const [group, setGroup] = useState<'engineering' | 'work'>('work')
   const chatSlugs = listSkillPacks().map(pack => pack.name)
-  const developmentSlugs = [...new Set([...HOME_CATALOG_SLUGS, ...skills.map(skill => skill.slug)])]
-  const slugs = group === 'work' ? chatSlugs : developmentSlugs
+  const slugs = FEATURED_SKILL_SLUGS[group]
   const homeCatalogSkills = slugs.map(slug => skills.find(s => s.slug === slug)).filter(
     (s): s is NonNullable<typeof s> => s != null
   )
@@ -46,7 +32,7 @@ export function HomeCatalog() {
       className='app-home-section app-home-section--catalog app-shell mx-auto max-w-[1080px]'
       id='catalog'
     >
-      <HomeSectionChip label={m.chip_catalog()} n='04' />
+      <HomeSectionChip label={m.chip_catalog()} n='03' />
       <div className='mb-3 flex items-baseline gap-3.5'>
         <h2 className='app-catalog__title m-0 font-bold font-sans tracking-tight'>
           {m.home_catalog_heading()}
@@ -54,27 +40,26 @@ export function HomeCatalog() {
         <span aria-hidden className='h-px flex-1 bg-line' />
       </div>
       <p className='mb-6 text-muted'>{m.home_catalog_intro()}</p>
-      <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
+      <div className='mb-8 flex flex-wrap items-center gap-4'>
         <Toolbar aria-label={m.home_catalog_group()} rounded variant='inline'>
           <ToggleGroup
             aria-label={m.home_catalog_group()}
+            className='toolbar-group'
             onValueChange={values => {
               const next = values[0]
               if (next === 'engineering' || next === 'work') setGroup(next)
             }}
             value={[group]}
           >
-            <Toolbar.Button render={<Toggle className='toggle' />} value='engineering'>
-              {m.home_catalog_engineering()}
-            </Toolbar.Button>
-            <Toolbar.Button render={<Toggle className='toggle' />} value='work'>
+            <Toggle className='toolbar-button' value='work'>
               {m.home_catalog_work()}
-            </Toolbar.Button>
+            </Toggle>
+            <Toggle className='toolbar-button' value='engineering'>
+              {m.home_catalog_engineering()}
+            </Toggle>
           </ToggleGroup>
         </Toolbar>
-        <Link className='font-semibold text-primary-700 text-sm hover:underline' search={defaultSkillsSearch} to='/skills'>
-          {m.home_catalog_all()} →
-        </Link>
+
       </div>
       <p className='mb-5 text-sm text-muted'>
         {group === 'work' ? m.home_catalog_chat_hint() : m.home_catalog_dev_hint()}
@@ -111,6 +96,11 @@ export function HomeCatalog() {
             </Link>
           )
         })}
+      </div>
+      <div className='mt-7 text-center'>
+        <Link className='inline-flex rounded-full border border-line px-5 py-2.5 font-semibold text-primary-700 no-underline hover:bg-surface' search={defaultSkillsSearch} to='/skills'>
+          {m.home_catalog_all()} →
+        </Link>
       </div>
     </section>
   )

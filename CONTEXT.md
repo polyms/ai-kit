@@ -1,12 +1,36 @@
 # ai-kit
 
-Polyms agent skills for real engineering — align, spec, ship. Shared vocabulary for the kit's pipeline, skills, and artifacts.
+Polyms AI Augmentation Layer for existing LLMs and AI tools. Shared vocabulary for skill delivery,
+host-executed workflows and artifacts. See [product positioning](docs/product/positioning.md).
 
 ## Kit
 
 **ai-kit**:
-The version-controlled skill library for agentic fullstack development at Polyms — skills, agents, and bootstrap tooling linked globally across projects.
-_Avoid_: ai kit, toolkit, prompt library
+The version-controlled AI Augmentation Layer for existing host AI clients — reusable skills,
+methodology, Knowledge, and client-specific delivery for end-user work and engineering.
+The host AI, not AI Kit, performs inference, reasoning and tool execution.
+_Avoid_: ai kit, AI platform, standalone chatbot, server-side agent runtime, AI orchestration engine
+
+**Host AI**:
+The existing AI client or agent that reasons, resolves context and executes authorized tool calls.
+AI Kit provides methodology and references, not an inference or orchestration runtime.
+
+**Memory**:
+Historical experience, decisions, preferences and lessons owned by the host, business or external
+provider. Distinct from curated AI Kit **Knowledge**, current business state and session context.
+
+**Memory Protocol** (planned):
+Provider-agnostic guidance for using relevant Memory with skills: recall, apply, reflect and
+authorized capture. Not a storage format, API, provider engine or synchronization service.
+See [augmentation roadmap](docs/product/augmentation-roadmap.md).
+
+**Context contract**:
+Advisory information requirements for a skill. The host resolves material gaps through available,
+authorized sources; the contract does not execute retrieval or grant permissions.
+
+**Skill composition**:
+Host-selected coordination of distinct skills and artifact handoffs to meet the requested outcome.
+Recipes are optional guidance, not an AI Kit execution engine.
 
 **Bootstrap**:
 The one-time symlink step (`bootstrap.sh`) that links ai-kit skills and agents into local AI tool directories.
