@@ -6,6 +6,12 @@ It uses the repository's existing tsx and MCP functions; a configurable OpenAI-c
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted
 output/composition. Native client testing (ChatGPT, Claude, Codex, etc.) remains a separate exercise.
 
+## Memory Protocol pilot
+
+See [manual Memory Protocol fixtures](memory/README.md) for paired P0/P1 versus P2 scenarios.
+These fixtures are structurally validated by the landing skill-pack tests; the current model runner
+has not been extended to execute this suite. Do not count them as executed benchmark scenarios.
+
 ## Run
 
 Install the repository dependencies first. No model requests are made by the scoring tests or dry run.

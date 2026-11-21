@@ -10,6 +10,13 @@ describe('versioned snapshot provider', () => {
     expect(data.revision).toBe(RELEASES['0.3.2'])
     expect(data.files.filter((file: {content?: string}) => file.content)).toHaveLength(data.starterPaths.length)
   })
+  it('keeps the published P0/P1 snapshot unchanged by the source memory pilot', async () => {
+    const data = await (await skillProvider({ name: 'plan', version: '0.3.2' })).json()
+    expect(data.contract.memory).toBeUndefined()
+    expect(data.files.map((file: { path: string }) => file.path)).not.toContain(
+      'docs/agents/memory-protocol.md'
+    )
+  })
   it('rejects invalid versions and paths', async () => {
     expect((await skillProvider({ name: 'reqs', version: 'main' })).status).toBe(404)
     expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)

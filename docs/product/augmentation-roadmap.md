@@ -30,7 +30,11 @@ workspace rules and verification gates remain unchanged. Local and remote client
 where useful; they do not need a common runtime. Build and fixture checks are not proof of native
 client quality; production integration and model effectiveness require separate verification.
 
-## Next: P2 Memory Integration
+## P2 Memory Integration
+
+Source pilot: shared Memory Protocol guidance, optional hints for five skills and manual evaluation
+fixtures. Versioned SDK distribution, automated model evaluation and native-client validation remain
+pending; no release version or effectiveness claim is established.
 
 Decision: **AI Kit standardizes memory usage, not memory ownership.** Every business and agent may
 use its own storage model and access mechanism. No memory database, API, provider engine, vector
