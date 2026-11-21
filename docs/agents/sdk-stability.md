@@ -1,38 +1,37 @@
 # SDK stable-release readiness
 
-Status: **not yet verified ready for 1.0.0**. This assessment is based on
-`@polyms/ai-kit-sdk` source and pull-request CI, not package-registry validation.
-SDK package versions are independent of skill content releases.
+Status: **release candidate prepared; stable 1.0.0 not yet authorized**.
+The SDK package is independent of experimental skill content release `0.3.3`.
 
-## Existing evidence
+## Implemented and verified in PR CI
 
-- The SDK is a dependency-free TypeScript consumer for Node 22+ with
-  `list`, `getSkill`, `preload`, `clearCache` and `extendSkill`.
-- It implements read-only skill delivery, endpoint restrictions, explicit timeouts,
-  cache limits, deduplication, selective references and basic identity checks.
-- PR CI builds SDK TypeScript, runs provider tests and packs a testable artifact.
-- The package currently declares `0.4.0-alpha.2`. A successful CI package build
-  does not establish that public registry publishing or clean installation works.
-- The branch's single supported skill release is experimental `0.3.3`.
+- Public API types replace the previous `unknown` contract and catalog pack
+  surfaces. `SkillContract` includes typed optional Knowledge and Memory hints.
+- Read-only transport validates catalog/bundle shape, schema and release
+  identity, source URL, allowlisted paths, content completeness and consistency.
+- Provider errors are not cached. Concurrent reference fetches preserve successful
+  content; `clearCache()` invalidates in-flight cache writes.
+- CI builds the TypeScript declarations and SDK package, runs negative and
+  concurrency tests, and verifies a clean local tarball install/import.
+- Node 22 and Node 24 are both tested in CI. Package remains dependency-free.
+- Prerelease tags use `next`, stable tags use `latest` when eventually published.
 
-## Gates before claiming stable
+## External release gates
 
-| Requirement | Gap or current result |
+| Gate | Status and requirement |
 | --- | --- |
-| Stable public TypeScript API | `SkillBundle.contract` and catalog `packs` still use `unknown`; freeze typed contracts and optional memory hints |
-| Error-handling coverage | Add negative tests for malformed catalogs, bundles, invalid references and inconsistent metadata, including concurrent responses |
-| Consumer integration | Astra Stg currently returned core `0.3.2` without forwarding `contract`; verify its migration to `0.3.3` and selective references |
-| Distribution | Verify publishing, registry proxy resolution, dist-tags and clean installation from the published package |
-| Compatibility policy | Document semantic versioning, supported Node versions, content/schema compatibility, migration and changelog rules |
-| Runtime evidence | Record consuming-host cold/warm latency, cache behavior and error-path results; unit tests are not integration results |
-
-Missing evidence is not proof of a broken implementation; build passing is not proof
-of production readiness either.
+| Source TypeScript tests | Confirmed by PR CI |
+| Install from local packed tarball | Confirmed by PR CI |
+| GitHub Packages publishing | Not performed; requires explicit tag/release |
+| Public Polyms registry proxy | Not verified with a published RC and clean consumer install |
+| Astra Stg consumer | Current observed core `0.3.2` without forwarded contract; needs migration and reference retrieval for `0.3.3` |
+| Operational performance | Recorded consuming-host cold/warm and reference timing still needed |
+| Production/native clients | Not verified for Memory Protocol |
+| Compatibility policy | ESM, Node 22+, schemaVersion 1; changes requiring a new wire schema or breaking published API require a major SDK version after stable |
 
 ## Decision
 
-Do not tag or publish `sdk-v1.0.0` in this PR. Keep the SDK in prerelease
-while closing the public API/type and integration gates. A stable SDK can deliver
-experimental, versioned skill content, but its API and protocol guarantees must be
-explicit and tested. Only promote to `1.0.0` after a release-candidate install,
-real consumer smoke tests and compatibility review.
+Ship the source as `1.0.0-rc.1` in PR #14, without tagging or publishing the
+package. Real registry and Astra consumer verification remain external release
+gates. Promote to stable `1.0.0` only after the candidate passes them.
+No AI Kit-owned Memory storage, synchronization or execution is introduced.

@@ -21,8 +21,8 @@ const skill = extendSkill(base, {
 ```
 
 GitHub Actions builds and tests pull requests. Push a dedicated SDK tag matching the SDK package
-version to publish to GitHub Packages (for example, sdk-v0.4.0-alpha.1). The SDK is published with the latest dist-tag. Consumers install through the public Polyms npm
-registry without authentication.
+version to publish to GitHub Packages (for example, sdk-v1.0.0-rc.1). A prerelease tag publishes under the next dist-tag; a stable tag publishes under latest.
+Consumers install through the public Polyms npm registry after publication and proxy verification.
 
 For local testing before publication, after workspace install, run
 `pnpm exec tsc -p sdk/tsconfig.json` and `npm pack ./sdk --ignore-scripts` to create a local tarball.
@@ -94,5 +94,19 @@ resolved release version. Reuse it within the session. Starter-only consumers st
 core context rules and hints; consumers must expose the reference to enable full guidance.
 The SDK only retrieves public methodology, never memory contents or business data.
 
-The SDK package remains prerelease pending the gates in
+## API stability and release candidate
+
+The source package version is `1.0.0-rc.1`. This is a **release candidate**, not
+a published stable build. `list()` returns typed `SkillCatalog`, `getSkill()`
+returns typed `SkillBundle` with `SkillContract` (including optional
+`MemoryHints`), and `extendSkill()` applies trusted local instructions only.
+Responses are checked for schema, pinned identity, known paths, duplicate entries,
+unexpected reference origins, incomplete content and inconsistent immutable metadata.
+
+Supported runtime: Node.js 22 or later, ESM and built-in `fetch`. The wire schema
+remains 1; added optional fields never imply authorization or memory persistence.
+Skill content versions are separate from SDK package versions. Older experimental
+content versions are not served by the provider on this branch.
+
+The SDK package remains prerelease pending the remaining external gates in
 [SDK stability review](../docs/agents/sdk-stability.md).

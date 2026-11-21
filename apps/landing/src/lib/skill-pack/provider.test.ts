@@ -332,3 +332,36 @@ describe('SDK wire contract and resilience', () => {
     await expect(client.getSkill('plan', { paths: [b] })).rejects.toThrow('Immutable release content changed')
   })
 })
+
+// Release candidate smoke: clearing cache must not let an old request overwrite a fresh result.
+describe('SDK clearCache in-flight isolation', () => {
+  it('discards stale pending cache writes without discarding new results', async () => {
+    const version = '0.3.3'
+    const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
+    const a = 'docs/agents/context-contract.md'
+    let finishOld: (() => void) | undefined
+    const gate = new Promise<void>(resolve => { finishOld = resolve })
+    let calls = 0
+    const transport = vi.fn(async () => {
+      calls++
+      const call = calls
+      if (call === 1) await gate
+      return Response.json({
+        ...source,
+        files: source.files.map(file => file.path === a
+          ? { ...file, content: call === 1 ? '# Old content' : '# Fresh content' }
+          : { path: file.path, rawUrl: file.rawUrl }),
+      })
+    })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version, fetch: transport })
+    const pending = client.getSkill('plan', { paths: [a] })
+    client.clearCache()
+    const fresh = await client.getSkill('plan', { paths: [a] })
+    expect(fresh.files.find(file => file.path === a)?.content).toBe('# Fresh content')
+    finishOld!()
+    await pending
+    const again = await client.getSkill('plan', { paths: [a] })
+    expect(again.files.find(file => file.path === a)?.content).toBe('# Fresh content')
+    expect(calls).toBe(2)
+  })
+})

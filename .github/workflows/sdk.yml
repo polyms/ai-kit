@@ -50,12 +50,48 @@ jobs:
           mkdir -p "$RUNNER_TEMP/sdk-package"
           npm pack ./sdk --ignore-scripts --pack-destination "$RUNNER_TEMP/sdk-package"
           node --input-type=module -e "import('./sdk/dist/skill-provider.js').then(m => { if (typeof m.createSkillProvider !== 'function') throw new Error('Missing SDK export') })"
+      - name: Verify package installs and imports without workspace dependencies
+        run: |
+          test_dir="$(mktemp -d)"
+          npm install --prefix "$test_dir" "$RUNNER_TEMP"/sdk-package/*.tgz --ignore-scripts --no-audit --no-fund --offline
+          test -f "$test_dir/node_modules/@polyms/ai-kit-sdk/dist/skill-provider.d.ts"
+          (
+            cd "$test_dir"
+            node --input-type=module -e "
+              import('@polyms/ai-kit-sdk').then(m => {
+                if (typeof m.createSkillProvider !== 'function' || typeof m.extendSkill !== 'function')
+                  throw new Error('Missing package exports')
+                const api = m.createSkillProvider({endpoint:'https://ai-kit.polyms.dev'})
+                for (const method of ['list', 'getSkill', 'preload', 'clearCache'])
+                  if (typeof api[method] !== 'function') throw new Error('Missing method '+method)
+              })
+            "
+          )
       - name: Upload SDK package
         uses: actions/upload-artifact@v4
         with:
           name: ai-kit-sdk
           path: ${{ runner.temp }}/sdk-package/*.tgz
           if-no-files-found: error
+
+  node22:
+    name: Node 22 compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v6
+        with:
+          cache: true
+          run_install: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec tsc -p sdk/tsconfig.json
+      - run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts
+
 
   publish:
     name: Publish to GitHub Packages
@@ -82,4 +118,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm publish ./*.tgz --registry=https://npm.pkg.github.com --tag latest --ignore-scripts
+          tag=latest
+          case "$GITHUB_REF_NAME" in *-*) tag=next ;; esac
+          npm publish ./*.tgz --registry=https://npm.pkg.github.com --tag "$tag" --ignore-scripts
