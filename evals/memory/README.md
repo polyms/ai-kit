@@ -1,25 +1,28 @@
 # Memory Protocol evaluation pilot
 
-These 15 synthetic scenarios are manual evaluation fixtures, not measured outcomes or an automated
-model suite. No real workspace or Memory Provider is required.
+The 15 synthetic scenarios run through the existing paired evaluation runner:
 
-Compare two fresh sessions on the same model/client configuration and identical prompt, synthetic
-context, tools and authorization. Baseline receives existing P0/P1 guidance and skills; assisted
-receives the same content plus the P2 protocol and applicable pilot hints. For isolation, use the
-pinned P0/P1 content for both, adding only the P2 changes to the assisted condition. Record versions,
-fixture ID and actual tool observations. Never use real private records or paid calls without
-explicit configuration.
+```sh
+pnpm eval:run --suite memory --dry-run
+pnpm eval:run --suite memory --case MP-01 --model YOUR_MODEL --judge-model YOUR_JUDGE
+```
 
-Each case declares a prompt, context, candidate skills, expected behavior and forbidden behavior.
-Where a test needs tools, supply equivalent synthetic read-only fixtures or simulated receipts in
-both conditions; do not provide actual write access. If a gate cannot be observed, mark it
-unverified. Do not infer tool behavior from model self-reports.
+Actual model calls require the existing explicitly configured endpoint. A full Git checkout with
+both pinned revisions is required. No real workspace, memory provider or write tool is involved.
 
-Score expected behavior separately from hard violations (unauthorized actions, sensitive disclosure,
-fabricated evidence or persistence, approved-scope regressions). Record relevance, correct
-application, conflict handling, unnecessary lookups, continuity, capture quality and actual token
-or tool overhead where observable. Review paired trials before drawing conclusions.
+Both arms receive identical P0/P1 contracts and starter files from immutable release 0.3.2,
+plus composition guidance for multi-skill cases. Only the assisted arm receives the P2 hints
+and protocol, using the pinned 0.3.3 reference. In this targeted suite the skill route is fixed
+to isolate memory behavior rather than routing accuracy. Fixture fingerprints include the actual
+guidance. Never use private records or run paid calls without explicit configuration.
 
-The landing skill-pack tests validate fixture structure and pilot metadata/reference delivery.
-The existing evaluation runner does not execute these cases yet. Automated suite integration,
-versioned SDK snapshot delivery and native client testing are separate follow-ups.
+Four fixtures expose the same narrow synthetic read-only lookup to both arms. The actual
+trace verifies one necessary recall, no redundant recalls, and denied scope requests.
+Other cases have no lookup capability. The judge receives the same user evidence and actual
+lookup trace when available; mark tool behavior unobservable where it cannot be checked.
+Semantic output and hard gates use the existing blinded judge. No memory writes are enabled;
+a model must not claim persistence or external execution.
+
+Dry runs and structural tests are not measured quality. Compare paired runs and record actual
+token, latency, tool and semantic results. Native client and Astra compatibility require
+separate verification.

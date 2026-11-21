@@ -32,9 +32,9 @@ client quality; production integration and model effectiveness require separate 
 
 ## P2 Memory Integration
 
-Source pilot: shared Memory Protocol guidance, optional hints for five skills and manual evaluation
-fixtures. Versioned SDK distribution, automated model evaluation and native-client validation remain
-pending; no release version or effectiveness claim is established.
+P2 branch: shared Memory Protocol guidance, optional hints for five skills, immutable skill snapshot
+0.3.3 and automated paired evaluation fixtures. Release deployment, measured model effectiveness
+and native-client validation remain pending.
 
 Decision: **AI Kit standardizes memory usage, not memory ownership.** Every business and agent may
 use its own storage model and access mechanism. No memory database, API, provider engine, vector

@@ -8,9 +8,10 @@ output/composition. Native client testing (ChatGPT, Claude, Codex, etc.) remains
 
 ## Memory Protocol pilot
 
-See [manual Memory Protocol fixtures](memory/README.md) for paired P0/P1 versus P2 scenarios.
-These fixtures are structurally validated by the landing skill-pack tests; the current model runner
-has not been extended to execute this suite. Do not count them as executed benchmark scenarios.
+See [Memory Protocol evaluation](memory/README.md) for 15 paired P0/P1 versus P2 scenarios.
+Run `pnpm eval:run --suite memory --dry-run`. Both arms get pinned P0/P1 methodology;
+only assisted receives P2 guidance and hints. Synthetic lookup tools are identical in both arms.
+Fixture count is not a benchmark result. A full Git checkout is required.
 
 ## Run
 
