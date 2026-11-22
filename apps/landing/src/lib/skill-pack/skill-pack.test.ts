@@ -94,7 +94,7 @@ describe('skill pack MCP tools', () => {
     expect(registerTool.mock.calls.map(call => call[0])).toEqual(['list_skill_packs', 'get_skill_pack'])
   })
 
-  it('exposes explicit mutable provenance and a derived pack count for Instant', () => {
+  it('exposes explicit mutable provenance and a derived pack count for everyday clients', () => {
     const response = JSON.parse(executeListSkillPacks().content[0]!.text)
     expect(response.packCount).toBe(response.packs.length)
     expect(response.packCount).toBe(13)
@@ -424,7 +424,7 @@ describe('skill composition', () => {
     expect(fetchFile).not.toHaveBeenCalled()
   })
 
-  it('keeps Instant-first authorization and minimal routing regression fixtures', () => {
+  it('keeps everyday-mode authorization and minimal routing regression fixtures', () => {
     const routing = JSON.parse(readFileSync(join(repoRoot, 'evals/work-skills/routing-cases.json'), 'utf8'))
     const r = routing.find((item: { id: string }) => item.id === 'RT-39')
     expect(r.expected).toEqual(['plan', 'task', 'qa'])

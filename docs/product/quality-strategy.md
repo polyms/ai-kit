@@ -4,17 +4,27 @@ Status: deterministic evaluation foundation and 86 synthetic scenarios are imple
 release smoke verifier and measured-run report generator are documented in
 [Quality Baseline](../quality/baseline.md). Model-quality scores and final thresholds remain unverified.
 
-## Primary client: Instant-first, not High-first
+## Primary target: everyday, latency-sensitive AI workflows
 
-ChatGPT **Instant is the daily-use reference mode** for AI Kit. Begin native-client
-quality, routing and cost investigations with Instant and use Medium/High to diagnose
-differences. Prioritize a small relevant route, one batched retrieval per skill
-when paths are known, no unnecessary recipes, honest provenance and concise
-high-coverage QA. A more elaborate High result is not automatically better.
-Manual cross-mode evidence is available at
-[Team Invitation 2026-11-22](../../evals/manual/2026-11-22-team-invitation.md).
-Do not use this 3-session observation as a causal benchmark, latency claim or
-statistically meaningful model comparison.
+AI Kit is client- and model-agnostic. Prioritize reliable, low-overhead execution
+on each host's **everyday/default/fast configuration**: select the smallest useful
+skill set, batch known exact-path retrieval, avoid unnecessary recipes, retain
+critical QA coverage and report honest provenance. Do not require an advertised
+reasoning level or a particular provider, product, client or model name.
+Compare against higher-reasoning configurations **within the same host** where
+they exist and are available. Measure quality, overhead and failure rates separately;
+a longer response is not inherently a better one.
+
+ChatGPT's **Instant** is the everyday configuration used in the
+[2026-11-22 Team Invitation manual evaluation](../../evals/manual/2026-11-22-team-invitation.md).
+Instant/Medium/High are **ChatGPT-specific labels**, not portable tiers for
+Claude, Cursor, Codex or other hosts. This three-session observation does not
+establish causal uplift, latency savings or statistical model rankings.
+
+AI Kit may reference **Polyms UI Kit** (`@polyms/ui-kit`) as an optional
+integration. Respect the host project's existing design system, stack and
+explicit user choice; neither Polyms UI Kit nor any other design library is a
+dependency for applying the core AI Kit methodology.
 
 ## Evaluation: does augmentation improve work?
 

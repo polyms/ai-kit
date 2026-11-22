@@ -47,16 +47,17 @@ Any mismatch, non-JSON response or missing expected content is a failure.
 The production smoke checks **HTTP skill delivery**, not OAuth/MCP client behavior.
 Do not call a PR test run proof of production deployment.
 
-## Instant-first manual baseline
+## Everyday-mode manual baseline
 
-ChatGPT **Instant is the primary daily-use mode**; prioritize its correct,
-low-friction execution over maximizing the length or number of skill references.
-Medium and High are comparators. A single high-quality High answer is not evidence
-that the everyday Instant experience is fixed. The three same-prompt
-skill-assisted Team Invitation sessions on 2026-11-22 are recorded, with
-provenance limits and observed gaps, in
-[manual evaluation evidence](../../evals/manual/2026-11-22-team-invitation.md).
-They show neither baseline-model uplift nor a measured latency/token saving.
+Optimize AI Kit for **typical default/fast, resource-conscious sessions across
+supported hosts**, not for a specific ChatGPT model selector. Evaluate workflow
+completion, correctness, authorized actions and retrieval overhead in each host's
+normal configuration; use higher-effort configurations as optional comparators.
+ChatGPT Instant was the primary real-world usage mode for the 2026-11-22
+Team Invitation sample; Medium and High were comparators *within ChatGPT* only.
+See [manual evidence](../../evals/manual/2026-11-22-team-invitation.md).
+The three assisted-only observations show neither uplift against an unassisted
+baseline nor measured latency/token savings.
 
 ## Real paired evaluation
 

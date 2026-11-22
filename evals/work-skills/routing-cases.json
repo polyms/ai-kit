@@ -496,6 +496,6 @@
       "track",
       "release"
     ],
-    "notes": "Instant-first manual-regression counterpart; use approved requirements, small skill route and read-only draft."
+    "notes": "Everyday/default-client regression based on a ChatGPT Instant sample; behavior is client-agnostic. Use approved requirements, minimal routing and read-only draft."
   }
 ]

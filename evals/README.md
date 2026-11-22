@@ -7,18 +7,20 @@ It uses the repository's existing tsx and MCP functions; a configurable OpenAI-c
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted
 output/composition and the four memory cases that simulate recall. Native client testing (ChatGPT, Claude, Codex, etc.) remains a separate exercise.
 
-## Instant-first native client priority
+## Everyday-first native client priority
 
-**ChatGPT Instant is the primary daily-use target for AI Kit.** Test and repair Instant
-first, especially small-skill routing, minimum retrieval, context reuse, risk-based QA
-authorization and accurate provenance. Medium and High are regression comparators,
-not the main quality target. High quality with extra tool calls is not enough to pass
-an Instant-first efficiency review. Do not assume Instant is inherently less capable
-or extrapolate from a single sample. Native-client evidence is separate from the
-model-endpoint runner.
+**Prioritize the everyday/default/fast configuration available on each client.**
+AI Kit is model- and host-independent. Check minimal correct routing, selective
+retrieval, context reuse, critical authorization QA, provenance and overhead on
+that configuration first; compare other effort levels **only inside a host**
+when useful. Do not require a ChatGPT-only name or assume another provider
+exposes the same effort modes. More tool calls or longer output are not a
+quality proxy. Native-client evidence is separate from this model-endpoint runner.
 
-See [Team Invitation manual 3-mode evidence](manual/2026-11-22-team-invitation.md).
-All three were assisted sessions without an independent baseline or provider audit trace.
+In the [Team Invitation manual 3-mode evidence](manual/2026-11-22-team-invitation.md),
+**Instant/Medium/High are labels of the tested ChatGPT sessions**, not universal
+AI Kit model tiers. All three were assisted-only sessions without an independent
+baseline or provider audit trace.
 
 ## Memory Protocol pilot
 
