@@ -13,7 +13,8 @@ The SDK package is independent of experimental skill content release `0.3.3`.
   content; `clearCache()` invalidates in-flight cache writes.
 - CI builds the TypeScript declarations and SDK package, runs negative and
   concurrency tests, and verifies a clean local tarball install/import.
-- Node 22 and Node 24 are both tested in CI. Package remains dependency-free.
+- Node 24 is the SDK baseline in CI. Node 22 is intentionally unsupported;
+  package remains dependency-free.
 - Prerelease tags use `next`, stable tags use `latest` when eventually published.
 
 ## External release gates
@@ -27,7 +28,7 @@ The SDK package is independent of experimental skill content release `0.3.3`.
 | Astra Stg consumer | Current observed core `0.3.2` without forwarded contract; needs migration and reference retrieval for `0.3.3` |
 | Operational performance | Recorded consuming-host cold/warm and reference timing still needed |
 | Production/native clients | Not verified for Memory Protocol |
-| Compatibility policy | ESM, Node 22+, schemaVersion 1; changes requiring a new wire schema or breaking published API require a major SDK version after stable |
+| Compatibility policy | ESM, Node 24+, schemaVersion 1; changes requiring a new wire schema or breaking published API require a major SDK version after stable |
 
 ## Decision
 

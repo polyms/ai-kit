@@ -12,7 +12,8 @@
 - Preserve concurrently loaded references when updating the same versioned bundle.
   Prevent in-flight requests from repopulating a cleared cache.
 - Keep the existing `createSkillProvider` and `extendSkill` usage, transport,
-  caching, Node 22+ requirement and schemaVersion 1.
+  caching and schemaVersion 1.
+- Set the supported runtime floor to Node.js 24 and remove the Node 22 CI job.
 
 This candidate does not publish a new package, make claims of provider compatibility
 or introduce a Memory service. Stable `1.0.0` requires clean registry installation

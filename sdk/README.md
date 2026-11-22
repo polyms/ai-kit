@@ -103,7 +103,7 @@ returns typed `SkillBundle` with `SkillContract` (including optional
 Responses are checked for schema, pinned identity, known paths, duplicate entries,
 unexpected reference origins, incomplete content and inconsistent immutable metadata.
 
-Supported runtime: Node.js 22 or later, ESM and built-in `fetch`. The wire schema
+Supported runtime: Node.js 24 or later, ESM and built-in `fetch`. The wire schema
 remains 1; added optional fields never imply authorization or memory persistence.
 Skill content versions are separate from SDK package versions. Older experimental
 content versions are not served by the provider on this branch.

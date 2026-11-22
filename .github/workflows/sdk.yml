@@ -74,25 +74,6 @@ jobs:
           path: ${{ runner.temp }}/sdk-package/*.tgz
           if-no-files-found: error
 
-  node22:
-    name: Node 22 compatibility
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@v6
-        with:
-          cache: true
-          run_install: false
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm exec tsc -p sdk/tsconfig.json
-      - run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts
-
-
   publish:
     name: Publish to GitHub Packages
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/sdk-v')

@@ -1,4 +1,4 @@
-/** Dependency-free server-side TypeScript client. Requires Node 22+ fetch. */
+/** Dependency-free server-side TypeScript client. Requires Node 24+ fetch. */
 export type SkillFile = { path: string; rawUrl: string; content?: string }
 export type ArtifactKind =
   | 'context' | 'requirements' | 'decision' | 'review-findings' | 'evidence'
