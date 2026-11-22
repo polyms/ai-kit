@@ -1,7 +1,8 @@
 # Memory strategy: provider-neutral usage
 
-Status: ownership decision agreed. The P2 branch defines shared guidance, optional hints and
-versioned delivery; deployment, measured behavior and native-client compatibility remain unverified.
+Status: ownership decision agreed; Memory Protocol and five optional skill hints shipped in
+immutable skill release 0.3.3. Production MCP and Astra template retrieval were smoke-tested
+after PR #14; model-quality and full native-client behavior remain unmeasured.
 AI Kit does not own, implement or operate memory. See [positioning](positioning.md).
 
 ## Research rationale
@@ -59,7 +60,7 @@ access. A current approved requirement or live business status must come from th
 authoritative source when verification is material. Memory is neither always true nor always
 available. A past inference is not a confirmed fact.
 
-## Planned Memory Protocol
+## Shipped Memory Protocol (advisory)
 
 The protocol guides behavior at the skill level, not transport, database, records or tool names.
 
@@ -81,22 +82,21 @@ a bounded result, verify from live sources when possible, or report the specific
 
 ### Skill-aware recall and capture
 
-The roadmap records examples across business and engineering skills. The likely contract direction
-is optional semantic recall/capture hints, for example for plan:
+The shipped 0.3.3 contract uses optional semantic `topic` / `when` objects, not a provider
+query or persistence instruction. Example from the plan skill:
 
 ```yaml
-# Illustrative proposal only; not a published schema.
 memory:
   recall:
-    - historical-estimates
-    - actual-effort
-    - previous-decisions
-    - lessons-learned
+    - topic: actual-effort
+      when: Calibrating an estimate using comparable, verified delivery outcomes.
   capture:
-    - estimation-corrections
-    - confirmed-delivery-decisions
-    - reusable-planning-lessons
+    - topic: estimation-corrections
+      when: Comparable actual effort is verified against an earlier estimate.
 ```
+
+This is an illustrative subset of the shipped plan hints; inspect the versioned catalog for
+the full contract. Hosts may ignore hints when memory is irrelevant or unavailable.
 
 The host must be free to use native memory, business APIs, authorized local notes, external
 memory tools or no memory at all. No provider interface, common storage schema, mandatory
@@ -119,6 +119,6 @@ A shared external source can enable continuity between clients only if each has 
 See [Memory Protocol](../agents/memory-protocol.md) for the source pilot guidance. Optional
 `contract.memory` hints use `topic` and `when`; the five pilot skills are reqs, plan, bug, qa and
 review. The existing live MCP source manifest exposes the guidance as an optional reference.
-Only experimental skill release 0.3.3 is distributed; the runner includes
-paired memory scenarios. Model results, deployment and native-client validation are separate gates.
+Skill release 0.3.3 is distributed and deployed; the runner includes paired memory scenarios.
+Delivery has been verified; model-quality and native-client execution still require measured evidence.
 No memory storage, ingestion, embedding, retrieval engine or host-side hooks.

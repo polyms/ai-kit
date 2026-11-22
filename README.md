@@ -23,14 +23,14 @@ AI Kit **augments** host assistants; it does not replace them or take over user 
 | --- | --- |
 | Skills, standards, templates and Knowledge | Model inference, reasoning and conversation |
 | Context contracts and optional workflow recipes | Skill selection, context and orchestration |
-| Planned memory-use and reflection guidance | Agent or business memory; authorized recall and capture |
+| Memory Protocol guidance and reflection hints | Agent or business memory; authorized recall and capture |
 | MCP, SDK and local skill delivery | Authenticated tools, actions, approvals and verification |
 
 AI Kit's server may deliver skill content and Knowledge, but does **not** perform LLM inference for
 end-user work. See [canonical product positioning](docs/product/positioning.md) before changing
 architecture or product messaging. The [augmentation roadmap](docs/product/augmentation-roadmap.md)
 records current and planned capabilities. AI Kit does not store or manage agent or business memory;
-its planned Memory Protocol guides effective use of existing memory sources. The roadmap links the
+its shipped Memory Protocol guides effective use of existing memory sources. The roadmap links the
 architecture, memory, Knowledge and quality strategies; these describe direction, not shipped features.
 
 ## Real engineering
@@ -651,7 +651,7 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 - [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
 - [x] `/docs` — business and developer-facing docs
 - [x] `research`, `business`, `task`, `bug` — work operations skills and templates
-- [x] MCP skill provider — direct Markdown delivery (deployment verification pending)
+- [x] MCP skill provider — direct Markdown delivery (0.3.3 verified in production)
 - [x] `/e2e` — E2E automation (`tester`)
 - [x] `/build-feature-map` — authors the repo-local `feature-map` skill (`tester`)
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
@@ -671,3 +671,6 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 Run `pnpm eval:test` for deterministic scoring tests and `pnpm eval:run --dry-run` to inspect
 benchmark scope without model calls. See [the evaluation runner](evals/README.md) for opt-in
 paired runs, trace scoring, model configuration and limitations.
+Use `node scripts/verify-skill-release.mjs --version 0.3.3 --endpoint https://ai-kit.polyms.dev`
+for production delivery checks. See [Quality Baseline](docs/quality/baseline.md) and
+`pnpm eval:report` for measured-run summaries.

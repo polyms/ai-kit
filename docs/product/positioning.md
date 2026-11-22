@@ -21,7 +21,7 @@ not need to know MCP, skill pack names, or workflow internals to benefit from a 
 | --- | --- |
 | Skills, playbooks, templates, standards | Reasoning and model inference |
 | Knowledge retrieval and reference content | Conversation and session context |
-| Planned Memory Protocol (methodology only) | Use of agent-native or authorized external memory; storage stays with its owner |
+| Shipped Memory Protocol (methodology only) | Use of agent-native or authorized external memory; storage stays with its owner |
 | Context requirements and artifact contracts | Interpreting intent and selecting when to use a skill |
 | Optional composition recipes and handoff guidance | Orchestrating steps and making tool calls |
 | Versioned content and delivery through MCP, SDK, plugins, or local skills | Authenticated access to project data and external services |
@@ -52,7 +52,7 @@ within AI Kit's scope because they make augmentation dependable without duplicat
 | Skills | Consistent, composable methods for specialized work | AI Kit owns reusable methodology |
 | Knowledge | Curated, reusable technical expertise | AI Kit maintains its existing Knowledge catalog |
 | Context and composition | Use the right facts and artifacts for each selected skill | AI Kit supplies guidance; host resolves context and executes |
-| Memory (planned) | Apply relevant past experience, decisions and preferences | AI Kit defines usage guidance; host or business owns actual memory |
+| Memory guidance (0.3.3) | Apply relevant past experience, decisions and preferences | AI Kit defines usage guidance; host or business owns actual memory |
 | Reflection (planned) | Identify useful lessons from observed outcomes and feedback | Host reasons and proposes; authorized owners decide what to retain |
 
 These capabilities are complementary, not a cognitive architecture or an agent execution pipeline.
@@ -66,7 +66,7 @@ AI Kit does not own memory. Individual AI clients, agents, businesses and extern
 providers may implement memory differently. AI Kit will standardize how its skills can benefit
 from such memory, not how any provider stores, indexes, retrieves internally or synchronizes it.
 
-The planned Memory Protocol is advisory and provider-agnostic. Its scope is vocabulary,
+The shipped Memory Protocol is advisory and provider-agnostic. Its scope is vocabulary,
 selective recall, proper use of historical evidence, reflection, capture suggestions and
 governance. A skill may describe relevant memory categories and useful capture candidates,
 but no provider or memory availability is a prerequisite to using AI Kit.
@@ -77,8 +77,9 @@ current evidence; do not confuse recalled facts with live state or approved requ
 old proposals. Capture or correction follows the memory owner's policies and permissions.
 There is no automatic persistence, export, cross-provider sharing or publication to Knowledge.
 
-See [augmentation roadmap](augmentation-roadmap.md) for staged delivery direction. This PR
-records the decision and plans; it does not deliver the Memory Protocol implementation.
+See [augmentation roadmap](augmentation-roadmap.md) for staged delivery direction. PR #14 shipped
+provider-neutral Memory Protocol guidance in skill release 0.3.3. Delivery verification does not
+prove model-quality improvement or native-client execution.
 
 ## Distribution is not execution
 
@@ -99,7 +100,7 @@ action occurred.
 
 - [Architecture principles](architecture-principles.md): context, composition, local/remote skills,
   integrations and ownership.
-- [Memory strategy](memory-strategy.md): research rationale and planned provider-neutral usage.
+- [Memory strategy](memory-strategy.md): research rationale and shipped provider-neutral guidance.
 - [Knowledge strategy](knowledge-strategy.md): catalog evolution and reviewed improvement.
 - [Quality strategy](quality-strategy.md): evaluation, governance and bounded observability.
 - [Augmentation roadmap](augmentation-roadmap.md): completed foundation and planned priorities.
