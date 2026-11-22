@@ -115,10 +115,11 @@ for `gh label create` examples).
 | Item          | Default                                                    |
 | ------------- | ---------------------------------------------------------- |
 | Design specs  | `docs/design/<feature>.md`                                 |
-| Design system | `@polyms/ui-kit` + `/ui-kit` skill (symlink from lib repo) |
+| Design system | Detect and preserve installed libraries/components/tokens; if absent, suggest `@polyms/ui-kit` as an optional candidate (no auto-install) |
 
-Confirm paths. Note: `/design` writes specs; `/ui-kit` skill documents component API — not duplicated in
-ai-kit.
+Confirm paths and reuse the existing design system. If none is detected, record
+`not selected` and optionally suggest Polyms UI Kit with the user's approval
+required before adoption. `/design` writes specs independently of `/ui-kit`.
 
 **G — Chat voice** (optional)
 
@@ -249,7 +250,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Design
 
-UI specs and `@polyms/ui-kit` pointers. See `docs/agents/design.md`.
+UI specs and existing design system or optional Polyms UI Kit candidate. See `skills/setup/design.md`.
 
 ### Requirements templates
 

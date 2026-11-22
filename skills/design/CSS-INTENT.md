@@ -12,7 +12,7 @@ Required in every `docs/design/<feature>.md` that ships UI. `/dev` implements th
 | **Grids**          | Bento / asymmetric layouts: explicit `grid-template` or `grid-area` per breakpoint — not only `grid-cols-2` prose |
 | **Accent**         | When `border-s-4 border-primary-*`, focal card treatment, mono invoke scale                                       |
 | **Theme**          | follow approved project light/dark policy and existing tokens; don't impose a vendor or theme                                  |
-| **Custom CSS**     | List classes that belong in `globals.css` `@layer components` — not scattered inline styles                       |
+| **Custom CSS**     | Document the project's existing stylesheet, CSS modules, utility layers or token system; do not assume Tailwind                       |
 
 ## Borrow / avoid (when visual reference is set)
 
@@ -29,4 +29,4 @@ Required in every `docs/design/<feature>.md` that ships UI. `/dev` implements th
 - Component map without CSS layer — `/dev` will ship unstyled README layout
 - Only hex colors with no semantic token mapping
 
-**Completion criterion:** `/dev` can write `globals.css` and section wrappers without inventing the visual system.
+**Completion criterion:** `/dev` can implement the project's actual stylesheets and layouts without inventing a design system or framework.

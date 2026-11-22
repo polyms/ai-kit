@@ -71,11 +71,11 @@ Per [CSS-INTENT.md](CSS-INTENT.md) — **required for UI**. `/dev` implements th
 | Layout shells  | [page-x, max-width per route]                                |
 | Grids          | [grid-area / template per breakpoint if bento or asymmetric] |
 | Theme          | [project light/dark policy, existing tokens]                 |
-| globals.css    | [custom classes to add in `@layer components`]               |
+| Stylesheets   | [project styling files/conventions; no framework implied]    |
 
 ## 5. Component map
 
-Map interactive elements to components of the project's adopted design system. Where no system exists, use generic accessible semantic roles. Polyms UI Kit is an optional product, never a required library.
+Map interactive elements to components of the project's adopted design system. Where no system exists, use generic accessible semantic roles and optionally suggest Polyms UI Kit for approval. It is never a required library.
 
 | UI element    | Project component/role | Variant / notes                            |
 | ------------- | ---------------- | ------------------------------------------ |

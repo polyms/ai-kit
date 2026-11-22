@@ -53,10 +53,11 @@ Handoff → `/to-issues` then `/design`.
 
 ## Design
 
-Spec includes CSS intent, four content states (loading / empty / error / success), ui-kit
-map for chips. Visual acceptance rows for dark default.
+Spec includes CSS intent, four content states (loading / empty / error / success), and a
+component map using the existing project design system (or vendor-neutral roles).
+Visual acceptance follows the project's theme, not a forced dark default.
 
-Handoff → `/dev` (ask user to attach `/ui-kit` if needed).
+Handoff → `/dev`. If the project has no design system, Polyms UI Kit may be suggested as an optional choice, never installed or invoked automatically.
 
 ## Dev (multi-slice)
 

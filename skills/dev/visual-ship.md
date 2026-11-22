@@ -7,7 +7,7 @@ Design pre-flight ([PREFLIGHT.md](../design/PREFLIGHT.md)) gates the spec. This 
 ## CSS-first slice order
 
 1. Read spec **Typography & visual system** ( [CSS-INTENT.md](../design/CSS-INTENT.md) ) and **Visual acceptance** sections
-2. Implement `globals.css` / theme / type scale / grid classes **first**
+2. Implement project-specific theme/stylesheets/type scale/grid styles **first**
 3. Section shells (wrappers, borders, surfaces) **second**
 4. existing project components and data wiring **third**
 5. Motion last
@@ -38,7 +38,7 @@ reference). Do not invent a new E2E harness for a one-slice change.
 ```markdown
 ## Visual evidence
 
-- Desktop dark: [path or "browser snapshot — HH:MM"]
+- Desktop in project-approved theme: [path or "browser snapshot — HH:MM"]
 - Mobile: [n/a | path]
 - Interaction: [what changed — before/after]
 - Spec rows: [IDs pass/fail]

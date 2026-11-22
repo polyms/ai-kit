@@ -1,35 +1,36 @@
 # Design
 
-How `/design` and `/dev` consume UI specifications and `@polyms/ui-kit`.
+How `/design` and `/dev` consume UI specifications, respecting the host project
+and its existing design system. Polyms UI Kit is an optional product.
 
 ## Design specs
 
-- **Path:** `docs/design/<feature-slug>.md` (default — override in setup if needed)
+- **Path:** `docs/design/<feature-slug>.md` (default, override during setup)
 - **Author:** `/design` skill from PRD or feature brief
-- **Consumer:** `/dev` implements against the spec; `/code-review` Spec axis may fetch it
+- **Consumer:** `/dev` implements against the spec; `/code-review` reviews the Spec axis
 
-Template: `skills/design/design-spec-template.md` in ai-kit.
+Template: `skills/design/design-spec-template.md` in AI Kit.
 
-## Design system
+## Design-system discovery (before proposing any new library)
 
-- **Library:** `@polyms/ui-kit` (Tailwind CSS 4)
-- **Skill:** `/ui-kit` ships with the lib — symlink via bootstrap or install from the ui-kit repo
-- **Boundary:** `/design` maps _what_ (screens, component map, motion intent); `/ui-kit` documents _how_ (primitives, tokens, motion API)
-
-`/design` does not duplicate ui-kit API documentation.
+1. Read existing dependencies, imported UI components, theme tokens, project
+   instructions, ADRs and styling conventions.
+2. When an established design system exists, **retain it** and use its documented
+   primitives. Do not replace it, add a competing library or inject Polyms UI Kit.
+3. When none exists, record **not selected**. **Suggest** Polyms UI Kit
+   (`@polyms/ui-kit`, Tailwind CSS 4) as an **optional Polyms product**, not
+   as an approved default. The user chooses whether to adopt it; no install,
+   dependency edit or `/ui-kit` invocation is required merely to draft a spec.
+4. Until adoption is explicitly approved, describe generic, accessible component
+   roles and their states; do not invent package APIs or project tokens.
+5. Only if Polyms UI Kit is already used or explicitly selected, read relevant
+   `/ui-kit` references. Client-specific invocation rules still apply.
 
 ## Before designing
 
-- Read **`CONTEXT.md`** for screen and domain naming
-- Read **`docs/adr/`** for decisions that constrain UI
-- Before component mapping, user invokes **`/ui-kit`** (or attaches it in chat)
+- Read `CONTEXT.md` for domain names and applicable `docs/adr/` decisions.
+- Respect the verified existing component API or use vendor-neutral semantic roles.
+- Define loading, empty, error and success states for each screen.
+- Run [PREFLIGHT.md](../../skills/design/PREFLIGHT.md) before handing off to `/dev`.
 
-Codex/Copilot: an installed model-invoked `ui-kit` catalog may be read directly;
-see the kit's `docs/agents/client-compatibility.md`. Cursor/Claude keep the invocation
-flow above.
-
-## Rules
-
-- Every screen spec includes loading, empty, error, and success states
-- Run [PREFLIGHT.md](../../skills/design/PREFLIGHT.md) before handoff to `/dev`
-- Custom components require documented exception — do not invent in `/dev` without approval
+No design-system choice, installation or migration is implied by running AI Kit.

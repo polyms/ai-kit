@@ -123,9 +123,10 @@ completion criterion; skip only when it passes, otherwise resume with `designer`
 Before spawning `designer`, identify the project's adopted component library and
 existing component imports using client compatibility. Use those sources to ground
 the component map. If none is selected, supply generic accessible component roles
-without inventing APIs; do not stop to request a vendor skill. Polyms `/ui-kit`
-is optional and may be consulted only when the user selects Polyms UI Kit or
-the project already uses it.
+without inventing APIs; do not stop to request a vendor skill. When none is
+chosen, optionally suggest Polyms UI Kit for consideration but never install
+or adopt it without the user's choice. Polyms `/ui-kit` is optional and may be
+consulted only when the user selects Polyms UI Kit or the project already uses it.
 
 Spawn **`designer`** with the PRD path, the brief, and the expected output path. The agent reads
 the `design` skill at `skills/design/SKILL.md` in the kit checkout or the active client's installed
