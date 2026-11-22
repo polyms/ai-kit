@@ -20,9 +20,25 @@ const skill = extendSkill(base, {
 })
 ```
 
-GitHub Actions builds and tests pull requests. Push a dedicated SDK tag matching the SDK package
-version to publish to GitHub Packages (for example, sdk-v1.0.0-rc.1). A prerelease tag publishes under the next dist-tag; a stable tag publishes under latest.
-Consumers install through the public Polyms npm registry after publication and proxy verification.
+GitHub Actions builds and tests pull requests on Node.js 24. To publish a release
+candidate, use a dedicated Git tag matching `sdk/package.json`. For the current RC:
+
+```sh
+git fetch origin
+git switch feat/p2-memory-protocol
+git pull --ff-only
+git tag sdk-v1.0.0-rc.1
+git push origin sdk-v1.0.0-rc.1
+```
+
+The tag push triggers the same SDK build, tests, evaluation dry run, clean tarball
+installation, then publishes **that tested tarball** to GitHub Packages using the
+workflow's `GITHUB_TOKEN` with `packages: write`. Tag, package name, version,
+Node.js engine and tarball metadata are checked before publication. RC tags publish
+under the `next` dist-tag; stable tags publish under `latest` and must point to
+a commit on `main`. Reusing an already-published version is not supported.
+Consumers install through the public Polyms npm registry after publication and
+proxy verification.
 
 For local testing before publication, after workspace install, run
 `pnpm exec tsc -p sdk/tsconfig.json` and `npm pack ./sdk --ignore-scripts` to create a local tarball.

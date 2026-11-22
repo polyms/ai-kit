@@ -15,7 +15,9 @@ The SDK package is independent of experimental skill content release `0.3.3`.
   concurrency tests, and verifies a clean local tarball install/import.
 - Node 24 is the SDK baseline in CI. Node 22 is intentionally unsupported;
   package remains dependency-free.
-- Prerelease tags use `next`, stable tags use `latest` when eventually published.
+- Pushing a matching `sdk-v<package-version>` tag runs the same tested build
+  and publishes its validated tarball to GitHub Packages using `GITHUB_TOKEN`.
+  Prereleases use `next`; stable tags use `latest` and require main history.
 
 ## External release gates
 
