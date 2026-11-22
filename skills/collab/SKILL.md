@@ -120,16 +120,16 @@ which of the three tests failed.
 Skip when the feature has no screen. If `docs/design/<slug>.md` exists, verify it against the
 completion criterion; skip only when it passes, otherwise resume with `designer`.
 
-Before spawning `designer`, check the component-map source using client compatibility. Use repo
-imports when they cover every required primitive, an already attached `/ui-kit`, or an installed
-model-invoked catalog where the client allows it. If these sources cannot cover the map and `/ui-kit`
-is missing or manual-only, ask the user to attach it through the active client's picker and stop
-before component mapping. Resume this step after it is attached.
+Before spawning `designer`, identify the project's adopted component library and
+existing component imports using client compatibility. Use those sources to ground
+the component map. If none is selected, supply generic accessible component roles
+without inventing APIs; do not stop to request a vendor skill. Polyms `/ui-kit`
+is optional and may be consulted only when the user selects Polyms UI Kit or
+the project already uses it.
 
 Spawn **`designer`** with the PRD path, the brief, and the expected output path. The agent reads
 the `design` skill at `skills/design/SKILL.md` in the kit checkout or the active client's installed
-skill path. Brief lock is already inferred — do not wait for a second confirm. Map `@polyms/ui-kit`
-from the source confirmed above; do not invent the component map. Write `docs/design/<slug>.md`.
+skill path. Brief lock is already inferred — do not wait for a second confirm. Map actual project components from verified sources, or use semantic component roles when the design system is not established; do not invent a library. Write `docs/design/<slug>.md`.
 
 **Completion criterion:** The spec exists, names flows and four content states per screen, and
 passes `skills/design/PREFLIGHT.md`; or the packet explicitly says there is no screen.

@@ -1,14 +1,14 @@
 # Redesign Audit
 
 Audit-first workflow when modernizing **existing** UI. Preserve data flow and business logic;
-change the visual layer through `@polyms/ui-kit`.
+change the visual layer through the project's adopted design system. Polyms UI Kit is optional, never required.
 
 Use this workflow from `/design` when the user asks to redesign, refresh, modernize, **or
 audit** screens that already exist.
 
 ## When to use
 
-- Existing pages feel dated or inconsistent with ui-kit
+- Existing pages feel dated or inconsistent with the project's design system
 - PRD is a visual refresh, not a new feature
 - User says "redesign", "modernize", "refresh UI", "làm lại giao diện"
 - User says "audit UI", "chấm UI", "anti-slop audit", "score this screen" → **[Audit-only](#audit-only)**
@@ -39,9 +39,9 @@ screen or cluster:
 | Audit item     | Note                                                                       |
 | -------------- | -------------------------------------------------------------------------- |
 | Screen purpose | Still matches PRD / CONTEXT?                                               |
-| ui-kit usage   | Which primitives already used vs raw HTML/Tailwind?                        |
+| Component use | Which project primitives are already used vs custom HTML?                        |
 | State coverage | Missing loading/empty/error? Primary controls missing interaction states?  |
-| Motion         | Ad-hoc animations vs ui-kit motion API?                                    |
+| Motion         | Ad-hoc animations vs existing project motion patterns?                                    |
 | a11y gaps      | Focus traps, labels, contrast                                              |
 | Slop signals   | §A / §A2 (+ §B if layout in scope) — §E punch list before proposing levers |
 
@@ -64,11 +64,11 @@ Explicitly list what **must not change**:
 
 ### 3. Modernization levers
 
-Propose changes scoped to ui-kit:
+Propose changes scoped to the existing project's component system:
 
-- Replace raw elements with ui-kit primitives
+- Reuse adopted components where appropriate; do not replace the library
 - Consolidate duplicate patterns into shared layout
-- Align tokens/theme to current ui-kit preset
+- Align tokens/theme to current project presets (if any)
 - Motion tier normalization
 - Fill missing **screen** four content states (loading / empty / error / success)
 - For primary interactive controls in the component map: note **interaction states** —

@@ -429,12 +429,16 @@ describe('skill composition', () => {
     const dev = readFileSync(join(repoRoot, 'skills/dev/SKILL.md'), 'utf8')
     const template = readFileSync(join(repoRoot, 'skills/design/design-spec-template.md'), 'utf8')
     const readme = readFileSync(join(repoRoot, 'README.md'), 'utf8')
+    const collab = readFileSync(join(repoRoot, 'skills/collab/SKILL.md'), 'utf8')
+    const redesign = readFileSync(join(repoRoot, 'skills/design/REDESIGN.md'), 'utf8')
     expect(design).toMatch(/vendor-neutral|existing design system/i)
     expect(design).toMatch(/optional Polyms products/)
     expect(dev).toMatch(/optional integration/)
     expect(template).toMatch(/optional product/)
     expect(readme).toMatch(/Optional Polyms integration/)
-    for (const content of [design, dev, template]) {
+    expect(collab).toMatch(/optional/)
+    expect(redesign).toMatch(/optional/)
+    for (const content of [design, dev, template, collab, redesign]) {
       expect(content).not.toMatch(/must (?:install|invoke|use) .{0,40}(?:ui-kit|polyms\/ui-kit)/i)
     }
   })

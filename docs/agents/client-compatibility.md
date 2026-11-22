@@ -24,11 +24,12 @@ can read its playbook as a reference; do not confuse reading a file with implici
 selecting a manual-only skill. Reading another skill's reference does not authorize
 publishing, implementation, or a scope change.
 
-An installed model-invoked `ui-kit` skill may be read directly for component mapping in
-Codex/Copilot. The design pre-flight's availability check is satisfied by reading that
-installed catalog; do not stop to request a second invocation. If it is missing or
-explicitly manual-only, request the skill through the current client's picker. The
-existing `collab` exception and all design/spec quality checks remain in effect.
+Use the project's existing component library and design system for mapping in
+Codex/Copilot. An installed Polyms `ui-kit` skill is an optional reference only
+when the project uses Polyms UI Kit or the user requests it. If it is absent,
+continue with grounded project components or generic semantic roles rather than
+requesting a vendor-specific skill. The existing `collab` exception and all
+design/spec quality checks remain in effect.
 
 ## Files and project setup
 

@@ -46,7 +46,7 @@ article ids — catalog content can change.
 
 - Functional components + hooks (no class components unless error boundary)
 - Type-safe, accessible, performance-focused
-- UI primitives from `@polyms/ui-kit` when implementing product UI — see `/ui-kit` skill
+- UI primitives from the project's existing library; optional `@polyms/ui-kit` only when project/user selected it
 
 ## Quick decision
 
