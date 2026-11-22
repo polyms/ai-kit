@@ -7,9 +7,9 @@ Design pre-flight ([PREFLIGHT.md](../design/PREFLIGHT.md)) gates the spec. This 
 ## CSS-first slice order
 
 1. Read spec **Typography & visual system** ( [CSS-INTENT.md](../design/CSS-INTENT.md) ) and **Visual acceptance** sections
-2. Implement `globals.css` / theme / type scale / grid classes **first**
+2. Implement project-specific theme/stylesheets/type scale/grid styles **first**
 3. Section shells (wrappers, borders, surfaces) **second**
-4. ui-kit primitives and data wiring **third**
+4. existing project components and data wiring **third**
 5. Motion last
 
 Do not ship a vertical slice that is correct in React but still using default unstyled layout.
@@ -28,7 +28,7 @@ reference). Do not invent a new E2E harness for a one-slice change.
 
 | Surface      | What to capture                                                   |
 | ------------ | ----------------------------------------------------------------- |
-| Default view | Dark theme, type scale visible — desktop                          |
+| Default view | Project-approved theme, type scale visible — desktop                          |
 | Responsive   | One mobile width when layout is non-trivial                       |
 | Interaction  | Before/after for the main control (chip, form submit, modal open) |
 | Spec rows    | Each **Visual acceptance** row: pass / fail + evidence ref        |
@@ -38,7 +38,7 @@ reference). Do not invent a new E2E harness for a one-slice change.
 ```markdown
 ## Visual evidence
 
-- Desktop dark: [path or "browser snapshot — HH:MM"]
+- Desktop in project-approved theme: [path or "browser snapshot — HH:MM"]
 - Mobile: [n/a | path]
 - Interaction: [what changed — before/after]
 - Spec rows: [IDs pass/fail]
@@ -62,12 +62,12 @@ per slice. A new session re-asks from scratch.
 
 ## Hard checks (before done)
 
-- [ ] Dark theme is the default acceptance view — matches spec (flash script if specified)
+- [ ] Acceptance theme matches the approved project specification
 - [ ] Type scale from spec is visible — display / section / body / mono, not one size everywhere
 - [ ] No [ANTI-SLOP.md](../design/ANTI-SLOP.md) §A / §A2 violations in shipped UI; if layout is
       in scope, no §B misses either; failures → §E punch-list format before claiming done
 - [ ] No invented metrics / proof bars unless sourced from PRD/CONTEXT
-- [ ] ui-kit primitives used where spec maps them — not raw `<input>` / ad-hoc buttons
+- [ ] adopted project components used where mapped; otherwise accessible semantic controls
 - [ ] Compared to spec **visual reference** URL — composition tier in the same ballpark; gaps
       listed if not
 - [ ] Evidence log filled — hard checks traced to screenshot, snapshot, or visual-acceptance IDs

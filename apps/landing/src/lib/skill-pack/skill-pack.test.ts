@@ -28,7 +28,7 @@ import {
   WORK_ARTIFACT_STANDARD,
   WORK_SKILL_PATHS,
 } from './skill-pack'
-import { executeGetSkillPack, executeListSkillPacks, registerSkillPackMcpTools } from './skill-pack.mcp'
+import { executeGetSkillPack, executeListSkillPacks, MCP_SKILL_SOURCE, registerSkillPackMcpTools } from './skill-pack.mcp'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../../../../..')
 
@@ -94,11 +94,21 @@ describe('skill pack MCP tools', () => {
     expect(registerTool.mock.calls.map(call => call[0])).toEqual(['list_skill_packs', 'get_skill_pack'])
   })
 
+  it('exposes explicit mutable provenance and a derived pack count for everyday clients', () => {
+    const response = JSON.parse(executeListSkillPacks().content[0]!.text)
+    expect(response.packCount).toBe(response.packs.length)
+    expect(response.source).toEqual({
+      kind: 'mutable-branch', ref: 'refs/heads/main', immutable: false, revision: null,
+    })
+  })
+
   it('returns pack URLs from list_skill_packs', () => {
     const result = executeListSkillPacks()
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       packs: listSkillPacks(),
+      packCount: listSkillPacks().length,
+      source: MCP_SKILL_SOURCE,
       composition: compositionCatalog(),
     })
   })
@@ -119,10 +129,26 @@ describe('skill pack MCP tools', () => {
       uiKit: { rawUrl: string; content: string }[]
     }
     expect(result.isError).toBeUndefined()
-    for (const file of [...body.files, ...body.uiKit]) {
+    for (const file of body.files) {
       expect(file.rawUrl.startsWith(SKILL_PACK_RAW_BASE)).toBe(true)
       expect(file.content).toBe('# Skill content')
     }
+    for (const file of body.uiKit) {
+      expect(file.rawUrl.startsWith(SKILL_PACK_RAW_BASE)).toBe(true)
+      expect(file.content).toBeUndefined()
+    }
+    expect(fetchFile).toHaveBeenCalledTimes(body.files.length)
+  })
+  it('does not fetch optional Polyms UI Kit unless its exact path is requested', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Selected'))
+    const meta = await executeGetSkillPack('design', fetchFile)
+    const first = JSON.parse(meta.content[0]!.text).uiKit[0].path
+    expect(fetchFile.mock.calls.map(call => call[0])).not.toContain(skillPackRawUrl(first))
+    fetchFile.mockClear()
+    const selected = await executeGetSkillPack('design', fetchFile, [first])
+    const result = JSON.parse(selected.content[0]!.text)
+    expect(result.uiKit.find((file: { path: string }) => file.path === first).content).toBe('# Selected')
+    expect(fetchFile).toHaveBeenCalledTimes(1)
   })
   it('returns reqs Markdown without uiKit', async () => {
     const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Reqs'))
@@ -131,6 +157,7 @@ describe('skill pack MCP tools', () => {
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
       contract: SKILL_CONTRACTS.reqs,
+      source: MCP_SKILL_SOURCE,
       files: [
         ...REQS_SKILL_PATHS,
         ...REQS_REFERENCE_PATHS,
@@ -150,6 +177,7 @@ describe('skill pack MCP tools', () => {
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
         contract: SKILL_CONTRACTS[name as SkillPackName],
+        source: MCP_SKILL_SOURCE,
         files: [
           ...paths,
           ...references,
@@ -169,7 +197,7 @@ describe('skill pack MCP tools', () => {
     const result = await executeGetSkillPack('design', fetchFile, [])
     expect(result.isError).toBeUndefined()
     expect(fetchFile).not.toHaveBeenCalled()
-    expect(JSON.parse(result.content[0]!.text)).toEqual(getSkillPack('design'))
+    expect(JSON.parse(result.content[0]!.text)).toEqual({ ...getSkillPack('design'), source: MCP_SKILL_SOURCE })
   })
 
   it('fetches only selected paths including uiKit and retains other metadata', async () => {
@@ -409,6 +437,64 @@ describe('skill composition', () => {
     const invalid = await executeGetSkillPack('design', fetchFile, [recipe.path])
     expect(invalid.isError).toBe(true)
     expect(fetchFile).not.toHaveBeenCalled()
+  })
+
+  it('protects setup, subagent and invocation from forcing a vendor UI library', () => {
+    const setup = readFileSync(join(repoRoot, 'skills/setup/SKILL.md'), 'utf8')
+    const setupDesign = readFileSync(join(repoRoot, 'skills/setup/design.md'), 'utf8')
+    const designer = readFileSync(join(repoRoot, 'agents/designer.md'), 'utf8')
+    const invocation = readFileSync(join(repoRoot, 'docs/agents/invocation.md'), 'utf8')
+    const projectGuidance = readFileSync(join(repoRoot, 'AGENTS.md'), 'utf8')
+    expect(setup).toMatch(/Detect and preserve/)
+    expect(setup).toMatch(/no auto-install/)
+    expect(setupDesign).toMatch(/record \*\*not selected\*\*/)
+    expect(setupDesign).toMatch(/\*\*Suggest\*\* Polyms UI Kit/)
+    expect(designer).toMatch(/existing project's design system/)
+    expect(designer).toMatch(/never block a design/)
+    expect(invocation).toMatch(/preserve the project's existing library/)
+    expect(projectGuidance).toMatch(/optional.*candidate/)
+    for (const content of [setup, setupDesign, designer, invocation, projectGuidance]) {
+      expect(content).not.toMatch(/(?:must|require|before component mapping,? user invokes).{0,55}(?:@polyms\/ui-kit|\/ui-kit)/i)
+    }
+  })
+
+  it('keeps design and dev independent of Polyms UI Kit', () => {
+    const design = readFileSync(join(repoRoot, 'skills/design/SKILL.md'), 'utf8')
+    const dev = readFileSync(join(repoRoot, 'skills/dev/SKILL.md'), 'utf8')
+    const template = readFileSync(join(repoRoot, 'skills/design/design-spec-template.md'), 'utf8')
+    const readme = readFileSync(join(repoRoot, 'README.md'), 'utf8')
+    const collab = readFileSync(join(repoRoot, 'skills/collab/SKILL.md'), 'utf8')
+    const redesign = readFileSync(join(repoRoot, 'skills/design/REDESIGN.md'), 'utf8')
+    expect(design).toMatch(/vendor-neutral|existing design system/i)
+    expect(design).toMatch(/optional Polyms products/)
+    expect(dev).toMatch(/optional integration/)
+    expect(template).toMatch(/optionally suggest Polyms UI Kit/)
+    expect(readme).toMatch(/Optional Polyms integration/)
+    expect(collab).toMatch(/optional/)
+    expect(redesign).toMatch(/optional/)
+    for (const content of [design, dev, template, collab, redesign]) {
+      expect(content).not.toMatch(/must (?:install|invoke|use) .{0,40}(?:ui-kit|polyms\/ui-kit)/i)
+    }
+  })
+
+  it('keeps everyday-mode authorization and minimal routing regression fixtures', () => {
+    const routing = JSON.parse(readFileSync(join(repoRoot, 'evals/work-skills/routing-cases.json'), 'utf8'))
+    const r = routing.find((item: { id: string }) => item.id === 'RT-39')
+    expect(r.expected).toEqual(['plan', 'task', 'qa'])
+    expect(r.avoid).toContain('reqs')
+    const composition = JSON.parse(readFileSync(join(repoRoot, 'evals/composition/cases.json'), 'utf8'))
+    const whole = composition.find((item: { id: string }) => item.id === 'CP-18')
+    const security = composition.find((item: { id: string }) => item.id === 'CP-19')
+    expect(whole.requiredSkills).toEqual(['plan', 'task', 'qa'])
+    expect(whole.criteria.join(' ')).toMatch(/cross-team/)
+    expect(whole.criteria.join(' ')).toMatch(/provenance|revision/)
+    expect(security.requiredSkills).toEqual(['qa'])
+    expect(security.criteria.join(' ')).toMatch(/forged-owner-role/)
+    expect(security.criteria.join(' ')).toMatch(/Not run/)
+    const optional = composition.find((item: { id: string }) => item.id === 'CP-21')
+    expect(optional.requiredSkills).toEqual(['design'])
+    expect(optional.criteria.join(' ')).toMatch(/optional candidate/)
+    expect(optional.hardGates.join(' ')).toMatch(/automatically install or adopt/)
   })
 
   it('keeps composition fixtures valid, covering every recipe, single and custom routes', () => {

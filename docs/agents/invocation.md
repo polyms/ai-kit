@@ -49,10 +49,12 @@ Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together 
 when deepening. `collab` (model-invoked) is the one-prompt front door: codebase pass, at most one batched
 question, then spawn `pm` → `techlead` (ADR only) → `designer` (when there is a screen). It spawns
 agents; it does not fire `/reqs` or `/design`. A packet with no blocking gap follows `dev` in that
-turn. A blocking fork is one question, then a stop. `/design` is user-invoked — ask the user to
-run `/ui-kit` (external lib skill) before component mapping, except a `collab` brief that already
-cleared the ask gate;
-`dev` uses `ui-kit` when implementing UI.
+turn. A blocking fork is one question, then a stop. `/design` is user-invoked.
+For component mapping, preserve the project's existing library. If none exists,
+provide neutral accessible component roles and optionally recommend Polyms UI Kit
+without installing or invoking it. `dev` implements using the chosen project UI
+stack. The Polyms `/ui-kit` skill is optional and only relevant when that product
+is already used or expressly selected.
 
 ## Slash prefix
 

@@ -9,10 +9,10 @@ pnpm eval:run --suite memory --case MP-01 --model YOUR_MODEL --judge-model YOUR_
 
 Actual model calls require the existing explicitly configured endpoint. A full Git checkout with both referenced revisions is required. No real workspace, memory provider or write tool is involved.
 
-Both arms receive the same P0/P1 contract fields from the pinned 0.3.3 manifest with memory
+Both arms receive the same P0/P1 contract fields from the pinned 0.3.4 manifest with memory
 hints removed, and historical starter files verified against a pre-P2 Git revision in
 `baseline.json`. This baseline is a test fixture, not an available skill release. Only the
-assisted arm receives the P2 hints and protocol from the pinned 0.3.3 source. In this targeted suite the skill route is fixed
+assisted arm receives the P2 hints and protocol from the pinned 0.3.4 source. In this targeted suite the skill route is fixed
 to isolate memory behavior rather than routing accuracy. Fixture fingerprints include the actual
 guidance. Never use private records or run paid calls without explicit configuration.
 

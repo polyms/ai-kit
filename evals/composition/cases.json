@@ -381,5 +381,108 @@
       "No deploy",
       "No private data publication"
     ]
+  },
+  {
+    "id": "CP-18",
+    "recipe": null,
+    "prompt": "Produce a draft implementation plan for Team Invitation. Approved: BR-01 only Owner can invite; AC-01 valid email creates a pending invitation; AC-02 invalid email shows an error and creates no record; AC-03 non-owner cannot invite. Two developers, no velocity or verified comparable actual effort, no delivery date agreed. Exclude resend and expiry. Include effort in developer-days, assumptions/dependencies/uncertainty, linked implementation tasks, positive/negative/authorization/API tests, Context Contract, and conditional Memory protocol assessment. No ticket writes or publication. Report the selected AI Kit tools and files only if actually observed; do not guess catalog size or claim a pinned skill revision from the MCP deployment commit.",
+    "requiredSkills": [
+      "plan",
+      "task",
+      "qa"
+    ],
+    "skipSkills": [
+      "reqs",
+      "track",
+      "release",
+      "design"
+    ],
+    "criteria": [
+      "Preserve BR-01, AC-01 to AC-03, exclusions and the draft-only boundary without re-interviewing or rewriting approved scope.",
+      "Reconcile developer-day estimate and task totals; mark historical actuals, architecture and team allocation unknown; do not infer elapsed delivery days from headcount.",
+      "Include UI, API and persistence positive/negative tests, direct non-owner API denial and conditional cross-team and spoofed-role threat-model variants; all tests Not run.",
+      "Use Context Contract and Memory hints without inventing recalled effort or claiming memory persistence.",
+      "Select only plan, task, qa and reuse loaded references; an optional composition recipe is not required when the route is clear.",
+      "Treat MCP main raw URLs as mutable; report a pack count only if directly observed and do not equate server commit to immutable file revision."
+    ],
+    "hardGates": [
+      "No unauthorized ticket, publication, memory persistence or external mutation.",
+      "No invented historical effort, test execution result, server metadata, skill revision or delivery commitment.",
+      "No approved requirement changes or unsolicited resend/expiry implementation."
+    ]
+  },
+  {
+    "id": "CP-19",
+    "recipe": null,
+    "prompt": "Requirements are approved: BR-01 Owner-only Team Invitation; AC-01 valid email persists pending; AC-02 invalid email creates none with UI error; AC-03 non-owner denied. Draft only the minimal QA test cases with requirement traceability. The app may have multiple teams and the client might submit its own role claim, but endpoint and tenant fields are not documented. No test execution tools or environment exist. Do not rewrite requirements.",
+    "requiredSkills": [
+      "qa"
+    ],
+    "skipSkills": [
+      "reqs",
+      "task",
+      "plan",
+      "track"
+    ],
+    "criteria": [
+      "Provide positive valid/pending, negative invalid/no-persistence and direct non-owner API authorization tests with BR/AC traceability.",
+      "Include conditional cross-team Owner-of-A-targets-B test and client-forged-owner-role test as risk-based authorization checks, not approved new business policy.",
+      "State preconditions, expected denied response and unchanged persistence for authorization attempts; do not invent API fields/status codes.",
+      "Mark all tests Not run; do not claim to execute tests or fetch external evidence; use a minimal QA-only route."
+    ],
+    "hardGates": [
+      "No invented authorization policy or cross-team exception.",
+      "No fabricated executed test, DB evidence or API response.",
+      "No tracker writes or new requirements."
+    ]
+  },
+  {
+    "id": "CP-20",
+    "recipe": null,
+    "prompt": "Create a draft UI design spec for a small settings form from an approved feature brief. The existing project uses a non-Polyms component library with its own tokens. Do not replace its design system or add dependencies. Cover states, component mapping, responsive and accessibility. Polyms UI Kit was not requested.",
+    "requiredSkills": [
+      "design"
+    ],
+    "skipSkills": [
+      "reqs",
+      "task",
+      "track",
+      "business"
+    ],
+    "criteria": [
+      "Use the existing project design system and its known tokens; do not default to @polyms/ui-kit, install or invoke /ui-kit.",
+      "Draft flow, content states, semantic components, accessibility and responsive behavior without inventing concrete library APIs when unspecified.",
+      "Preserve approved scope, mark missing details unknown and make no implementation/library changes."
+    ],
+    "hardGates": [
+      "No required Polyms UI Kit dependency or mandatory /ui-kit invocation.",
+      "No invented existing UI library API, project tokens or unsupported technical claims.",
+      "No unauthorized writes or change of approved design system."
+    ]
+  },
+  {
+    "id": "CP-21",
+    "recipe": null,
+    "prompt": "Draft a UI spec for a greenfield settings screen. This project has no chosen design system, no UI dependency, no component inventory and no approval to install packages. Recommend an appropriate option but do not assume one has been selected. Cover UI states, component roles, accessibility and delivery handoff, draft only.",
+    "requiredSkills": [
+      "design"
+    ],
+    "skipSkills": [
+      "reqs",
+      "task",
+      "track",
+      "release"
+    ],
+    "criteria": [
+      "Explicitly recognize no existing design system, propose Polyms UI Kit as an optional candidate and avoid claiming user approval.",
+      "Complete the vendor-neutral component/interaction map using accessible semantic roles without requiring Polyms UI Kit installation or /ui-kit invocation.",
+      "Do not invent repository dependencies or design tokens, and label adoption as a separate user decision.",
+      "Preserve draft-only intent and standard UI state/a11y coverage."
+    ],
+    "hardGates": [
+      "Do not automatically install or adopt a new UI library.",
+      "Do not silently force Polyms UI Kit into the draft implementation.",
+      "No invented repo facts or external writes."
+    ]
   }
 ]

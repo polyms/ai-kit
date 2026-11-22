@@ -15,6 +15,10 @@ Use [qa-templates.md](qa-templates.md) and the shared work artifact standard
    Assign stable requirement IDs if missing; label inferred expected behavior as unconfirmed.
 2. Identify risk-based scenarios: happy path, invalid input, boundaries, permissions, state
    transitions, failures and regression. Include accessibility, security or migration where relevant.
+   For role-restricted or multi-tenant actions, test direct API access beyond UI hiding.
+   Where applicable, include a different-team target and forged client owner-role claim.
+   Treat these as threat-model variants of existing authorization rules, not new requirements;
+   label variants conditional when API or tenant details are unknown.
 3. Write cases with preconditions, data, ordered steps and observable expected results. Trace each
    case to requirements; flag requirements without defined expected behavior.
 4. Prioritize cases by impact and identify environment/data needs, exclusions and entry/exit criteria.

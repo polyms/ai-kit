@@ -106,10 +106,13 @@ ladder in the user reply.
 answered the one blocking seam fork. No test is written before that. A settled seam does not end
 the turn.
 
-When implementing UI, use **`ui-kit`** for primitives. Read design spec **§4 CSS** and
-**§8 visual acceptance** first — run [visual-ship.md](visual-ship.md) (CSS before wiring). Read
-the repo `ui-kit` skill when it is on disk. Ask the user to attach `/ui-kit` only when that skill
-is absent and the component map would be invented.
+When implementing UI, reuse the **project's adopted design system and components**.
+Read design spec **§4 CSS** and **§8 visual acceptance** first; run
+[visual-ship.md](visual-ship.md) (CSS before wiring). Polyms `@polyms/ui-kit`
+is an optional integration: consult its skill only when the user selects it or
+the project already uses it. Never require `/ui-kit` installation/invocation
+or replace a project's library merely to implement a screen. Use accessible
+semantic controls when no library has been chosen.
 
 ### 3. Solution ladder
 

@@ -87,7 +87,7 @@ export type SkillPackName = 'reqs' | 'design' | WorkSkillName
 
 const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   reqs: 'Business and product requirements, PRDs, user stories and acceptance criteria',
-  design: 'UI design specifications and UI Kit guidance',
+  design: 'UI design specifications with optional Polyms UI Kit references',
   research: 'Evidence-based research and comparative analysis',
   business: 'Business cases, pricing, costs and decision analysis',
   docs: 'Business and technical documentation',

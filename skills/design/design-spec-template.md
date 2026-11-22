@@ -70,23 +70,22 @@ Per [CSS-INTENT.md](CSS-INTENT.md) — **required for UI**. `/dev` implements th
 | Surface rhythm | [body vs surface sections; border seams]                     |
 | Layout shells  | [page-x, max-width per route]                                |
 | Grids          | [grid-area / template per breakpoint if bento or asymmetric] |
-| Theme          | [dark-first, flash script, tokens]                           |
-| globals.css    | [custom classes to add in `@layer components`]               |
+| Theme          | [project light/dark policy, existing tokens]                 |
+| Stylesheets   | [project styling files/conventions; no framework implied]    |
 
 ## 5. Component map
 
-Map every interactive element to `@polyms/ui-kit` primitives. User should invoke **`/ui-kit`** when unsure of catalog or API.
+Map interactive elements to components of the project's adopted design system. Where no system exists, use generic accessible semantic roles and optionally suggest Polyms UI Kit for approval. It is never a required library.
 
-| UI element    | ui-kit primitive | Variant / notes                            |
-| ------------- | ---------------- | ------------------------------------------ |
+| UI element    | Project component/role | Variant / notes                            |
+| ------------- | ---------------------- | ------------------------------------------ |
 | [e.g. Submit] | Button           | primary; loading + disabled; focus-visible |
 | ...           | ...              | ...                                        |
 
 For primary controls, note **interaction states** the primitive supports (default · hover ·
-focus-visible · active · disabled · loading · error · success). Do not invent parallel chrome —
-ship what ui-kit exposes. **Content states** (loading/empty/error/success) stay in §3.
+focus-visible · active · disabled · loading · error · success). Reuse existing project components and tokens rather than inventing parallel chrome. **Content states** (loading/empty/error/success) stay in §3.
 
-**Custom components** (only when ui-kit has no primitive):
+**Custom components** (when the current project has no suitable component):
 
 | Component | Why custom | Follow-up |
 | --------- | ---------- | --------- |
@@ -94,7 +93,7 @@ ship what ui-kit exposes. **Content states** (loading/empty/error/success) stay 
 
 ## 6. Motion plan
 
-Intent only — implementation details via `/ui-kit` motion API.
+Intent only — implementation uses the project's chosen motion API or CSS.
 
 | Transition        | Trigger    | Tier (subtle / standard / emphasis) | Reduced motion    |
 | ----------------- | ---------- | ----------------------------------- | ----------------- |

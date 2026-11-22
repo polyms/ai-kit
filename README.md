@@ -59,13 +59,13 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 /to-prd        → synthesize conversation into lean PRD, publish to GitHub
 /to-issues     → break spec into vertical-slice GitHub issues
 /triage        → move raw issues through triage state machine
-/design        → UI spec from PRD at docs/design/ (maps to @polyms/ui-kit)
+/design        → UI spec from PRD using the project's design system
 /dev           → fullstack implementation, TDD, debugging
 /code-review   → three-axis review (Standards + Spec + Simplify) before merge
 /arch-refactor → scan codebase for deepening opportunities (maintenance)
 ```
 
-`arch` (model-invoked) supplies architecture vocabulary. **`/ui-kit`** skill ships with `@polyms/ui-kit` (Tailwind CSS 4) — symlink from the lib repo; `/design` and `/dev` reach it for component API, not duplicated in ai-kit.
+`arch` (model-invoked) supplies architecture vocabulary. **Polyms UI Kit** (`@polyms/ui-kit`) offers an **optional** component library and `/ui-kit` skill. AI Kit `/design` and `/dev` work with the existing project's chosen design system and do not require installing or invoking Polyms UI Kit.
 
 The goal: a coherent pipeline where PM artifacts hand off cleanly to design and engineering agents — without reinventing prompts every project.
 
@@ -88,7 +88,7 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | `/to-prd`            | [`to-prd`](skills/to-prd/)                                                                                   | **Available** | Lean PRD from chat → publish to GitHub Issues (user-invoked)    |
 | `/to-issues`         | [`to-issues`](skills/to-issues/)                                                                             | **Available** | Break PRD/plan into vertical-slice GitHub issues                |
 | `/triage`            | [`triage`](skills/triage/)                                                                                   | **Available** | Triage backlog — verify, grill, agent briefs, `ready-for-agent` |
-| `/design`            | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, ui-kit component map, a11y   |
+| `/design`            | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, project component map, a11y   |
 | `/dev`               | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging   |
 | `/code-review`       | [`code-review`](skills/code-review/)                                                                         | **Available** | Three-axis review — 🔴/🟡/💭 severity tags, parallel axes       |
 | `/docs`              | [`docs`](skills/docs/)                                                                                       | **Available** | Business and developer docs — proposals, API ref, tutorials     |
@@ -284,7 +284,7 @@ skill's own flow.
 
 ### `/design` — UI Spec from PRD
 
-Turn a PRD or feature brief into an engineering-ready design spec at `docs/design/<feature>.md`, mapped to **`@polyms/ui-kit`**:
+Turn a PRD or feature brief into an engineering-ready design spec at `docs/design/<feature>.md`, mapped to **the project's existing design system** (or vendor-neutral component roles):
 
 ```
 /design
@@ -296,7 +296,7 @@ Flows, screen inventory (**four content states** each), **§4 CSS intent**, **§
 acceptance**, **§11 anti-slop appendix**, component map. Audit-only branch (`chấm UI` / score
 this screen) → punch list, no spec file. [`/dev` runs visual-ship](skills/dev/visual-ship.md)
 before UI is done. See [QUALITY-BAR.md](skills/design/QUALITY-BAR.md). User invokes
-**`/ui-kit`** when mapping primitives. Pre-flight via [PREFLIGHT.md](skills/design/PREFLIGHT.md).
+Existing project components take precedence; optional **`/ui-kit`** references apply only when Polyms UI Kit was chosen. Pre-flight via [PREFLIGHT.md](skills/design/PREFLIGHT.md).
 Hands off to `/dev`. See [design-spec-template.md](skills/design/design-spec-template.md).
 
 **Agent** (optional — isolated context for long design sessions):
@@ -305,7 +305,7 @@ Hands off to `/dev`. See [design-spec-template.md](skills/design/design-spec-tem
 Use the designer to spec UI from PRD #42
 ```
 
-**External:** Install `@polyms/ui-kit` and symlink its `/ui-kit` skill (bootstrap or `npx skills add` from the ui-kit repo).
+**Optional Polyms integration:** If the project already uses `@polyms/ui-kit` or the user elects to adopt it, attach its `/ui-kit` reference skill as documented in the Polyms UI Kit repository. It is **not** a setup prerequisite or default dependency. If the project has no design system, AI Kit may suggest Polyms UI Kit for consideration, without auto-installing or adopting it.
 
 ### `/dev` — Fullstack Implementation
 
@@ -628,8 +628,7 @@ Run `/setup` once per repo first (includes triage label mapping).
 Each stage produces artifacts the next agent can consume. `/reqs` drafts enterprise PRD/stories in chat;
 `/to-prd` publishes a lean PRD to the tracker; `/to-issues` publishes vertical-slice GitHub issues; `/triage`
 processes inbound backlog into `ready-for-agent` issues with agent briefs; `/design` adds `docs/design/` specs
-mapped to `@polyms/ui-kit`; Dev implements against briefs and design specs (`dev` uses `ui-kit` for UI
-code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
+mapped to the project's chosen components; Dev implements against briefs and design specs (Polyms UI Kit is optional); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 
 ## Daily workflow
 
@@ -651,13 +650,13 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 - [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
 - [x] `/docs` — business and developer-facing docs
 - [x] `research`, `business`, `task`, `bug` — work operations skills and templates
-- [x] MCP skill provider — direct Markdown delivery (0.3.3 verified in production)
+- [x] MCP skill provider — mutable Markdown delivery; new 0.3.4 pinned release pending production smoke
 - [x] `/e2e` — E2E automation (`tester`)
 - [x] `/build-feature-map` — authors the repo-local `feature-map` skill (`tester`)
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
 - [x] `/arch-refactor` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)
-- [x] `/design` — UI spec from PRD at `docs/design/`, `@polyms/ui-kit` + `/ui-kit` boundary
+- [x] `/design` — vendor-neutral UI specs at `docs/design/`, optional Polyms UI Kit integration
 - [x] `examples/` — pipeline feature walkthrough for onboarding
 - [ ] Frontmatter validation script
 - [ ] Claude agent support
@@ -671,6 +670,6 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 Run `pnpm eval:test` for deterministic scoring tests and `pnpm eval:run --dry-run` to inspect
 benchmark scope without model calls. See [the evaluation runner](evals/README.md) for opt-in
 paired runs, trace scoring, model configuration and limitations.
-Use `node scripts/verify-skill-release.mjs --version 0.3.3 --endpoint https://ai-kit.polyms.dev`
+Use `node scripts/verify-skill-release.mjs --version 0.3.4 --endpoint https://ai-kit.polyms.dev`
 for production delivery checks. See [Quality Baseline](docs/quality/baseline.md) and
 `pnpm eval:report` for measured-run summaries.

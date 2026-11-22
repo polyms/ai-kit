@@ -16,10 +16,12 @@ inputs or a data validator. Read the selected workflow to determine actual prere
 Use [context contract](context-contract.md) to identify material gaps before each stage. Reuse the
 shared context and source-backed artifacts; do not reload or retrieve unrelated context. For multi-skill
 work, read this protocol once. Choose a relevant recipe only if it helps; use a
-custom minimal route otherwise. In remote MCP, the catalog lists each recipe's hostPack and path.
+custom minimal route otherwise. Approved scope requiring estimates, implementation tasks and QA
+can use `plan`, `task` and `qa` without fetching a recipe from `reqs`. In remote MCP, the catalog lists each recipe's hostPack and path.
 Request the protocol through any selected pack, and the recipe through its hostPack using exact
 paths. The host is only a retrieval location, not a required first stage. Load starterPaths of
-selected skills, then relevant references; avoid reloading files already in context. Local clients
+selected skills, then relevant references. Batch missing exact paths per selected pack when
+already known, instead of fetching templates in a second round; do not reload known files. Local clients
 read these files from the kit. Do not use all recipes for a single request.
 
 ## Shared execution context

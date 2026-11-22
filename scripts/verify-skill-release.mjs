@@ -122,7 +122,7 @@ if (process.argv[1] && resolve(process.argv[1]) === mainFile) {
   const endpointFlag = args.indexOf('--endpoint')
   if (versionFlag === -1 || !args[versionFlag + 1] ||
       endpointFlag === -1 || !args[endpointFlag + 1]) {
-    console.error('Usage: node scripts/verify-skill-release.mjs --version 0.3.3 --endpoint https://ai-kit.polyms.dev')
+    console.error('Usage: node scripts/verify-skill-release.mjs --version 0.3.4 --endpoint https://ai-kit.polyms.dev')
     process.exitCode = 2
   } else {
     const version = args[versionFlag + 1]

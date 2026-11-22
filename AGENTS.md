@@ -92,7 +92,7 @@ See `docs/agents/skill-capabilities.md` for tool abstraction and composition,
 
 ### Design stack
 
-`/design` — UI spec from PRD at `docs/design/`; `@polyms/ui-kit` + `/ui-kit` skill for implementation (lib repo, not ai-kit). Long sessions: `designer` in `agents/designer.md`.
+`/design` — UI spec from PRD at `docs/design/`; preserve the project's existing design system. If none exists, suggest Polyms UI Kit (`@polyms/ui-kit`) as an **optional** candidate without installing or adopting it automatically. Long sessions: `designer` in `agents/designer.md`.
 
 ### Maintenance
 
@@ -111,7 +111,7 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | Agent       | Role                        | Owns                                                                               |
 | ----------- | --------------------------- | ---------------------------------------------------------------------------------- |
 | `pm`        | Principal product manager   | PRD, stories, acceptance criteria, scope (`/reqs`)                                 |
-| `designer`  | Principal product designer  | `docs/design/` UI specs, `@polyms/ui-kit` maps (`/design`)                         |
+| `designer`  | Principal product designer  | `docs/design/` UI specs, project design-system maps (`/design`)                         |
 | `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
 | `tester`    | Principal tester            | E2E (`/e2e`); repo feature map (`/build-feature-map`)                              |
 | `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |

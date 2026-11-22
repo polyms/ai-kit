@@ -11,11 +11,11 @@ Copy this section into every UI design spec. Design writes criteria; **`/dev` pr
 
 | Check          | Pass when                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------- |
-| Dark-first     | First paint dark (or per ADR); acceptance screenshots in dark                             |
+| Theme          | First paint and screenshots match approved project theme or ADR                             |
 | Type scale     | Type tiers from spec §4 visible (e.g. display / h1 / h2 / body) — not one size everywhere |
 | Surface rhythm | ≥2 distinct surfaces or `border-line` seams — not flat single background                  |
 | Focal beat     | Hero (or primary section) has one clear visual anchor — not five equal blocks             |
-| ui-kit         | No raw form controls where spec maps `Field.Control` / `Button` / `Modal`                 |
+| Components     | Use the project-selected components where specified; otherwise semantic accessible controls                 |
 | Anti-slop      | No §A / §A2 (and §B if layout in scope) from ANTI-SLOP.md; failures use §E format         |
 
 **P0 slices (order):** [list — CSS/globals → hero → … from implementation priority]

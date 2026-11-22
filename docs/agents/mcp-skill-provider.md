@@ -46,7 +46,7 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 | docs     | Business documents or developer documentation          | business-doc-template.md, work-records.md                                    |
 | task     | Actionable standalone task ticket                      | task-template.md                                                             |
 | bug      | Evidence-based defect report                           | bug-template.md                                                              |
-| design   | UI specification                                       | Existing design references and uiKit files                                   |
+| design   | UI specification                                       | Existing design references; optional Polyms uiKit files                                   |
 | track    | Ticket review, backlog snapshot, bulk update receipt   | tracking-templates.md                                                        |
 | plan     | Effort estimate and delivery plan                      | delivery-plan-template.md                                                    |
 | qa       | Test plan, cases, coverage and report                  | qa-templates.md                                                              |
@@ -104,18 +104,18 @@ can connect or automatically invoke remote skills.
 4. Use user-supplied or authorized context. Draft the output, or publish only when requested.
 5. Return actual ticket/document IDs and links after a successful write.
 
-The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract}], composition: {protocol, recipes}}`.
+The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract}], packCount, source, composition: {protocol, recipes}}`. The `packCount` is derived from `packs.length`.
 The additional routing and composition fields are advisory and backward-compatible.
-The get operation returns `{name, contract, files: [{path, rawUrl, content}]}`.
-The contract includes advisory context requirements; starter content includes shared context guidance. For design it also returns
-`uiKit` entries of the same file shape. Existing raw URLs are retained; clients need not perform
+The get operation returns `{name, contract, source, files: [{path, rawUrl, content}]}`.
+The contract includes advisory context requirements; starter content includes shared context guidance. For design it also exposes optional
+`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Omitting paths retrieves all core files but **does not load Polyms UI Kit content**; optional UI Kit paths remain discoverable and require explicit selection. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
 A failed fetch fails the whole pack rather than silently returning incomplete instructions.
 
 The existing transport uses MCP text results containing serialized JSON. Paths are explicitly
 allowlisted. Skills are fetched in parallel with a ten-second per-file timeout; no application
 cache is used. GitHub CDN propagation may delay updated content. There is no commit pinning across
-parallel reads. A Markdown-only edit to an already registered file does not require redeploying the
+parallel reads. Both tools now expose `source: {kind: "mutable-branch", ref: "refs/heads/main", immutable: false, revision: null}`. The deployment commit from `server_info` is not a pinned Markdown revision. Do not infer skill release `0.3.3` from it or from a file mentioning that version. For independently pinned provenance use the separate versioned provider, `/skill-bundles/<version>/catalog.json` and `/api/skills` with an explicit version; do not equate the versioned snapshot bytes with live MCP `main` content. A Markdown-only edit to an already registered file does not require redeploying the
 landing app after it reaches main. New packs, changed file lists and server changes do require
 deployment. Preview/local servers also fetch from main, not the PR branch; mocked tests or a
 controlled test fixture are needed for pre-merge content checks.
@@ -128,10 +128,10 @@ template where applicable; all other file paths remain metadata. For large packs
 
 - Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.
 - Fetch the entry point using `paths: ["skills/design/SKILL.md"]`, then request referenced files as needed.
-- Unselected files retain path and rawUrl but omit content. The design uiKit group is preserved.
+- Unselected files retain path and rawUrl but omit content. The optional design uiKit group is preserved as manifest metadata; select content only when the user/project chose Polyms UI Kit.
 - All paths must match the selected pack manifest; INVALID_PATHS fails before external fetch.
 - For work packs, load the shared work artifact standard and relevant templates before drafting.
-- Request only missing references. Reuse already loaded content within the current session.
+- Request only missing references. Batch needed exact paths per pack in one call, reuse already loaded content, and skip optional recipes when contracts already suffice.
 - Related skills are optional handoffs, not prerequisites, automatic execution or permission to publish.
 
 The provider has no arbitrary URL endpoint, cache or orchestration engine. Optional selection is a
@@ -146,7 +146,7 @@ See [skill-intelligence.md](skill-intelligence.md) for routing metadata, selecti
 composition and regression checks. See [skill composition](skill-composition.md) for typed metadata,
 shared context, gates, handoffs and recipes. Load the protocol and chosen recipe on demand;
 recipe paths are scoped to their host pack, and no composition files are in starterPaths.
-Legacy full-pack loading includes the newly allowlisted references. The server does not classify
+MCP implicit full-pack loading includes core files only; optional Polyms UI Kit content requires exact paths. The versioned provider defaults to minimal `starter`; its explicitly requested `full` strategy intentionally includes all registered files, including optional UI Kit. The server does not classify
 prompts or execute workflows.
 The client chooses relevant skills using metadata and user intent, while local manual-only policy
 continues to govern native skill invocation.
