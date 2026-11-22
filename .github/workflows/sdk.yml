@@ -40,23 +40,25 @@ jobs:
         run: |
           pnpm eval:test
           pnpm eval:run --dry-run
-      - name: Verify release tag and SDK package metadata
-        if: github.event_name == 'push'
+      - name: Verify SDK release metadata and tag
         shell: bash
         run: |
           set -euo pipefail
+          # Exercise the same validation on PRs, even before the release tag exists.
           node --input-type=module <<'NODE'
           import { readFileSync } from 'node:fs'
           const pkg = JSON.parse(readFileSync('sdk/package.json', 'utf8'))
-          const tag = process.env.GITHUB_REF_NAME
-          if (pkg.name !== '@polyms/ai-kit-sdk' || pkg.version !== tag.replace(/^sdk-v/, '') ||
-              !/^sdk-v[1-9][0-9]*\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$/.test(tag)) {
+          const version = pkg.version
+          const tag = process.env.GITHUB_REF_TYPE === 'tag'
+            ? process.env.GITHUB_REF_NAME : 'sdk-v' + version
+          if (pkg.name !== '@polyms/ai-kit-sdk' || tag !== 'sdk-v' + version ||
+              !/^[1-9][0-9]*[.][0-9]+[.][0-9]+(?:-[0-9A-Za-z.-]+)?$/.test(version)) {
             throw new Error('SDK tag must exactly match sdk/package.json name and version')
           }
           if (pkg.engines?.node !== '>=24') throw new Error('SDK Node.js engine mismatch')
           NODE
-          # Stable releases must come from main; prereleases may be tested from a PR head.
-          if [[ "$GITHUB_REF_NAME" != *-* ]]; then
+          # Stable tags must come from main; prereleases may point to a PR commit.
+          if [[ "$GITHUB_REF_TYPE" == tag && "${GITHUB_REF_NAME#sdk-v}" != *-* ]]; then
             git merge-base --is-ancestor HEAD origin/main || {
               echo "::error::Stable SDK tags must point to main history"
               exit 1
