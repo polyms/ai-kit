@@ -70,7 +70,7 @@ Per [CSS-INTENT.md](CSS-INTENT.md) — **required for UI**. `/dev` implements th
 | Surface rhythm | [body vs surface sections; border seams]                     |
 | Layout shells  | [page-x, max-width per route]                                |
 | Grids          | [grid-area / template per breakpoint if bento or asymmetric] |
-| Theme          | [dark-first, flash script, tokens]                           |
+| Theme          | [project light/dark policy, existing tokens]                 |
 | globals.css    | [custom classes to add in `@layer components`]               |
 
 ## 5. Component map

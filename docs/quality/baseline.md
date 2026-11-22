@@ -61,15 +61,15 @@ baseline nor measured latency/token savings.
 
 ## Real paired evaluation
 
-The opt-in `evals/run.ts` runner has **86 synthetic scenarios**:
+The opt-in `evals/run.ts` runner has **87 synthetic scenarios**:
 
 | Suite | Count | What it exercises |
 | --- | ---: | --- |
 | Routing | 39 | Appropriate smallest skill set and routing rules |
 | Output | 13 | Artifact quality and evidence-aware drafting |
-| Composition | 19 | Multi-skill selection, references and handoffs |
+| Composition | 20 | Multi-skill selection, references and handoffs |
 | Memory | 15 | Relevant recall, source integrity, stale decisions, privacy and capture rules |
-| **Total** | **86** | |
+| **Total** | **87** | |
 
 The runner compares baseline vs skill-assisted on the same synthetic context.
 Memory cases isolate P2 advice with the same historical evidence in both arms.

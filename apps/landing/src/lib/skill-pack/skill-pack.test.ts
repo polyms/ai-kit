@@ -424,6 +424,21 @@ describe('skill composition', () => {
     expect(fetchFile).not.toHaveBeenCalled()
   })
 
+  it('keeps design and dev independent of Polyms UI Kit', () => {
+    const design = readFileSync(join(repoRoot, 'skills/design/SKILL.md'), 'utf8')
+    const dev = readFileSync(join(repoRoot, 'skills/dev/SKILL.md'), 'utf8')
+    const template = readFileSync(join(repoRoot, 'skills/design/design-spec-template.md'), 'utf8')
+    const readme = readFileSync(join(repoRoot, 'README.md'), 'utf8')
+    expect(design).toMatch(/vendor-neutral|existing design system/i)
+    expect(design).toMatch(/optional Polyms products/)
+    expect(dev).toMatch(/optional integration/)
+    expect(template).toMatch(/optional product/)
+    expect(readme).toMatch(/Optional Polyms integration/)
+    for (const content of [design, dev, template]) {
+      expect(content).not.toMatch(/must (?:install|invoke|use) .{0,40}(?:ui-kit|polyms\/ui-kit)/i)
+    }
+  })
+
   it('keeps everyday-mode authorization and minimal routing regression fixtures', () => {
     const routing = JSON.parse(readFileSync(join(repoRoot, 'evals/work-skills/routing-cases.json'), 'utf8'))
     const r = routing.find((item: { id: string }) => item.id === 'RT-39')

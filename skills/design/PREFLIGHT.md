@@ -59,8 +59,7 @@ Score the draft spec 1–5 on each axis. Any axis below 3 → revise before hand
 
 - [ ] Spec describes **one focal beat per viewport** for hero and primary section (**N/A**
       with reason when no marketing hero)
-- [ ] Dark-first acceptance called out — screenshots for sign-off use dark theme unless PRD
-      excepts
+- [ ] Theme acceptance matches existing project requirements or ADR; do not force dark-first
 - [ ] If redesign: audit includes **screenshot of shipped UI** vs intent (not codebase walk only)
 
 ## Motion and accessibility

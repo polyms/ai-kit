@@ -28,7 +28,7 @@ reference). Do not invent a new E2E harness for a one-slice change.
 
 | Surface      | What to capture                                                   |
 | ------------ | ----------------------------------------------------------------- |
-| Default view | Dark theme, type scale visible — desktop                          |
+| Default view | Project-approved theme, type scale visible — desktop                          |
 | Responsive   | One mobile width when layout is non-trivial                       |
 | Interaction  | Before/after for the main control (chip, form submit, modal open) |
 | Spec rows    | Each **Visual acceptance** row: pass / fail + evidence ref        |

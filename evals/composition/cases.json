@@ -435,5 +435,29 @@
       "No fabricated executed test, DB evidence or API response.",
       "No tracker writes or new requirements."
     ]
+  },
+  {
+    "id": "CP-20",
+    "recipe": null,
+    "prompt": "Create a draft UI design spec for a small settings form from an approved feature brief. The existing project uses a non-Polyms component library with its own tokens. Do not replace its design system or add dependencies. Cover states, component mapping, responsive and accessibility. Polyms UI Kit was not requested.",
+    "requiredSkills": [
+      "design"
+    ],
+    "skipSkills": [
+      "reqs",
+      "task",
+      "track",
+      "business"
+    ],
+    "criteria": [
+      "Use the existing project design system and its known tokens; do not default to @polyms/ui-kit, install or invoke /ui-kit.",
+      "Draft flow, content states, semantic components, accessibility and responsive behavior without inventing concrete library APIs when unspecified.",
+      "Preserve approved scope, mark missing details unknown and make no implementation/library changes."
+    ],
+    "hardGates": [
+      "No required Polyms UI Kit dependency or mandatory /ui-kit invocation.",
+      "No invented existing UI library API, project tokens or unsupported technical claims.",
+      "No unauthorized writes or change of approved design system."
+    ]
   }
 ]
