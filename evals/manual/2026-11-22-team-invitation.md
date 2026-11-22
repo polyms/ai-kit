@@ -85,9 +85,18 @@ should use their own normal settings, not emulate ChatGPT effort labels.
 Retest in a fresh session after deployment and attach a tool trace when available
 before claiming improved behavior.
 
+## Follow-up: post-PR #18 Instant regression
+
+A separate fresh-session ChatGPT Instant output was reviewed on 2026-11-23.
+It includes 12 planned cases (up from 10), with conditional forged-client-role
+and cross-team authorization tests, and a verified deployment/catalog identity.
+See [post-merge Instant regression evidence](2026-11-23-team-invitation-instant-regression.md).
+This is a **manual single-run observation**, not paired baseline or production
+test execution. UI scenarios were explicitly skipped.
+
 ## Decision
 
 Improve the smallest compatible MCP response and guidance and add targeted
 synthetic regression prompts. **Do not** change approved business requirements,
-invent provider-level measurements, change immutable release `0.3.3`, auto-run
+invent provider-level measurements, treat an MCP deployment SHA as an immutable file hash, auto-run
 paid models or tag SDK stable from this manual evidence.
