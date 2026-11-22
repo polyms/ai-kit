@@ -1,40 +1,47 @@
 # SDK stable-release readiness
 
-Status: **release candidate prepared; stable 1.0.0 not yet authorized**.
-The SDK package is independent of experimental skill content release `0.3.3`.
+Status (2026-11-22): **`1.0.0-rc.1` published; stable `1.0.0` not yet authorized**.
+SDK versions are independent of immutable skill release `0.3.3`.
+Only Node.js 24+ / ESM with built-in `fetch` is supported.
 
-## Implemented and verified in PR CI
+## Proven release candidate
 
-- Public API types replace the previous `unknown` contract and catalog pack
-  surfaces. `SkillContract` includes typed optional Knowledge and Memory hints.
-- Read-only transport validates catalog/bundle shape, schema and release
-  identity, source URL, allowlisted paths, content completeness and consistency.
-- Provider errors are not cached. Concurrent reference fetches preserve successful
-  content; `clearCache()` invalidates in-flight cache writes.
-- CI builds the TypeScript declarations and SDK package, runs negative and
-  concurrency tests, and verifies a clean local tarball install/import.
-- Node 24 is the SDK baseline in CI. Node 22 is intentionally unsupported;
-  package remains dependency-free.
-- Pushing a matching `sdk-v<package-version>` tag runs the same tested build
-  and publishes its validated tarball to GitHub Packages using `GITHUB_TOKEN`.
-  Prereleases use `next`; stable tags use `latest` and require main history.
+- Public TypeScript API includes typed `SkillCatalog`, `SkillBundle` and
+  contracts with optional Knowledge and Memory hints.
+- Schema, release identity, raw URL origin, content completeness, manifest
+  consistency and in-flight cache behavior have negative/concurrency tests.
+- CI built TypeScript declarations and the package, tested the provider and
+  evaluation fixtures, and clean-installed a local tarball in isolation.
+- Git tag `sdk-v1.0.0-rc.1` successfully published the tested tarball to
+  GitHub Packages with dist-tag `next`.
+  Evidence: [successful tag workflow](https://github.com/polyms/ai-kit/actions/runs/45020141109).
+- PR #14 merged as `4c028ae`; AI Kit production and Astra Stg retrieved
+  skill release `0.3.3` / revision `2617cd6`.
+  This verifies delivery but not which SDK package Astra is executing.
+- Daily/manual public production verification is specified in
+  [Quality Baseline](../quality/baseline.md). Its first scheduled CI execution
+  is not claimed as completed by this document.
 
 ## External release gates
 
-| Gate | Status and requirement |
-| --- | --- |
-| Source TypeScript tests | Confirmed by PR CI |
-| Install from local packed tarball | Confirmed by PR CI |
-| GitHub Packages publishing | Not performed; requires explicit tag/release |
-| Public Polyms registry proxy | Not verified with a published RC and clean consumer install |
-| Astra Stg consumer | Current observed core `0.3.2` without forwarded contract; needs migration and reference retrieval for `0.3.3` |
-| Operational performance | Recorded consuming-host cold/warm and reference timing still needed |
-| Production/native clients | Not verified for Memory Protocol |
-| Compatibility policy | ESM, Node 24+, schemaVersion 1; changes requiring a new wire schema or breaking published API require a major SDK version after stable |
+| Gate | Evidence | State |
+| --- | --- | --- |
+| PR source tests and local packed tarball import | GitHub CI on SDK RC head | Verified |
+| Publishing to GitHub Packages | Tag workflow `sdk-v1.0.0-rc.1` | Verified |
+| Skill `latest` and exact-path reference retrieval | Production MCP and Astra Stg 0.3.3 smoke | Verified |
+| Public Polyms registry proxy install | Clean install of RC through `registry.polyms.dev/npm` | Not verified |
+| Explicit consumer SDK runtime version | Inspect actual resolved dependency and run RC methods | Not verified by MCP response |
+| Consuming-host performance | Cold/warm and reference timing with `sdk/benchmark.mjs` | Not measured |
+| Full native-client Memory behavior | Client-specific tool traces, not just delivery | Not verified |
+| Paired model-quality benefit | Real model + judge measurements under quality plan | Not measured; separate quality track |
 
-## Decision
+## Stable decision
 
-Ship the source as `1.0.0-rc.1` in PR #14, without tagging or publishing the
-package. Real registry and Astra consumer verification remain external release
-gates. Promote to stable `1.0.0` only after the candidate passes them.
-No AI Kit-owned Memory storage, synchronization or execution is introduced.
+Do not tag `sdk-v1.0.0` until the actual registry and consumer
+compatibility gates have concrete results and the SDK package version
+has been updated on `main`. Promotion of the SDK does not require
+inventing a Memory storage engine or claiming a model-quality lift.
+Retain the `schemaVersion: 1` compatibility contract and optional hints.
+
+No new Memory persistence, host tool execution or write authorization
+is introduced by this release.
