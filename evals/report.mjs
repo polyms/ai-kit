@@ -10,6 +10,10 @@ const suites = ['routing', 'output', 'composition', 'memory']
 function percentile(values, fraction) {
   if (!values.length) return null
   const sorted = [...values].sort((a, b) => a - b)
+  const middle = sorted.length / 2
+  if (fraction === .5 && sorted.length % 2 === 0) {
+    return Math.round((sorted[middle - 1] + sorted[middle]) * 50) / 100
+  }
   return Math.round(sorted[Math.ceil(sorted.length * fraction) - 1] * 100) / 100
 }
 const countStatus = rows => Object.fromEntries(
