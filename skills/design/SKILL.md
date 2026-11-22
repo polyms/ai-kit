@@ -1,7 +1,7 @@
 ---
 name: design
 description: >-
-  Turn a PRD or feature brief into an engineering-ready design spec mapped to @polyms/ui-kit.
+  Turn a PRD or feature brief into an engineering-ready design spec using the project's chosen design system.
   Invoke with /design, UI spec, design spec, thiết kế màn hình, spec giao diện, làm lại giao diện,
   wireframe from PRD, audit UI, chấm UI, anti-slop audit, or score this screen.
 disable-model-invocation: true
@@ -11,17 +11,22 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
-Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/design/<feature>.md`. Map screens and components to **`@polyms/ui-kit`** — do not invent a parallel design system.
+Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/design/<feature>.md`. Map screens and components to the **project's existing design system**, or use vendor-neutral semantic roles when none is selected.
 
-**Boundary vs `ui-kit`:**
+**Optional Polyms UI Kit integration:**
 
 | Invoke        | Repo             | Answers                                                       |
 | ------------- | ---------------- | ------------------------------------------------------------- |
 | **`/design`** | ai-kit           | _What_ — flows, screens, states, component map, motion intent |
 | **`/ui-kit`** | `@polyms/ui-kit` | _How_ — compose primitives, tokens, motion API when coding    |
 
-`/design` does **not** duplicate ui-kit API docs. **User-invoked** — you cannot agent-fire `/ui-kit`. When the MCP pack supplies UI Kit references, use those files for component mapping; no local install
-or separate slash command is required. Otherwise, before the component map, ask the user to invoke **`/ui-kit`** in this chat (skill ships with the lib — symlink or `npx skills add`), or follow it if the user already attached it.
+The `/design` workflow is **vendor-neutral**. Reuse the project's actual components,
+design tokens and ADRs. If no system is chosen, specify accessible, generic
+component roles without choosing a library. **Polyms UI Kit** (`@polyms/ui-kit`)
+and its user-invoked `/ui-kit` skill are **optional Polyms products**, not
+dependencies of AI Kit. Load bundled Polyms UI Kit references only if already
+used by the project or explicitly requested. Never require installation or
+a `/ui-kit` invocation to finish the spec.
 
 **Boundary vs `/reqs`:** `/reqs` writes requirements and PRD — `/design` consumes PRD and produces UI spec. Do not rewrite product scope.
 
@@ -29,9 +34,9 @@ or separate slash command is required. Otherwise, before the component map, ask 
 
 **Upstream:** `/align` → `/reqs` or `/to-prd` → `/to-issues` (optional) → `/design`.
 
-**Downstream:** `/dev` implements from `docs/design/<feature>.md`; `dev` uses `ui-kit` when writing UI code.
+**Downstream:** `/dev` implements from `docs/design/<feature>.md` using the selected project UI stack.
 
-**Prerequisites:** Soft — read `CONTEXT.md` + ADRs when present. For local clients, recommend `@polyms/ui-kit` installed and user runs `/ui-kit` before component mapping. Remote clients use bundled UI Kit references on demand. Read `docs/agents/language.md` when present — write the spec in that language.
+**Prerequisites:** Soft — read `CONTEXT.md` + ADRs when present. Respect any existing project design system and do not recommend installing a new library by default. Remote clients load optional Polyms UI Kit references only when chosen. Read `docs/agents/language.md` when present — write the spec in that language.
 
 ## References
 
@@ -48,8 +53,8 @@ or separate slash command is required. Otherwise, before the component map, ask 
 | Domain glossary | `CONTEXT.md` at repo root                                                                                                                                             |
 | ADRs            | `docs/adr/` — do not re-litigate recorded decisions                                                                                                                   |
 | PRD source      | Issue tracker, `docs/`, or conversation — fetch per issue-tracker if needed                                                                                           |
-| Component API   | **`/ui-kit`** in `@polyms/ui-kit` — user invokes before component map, or attached in chat                                                                            |
-| External ref    | [Taste](https://www.tasteskill.dev/) / [Hallmark](https://github.com/Nutlope/hallmark) — anti-slop discipline only; DS locked to ui-kit; do not install theme engines |
+| Component API   | Project's current component library, or **optional** `/ui-kit` when Polyms UI Kit is already selected                                                                            |
+| External ref    | [Taste](https://www.tasteskill.dev/) / [Hallmark](https://github.com/Nutlope/hallmark) — anti-slop discipline only; respect the host project's design system |
 
 ## Quick Router
 
@@ -59,7 +64,7 @@ or separate slash command is required. Otherwise, before the component map, ask 
 | One complex flow         | [Screen drill-down](#screen-drill-down) |
 | Score existing UI only   | [Audit-only](#audit-only)               |
 | Modernize existing UI    | [Redesign audit](#redesign-audit)       |
-| Missing ui-kit primitive | [Component gap](#component-gap)         |
+| Missing chosen-system component | [Component gap](#component-gap)         |
 
 ## Spec from PRD
 
@@ -69,34 +74,34 @@ or separate slash command is required. Otherwise, before the component map, ask 
 
 Read the PRD (issue, path, or conversation). Read `CONTEXT.md` and relevant ADRs.
 
-Run [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — fill the table; write **brief lock** paragraph. Output maps to **ui-kit**, not Material/shadcn.
+Run [BRIEF-INFERENCE.md](BRIEF-INFERENCE.md) — fill the table; write **brief lock** paragraph. Output maps to the **project's existing design system**, not a vendor picked by AI Kit.
 
 **Completion criterion:** PRD read; brief inference table filled; domain vocabulary and ADR constraints noted.
 
 ### 2. Infer layout direction
 
-From brief lock + PRD, state mood and layout family. Pick ui-kit **theme/variant/motion tier**.
+From brief lock + PRD, state mood and layout family. Pick theme/variant/motion intent according to the project's adopted system (or express neutral intent if none is chosen).
 Read [ANTI-SLOP.md](ANTI-SLOP.md) — list which §A / §A2 bans apply; which §B composition rules
 this feature must satisfy.
 
-For remote MCP clients, load the bundled UI Kit entry point and only the component references needed
-for the map. Otherwise ask user to invoke **`/ui-kit`** if not already attached; use its catalog. A `collab` brief skips the extra confirm (see
-[BRIEF-INFERENCE.md](BRIEF-INFERENCE.md)); map primitives from existing `@polyms/ui-kit` imports
-when the repo already has them.
+When the project uses Polyms UI Kit, selectively load its optional component
+references; otherwise use existing project components or neutral semantic roles.
+Do not ask the user to install or invoke `/ui-kit`. The existing brief-confirmation
+rules, including the `collab` exception, still apply.
 
 **Completion criterion:** Brief + theme direction stated; anti-slop rows cited; user corrects or explicitly
 proceeds before step 3, or a `collab` brief already cleared the ask gate.
 
 ### 3. Draft spec
 
-Read [QUALITY-BAR.md](QUALITY-BAR.md) — finished-site polish (tokens, CSS intent, ui-kit); PRD drives sections, not a fixed layout checklist.
+Read [QUALITY-BAR.md](QUALITY-BAR.md) — finished-site polish (existing tokens, CSS intent, component consistency); PRD drives sections, not a fixed layout checklist.
 
 Fill [design-spec-template.md](design-spec-template.md):
 
 - Flows (Mermaid)
 - Screen inventory with **four content states** each (loading / empty / error / success)
-- Component map → ui-kit primitives + interaction-state notes for primary controls
-- Motion plan (intent only — API details in `/ui-kit`)
+- Component map → existing project components or neutral roles + interaction states
+- Motion plan (intent only; APIs depend on the adopted project stack)
 - Responsive + a11y
 - **Visual reference** (1–2 URLs or screenshots — target craft tier; optional DNA notes per
   [QUALITY-BAR.md](QUALITY-BAR.md); see [ANTI-SLOP.md](ANTI-SLOP.md) §C)
@@ -161,16 +166,16 @@ redesign: preferred `→ /design` (redesign audit).
 **Goal:** Modernize existing UI without breaking logic or data.
 
 Follow [REDESIGN.md](REDESIGN.md) — audit-first (prefer §E punch list), preserve behaviour,
-update visual layer via ui-kit.
+update the visual layer with the project's adopted design system.
 
 **Completion criterion:** Audit notes in spec; preservation rules explicit; pre-flight pass.
 
 ## Component gap
 
-**Goal:** Flag a PRD requirement that needs a primitive not in `@polyms/ui-kit`.
+**Goal:** Flag a requirement needing a component missing from the existing project system.
 
 1. Document the gap in the spec **Custom components** table
-2. Propose follow-up (GitHub issue or ADR) — do not invent the primitive in `/dev` without approval
+2. Propose follow-up (GitHub issue or ADR) — do not introduce a new UI dependency or undocumented component without approval
 3. Hand off to `/reqs` or user if scope change is needed
 
 **Completion criterion:** Gap documented with follow-up action; no silent custom UI in implementation spec.

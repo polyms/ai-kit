@@ -1,7 +1,6 @@
 # Design Pre-flight
 
-Every checkbox must honestly pass before handing a design spec to `/dev`. **Design system lock**
-on `@polyms/ui-kit`.
+Every checkbox must honestly pass before handing a design spec to `/dev`. Respect the **project/user's chosen design system**, without mandating Polyms UI Kit.
 
 **Skip this file** for [audit-only](REDESIGN.md#audit-only) — that branch ends at
 [ANTI-SLOP.md §E](ANTI-SLOP.md#e--audit-punch-list-report-format); do not run craft critique or
@@ -17,17 +16,15 @@ require a `docs/design/` write.
 - [ ] Open questions are listed explicitly — none hidden in prose
 - [ ] No invented metrics, testimonials, or logo counts — PRD/CONTEXT only or labelled pending
 
-## ui-kit alignment
+## Design-system alignment
 
-- [ ] Every interactive element maps to a `@polyms/ui-kit` primitive **or** has a documented
-      custom exception with follow-up (issue/ADR)
-- [ ] No invented component names that duplicate an existing ui-kit primitive
-- [ ] Theme/variant choices reference ui-kit presets — not ad-hoc Tailwind one-offs in the spec
-- [ ] `/ui-kit` was available (user invoked or attached; Codex/Copilot may read an
-      installed model-invoked catalog per the client compatibility guide) when mapping components,
-      **or** a `collab` brief mapped every primitive from `@polyms/ui-kit` imports already in the
-      repo — no primitive invented without one
-- [ ] Colours and fonts in §4 reference named tokens / brandkit — no mid-spec raw hex improvisation
+- [ ] Each interactive element maps to an existing project component or an
+      accessible, vendor-neutral role; document any real component gaps
+- [ ] No invented component APIs, properties, or unapproved library replacements
+- [ ] Reuse actual project tokens, themes and variants when available
+- [ ] Do not require `@polyms/ui-kit`, `/ui-kit`, or a new dependency to finish
+      the spec; bundled Polyms references are optional when the project chose them
+- [ ] Colours/fonts in §4 match existing project tokens or explicitly labelled proposals
 
 ## Anti-slop (spec level)
 
@@ -56,7 +53,7 @@ Score the draft spec 1–5 on each axis. Any axis below 3 → revise before hand
 | Execution   |     | §4 CSS + §8 visual acceptance concrete enough for `/dev` without guessing |
 | Specificity |     | Visual reference + anti-slop rows cited; no orphan PRD paths              |
 | Restraint   |     | No invented proof metrics; eyebrows/chrome tells marked N/A or banned     |
-| Consistency |     | Product routes share ui-kit tokens/chrome — no variety-for-variety        |
+| Consistency |     | Product routes share the project's adopted tokens/chrome — no variety-for-variety        |
 
 ## Visual acceptance (before `/dev` handoff)
 

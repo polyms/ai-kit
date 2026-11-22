@@ -46,7 +46,7 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 | docs     | Business documents or developer documentation          | business-doc-template.md, work-records.md                                    |
 | task     | Actionable standalone task ticket                      | task-template.md                                                             |
 | bug      | Evidence-based defect report                           | bug-template.md                                                              |
-| design   | UI specification                                       | Existing design references and uiKit files                                   |
+| design   | UI specification                                       | Existing design references; optional Polyms uiKit files                                   |
 | track    | Ticket review, backlog snapshot, bulk update receipt   | tracking-templates.md                                                        |
 | plan     | Effort estimate and delivery plan                      | delivery-plan-template.md                                                    |
 | qa       | Test plan, cases, coverage and report                  | qa-templates.md                                                              |
@@ -107,8 +107,8 @@ can connect or automatically invoke remote skills.
 The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract}], packCount, source, composition: {protocol, recipes}}`. The `packCount` is derived from `packs.length`.
 The additional routing and composition fields are advisory and backward-compatible.
 The get operation returns `{name, contract, source, files: [{path, rawUrl, content}]}`.
-The contract includes advisory context requirements; starter content includes shared context guidance. For design it also returns
-`uiKit` entries of the same file shape. Existing raw URLs are retained; clients need not perform
+The contract includes advisory context requirements; starter content includes shared context guidance. For design it also exposes optional
+`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
 A failed fetch fails the whole pack rather than silently returning incomplete instructions.
 
@@ -128,7 +128,7 @@ template where applicable; all other file paths remain metadata. For large packs
 
 - Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.
 - Fetch the entry point using `paths: ["skills/design/SKILL.md"]`, then request referenced files as needed.
-- Unselected files retain path and rawUrl but omit content. The design uiKit group is preserved.
+- Unselected files retain path and rawUrl but omit content. The optional design uiKit group is preserved as manifest metadata; select content only when the user/project chose Polyms UI Kit.
 - All paths must match the selected pack manifest; INVALID_PATHS fails before external fetch.
 - For work packs, load the shared work artifact standard and relevant templates before drafting.
 - Request only missing references. Batch needed exact paths per pack in one call, reuse already loaded content, and skip optional recipes when contracts already suffice.
