@@ -480,5 +480,22 @@
       "track"
     ],
     "notes": "Context-aware routing; use local engineering workflow when applicable."
+  },
+  {
+    "id": "RT-39",
+    "kind": "Compose",
+    "prompt": "Approved Team Invitation scope: only owners may create pending invitations for valid emails; invalid emails fail without persistence; non-owners cannot invite. Two developers, no historical effort or committed date. Draft developer-day estimate, implementation tasks and QA tests only, no writes, no re-specification.",
+    "expected": [
+      "plan",
+      "task",
+      "qa"
+    ],
+    "avoid": [
+      "reqs",
+      "design",
+      "track",
+      "release"
+    ],
+    "notes": "Instant-first manual-regression counterpart; use approved requirements, small skill route and read-only draft."
   }
 ]

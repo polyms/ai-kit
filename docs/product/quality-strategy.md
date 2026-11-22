@@ -1,15 +1,27 @@
 # Evaluation, governance and observability
 
-Status: deterministic evaluation foundation and 83 synthetic scenarios are implemented. A
+Status: deterministic evaluation foundation and 86 synthetic scenarios are implemented. A
 release smoke verifier and measured-run report generator are documented in
 [Quality Baseline](../quality/baseline.md). Model-quality scores and final thresholds remain unverified.
+
+## Primary client: Instant-first, not High-first
+
+ChatGPT **Instant is the daily-use reference mode** for AI Kit. Begin native-client
+quality, routing and cost investigations with Instant and use Medium/High to diagnose
+differences. Prioritize a small relevant route, one batched retrieval per skill
+when paths are known, no unnecessary recipes, honest provenance and concise
+high-coverage QA. A more elaborate High result is not automatically better.
+Manual cross-mode evidence is available at
+[Team Invitation 2026-11-22](../../evals/manual/2026-11-22-team-invitation.md).
+Do not use this 3-session observation as a causal benchmark, latency claim or
+statistically meaningful model comparison.
 
 ## Evaluation: does augmentation improve work?
 
 The existing evaluation runner compares baseline and skill-assisted outputs using synthetic
 fixtures and an explicitly configured compatible model endpoint. It tests routing, output and
-composition; it can record retrieval traces and optional judge scores. At the PR #12 foundation
-there are 13 output, 38 routing and 17 composition scenarios (68 total). Scenario counts,
+composition; it can record retrieval traces and optional judge scores. At the PR #12 foundation there were 68 scenarios; the current foundation includes
+13 output, 39 routing, 19 composition and 15 memory scenarios (86 total). Scenario counts,
 fixture validity, successful CI and dry runs are not measured model quality. Native clients
 need separate integration tests. See [evaluation runner](../../evals/README.md).
 

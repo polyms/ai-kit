@@ -47,17 +47,28 @@ Any mismatch, non-JSON response or missing expected content is a failure.
 The production smoke checks **HTTP skill delivery**, not OAuth/MCP client behavior.
 Do not call a PR test run proof of production deployment.
 
+## Instant-first manual baseline
+
+ChatGPT **Instant is the primary daily-use mode**; prioritize its correct,
+low-friction execution over maximizing the length or number of skill references.
+Medium and High are comparators. A single high-quality High answer is not evidence
+that the everyday Instant experience is fixed. The three same-prompt
+skill-assisted Team Invitation sessions on 2026-11-22 are recorded, with
+provenance limits and observed gaps, in
+[manual evaluation evidence](../../evals/manual/2026-11-22-team-invitation.md).
+They show neither baseline-model uplift nor a measured latency/token saving.
+
 ## Real paired evaluation
 
-The opt-in `evals/run.ts` runner has **83 synthetic scenarios**:
+The opt-in `evals/run.ts` runner has **86 synthetic scenarios**:
 
 | Suite | Count | What it exercises |
 | --- | ---: | --- |
-| Routing | 38 | Appropriate smallest skill set and routing rules |
+| Routing | 39 | Appropriate smallest skill set and routing rules |
 | Output | 13 | Artifact quality and evidence-aware drafting |
-| Composition | 17 | Multi-skill selection, references and handoffs |
+| Composition | 19 | Multi-skill selection, references and handoffs |
 | Memory | 15 | Relevant recall, source integrity, stale decisions, privacy and capture rules |
-| **Total** | **83** | |
+| **Total** | **86** | |
 
 The runner compares baseline vs skill-assisted on the same synthetic context.
 Memory cases isolate P2 advice with the same historical evidence in both arms.

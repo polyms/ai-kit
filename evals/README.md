@@ -1,11 +1,24 @@
 # Evaluation runner
 
-The local, opt-in benchmark includes 13 output, 38 routing, 17 composition and 15 memory cases
-(83 scenarios total).
+The local, opt-in benchmark includes 13 output, 39 routing, 19 composition and 15 memory cases
+(86 scenarios total).
 The runner is separate from the deployed MCP server and does not introduce a provider dependency.
 It uses the repository's existing tsx and MCP functions; a configurable OpenAI-compatible chat
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted
 output/composition and the four memory cases that simulate recall. Native client testing (ChatGPT, Claude, Codex, etc.) remains a separate exercise.
+
+## Instant-first native client priority
+
+**ChatGPT Instant is the primary daily-use target for AI Kit.** Test and repair Instant
+first, especially small-skill routing, minimum retrieval, context reuse, risk-based QA
+authorization and accurate provenance. Medium and High are regression comparators,
+not the main quality target. High quality with extra tool calls is not enough to pass
+an Instant-first efficiency review. Do not assume Instant is inherently less capable
+or extrapolate from a single sample. Native-client evidence is separate from the
+model-endpoint runner.
+
+See [Team Invitation manual 3-mode evidence](manual/2026-11-22-team-invitation.md).
+All three were assisted sessions without an independent baseline or provider audit trace.
 
 ## Memory Protocol pilot
 

@@ -424,6 +424,22 @@ describe('skill composition', () => {
     expect(fetchFile).not.toHaveBeenCalled()
   })
 
+  it('keeps Instant-first authorization and minimal routing regression fixtures', () => {
+    const routing = JSON.parse(readFileSync(join(repoRoot, 'evals/work-skills/routing-cases.json'), 'utf8'))
+    const r = routing.find((item: { id: string }) => item.id === 'RT-39')
+    expect(r.expected).toEqual(['plan', 'task', 'qa'])
+    expect(r.avoid).toContain('reqs')
+    const composition = JSON.parse(readFileSync(join(repoRoot, 'evals/composition/cases.json'), 'utf8'))
+    const whole = composition.find((item: { id: string }) => item.id === 'CP-18')
+    const security = composition.find((item: { id: string }) => item.id === 'CP-19')
+    expect(whole.requiredSkills).toEqual(['plan', 'task', 'qa'])
+    expect(whole.criteria.join(' ')).toMatch(/cross-team/)
+    expect(whole.criteria.join(' ')).toMatch(/provenance|revision/)
+    expect(security.requiredSkills).toEqual(['qa'])
+    expect(security.criteria.join(' ')).toMatch(/forged-owner-role/)
+    expect(security.criteria.join(' ')).toMatch(/Not run/)
+  })
+
   it('keeps composition fixtures valid, covering every recipe, single and custom routes', () => {
     const names = new Set(listSkillPacks().map(pack => pack.name))
     const recipes = new Set(WORKFLOW_RECIPES.map(recipe => recipe.id))
