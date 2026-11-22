@@ -24,7 +24,9 @@ establish causal uplift, latency savings or statistical model rankings.
 AI Kit may reference **Polyms UI Kit** (`@polyms/ui-kit`) as an optional
 integration. Respect the host project's existing design system, stack and
 explicit user choice; neither Polyms UI Kit nor any other design library is a
-dependency for applying the core AI Kit methodology.
+dependency for applying the core AI Kit methodology. If a project has no system,
+Polyms UI Kit may be suggested as a candidate with explicit user approval
+before adoption; never install or replace a stack automatically.
 
 ## Evaluation: does augmentation improve work?
 

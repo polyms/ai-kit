@@ -108,7 +108,7 @@ The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, 
 The additional routing and composition fields are advisory and backward-compatible.
 The get operation returns `{name, contract, source, files: [{path, rawUrl, content}]}`.
 The contract includes advisory context requirements; starter content includes shared context guidance. For design it also exposes optional
-`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Existing raw URLs are retained; clients need not perform
+`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Omitting paths retrieves all core files but **does not load Polyms UI Kit content**; optional UI Kit paths remain discoverable and require explicit selection. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
 A failed fetch fails the whole pack rather than silently returning incomplete instructions.
 
@@ -146,7 +146,7 @@ See [skill-intelligence.md](skill-intelligence.md) for routing metadata, selecti
 composition and regression checks. See [skill composition](skill-composition.md) for typed metadata,
 shared context, gates, handoffs and recipes. Load the protocol and chosen recipe on demand;
 recipe paths are scoped to their host pack, and no composition files are in starterPaths.
-Legacy full-pack loading includes the newly allowlisted references. The server does not classify
+Legacy full-pack loading includes all core references; optional Polyms UI Kit content requires exact-path selection. The versioned provider's `full` strategy follows the same opt-in rule. The server does not classify
 prompts or execute workflows.
 The client chooses relevant skills using metadata and user intent, while local manual-only policy
 continues to govern native skill invocation.

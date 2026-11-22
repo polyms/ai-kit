@@ -10,7 +10,7 @@ const getSkillPackInputSchema = {
   paths: z
     .array(z.string())
     .optional()
-    .describe('Optional exact manifest paths to load. Omit for all content; empty array for manifest only.'),
+    .describe('Optional exact manifest paths to load. Omit for all core files (optional Polyms UI Kit remains metadata-only); [] for manifest.'),
 }
 
 /** MCP Markdown is fetched from mutable main, not a pinned skill release. */
@@ -25,7 +25,7 @@ export const LIST_SKILL_PACKS_TOOL_DESCRIPTION =
   'Discover ai-kit workflows for relevant work requests, including research, requirements, business decisions, documents, design, task and bug drafting, tracker updates, estimation, QA, communication, review and release. Infer intent in English or Vietnamese, including unaccented, colloquial and mixed-language requests. Select the smallest set using description, useWhen and avoidWhen; explicit user or local client invocation rules take precedence. For each selected pack request its starterPaths, excluding shared files already loaded at the same revision in this conversation. Read contract.context and shared context guidance; reuse available context and resolve only material gaps; contract.knowledge and contract.memory hints are conditional, not required tool calls. When historical experience or reflection is materially useful, selectively load docs/agents/memory-protocol.md from a selected pack. Reuse supplied context and respect memory ownership; no memory access or persistence is implied. For multi-skill work, inspect contract and composition metadata. Load the shared protocol from any selected pack and an applicable recipe from its hostPack, using exact paths. Related skills and recipe stages are optional; respect completion gates and never infer write authorization. Skip irrelevant packs. Calculate pack totals from packs.length or the returned packCount, never guess. source reports mutable main, not a pinned skill revision; server_info commit identifies the deployment only. No client-side HTTP GET is needed.'
 
 export const GET_SKILL_PACK_TOOL_DESCRIPTION =
-  'Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, contract, files: [{ path, rawUrl, content }] }. design also returns uiKit files with content. Prefer paths from starterPaths in list_skill_packs. This loads the entry workflow and applicable standard/template, with remaining file paths returned as metadata. Read SKILL.md first; request only referenced files needed for the selected branch, batching related paths when useful. Use paths: [] for manifest-only discovery; omit paths only for intentional full-pack loading (legacy compatible). Batch missing paths per pack in one call; do not reload files already available in this session unless stale. Recipes are optional: do not request a host pack only for an unnecessary recipe. source is mutable-main metadata, not an immutable file hash. Unregistered paths return INVALID_PATHS without fetching. Follow SKILL.md first and consult bundled templates and references only when needed. Only when the project already uses Polyms UI Kit or the user selects it, load matching optional bundled uiKit references. Never require Polyms UI Kit for core design work. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.'
+  'Load one ai-kit skill pack by name. Packs include their workflow, templates and reference files. Returns { name, contract, files: [{ path, rawUrl, content }] }. design exposes optional uiKit metadata, with content only for explicitly requested exact paths. Prefer paths from starterPaths in list_skill_packs. This loads the entry workflow and applicable standard/template, with remaining file paths returned as metadata. Read SKILL.md first; request only referenced files needed for the selected branch, batching related paths when useful. Use paths: [] for manifest-only discovery; omit paths for core full-pack loading (legacy compatible, without optional UI Kit content). Batch missing paths per pack in one call; do not reload files already available in this session unless stale. Recipes are optional: do not request a host pack only for an unnecessary recipe. source is mutable-main metadata, not an immutable file hash. Unregistered paths return INVALID_PATHS without fetching. Follow SKILL.md first and consult bundled templates and references only when needed. Only when the project already uses Polyms UI Kit or the user selects it, load matching optional bundled uiKit references. Never require Polyms UI Kit for core design work. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.'
 
 type McpTextResult = {
   content: [{ type: 'text'; text: string }]
@@ -85,7 +85,7 @@ export async function executeGetSkillPack(
   try {
     const [files, uiKit] = await Promise.all([
       loadFiles(pack.files, fetchFile, selected),
-      pack.name === 'design' ? loadFiles(pack.uiKit, fetchFile, selected) : Promise.resolve(undefined),
+      pack.name === 'design' ? loadFiles(pack.uiKit, fetchFile, selected ?? new Set<string>()) : Promise.resolve(undefined),
     ])
     return {
       content: [{ type: 'text', text: JSON.stringify({ ...pack, source: MCP_SKILL_SOURCE, files, uiKit }, null, 2) }],

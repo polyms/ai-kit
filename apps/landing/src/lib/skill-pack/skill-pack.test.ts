@@ -130,10 +130,26 @@ describe('skill pack MCP tools', () => {
       uiKit: { rawUrl: string; content: string }[]
     }
     expect(result.isError).toBeUndefined()
-    for (const file of [...body.files, ...body.uiKit]) {
+    for (const file of body.files) {
       expect(file.rawUrl.startsWith(SKILL_PACK_RAW_BASE)).toBe(true)
       expect(file.content).toBe('# Skill content')
     }
+    for (const file of body.uiKit) {
+      expect(file.rawUrl.startsWith(SKILL_PACK_RAW_BASE)).toBe(true)
+      expect(file.content).toBeUndefined()
+    }
+    expect(fetchFile).toHaveBeenCalledTimes(body.files.length)
+  })
+  it('does not fetch optional Polyms UI Kit unless its exact path is requested', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Selected'))
+    const meta = await executeGetSkillPack('design', fetchFile)
+    const first = JSON.parse(meta.content[0]!.text).uiKit[0].path
+    expect(fetchFile.mock.calls.map(call => call[0])).not.toContain(skillPackRawUrl(first))
+    fetchFile.mockClear()
+    const selected = await executeGetSkillPack('design', fetchFile, [first])
+    const result = JSON.parse(selected.content[0]!.text)
+    expect(result.uiKit.find((file: { path: string }) => file.path === first).content).toBe('# Selected')
+    expect(fetchFile).toHaveBeenCalledTimes(1)
   })
   it('returns reqs Markdown without uiKit', async () => {
     const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Reqs'))
