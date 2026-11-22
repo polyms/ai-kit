@@ -671,5 +671,6 @@ code); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 Run `pnpm eval:test` for deterministic scoring tests and `pnpm eval:run --dry-run` to inspect
 benchmark scope without model calls. See [the evaluation runner](evals/README.md) for opt-in
 paired runs, trace scoring, model configuration and limitations.
-
-Release verification: run `node scripts/verify-skill-release.mjs --version 0.3.3 --endpoint https://ai-kit.polyms.dev` for public production checks. See [Quality Baseline](docs/quality/baseline.md) and `pnpm eval:report` for measured model evaluation reports.
+Use `node scripts/verify-skill-release.mjs --version 0.3.3 --endpoint https://ai-kit.polyms.dev`
+for production delivery checks. See [Quality Baseline](docs/quality/baseline.md) and
+`pnpm eval:report` for measured-run summaries.

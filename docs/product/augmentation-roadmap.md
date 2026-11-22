@@ -72,7 +72,7 @@ private context, secrets or sensitive business data into AI Kit.
 The same principle applies to other skills when memory has a material benefit. Avoid mandatory
 recall before every request, indiscriminate capture, or any dependency on a particular provider.
 
-### Planned deliverables
+### Delivered P2 scope and remaining verification
 
 Delivered in 0.3.3: shared guidance, optional `contract.memory` recall/capture hints for reqs,
 plan, bug, qa and review, versioned MCP/SDK delivery, and synthetic paired evaluation scenarios.

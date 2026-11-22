@@ -31,7 +31,7 @@ matching `sdk-v<version>` tag. The workflow tests, packs and publishes the
 exact verified tarball. Prereleases use `next`; stable tags use `latest`
 and must point to `main`. Do not reuse an already published version.
 
-For local testing before publication, after workspace install, run
+For a local tarball test without the registry, after workspace install run
 `pnpm exec tsc -p sdk/tsconfig.json` and `npm pack ./sdk --ignore-scripts` to create a local tarball.
 Install that tarball in your Business MCP. No new workspace dependencies or runtime packages.
 
