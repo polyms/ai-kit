@@ -38,10 +38,11 @@ Any mismatch, non-JSON response or missing expected content is a failure.
 
 - Pull requests run isolated, deterministic tests for the verifier and report
   formatter. These tests use mock response fixtures and **never** touch production.
-- A daily scheduled workflow and a manual `workflow_dispatch` run the public
-  production smoke verifier. The expected version defaults to `0.3.3`;
-  update it deliberately when changing the published `latest` release.
-  Production checks are read-only and need no secret or authenticated MCP session.
+- A manual `workflow_dispatch` runs the public production smoke verifier **on demand**,
+  such as immediately after a skill release deployment. The expected version defaults
+  to `0.3.3`; update it deliberately when changing the published `latest` release.
+  There is no recurring production polling. Production checks are read-only and need
+  no secret or authenticated MCP session.
 
 The production smoke checks **HTTP skill delivery**, not OAuth/MCP client behavior.
 Do not call a PR test run proof of production deployment.

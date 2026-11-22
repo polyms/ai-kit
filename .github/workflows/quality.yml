@@ -9,8 +9,6 @@ on:
         required: true
         default: '0.3.3'
         type: string
-  schedule:
-    - cron: '13 2 * * *'
 
 permissions:
   contents: read
@@ -30,10 +28,10 @@ jobs:
 
   production:
     name: Verify deployed latest against immutable release
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
-      EXPECTED_SKILL_VERSION: ${{ inputs.version || '0.3.3' }}
+      EXPECTED_SKILL_VERSION: ${{ inputs.version }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6

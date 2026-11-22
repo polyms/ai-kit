@@ -18,9 +18,9 @@ Only Node.js 24+ / ESM with built-in `fetch` is supported.
 - PR #14 merged as `4c028ae`; AI Kit production and Astra Stg retrieved
   skill release `0.3.3` / revision `2617cd6`.
   This verifies delivery but not which SDK package Astra is executing.
-- Daily/manual public production verification is specified in
-  [Quality Baseline](../quality/baseline.md). Its first scheduled CI execution
-  is not claimed as completed by this document.
+- Manual, on-demand public production verification is specified in
+  [Quality Baseline](../quality/baseline.md). No periodic production polling
+  is configured; no new CI production verification run is claimed here.
 
 ## External release gates
 
