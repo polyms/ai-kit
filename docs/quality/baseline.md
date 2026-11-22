@@ -68,7 +68,7 @@ Once an operator has explicitly approved a real model endpoint and its cost:
 ```sh
 export EVAL_CHAT_URL='https://your-model-provider.example/v1/chat/completions'
 # Set EVAL_API_KEY securely when required; never commit it.
-pnpm eval:run --suite all --repeat 3 --model MODEL_ID --judge-model JUDGE_MODEL_ID
+pnpm eval:run --suite all --repeat 3 --model MODEL_ID --judge-model JUDGE_MODEL_ID --max-requests APPROVED_LIMIT
 pnpm eval:report evals/results/ACTUAL_RUN.json --out evals/results/ACTUAL_RUN.md
 ```
 
@@ -80,7 +80,10 @@ token coverage and transferred bytes. It does not report fabricated quality
 scores or silently count incomplete pairs as successes.
 
 For a cost-controlled pilot, first use `--suite memory --case MP-01 --repeat 3`
-with both models configured. Expand only after inspecting receipts, judge
+with both models configured and an explicit `--max-requests` cap (for example,
+24 requests as a *request limit*, not a dollar estimate). CI now exercises
+this cap with a localhost mock. Set the cap and approve actual model/judge
+provider rates before any paid calls. Expand only after inspecting receipts, judge
 rationale, tool traces and actual usage. Running the full suite requires an
 explicit budget decision; CI must not automatically call a paid model.
 

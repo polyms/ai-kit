@@ -31,10 +31,18 @@ Use an environment variable for the API key; never commit it or include it in re
 ```sh
 export EVAL_CHAT_URL='https://your-provider.example/v1/chat/completions'
 # Set EVAL_API_KEY securely if the endpoint requires authentication.
-pnpm eval:run --suite routing --model YOUR_MODEL
-pnpm eval:run --suite composition --case CP-01 --model YOUR_MODEL --judge-model YOUR_JUDGE
-pnpm eval:run --suite output --model YOUR_MODEL --repeat 3 --judge-model YOUR_JUDGE
+pnpm eval:run --suite routing --model YOUR_MODEL --max-requests 100
+pnpm eval:run --suite composition --case CP-01 --model YOUR_MODEL --judge-model YOUR_JUDGE --max-requests 40
+pnpm eval:run --suite output --model YOUR_MODEL --repeat 3 --judge-model YOUR_JUDGE --max-requests 300
 ```
+
+A non-dry-run invocation **requires** `--max-requests N`. This is a hard
+per-run budget on total chat-completion HTTP requests, including both generator
+and judge calls. If the budget is exhausted while the runner still needs a
+request, it stops, exits nonzero and keeps the partial report with
+`requestsSent` and `requestCapHit`. A cap limits *request count*, not dollar
+spend or provider-billed tokens. Operators must still approve model/judge rates
+and the upper-bound estimate printed by `--dry-run`.
 
 The endpoint must accept messages, standard function tool calls (for assisted work), and max_tokens.
 No extra model SDK. The runner does not configure any native AI clients, authenticate to production

@@ -4,7 +4,7 @@ The 15 synthetic scenarios run through the existing paired evaluation runner:
 
 ```sh
 pnpm eval:run --suite memory --dry-run
-pnpm eval:run --suite memory --case MP-01 --model YOUR_MODEL --judge-model YOUR_JUDGE
+pnpm eval:run --suite memory --case MP-01 --model YOUR_MODEL --judge-model YOUR_JUDGE --max-requests 8
 ```
 
 Actual model calls require the existing explicitly configured endpoint. A full Git checkout with both referenced revisions is required. No real workspace, memory provider or write tool is involved.
