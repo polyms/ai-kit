@@ -40,6 +40,8 @@ jobs:
         run: |
           pnpm eval:test
           pnpm eval:run --dry-run
+      - name: End-to-end evaluation runner smoke (localhost mock only)
+        run: pnpm exec node evals/mock-model-smoke.mjs
       - name: Verify SDK release metadata and tag
         shell: bash
         run: |

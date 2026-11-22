@@ -100,3 +100,14 @@ verification steps, see [Quality Baseline](../docs/quality/baseline.md).
 Run `node --test evals/report.test.mjs` to validate the report formatter
 without calling a model. The report is **not** a benchmark until an
 actual paired model run has been completed, judged and reviewed.
+
+## End-to-end harness smoke (no real model)
+
+`pnpm exec node evals/mock-model-smoke.mjs` runs the full generation → synthetic
+`recall_memory` tool → blinded-judge JSON protocol → paired-run JSON → Markdown
+report path against a **localhost mock** using the MP-01 fixture. This validates
+integration wiring and report coverage without network access to any model provider.
+It is included in SDK CI and performs **zero** real model calls. Its all-pass
+mock results must never be reported as evidence that AI Kit improves model quality.
+Real paired model benchmarks remain opt-in with an explicitly configured endpoint,
+model and judge; see [Quality Baseline](../docs/quality/baseline.md).
