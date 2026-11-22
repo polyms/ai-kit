@@ -35,7 +35,9 @@ function fakeFetch({ staleLatest = false, badStarter = false, noMemory = false }
       return response({ ...catalog, ...(staleLatest ? { version: '0.3.2' } : {}),
         packs: noMemory ? packs.map(p => ({ ...p, contract: { ...p.contract, memory: undefined } })) : packs })
     }
-    if (path === '/skill-bundles/0.3.3/catalog.json') return response(catalog)
+    if (path === '/skill-bundles/0.3.3/catalog.json') return response(noMemory ? {
+      ...catalog, packs: packs.map(p => ({ ...p, contract: { ...p.contract, memory: undefined } })),
+    } : catalog)
     if (path === '/api/skills') {
       const body = JSON.parse(init.body)
       return response(makeBundle(body.name, 'selected'))
