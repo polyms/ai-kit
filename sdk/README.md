@@ -20,25 +20,16 @@ const skill = extendSkill(base, {
 })
 ```
 
-GitHub Actions builds and tests pull requests on Node.js 24. To publish a release
-candidate, use a dedicated Git tag matching `sdk/package.json`. For the current RC:
+GitHub Actions builds and tests on Node.js 24. RC `1.0.0-rc.1` was built,
+pack-verified and **published to GitHub Packages** by tag `sdk-v1.0.0-rc.1`
+([release workflow](https://github.com/polyms/ai-kit/actions/runs/45020141109)).
+It uses the `next` dist-tag, not `latest`. Public Polyms proxy installation
+has not yet been independently verified.
 
-```sh
-git fetch origin
-git switch feat/p2-memory-protocol
-git pull --ff-only
-git tag sdk-v1.0.0-rc.1
-git push origin sdk-v1.0.0-rc.1
-```
-
-The tag push triggers the same SDK build, tests, evaluation dry run, clean tarball
-installation, then publishes **that tested tarball** to GitHub Packages using the
-workflow's `GITHUB_TOKEN` with `packages: write`. Tag, package name, version,
-Node.js engine and tarball metadata are checked before publication. RC tags publish
-under the `next` dist-tag; stable tags publish under `latest` and must point to
-a commit on `main`. Reusing an already-published version is not supported.
-Consumers install through the public Polyms npm registry after publication and
-proxy verification.
+For future versions: update `sdk/package.json`, verify CI, then push a
+matching `sdk-v<version>` tag. The workflow tests, packs and publishes the
+exact verified tarball. Prereleases use `next`; stable tags use `latest`
+and must point to `main`. Do not reuse an already published version.
 
 For local testing before publication, after workspace install, run
 `pnpm exec tsc -p sdk/tsconfig.json` and `npm pack ./sdk --ignore-scripts` to create a local tarball.
@@ -112,8 +103,8 @@ The SDK only retrieves public methodology, never memory contents or business dat
 
 ## API stability and release candidate
 
-The source package version is `1.0.0-rc.1`. This is a **release candidate**, not
-a published stable build. `list()` returns typed `SkillCatalog`, `getSkill()`
+The source package version is `1.0.0-rc.1`. This is a **published release candidate**,
+not a stable `1.0.0` release. `list()` returns typed `SkillCatalog`, `getSkill()`
 returns typed `SkillBundle` with `SkillContract` (including optional
 `MemoryHints`), and `extendSkill()` applies trusted local instructions only.
 Responses are checked for schema, pinned identity, known paths, duplicate entries,
@@ -122,7 +113,7 @@ unexpected reference origins, incomplete content and inconsistent immutable meta
 Supported runtime: Node.js 24 or later, ESM and built-in `fetch`. The wire schema
 remains 1; added optional fields never imply authorization or memory persistence.
 Skill content versions are separate from SDK package versions. Older experimental
-content versions are not served by the provider on this branch.
+content versions are no longer served by the deployed provider.
 
-The SDK package remains prerelease pending the remaining external gates in
+The SDK remains prerelease pending the remaining external gates in
 [SDK stability review](../docs/agents/sdk-stability.md).

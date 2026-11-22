@@ -32,9 +32,10 @@ client quality; production integration and model effectiveness require separate 
 
 ## P2 Memory Integration
 
-P2 branch: shared Memory Protocol guidance, optional hints for five skills, immutable skill snapshot
-0.3.3 and automated paired evaluation fixtures. Release deployment, measured model effectiveness
-and native-client validation remain pending.
+PR #14 shipped the provider-neutral Memory Protocol, optional hints for five skill packs,
+immutable skill release 0.3.3, and 15 synthetic memory evaluation scenarios. Production MCP and
+Astra Stg template retrieval have been smoke-tested at 0.3.3 / revision 2617cd6 after deployment.
+This verifies delivery, not measured model effectiveness or full native-client behavior.
 
 Decision: **AI Kit standardizes memory usage, not memory ownership.** Every business and agent may
 use its own storage model and access mechanism. No memory database, API, provider engine, vector
@@ -55,7 +56,7 @@ using its own capabilities; AI Kit supplies guidance. Missing access to memory d
 skill by itself. Never imply persistence when it cannot be verified. Do not copy raw conversations,
 private context, secrets or sensitive business data into AI Kit.
 
-### Skill-level examples (illustrative, not shipped metadata)
+### Skill-level examples (five pilot skills shipped; others illustrative)
 
 | Skill | Recall candidates | Capture candidates |
 | --- | --- | --- |
@@ -73,11 +74,10 @@ recall before every request, indiscriminate capture, or any dependency on a part
 
 ### Planned deliverables
 
-Define provider-neutral Memory Protocol guidance and vocabulary; consider optional recall/capture
-hints in existing skill contracts; document host-led reflection and capture; connect remote
-MCP/SDK delivery and local engineering guidance without changing local execution; add synthetic
-evaluation cases for relevance, absence of memory, stale evidence, privacy and capture boundaries.
-Exact types, file placement, distribution and compatibility requirements are deferred to P2 design.
+Delivered in 0.3.3: shared guidance, optional `contract.memory` recall/capture hints for reqs,
+plan, bug, qa and review, versioned MCP/SDK delivery, and synthetic paired evaluation scenarios.
+The live Memory Protocol reference is selectively retrievable. Full model-quality measurement,
+client-specific behavior and SDK stable-release verification remain separate follow-ups.
 
 ## Later directions
 
@@ -103,6 +103,7 @@ captured in the strategy documents, not assigned release numbers or a fixed deli
   they add value, preserving licensing, version/provenance and quality boundaries. Avoid a
   mandatory registry, orchestration engine or vendor-specific runtime.
 
-Sequencing after P2 remains a proposal; prioritize measured user benefit and small, independent
-changes. No new version numbers, delivery dates, storage systems or implementation are committed
-by this roadmap.
+Next focus: [Quality Baseline and Release Verification](../quality/baseline.md).
+Prioritize repeatable production delivery checks, real paired model evaluation with reviewed
+hard gates, then cross-client traces and SDK stable-release evidence. No new memory storage,
+agent runtime or release dates are committed by this roadmap.

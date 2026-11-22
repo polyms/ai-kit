@@ -1,7 +1,8 @@
 # Evaluation, governance and observability
 
-Status: existing evaluation foundation plus proposed quality direction. This document does not
-define new release gates, metrics thresholds, telemetry infrastructure or data collection.
+Status: deterministic evaluation foundation and 83 synthetic scenarios are implemented. A
+release smoke verifier and measured-run report generator are documented in
+[Quality Baseline](../quality/baseline.md). Model-quality scores and final thresholds remain unverified.
 
 ## Evaluation: does augmentation improve work?
 
@@ -18,8 +19,8 @@ need separate integration tests. See [evaluation runner](../../evals/README.md).
 | Output quality | Useful deliverables, traceable evidence, clarity, completeness, explicit limitations |
 | Context continuity | Approved scope, IDs, decisions and evidence retained through handoffs |
 | Knowledge utilization | Relevant search, opened source, applicable version, fewer invented recipes |
-| Memory use (planned) | Relevant recall, accurate use of past facts, handling of stale/conflicting context |
-| Capture / reflection (planned) | Supported lessons, no fabricated outcomes, privacy and owner permissions |
+| Memory use (0.3.3 pilot) | Relevant recall, accurate use of past facts, handling of stale/conflicting context |
+| Capture / reflection (0.3.3 pilot) | Supported lessons, no fabricated outcomes, privacy and owner permissions |
 | Efficiency | Tool calls, reloaded bytes, latency, reported tokens; no unnecessary context inflation |
 | Compatibility | Real behavior across tested models, clients, versions and tool capabilities |
 

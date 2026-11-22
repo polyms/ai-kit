@@ -83,3 +83,20 @@ deterministic scores and compare like-for-like paired reports. Review hard gates
 token and payload changes; do not silently convert unobservable results into passes. To assess real
 ChatGPT/Claude/Codex MCP behavior, follow the manual routing/composition guidance with actual tool
 trace evidence instead of treating this client simulation as a native integration benchmark.
+
+## Measured-run summary
+
+To generate an auditable Markdown report from a completed real model run, use
+`pnpm eval:report evals/results/<run>.json`. To write an explicitly reviewed
+copy without overwriting an existing report, pass `--out <path>.md`.
+The formatter reports baseline/assisted pass/fail/unverified/error counts,
+completed pairs, assist wins/losses, hard-gate failures, actual tool-trace
+failures, latency, observed token coverage and payload bytes. It fails
+closed on malformed rows or duplicate pair keys; partial runs are shown
+as incomplete, never counted as successes.
+
+For the current measurement plan, fixture counts, coverage and release
+verification steps, see [Quality Baseline](../docs/quality/baseline.md).
+Run `node --test evals/report.test.mjs` to validate the report formatter
+without calling a model. The report is **not** a benchmark until an
+actual paired model run has been completed, judged and reviewed.
