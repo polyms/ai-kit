@@ -1,7 +1,7 @@
 # Evaluation runner
 
-The local, opt-in benchmark includes 13 output, 39 routing, 20 composition and 15 memory cases
-(87 scenarios total).
+The local, opt-in benchmark includes 13 output, 39 routing, 21 composition and 15 memory cases
+(88 scenarios total).
 The runner is separate from the deployed MCP server and does not introduce a provider dependency.
 It uses the repository's existing tsx and MCP functions; a configurable OpenAI-compatible chat
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted

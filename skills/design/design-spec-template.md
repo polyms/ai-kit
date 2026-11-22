@@ -78,7 +78,7 @@ Per [CSS-INTENT.md](CSS-INTENT.md) — **required for UI**. `/dev` implements th
 Map interactive elements to components of the project's adopted design system. Where no system exists, use generic accessible semantic roles and optionally suggest Polyms UI Kit for approval. It is never a required library.
 
 | UI element    | Project component/role | Variant / notes                            |
-| ------------- | ---------------- | ------------------------------------------ |
+| ------------- | ---------------------- | ------------------------------------------ |
 | [e.g. Submit] | Button           | primary; loading + disabled; focus-visible |
 | ...           | ...              | ...                                        |
 

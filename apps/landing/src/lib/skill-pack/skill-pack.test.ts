@@ -440,6 +440,25 @@ describe('skill composition', () => {
     expect(fetchFile).not.toHaveBeenCalled()
   })
 
+  it('protects setup, subagent and invocation from forcing a vendor UI library', () => {
+    const setup = readFileSync(join(repoRoot, 'skills/setup/SKILL.md'), 'utf8')
+    const setupDesign = readFileSync(join(repoRoot, 'skills/setup/design.md'), 'utf8')
+    const designer = readFileSync(join(repoRoot, 'agents/designer.md'), 'utf8')
+    const invocation = readFileSync(join(repoRoot, 'docs/agents/invocation.md'), 'utf8')
+    const projectGuidance = readFileSync(join(repoRoot, 'AGENTS.md'), 'utf8')
+    expect(setup).toMatch(/Detect and preserve/)
+    expect(setup).toMatch(/no auto-install/)
+    expect(setupDesign).toMatch(/record \*\*not selected\*\*/)
+    expect(setupDesign).toMatch(/\*\*Suggest\*\* Polyms UI Kit/)
+    expect(designer).toMatch(/existing project's design system/)
+    expect(designer).toMatch(/never block a design/)
+    expect(invocation).toMatch(/preserve the project's existing library/)
+    expect(projectGuidance).toMatch(/optional.*candidate/)
+    for (const content of [setup, setupDesign, designer, invocation, projectGuidance]) {
+      expect(content).not.toMatch(/(?:must|require|before component mapping,? user invokes).{0,55}(?:@polyms\/ui-kit|\/ui-kit)/i)
+    }
+  })
+
   it('keeps design and dev independent of Polyms UI Kit', () => {
     const design = readFileSync(join(repoRoot, 'skills/design/SKILL.md'), 'utf8')
     const dev = readFileSync(join(repoRoot, 'skills/dev/SKILL.md'), 'utf8')
@@ -473,6 +492,10 @@ describe('skill composition', () => {
     expect(security.requiredSkills).toEqual(['qa'])
     expect(security.criteria.join(' ')).toMatch(/forged-owner-role/)
     expect(security.criteria.join(' ')).toMatch(/Not run/)
+    const optional = composition.find((item: { id: string }) => item.id === 'CP-21')
+    expect(optional.requiredSkills).toEqual(['design'])
+    expect(optional.criteria.join(' ')).toMatch(/optional candidate/)
+    expect(optional.hardGates.join(' ')).toMatch(/automatically install or adopt/)
   })
 
   it('keeps composition fixtures valid, covering every recipe, single and custom routes', () => {

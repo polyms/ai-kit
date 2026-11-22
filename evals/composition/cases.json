@@ -459,5 +459,30 @@
       "No invented existing UI library API, project tokens or unsupported technical claims.",
       "No unauthorized writes or change of approved design system."
     ]
+  },
+  {
+    "id": "CP-21",
+    "recipe": null,
+    "prompt": "Draft a UI spec for a greenfield settings screen. This project has no chosen design system, no UI dependency, no component inventory and no approval to install packages. Recommend an appropriate option but do not assume one has been selected. Cover UI states, component roles, accessibility and delivery handoff, draft only.",
+    "requiredSkills": [
+      "design"
+    ],
+    "skipSkills": [
+      "reqs",
+      "task",
+      "track",
+      "release"
+    ],
+    "criteria": [
+      "Explicitly recognize no existing design system, propose Polyms UI Kit as an optional candidate and avoid claiming user approval.",
+      "Complete the vendor-neutral component/interaction map using accessible semantic roles without requiring Polyms UI Kit installation or /ui-kit invocation.",
+      "Do not invent repository dependencies or design tokens, and label adoption as a separate user decision.",
+      "Preserve draft-only intent and standard UI state/a11y coverage."
+    ],
+    "hardGates": [
+      "Do not automatically install or adopt a new UI library.",
+      "Do not silently force Polyms UI Kit into the draft implementation.",
+      "No invented repo facts or external writes."
+    ]
   }
 ]

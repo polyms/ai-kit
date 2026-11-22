@@ -305,7 +305,7 @@ Hands off to `/dev`. See [design-spec-template.md](skills/design/design-spec-tem
 Use the designer to spec UI from PRD #42
 ```
 
-**Optional Polyms integration:** If the project already uses `@polyms/ui-kit` or the user elects to adopt it, attach its `/ui-kit` reference skill as documented in the Polyms UI Kit repository. It is **not** a setup prerequisite or default dependency.
+**Optional Polyms integration:** If the project already uses `@polyms/ui-kit` or the user elects to adopt it, attach its `/ui-kit` reference skill as documented in the Polyms UI Kit repository. It is **not** a setup prerequisite or default dependency. If the project has no design system, AI Kit may suggest Polyms UI Kit for consideration, without auto-installing or adopting it.
 
 ### `/dev` — Fullstack Implementation
 

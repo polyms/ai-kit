@@ -77,7 +77,8 @@ not be silently equated to those MCP reads.
 6. **Memory/governance:** no invented recall, write, approval, ticket ID or execution.
 
 Regression inputs: `RT-39` for routing; `CP-18` for the full draft; `CP-19`
-for authorization QA. Run them first in the host's **everyday/default**
+for authorization QA, `CP-20` for an existing non-Polyms design system and
+`CP-21` for a greenfield optional Polyms UI Kit recommendation. Run them first in the host's **everyday/default**
 configuration. For the original ChatGPT case, this means **Instant**, then
 Medium/High with the same prompt and compatible tool setup. Other clients
 should use their own normal settings, not emulate ChatGPT effort labels.
