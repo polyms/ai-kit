@@ -12,7 +12,9 @@ The client remains responsible for reasoning, retrieval and authorized actions.
   keys are semantic hints, not fixed JSON fields, tool names or permissions.
 - Prefer current authoritative workspace/business records for mutable facts, published Knowledge
   for reusable guidance, and authorized Memory for past decisions, preferences and lessons.
-  Conversation context establishes the current request. Memory is optional and may be unavailable.
+  Conversation context establishes the current request. Memory is optional and may be unavailable. Read [Memory Protocol](memory-protocol.md) when
+  historical experience or reflection materially helps; optional `contract.memory` hints are not
+  retrieval requirements. Reuse evidence already in context; no permission or persistence is implied.
 - Search Knowledge only for relevant gaps; open matching articles/chunks before applying them.
   Never invent a source, assume access, bypass permissions or upload private context to a public
   Knowledge catalog. Do not confuse historical memory with current state.

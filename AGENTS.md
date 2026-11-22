@@ -83,6 +83,8 @@ See [MCP skill provider](docs/agents/mcp-skill-provider.md) for architecture, pa
 maintenance, verification and the rollout handoff. Read it before changing skill delivery.
 For remote routing and progressive retrieval, see `docs/agents/skill-intelligence.md`.
 For context requirements and source integrity, see `docs/agents/context-contract.md`.
+For selective use of historical experience, see `docs/agents/memory-protocol.md` when relevant.
+Memory is optional; existing local invocation and verification gates remain unchanged.
 For multi-skill work, follow `docs/agents/skill-composition.md` and select only relevant recipes
 in `workflows/`. Evaluate handoffs with `evals/composition/`.
 See `docs/agents/skill-capabilities.md` for tool abstraction and composition,

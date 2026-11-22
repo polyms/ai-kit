@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   ARTIFACT_KINDS,
   COMPOSITION_PROTOCOL,
+  MEMORY_PROTOCOL,
   CONTEXT_PROTOCOL,
   compositionCatalog,
   compositionPaths,
@@ -322,6 +323,58 @@ describe('skill composition', () => {
     }
     expect(SKILL_CONTRACTS.qa.produces).toContain('test-plan')
     expect(SKILL_CONTRACTS.qa.produces).toContain('test-report')
+  })
+
+  it('keeps memory guidance optional and pilot hints conditional', () => {
+    const pilots = ['bug', 'plan', 'qa', 'reqs', 'review']
+    const catalog = listSkillPacks()
+    expect(catalog.filter(pack => pack.contract.memory).map(pack => pack.name).sort()).toEqual(pilots)
+    for (const summary of catalog) {
+      expect(getSkillPack(summary.name)?.files.map(file => file.path)).toContain(MEMORY_PROTOCOL)
+      expect(summary.starterPaths).not.toContain(MEMORY_PROTOCOL)
+      const memory = summary.contract.memory
+      if (!memory) continue
+      for (const hints of [memory.recall ?? [], memory.capture ?? []]) {
+        expect(hints.length).toBeGreaterThan(0)
+        expect(new Set(hints.map(hint => hint.topic)).size).toBe(hints.length)
+        for (const hint of hints) {
+          expect(hint.topic).toMatch(/^[a-z][a-z0-9-]*$/)
+          expect(hint.when.trim().length).toBeGreaterThan(0)
+        }
+      }
+    }
+  })
+
+  it('loads the memory protocol selectively and preserves contract metadata', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Memory Protocol'))
+    const result = await executeGetSkillPack('plan', fetchFile, [MEMORY_PROTOCOL])
+    expect(result.isError).toBeUndefined()
+    expect(fetchFile.mock.calls.map(call => call[0])).toEqual([skillPackRawUrl(MEMORY_PROTOCOL)])
+    const body = JSON.parse(result.content[0]!.text)
+    expect(body.contract.memory).toEqual(SKILL_CONTRACTS.plan.memory)
+    expect(body.files.filter((file: { content?: string }) => file.content)).toHaveLength(1)
+  })
+
+  it('validates the manual memory evaluation fixtures', () => {
+    const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/memory/cases.json'), 'utf8')) as {
+      id: string
+      skills: SkillPackName[]
+      prompt: string
+      context: string
+      expected: string
+      forbidden: string
+    }[]
+    const names = new Set(listSkillPacks().map(pack => pack.name))
+    expect(cases).toHaveLength(15)
+    expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
+    for (const item of cases) {
+      expect(item.id).toMatch(/^MP-\d{2}$/)
+      expect(item.skills.length).toBeGreaterThan(0)
+      expect(item.skills.every(name => names.has(name))).toBe(true)
+      for (const value of [item.prompt, item.context, item.expected, item.forbidden]) {
+        expect(value.trim().length).toBeGreaterThan(0)
+      }
+    }
   })
 
   it('advertises five unique recipes with valid stages and allowlisted hosts', () => {

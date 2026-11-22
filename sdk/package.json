@@ -1,8 +1,8 @@
 {
   "name": "@polyms/ai-kit-sdk",
-  "version": "0.4.0-alpha.2",
+  "version": "1.0.0-rc.1",
   "type": "module",
-  "description": "Dependency-free AI Kit skill delivery client",
+  "description": "Typed, dependency-free AI Kit skill delivery SDK for Node.js",
   "license": "MIT",
   "exports": {
     ".": {
@@ -15,7 +15,7 @@
     "README.md"
   ],
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

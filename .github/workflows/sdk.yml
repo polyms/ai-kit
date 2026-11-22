@@ -40,16 +40,52 @@ jobs:
         run: |
           pnpm eval:test
           pnpm eval:run --dry-run
-      - name: Verify release tag
-        if: github.event_name == 'push'
+      - name: Verify SDK release metadata and tag
+        shell: bash
         run: |
-          version=$(node -p "require('./sdk/package.json').version")
-          test "$GITHUB_REF_NAME" = "sdk-v$version"
+          set -euo pipefail
+          # Exercise the same validation on PRs, even before the release tag exists.
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs'
+          const pkg = JSON.parse(readFileSync('sdk/package.json', 'utf8'))
+          const version = pkg.version
+          const tag = process.env.GITHUB_REF_TYPE === 'tag'
+            ? process.env.GITHUB_REF_NAME : 'sdk-v' + version
+          if (pkg.name !== '@polyms/ai-kit-sdk' || tag !== 'sdk-v' + version ||
+              !/^[1-9][0-9]*[.][0-9]+[.][0-9]+(?:-[0-9A-Za-z.-]+)?$/.test(version)) {
+            throw new Error('SDK tag must exactly match sdk/package.json name and version')
+          }
+          if (pkg.engines?.node !== '>=24') throw new Error('SDK Node.js engine mismatch')
+          NODE
+          # Stable tags must come from main; prereleases may point to a PR commit.
+          if [[ "$GITHUB_REF_TYPE" == tag && "${GITHUB_REF_NAME#sdk-v}" != *-* ]]; then
+            git merge-base --is-ancestor HEAD origin/main || {
+              echo "::error::Stable SDK tags must point to main history"
+              exit 1
+            }
+          fi
       - name: Pack SDK
         run: |
           mkdir -p "$RUNNER_TEMP/sdk-package"
           npm pack ./sdk --ignore-scripts --pack-destination "$RUNNER_TEMP/sdk-package"
           node --input-type=module -e "import('./sdk/dist/skill-provider.js').then(m => { if (typeof m.createSkillProvider !== 'function') throw new Error('Missing SDK export') })"
+      - name: Verify package installs and imports without workspace dependencies
+        run: |
+          test_dir="$(mktemp -d)"
+          npm install --prefix "$test_dir" "$RUNNER_TEMP"/sdk-package/*.tgz --ignore-scripts --no-audit --no-fund --offline
+          test -f "$test_dir/node_modules/@polyms/ai-kit-sdk/dist/skill-provider.d.ts"
+          (
+            cd "$test_dir"
+            node --input-type=module -e "
+              import('@polyms/ai-kit-sdk').then(m => {
+                if (typeof m.createSkillProvider !== 'function' || typeof m.extendSkill !== 'function')
+                  throw new Error('Missing package exports')
+                const api = m.createSkillProvider({endpoint:'https://ai-kit.polyms.dev'})
+                for (const method of ['list', 'getSkill', 'preload', 'clearCache'])
+                  if (typeof api[method] !== 'function') throw new Error('Missing method '+method)
+              })
+            "
+          )
       - name: Upload SDK package
         uses: actions/upload-artifact@v4
         with:
@@ -77,9 +113,31 @@ jobs:
         with:
           name: ai-kit-sdk
           path: ${{ runner.temp }}/sdk-package
-      - name: Publish to GitHub Packages
+      - name: Validate tested artifact and publish to GitHub Packages
         working-directory: ${{ runner.temp }}/sdk-package
+        shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm publish ./*.tgz --registry=https://npm.pkg.github.com --tag latest --ignore-scripts
+          set -euo pipefail
+          shopt -s nullglob
+          packages=( ./*.tgz )
+          if (( ${#packages[@]} != 1 )); then
+            echo "::error::Expected exactly one SDK tarball from the tested build"
+            exit 1
+          fi
+          node - "${packages[0]}" "${GITHUB_REF_NAME#sdk-v}" <<'NODE'
+          const { execFileSync } = require('node:child_process')
+          const data = execFileSync('tar', ['-xOzf', process.argv[2], 'package/package.json'], {
+            encoding: 'utf8',
+          })
+          const pkg = JSON.parse(data)
+          if (pkg.name !== '@polyms/ai-kit-sdk' || pkg.version !== process.argv[3] ||
+              pkg.engines?.node !== '>=24') {
+            throw new Error('Tested package does not match the release tag and engine requirements')
+          }
+          NODE
+          dist_tag=latest
+          if [[ "${GITHUB_REF_NAME#sdk-v}" == *-* ]]; then dist_tag=next; fi
+          npm publish "${packages[0]}" --registry=https://npm.pkg.github.com --tag "$dist_tag" --ignore-scripts
+          echo "Published ${GITHUB_REF_NAME} to GitHub Packages with dist-tag ${dist_tag}"
