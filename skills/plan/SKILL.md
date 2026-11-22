@@ -16,7 +16,9 @@ Use [delivery-plan-template.md](delivery-plan-template.md) and the shared work a
 3. Estimate effort per deliverable as a range or justified point estimate. State the unit and basis.
    Separate person-days of effort from elapsed working days, and list assumptions and exclusions.
 4. Map dependencies, ownership, available capacity and parallelism. Compute total effort and
-   feasible schedule; do not divide effort by team size when dependencies constrain execution.
+   a feasible schedule only when actual allocation and dependencies justify it. Otherwise
+   leave elapsed duration unknown even if team headcount is supplied; never divide effort
+   by team size to invent a calendar estimate.
    Account for holidays, part-time allocation and non-project work when known.
 5. Identify critical dependencies, uncertainty, contingency and options for scope reduction.
    Explain what would change the estimate. Use the template at the detail level requested.

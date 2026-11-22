@@ -19,10 +19,16 @@
 - Steps:
   1. [Action]
   2. [Action]
-- Expected result: [Observable outcome]
+- Expected result: [Observable outcome; for denied API requests verify no DB side effects]
 - Actual result: [Only after execution]
 - Status: [Not run / Pass / Fail / Blocked / Not applicable]
 - Evidence / bug: [Real link, if any]
+
+For owner-only team actions, consider independent authorization tests when applicable:
+non-owner direct API access, owner of team A targeting team B, and forged client claims
+such as role=owner. The backend should derive authorization from trusted server identity,
+not user-supplied request fields. Mark these variants conditional when the tenant or
+request schema is unknown; do not invent product policy or approved AC.
 
 ## Requirements coverage
 

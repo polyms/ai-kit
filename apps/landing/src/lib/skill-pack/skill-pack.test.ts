@@ -28,7 +28,7 @@ import {
   WORK_ARTIFACT_STANDARD,
   WORK_SKILL_PATHS,
 } from './skill-pack'
-import { executeGetSkillPack, executeListSkillPacks, registerSkillPackMcpTools } from './skill-pack.mcp'
+import { executeGetSkillPack, executeListSkillPacks, MCP_SKILL_SOURCE, registerSkillPackMcpTools } from './skill-pack.mcp'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../../../../..')
 
@@ -94,11 +94,22 @@ describe('skill pack MCP tools', () => {
     expect(registerTool.mock.calls.map(call => call[0])).toEqual(['list_skill_packs', 'get_skill_pack'])
   })
 
+  it('exposes explicit mutable provenance and a derived pack count for Instant', () => {
+    const response = JSON.parse(executeListSkillPacks().content[0]!.text)
+    expect(response.packCount).toBe(response.packs.length)
+    expect(response.packCount).toBe(13)
+    expect(response.source).toEqual({
+      kind: 'mutable-branch', ref: 'refs/heads/main', immutable: false, revision: null,
+    })
+  })
+
   it('returns pack URLs from list_skill_packs', () => {
     const result = executeListSkillPacks()
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       packs: listSkillPacks(),
+      packCount: listSkillPacks().length,
+      source: MCP_SKILL_SOURCE,
       composition: compositionCatalog(),
     })
   })
@@ -131,6 +142,7 @@ describe('skill pack MCP tools', () => {
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
       contract: SKILL_CONTRACTS.reqs,
+      source: MCP_SKILL_SOURCE,
       files: [
         ...REQS_SKILL_PATHS,
         ...REQS_REFERENCE_PATHS,
@@ -150,6 +162,7 @@ describe('skill pack MCP tools', () => {
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
         contract: SKILL_CONTRACTS[name as SkillPackName],
+        source: MCP_SKILL_SOURCE,
         files: [
           ...paths,
           ...references,
@@ -169,7 +182,7 @@ describe('skill pack MCP tools', () => {
     const result = await executeGetSkillPack('design', fetchFile, [])
     expect(result.isError).toBeUndefined()
     expect(fetchFile).not.toHaveBeenCalled()
-    expect(JSON.parse(result.content[0]!.text)).toEqual(getSkillPack('design'))
+    expect(JSON.parse(result.content[0]!.text)).toEqual({ ...getSkillPack('design'), source: MCP_SKILL_SOURCE })
   })
 
   it('fetches only selected paths including uiKit and retains other metadata', async () => {
