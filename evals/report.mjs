@@ -40,6 +40,11 @@ export function summarizeEvaluation(report) {
     pair.suite = row.suite
     grouped.set(key, pair)
   }
+  const expectedPairs = report.plan?.pairedRuns
+  if (expectedPairs !== undefined) {
+    assert.ok(Number.isSafeInteger(expectedPairs) && expectedPairs >= grouped.size,
+      'Runner plan has fewer paired runs than the observed sample keys')
+  }
   const summary = {}
   for (const suite of suites) {
     const all = report.rows.filter(row => row.suite === suite)
@@ -103,7 +108,15 @@ export function summarizeEvaluation(report) {
       byMode,
     }
   }
-  return { report, summary }
+  const recordedPairs = grouped.size
+  const completedPairs = Object.values(summary).reduce((count, suite) => count + suite.completedPairs, 0)
+  const coverage = {
+    expectedPairs: expectedPairs ?? null,
+    recordedPairs,
+    completedPairs,
+    missingOrIncomplete: expectedPairs === undefined ? null : expectedPairs - completedPairs,
+  }
+  return { report, summary, coverage }
 }
 
 const statusString = counts => ['pass', 'fail', 'unverified', 'error']
@@ -112,7 +125,7 @@ const measure = value => value === null ? 'n/a' : String(value)
 const safe = value => String(value ?? 'n/a').replaceAll('|', '\\|').replaceAll('\n', ' ')
 
 export function renderEvaluationReport(report) {
-  const { summary } = summarizeEvaluation(report)
+  const { summary, coverage } = summarizeEvaluation(report)
   const lines = [
     '# AI Kit measured evaluation report',
     '',
@@ -127,6 +140,9 @@ export function renderEvaluationReport(report) {
     '| Run timestamp | ' + safe(report.createdAt) + ' |',
     '| Endpoint host | ' + safe(report.endpointHost) + ' |',
     '| Rows recorded | ' + report.rows.length + ' |',
+    '| Planned pairs | ' + measure(coverage.expectedPairs) + ' |',
+    '| Complete pairs | ' + coverage.completedPairs + ' |',
+    '| Missing or incomplete planned pairs | ' + measure(coverage.missingOrIncomplete) + ' |',
     '',
     '## Paired outcomes',
     '',
@@ -151,7 +167,8 @@ export function renderEvaluationReport(report) {
       const v = value.byMode[mode]
       lines.push('| ' + suite + ' / ' + mode + ' | ' +
         measure(v.p50Ms) + ' / ' + measure(v.p95Ms) + ' (' + v.latencySamples + ')' +
-        ' | ' + v.totalInputTokens + ' / ' + v.totalOutputTokens + ' (' +
+        ' | ' + (v.usageSamples ? v.totalInputTokens : 'n/a') + ' / ' +
+        (v.usageSamples ? v.totalOutputTokens : 'n/a') + ' (' +
         v.usageSamples + '/' + v.samples + ')' +
         ' | ' + v.traceFailures + ' | ' + v.hardGateFailures + ' | ' +
         v.payloadBytes + ' (' + v.traceSamples + ') |')

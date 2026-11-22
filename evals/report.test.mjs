@@ -49,3 +49,18 @@ test('malformed rows and missing provenance fail closed', () => {
   assert.throws(() => summarizeEvaluation(make([], { fixtureHash: null })),
     /Missing model or fixture provenance/)
 })
+
+test('reports unstarted planned pairs as missing and never as wins', () => {
+  const data = make([row('X', 'baseline', 'pass'), row('X', 'assisted', 'pass')], {
+    plan: { pairedRuns: 83 },
+  })
+  const result = summarizeEvaluation(data)
+  assert.equal(result.coverage.expectedPairs, 83)
+  assert.equal(result.coverage.completedPairs, 1)
+  assert.equal(result.coverage.missingOrIncomplete, 82)
+  assert.match(renderEvaluationReport(data), /Missing or incomplete planned pairs \| 82/)
+})
+test('rejects inconsistent planned paired-run counts', () => {
+  const data = make([row('X', 'baseline', 'pass')], { plan: { pairedRuns: 0 } })
+  assert.throws(() => summarizeEvaluation(data), /Runner plan has fewer paired runs/)
+})
