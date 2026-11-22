@@ -26,9 +26,7 @@ export async function skillProvider(input: unknown): Promise<Response> {
       paths.length > 100 || paths.some(path => typeof path !== 'string'))) return fail('INVALID_PATHS', 400)
   const bundle = bundles[name]
   const selected = new Set<string>((paths as string[] | undefined) ??
-    (strategy === 'full'
-      ? bundle.files.filter(file => !file.path.startsWith('.cursor/skills/ui-kit/')).map(file => file.path)
-      : strategy === 'manifest' ? [] : bundle.starterPaths))
+    (strategy === 'full' ? bundle.files.map(file => file.path) : strategy === 'manifest' ? [] : bundle.starterPaths))
   if ([...selected].some(path => !bundle.files.some(file => file.path === path))) return fail('INVALID_PATHS', 400)
   return Response.json({
     ...bundle,

@@ -5,10 +5,10 @@ import type { SkillBundle, SkillCatalog, SkillContract } from '../../../../../sd
 
 describe('versioned snapshot provider', () => {
   it('loads only pinned starter paths', async () => {
-    const response = await skillProvider({ name: 'reqs', version: '0.3.3' })
+    const response = await skillProvider({ name: 'reqs', version: '0.3.4' })
     const data = await response.json()
     expect(response.status).toBe(200)
-    expect(data.revision).toBe(RELEASES['0.3.3'])
+    expect(data.revision).toBe(RELEASES['0.3.4'])
     expect(data.files.filter((file: {content?: string}) => file.content)).toHaveLength(data.starterPaths.length)
   })
   it('retires the experimental skill snapshot', async () => {
@@ -20,10 +20,10 @@ describe('versioned snapshot provider', () => {
     expect((await skillProvider({ name: 'reqs', paths: ['../../secret'] })).status).toBe(400)
     expect((await skillProvider({ name: '__proto__' })).status).toBe(404)
   })
-  it('resolves latest to the memory release and preserves the previous pinned release', async () => {
+  it('resolves latest to only the new pinned release', async () => {
     const latest = await (await skillProvider({ version: 'latest' })).json()
-    const pinned = await (await skillProvider({ version: '0.3.3' })).json()
-    expect(latest.version).toBe('0.3.3')
+    const pinned = await (await skillProvider({ version: '0.3.4' })).json()
+    expect(latest.version).toBe('0.3.4')
     expect(pinned).toEqual(latest)
     expect(latest.composition.recipes).toHaveLength(5)
     expect(latest.composition.protocol.path).toBe('docs/agents/skill-composition.md')
@@ -31,7 +31,9 @@ describe('versioned snapshot provider', () => {
       'Check giúp a ticket quá hạn, đổi assignee; check ticket qua han'
     )
     expect(latest.packs.every((p: { contract: { context?: unknown } }) => Array.isArray(p.contract.context))).toBe(true)
-    expect(Object.keys(RELEASES)).toEqual(['0.3.3'])
+    expect(Object.keys(RELEASES)).toEqual(['0.3.4'])
+    expect((await skillProvider({ version: '0.3.3' })).status).toBe(404)
+    expect((await skillProvider({ name: 'design', version: '0.3.3' })).status).toBe(404)
     expect((await skillProvider({ version: '0.3.0' })).status).toBe(404)
     expect((await skillProvider({ version: '0.3.1' })).status).toBe(404)
     expect((await skillProvider({ name: 'reqs', version: '0.3.1' })).status).toBe(404)
@@ -47,7 +49,7 @@ describe('versioned snapshot provider', () => {
     const catalog = await client.list()
     expect(catalog.composition?.recipes.some(recipe => recipe.id === 'sprint-planning')).toBe(true)
     const bundle = await client.getSkill('plan')
-    expect(bundle.version).toBe('0.3.3')
+    expect(bundle.version).toBe('0.3.4')
     expect(bundle.contract).toMatchObject({
       context: expect.arrayContaining([{ key: 'scope', importance: 'required', description: expect.any(String) }]),
     })
@@ -70,7 +72,7 @@ describe('versioned snapshot provider', () => {
     const catalog = await client.list()
     const pack = (catalog.packs as { name: string; contract: unknown }[]).find(item => item.name === 'plan')
     const base = await client.getSkill('plan')
-    expect(base.version).toBe('0.3.3')
+    expect(base.version).toBe('0.3.4')
     expect(base.contract).toEqual(pack?.contract)
     expect(base.contract).toMatchObject({
       memory: {
@@ -89,18 +91,18 @@ describe('versioned snapshot provider', () => {
     await client.getSkill('plan', { paths: [path] })
     expect(transport).toHaveBeenCalledTimes(calls)
     expect(extendSkill(base, {
-      name: 'project-plan', extends: 'ai-kit/plan@0.3.3', instructions: 'Apply local planning policy.',
+      name: 'project-plan', extends: 'ai-kit/plan@0.3.4', instructions: 'Apply local planning policy.',
     }).base.contract).toEqual(base.contract)
     await expect(client.getSkill('plan', { version: '0.3.2' })).rejects.toThrow('404')
   })
 
   it('extends domain context additively without mutating core metadata', async () => {
-    const bundle = await (await skillProvider({ name: 'plan', version: '0.3.3' })).json()
+    const bundle = await (await skillProvider({ name: 'plan', version: '0.3.4' })).json()
     const original = structuredClone(bundle.contract)
     const context = [{ key: 'project-policy', importance: 'required' as const, description: 'Local policy.' }]
     const extension = {
       name: 'project-plan',
-      extends: 'ai-kit/plan@0.3.3' as const,
+      extends: 'ai-kit/plan@0.3.4' as const,
       instructions: 'Use local policy.',
       context,
     }
@@ -114,6 +116,15 @@ describe('versioned snapshot provider', () => {
     expect(() => extendSkill(bundle, { ...extension, context: [{ ...context[0], description: ' ' }] })).toThrow('conflicting')
     expect(() => extendSkill({ ...bundle, contract: {} }, extension)).toThrow('Core context contract unavailable')
   })
+  it('delivers optional Polyms UI Kit only upon explicit selection', async () => {
+    const starter = await (await skillProvider({ name: 'design', version: '0.3.4' })).json()
+    const optional = starter.files.filter((file: { path: string }) => file.path.startsWith('.cursor/skills/ui-kit/'))
+    expect(optional.length).toBeGreaterThan(0)
+    expect(optional.every((file: { content?: string }) => file.content === undefined)).toBe(true)
+    const path = optional[0].path
+    const exact = await (await skillProvider({ name: 'design', version: '0.3.4', paths: [path] })).json()
+    expect(exact.files.find((file: { path: string }) => file.path === path).content).toContain('@polyms/ui-kit')
+  })
   it('returns manifest only', async () => {
     const data = await (await skillProvider({ name: 'reqs', strategy: 'manifest' })).json()
     expect(data.files.every((file: {content?: string}) => file.content === undefined)).toBe(true)
@@ -122,9 +133,9 @@ describe('versioned snapshot provider', () => {
     const transport = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
       if (init?.body) return skillProvider(JSON.parse(String(init.body)))
       const name = new URL(String(url)).pathname.split('/')[3]
-      return skillProvider({ name, version: '0.3.3' })
+      return skillProvider({ name, version: '0.3.4' })
     })
-    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.3', fetch: transport })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.4', fetch: transport })
     const [bundle] = await Promise.all([client.getSkill('reqs'), client.getSkill('reqs')])
     await client.getSkill('reqs')
     expect(transport).toHaveBeenCalledTimes(1)
@@ -134,7 +145,7 @@ describe('versioned snapshot provider', () => {
     await client.getSkill('reqs', { paths: [path] })
     expect(transport).toHaveBeenCalledTimes(2)
     expect(extendSkill(bundle, {
-      name: 'product-reqs', extends: 'ai-kit/reqs@0.3.3', instructions: 'Preserve project IDs.',
+      name: 'product-reqs', extends: 'ai-kit/reqs@0.3.4', instructions: 'Preserve project IDs.',
     }).base).toBe(bundle)
   })
   it('does not cache errors and isolates returned bundles', async () => {
@@ -142,9 +153,9 @@ describe('versioned snapshot provider', () => {
     const transport = vi.fn(async () => {
       attempts++
       return attempts === 1 ? new Response('', { status: 503 }) :
-        skillProvider({ name: 'reqs', version: '0.3.3' })
+        skillProvider({ name: 'reqs', version: '0.3.4' })
     })
-    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.3', fetch: transport })
+    const client = createSkillProvider({ endpoint: 'https://example.com', version: '0.3.4', fetch: transport })
     await expect(client.getSkill('reqs')).rejects.toThrow('503')
     const first = await client.getSkill('reqs')
     first.files[0].content = 'changed by caller'
@@ -172,7 +183,7 @@ describe('versioned snapshot provider', () => {
 })
 
 describe('SDK wire contract and resilience', () => {
-  const version = '0.3.3'
+  const version = '0.3.4'
   const endpoint = 'https://example.com'
 
   it('exposes concrete public contract and catalog types', async () => {
@@ -336,7 +347,7 @@ describe('SDK wire contract and resilience', () => {
 // Release candidate smoke: clearing cache must not let an old request overwrite a fresh result.
 describe('SDK clearCache in-flight isolation', () => {
   it('discards stale pending cache writes without discarding new results', async () => {
-    const version = '0.3.3'
+    const version = '0.3.4'
     const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
     const a = 'docs/agents/context-contract.md'
     let finishOld: (() => void) | undefined
