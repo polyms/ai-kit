@@ -146,7 +146,7 @@ See [skill-intelligence.md](skill-intelligence.md) for routing metadata, selecti
 composition and regression checks. See [skill composition](skill-composition.md) for typed metadata,
 shared context, gates, handoffs and recipes. Load the protocol and chosen recipe on demand;
 recipe paths are scoped to their host pack, and no composition files are in starterPaths.
-Legacy full-pack loading includes all core references; optional Polyms UI Kit content requires exact-path selection. The versioned provider's `full` strategy follows the same opt-in rule. The server does not classify
+MCP implicit full-pack loading includes core files only; optional Polyms UI Kit content requires exact paths. The versioned provider defaults to minimal `starter`; its explicitly requested `full` strategy intentionally includes all registered files, including optional UI Kit. The server does not classify
 prompts or execute workflows.
 The client chooses relevant skills using metadata and user intent, while local manual-only policy
 continues to govern native skill invocation.

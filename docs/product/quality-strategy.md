@@ -43,8 +43,8 @@ need separate integration tests. See [evaluation runner](../../evals/README.md).
 | Output quality | Useful deliverables, traceable evidence, clarity, completeness, explicit limitations |
 | Context continuity | Approved scope, IDs, decisions and evidence retained through handoffs |
 | Knowledge utilization | Relevant search, opened source, applicable version, fewer invented recipes |
-| Memory use (0.3.3 pilot) | Relevant recall, accurate use of past facts, handling of stale/conflicting context |
-| Capture / reflection (0.3.3 pilot) | Supported lessons, no fabricated outcomes, privacy and owner permissions |
+| Memory use (0.3.4 pilot) | Relevant recall, accurate use of past facts, handling of stale/conflicting context |
+| Capture / reflection (0.3.4 pilot) | Supported lessons, no fabricated outcomes, privacy and owner permissions |
 | Efficiency | Tool calls, reloaded bytes, latency, reported tokens; no unnecessary context inflation |
 | Compatibility | Real behavior across tested models, clients, versions and tool capabilities |
 

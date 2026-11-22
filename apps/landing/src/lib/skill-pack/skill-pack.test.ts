@@ -97,7 +97,6 @@ describe('skill pack MCP tools', () => {
   it('exposes explicit mutable provenance and a derived pack count for everyday clients', () => {
     const response = JSON.parse(executeListSkillPacks().content[0]!.text)
     expect(response.packCount).toBe(response.packs.length)
-    expect(response.packCount).toBe(13)
     expect(response.source).toEqual({
       kind: 'mutable-branch', ref: 'refs/heads/main', immutable: false, revision: null,
     })

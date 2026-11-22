@@ -650,7 +650,7 @@ mapped to the project's chosen components; Dev implements against briefs and des
 - [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
 - [x] `/docs` — business and developer-facing docs
 - [x] `research`, `business`, `task`, `bug` — work operations skills and templates
-- [x] MCP skill provider — direct Markdown delivery (0.3.3 verified in production)
+- [x] MCP skill provider — mutable Markdown delivery; new 0.3.4 pinned release pending production smoke
 - [x] `/e2e` — E2E automation (`tester`)
 - [x] `/build-feature-map` — authors the repo-local `feature-map` skill (`tester`)
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
@@ -670,6 +670,6 @@ mapped to the project's chosen components; Dev implements against briefs and des
 Run `pnpm eval:test` for deterministic scoring tests and `pnpm eval:run --dry-run` to inspect
 benchmark scope without model calls. See [the evaluation runner](evals/README.md) for opt-in
 paired runs, trace scoring, model configuration and limitations.
-Use `node scripts/verify-skill-release.mjs --version 0.3.3 --endpoint https://ai-kit.polyms.dev`
+Use `node scripts/verify-skill-release.mjs --version 0.3.4 --endpoint https://ai-kit.polyms.dev`
 for production delivery checks. See [Quality Baseline](docs/quality/baseline.md) and
 `pnpm eval:report` for measured-run summaries.
