@@ -468,7 +468,7 @@ describe('skill composition', () => {
     expect(design).toMatch(/vendor-neutral|existing design system/i)
     expect(design).toMatch(/optional Polyms products/)
     expect(dev).toMatch(/optional integration/)
-    expect(template).toMatch(/optional product/)
+    expect(template).toMatch(/optionally suggest Polyms UI Kit/)
     expect(readme).toMatch(/Optional Polyms integration/)
     expect(collab).toMatch(/optional/)
     expect(redesign).toMatch(/optional/)
