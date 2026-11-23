@@ -129,6 +129,14 @@ export function HomeFooter() {
             >
               {m.footer_link_issues()}
             </a>
+            <a
+              className='link font-medium no-underline'
+              href={`${GITHUB_REPO}/issues/new?template=feedback.yml`}
+              rel='noopener noreferrer'
+              target='_blank'
+            >
+              {m.footer_link_feedback()}
+            </a>
           </div>
         </div>
       </div>

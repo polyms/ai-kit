@@ -15,9 +15,8 @@
     "check": "biome check --write . && prettier -l --write .",
     "release": "zx scripts/release.mjs",
     "eval:run": "tsx evals/run.ts",
-    "eval:test": "node --test evals/scoring.test.mjs evals/native-client/workflow-audit.test.mjs",
-    "eval:report": "node evals/report.mjs",
-    "eval:native": "node evals/native-client/run.mjs"
+    "eval:test": "node --test evals/scoring.test.mjs",
+    "eval:report": "node evals/report.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",

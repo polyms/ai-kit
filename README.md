@@ -15,6 +15,15 @@ Use native/local skill installation, MCP or the SDK to deliver the same version-
 
 **Kit site:** [ai-kit.polyms.dev](https://ai-kit.polyms.dev) — browse skills, copy sample prompts, quick start. Source in `apps/landing/`.
 
+## Optional feedback
+
+Have an idea or a problem with an AI Kit skill, workflow or template?
+[Send public feedback via GitHub Issues](https://github.com/polyms/ai-kit/issues/new?template=feedback.yml).
+A short description is enough: no benchmarks, traces or files required.
+Remove sensitive information before publishing. The maintainer reviews
+submissions manually; AI Kit does not automatically collect or post feedback.
+See [how to share feedback](docs/feedback.md).
+
 ## Product boundary
 
 AI Kit **augments** host assistants; it does not replace them or take over user work.

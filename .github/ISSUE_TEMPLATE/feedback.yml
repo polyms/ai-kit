@@ -1,0 +1,62 @@
+name: "AI Kit feedback / Góp ý AI Kit"
+description: "Share a workflow, skill, template or documentation suggestion. Public issue."
+title: "[Feedback] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve AI Kit! / Cảm ơn bạn đã góp ý!
+        This issue is **public**. Do not include private chats, customer information,
+        proprietary files, credentials, access tokens or internal prompts.
+        A short description is enough. **No benchmark, trace or screenshot is required.**
+        The maintainer reviews submissions manually; there is no automatic action.
+  - type: dropdown
+    id: category
+    attributes:
+      label: "Feedback category / Loại góp ý"
+      options:
+        - "Skill discovery / Chọn skill"
+        - "Workflow guidance / Quy trình"
+        - "Template / Mẫu tài liệu"
+        - "Documentation / Hướng dẫn"
+        - "Bug / Lỗi"
+        - "Suggestion / Đề xuất"
+        - "Other / Khác"
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: "What happened or what should improve? / Nội dung"
+      description: "Describe the issue or idea in your own words. A sentence or two is fine."
+      placeholder: "Example: The plan skill asked for team size again even though I had supplied it."
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: "AI client (optional) / Công cụ AI"
+      options:
+        - "Not specified"
+        - "ChatGPT"
+        - "Cursor"
+        - "Claude"
+        - "Codex"
+        - "Other"
+  - type: input
+    id: skill
+    attributes:
+      label: "Skill or workflow (optional) / Skill"
+      placeholder: "plan, qa, reqs, etc."
+  - type: textarea
+    id: example
+    attributes:
+      label: "Short public example (optional) / Ví dụ ngắn"
+      description: "Only redacted or synthetic examples. Full chats or logs are unnecessary."
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: "Public submission / Xác nhận thông tin công khai"
+      options:
+        - label: "I understand this is public and have removed private or sensitive information. / Tôi hiểu đây là issue công khai và đã loại bỏ thông tin nhạy cảm."
+          required: true
