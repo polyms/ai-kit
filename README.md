@@ -18,11 +18,13 @@ Use native/local skill installation, MCP or the SDK to deliver the same version-
 ## Optional feedback
 
 Have an idea or a problem with an AI Kit skill, workflow or template?
-[Send public feedback via GitHub Issues](https://github.com/polyms/ai-kit/issues/new?template=feedback.yml).
-A short description is enough: no benchmarks, traces or files required.
-Remove sensitive information before publishing. The maintainer reviews
-submissions manually; AI Kit does not automatically collect or post feedback.
-See [how to share feedback](docs/feedback.md).
+Simply tell your AI client what worked or what should change. AI Kit's
+`prepare_feedback_issue` MCP tool creates a complete public GitHub Issue
+**draft**. The AI shows it for review, then after your explicit approval
+uses an independently connected GitHub `create_issue` action to publish
+on your behalf. If no GitHub integration is available, you get a
+**prefilled issue link**, not a blank form. No benchmarks or trace exports
+required. See [AI-assisted feedback](docs/feedback.md).
 
 ## Product boundary
 

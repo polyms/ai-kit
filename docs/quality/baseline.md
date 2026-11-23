@@ -88,9 +88,10 @@ produce more/better content than the unassisted model in every individual sample
 
 ## End-user feedback is optional
 
-End users can share a short redacted observation using the
-[public feedback issue form](https://github.com/polyms/ai-kit/issues/new?template=feedback.yml). No tool trace,
-test run or benchmark is required. Issues are reviewed manually and are
+End users can tell their AI client about an AI Kit issue and use
+`prepare_feedback_issue` to create a public draft. A separately authorized
+GitHub connector can publish it **after user approval**; otherwise the
+user gets a prefilled URL. No tool trace, test run or benchmark is required. Issues are reviewed manually and are
 not interchangeable with verified evaluation evidence. Details:
 [feedback guidance](../feedback.md).
 

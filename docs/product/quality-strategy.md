@@ -111,9 +111,12 @@ inference, private memory access and external execution are not.
 ## Voluntary public feedback
 
 People using AI Kit do **not** have to run evaluation tools or send model traces.
-If they voluntarily want to comment on skills, workflows or templates, guide
-them to the [public GitHub feedback form](https://github.com/polyms/ai-kit/issues/new?template=feedback.yml) and
-[privacy guidance](../feedback.md). The user decides whether to submit;
+If they voluntarily want to comment on skills, workflows or templates, let
+AI Kit `prepare_feedback_issue` draft a public GitHub Issue and follow the
+[conversation and GitHub handoff workflow](../feedback.md). The user reviews
+and explicitly authorizes publication through the host's independent GitHub
+integration. Without GitHub integration, use a prefilled URL.
+The user decides whether to submit;
 the maintainer reviews feedback manually. Only validated, generalized
 observations may motivate subsequent reviewed methodology changes. No automatic
 feedback ingestion, tracking or user-data collection.

@@ -1,34 +1,50 @@
-# Feedback / Góp ý cho AI Kit
+# AI-assisted feedback / Góp ý ngay trong AI client
 
-If a skill, workflow, template or instruction helps or feels wrong, you can
-share **optional feedback**. AI Kit supplies workflows and templates; it does
-not change the AI model's inherent reasoning quality.
+Give AI Kit feedback **through your AI conversation**. AI Kit helps you clarify
+and prepare a public GitHub Issue, using its `prepare_feedback_issue` MCP tool.
+You do not need to fill a blank form, run a benchmark or export tool traces.
 
-**[Open the public GitHub feedback form](https://github.com/polyms/ai-kit/issues/new?template=feedback.yml)**
+Example prompt:
 
-1. Sign in to GitHub and enter a short issue title.
-2. Choose a category and describe your suggestion or problem.
-3. Optionally mention the AI client and skill, or add a short **sanitized**
-   example. You do **not** need to run tests, export traces, attach files or
-   benchmark the model.
-4. Check the public-information confirmation and **submit it yourself**.
+> Tôi muốn góp ý AI Kit: skill plan hỏi lại số developers dù tôi đã nói trước đó.
 
-The AI Kit maintainer reviews and prioritizes public Issues when able.
-Submitting feedback is not a promise of a fix.
+## Workflow
 
-**Privacy:** GitHub Issues are public. Do not share entire chats, client or
-customer data, credentials, tokens, private repo content, confidential code,
-personal data or proprietary prompts. Paraphrase or use synthetic examples.
-For an issue that cannot be described safely in public, do **not** submit
-confidential details to this form.
+1. **Describe:** Say what worked or what was confusing. The AI reuses the
+   relevant context already provided and asks a short follow-up only if needed.
+2. **Draft:** The AI calls `prepare_feedback_issue`. It returns a complete
+   issue title, category, Markdown body and fixed destination `polyms/ai-kit`.
+3. **Approve:** The AI shows you the exact PUBLIC title/body. Review it, edit
+   or redact anything sensitive, and explicitly say whether to publish.
+4. **Create:** With your approval, the AI calls the host's **connected GitHub
+   `create_issue` action** using your GitHub authorization, then shares the
+   real issue URL/number after successful creation.
+5. **Fallback:** Without a connected GitHub write integration, the AI gives
+   you a **prefilled GitHub Issue link** with the title/body already filled.
+   You review and submit. No blank form or manual copy/paste.
 
-If you ask an AI assistant to help write feedback, it may draft a short,
-redacted Issue body. It must not publish without your explicit authorization.
-AI Kit does not automatically collect conversations, feedback or telemetry.
+GitHub Issues are public. Avoid private conversations, client/customer data,
+proprietary source, internal prompts, credentials or access tokens.
+AI Kit's draft tool performs only **best-effort detection of obvious secrets**.
+It cannot guarantee a draft is safe. Read the full content before publishing.
 
----
+**Authentication boundary:** The AI Kit OAuth account is *not* a GitHub
+authorization. The MCP draft tool cannot create an issue on its own. To
+publish from inside the AI chat, the host needs its own authenticated
+GitHub connector/MCP with write permission. No shared server token is used.
+Neither a successful draft nor an approval message proves the issue was
+created. Only a real GitHub response confirms publication.
 
-Góp ý là **tự nguyện**. Bạn chỉ cần mô tả ngắn điều phù hợp hoặc chưa phù hợp,
-chọn [mẫu GitHub Issue công khai](https://github.com/polyms/ai-kit/issues/new?template=feedback.yml), kiểm tra thông tin nhạy cảm,
-rồi tự bấm Submit. Không cần chạy benchmark hay gửi log. Người duy trì AI Kit
-sẽ xem và xử lý thủ công khi phù hợp.
+The AI Kit maintainer reviews submitted issues and decides whether and
+when to act. No automatic bug fix or skill edit happens on feedback.
+
+## Tiếng Việt
+
+Chỉ cần nói với AI bạn muốn góp ý điều gì về AI Kit. AI Kit sẽ hỗ trợ
+làm rõ, **tạo bản nháp GitHub Issue đúng cấu trúc**, cho bạn xem và duyệt.
+Nếu AI client có GitHub connector được cấp quyền, AI sẽ **tạo Issue giúp bạn**
+sau khi bạn đồng ý. Nếu chưa kết nối GitHub, AI cung cấp liên kết
+**đã điền sẵn tiêu đề và nội dung** để bạn xác nhận trên GitHub.
+
+Đây là phản hồi tự nguyện, không bắt người dùng chạy benchmark, xuất log
+hay thu thập hội thoại riêng tư. Issue trên GitHub là công khai.
