@@ -1,6 +1,6 @@
 # Quality Baseline and Release Verification
 
-Status (2026-11-22): **historical skill delivery verified; new 0.3.4 production delivery and model-quality uplift are not yet verified**.
+Status (2026-11-23): **historical skill delivery verified; new 0.3.4 HTTP release delivery and workflow-augmentation effectiveness are not yet independently measured**.
 This is an evaluation and delivery-verification plan, not a claim that skills outperform
 the baseline, a new release gate or authorization to run paid models.
 
@@ -17,7 +17,7 @@ the baseline, a new release gate or authorization to run paid models.
 | Neutral-prompt AI Kit-assisted (manual pair) | 8 tasks, 12 planned tests, 8–13 dev-day task range, 2–3 allowance; conditional cross-team and forged-role variants | [User-submitted follow-up](../../evals/manual/2026-11-23-team-invitation-neutral-assisted-candidate.md); 4 MCP calls self-reported, shared prompt confirmed, mode/tool traces not independently verified |
 | Memory reference | On-demand `docs/agents/memory-protocol.md` retrieved with full content | AI Kit `get_skill_pack`, exact path selection |
 | SDK RC tag | `sdk-v1.0.0-rc.1` published with `next` dist-tag | [GitHub Actions #45020141109](https://github.com/polyms/ai-kit/actions/runs/45020141109) |
-| Real model improvement | **Unverified** | No reproducible paired model run and reviewed judge report yet |
+| Workflow augmentation outcome | **Partially observed; not measured as uplift** | Same-prompt manual pair documents routing/template/process behavior, not improved underlying model intelligence; no replicated host trace |
 | SDK performance and public proxy install | **Unverified** | Release candidate published, but external proxy install/consumer timing not recorded |
 
 These are observed deployment and delivery checks. They do not prove model-output
@@ -70,12 +70,23 @@ The user confirmed that the baseline and AI Kit-assisted drafts both used the
 authored earlier in this conversation. This resolves **prompt identity** for
 the manual pair, and a new run is not required just to reconstruct the prompt.
 Other controls (actual host model settings, tool traces, latency, tokens and
-repeated trials) are still unverified, so this is **not** a measured causal
-quality uplift. Qualitative coverage is mixed: baseline explicitly handles
+repeated trials) are still unverified. The measurement target is **workflow
+augmentation**, not a model-quality uplift: did the host discover the
+appropriate skills, use the planning/task/QA templates and context boundaries,
+preserve traceability, and avoid unnecessary retrieval? Qualitative coverage
+is mixed: baseline explicitly handles
 unauthenticated API and client status override; assisted specifies conditional
 cross-team and failure-atomicity tests.
 
-## Real paired evaluation
+## Interpretation boundary
+
+AI Kit delivers workflow guidance, templates and reusable standards. It does
+**not** change a model's native reasoning capabilities. Comparing model-written
+artifacts is useful as supporting evidence of workflow adherence and consistency;
+it is not a direct score of model intelligence or a requirement for AI Kit to
+produce more/better content than the unassisted model in every individual sample.
+
+## Optional paired workflow evaluation
 
 The opt-in `evals/run.ts` runner has **88 synthetic scenarios**:
 
@@ -130,5 +141,4 @@ explicit budget decision; CI must not automatically call a paid model.
 
 SDK `1.0.0-rc.1` remains a published RC. Stable `1.0.0` needs an install
 from the public Polyms registry/proxy, a verified consumer running that package,
-and documented consuming-host latency. Those are distinct from measured
-model-quality improvements. See [SDK stability review](../agents/sdk-stability.md).
+and documented consuming-host latency. Those are distinct from evidence that AI Kit's workflow and template delivery is reliably used. See [SDK stability review](../agents/sdk-stability.md).

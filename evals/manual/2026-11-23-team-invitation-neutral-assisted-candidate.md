@@ -63,6 +63,16 @@ No Memory Protocol file was reported as loaded, and no historical evidence/Memor
 
 The baseline is strong and has unique security test coverage. The assisted case has unique conditional cross-team and failure-atomicity checks and fewer reported discovery calls than the earlier forced-MCP prompt run (4 vs 6); **neither test count nor call count is a quality or latency score**.
 
+## Product-value criteria: process support, not model intelligence
+
+AI Kit's success criteria for this pair are **discoverability and smallest
+appropriate skill route**, practical use of the plan/task/QA methodology,
+structured tasks with dependencies and acceptance, traceability across approved
+BR/AC identifiers, clear uncertainty and scope boundaries, and truthful
+provenance with limited tool overhead. The unassisted model can independently
+generate a high-quality artifact; that does not negate AI Kit's role. Extra test
+cases, longer prose or a different estimate are not expected product wins.
+
 ## Provisional output-only rubric, not an experiment score
 
 | Gate | Baseline | Assisted | Limitation |
@@ -77,4 +87,4 @@ The baseline is strong and has unique security test coverage. The assisted case 
 | Tool/skill use | No AI Kit reported | Minimal 3-pack route reported | Raw host trace unavailable |
 | No external write / invented historical record | No write/retrieval claimed | No write/retrieval claimed | Self-reported |
 
-**Decision:** The user confirmed **identical neutral prompt text** in both arms; this is a valid **manual same-prompt output comparison**. Both drafts meet core planning/governance gates and AI Kit reported choosing the expected skills naturally, but there is **no clear quality winner**. The precise mode, tool availability and actual tool traces remain independently unverified. The single pair is not a replicated, causally controlled benchmark. Repeat isolated sessions with recorded settings for stronger claims; do not request a new run just to recover the prompt. UI-design tests stay out of scope, and no paid calls were made by this evidence review.
+**Decision:** The user confirmed **identical neutral prompt text** in both arms; this is a valid **manual same-prompt output comparison**. Both drafts meet core planning/governance gates, while AI Kit reported selecting the expected skills naturally and retrieving their templates. This demonstrates **observed workflow support**, not greater reasoning ability or an obligation to beat the unassisted model on content. The precise mode, tool availability and actual tool traces remain independently unverified. The single pair is not a replicated, causally controlled benchmark. Repeat isolated sessions with recorded settings for stronger claims; do not request a new run just to recover the prompt. UI-design tests stay out of scope, and no paid calls were made by this evidence review.
