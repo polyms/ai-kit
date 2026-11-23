@@ -95,11 +95,18 @@ if (cases.some(item => item.suite === 'memory')) {
   const baselineSource = await readJson('evals/memory/baseline.json')
   const p2Release = await readJson('registry/releases/0.3.4/release.json')
   const readPinned = (snapshot: { revision: string; files: Record<string, string> }, path: string) => {
-    const bytes = execFileSync('git', ['show', snapshot.revision + ':' + path], {
+    // A pinned source commit may become unreachable after a squash merge.
+    // Git blob IDs are content-addressed: read the exact manifest-pinned bytes
+    // rather than depending on the commit still being reachable from CI refs.
+    const expected = snapshot.files[path]
+    if (!expected || !/^[a-f0-9]{40}$/.test(expected)) {
+      throw new Error('Missing pinned evaluation blob for: ' + path)
+    }
+    const bytes = execFileSync('git', ['cat-file', 'blob', expected], {
       cwd: root, maxBuffer: 2_000_000,
     })
     const blob = createHash('sha1').update('blob ' + bytes.length).update(Buffer.from([0])).update(bytes).digest('hex')
-    if (blob !== snapshot.files[path]) throw new Error('Invalid pinned evaluation file: ' + path)
+    if (blob !== expected) throw new Error('Invalid pinned evaluation file: ' + path)
     return bytes.toString('utf8')
   }
   const protocol = readPinned(p2Release, 'docs/agents/memory-protocol.md')
