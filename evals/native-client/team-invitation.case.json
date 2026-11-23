@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "team-invitation",
+  "promptId": "team-invitation-neutral-2026-11-23",
+  "requiredSkills": [
+    "plan",
+    "task",
+    "qa"
+  ],
+  "avoidSkills": [
+    "reqs",
+    "design",
+    "business",
+    "track",
+    "release"
+  ],
+  "criteria": {
+    "workflow": [
+      {
+        "id": "scope_and_context",
+        "description": "Uses approved BR-01 and AC-01..03; maintains exclusions and uses known context before requesting more"
+      },
+      {
+        "id": "dependency_flow",
+        "description": "Planning handoff into tasks and QA, task dependencies consistent with technical contract and parallel work"
+      },
+      {
+        "id": "unknowns_and_capacity",
+        "description": "Unknown historical effort and allocation remain unknown; no fabricated calendar delivery"
+      }
+    ],
+    "template": [
+      {
+        "id": "effort_structure",
+        "description": "Effort in developer-days with assumptions, task reconciliation and uncertainty separated from commitment"
+      },
+      {
+        "id": "task_structure",
+        "description": "Every implementation task has ID, dependencies, effort, verifiable acceptance"
+      },
+      {
+        "id": "qa_structure",
+        "description": "Positive, negative, authorization and direct API/backend cases with preconditions and expected side effects"
+      },
+      {
+        "id": "requirement_traceability",
+        "description": "BR-01 and AC-01..03 link to actual implementation and test cases"
+      }
+    ],
+    "governance": [
+      {
+        "id": "approved_scope_preserved",
+        "description": "No resend/expiry or invented behavior treated as approved"
+      },
+      {
+        "id": "no_invented_evidence",
+        "description": "No fabricated actual effort, memory recalls, QA execution or external delivery"
+      },
+      {
+        "id": "authorized_actions_only",
+        "description": "Draft-only, no real tracker writes or publish without user authorization"
+      }
+    ]
+  }
+}
