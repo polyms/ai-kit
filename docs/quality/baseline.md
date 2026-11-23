@@ -13,6 +13,7 @@ the baseline, a new release gate or authorization to run paid models.
 | Remote skill metadata | 13 skill packs; five pilot contracts expose optional `memory` hints | AI Kit `list_skill_packs` |
 | Post-PR #18 MCP identity | Production server `0.3.0`, commit `9a25162`, `packCount = packs.length = 13`, source `main` mutable | Read-only MCP verification; **not** immutable `0.3.4` HTTP release verification |
 | Post-merge ChatGPT Instant regression | 12 planned QA cases with conditional cross-team and forged-role variants; no tests executed | [User-supplied manual evidence](../../evals/manual/2026-11-23-team-invitation-instant-regression.md); no independent model trace or causal control |
+| Unassisted Team Invitation baseline candidate | 8 tasks, 15 planned tests, 9.0 developer-days; explicit forged role and status override checks | [User-supplied draft review](../../evals/manual/2026-11-23-team-invitation-unassisted-baseline-candidate.md); no independent host trace, **not** a controlled pair |
 | Memory reference | On-demand `docs/agents/memory-protocol.md` retrieved with full content | AI Kit `get_skill_pack`, exact path selection |
 | SDK RC tag | `sdk-v1.0.0-rc.1` published with `next` dist-tag | [GitHub Actions #45020141109](https://github.com/polyms/ai-kit/actions/runs/45020141109) |
 | Real model improvement | **Unverified** | No reproducible paired model run and reviewed judge report yet |

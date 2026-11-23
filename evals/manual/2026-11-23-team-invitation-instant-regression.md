@@ -90,6 +90,20 @@ An independent read-only check of production MCP during this review confirmed:
 
 These are observations for future guidance or fixtures, not authorization to change approved requirements, create tracker tickets or publish new skill content.
 
+## Baseline candidate comparison (not a scored pair)
+
+A separate user-uploaded, self-reported **non-AI-Kit** Team Invitation draft was
+reviewed on 2026-11-23. It contains 8 tasks, 15 planned tests and 9.0
+baseline developer-days, with no delivery commitment. It includes forged-role,
+unauthenticated and client-override-of-status checks, but mentions cross-team
+access as a conditional risk rather than an executable test case.
+See [unassisted baseline candidate evidence](2026-11-23-team-invitation-unassisted-baseline-candidate.md).
+
+**Do not treat this as a valid paired benchmark:** the previous assisted session
+used a prompt explicitly requesting AI Kit, while the baseline candidate's
+exact prompt/mode/tool setup is not independently established. A fresh assisted
+run on the **same neutral prompt** is still required.
+
 ## Next phase
 
 According to [Quality Baseline](../../docs/quality/baseline.md), next verify deployed **`0.3.4`** via public immutable catalog/bundle smoke (including retirement of `0.3.3`) and then conduct a **small, paired baseline-vs-assisted evaluation** of Team Invitation using the same host/model/settings with repeated trials and actual traces where accessible. Obtain explicit approval before any paid model requests. Avoid UI-design scenarios in this follow-up.
