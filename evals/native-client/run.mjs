@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url'
 import { evaluateNativeCapture, renderNativeAudit } from './workflow-audit.mjs'
 
 const args = process.argv.slice(2)
+// pnpm may preserve the conventional argument separator before script args.
+if (args[0] === '--') args.shift()
 if (!args.length || args.includes('--help')) {
   console.log('Usage: node evals/native-client/run.mjs <capture.json> [more-captures.json] [--out report.md]')
   console.log('No network or model calls. Input is evaluation metadata only; redact sensitive references.')
