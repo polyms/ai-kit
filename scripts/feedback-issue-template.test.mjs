@@ -26,7 +26,7 @@ test('assistant-driven feedback and issue links hidden in landing footer', () =>
   assert.ok(read('apps/landing/src/lib/mcp.server.ts').includes('registerFeedbackMcpTools'))
   const footer = read('apps/landing/src/components/home/HomeFooter.tsx')
   assert.equal(footer.includes('/issues/new'), false)
-  assert.equal(footer.includes('/issues`'), false)
+  assert.equal(footer.includes('${GITHUB_REPO}/issues'), false)
   assert.equal(footer.includes('footer_link_issues()'), false)
   assert.equal(footer.includes('footer_link_feedback()'), false)
 })
