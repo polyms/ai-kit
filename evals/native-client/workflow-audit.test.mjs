@@ -97,6 +97,7 @@ test('baseline does not require AI Kit calls, but a host-observed accidental ret
   assert.equal(absent.status, 'pass')
   const y = capture({ mode: 'baseline' })
   assert.equal(evaluateNativeCapture(spec, y).trace.routeStatus, 'fail')
+  assert.equal(evaluateNativeCapture(spec, y).status, 'fail')
 })
 
 test('client labels are generic; prompt identity, names and contradictory provenance validated', () => {

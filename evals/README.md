@@ -22,6 +22,33 @@ In the [Team Invitation manual 3-mode evidence](manual/2026-11-22-team-invitatio
 AI Kit model tiers. All three were assisted-only sessions without an independent
 baseline or provider audit trace.
 
+## Native-client workflow/template/retrieval audit
+
+Run the **offline native-client scorer** in
+[native-client/](native-client/README.md). It accepts evidence metadata from
+ChatGPT, Cursor, Claude, Codex and other clients under the **same rubric**
+without pretending those clients share ChatGPT's effort modes or tool logging.
+It separately reports:
+
+- Workflow adherence and context reuse (reviewer-graded with explicit
+  artifact references, missing grades remain unverified).
+- Template compliance: developer-day estimates, tasks with dependencies and
+  acceptance, QA cases and requirement traceability.
+- Governance: approved scope, no invented history, no unauthorized writes.
+- Minimal skill routing and retrieval efficiency: **pass/fail only from a
+  complete user-supplied host-export trace**, never from model-authored tool
+  lists. The validator cannot authenticate the host export.
+  
+```sh
+pnpm eval:native -- evals/native-client/examples/instant-model-reported.example.json
+node --test evals/native-client/workflow-audit.test.mjs
+```
+
+The example deliberately evaluates **unverified**, not pass. No real client
+integration, paid model call or production write occurs in the runner. This
+pilot is separate from the 88 synthetic model-endpoint cases and from
+independent native-client integration certification.
+
 ## Memory Protocol pilot
 
 See [Memory Protocol evaluation](memory/README.md) for 15 paired P0/P1 versus P2 scenarios.

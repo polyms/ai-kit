@@ -39,6 +39,7 @@ jobs:
       - name: Check evaluation fixtures and scoring
         run: |
           pnpm eval:test
+          pnpm eval:native -- evals/native-client/examples/instant-model-reported.example.json
           pnpm eval:run --dry-run
       - name: End-to-end evaluation runner smoke (localhost mock only)
         run: pnpm exec node evals/mock-model-smoke.mjs

@@ -110,8 +110,10 @@ export function evaluateNativeCapture(spec, capture) {
       promptId: capture.promptId, promptProvenance: capture.promptProvenance },
     dimensions, trace,
     // A human-reviewed rubric pass is not independent proof of model reasoning quality.
+    // Host-observed AI Kit calls in the baseline violate the experimental control.
     status: totalStatus(Object.values(dimensions).map(value => value.status)
-      .concat(capture.mode === 'assisted' ? [trace.routeStatus, trace.retrievalStatus] : [])),
+      .concat(capture.mode === 'assisted' || trace.routeStatus === 'fail'
+        ? [trace.routeStatus, ...(capture.mode === 'assisted' ? [trace.retrievalStatus] : [])] : [])),
   }
 }
 

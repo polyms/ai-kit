@@ -62,6 +62,12 @@ availability of a memory store with skill quality. Include no memory, irrelevant
 stale memory, approved versus proposed decisions, cross-scope privacy, and absent write capability.
 A recall score alone is not end-to-end answer accuracy.
 
+For native clients, the [offline workflow audit](../../evals/native-client/README.md)
+records per-host configuration, reviewer-cited workflow/template/governance
+grades and provenance-tiered route/retrieval evidence. Model-authored tool-call
+lists cannot produce a verified retrieval pass. A passing synthetic audit
+fixture is not evidence that any real AI client was exercised.
+
 Run deterministic contract, manifest, retrieval, scoring and fixture checks before model tests.
 Compare like-for-like model and client configurations across repeated runs. Record revision,
 selected route, actual retrieved references, elapsed time, payload bytes and reported token usage

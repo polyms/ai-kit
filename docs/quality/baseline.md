@@ -86,6 +86,26 @@ artifacts is useful as supporting evidence of workflow adherence and consistency
 it is not a direct score of model intelligence or a requirement for AI Kit to
 produce more/better content than the unassisted model in every individual sample.
 
+## Native-client workflow audit pilot
+
+The new [offline evidence validator](../../evals/native-client/README.md)
+uses one client-neutral Team Invitation rubric for workflow adherence,
+template compliance and governance, with separately scored retrieval traces.
+Only a **complete host-export trace** can substantiate routing/retrieval
+pass/fail; model-written tool lists are always `unverified`. The
+validator checks metadata and reviewer citations; it does not authenticate
+host logs, execute client software or measure the model's reasoning ability.
+It is tested with synthetic fixtures in SDK CI and is **not evidence that
+ChatGPT, Cursor, Claude or Codex integration has passed**.
+
+```sh
+pnpm eval:native -- evals/native-client/examples/instant-model-reported.example.json
+```
+
+The manually supplied Team Invitation pair remains evidence of process
+support and artifact structure; exact model settings and host traces are not
+established. No new native-client pass or causal uplift is claimed.
+
 ## Optional paired workflow evaluation
 
 The opt-in `evals/run.ts` runner has **88 synthetic scenarios**:
