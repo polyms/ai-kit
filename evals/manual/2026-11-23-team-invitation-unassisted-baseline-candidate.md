@@ -54,10 +54,24 @@ Approved BR-01 (Owner-only), AC-01 (valid email creates pending), AC-02 (invalid
 
 The baseline has meaningful coverage independently of AI Kit. The assisted response puts cross-team authorization directly into a conditional test case. Conversely, the baseline explicitly tests pending-state override and unauthenticated API access. Neither case count nor a slightly different effort estimate establishes higher quality.
 
+## Neutral-prompt assisted candidate received
+
+A second user-supplied ChatGPT draft, submitted after the neutral-prompt assisted
+instructions, reports 4 AI Kit MCP invocations and a minimal `plan/task/qa` route.
+It has 8 tasks, 12 QA cases, an 8–13 developer-day task range and a separate 2–3
+developer-day planning allowance. It turns cross-team access into a conditional
+test (TC-09), while this baseline uniquely has dedicated unauthenticated API and
+client-side pending-status override cases.
+
+See [neutral-prompt assisted candidate](2026-11-23-team-invitation-neutral-assisted-candidate.md).
+This is an **output-level candidate pair**, not a controlled experiment: the
+two original complete prompts, client mode/settings and independently captured
+call traces have not been authenticated. No measured uplift or efficiency claim.
+
 ## Critical comparability warning
 
 **Do not record this as a scored baseline-vs-assisted pair yet.** The earlier assisted Instant artifact came from a prompt explicitly requiring AI Kit MCP and an AI Kit Verification section. The baseline candidate is a new upload following a neutral-prompt experiment, but its exact prompt, ChatGPT effort mode and tool availability have not been independently established. Those differences create selection and instrumentation confounds.
 
-To form a legitimate pair, obtain a **fresh assisted ChatGPT Instant output with the exact neutral prompt** used for this baseline, and record session mode, tool availability, original prompt and actual calls/usage when exposed. Use the same evaluation rubric, ensure both arms get identical approved requirements and no cross-arm historical memory, and repeat before making any causal claim.
+An assisted candidate has now been submitted (linked above). To form a legitimate controlled pair, independently verify the **identical neutral prompt** used in both sessions, mode, tool availability, original prompt and actual calls/usage when exposed. Use the same evaluation rubric, ensure both arms get identical approved requirements and no cross-arm historical memory, and repeat before making any causal claim.
 
 **No paid-model calls were triggered by this evidence review.** Design-system/UI cases remain explicitly out of scope.

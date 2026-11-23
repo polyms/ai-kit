@@ -104,6 +104,19 @@ used a prompt explicitly requesting AI Kit, while the baseline candidate's
 exact prompt/mode/tool setup is not independently established. A fresh assisted
 run on the **same neutral prompt** is still required.
 
+## Neutral-prompt assisted follow-up
+
+A user-uploaded follow-up to the neutral-prompt experiment reports a second
+assisted draft with 8 tasks, 12 cases, a minimal 3-pack route and four MCP calls.
+Its security cases include conditional cross-team, forged-role and persistence
+failure handling. Compared with the separate baseline candidate (15 tests),
+it does not independently specify unauthenticated API or pending-status override
+tests. This is **not** a quality win based on case count.
+
+See [neutral-prompt assisted candidate](2026-11-23-team-invitation-neutral-assisted-candidate.md).
+The original session configurations and independent tool traces remain
+unverified; do not promote this to a measured paired benchmark or causal lift.
+
 ## Next phase
 
 According to [Quality Baseline](../../docs/quality/baseline.md), next verify deployed **`0.3.4`** via public immutable catalog/bundle smoke (including retirement of `0.3.3`) and then conduct a **small, paired baseline-vs-assisted evaluation** of Team Invitation using the same host/model/settings with repeated trials and actual traces where accessible. Obtain explicit approval before any paid model requests. Avoid UI-design scenarios in this follow-up.
