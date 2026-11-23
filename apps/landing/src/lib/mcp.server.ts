@@ -1,5 +1,6 @@
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server'
 import { registerKnowledgeMcpTools } from './knowledge/knowledge.mcp'
+import { registerFeedbackMcpTools } from './feedback/feedback.mcp'
 import {
   McpAuthError,
   type McpAuthSession,
@@ -24,6 +25,7 @@ function createOpsCmsMcpServer(session: McpAuthSession, accessToken: string): Mc
   registerMeMcpTool(server, session, accessToken)
   registerKnowledgeMcpTools(server, { session })
   registerSkillPackMcpTools(server)
+  registerFeedbackMcpTools(server)
   return server
 }
 
