@@ -2,7 +2,7 @@
 
 **Date in user-supplied artifact:** 2026-11-23  
 **Source type:** one user-uploaded Markdown planning draft (133 lines), not a tool/host trace  
-**Session classification:** *candidate* unassisted baseline. Its audit says no AI Kit MCP, GitHub, ClickUp or Jira calls, and local `container.exec` was used to create the file. The precise ChatGPT model/mode, original session settings, tool capture and complete prompt are **not independently verified**.
+**Session classification:** unassisted arm in a **user-confirmed same-prompt manual pair**. Its audit says no AI Kit MCP, GitHub, ClickUp or Jira calls, and local `container.exec` created the file. The exact [neutral prompt](2026-11-23-team-invitation-neutral-prompt.md) was authored earlier in the conversation; the user confirms it was used for the comparison. Precise host model/mode, tool capture and runtime settings are **not independently verified**.
 
 ## Preserved scenario
 
@@ -64,14 +64,27 @@ test (TC-09), while this baseline uniquely has dedicated unauthenticated API and
 client-side pending-status override cases.
 
 See [neutral-prompt assisted candidate](2026-11-23-team-invitation-neutral-assisted-candidate.md).
-This is an **output-level candidate pair**, not a controlled experiment: the
-two original complete prompts, client mode/settings and independently captured
-call traces have not been authenticated. No measured uplift or efficiency claim.
+This is a **user-confirmed same-prompt manual pair**, not an independently
+instrumented experiment: client mode/settings and actual host tool traces
+remain unverified. No measured uplift or efficiency claim.
 
-## Critical comparability warning
+## Comparability and evidence boundary
 
-**Do not record this as a scored baseline-vs-assisted pair yet.** The earlier assisted Instant artifact came from a prompt explicitly requiring AI Kit MCP and an AI Kit Verification section. The baseline candidate is a new upload following a neutral-prompt experiment, but its exact prompt, ChatGPT effort mode and tool availability have not been independently established. Those differences create selection and instrumentation confounds.
+The user explicitly clarified that the original prompt was the [neutral prompt
+authored earlier in this conversation](2026-11-23-team-invitation-neutral-prompt.md).
+Both submitted artifacts are therefore treated as a **user-confirmed same-prompt
+manual baseline/assisted pair**. The exact prompt is stored as a fixture; it is
+not an unknown input, and a new run is **not** required merely to recover it.
 
-An assisted candidate has now been submitted (linked above). To form a legitimate controlled pair, independently verify the **identical neutral prompt** used in both sessions, mode, tool availability, original prompt and actual calls/usage when exposed. Use the same evaluation rubric, ensure both arms get identical approved requirements and no cross-arm historical memory, and repeat before making any causal claim.
+The older assisted output produced from an *explicit AI Kit MCP prompt* is
+**excluded** from this pair. The paired files contain model-reported tool
+audit statements, not independent host traces. Identical ChatGPT mode/settings,
+isolation from prior chat context, exact external tool availability, token
+and latency measurements are not independently certified. This is one
+output-level pair, not a replicated controlled experiment.
+
+Use the same rubric to compare both artifacts. Repeat isolated runs with
+captured settings and traces before claiming causal uplift, but do not
+discard the current user-confirmed paired evidence.
 
 **No paid-model calls were triggered by this evidence review.** Design-system/UI cases remain explicitly out of scope.

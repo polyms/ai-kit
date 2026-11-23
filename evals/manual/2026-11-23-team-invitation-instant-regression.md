@@ -99,10 +99,12 @@ unauthenticated and client-override-of-status checks, but mentions cross-team
 access as a conditional risk rather than an executable test case.
 See [unassisted baseline candidate evidence](2026-11-23-team-invitation-unassisted-baseline-candidate.md).
 
-**Do not treat this as a valid paired benchmark:** the previous assisted session
-used a prompt explicitly requesting AI Kit, while the baseline candidate's
-exact prompt/mode/tool setup is not independently established. A fresh assisted
-run on the **same neutral prompt** is still required.
+**Current status:** The older AI Kit-specific prompt run is not the assisted
+arm of the neutral-prompt pair. A separate assisted response was subsequently
+uploaded, and the user confirmed both neutral arms used the
+[assistant-authored shared prompt](2026-11-23-team-invitation-neutral-prompt.md).
+See the manual pair below. No independent client trace or repeated trial is
+claimed.
 
 ## Neutral-prompt assisted follow-up
 
@@ -114,8 +116,9 @@ it does not independently specify unauthenticated API or pending-status override
 tests. This is **not** a quality win based on case count.
 
 See [neutral-prompt assisted candidate](2026-11-23-team-invitation-neutral-assisted-candidate.md).
-The original session configurations and independent tool traces remain
-unverified; do not promote this to a measured paired benchmark or causal lift.
+The **prompt identity is user-confirmed**, while client settings and independent
+host tool traces remain unverified. Record a same-prompt manual comparison, not
+a replicated, instrumented or causal quality uplift.
 
 ## Next phase
 

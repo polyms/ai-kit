@@ -2,7 +2,7 @@
 
 **Artifact date:** 2026-11-23  
 **Source:** user-uploaded 146-line `Team Invitation — Implementation Plan (Draft)` containing a self-reported four-call AI Kit MCP audit; not a raw host/provider tool trace  
-**Context:** User submitted the artifact immediately after the neutral-prompt assisted-run instructions. It is a **candidate** ChatGPT Instant assisted arm, **not a verified controlled experiment**. The precise submitted prompt, model/effort setting, AI Kit connection state and invocation trace cannot be independently reproduced from the Markdown alone.  
+**Context:** User submitted this artifact following the neutral-prompt assisted instructions and explicitly confirmed the original prompt was the [same neutral prompt authored earlier](2026-11-23-team-invitation-neutral-prompt.md). This is the **assisted arm of a user-confirmed same-prompt manual pair**, not an independently controlled experiment. Model/effort settings, actual connection/tool traces and usage cannot be independently verified from the Markdown alone.  
 **Scope:** Owner-only Team Invitation planning and QA. **UI design scenarios omitted** by user direction.
 
 ## Approved scenario and output
@@ -39,7 +39,7 @@ No Memory Protocol file was reported as loaded, and no historical evidence/Memor
 
 **Evidence boundary:** This call list is part of the generated answer, not an independently captured MCP trace. Do not report measured latency, tokens, payload bytes or skill invocation causality.
 
-## Comparison: candidate unassisted vs neutral assisted
+## Comparison: user-confirmed same-prompt unassisted vs assisted
 
 | Observable item | Unassisted baseline candidate | This neutral assisted candidate |
 | --- | --- | --- |
@@ -77,4 +77,4 @@ The baseline is strong and has unique security test coverage. The assisted case 
 | Tool/skill use | No AI Kit reported | Minimal 3-pack route reported | Raw host trace unavailable |
 | No external write / invented historical record | No write/retrieval claimed | No write/retrieval claimed | Self-reported |
 
-**Decision:** Candidate comparison supports correct routing and broadly adequate output; no established quality uplift and no statistically meaningful outcome. The two arms should not be treated as one audited paired evaluation until original identical prompt/model settings, tool availability and independent traces are verified. Repeat identical neutral prompts in isolated sessions and grade criterion-by-criterion with the same rubric. Keep UI-design tests out of scope. No paid model calls were initiated.
+**Decision:** The user confirmed **identical neutral prompt text** in both arms; this is a valid **manual same-prompt output comparison**. Both drafts meet core planning/governance gates and AI Kit reported choosing the expected skills naturally, but there is **no clear quality winner**. The precise mode, tool availability and actual tool traces remain independently unverified. The single pair is not a replicated, causally controlled benchmark. Repeat isolated sessions with recorded settings for stronger claims; do not request a new run just to recover the prompt. UI-design tests stay out of scope, and no paid calls were made by this evidence review.
