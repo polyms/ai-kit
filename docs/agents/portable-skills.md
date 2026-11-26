@@ -38,9 +38,11 @@ workspace. A cloud sandbox is not necessarily a checkout; a connector is not nec
 - Read before writing. Preserve unrelated content, confirm identity/permission/scope and branch/PR
   policy. Reconcile ambiguous outcomes before retrying; never fall through to another write tool
   blindly. Draft, publication, actual test evidence and human approval are distinct.
-- Setup, to-prd, to-issues and triage require explicit selection or a clearly authorized assignment.
-  Reading references or relatedSkills is not invocation. Never infer publish, close, deploy or merge
-  authority from a skill.
+- Setup, craft and build-feature-map retain explicit invocation; respect native manual-only policies
+  for align, reqs, design and docs. A canonical skill may select a relevant reference branch without
+  automatically invoking a second skill. Lean publication, slice creation, triage mutations, ADR writes,
+  architecture refactors, implementation and deployment require their original evidence and approval
+  gates. Reading references or relatedSkills is not invocation or authorization.
 
 Skill-relative references are served by AI Kit; project paths are resolved in the target project.
 Use starter content and request additional allowlisted references by exact path as needed. Do not

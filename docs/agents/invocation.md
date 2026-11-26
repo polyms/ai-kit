@@ -42,14 +42,15 @@ language and the confirmed destination language for artifacts; preserve technica
 
 | User-invoked                                                                                                                                  | Model-invoked                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/build-feature-map`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
+| `/align`, `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map` | `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
 
-Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing);
-`/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch`
-when deepening. `collab` (model-invoked) is the one-prompt front door: codebase pass, at most one batched
-question, then spawn `pm` → `techlead` (ADR only) → `designer` (when there is a screen). It spawns
-agents; it does not fire `/reqs` or `/design`. A packet with no blocking gap follows `dev` in that
-turn. A blocking fork is one question, then a stop. `/design` is user-invoked.
+Canonical skills select one reference workflow from the user's intent. Align owns the decision loop
+and domain modeling; reqs owns lean PRD synthesis/publication; task owns vertical slicing; track owns
+triage; arch owns deepening assessments; dev owns feature preparation; qa owns E2E; review owns source
+review. An explicit legacy workflow request routes to the corresponding canonical branch, never a
+second independent skill. A complete spec packet may continue to authorized implementation in the same
+turn; an unresolved blocking fork stops dependent work. Delegate where supported; otherwise use scoped
+inline passes with the same quality gates. Do not infer write permission from routing.
 For component mapping, preserve the project's existing library. If none exists,
 provide neutral accessible component roles and optionally recommend Polyms UI Kit
 without installing or invoking it. `dev` implements using the chosen project UI
@@ -62,8 +63,8 @@ Two contexts — don't mix them:
 
 | Context                                                                      | Form                    | Examples                                                       |
 | ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------------- |
-| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/arch-refactor`, `/docs`, `/e2e`    |
-| **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`                    |
+| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/review`, `/docs`, `/qa`    |
+| **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align decision loop`, `Use arch`, reaches `dev`                    |
 | **Agent name** — isolated subagent for deep work (org role, not skill twin)  | role id                 | `Use pm`, `Use designer`, `agents/pm.md`, `agents/techlead.md` |
 
 **Handoffs** use `## Next Step` (singular) — prefer one `→ /skill`; at most two with when/why.
@@ -94,12 +95,12 @@ When the parent chat (or a principal agent) spawns an explore / Task / nested ag
 A nested agent's **"green" / "done" report is not ground truth** for pass/fail gates. Before the
 parent declares a gate or ship step PASS:
 
-1. **Re-run only the gate-deciding command(s)** on disk (e.g. package test script, `typecheck`,
+1. **Run only the gate-deciding command(s)** in the matching workspace, or inspect authorized matching CI evidence (e.g. package test script, `typecheck`,
    targeted build, compose health + smoke — whichever the workflow treats as the gate). Read the
    **real exit code / counts**, not the child's summary.
 2. **Cross-check load-bearing artifacts** when the child claimed to write them (path exists, expected
    content or digest present, no out-of-scope production edits).
-3. **On mismatch** → trust the disk, surface it, fix before continuing.
+3. **On mismatch** → trust the verified actual evidence, surface it, fix before continuing.
 
 This is the deliberate exception to **Do not duplicate work**: search/plan results stay trusted;
 **gate-deciding verification** must be re-executed by the parent (or by the same agent before it
@@ -107,7 +108,7 @@ claims done — same discipline, no silent trust of an earlier turn's claim).
 
 Do **not** re-run the entire monorepo "just in case". Docs-only / no-runnable-gate diffs skip this.
 
-Skills that ship code (`dev`, `e2e`, `devops`, `code-review` when claiming build/test green)
+Skills that ship code (`dev`, `qa`, `devops`, `review` when claiming build/test green)
 point here from their ship/close steps.
 
 Agent `description` frontmatter should include **negative triggers** (`Do NOT use for…`) so the parent does
@@ -116,15 +117,15 @@ not mis-route. Keep agent bodies **lean**: role + router + constraints + “read
 
 ## Dependencies between skills
 
-Express dependencies as skill-name prose ("Run `align-loop`", "Use `domain-modeling`"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
+Express dependencies as skill-name prose ("Use the align decision-loop reference", "Use the align domain-modeling reference"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
 
 Shared reference inside a skill folder (templates, glossaries) is fine via sibling links. Cross-skill behavior reaches through **invoking** the model-invoked skill.
 
 ## Passive vs active domain work
 
-Merely reading `CONTEXT.md` for vocabulary is a one-line habit — not `domain-modeling`.
+Merely reading `CONTEXT.md` for vocabulary is a one-line habit — not the align domain-modeling workflow.
 
-Only the active discipline (challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs) is **`domain-modeling`**.
+Only the active discipline (challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs) is the **align domain-modeling workflow**.
 
 ## Setup dependencies
 

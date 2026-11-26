@@ -125,10 +125,10 @@ describe('skill pack MCP tools', () => {
 
   it('returns NOT_FOUND for an unknown pack name', async () => {
     const fetchFile = vi.fn<typeof fetch>()
-    const result = await executeGetSkillPack('craft', fetchFile)
+    const result = await executeGetSkillPack('unknown-skill', fetchFile)
     expect(fetchFile).not.toHaveBeenCalled()
     expect(result.isError).toBe(true)
-    expect(JSON.parse(result.content[0]!.text)).toEqual({ error: 'NOT_FOUND', name: 'craft' })
+    expect(JSON.parse(result.content[0]!.text)).toEqual({ error: 'NOT_FOUND', name: 'unknown-skill' })
   })
 
   it('returns design and uiKit Markdown with existing raw URLs', async () => {
@@ -512,7 +512,7 @@ describe('skill composition', () => {
     const dev = readFileSync(join(repoRoot, 'skills/dev/SKILL.md'), 'utf8')
     const template = readFileSync(join(repoRoot, 'skills/design/design-spec-template.md'), 'utf8')
     const readme = readFileSync(join(repoRoot, 'README.md'), 'utf8')
-    const collab = readFileSync(join(repoRoot, 'skills/collab/SKILL.md'), 'utf8')
+    const collab = readFileSync(join(repoRoot, 'skills/dev/feature-preparation.md'), 'utf8')
     const redesign = readFileSync(join(repoRoot, 'skills/design/REDESIGN.md'), 'utf8')
     expect(design).toMatch(/vendor-neutral|existing design system/i)
     expect(design).toMatch(/optional Polyms products/)

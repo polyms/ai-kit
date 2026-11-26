@@ -38,6 +38,7 @@ fi
 if [ "$TARGET" = all ] || [ "$TARGET" = claude ]; then
   mkdir -p "$CLAUDE/skills" "$CLAUDE/agents"
   for skill in "$REPO"/skills/*/; do
+    [ -f "$skill/SKILL.md" ] || continue
     name="$(basename "$skill")"
     ln -sfn "$skill" "$CLAUDE/skills/$name"
     echo "Linked: $CLAUDE/skills/$name -> $skill"

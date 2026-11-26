@@ -60,7 +60,7 @@ because a blocking gap remains.
   open the one area file for this slice before locking the seam. Its user path and gotchas are the
   behavior contract. Still read the module this slice edits. The area file does not replace that
   read, and it is not a reason to stop and retell the gotchas. Do not run `/build-feature-map`.
-  Do not suggest the map when it is missing — `/collab` and `/e2e` own that suggestion. Glossary,
+  Do not suggest the map when it is missing — feature preparation and QA E2E own that suggestion. Glossary,
   ADRs, the PRD, and `docs/design/<feature>.md` are still read in full.
 - Read **`docs/agents/stack-profile.md`** when present — pass `axes` on Knowledge searches below
 - **Deploy/CI slice (only when it surfaces mid-implementation):** [Knowledge pointer](../../docs/agents/knowledge.md)
@@ -169,7 +169,7 @@ name an upstream skill when blocked.
 - [ ] No secrets or credentials in code
 - [ ] Conventional commit ready
 - [ ] **Disk gate** — re-run the **gate-deciding** test/typecheck (and build if that is the
-      ship gate) on disk yourself; read real exit code. A sub-agent or prior turn saying
+      ship gate) in the matching checkout yourself, or inspect authorized matching CI evidence; read real exit code/logs. A sub-agent or prior turn saying
       "green" is not enough — see [invocation.md](../../docs/agents/invocation.md)
       (**Verification after delegation**). Skip only for diffs with no runnable gate
       (e.g. docs-only).
@@ -193,9 +193,9 @@ ship checklist — prefer **exactly one**:
 
 - Ship / done — feature closed, nothing queued
 - `/docs` — public integrator surface (API, MCP, CLI) just shipped
-- `/e2e` — critical browser journey needs CI coverage (not a substitute for seam TDD)
+- `/qa` (E2E) — critical browser journey needs CI coverage (not a substitute for seam TDD)
 
-Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces
+Name the higher-priority one when both `/docs` and `/qa` (E2E) could apply; two only if both surfaces
 genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/design`.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
@@ -212,11 +212,11 @@ genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/
 5. Instrument one variable at a time
 6. Fix + regression test at correct seam
 7. Cleanup debug logs; state hypothesis in commit message
-8. **Disk gate** — re-run gate-deciding command on disk (same rule as Implement ship)
+8. **Disk gate** — run the gate-deciding command in the matching workspace or verify authorized matching CI evidence (same rule as Implement ship)
 9. Run [scope-self-check.md](scope-self-check.md) — bug-fix diffs stay minimal; list
    cleanup temptations as follow-ups, do not sneak them in
 
-**Completion criterion:** Loop goes green on disk; regression test exists or seam gap
+**Completion criterion:** Loop goes green on matching workspace/CI evidence; regression test exists or seam gap
 documented; characterization done or skipped with reason; scope self-check filled.
 
 ## Stack Defaults

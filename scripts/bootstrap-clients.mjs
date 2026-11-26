@@ -73,6 +73,13 @@ const roles = readdirSync(join(repo, 'agents'))
 
 mkdirSync(skills, { recursive: true })
 
+// Retire only old symlinks owned by this exact kit checkout; preserve user-installed skills.
+for (const name of ['to-prd', 'to-issues', 'triage', 'align-loop', 'domain-modeling', 'arch-refactor', 'collab', 'e2e', 'code-review']) {
+  const target = join(skills, name)
+  const current = lstatSync(target, { throwIfNoEntry: false })
+  if (current?.isSymbolicLink() && resolve(dirname(target), readlinkSync(target)) === join(repo, 'skills', name)) backup(target)
+}
+
 for (const entry of readdirSync(join(repo, 'skills'), { withFileTypes: true })) {
   const source = join(repo, 'skills', entry.name)
   if (!entry.isDirectory() || !existsSync(join(source, 'SKILL.md'))) continue

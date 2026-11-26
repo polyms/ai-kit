@@ -8,8 +8,8 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
-Scaffold or incrementally update per-project configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`,
-`/to-issues`, `/dev`, `/devops`, and `/arch` assume. Prompt-driven — explore, confirm with user,
+Scaffold or incrementally update per-project configuration that `/reqs`, `/align`, `/design`, `/track`,
+`/task`, `/dev`, `/devops`, and `/arch` assume. Prompt-driven — explore, confirm with user,
 then write.
 
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md).
@@ -92,21 +92,21 @@ See [context-format.md](context-format.md) and [adr-format.md](adr-format.md).
 
 **D — Pipeline artifacts**
 
-Where specs land after `/reqs`, `/to-prd`, and `/align`:
+Where specs land after `/reqs` and `/align`:
 
 | Artifact | Default path                                                            |
 | -------- | ----------------------------------------------------------------------- |
-| PRDs     | Issue tracker canonical; `/to-prd` also mirrors to `docs/prd/<slug>.md` |
+| PRDs     | Issue tracker canonical; the reqs publication workflow also mirrors to `docs/prd/<slug>.md` |
 | ADRs     | `docs/adr/`                                                             |
 | Glossary | `CONTEXT.md`                                                            |
 
 Confirm or override paths. `/reqs` drafts enterprise PRDs in chat or `docs/prd/` and does **not** publish;
-`/to-prd` publishes to the tracker (and mirrors to `docs/prd/`). Once published, keep tracker and repo mirror
+the reqs lean publication workflow publishes to the tracker (and mirrors to `docs/prd/`). Once published, keep tracker and repo mirror
 in sync when both exist.
 
 **E — Triage labels**
 
-Map canonical triage roles to label strings on the issue tracker. Required for `/triage` and `/to-issues`.
+Map canonical triage roles to label strings on the issue tracker. Required for track triage mutations and reqs lean publication; optional for task vertical-slice labels.
 
 | Role type    | Canonical roles                                                               |
 | ------------ | ----------------------------------------------------------------------------- |
@@ -133,7 +133,7 @@ required before adoption. `/design` writes specs independently of `/ui-kit`.
 **G — Chat voice** (optional)
 
 Repo-level chat **persona** for agents. Distinct from documentation language (step A) and from grill
-question shape (`align-loop` / GRILL-FORMAT). Default: **do not** install — use the user's IDE/user rules.
+question shape (align decision loop / GRILL-FORMAT). Default: **do not** install — use the user's IDE/user rules.
 
 Ask: _Do you want a kit-written chat voice for this repo?_ If Explore found an existing
 `.cursor/rules/agent-voice.mdc`, say so and ask skip / replace / keep.
@@ -300,7 +300,7 @@ Author or repair areas with `/build-feature-map`.
 
 ### Pipeline
 
-Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev`; raw issues via `/triage`. Specs in
+Idea → `/align` → `/reqs` → `/task` → `/design` → `/dev`; raw issues via `/track` (triage). Specs in
 [path]; glossary in `CONTEXT.md`.
 ```
 
@@ -380,7 +380,7 @@ ln -sfn ../../.agents/skills/<slug> .claude/skills/<slug>
 Do **not** copy a second map under `.cursor/` or `.claude/` — one directory, two links.
 
 **If feature map No:** when no pointer exists, write `docs/agents/feature-map.md` with this body so
-`collab` and `e2e` stop suggesting the map:
+dev feature preparation and QA E2E stop suggesting the map:
 
 ```markdown
 # Feature map
@@ -406,8 +406,8 @@ contents are preserved. For both Yes and Keep existing, the Feature map subsecti
 Read back authorized writes; report verified, draft-only and blocked sections separately. For incremental
 setup verify only requested changes and preservation of unrelated configuration. Tell user setup is
 complete only when requested writes and gates are satisfied. Deliver the **orientation tour** in body prose — overview of
-pipeline entry points (`/align` before building; `/reqs` or `/to-prd` for specs; `/design` for
-UI specs; `/triage` for backlog issues; `/dev` / `/devops` / `/arch` filter Knowledge via
+pipeline entry points (`/align` before building; `/reqs` for specs; `/design` for
+UI specs; `/track` (triage) for backlog issues; `/dev` / `/devops` / `/arch` filter Knowledge via
 `docs/agents/stack-profile.md`). Remind them to create GitHub labels matching
 `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was
 installed, point at `.cursor/rules/agent-voice.mdc` to edit persona. If a feature map was
@@ -432,11 +432,10 @@ they have a raw backlog ready: `→ /triage` with when.
 → /align
 ```
 
-**Completion criterion:** `## Next Step` names `/align` (optional second `/triage` with when).
+**Completion criterion:** `## Next Step` names `/align` (optional second `/track` (triage) with when).
 
 ## Language
 
-Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `reqs`,
-`to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Prose stays natural in
+Once `docs/agents/language.md` exists, all skills that write persistent docs (`align`, `reqs`, `design`, `arch`, `task`) read it and write in the confirmed language. Prose stays natural in
 that language; only **pure-tech tokens** stay English ([language.md](language.md)). Chat tone is unaffected
 by this file — IDE/user rules, or `.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in.

@@ -54,7 +54,7 @@ When the user explicitly requests a business-facing BRD or business requirement 
 standard (`docs/agents/work-artifact-standard.md`, bundled by the MCP provider). Focus on business
 outcomes and rules; use the enterprise PRD for detailed product behavior. Do not create a second
 artifact unless requested. If project context is unavailable, use supplied inputs and flag unknowns.
-The skill drafts requirements; publishing requires explicit user direction and an authorized integration.
+The skill drafts requirements; publishing requires explicit user direction and an authorized integration; apply the relevant readiness and destination gates.
 The existing PRD and engineering handoff workflows below remain unchanged.
 
 ## Document types
@@ -65,6 +65,8 @@ or outside this skill — the **Other families** table in the requirements catal
 top) names which. Do not open a second document.
 
 ## Quick Router
+
+For aligned synthesis/publication, follow [lean PRD workflow](lean-prd-workflow.md) rather than repeating discovery.
 
 | User intent                       | Workflow                                            | Reference                                                |
 | --------------------------------- | --------------------------------------------------- | -------------------------------------------------------- |
@@ -86,7 +88,7 @@ including who is not a user).
 
 ## Codebase-first
 
-**Goal:** Lean PRD from the repo when `collab` passes an inference brief, or the user says to
+**Goal:** Lean PRD from the repo when dev feature preparation passes an inference brief, or the user says to
 draft from the codebase without an interview.
 
 1. Do **not** run [prd-interview.md](prd-interview.md), the confirmation turn, or the behavior-pass
@@ -102,7 +104,7 @@ draft from the codebase without an interview.
 **Completion criterion:** `docs/prd/<slug>.md` exists; no tracker issue; no interview questions
 were sent.
 
-When the user invoked `/reqs` this way themselves (no `collab` parent), end with `## Next Step`
+When the user invoked `/reqs` this way themselves (no dev feature preparation parent), end with `## Next Step`
 → `/design` if the feature has a screen, otherwise → `/reqs` (publish the approved lean PRD if requested).
 
 ## PRD Workflow

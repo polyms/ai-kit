@@ -7,8 +7,7 @@ project context and execution routes from `docs/agents/execution-profile.md` whe
 commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
 bounded draft or blocked handoff for unavailable actions.
 
-Synthesize the **confirmed decisions from conversation or authorized project artifacts** and available codebase understanding into a lean PRD and **publish** it to the
-issue tracker.
+Synthesize confirmed decisions into a lean PRD; publish to the issue tracker only when requested and authorized.
 
 **Do NOT interview** — synthesize from available decisions, source artifacts and codebase context.
 Reuse approved alignment handoffs across sessions; do not assume missing prior chat.
@@ -29,7 +28,7 @@ ship executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: ten
   **Repo references** only when the user asked; never as a banner under the title, never as a substitute for
   writing the decision in prose.
 
-**Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain
+**Upstream:** `/align` decision loop and domain-modeling references sharpen decisions and domain
 language before synthesis.
 
 **Downstream:** `/task` (vertical slicing) breaks the published PRD into vertical-slice issues.
@@ -87,7 +86,7 @@ may explicitly defer confirmation.
 Scan conversation, align handoff, and codebase for details an implementer still needs — same bar as
 `[NEEDS CLARIFICATION]` in [lean-prd-template.md](lean-prd-template.md).
 
-If any would appear in **Open Questions**: list them, **do not draft or publish yet**, and ask the
+If any would appear in **Open Questions**: list them, **do not finalize or publish yet**; a bounded draft with unconfirmed markers is allowed only as a clearly labeled draft, and ask the
 **open-questions confirmation** turn ([GRILL-FORMAT.md](../align/GRILL-FORMAT.md)) — **A** here means
 run `/align` on the listed items; **B** proceeds to step 4 with confirmed markers. If `/align` already
 deferred the same items with **B**, restate the list and proceed only after explicit yes.

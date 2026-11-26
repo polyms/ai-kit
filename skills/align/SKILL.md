@@ -14,7 +14,7 @@ Choose full alignment, [decision loop](decision-loop.md), or [domain modeling](d
 
 Run [decision loop](decision-loop.md) using [domain modeling](domain-modeling.md) — the same pairing as Matt `grill-with-docs`: grill the plan **and** write vocabulary and hard decisions down as they land.
 
-Close the communication gap before `/reqs`, `/reqs` (lean synthesis/publication), `/design`, or `/dev`. Do not substitute `/reqs` discovery, a PRD draft, or a feature list for the grill.
+Close the communication gap before `/reqs`, `/design`, or `/dev`. Do not substitute `/reqs` discovery, a PRD draft, or a feature list for the grill.
 
 Read confirmed context if available; missing setup is not a reason to auto-run it. Block only actions requiring unresolved policy.
 
@@ -56,14 +56,14 @@ or the user picked **B** and confirmed the deferred list — never with a silent
 implementer-facing gaps remain (that is how `/reqs` (lean synthesis/publication) surfaces markers the user never saw). An open branch
 is still a grill question, not `→ /align`.
 
-## When `/reqs` vs `/reqs` (lean synthesis/publication) vs `/align`
+## Choose the next reqs workflow or continue alignment
 
-Same decision tree in `/reqs` and `/reqs` (lean synthesis/publication) — keep in sync:
+Use the routing rules in reqs:
 
 ```
 Decisions / problem statement clear?
 ├─ Yes, aligned chat ready to ship a PRD → tell user to invoke `/reqs` (lean synthesis/publication)
-│     (lean template, publish to tracker — `/reqs` does NOT publish)
+│     (lean template; publish only when authorized)
 ├─ No — need design-tree grill (tech forks, domain terms) → continue `/align` (or restart)
 └─ No — need requirements discovery, enterprise PRD, stories, or prioritization → tell user to invoke `/reqs`
       (draft in chat or docs/prd/; does NOT create tracker issues)
@@ -109,4 +109,4 @@ Two leaving skills only when that fork is real:
 on that reply matches the audit (not silently empty). `→ /reqs` only when that audit is empty, or the
 deferral pick is the message this reply answers.
 
-Alignment is **interactive** — stay in this chat for the whole grill. There is no `align-agent` subagent; subagents run autonomously and cannot wait for one answer per turn.
+Interactive alignment stays in the conversation. For delegated runs without an interactive user, use the decision-loop handoff: resolve from approved evidence, report the highest blocking fork and stop dependent work. Never invent a decision.
