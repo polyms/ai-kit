@@ -1,7 +1,7 @@
 # SDK stable-release readiness
 
 Status (2026-11-22): **`1.0.0-rc.1` published; stable `1.0.0` not yet authorized**.
-SDK versions are independent of skill release `0.3.5`; the former `0.3.3` registry snapshot is retired, while historical evidence remains.
+SDK versions are independent of skill release `0.3.5`; the former `0.3.3` and `0.3.4` registry snapshots are retired, while historical evidence remains.
 Only Node.js 24+ / ESM with built-in `fetch` is supported.
 
 ## Proven release candidate
