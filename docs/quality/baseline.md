@@ -32,10 +32,10 @@ Ask an AI client connected to AI Kit MCP:
 
 The AI calls `server_info`, then `get_release_info` for the configured
 immutable release, and optionally `get_release_info` with
-`checkHttp=true, retiredVersion="0.3.4"` for **bounded public HTTP
+`expectedVersion="0.3.5", checkHttp=true, retiredVersion="0.3.4"` for **bounded public HTTP
 checks** (latest and pinned catalogs, QA skill, exact Context Contract, and
 retired endpoints returning HTTP 404). That HTTP result is observed from the
-**MCP server's network perspective**. An access block or network error is
+**MCP server's network perspective**. A requested-version mismatch fails before HTTP; complete latest/pinned catalog metadata must match. An access block or network error is
 **Unverified**, not Passed. MCP `get_skill_pack` independently checks mutable
 `main` content, not the pinned immutable release.
 
