@@ -29,14 +29,15 @@ to persist or publish any business artifact.
 Run from a clean checkout on Node.js 24 or later:
 
 ```sh
-node scripts/verify-skill-release.mjs --version 0.3.5 --endpoint https://ai-kit.polyms.dev
+node scripts/verify-skill-release.mjs --version 0.3.5 --retired 0.3.4 --endpoint https://ai-kit.polyms.dev
 ```
 
 The verifier reads `registry/releases/0.3.5/release.json` and compares its immutable
 revision with live `latest.json` and pinned `catalog.json`. It checks key
 bundle identities, contracts, manifest-only and starter content, `rawUrl` origin,
 five Memory hint contracts, and an exact-path POST for the shared Memory Protocol.
-Any mismatch, non-JSON response or missing expected content is a failure.
+Any mismatch, non-JSON response or missing expected content is a failure. Retired
+`0.3.4` catalog, QA starter and versioned API requests must return HTTP 404.
 
 `.github/workflows/quality.yml` provides two independent paths:
 
@@ -45,11 +46,16 @@ Any mismatch, non-JSON response or missing expected content is a failure.
 - A manual `workflow_dispatch` runs the public production smoke verifier **on demand**,
   such as immediately after a skill release deployment. The expected version defaults
   to `0.3.5`; update it deliberately for future releases.
-  There is no recurring production polling. Production checks are read-only and need
-  no secret or authenticated MCP session.
+  The same manual job builds the existing SDK and runs its **generic reference
+  consumer** against the live endpoint. This does not inspect which SDK Astra
+  actually deployed. There is no recurring production polling. Both checks
+  are read-only and need no Astra secret or authenticated MCP session.
 
 The production smoke checks **HTTP skill delivery**, not OAuth/MCP client behavior. The previous `0.3.3` and `0.3.4` versions are not supported by the new registry; old pinned provider requests should return 404 once production is deployed. Confirm no dependent consumer is still pinned to either retired version before promoting `latest`.
-Do not call a PR test run proof of production deployment.
+Do not call a PR test run proof of production deployment. See the separate
+[release and consumer verification runbook](release-consumer-verification.md)
+for production commands, the limited Astra Staging template retrieval evidence,
+and the missing proof of Astra's actual SDK runtime.
 
 ## Everyday-mode manual baseline
 
