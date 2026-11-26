@@ -3,14 +3,14 @@ import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import * as v034 from '../../../registry/releases/0.3.4/manifest/skill-pack'
-import { compositionCatalog as composition034 } from '../../../registry/releases/0.3.4/manifest/skill-composition'
+import * as v035 from '../../../registry/releases/0.3.5/manifest/skill-pack'
+import { compositionCatalog as composition035 } from '../../../registry/releases/0.3.5/manifest/skill-composition'
 
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const root = resolve(app, '../..')
 const output = resolve(app, 'public/skill-bundles')
-const registry = { '0.3.4': { ...v034, compositionCatalog: composition034 } }
-const latest = '0.3.4'
+const registry = { '0.3.5': { ...v035, compositionCatalog: composition035 } }
+const latest = '0.3.5'
 
 async function buildRelease(releaseVersion: keyof typeof registry) {
   const { getSkillPack, listSkillPacks, compositionCatalog } = registry[releaseVersion]
@@ -23,16 +23,30 @@ async function buildRelease(releaseVersion: keyof typeof registry) {
   async function load(path: string) {
     const expected = release.files[path]
     if (!/^[a-f0-9]{40}$/.test(expected ?? '')) throw new Error('Unregistered snapshot path: ' + path)
+    const sha = (buffer: Buffer) => createHash('sha1')
+      .update('blob ' + buffer.length).update(Buffer.from([0])).update(buffer).digest('hex')
     let bytes: Buffer | undefined
+    // Prefer exact verified worktree bytes when the pinned PR commit was squash-merged.
     try {
-      bytes = execFileSync('git', ['show', revision + ':' + path], { cwd: root, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 2_000_000 })
+      const local = readFileSync(resolve(root, path))
+      if (sha(local) === expected) bytes = local
     } catch {
-      // Shallow/Vercel checkouts may not have historical Git objects. Build-time fallback only.
-      const response = await fetch('https://raw.githubusercontent.com/polyms/ai-kit/' + revision + '/' + path, {
-        signal: AbortSignal.timeout(20_000), redirect: 'error',
-      })
-      if (!response.ok) throw new Error('Release source unavailable: ' + path + ' HTTP ' + response.status)
-      bytes = Buffer.from(await response.arrayBuffer())
+      // Worktree content may not exist in packaged or sparse builds.
+    }
+    if (!bytes) {
+      try {
+        // A content-addressed blob works even if its original commit ref is unreachable.
+        bytes = execFileSync('git', ['cat-file', 'blob', expected], {
+          cwd: root, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 2_000_000,
+        })
+      } catch {
+        // Fallback for build environments missing the pinned object.
+        const response = await fetch('https://raw.githubusercontent.com/polyms/ai-kit/' + revision + '/' + path, {
+          signal: AbortSignal.timeout(20_000), redirect: 'error',
+        })
+        if (!response.ok) throw new Error('Release source unavailable: ' + path + ' HTTP ' + response.status)
+        bytes = Buffer.from(await response.arrayBuffer())
+      }
     }
     const hash = createHash('sha1').update('blob ' + bytes.length).update(Buffer.from([0])).update(bytes).digest('hex')
     if (hash !== expected) throw new Error('Release blob mismatch: ' + path + ' expected=' + expected + ' actual=' + hash)

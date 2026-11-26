@@ -12,7 +12,7 @@ import {
 } from '../apps/landing/src/lib/skill-pack/skill-pack'
 import { executeGetSkillPack, executeListSkillPacks } from '../apps/landing/src/lib/skill-pack/skill-pack.mcp'
 import { scoreRoute, gradeOutput, scoreTrace, summarize } from './scoring.mjs'
-import { getSkillPack as getSnapshotPack, listSkillPacks as listSnapshotPacks } from '../registry/releases/0.3.4/manifest/skill-pack'
+import { getSkillPack as getSnapshotPack, listSkillPacks as listSnapshotPacks } from '../registry/releases/0.3.5/manifest/skill-pack'
 import { memoryCase, memoryTraceScore, invokeMemoryLookup } from './memory/scoring.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -93,7 +93,7 @@ hash.update(JSON.stringify(cases)).update(JSON.stringify(fixtureContext))
 const memoryInputs = new Map<string, { baseline: string; assisted: string }>()
 if (cases.some(item => item.suite === 'memory')) {
   const baselineSource = await readJson('evals/memory/baseline.json')
-  const p2Release = await readJson('registry/releases/0.3.4/release.json')
+  const p2Release = await readJson('registry/releases/0.3.5/release.json')
   const readPinned = (snapshot: { revision: string; files: Record<string, string> }, path: string) => {
     // A pinned source commit may become unreachable after a squash merge.
     // Git blob IDs are content-addressed: read the exact manifest-pinned bytes

@@ -1,6 +1,6 @@
 # Evaluation, governance and observability
 
-Status: deterministic evaluation foundation and 88 synthetic scenarios are implemented. A
+Status: deterministic evaluation foundation and 92 synthetic scenarios are implemented. A
 release smoke verifier and measured-run report generator are documented in
 [Quality Baseline](../quality/baseline.md). Workflow-augmentation effectiveness and final thresholds remain unverified; AI Kit does not claim to increase model intelligence.
 
@@ -41,7 +41,7 @@ proof of product value.
 The existing evaluation runner compares baseline and skill-assisted outputs using synthetic
 fixtures and an explicitly configured compatible model endpoint. It tests routing, output and
 composition; it can record retrieval traces and optional judge scores. At the PR #12 foundation there were 68 scenarios; the current foundation includes
-13 output, 39 routing, 21 composition and 15 memory scenarios (88 total). Scenario counts,
+17 output, 39 routing, 21 composition and 15 memory scenarios (92 total). Scenario counts,
 fixture validity, successful CI and dry runs are not measured model quality. Native clients
 need separate integration tests. See [evaluation runner](../../evals/README.md).
 

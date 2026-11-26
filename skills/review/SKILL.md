@@ -20,6 +20,12 @@ Use [review-template.md](review-template.md) and the shared work artifact standa
 5. Recommend proceed, proceed with conditions, revise, or insufficient evidence. Do not imply approval.
    Revise the artifact only if asked; preserve established scope and track suggested changes.
 
+For feature documents or change-impact reviews, check for mismatches among the approved
+requirement revision, open Q&A, documentation-completeness decision, environment-specific
+feature map and QA evidence. Distinguish an approval gap from an implementation discrepancy
+and a stale or missing observation. Do not treat a repository test export as authoritative
+when the owning project designates a separate canonical feature map.
+
 **Done when:** Findings are grounded, prioritized, actionable and independent of the author's intent.
 
 Use `code-review` for source-code changes. Use `qa` to execute or assess tests, not to review prose.

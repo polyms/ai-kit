@@ -20,6 +20,12 @@ Use [release-templates.md](release-templates.md) and the shared work artifact st
 5. Produce a readiness report, checklist or user-facing notes appropriate to the request.
    Do not deploy, merge, change flags or approve a launch without explicit authorization.
 
+For environment-specific release or feature questions, compare the approved scope to the
+actual target environment/build, deployment or flag evidence, QA confirmation and open
+questions independently. Do not infer Production presence from a Dev/Staging test, a completed
+ticket or a green deployment. Report missing environment evidence as `Unknown` and preserve
+historical revision references when older builds are live.
+
 **Done when:** Every applicable gate has an evidence-backed status, unresolved risk is visible,
 and the proposed release decision is distinct from authorized sign-off.
 

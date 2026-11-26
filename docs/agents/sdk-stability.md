@@ -1,7 +1,7 @@
 # SDK stable-release readiness
 
 Status (2026-11-22): **`1.0.0-rc.1` published; stable `1.0.0` not yet authorized**.
-SDK versions are independent of skill release `0.3.4`; the former `0.3.3` registry snapshot is retired, while historical evidence remains.
+SDK versions are independent of skill release `0.3.5`; the former `0.3.3` and `0.3.4` registry snapshots are retired, while historical evidence remains.
 Only Node.js 24+ / ESM with built-in `fetch` is supported.
 
 ## Proven release candidate
@@ -28,7 +28,7 @@ Only Node.js 24+ / ESM with built-in `fetch` is supported.
 | --- | --- | --- |
 | PR source tests and local packed tarball import | GitHub CI on SDK RC head | Verified |
 | Publishing to GitHub Packages | Tag workflow `sdk-v1.0.0-rc.1` | Verified |
-| Historical 0.3.3 skill delivery | Earlier production MCP and Astra Stg smoke | Verified previously; 0.3.4 production smoke pending |
+| Historical 0.3.3 skill delivery | Earlier production MCP and Astra Stg smoke | Verified previously; 0.3.5 production smoke pending |
 | Public Polyms registry proxy install | Clean install of RC through `registry.polyms.dev/npm` | Not verified |
 | Explicit consumer SDK runtime version | Inspect actual resolved dependency and run RC methods | Not verified by MCP response |
 | Consuming-host performance | Cold/warm and reference timing with `sdk/benchmark.mjs` | Not measured |

@@ -1,6 +1,6 @@
 # Quality Baseline and Release Verification
 
-Status (2026-11-23): **historical skill delivery verified; new 0.3.4 HTTP release delivery and workflow-augmentation effectiveness are not yet independently measured**.
+Status (2026-11-26): **historical skill delivery verified; new 0.3.5 HTTP release delivery and workflow-augmentation effectiveness are not yet independently measured**.
 This is an evaluation and delivery-verification plan, not a claim that skills outperform
 the baseline, a new release gate or authorization to run paid models.
 
@@ -9,9 +9,9 @@ the baseline, a new release gate or authorization to run paid models.
 | Capability | Observed result | Evidence and limit |
 | --- | --- | --- |
 | P2 production deployment | AI Kit production commit `4c028ae` after PR #14 merge | MCP `server_info` read-only response |
-| Historical delivery (retired) | Astra Stg returned core `0.3.3`, revision `2617cd6` | Old smoke evidence, not proof of `0.3.4` production deployment |
+| Historical delivery (retired) | Astra Stg returned core `0.3.3`, revision `2617cd6` | Old smoke evidence, not proof of `0.3.5` production deployment |
 | Remote skill metadata | 13 skill packs; five pilot contracts expose optional `memory` hints | AI Kit `list_skill_packs` |
-| Post-PR #18 MCP identity | Production server `0.3.0`, commit `9a25162`, `packCount = packs.length = 13`, source `main` mutable | Read-only MCP verification; **not** immutable `0.3.4` HTTP release verification |
+| Post-PR #18 MCP identity | Production server `0.3.0`, commit `9a25162`, `packCount = packs.length = 13`, source `main` mutable | Read-only MCP verification; **not** immutable `0.3.5` HTTP release verification |
 | Post-merge ChatGPT Instant regression | 12 planned QA cases with conditional cross-team and forged-role variants; no tests executed | [User-supplied manual evidence](../../evals/manual/2026-11-23-team-invitation-instant-regression.md); no independent model trace or causal control |
 | Unassisted Team Invitation baseline (manual pair) | 8 tasks, 15 planned tests, 9.0 developer-days; explicit forged role and status override checks | [User-supplied draft review](../../evals/manual/2026-11-23-team-invitation-unassisted-baseline-candidate.md); shared prompt **confirmed by user**, no independent host trace |
 | Neutral-prompt AI Kit-assisted (manual pair) | 8 tasks, 12 planned tests, 8–13 dev-day task range, 2–3 allowance; conditional cross-team and forged-role variants | [User-submitted follow-up](../../evals/manual/2026-11-23-team-invitation-neutral-assisted-candidate.md); 4 MCP calls self-reported, shared prompt confirmed, mode/tool traces not independently verified |
@@ -29,10 +29,10 @@ to persist or publish any business artifact.
 Run from a clean checkout on Node.js 24 or later:
 
 ```sh
-node scripts/verify-skill-release.mjs --version 0.3.4 --endpoint https://ai-kit.polyms.dev
+node scripts/verify-skill-release.mjs --version 0.3.5 --endpoint https://ai-kit.polyms.dev
 ```
 
-The verifier reads `registry/releases/0.3.4/release.json` and compares its immutable
+The verifier reads `registry/releases/0.3.5/release.json` and compares its immutable
 revision with live `latest.json` and pinned `catalog.json`. It checks key
 bundle identities, contracts, manifest-only and starter content, `rawUrl` origin,
 five Memory hint contracts, and an exact-path POST for the shared Memory Protocol.
@@ -44,11 +44,11 @@ Any mismatch, non-JSON response or missing expected content is a failure.
   formatter. These tests use mock response fixtures and **never** touch production.
 - A manual `workflow_dispatch` runs the public production smoke verifier **on demand**,
   such as immediately after a skill release deployment. The expected version defaults
-  to `0.3.4`; update it deliberately for future releases.
+  to `0.3.5`; update it deliberately for future releases.
   There is no recurring production polling. Production checks are read-only and need
   no secret or authenticated MCP session.
 
-The production smoke checks **HTTP skill delivery**, not OAuth/MCP client behavior. The previous `0.3.3` version is not supported by the new registry; old pinned provider requests should return 404 once production is deployed.
+The production smoke checks **HTTP skill delivery**, not OAuth/MCP client behavior. The previous `0.3.3` and `0.3.4` versions are not supported by the new registry; old pinned provider requests should return 404 once production is deployed. Confirm no dependent consumer is still pinned to either retired version before promoting `latest`.
 Do not call a PR test run proof of production deployment.
 
 ## Everyday-mode manual baseline
@@ -97,15 +97,16 @@ not interchangeable with verified evaluation evidence. Details:
 
 ## Optional paired workflow evaluation
 
-The opt-in `evals/run.ts` runner has **88 synthetic scenarios**:
+The opt-in `evals/run.ts` runner has **92 synthetic scenarios** (including four
+feature-context cases added after the 2026-11-22 baseline):
 
 | Suite | Count | What it exercises |
 | --- | ---: | --- |
 | Routing | 39 | Appropriate smallest skill set and routing rules |
-| Output | 13 | Artifact quality and evidence-aware drafting |
+| Output | 17 | Artifact quality and evidence-aware drafting |
 | Composition | 21 | Multi-skill selection, references and handoffs |
 | Memory | 15 | Relevant recall, source integrity, stale decisions, privacy and capture rules |
-| **Total** | **88** | |
+| **Total** | **92** | |
 
 The runner compares baseline vs skill-assisted on the same synthetic context.
 Memory cases isolate P2 advice with the same historical evidence in both arms.

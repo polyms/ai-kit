@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { verifySkillRelease } from './verify-skill-release.mjs'
 
-const version = '0.3.4'
+const version = '0.3.5'
 const revision = 'a'.repeat(40)
 const release = { version, revision }
 const names = ['reqs', 'plan', 'bug', 'qa', 'review']
@@ -35,14 +35,14 @@ function fakeFetch({ staleLatest = false, badStarter = false, noMemory = false }
       return response({ ...catalog, ...(staleLatest ? { version: '0.3.2' } : {}),
         packs: noMemory ? packs.map(p => ({ ...p, contract: { ...p.contract, memory: undefined } })) : packs })
     }
-    if (path === '/skill-bundles/0.3.4/catalog.json') return response(noMemory ? {
+    if (path === '/skill-bundles/0.3.5/catalog.json') return response(noMemory ? {
       ...catalog, packs: packs.map(p => ({ ...p, contract: { ...p.contract, memory: undefined } })),
     } : catalog)
     if (path === '/api/skills') {
       const body = JSON.parse(init.body)
       return response(makeBundle(body.name, 'selected'))
     }
-    const match = path.match(/^\/skill-bundles\/0\.3\.4\/(reqs|plan|bug)\/(starter|manifest)\.json$/)
+    const match = path.match(/^\/skill-bundles\/0\.3\.5\/(reqs|plan|bug)\/(starter|manifest)\.json$/)
     if (match) {
       const bundle = makeBundle(match[1], match[2])
       if (badStarter && match[1] === 'plan' && match[2] === 'starter') {

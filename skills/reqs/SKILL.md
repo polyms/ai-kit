@@ -43,6 +43,12 @@ Use [assumptions-and-change.md](assumptions-and-change.md) when the request invo
 premises, revising approved requirements, or tracing requirements to tasks and QA. Preserve agreed
 scope and identifiers; do not treat unvalidated assertions as accepted requirements.
 
+When a QA question, environment observation or draft feature map raises a possible business
+rule change, keep that material **Pending** until the authorized product decision owner confirms
+it. Existing approved requirements remain the baseline; a confirmed answer that changes
+behavior needs a traceable approved revision, not a silent rewrite. Environment verification
+alone does not approve requirements or documentation completeness.
+
 ## Business requirements workflow
 
 When the user explicitly requests a business-facing BRD or business requirement ticket, use

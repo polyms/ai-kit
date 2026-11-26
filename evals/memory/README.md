@@ -14,10 +14,10 @@ recomputes each blob hash. It does **not** rely on the pinned source commit
 being fetchable as a Git ref after squash merges; a missing blob is an explicit error.
 No network fallback or silent substitution with current source text is permitted. No real workspace, memory provider or write tool is involved.
 
-Both arms receive the same P0/P1 contract fields from the pinned 0.3.4 manifest with memory
+Both arms receive the same P0/P1 contract fields from the pinned 0.3.5 manifest with memory
 hints removed, and historical starter files verified against a pre-P2 Git revision in
 `baseline.json`. This baseline is a test fixture, not an available skill release. Only the
-assisted arm receives the P2 hints and protocol from the pinned 0.3.4 source. In this targeted suite the skill route is fixed
+assisted arm receives the P2 hints and protocol from the pinned 0.3.5 source. In this targeted suite the skill route is fixed
 to isolate memory behavior rather than routing accuracy. Fixture fingerprints include the actual
 guidance. Never use private records or run paid calls without explicit configuration.
 

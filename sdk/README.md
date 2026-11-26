@@ -40,7 +40,7 @@ Install that tarball in your Business MCP. No new workspace dependencies or runt
 Run from the host that will consume the provider, after building the SDK and deploying the API:
 
 ```sh
-node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.4 20
+node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.5 20
 ```
 
 The report includes cold/warm p50 and p95, reference fetch timing and network call counts.
@@ -63,11 +63,11 @@ Pinned bundles remain cached until eviction or explicit clearing.
 
 ## Context-aware consumers
 
-Skill release 0.3.4 includes context requirements and the starter files include shared
-context guidance. Forward both the contract and selected file contents to the AI client,
+Skill release 0.3.5 adds environment-aware feature context governance. Starter bundles
+include shared context guidance. Forward both the contract and selected file contents to the AI client,
 together with trusted domain instructions. The client resolves context through authorized
-tools; do not send workspace data to the skill provider. Earlier experimental skill releases, including 0.3.3,
-are retired: consumers pinning them must switch to 0.3.4 or `latest`. SDK and skill versions
+tools; do not send workspace data to the skill provider. Earlier skill releases, including 0.3.3 and 0.3.4,
+are retired: consumers pinning them must switch to 0.3.5 or `latest`. SDK and skill versions
 are independent.
 
 For multi-skill discovery, `provider.list()` includes optional `composition` metadata (recipes and
@@ -92,7 +92,7 @@ call Knowledge tools or execute recipes. Keep actual project data within authori
 
 ## Memory-aware consumers
 
-Skill release 0.3.4 adds optional `contract.memory` recall/capture hints and an allowlisted shared
+Skill release 0.3.5 retains optional `contract.memory` recall/capture hints and an allowlisted shared
 `docs/agents/memory-protocol.md` reference. The SDK keeps the same wire schema and forwards the
 contract unchanged; no SDK upgrade or provider integration is required. Forward selected contracts
 and paths to the host. When memory guidance is
