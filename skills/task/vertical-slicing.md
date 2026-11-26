@@ -1,11 +1,3 @@
----
-name: to-issues
-description: Break a plan, spec, or PRD into independently-grabbable tracker issues using tracer-bullet
-  vertical slices. Invoke with /to-issues, tách issue, vertical slice, break down PRD, bẻ PRD thành issues,
-  publish issues, đẩy issues lên GitHub, or splitting a spec into implementation tickets.
-disable-model-invocation: true
----
-
 # To Issues
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
@@ -15,12 +7,12 @@ project context and execution routes from `docs/agents/execution-profile.md` whe
 commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
 bounded draft or blocked handoff for unavailable actions.
 
-Break a plan, spec, or PRD into independently-grabbable GitHub issues using **tracer bullet** vertical slices.
+Break a plan, spec, or PRD into independently-grabbable tracker issues using **tracer bullet** vertical slices.
 
-**Upstream:** `/reqs` or `/to-prd` produces PRDs and user stories. This skill turns approved specs into
+**Upstream:** `/reqs` produces PRDs and user stories. This skill turns approved specs into
 implementation-ready issues — it does not rewrite stories or acceptance criteria from scratch.
 
-**Audience:** Follow [issue-template.md](issue-template.md). Do **not** pass a parent PRD executive summary
+**Audience:** Follow [vertical-slice-template.md](vertical-slice-template.md). Do **not** pass a parent PRD executive summary
 into slices or ship agent-only shorthand (e.g. `"US#1–9: tenancy..."`) — expand enough context per wave.
 Tracker body is for humans first: issue keys for Parent/Blocked by; repo paths only in optional **Repo notes**.
 
@@ -37,14 +29,14 @@ that language.
 | Triage labels   | `docs/agents/triage-labels.md` — `ready-for-agent` mapping |
 | Domain glossary | `CONTEXT.md` — use terms in **prose**; do not cite the file as main issue content              |
 | ADRs            | `docs/adr/` — fold decisions into **What to build**; path only in **Repo notes**               |
-| Issue body      | [issue-template.md](issue-template.md)                                                         |
+| Issue body      | [vertical-slice-template.md](vertical-slice-template.md)                                                         |
 
 ## Process
 
 ### 1. Gather context
 
 Work from whatever is already in the conversation. If the user passes an issue reference (number, URL, or
-path), fetch it — PRDs from `/to-prd` use title `PRD: <feature>`:
+path), fetch it — PRDs from the lean PRD workflow use title `PRD: <feature>`:
 
 ```bash
 gh issue view <number> --comments
@@ -104,9 +96,12 @@ run with unresolved approval, deliver the numbered draft and stop before publish
 
 **Completion criterion:** User explicitly approves the slice list and dependencies.
 
-### 5. Publish issues
+### 5. Publish issues (only when explicitly authorized)
 
-For each approved slice, create a tracker issue using [issue-template.md](issue-template.md). Publish only with authorization using the configured tracker route. Publish in
+For a draft-only request stop after drafting; ask for approval only if needed for the requested action.
+Search for duplicate issues where supported before writing. Reject cyclic or unresolved dependencies.
+
+For each approved slice, create a tracker issue using [vertical-slice-template.md](vertical-slice-template.md). Publish only with authorization using the configured tracker route. Publish in
 dependency order (blockers first) so you can reference real issue numbers in **Blocked by**. Follow
 `docs/agents/issue-tracker.md` for create commands (`gh` example below).
 
@@ -139,7 +134,7 @@ Use the actual label string from the mapping table, not the canonical role name,
 
 Do **not** close or modify any parent issue.
 
-**Completion criterion:** Every approved slice exists as a GitHub issue with filled template sections;
+**Completion criterion:** Every approved slice exists as a tracker issue with filled template sections;
 human-readable check passed per issue; blocker references use real issue numbers.
 
 ### 6. Handoff

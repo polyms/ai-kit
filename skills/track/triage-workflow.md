@@ -1,9 +1,3 @@
----
-name: triage
-description: Move GitHub issues and optional external PRs through a triage state machine — categorise, verify, grill if needed, write agent briefs. Invoke with /triage, triage issues, phân loại issue, ready-for-agent, xử lý backlog GitHub, or classify bugs.
-disable-model-invocation: true
----
-
 # Triage
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
@@ -37,8 +31,8 @@ or automatic setup.
 | ADRs            | `docs/adr/` — decisions in the area you are touching                                      |
 | Agent brief     | [agent-brief.md](agent-brief.md) — contract for `ready-for-agent`                         |
 | Out of scope    | [out-of-scope.md](out-of-scope.md) — `.out-of-scope/` knowledge base                      |
-| Grill           | `align-loop` skill — one question, lettered options + `(Recommended)` (model-invoked)     |
-| Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline (model-invoked)                      |
+| Grill           | `align` decision loop skill — one question, lettered options + `(Recommended)` (model-invoked)     |
+| Domain terms    | `align` domain modeling skill — update `CONTEXT.md` inline (model-invoked)                      |
 
 ## Roles
 
@@ -65,7 +59,7 @@ If state roles conflict, flag it and ask the maintainer before doing anything el
 
 ## Natural language requests
 
-The maintainer invokes `/triage` and describes what they want in natural language. Interpret the request and act. Examples:
+The maintainer invokes `/track` (triage) and describes what they want in natural language. Interpret the request and act. Examples:
 
 - "Show me anything that needs my attention"
 - "Let's look at #42" (issue or PR)
@@ -127,11 +121,15 @@ unverified, not confirmed; do not infer test results from the diff. Report: conf
 
 ### 4. Grill (if needed)
 
-If the request needs fleshing out, reach **`align-loop`** and **`domain-modeling`** together — design tree, one question, lettered options + `(Recommended)`, codebase-first; sharpen domain terms and update `CONTEXT.md` inline as decisions land. Question shape: [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md). Do not duplicate those skill bodies here; follow them in-process.
+If the request needs fleshing out, reach **`align` decision loop** and **`align` domain modeling** together — design tree, one question, lettered options + `(Recommended)`, codebase-first; sharpen domain terms and update `CONTEXT.md` inline as decisions land. Question shape: [GRILL-FORMAT.md](../align/GRILL-FORMAT.md). Do not duplicate those skill bodies here; follow them in-process.
 
 **Completion criterion:** Request is specific enough for an agent brief, or maintainer chooses to stop at `needs-info`.
 
 ### 5. Apply the outcome
+
+Use the shared tracker read-before-write and readback rules. Do not mutate a read-only triage request.
+For rejected enhancements, verify the required out-of-scope record before closing; if blocked, report
+partial progress rather than closing without the record.
 
 With verified authorization, apply **one category** and **one state** label using mapped strings from `docs/agents/triage-labels.md`. Remove conflicting state/category labels when replacing:
 

@@ -1,9 +1,3 @@
----
-name: to-prd
-description: Synthesize the current conversation into a lean PRD and publish it to the issue tracker — no interview. Invoke with /to-prd, publish PRD, đẩy PRD lên GitHub, tổng hợp PRD, or chốt PRD.
-disable-model-invocation: true
----
-
 # To PRD
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
@@ -19,18 +13,9 @@ issue tracker.
 **Do NOT interview** — synthesize from available decisions, source artifacts and codebase context.
 Reuse approved alignment handoffs across sessions; do not assume missing prior chat.
 
-## When `/reqs` vs `/to-prd` vs `/align`
+## Selection
 
-Same decision tree in `/align` handoff and `/reqs` — keep in sync:
-
-```
-Decisions / problem statement clear?
-├─ Yes, aligned chat ready to ship a PRD → `/to-prd` (this skill)
-│     (lean template, publish to tracker)
-├─ No — need design-tree grill (tech forks, domain terms) → user invokes `/align`
-└─ No — need requirements discovery, enterprise PRD, stories, or prioritization → user invokes `/reqs`
-      (draft in chat or docs/prd/; `/reqs` does NOT create tracker issues)
-```
+Use only for aligned decisions; draft unless publication is explicitly requested. Do not restart discovery.
 
 **Audience:** Follow [lean-prd-template.md](lean-prd-template.md). The published issue is for **humans on the
 tracker first** — any role skimming the issue without opening the repo. Agents reuse the same body. Do **not**
@@ -44,17 +29,10 @@ ship executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: ten
   **Repo references** only when the user asked; never as a banner under the title, never as a substitute for
   writing the decision in prose.
 
-**Boundary vs `/reqs`:**
-
-| Skill     | When                                     | Behavior                                                                                                  |
-| --------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `/reqs`   | Discovery, formal PRD, stories, priority | May interview; enterprise-prd-template in `/reqs`; **does not publish**                                   |
-| `/to-prd` | "We've talked enough — ship the PRD"     | **Synthesize only** — no discovery interview; [lean-prd-template.md](lean-prd-template.md); **publishes** |
-
 **Upstream:** `/align` + `align-loop` (+ `domain-modeling` when terms resolve) sharpen decisions and domain
 language before synthesis.
 
-**Downstream:** `/to-issues` breaks the published PRD into vertical-slice issues.
+**Downstream:** `/task` (vertical slicing) breaks the published PRD into vertical-slice issues.
 
 **Prerequisites:** Resolve confirmed tracker and label mapping from project setup or authorized context.
 Missing policy blocks publication, not a bounded draft; propose setup only if needed. Read `docs/agents/language.md` when present — publish the PRD in that language (**one prose
@@ -75,6 +53,8 @@ tokens stay English — no mid-sentence EN/VI mix; VI SSOT `skills/setup/languag
 When that file's default is **AI-optimized**, carry each phase's testable output and the prohibitions into
 **Implementation Decisions** and **Testing Decisions**. Missing file: lean body only.
 
+Apply the shared work artifact standard. For a draft-only request, stop before step 5.
+
 ## Process
 
 ### 1. Explore the codebase
@@ -86,8 +66,7 @@ touching — state the decision in **Implementation Decisions**, do not replace 
 Scan the tracker for related issues (prior PRDs, blockers, superseded work) so **Related Issues** can be
 filled with real issue keys or URLs (not the project issues index).
 
-**Completion criterion:** Glossary terms and relevant ADRs noted for prose; related tracker issues listed or
-confirmed none.
+**Completion criterion:** Glossary terms and relevant ADRs noted for prose; related tracker issues listed, confirmed none, or explicitly inaccessible (publication waits if required).
 
 ### 2. Sketch test seams
 
@@ -150,7 +129,10 @@ knowledge). When prose is Vietnamese, also run the English-thrift read-aloud tes
 unsettled detail carries a marker instead of a guess; markers match the step 3 confirmed deferral list when
 any exist; human-readable check passed.
 
-### 5. Publish
+### 5. Publish (only when explicitly authorized)
+
+Do not create or mirror anything for draft-only requests. Search for duplicates before creating and
+reconcile ambiguous writes. If any gate remains unconfirmed, return the blocker; do not publish.
 
 Create an issue titled `PRD: <feature>` per
 `docs/agents/issue-tracker.md`. Apply the mapped `ready-for-agent` label
@@ -168,7 +150,7 @@ EOF
 
 (`gh` example — follow `issue-tracker.md` when the tracker is not GitHub.)
 
-Skip `/triage` — this skill publishes a pre-aligned spec from conversation (`/align` upstream), not a raw
+Skip `/track` (triage) — this skill publishes a pre-aligned spec from conversation (`/align` upstream), not a raw
 inbound issue. No agent brief needed; the PRD body is the AFK contract.
 
 **Completion criterion:** Issue created on tracker with full PRD body and mapped `ready-for-agent` label;
@@ -177,7 +159,7 @@ required mirror verified or explicitly pending; never claim full completion for 
 ### 6. Handoff
 
 Summarize what was published (issue number + title). End with `## Next Step` — prefer **exactly one** next
-skill (typically `/to-issues` on the published PRD). Second option only when UI-heavy and design should land
+skill (typically `/task` (vertical slicing) on the published PRD). Second option only when UI-heavy and design should land
 before slicing (`→ /design` with when). Never a 3+ menu.
 
 **Completion criterion:** Summary delivered; `## Next Step` names one preferred skill (two max with
