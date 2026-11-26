@@ -63,8 +63,8 @@ Pinned bundles remain cached until eviction or explicit clearing.
 
 ## Context-aware consumers
 
-Skill release 0.3.5 includes environment-aware context governance and and the starter files include shared
-context guidance. Forward both the contract and selected file contents to the AI client,
+Skill release 0.3.5 adds environment-aware feature context governance. Starter bundles
+include shared context guidance. Forward both the contract and selected file contents to the AI client,
 together with trusted domain instructions. The client resolves context through authorized
 tools; do not send workspace data to the skill provider. Earlier skill releases, including 0.3.3 and 0.3.4,
 are retired: consumers pinning them must switch to 0.3.5 or `latest`. SDK and skill versions
