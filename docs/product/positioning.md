@@ -15,6 +15,13 @@ skill methodology in their own authorized AI/MCP integrations.
 The product is an augmentation layer, **not** a separate AI assistant or platform. A user should
 not need to know MCP, skill pack names, or workflow internals to benefit from a compatible client.
 
+**AI Kit does not upgrade the host model's intrinsic reasoning, knowledge or intelligence.**
+Its value is providing structured methods, appropriate workflows, reusable templates,
+context contracts, evidence boundaries, and verifiable handoff/checking practices.
+The host model still determines how well it understands and carries out the work;
+skills may influence **process consistency and artifact structure**, not the
+model's underlying capability. Evaluation must distinguish those effects.
+
 ## Ownership boundaries
 
 | AI Kit provides | The host AI/client owns |

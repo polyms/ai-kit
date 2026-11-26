@@ -121,14 +121,6 @@ export function HomeFooter() {
             >
               GitHub
             </a>
-            <a
-              className='link font-medium no-underline'
-              href={`${GITHUB_REPO}/issues`}
-              rel='noopener noreferrer'
-              target='_blank'
-            >
-              {m.footer_link_issues()}
-            </a>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 Status: deterministic evaluation foundation and 88 synthetic scenarios are implemented. A
 release smoke verifier and measured-run report generator are documented in
-[Quality Baseline](../quality/baseline.md). Model-quality scores and final thresholds remain unverified.
+[Quality Baseline](../quality/baseline.md). Workflow-augmentation effectiveness and final thresholds remain unverified; AI Kit does not claim to increase model intelligence.
 
 ## Primary target: everyday, latency-sensitive AI workflows
 
@@ -28,7 +28,15 @@ dependency for applying the core AI Kit methodology. If a project has no system,
 Polyms UI Kit may be suggested as a candidate with explicit user approval
 before adoption; never install or replace a stack automatically.
 
-## Evaluation: does augmentation improve work?
+## Evaluation: does augmentation support the workflow?
+
+Evaluate **what AI Kit provides**, rather than implying it changes model intelligence:
+appropriate skill discovery, correct workflow and templates, Context Contract reuse,
+requirement traceability, evidence and authorization boundaries, dependable handoffs,
+and selective retrieval overhead. The host model owns reasoning and content quality.
+Output comparisons can detect workflow effects, but cannot establish that AI Kit
+enhances a model's inherent ability to reason. More tasks or QA cases are not
+proof of product value.
 
 The existing evaluation runner compares baseline and skill-assisted outputs using synthetic
 fixtures and an explicitly configured compatible model endpoint. It tests routing, output and
@@ -40,7 +48,7 @@ need separate integration tests. See [evaluation runner](../../evals/README.md).
 | Dimension | What to evaluate |
 | --- | --- |
 | Skill adherence | Correct method, minimal routing, respected invocation, quality and authorization gates |
-| Output quality | Useful deliverables, traceable evidence, clarity, completeness, explicit limitations |
+| Template / artifact adherence | Required structure, traceable evidence, correct acceptance fields, explicit limitations; don't equate length with quality |
 | Context continuity | Approved scope, IDs, decisions and evidence retained through handoffs |
 | Knowledge utilization | Relevant search, opened source, applicable version, fewer invented recipes |
 | Memory use (0.3.4 pilot) | Relevant recall, accurate use of past facts, handling of stale/conflicting context |
@@ -100,10 +108,23 @@ provenance, distinguish proposals from approvals, review contributions and verif
 Versioned delivery and deterministic checks are within AI Kit's responsibility; model-side
 inference, private memory access and external execution are not.
 
+## Voluntary public feedback
+
+People using AI Kit do **not** have to run evaluation tools or send model traces.
+If they voluntarily want to comment on skills, workflows or templates, let
+AI Kit `prepare_feedback_issue` draft a public GitHub Issue and follow the
+[conversation and GitHub handoff workflow](../feedback.md). The user reviews
+and explicitly authorizes publication through the host's independent GitHub
+integration. Without GitHub integration, use a prefilled URL.
+The user decides whether to submit;
+the maintainer reviews feedback manually. Only validated, generalized
+observations may motivate subsequent reviewed methodology changes. No automatic
+feedback ingestion, tracking or user-data collection.
+
 ## Improvement cycle
 
 Review observable failures or user feedback, reproduce with a minimized synthetic case, identify
 whether the issue belongs to skill guidance, Knowledge applicability, host behavior or consumer
 integration, and make the smallest reviewed improvement. Re-evaluate the case and neighboring
-regressions. A confirmed performance or quality improvement must be supported by comparable
-measured evidence, not a bigger catalog, more telemetry, or more complex orchestration.
+regressions. A confirmed **workflow/process improvement** must be supported by comparable
+measured evidence, not a bigger catalog, more telemetry, more test cases or more complex orchestration.

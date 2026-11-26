@@ -35,10 +35,11 @@ jobs:
       - name: Build SDK
         run: pnpm exec tsc -p sdk/tsconfig.json
       - name: Test provider and SDK
-        run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts src/lib/skill-pack/skill-pack.test.ts
+        run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts src/lib/skill-pack/skill-pack.test.ts src/lib/feedback/feedback.mcp.test.ts
       - name: Check evaluation fixtures and scoring
         run: |
           pnpm eval:test
+          node --test scripts/feedback-issue-template.test.mjs
           pnpm eval:run --dry-run
       - name: End-to-end evaluation runner smoke (localhost mock only)
         run: pnpm exec node evals/mock-model-smoke.mjs

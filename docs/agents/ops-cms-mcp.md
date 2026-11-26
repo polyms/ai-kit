@@ -103,6 +103,29 @@ documents workspace files and server options.
 | `delete_knowledge`       | OAuth + JWT `role: admin` |
 | `list_skill_packs`       | OAuth (any user)          |
 | `get_skill_pack`         | OAuth (any user)          |
+| `prepare_feedback_issue` | OAuth (any user, read-only draft) |
+
+## Conversational GitHub feedback
+
+If the user asks to report AI Kit feedback, call `prepare_feedback_issue`
+to build a complete title and Markdown body for the **public**
+`polyms/ai-kit` repository. Reuse context, ask questions only when needed,
+show the exact draft and obtain explicit publication approval.
+
+After approval, a host AI client with its **own separately authenticated**
+GitHub tool and Issues write permission on `polyms/ai-kit` can call
+`create_issue` and report the real URL/number. A connected GitHub app is
+not evidence of permission on this repository. On a GitHub error, report
+the failed action, do not automatically retry, and offer the fallback URL.
+AI Kit's OAuth bearer token **cannot** be used as GitHub authorization.
+Without a connected GitHub write action, use the returned **prefilled**
+Issue Form link and let the user review/submit. If
+`prefilledUrlTruncated` is true, note clearly that the URL contains an
+excerpt; the complete draft remains available in chat. GitHub still requires
+public-consent confirmation. No blank Issue template required for the
+normal chat flow. Do not claim issue creation from a draft or user approval.
+
+See [feedback flow and privacy](../feedback.md).
 
 ## Skill packs (MCP clients)
 

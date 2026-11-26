@@ -25,7 +25,7 @@ export function getMcpServerInfo(
 }
 
 export function getMcpServerInstructions(info: ServerInfo): string {
-  return `AI Kit MCP server ${info.name} version ${info.version}. Use server_info to verify the currently deployed server version and available build metadata. Use me for the authenticated user's profile.`
+  return `AI Kit MCP server ${info.name} version ${info.version}. Use server_info to verify the currently deployed server version and available build metadata. Use me for the authenticated user's profile. If a user wants to give AI Kit feedback, use prepare_feedback_issue to draft a public GitHub Issue for review; submit through a separately authorized GitHub connector only after explicit approval, otherwise offer the prefilled URL.`
 }
 
 export function registerServerInfoMcpTool(server: McpServer, version: string): void {

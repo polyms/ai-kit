@@ -22,6 +22,14 @@ In the [Team Invitation manual 3-mode evidence](manual/2026-11-22-team-invitatio
 AI Kit model tiers. All three were assisted-only sessions without an independent
 baseline or provider audit trace.
 
+## Optional user feedback
+
+This benchmark runner is for maintainers and researchers, **not** an expected
+end-user step. End users who wish to comment can use the
+[AI-assisted conversational GitHub Issue workflow](../docs/feedback.md) without logs,
+trace exports or tests. Maintainers may later turn verified public feedback
+into narrowly scoped regression cases.
+
 ## Memory Protocol pilot
 
 See [Memory Protocol evaluation](memory/README.md) for 15 paired P0/P1 versus P2 scenarios.

@@ -15,6 +15,17 @@ Use native/local skill installation, MCP or the SDK to deliver the same version-
 
 **Kit site:** [ai-kit.polyms.dev](https://ai-kit.polyms.dev) — browse skills, copy sample prompts, quick start. Source in `apps/landing/`.
 
+## Optional feedback
+
+Have an idea or a problem with an AI Kit skill, workflow or template?
+Simply tell your AI client what worked or what should change. AI Kit's
+`prepare_feedback_issue` MCP tool creates a complete public GitHub Issue
+**draft**. The AI shows it for review, then after your explicit approval
+uses an independently connected GitHub `create_issue` action to publish
+on your behalf. If no GitHub integration is available, you get a
+**prefilled issue link**, not a blank form. No benchmarks or trace exports
+required. See [AI-assisted feedback](docs/feedback.md).
+
 ## Product boundary
 
 AI Kit **augments** host assistants; it does not replace them or take over user work.

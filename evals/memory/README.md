@@ -7,7 +7,12 @@ pnpm eval:run --suite memory --dry-run
 pnpm eval:run --suite memory --case MP-01 --model YOUR_MODEL --judge-model YOUR_JUDGE
 ```
 
-Actual model calls require the existing explicitly configured endpoint. A full Git checkout with both referenced revisions is required. No real workspace, memory provider or write tool is involved.
+Actual model calls require the existing explicitly configured endpoint. A full Git checkout
+containing the historical baseline blobs is required. The runner loads files via
+content-addressed Git blob SHAs recorded in the pinned manifests, then independently
+recomputes each blob hash. It does **not** rely on the pinned source commit
+being fetchable as a Git ref after squash merges; a missing blob is an explicit error.
+No network fallback or silent substitution with current source text is permitted. No real workspace, memory provider or write tool is involved.
 
 Both arms receive the same P0/P1 contract fields from the pinned 0.3.4 manifest with memory
 hints removed, and historical starter files verified against a pre-P2 Git revision in
