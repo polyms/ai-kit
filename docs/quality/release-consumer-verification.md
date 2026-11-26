@@ -1,97 +1,105 @@
-# Release and consumer verification
+# AI-driven release and consumer verification
 
-Status (2026-11-27): **verification tooling proposed; production HTTP delivery and
-actual Astra SDK runtime are not yet independently verified by this document.**
-This runbook tests distribution and the consumer contract, not model reasoning,
-the quality of business artifacts, or an Astra deployment.
+Status (2026-11-27): **MCP-first diagnostics proposed in PR #21**. Until merged and deployed,
+production `get_release_info` is unavailable. Astra's resolved SDK version and
+public HTTP release delivery are **not yet independently verified**.
 
-## Two separate verification surfaces
+## One prompt, available tools
 
-| Surface | What passes | What it does not establish |
+Ask the AI client:
+
+> Check AI Kit production, verify skill release 0.3.5 and Astra compatibility.
+
+The host should use only tools that are actually connected and available:
+
+1. Call AI Kit `server_info` for the deployed MCP server's identity and commit.
+2. Call AI Kit `get_release_info` **without arguments** for the *configured*
+   immutable HTTP skill release, revision and supported versions. This step
+   makes **no network request**, and is **not HTTP delivery verification**.
+3. Call `get_release_info({ "checkHttp": true, "retiredVersion": "0.3.4" })`
+   for a bounded read-only verification of public HTTP `latest`, pinned
+   catalog, QA starter, exact Context Contract retrieval and retired
+   catalog/API 404. The tool uses a **fixed** destination
+   `https://ai-kit.polyms.dev`; the caller cannot supply a URL or token.
+   A failed, timed-out or protected request is reported **Unverified**, never
+   silently treated as Passed. A wrong status or wrong content is **Failed**.
+4. Optionally use `list_skill_packs` / `get_skill_pack` to read current
+   MCP skill bodies and validate specific guidance. **MCP skills use mutable
+   `main`**, so this does not prove that immutable HTTP release `0.3.5`
+   delivered its pinned content.
+5. If Astra is connected, make authorized **read-only** calls for its
+   current methodology/template. Report the SDK package version as **Unverified**
+   unless there is explicit evidence from the *running Astra consumer*.
+
+The response must present **Passed / Failed / Unverified / Not run** for
+separate checks, with evidence and limitations. Avoid a single all-green
+status that conflates MCP, HTTP, SDK and Astra.
+
+## What each check establishes
+
+| Tool or check | Positive evidence | It does NOT prove |
 | --- | --- | --- |
-| HTTP release verifier | Live `latest` equals immutable `0.3.5` catalog/revision, selected starter/manifest/reference delivery, `0.3.4` GET/POST routes return 404 | SDK installed in Astra, production MCP tool authorization |
-| SDK reference consumer | Compiled SDK lists pinned/latest metadata, loads QA starter and on-demand Memory reference, preserves environment and approval guidance, applies additive domain extension without mutating core contract | Which SDK package or release is running inside Astra |
-| Astra Staging manual read | Authorized tool can retrieve its own issue templates | End-to-end SDK delivery, QA approval, ticket creation or feature-map runtime |
+| `server_info` | MCP deployment commit and server identity | HTTP skill version or SDK dependency |
+| `get_release_info` default | Immutable skill version and revision **configured in the deployed build** | Public HTTP bundle retrieval |
+| `get_release_info` with `checkHttp=true` | Public HTTP identity/QA/Context content from **the MCP server's network perspective** | Independent outside network, Astra SDK/runtime |
+| `get_skill_pack` | Live mutable-`main` MCP content returned to AI client | Immutable SDK release content |
+| Astra `get_issue_template` | Template/methodology retrieval as observed | Installed SDK version, end-to-end Grok flow or approved QA evidence |
+| Consumer-specific diagnostic | Resolved package/runtime release when implemented and read from actual deployment | PM/PO approval or QA confirmation by itself |
 
-**Do not collapse these into a single “Astra integration verified” claim.**
+The live HTTP check is a bounded diagnostic invoked by the user through AI
+rather than a GitHub Actions schedule. It makes up to 6 fixed-route requests,
+including a read-only versioned `POST /api/skills` selection. No private
+workspace data, credentials, unrestricted URL input or business writes are used.
+The tool does **not** run the full 10-request release smoke suite or perform
+SDK package installation. Use the optional local verification scripts for
+deeper troubleshooting.
 
-## Production, on demand and read-only
+## CI stays small and offline
 
-Run GitHub Actions **Verify Skill Release and Quality Reports → Run workflow**
-on the deployed `main` revision. Inputs: `version=0.3.5`,
-`retired=0.3.4`. The workflow has no schedule and uses no Astra credentials.
-It first checks live public HTTP responses, then builds the SDK and exercises
-its read-only reference consumer against the same public endpoint.
-A failed or blocked HTTP request is a failed or **unverified** production gate,
-not evidence of successful deployment.
+PR CI still compiles the SDK and runs deterministic regression tests. It
+covers `get_release_info` configuration, expected/retired HTTP responses,
+stale catalogs, missing QA guidance, restricted network and errors. It also
+tests the reference SDK against generated fixtures, including negative cases.
 
-Equivalent local commands from the repository root (Node.js 24+):
+**No manual or scheduled production GitHub Actions job is required** to ask
+the AI for a health check. The separate optional local CLI remains useful
+for operators who want an independent network vantage or full bundle validation:
 
 ```sh
 node scripts/verify-skill-release.mjs --version 0.3.5 --retired 0.3.4 --endpoint https://ai-kit.polyms.dev
-pnpm install --frozen-lockfile
 pnpm exec tsc -p sdk/tsconfig.json
 node scripts/verify-sdk-consumer.mjs --version 0.3.5 --endpoint https://ai-kit.polyms.dev
 ```
 
-The HTTP verifier requires a matching `schemaVersion=1`, pinned revision,
-unchanged catalog metadata, correct starter-only and manifest-only content, and
-a selected Memory Protocol reference. A retired version must return HTTP 404 for
-`/skill-bundles/0.3.4/catalog.json`,
-`/skill-bundles/0.3.4/qa/starter.json`, and the versioned
-`POST /api/skills` call. HTTP 200 or a redirect from a retired route fails.
-This detects stale public assets or a proxy that silently falls back to latest.
-No writing to production or private system data is needed.
+These commands run only when explicitly invoked, not by the PR quality workflow.
 
-The SDK script uses the locally built **AI Kit workspace SDK**, not a version
-proven to be installed in Astra. It verifies the `qa` bundle includes
-environment-specific Context Contract guidance, does not allow the model to
-self-confirm QA, lazily retrieves `docs/agents/memory-protocol.md`, and adds
-trusted consumer context without changing the core contract. It uses only public
-AI Kit methodology and prints a small, non-sensitive receipt.
+## Astra verification boundary
 
-## Pull request / local deterministic coverage
+On 2026-11-27, read-only Astra Staging calls to `get_issue_template` for
+`feature` and `task` both returned Astra Template version `1.3.0`,
+with AI Kit methodology instructions. That is **template retrieval evidence
+only**, not SDK package evidence.
 
-The regular PR quality workflow tests HTTP verification against mocked responses.
-The SDK build workflow tests the **real compiled SDK** against the repository's
-generated `0.3.5` release snapshot, without making public HTTP requests.
-Negative cases include a stale catalog, missing environment separation guidance,
-incomplete exact-path retrieval, and retired endpoints returning 200.
+To verify the running Astra consumer, Astra MCP would need a safe, read-only
+diagnostic such as `get_ai_kit_runtime_info` that reports its own **resolved
+package name/version**, configured skill release, retrieved release/revision,
+and current source environment. Do **not** infer it from the AI Kit server's
+version or the Astra template version. Adding a diagnostic to Astra requires a
+separate Astra code change and its own deployment verification.
 
-CI passing on a PR demonstrates fixture and SDK compatibility, **not** that
-the deployed Vercel endpoint, Astra runtime or Grok bot has passed its smoke test.
+If Astra's runtime diagnostic is not available, mark this gate Unverified.
+The host may still read the existing Astra templates and perform safe
+authorization/evidence reasoning checks, but must not self-approve QA or
+PM/PO outcomes or create dummy project data.
 
-## Astra Staging: authorized read-only consumer check
+## Version semantics
 
-A read-only tool check on 2026-11-27 returned `get_issue_template` for
-`feature` and `task`, both reporting Astra Template `1.3.0` with AI Kit
-methodology instructions. This is narrow evidence of **Astra template retrieval
-only**. No ticket was created, no business record was modified, and no SDK
-dependency version was returned.
+- `@polyms/ai-kit-sdk@1.0.0-rc.1`: published SDK package candidate.
+- `0.3.5`: active immutable **skill content** release.
+- `server_info.version`: AI Kit **MCP server package** version; separate.
+- `server_info.commit`: actual MCP deployment commit; separate.
+- Astra Template `1.3.0`: Astra template revision; separate.
 
-Before marking **Astra consumer verified**, its deployment owner must confirm:
-
-1. The **resolved package actually running in Astra Staging** (lockfile,
-   build/deployment receipt), including whether it consumes
-   `@polyms/ai-kit-sdk@1.0.0-rc.1` or another compatible build.
-2. The runtime's configured content version is `0.3.5` or `latest`, not a
-   retired `0.3.4` pin, and a **read-only call in that runtime** obtains
-   catalog and QA bundle `0.3.5` with the expected immutable revision.
-3. The Grok bot receives the selected Context Contract, QA and approval
-   boundaries, and retrieves environment/build/decision evidence via
-   **authorized Astra tools**. Test a Dev-only QA observation with no
-   Production evidence: Production must remain `Unknown`.
-4. No assistant independently marks a PM/PO approval or human QA confirmation.
-   A planned test is not executed evidence; live system records remain the
-   source of truth.
-
-If any check is unavailable, report **Pending / Not observed** and the
-specific missing receipt. Do not create a dummy ticket, grant new permissions,
-publish a fake verification result, or copy Astra data into AI Kit.
-
-## Follow-up gates
-
-SDK `1.0.0` stable promotion still requires a clean installation through the
-configured Polyms registry proxy, an independently verified Astra/runtime
-dependency, and cold/warm consumer latency evidence. This verification PR does
-not bump the SDK package or change its wire schema.
+SDK `1.0.0` stable promotion still requires clean public registry
+installation, actual consuming-runtime compatibility and cold/warm latency
+evidence. This PR does not bump the SDK package or change its wire schema.
