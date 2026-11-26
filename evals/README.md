@@ -1,7 +1,7 @@
 # Evaluation runner
 
-The local, opt-in benchmark includes 13 output, 39 routing, 21 composition and 15 memory cases
-(88 scenarios total).
+The local, opt-in benchmark includes 17 output, 39 routing, 21 composition and 15 memory cases
+(92 scenarios total).
 The runner is separate from the deployed MCP server and does not introduce a provider dependency.
 It uses the repository's existing tsx and MCP functions; a configurable OpenAI-compatible chat
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted
@@ -29,6 +29,14 @@ end-user step. End users who wish to comment can use the
 [AI-assisted conversational GitHub Issue workflow](../docs/feedback.md) without logs,
 trace exports or tests. Maintainers may later turn verified public feedback
 into narrowly scoped regression cases.
+
+## Feature-context regression cases
+
+Four synthetic output cases (WS-14 through WS-17) cover per-environment QA evidence,
+pending questions and approved-revision preservation, older Production revisions,
+and canonical feature-map ownership versus E2E exports. These fixtures do not
+establish model correctness or real integration behavior. Use the ordinary
+`--suite output` runner and review model/judge evidence before reporting results.
 
 ## Memory Protocol pilot
 
