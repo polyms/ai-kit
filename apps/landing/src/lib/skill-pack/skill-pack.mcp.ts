@@ -2,6 +2,7 @@ import type { McpServer } from '@modelcontextprotocol/server'
 import { z } from 'zod'
 import { compositionCatalog } from './skill-composition'
 import { getSkillPack, listSkillPacks, type SkillPackFile } from './skill-pack'
+import { executeGetReleaseInfo, RELEASE_INFO_INPUT_SCHEMA, RELEASE_INFO_TOOL_DESCRIPTION } from './release-info.mcp'
 
 const listSkillPacksInputSchema = {}
 
@@ -115,5 +116,14 @@ export function registerSkillPackMcpTools(server: McpServer): void {
       inputSchema: z.object(getSkillPackInputSchema),
     },
     async ({ name, paths }) => executeGetSkillPack(name, fetch, paths)
+  )
+
+  server.registerTool(
+    'get_release_info',
+    {
+      description: RELEASE_INFO_TOOL_DESCRIPTION,
+      inputSchema: RELEASE_INFO_INPUT_SCHEMA,
+    },
+    async ({ checkHttp, retiredVersion }) => executeGetReleaseInfo({ checkHttp, retiredVersion })
   )
 }
