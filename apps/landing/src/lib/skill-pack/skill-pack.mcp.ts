@@ -124,6 +124,7 @@ export function registerSkillPackMcpTools(server: McpServer): void {
       description: RELEASE_INFO_TOOL_DESCRIPTION,
       inputSchema: RELEASE_INFO_INPUT_SCHEMA,
     },
-    async ({ checkHttp, retiredVersion }) => executeGetReleaseInfo({ checkHttp, retiredVersion })
+    async ({ checkHttp, retiredVersion, expectedVersion }) =>
+      executeGetReleaseInfo({ checkHttp, retiredVersion, expectedVersion })
   )
 }
