@@ -16,7 +16,9 @@ Split skills into **hard-dependency** and **soft-dependency**:
 
 ### Hard dependency
 
-Include an explicit prerequisite — run `/setup` if the required `docs/agents/*.md` file is missing. Without the mapping, output is **wrong**, not just fuzzy.
+Require confirmed tracker destination and mapping before mutation. Target project setup output or
+other authorized confirmed context can supply it. Missing mapping blocks publication/state changes,
+not a read-only draft; propose `/setup` only when useful. Never auto-run setup in a delegated host.
 
 | Skill        | Requires                                                       |
 | ------------ | -------------------------------------------------------------- |

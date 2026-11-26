@@ -87,7 +87,12 @@ own issue rules and template; applying a skill does not grant permission to crea
 
 See [existing composition guidance](../agents/skill-composition.md).
 
-## Two delivery environments, shared methodology
+## Delivery environments, shared methodology
+
+Engineering methodology is portable across conversational, workspace and delegated hosts. MCP,
+SDK and native installation are delivery mechanisms rather than skill categories. Project setup
+maps canonical sources and operations to preferred/allowed execution routes; the host validates
+actual tools and authorization. No execution resolver or server-side runtime is introduced.
 
 | Dimension | Remote MCP / SDK skills | Local engineering skills |
 | --- | --- | --- |

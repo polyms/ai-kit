@@ -1,6 +1,7 @@
 # Issue tracker: GitLab
 
-Issues and PRDs live as GitLab issues. Use [`glab`](https://gitlab.com/gitlab-org/cli) CLI.
+Issues and PRDs live as GitLab issues unless project policy identifies a different canonical source.
+Follow the execution profile; use an authorized GitLab connector or [`glab`](https://gitlab.com/gitlab-org/cli) CLI.
 
 ## Commands
 

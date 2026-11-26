@@ -35,7 +35,11 @@ does not set persona unless `/setup` opted in chat voice → `.cursor/rules/agen
 
 ### Issue tracker
 
-GitHub issues via `gh` CLI. See `docs/agents/issue-tracker.md`.
+GitHub issues via authorized GitHub MCP or `gh`. See `docs/agents/issue-tracker.md`.
+
+### Execution profile
+
+Follow `docs/agents/execution-profile.md` for canonical sources, operation routes and write/verification policy.
 
 ### Domain docs
 

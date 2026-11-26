@@ -1,0 +1,47 @@
+# Portable skill standard
+
+AI Kit owns reusable methodology and quality gates. Project setup identifies authoritative sources,
+preferred execution routes and policies. The host owns reasoning, tools, credentials and execution.
+A skill works across IDE, conversational and delegated hosts without installing AI Kit into the target
+workspace. A cloud sandbox is not necessarily a checkout; a connector is not necessarily read/write.
+
+## Before work
+
+1. Reuse supplied context. Resolve target project/repository, issue/PR, branch/revision, environment
+   and requested result where material. Never confuse the AI Kit source repository with the target.
+2. Read target agent instructions and `docs/agents/execution-profile.md` when available, plus relevant
+   tracker, language, domain and stack configuration. Discover them through authorized repo/project
+   tools or a confirmed checkout. Distinguish absent, inaccessible and unknown. Do not require a
+   profile to discover a profile, or download AI Kit Markdown into the project.
+3. Follow canonical sources and operation routes. Resolve actual host tool schemas, not guessed MCP
+   aliases. Preferences are not proof of access. Without a profile, choose safe equivalent routes
+   to the same source. Missing destination, label mapping, branch policy or authority blocks the
+   affected write, not a read-only draft. Ask only material questions. Do not auto-run setup,
+   install tools, change credentials or permissions to satisfy a workflow.
+
+## Execution and continuity
+
+- Express gates as observable outcomes, not mandatory commands. CLI examples are equivalent
+  operations, not required tools. Verify checkout/ref or remote comparison; preserve merge-base
+  semantics and disclose truncated diffs. Do not mix a PR patch and unrelated HEAD.
+- Prefer independent parallel review axes when supported; otherwise use separate checklist passes
+  and disclose reduced isolation. Keep local verification gates intact. Remote CI/test evidence must
+  match the revision, environment and required checks. Never equate a delegated summary or unrelated
+  green build with PASS.
+- Interactive tasks retain decision gates. Delegated tasks reuse approved decisions and explicit
+  bounded assignments; do not ask again or infer write authority from a mention/event alone. Never
+  settle unapproved business decisions. If nobody can answer, return a conditional/blocked handoff
+  with questions and proposed options, rather than waiting in an empty loop.
+- Carry decisions, source/revision, artifacts, blockers, gate and actual receipts using the existing
+  composition handoff. For separate runs use authorized durable project records or a portable draft;
+  AI Kit does not store workflow state.
+- Read before writing. Preserve unrelated content, confirm identity/permission/scope and branch/PR
+  policy. Reconcile ambiguous outcomes before retrying; never fall through to another write tool
+  blindly. Draft, publication, actual test evidence and human approval are distinct.
+- Setup, to-prd, to-issues and triage require explicit selection or a clearly authorized assignment.
+  Reading references or relatedSkills is not invocation. Never infer publish, close, deploy or merge
+  authority from a skill.
+
+Skill-relative references are served by AI Kit; project paths are resolved in the target project.
+Use starter content and request additional allowlisted references by exact path as needed. Do not
+fetch raw URLs or install a checkout merely to read a skill.

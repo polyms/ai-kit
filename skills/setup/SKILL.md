@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Configure a repo for the ai-kit pipeline — documentation language, issue tracker, domain docs, requirements templates, stack profile, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
+description: Configure project context and execution routes for the ai-kit pipeline — documentation language, issue tracker, domain docs, requirements templates, stack profile, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
 disable-model-invocation: true
 ---
 
@@ -8,11 +8,18 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
-Scaffold per-repo configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`,
+Scaffold or incrementally update per-project configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`,
 `/to-issues`, `/dev`, `/devops`, and `/arch` assume. Prompt-driven — explore, confirm with user,
 then write.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md).
+
 ## Process
+
+Inspect the target project using authorized repository/project tools (including GitHub MCP) before
+assuming a checkout. On a rerun, update only requested sections and preserve other choices. Confirm
+material unknowns and write through approved project routes or return a draft. Host-specific
+installation, symlinks and voice are optional local-client steps, not requirements for remote use.
 
 For Codex/Copilot, apply the client compatibility guide's **Files and project setup**
 branch throughout this process. It adds `AGENTS.md` discovery and opt-in voice pointers
@@ -25,7 +32,8 @@ See **Feature map publication** in that guide.
 
 Read what exists; don't assume:
 
-- `git remote -v` — GitHub, GitLab, or local-only?
+- Resolve the repository/provider from host context or `git remote -v` in a matching checkout.
+- Discover actual host tools and read `docs/agents/execution-profile.md` if accessible.
 - `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` — presence, layout, and written language
 - `docs/agents/` — prior setup output? especially `stack-profile.md` and `requirements.md`
 - Stack signals — `package.json` / lockfile (router, start, zustand, vercel, pnpm, nx);
@@ -61,12 +69,13 @@ write them in the confirmed language.
 
 **B — Issue tracker**
 
-Where issues and PRDs live. Skills read/write here.
+Confirm where issues and PRDs live independently of access tools. GitHub may use GitHub MCP,
+`gh`, or another authorized route; GitLab likewise. Do not infer tool access from provider or host name.
 
 | Choice                                      | When                                     |
 | ------------------------------------------- | ---------------------------------------- |
-| **GitHub** (default if `github.com` remote) | `gh` CLI                                 |
-| **GitLab**                                  | `glab` CLI                               |
+| **GitHub** (default if `github.com` remote) | GitHub MCP / `gh` CLI                                 |
+| **GitLab**                                  | GitLab connector / `glab` CLI                               |
 | **Local markdown**                          | `.scratch/<feature>/` files              |
 | **Other**                                   | User describes workflow in one paragraph |
 
@@ -193,7 +202,16 @@ If **Yes**, ask once for a harness command. No command → `Harness: none`. Slug
 `feature-map` unless `.agents/skills/feature-map/` already holds a different skill — then ask once
 for another slug. Never `build-feature-map`.
 
-**Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed;
+**K — Execution profile**
+
+Use [execution-profile.md](execution-profile.md). Confirm canonical sources, preferred/fallback routes
+per operation, branch/PR policy, write and verification gates, and target identifiers. Inspect tools
+actually available; never record credentials or assume preferences work for every host. Validate
+read-only access where possible. Reuse existing choices and ask only material unknowns; mark other
+entries Unknown. An explicit setup update may change only K without revisiting A–J.
+
+**Completion criterion:** For full setup, execution profile choices and unknowns recorded;
+Documentation language confirmed; all seven triage role mappings confirmed;
 issue tracker, domain layout, artifact paths, triage labels, design paths, voice choice (No or Yes +
 any overrides), **requirements template** default (Standard, MVP, or AI-optimized), **stack axes**
 confirmed by user, and feature-map choice (No, or Yes + harness and slug).
@@ -205,6 +223,7 @@ Show before writing:
 - `## Agent skills` block for `CLAUDE.md` or `AGENTS.md`
 - `docs/agents/language.md`
 - `docs/agents/issue-tracker.md`
+- `docs/agents/execution-profile.md` (confirmed routes/policies and Unknown entries)
 - `docs/agents/domain.md`
 - `docs/agents/triage-labels.md`
 - `docs/agents/design.md`
@@ -239,6 +258,11 @@ set by the kit unless Chat voice was opted in — see Voice below or the user's 
 ### Issue tracker
 
 [one-line summary]. See `docs/agents/issue-tracker.md`.
+
+### Execution profile
+
+Follow `docs/agents/execution-profile.md` for canonical sources, operation routes and write/verification
+policy. Check actual host capabilities and permissions; do not assume local CLI.
 
 ### Domain docs
 
@@ -293,6 +317,7 @@ Write docs using templates:
 - GitHub → [issue-tracker-github.md](issue-tracker-github.md)
 - GitLab → [issue-tracker-gitlab.md](issue-tracker-gitlab.md)
 - Local → [issue-tracker-local.md](issue-tracker-local.md)
+- Execution profile → [execution-profile.md](execution-profile.md)
 - Domain → [domain.md](domain.md)
 - Triage labels → [triage-labels.md](triage-labels.md)
 - Design → [design.md](design.md)
@@ -367,7 +392,7 @@ Run `/build-feature-map` to start one; it replaces this file.
 
 Never write a map package, and never remove an existing map or pointer.
 
-**Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
+**Completion criterion:** For full setup, `docs/agents/execution-profile.md` and `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
 `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`,
 `docs/agents/requirements.md`, `docs/agents/stack-profile.md`, and agent config file written; if voice Yes,
 Cursor rule + Claude symlink present; if feature map Yes, pointer + empty skill package with
@@ -378,7 +403,9 @@ contents are preserved. For both Yes and Keep existing, the Feature map subsecti
 
 ### 5. Done
 
-Tell user setup is complete. Deliver the **orientation tour** in body prose — overview of
+Read back authorized writes; report verified, draft-only and blocked sections separately. For incremental
+setup verify only requested changes and preservation of unrelated configuration. Tell user setup is
+complete only when requested writes and gates are satisfied. Deliver the **orientation tour** in body prose — overview of
 pipeline entry points (`/align` before building; `/reqs` or `/to-prd` for specs; `/design` for
 UI specs; `/triage` for backlog issues; `/dev` / `/devops` / `/arch` filter Knowledge via
 `docs/agents/stack-profile.md`). Remind them to create GitHub labels matching

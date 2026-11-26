@@ -1,6 +1,8 @@
 # Issue tracker: GitHub
 
-Issues and PRDs live as GitHub issues. Use `gh` CLI.
+Issues and PRDs live as GitHub issues unless project policy identifies a different canonical source.
+Follow the target project's `docs/agents/execution-profile.md` to select GitHub MCP or `gh` based on
+actual tools and permissions. The commands below are CLI examples, not required tools.
 
 ## Commands
 
@@ -22,5 +24,5 @@ Pull requests: `gh pr create`, `gh pr view`, `gh pr comment`, etc.
 ## Skill conventions
 
 - **Publish to tracker** → create GitHub issue
-- **Fetch ticket** → `gh issue view <number> --comments`
+- **Fetch ticket** → read issue and comments via the configured route (`gh issue view <number> --comments` is a CLI example)
 - Reference issues in commits: `Refs #123` / `Closes #123`
