@@ -21,7 +21,11 @@ Example prompt:
    real issue URL/number after successful creation.
 5. **Fallback:** Without a connected GitHub write integration, the AI gives
    you a **prefilled GitHub Issue link** with the title/body already filled.
-   You review and submit. No blank form or manual copy/paste.
+   You review and submit. The form opens with a prefilled title, feedback and
+   available optional fields; GitHub still asks you to confirm public
+   submission and may ask you to select the category. For a very long draft,
+   the link uses a **clearly marked shortened excerpt**; the complete draft
+   remains in the AI conversation.
 
 GitHub Issues are public. Avoid private conversations, client/customer data,
 proprietary source, internal prompts, credentials or access tokens.
@@ -45,6 +49,9 @@ làm rõ, **tạo bản nháp GitHub Issue đúng cấu trúc**, cho bạn xem v
 Nếu AI client có GitHub connector được cấp quyền, AI sẽ **tạo Issue giúp bạn**
 sau khi bạn đồng ý. Nếu chưa kết nối GitHub, AI cung cấp liên kết
 **đã điền sẵn tiêu đề và nội dung** để bạn xác nhận trên GitHub.
+Với nội dung quá dài, link sử dụng bản tóm lược có thông báo rõ;
+bản đầy đủ vẫn có trong cuộc hội thoại. Bạn vẫn cần xác nhận công khai
+và có thể cần chọn loại góp ý trên GitHub.
 
 Đây là phản hồi tự nguyện, không bắt người dùng chạy benchmark, xuất log
 hay thu thập hội thoại riêng tư. Issue trên GitHub là công khai.

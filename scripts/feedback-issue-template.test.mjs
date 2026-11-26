@@ -19,6 +19,12 @@ test('feedback GitHub Issue Form has essential fields and public consent', () =>
   assert.equal(fields.privacy.attributes.options[0].required, true)
   assert.equal(fields.client.validations, undefined)
   assert.equal(fields.example.validations, undefined)
+  for (const id of ['category', 'feedback', 'client', 'skill', 'example']) {
+    assert.ok(fields[id], 'GitHub Issue Form URL parameter missing field: ' + id)
+  }
+  const tool = read('apps/landing/src/lib/feedback/feedback.mcp.ts')
+  assert.ok(tool.includes("url.searchParams.set('template', 'feedback.yml')"))
+  assert.ok(tool.includes("url.searchParams.set('feedback', feedback)"))
 })
 test('assistant-driven feedback and issue links hidden in landing footer', () => {
   assert.ok(read('README.md').includes('prepare_feedback_issue'))

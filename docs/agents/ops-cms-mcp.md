@@ -115,8 +115,11 @@ show the exact draft and obtain explicit publication approval.
 After approval, a host AI client with its **own separately authenticated**
 GitHub tool can call `create_issue` and report the real URL/number.
 AI Kit's OAuth bearer token **cannot** be used as GitHub authorization.
-Without a connected GitHub write action, use the returned **prefilled** link
-and let the user review/submit. No blank Issue template required for the
+Without a connected GitHub write action, use the returned **prefilled**
+Issue Form link and let the user review/submit. If
+`prefilledUrlTruncated` is true, note clearly that the URL contains an
+excerpt; the complete draft remains available in chat. GitHub still requires
+public-consent confirmation. No blank Issue template required for the
 normal chat flow. Do not claim issue creation from a draft or user approval.
 
 See [feedback flow and privacy](../feedback.md).

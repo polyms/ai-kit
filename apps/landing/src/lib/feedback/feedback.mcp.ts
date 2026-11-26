@@ -84,9 +84,48 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
     appendSection('Short sanitized example (optional)', value.example),
     '\n---\nVoluntary public AI Kit feedback. A maintainer will review this issue.',
   ].filter(Boolean).join('\n').trim()
-  const url = new URL('https://github.com/polyms/ai-kit/issues/new')
-  url.searchParams.set('title', title)
-  url.searchParams.set('body', body)
+  // GitHub Issue Forms prefill custom fields by their YAML ids, rather than
+  // treating a body= parameter as a form textarea. Keep this fallback aligned
+  // with .github/ISSUE_TEMPLATE/feedback.yml.
+  const formCategory: Record<FeedbackCategory, string> = {
+    skill: 'Skill discovery / Chọn skill',
+    workflow: 'Workflow guidance / Quy trình',
+    template: 'Template / Mẫu tài liệu',
+    documentation: 'Documentation / Hướng dẫn',
+    bug: 'Bug / Lỗi',
+    suggestion: 'Suggestion / Đề xuất',
+    other: 'Other / Khác',
+  }
+  const formFeedback = [
+    value.description,
+    value.expected ? 'Expected: ' + value.expected : '',
+    value.actual ? 'Observed: ' + value.actual : '',
+  ].filter(Boolean).join('\n\n')
+  const formClient = ['ChatGPT', 'Cursor', 'Claude', 'Codex'].includes(value.client ?? '')
+    ? value.client : value.client ? 'Other' : undefined
+  function createFormUrl(feedback: string, includeOptional: boolean): string {
+    const url = new URL('https://github.com/polyms/ai-kit/issues/new')
+    url.searchParams.set('template', 'feedback.yml')
+    url.searchParams.set('title', title)
+    url.searchParams.set('feedback', feedback)
+    url.searchParams.set('category', formCategory[category])
+    if (includeOptional && formClient) url.searchParams.set('client', formClient)
+    if (includeOptional && value.skill) url.searchParams.set('skill', value.skill)
+    if (includeOptional && value.example) url.searchParams.set('example', value.example)
+    return url.toString()
+  }
+  let prefilledUrl = createFormUrl(formFeedback, true)
+  let prefilledUrlTruncated = false
+  if (prefilledUrl.length > 6800) {
+    // Never return null: long Vietnamese text is percent-encoded and can exceed
+    // browser URL limits. Fall back to a short, plainly labeled excerpt.
+    prefilledUrlTruncated = true
+    const excerpt = Array.from(value.description).slice(0, 200).join('')
+    prefilledUrl = createFormUrl(
+      excerpt + '\n\n[Shortened for GitHub URL length. Review the full draft in the AI conversation.]',
+      false,
+    )
+  }
   return {
     status: 'draft' as const,
     repository: FEEDBACK_REPOSITORY,
@@ -95,8 +134,9 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
     title,
     body,
     githubCreateIssue: { repository_full_name: FEEDBACK_REPOSITORY, title, body },
-    prefilledUrl: url.toString().length < 6800 ? url.toString() : null,
-    nextStep: 'Show the user the exact title/body and obtain explicit confirmation. Then call the separately authorized host GitHub create_issue tool, if available. Otherwise provide the prefilled URL. Never claim submission without a real returned issue URL.',
+    prefilledUrl,
+    prefilledUrlTruncated,
+    nextStep: 'Show the user the exact title/body and obtain explicit confirmation. Then call the separately authorized host GitHub create_issue tool, if available. Otherwise provide the prefilled GitHub Issue Form URL. If prefilledUrlTruncated is true, clearly explain that the link contains an excerpt and the full approved draft is available in chat. The user still needs to check public-consent and possibly category on GitHub. Never claim submission without a real returned issue URL.',
   }
 }
 
