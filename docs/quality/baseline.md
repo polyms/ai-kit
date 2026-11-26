@@ -97,15 +97,16 @@ not interchangeable with verified evaluation evidence. Details:
 
 ## Optional paired workflow evaluation
 
-The opt-in `evals/run.ts` runner has **88 synthetic scenarios**:
+The opt-in `evals/run.ts` runner has **92 synthetic scenarios** (including four
+feature-context cases added after the 2026-11-22 baseline):
 
 | Suite | Count | What it exercises |
 | --- | ---: | --- |
 | Routing | 39 | Appropriate smallest skill set and routing rules |
-| Output | 13 | Artifact quality and evidence-aware drafting |
+| Output | 17 | Artifact quality and evidence-aware drafting |
 | Composition | 21 | Multi-skill selection, references and handoffs |
 | Memory | 15 | Relevant recall, source integrity, stale decisions, privacy and capture rules |
-| **Total** | **88** | |
+| **Total** | **92** | |
 
 The runner compares baseline vs skill-assisted on the same synthetic context.
 Memory cases isolate P2 advice with the same historical evidence in both arms.
