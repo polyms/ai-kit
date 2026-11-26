@@ -497,5 +497,89 @@
       "release"
     ],
     "notes": "Everyday/default-client regression based on a ChatGPT Instant sample; behavior is client-agnostic. Use approved requirements, minimal routing and read-only draft."
+  },
+  {
+    "id": "RT-40",
+    "kind": "Route",
+    "prompt": "Review a PR or diff, inspect code changes",
+    "expected": [
+      "code-review"
+    ],
+    "avoid": [
+      "review"
+    ],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-41",
+    "kind": "Route",
+    "prompt": "Investigate deployment or CI failure, diagnose infrastructure",
+    "expected": [
+      "devops"
+    ],
+    "avoid": [
+      "release"
+    ],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-42",
+    "kind": "Route",
+    "prompt": "/to-issues, split approved PRD into issues",
+    "expected": [
+      "to-issues"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-43",
+    "kind": "Route",
+    "prompt": "/to-prd, synthesize a PRD from aligned decisions",
+    "expected": [
+      "to-prd"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-44",
+    "kind": "Route",
+    "prompt": "Challenge a plan, grill design decisions",
+    "expected": [
+      "align-loop"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-45",
+    "kind": "Route",
+    "prompt": "/triage, classify backlog or verify reported issue",
+    "expected": [
+      "triage"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-46",
+    "kind": "Route",
+    "prompt": "Sharpen domain glossary, record ADR decisions",
+    "expected": [
+      "domain-modeling"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-47",
+    "kind": "Route",
+    "prompt": "/setup, configure project tools and execution profile",
+    "expected": [
+      "setup"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
   }
 ]

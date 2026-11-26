@@ -27,6 +27,8 @@ import {
   UI_KIT_SKILL_PATHS,
   WORK_ARTIFACT_STANDARD,
   WORK_SKILL_PATHS,
+  ENGINEERING_SKILL_PATHS,
+  PORTABLE_SKILL_STANDARD,
 } from './skill-pack'
 import { executeGetSkillPack, executeListSkillPacks, MCP_SKILL_SOURCE, registerSkillPackMcpTools } from './skill-pack.mcp'
 
@@ -62,6 +64,14 @@ describe('skill pack manifest', () => {
       'comms',
       'review',
       'release',
+      'code-review',
+      'devops',
+      'to-issues',
+      'to-prd',
+      'align-loop',
+      'triage',
+      'domain-modeling',
+      'setup',
     ])
     for (const pack of packs) {
       expect(pack.skillRawUrl).toBe(skillPackRawUrl(`skills/${pack.name}/SKILL.md`))
@@ -238,6 +248,26 @@ describe('skill pack MCP tools', () => {
   })
 })
 
+describe('portable engineering packs', () => {
+  it('delivers starter content and explicit invocation metadata for all engineering packs', async () => {
+    const catalog = listSkillPacks()
+    const manual = ['setup', 'to-prd', 'to-issues', 'triage']
+    for (const name of Object.keys(ENGINEERING_SKILL_PATHS)) {
+      const summary = catalog.find(pack => pack.name === name)!
+      expect(summary.invocation).toBe(manual.includes(name) ? 'explicit' : 'model')
+      expect(summary.starterPaths).toContain(PORTABLE_SKILL_STANDARD)
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Methodology'))
+      const result = await executeGetSkillPack(name, fetchFile, summary.starterPaths)
+      expect(result.isError).toBeUndefined()
+      expect(JSON.parse(result.content[0]!.text).invocation).toBe(summary.invocation)
+      expect(fetchFile.mock.calls.map(call => call[0])).toEqual(summary.starterPaths.map(skillPackRawUrl))
+    }
+    expect(starterPaths('code-review')).toContain('skills/code-review/standards-baseline.md')
+    expect(starterPaths('code-review')).toContain('skills/code-review/simplify-baseline.md')
+    expect(starterPaths('setup')).toContain('skills/setup/execution-profile.md')
+  })
+})
+
 describe('skill intelligence', () => {
   it('advertises valid minimal starter paths and known optional handoffs for every pack', () => {
     const catalog = listSkillPacks()
@@ -292,6 +322,10 @@ describe('skill intelligence', () => {
         for (const [, target] of body.matchAll(/\]\(([^)\s#]+\.md)(?:#[^)]*)?\)/g)) {
           if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(target)) continue
           const resolved = posix.normalize(posix.join(posix.dirname(file.path), target))
+          // These exact template links refer to files generated in the target project, not AI Kit references.
+          if (file.path === 'skills/setup/context-format.md' && ['./src/ordering/CONTEXT.md', './src/billing/CONTEXT.md'].includes(target)) continue
+          if (file.path === 'skills/build-feature-map/repo-skill-template.md' && target === 'references/features/README.md') continue
+          if (file.path === 'skills/build-feature-map/index-template.md' && target === 'slug.md') continue
           expect(allowed.has(resolved), `${summary.name}: ${file.path} -> ${resolved}`).toBe(true)
         }
       }

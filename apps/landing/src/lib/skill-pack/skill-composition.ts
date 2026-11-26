@@ -61,6 +61,70 @@ export type SkillContract = {
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
+  'code-review': {
+    context: [
+      { key: 'change-set', importance: 'required', description: 'Verified base/head or supplied diff, applicable standards and spec when accessible.' },
+    ],
+    accepts: ['context', 'requirements', 'evidence'],
+    produces: ['review-findings'],
+    readyWhen: 'Review axes remain independent; findings are grounded and coverage gaps explicit.',
+  },
+  'devops': {
+    context: [
+      { key: 'incident', importance: 'required', description: 'Observed symptom, affected environment, revision and logs when available.' },
+    ],
+    accepts: ['context', 'evidence', 'defect'],
+    produces: ['review-findings', 'change-receipt'],
+    readyWhen: 'Diagnosis and actual verification are separate; missing evidence remains unverified.',
+  },
+  'to-issues': {
+    context: [
+      { key: 'approved-scope', importance: 'required', description: 'Approved scope, dependencies and tracker policy if publishing.' },
+    ],
+    accepts: ['requirements', 'decision', 'delivery-plan'],
+    produces: ['work-item', 'change-receipt'],
+    readyWhen: 'Slices preserve approved requirements and real dependency IDs when published.',
+  },
+  'to-prd': {
+    context: [
+      { key: 'aligned-decisions', importance: 'required', description: 'Confirmed scope, decisions, open questions and tracker policy for publication.' },
+    ],
+    accepts: ['context', 'decision', 'requirements'],
+    produces: ['requirements', 'change-receipt'],
+    readyWhen: 'Decisions and questions are traceable; publication and mirror status are explicit.',
+  },
+  'align-loop': {
+    context: [
+      { key: 'decision-goal', importance: 'required', description: 'Proposed design or problem and known constraints.' },
+    ],
+    accepts: ['context', 'requirements', 'decision'],
+    produces: ['decision'],
+    readyWhen: 'Resolved decisions and remaining blockers form a resumable handoff.',
+  },
+  'triage': {
+    context: [
+      { key: 'triage-target', importance: 'required', description: 'Issue or PR, current state and confirmed label mapping for writes.' },
+    ],
+    accepts: ['context', 'defect', 'tracker-snapshot'],
+    produces: ['review-findings', 'change-receipt'],
+    readyWhen: 'Recommendation and verification status are explicit; authorized state changes have receipts.',
+  },
+  'domain-modeling': {
+    context: [
+      { key: 'domain-context', importance: 'required', description: 'Current terminology, decisions and canonical artifact ownership.' },
+    ],
+    accepts: ['context', 'decision', 'requirements'],
+    produces: ['decision', 'document'],
+    readyWhen: 'Terms and ADR rationale are explicit; canonical updates verified or pending.',
+  },
+  'setup': {
+    context: [
+      { key: 'project-target', importance: 'required', description: 'Confirmed project, existing configuration and available host tools.' },
+    ],
+    accepts: ['context', 'decision'],
+    produces: ['document', 'change-receipt'],
+    readyWhen: 'Canonical sources, routes and policies are confirmed or unknown; requested writes verified.',
+  },
   research: {
     context: [
       { key: 'research-question', importance: 'required', description: 'Question and scope.' },

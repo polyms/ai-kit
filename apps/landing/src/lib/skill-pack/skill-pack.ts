@@ -82,8 +82,72 @@ export const WORK_SKILL_PATHS = {
   release: ['skills/release/SKILL.md', 'skills/release/release-templates.md'],
 } as const
 
+export const PORTABLE_SKILL_STANDARD = 'docs/agents/portable-skills.md'
+
+export const ENGINEERING_SKILL_PATHS = {
+  'code-review': [
+    'skills/code-review/SKILL.md',
+    'skills/code-review/standards-baseline.md',
+    'skills/code-review/simplify-baseline.md',
+  ],
+  'devops': [
+    'skills/devops/SKILL.md',
+    'skills/devops/incident-templates.md',
+  ],
+  'to-issues': [
+    'skills/to-issues/SKILL.md',
+    'skills/to-issues/issue-template.md',
+  ],
+  'to-prd': [
+    'skills/to-prd/SKILL.md',
+    'skills/to-prd/lean-prd-template.md',
+    'skills/reqs/enterprise-prd-template.md',
+    'skills/align-loop/GRILL-FORMAT.md',
+    'skills/setup/language.md',
+  ],
+  'align-loop': [
+    'skills/align-loop/SKILL.md',
+    'skills/align-loop/GRILL-FORMAT.md',
+  ],
+  'triage': [
+    'skills/triage/SKILL.md',
+    'skills/triage/agent-brief.md',
+    'skills/triage/out-of-scope.md',
+    'skills/align-loop/GRILL-FORMAT.md',
+  ],
+  'domain-modeling': [
+    'skills/domain-modeling/SKILL.md',
+    'skills/setup/domain.md',
+    'skills/setup/context-format.md',
+    'skills/setup/adr-format.md',
+    'skills/align-loop/GRILL-FORMAT.md',
+  ],
+  'setup': [
+    'skills/setup/SKILL.md',
+    'skills/setup/execution-profile.md',
+    'skills/setup/language.md',
+    'skills/setup/issue-tracker-github.md',
+    'skills/setup/issue-tracker-gitlab.md',
+    'skills/setup/issue-tracker-local.md',
+    'skills/setup/domain.md',
+    'skills/setup/context-format.md',
+    'skills/setup/adr-format.md',
+    'skills/setup/triage-labels.md',
+    'skills/setup/design.md',
+    'skills/setup/requirements.md',
+    'skills/setup/stack-profile.md',
+    'skills/setup/voice-rule.mdc',
+    'skills/build-feature-map/pointer-template.md',
+    'skills/build-feature-map/repo-skill-template.md',
+    'skills/build-feature-map/index-template.md',
+  ],
+} as const
+
+export type EngineeringSkillName = keyof typeof ENGINEERING_SKILL_PATHS
+const MANUAL_ENGINEERING_SKILLS: readonly EngineeringSkillName[] = ['setup', 'to-prd', 'to-issues', 'triage']
+
 export type WorkSkillName = keyof typeof WORK_SKILL_PATHS
-export type SkillPackName = 'reqs' | 'design' | WorkSkillName
+export type SkillPackName = 'reqs' | 'design' | WorkSkillName | EngineeringSkillName
 
 const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   reqs: 'Business and product requirements, PRDs, user stories and acceptance criteria',
@@ -99,6 +163,14 @@ const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   comms: 'Professional messages, client replies and stakeholder updates',
   review: 'Evidence-based artifact review, gap analysis and assumption challenge',
   release: 'Go-live readiness, rollout, rollback and release notes',
+  'code-review': 'Three-axis source-code change review',
+  'devops': 'Evidence-based deploy, CI and infrastructure diagnosis',
+  'to-issues': 'Vertical-slice implementation issues from approved scope',
+  'to-prd': 'Lean PRD synthesis from aligned decisions',
+  'align-loop': 'Design-tree decision alignment',
+  'triage': 'Tracker issue and external PR triage',
+  'domain-modeling': 'Domain vocabulary and architectural decision modeling',
+  'setup': 'Project integration and execution profile configuration',
 }
 
 export type SkillPackFile = {
@@ -114,6 +186,7 @@ export type SkillPackSummary = {
   avoidWhen: string
   starterPaths: string[]
   relatedSkills: readonly SkillPackName[]
+  invocation?: 'explicit' | 'model'
   contract: SkillContract
 }
 
@@ -131,7 +204,13 @@ export type DesignSkillPack = {
 }
 
 export type WorkSkillPack = { name: WorkSkillName; contract: SkillContract; files: SkillPackFile[] }
-export type SkillPack = ReqsSkillPack | DesignSkillPack | WorkSkillPack
+export type EngineeringSkillPack = {
+  name: EngineeringSkillName
+  contract: SkillContract
+  files: SkillPackFile[]
+  invocation: 'explicit' | 'model'
+}
+export type SkillPack = ReqsSkillPack | DesignSkillPack | WorkSkillPack | EngineeringSkillPack
 
 export function skillPackRawUrl(path: string): string {
   return `${SKILL_PACK_RAW_BASE}${path}`
@@ -151,10 +230,33 @@ export function listSkillPacks(): SkillPackSummary[] {
     starterPaths: starterPaths(name),
     relatedSkills: SKILL_ROUTING[name].relatedSkills,
     contract: SKILL_CONTRACTS[name],
+    ...(isEngineeringSkill(name) ? { invocation: engineeringInvocation(name) } : {}),
   }))
 }
 
+function isEngineeringSkill(name: string): name is EngineeringSkillName {
+  return Object.hasOwn(ENGINEERING_SKILL_PATHS, name)
+}
+
+function engineeringInvocation(name: EngineeringSkillName): 'explicit' | 'model' {
+  return MANUAL_ENGINEERING_SKILLS.includes(name) ? 'explicit' : 'model'
+}
+
 export function getSkillPack(name: string): SkillPack | null {
+  if (isEngineeringSkill(name)) {
+    return {
+      name,
+      contract: SKILL_CONTRACTS[name],
+      invocation: engineeringInvocation(name),
+      files: toFiles([
+        ...ENGINEERING_SKILL_PATHS[name],
+        PORTABLE_SKILL_STANDARD,
+        'docs/agents/client-compatibility.md',
+        WORK_ARTIFACT_STANDARD,
+        ...compositionPaths(name),
+      ]),
+    }
+  }
   if (name === 'reqs') {
     return {
       name: 'reqs',
@@ -196,6 +298,11 @@ export function getSkillPack(name: string): SkillPack | null {
 export function starterPaths(name: SkillPackName): string[] {
   const entry = `skills/${name}/SKILL.md`
   if (name === 'design') return [entry, CONTEXT_PROTOCOL]
+  if (isEngineeringSkill(name)) {
+    const paths = ENGINEERING_SKILL_PATHS[name]
+    const core = name === 'setup' ? paths.slice(1, 2) : paths.slice(1)
+    return [entry, PORTABLE_SKILL_STANDARD, CONTEXT_PROTOCOL, WORK_ARTIFACT_STANDARD, ...core]
+  }
   const paths = [entry, WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL]
   if (name !== 'reqs' && SKILL_ROUTING[name].starter === 'primary') {
     paths.push(WORK_SKILL_PATHS[name][1])

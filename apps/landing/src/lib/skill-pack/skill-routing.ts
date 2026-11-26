@@ -9,6 +9,54 @@ export type SkillRoutingHint = {
 }
 
 export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
+  'code-review': {
+    useWhen: ['Review a PR or diff, inspect code changes', 'Review code, rà soát code, xem diff'],
+    avoidWhen: 'Not general artifact critique; use actual change evidence.',
+    relatedSkills: ['review', 'devops'],
+    starter: 'entry',
+  },
+  'devops': {
+    useWhen: ['Investigate deployment or CI failure, diagnose infrastructure', 'Sửa deploy, lỗi build, fix CI'],
+    avoidWhen: 'Not feature implementation or release readiness alone.',
+    relatedSkills: ['release', 'code-review'],
+    starter: 'entry',
+  },
+  'to-issues': {
+    useWhen: ['/to-issues, split approved PRD into issues', 'Tách PRD thành issue triển khai'],
+    avoidWhen: 'Explicit invocation; no publication before approved slices and verified destination.',
+    relatedSkills: ['to-prd', 'task'],
+    starter: 'entry',
+  },
+  'to-prd': {
+    useWhen: ['/to-prd, synthesize a PRD from aligned decisions', 'Chốt PRD từ quyết định đã thống nhất'],
+    avoidWhen: 'Explicit invocation; use reqs for discovery, never auto-publish.',
+    relatedSkills: ['align-loop', 'reqs', 'to-issues'],
+    starter: 'entry',
+  },
+  'align-loop': {
+    useWhen: ['Challenge a plan, grill design decisions', 'Làm rõ quyết định, chốt hướng'],
+    avoidWhen: 'Not PRD publication or unattended business approval.',
+    relatedSkills: ['domain-modeling', 'to-prd'],
+    starter: 'entry',
+  },
+  'triage': {
+    useWhen: ['/triage, classify backlog or verify reported issue', 'Phân loại issue, triage backlog'],
+    avoidWhen: 'Explicit invocation; no unauthorized labels, comments or closure.',
+    relatedSkills: ['align-loop', 'domain-modeling', 'track'],
+    starter: 'entry',
+  },
+  'domain-modeling': {
+    useWhen: ['Sharpen domain glossary, record ADR decisions', 'Thống nhất thuật ngữ, cập nhật mô hình domain'],
+    avoidWhen: 'Not passive glossary reading or unauthorized canonical edits.',
+    relatedSkills: ['align-loop', 'to-prd'],
+    starter: 'entry',
+  },
+  'setup': {
+    useWhen: ['/setup, configure project tools and execution profile', 'Cấu hình repo, nguồn dữ liệu và công cụ'],
+    avoidWhen: 'Explicit invocation; do not run setup just to read existing project context.',
+    relatedSkills: ['domain-modeling', 'triage'],
+    starter: 'entry',
+  },
   reqs: {
     useWhen: [
       'Define business rules, BRD, PRD or acceptance criteria',

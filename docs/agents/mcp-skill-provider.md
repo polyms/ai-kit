@@ -120,6 +120,15 @@ landing app after it reaches main. New packs, changed file lists and server chan
 deployment. Preview/local servers also fetch from main, not the PR branch; mocked tests or a
 controlled test fixture are needed for pre-merge content checks.
 
+## Portable engineering packs
+
+The live MCP catalog includes setup, code-review, devops, to-issues, to-prd, align-loop, triage and
+domain-modeling. Load a known skill directly. The portable standard distinguishes methodology,
+project configuration and host execution; use the target project's execution profile, not the kit's
+profile. Explicit invocation is advertised for setup, to-prd, to-issues and triage. It does not grant
+write authority. Existing published SDK snapshots remain unchanged; a later validated release may
+unify immutable delivery. Native Grok compatibility requires real client tests.
+
 ## Progressive retrieval
 
 Existing clients may continue to omit paths and receive complete packs. Prefer the catalog's

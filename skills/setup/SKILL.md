@@ -149,7 +149,7 @@ If **Yes**, collect any one-line overrides (e.g. keep EN peer tone only; drop em
 **H — Stack profile** (Knowledge filter)
 
 Per-repo **Stack manifest** axes for Knowledge search — see [stack-profile.md](stack-profile.md) and
-[knowledge.md](../../docs/agents/knowledge.md). Filters `search_knowledge` for all intents.
+the published [Knowledge guide](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md). Filters `search_knowledge` for all intents.
 
 1. Propose axes from Explore signals (lowercase CMS tags: `tanstack-start`, `vercel`, `pnpm`, …).
 2. Show the candidate list; let the user add/remove/confirm.
