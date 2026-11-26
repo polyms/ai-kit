@@ -18,6 +18,26 @@ or destination. A person and an agent must understand the artifact without the o
 - Prefer readable Markdown over JSON/YAML in ticket bodies. Use tracker-native fields for metadata when
   available. Do not duplicate conflicting status, priority, assignee or due date in the body.
 
+## Feature and environment-specific artifacts
+
+When documenting a feature or QA observation, distinguish **approved behavior** from
+**observed behavior** and name the target environment, feature/requirement revision and
+build/snapshot where material and known. Keep documentation completeness, ticket progress,
+deployment, feature-flag availability and QA verification as separate claims.
+
+- Preserve the authoritative source and status for requirements, decisions, Q&A, feature maps,
+  test runs and environment observations. A database-backed map may be canonical while a
+  repository copy is only an E2E export; do not silently rewrite the canonical source from an
+  older fixture. Follow the consumer's stated ownership rather than assuming either storage.
+- Record actual source IDs, timestamps and evidence references when available. An unavailable
+  record is **Unknown**, not a verified absence or a passing test. Do not copy evidence from one
+  environment/build to another without verification.
+- Keep a proposed QA question or answer distinct from an approved business rule. Keep a draft
+  feature map distinct from an authorized QA-confirmed snapshot. Different approvals may have
+  different role owners; a document edit does not grant approval or QA confirmation rights.
+- When version/build relationships cannot be established, note that limitation explicitly
+  rather than assigning an inferred deployed requirement revision.
+
 ## Publishing
 
 Draft unless the user requested creation or update. When publishing, use the available authorized tracker
