@@ -15,7 +15,6 @@ import {
 import {
   DESIGN_REFERENCE_PATHS,
   DESIGN_SKILL_PATHS,
-  DOCS_REFERENCE_PATHS,
   getSkillPack,
   listSkillPacks,
   REQS_REFERENCE_PATHS,
@@ -28,6 +27,8 @@ import {
   WORK_ARTIFACT_STANDARD,
   WORK_SKILL_PATHS,
   ENGINEERING_SKILL_PATHS,
+  LEGACY_SKILL_ALIASES,
+  WORK_REFERENCE_PATHS,
   PORTABLE_SKILL_STANDARD,
 } from './skill-pack'
 import { executeGetSkillPack, executeListSkillPacks, MCP_SKILL_SOURCE, registerSkillPackMcpTools } from './skill-pack.mcp'
@@ -64,14 +65,13 @@ describe('skill pack manifest', () => {
       'comms',
       'review',
       'release',
-      'code-review',
       'devops',
-      'to-issues',
-      'to-prd',
-      'align-loop',
-      'triage',
-      'domain-modeling',
       'setup',
+      'align',
+      'arch',
+      'dev',
+      'craft',
+      'build-feature-map',
     ])
     for (const pack of packs) {
       expect(pack.skillRawUrl).toBe(skillPackRawUrl(`skills/${pack.name}/SKILL.md`))
@@ -183,7 +183,7 @@ describe('skill pack MCP tools', () => {
       expect([...paths].sort()).toEqual(markdownPaths(`skills/${name}`))
       const result = await executeGetSkillPack(name, fetchFile)
       expect(result.isError).toBeUndefined()
-      const references = name === 'docs' ? DOCS_REFERENCE_PATHS : []
+      const references = WORK_REFERENCE_PATHS[name as keyof typeof WORK_SKILL_PATHS] ?? []
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
         contract: SKILL_CONTRACTS[name as SkillPackName],
@@ -248,10 +248,22 @@ describe('skill pack MCP tools', () => {
   })
 })
 
+describe('consolidated engineering packs', () => {
+  it('lists 20 canonical skills and resolves all retired names without duplicate catalog entries', async () => {
+    const names = listSkillPacks().map(pack => pack.name)
+    expect(names).toHaveLength(20)
+    for (const [alias, canonical] of Object.entries(LEGACY_SKILL_ALIASES)) {
+      expect(names).not.toContain(alias)
+      expect(getSkillPack(alias)).toEqual(getSkillPack(canonical))
+      const response = await executeGetSkillPack(alias, vi.fn<typeof fetch>(), [])
+      expect(JSON.parse(response.content[0]!.text)).toMatchObject({ name: canonical, requestedName: alias })
+    }
+  })
+})
 describe('portable engineering packs', () => {
   it('delivers starter content and explicit invocation metadata for all engineering packs', async () => {
     const catalog = listSkillPacks()
-    const manual = ['setup', 'to-prd', 'to-issues', 'triage']
+    const manual = ['setup', 'align', 'craft', 'build-feature-map']
     for (const name of Object.keys(ENGINEERING_SKILL_PATHS)) {
       const summary = catalog.find(pack => pack.name === name)!
       expect(summary.invocation).toBe(manual.includes(name) ? 'explicit' : 'model')
@@ -262,8 +274,8 @@ describe('portable engineering packs', () => {
       expect(JSON.parse(result.content[0]!.text).invocation).toBe(summary.invocation)
       expect(fetchFile.mock.calls.map(call => call[0])).toEqual(summary.starterPaths.map(skillPackRawUrl))
     }
-    expect(starterPaths('code-review')).toContain('skills/code-review/standards-baseline.md')
-    expect(starterPaths('code-review')).toContain('skills/code-review/simplify-baseline.md')
+    expect(getSkillPack('review')?.files.map(file => file.path)).toContain('skills/review/standards-baseline.md')
+    expect(getSkillPack('review')?.files.map(file => file.path)).toContain('skills/review/simplify-baseline.md')
     expect(starterPaths('setup')).toContain('skills/setup/execution-profile.md')
   })
 })
@@ -285,11 +297,12 @@ describe('skill intelligence', () => {
       expect(summary.relatedSkills.every(name => name !== summary.name && names.has(name))).toBe(true)
     }
     expect(starterPaths('design')).toEqual(['skills/design/SKILL.md', CONTEXT_PROTOCOL])
-    expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL])
+    expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL, PORTABLE_SKILL_STANDARD])
     expect(starterPaths('task')).toEqual([
       'skills/task/SKILL.md',
       WORK_ARTIFACT_STANDARD,
       CONTEXT_PROTOCOL,
+      PORTABLE_SKILL_STANDARD,
       'skills/task/task-template.md',
     ])
   })
@@ -326,6 +339,8 @@ describe('skill intelligence', () => {
           if (file.path === 'skills/setup/context-format.md' && ['./src/ordering/CONTEXT.md', './src/billing/CONTEXT.md'].includes(target)) continue
           if (file.path === 'skills/build-feature-map/repo-skill-template.md' && target === 'references/features/README.md') continue
           if (file.path === 'skills/build-feature-map/index-template.md' && target === 'slug.md') continue
+          // Shared policy documentation links are navigation, not workflow dependencies; resolve via the owning pack.
+          if (['docs/agents/invocation.md', 'docs/agents/knowledge.md', 'docs/adr/0001-skill-setup-dependencies.md'].includes(file.path)) continue
           expect(allowed.has(resolved), `${summary.name}: ${file.path} -> ${resolved}`).toBe(true)
         }
       }

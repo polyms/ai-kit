@@ -61,13 +61,35 @@ export type SkillContract = {
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
-  'code-review': {
-    context: [
-      { key: 'change-set', importance: 'required', description: 'Verified base/head or supplied diff, applicable standards and spec when accessible.' },
-    ],
-    accepts: ['context', 'requirements', 'evidence'],
-    produces: ['review-findings'],
-    readyWhen: 'Review axes remain independent; findings are grounded and coverage gaps explicit.',
+  'align': {
+    context: [{ key: 'decision-goal', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'requirements', 'decision'],
+    produces: ['decision', 'document'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'arch': {
+    context: [{ key: 'architecture-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'decision', 'requirements', 'evidence'],
+    produces: ['decision', 'review-findings', 'document'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'dev': {
+    context: [{ key: 'implementation-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'requirements', 'ui-spec', 'work-item', 'defect', 'decision'],
+    produces: ['change-receipt', 'test-report', 'requirements', 'ui-spec'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'craft': {
+    context: [{ key: 'skill-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'document', 'review-findings'],
+    produces: ['document', 'review-findings'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'build-feature-map': {
+    context: [{ key: 'feature-map-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'requirements', 'evidence', 'ui-spec'],
+    produces: ['document', 'change-receipt'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
   },
   'devops': {
     context: [
@@ -76,46 +98,6 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     accepts: ['context', 'evidence', 'defect'],
     produces: ['review-findings', 'change-receipt'],
     readyWhen: 'Diagnosis and actual verification are separate; missing evidence remains unverified.',
-  },
-  'to-issues': {
-    context: [
-      { key: 'approved-scope', importance: 'required', description: 'Approved scope, dependencies and tracker policy if publishing.' },
-    ],
-    accepts: ['requirements', 'decision', 'delivery-plan'],
-    produces: ['work-item', 'change-receipt'],
-    readyWhen: 'Slices preserve approved requirements and real dependency IDs when published.',
-  },
-  'to-prd': {
-    context: [
-      { key: 'aligned-decisions', importance: 'required', description: 'Confirmed scope, decisions, open questions and tracker policy for publication.' },
-    ],
-    accepts: ['context', 'decision', 'requirements'],
-    produces: ['requirements', 'change-receipt'],
-    readyWhen: 'Decisions and questions are traceable; publication and mirror status are explicit.',
-  },
-  'align-loop': {
-    context: [
-      { key: 'decision-goal', importance: 'required', description: 'Proposed design or problem and known constraints.' },
-    ],
-    accepts: ['context', 'requirements', 'decision'],
-    produces: ['decision'],
-    readyWhen: 'Resolved decisions and remaining blockers form a resumable handoff.',
-  },
-  'triage': {
-    context: [
-      { key: 'triage-target', importance: 'required', description: 'Issue or PR, current state and confirmed label mapping for writes.' },
-    ],
-    accepts: ['context', 'defect', 'tracker-snapshot'],
-    produces: ['review-findings', 'change-receipt'],
-    readyWhen: 'Recommendation and verification status are explicit; authorized state changes have receipts.',
-  },
-  'domain-modeling': {
-    context: [
-      { key: 'domain-context', importance: 'required', description: 'Current terminology, decisions and canonical artifact ownership.' },
-    ],
-    accepts: ['context', 'decision', 'requirements'],
-    produces: ['decision', 'document'],
-    readyWhen: 'Terms and ADR rationale are explicit; canonical updates verified or pending.',
   },
   'setup': {
     context: [
@@ -192,7 +174,7 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       },
     ],
     accepts: ['context', 'evidence', 'decision', 'review-findings', 'requirements'],
-    produces: ['requirements'],
+    produces: ['requirements', 'change-receipt'],
     readyWhen: 'Scope, rules and acceptance criteria are traceable; unresolved decisions are explicit.',
   },
   design: {

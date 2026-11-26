@@ -471,9 +471,11 @@
   },
   {
     "id": "RT-38",
-    "kind": "Skip",
+    "kind": "Route",
     "prompt": "Fix loi build Vercel trong repo local, run lai build",
-    "expected": [],
+    "expected": [
+      "devops"
+    ],
     "avoid": [
       "release",
       "bug",
@@ -503,11 +505,9 @@
     "kind": "Route",
     "prompt": "Review a PR or diff, inspect code changes",
     "expected": [
-      "code-review"
-    ],
-    "avoid": [
       "review"
     ],
+    "avoid": [],
     "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
   },
   {
@@ -527,7 +527,7 @@
     "kind": "Route",
     "prompt": "/to-issues, split approved PRD into issues",
     "expected": [
-      "to-issues"
+      "task"
     ],
     "avoid": [],
     "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
@@ -537,7 +537,7 @@
     "kind": "Route",
     "prompt": "/to-prd, synthesize a PRD from aligned decisions",
     "expected": [
-      "to-prd"
+      "reqs"
     ],
     "avoid": [],
     "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
@@ -547,7 +547,7 @@
     "kind": "Route",
     "prompt": "Challenge a plan, grill design decisions",
     "expected": [
-      "align-loop"
+      "align"
     ],
     "avoid": [],
     "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
@@ -557,7 +557,7 @@
     "kind": "Route",
     "prompt": "/triage, classify backlog or verify reported issue",
     "expected": [
-      "triage"
+      "track"
     ],
     "avoid": [],
     "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
@@ -567,7 +567,7 @@
     "kind": "Route",
     "prompt": "Sharpen domain glossary, record ADR decisions",
     "expected": [
-      "domain-modeling"
+      "align"
     ],
     "avoid": [],
     "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
@@ -581,5 +581,45 @@
     ],
     "avoid": [],
     "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-48",
+    "kind": "Route",
+    "prompt": "Design module seams, assess architecture and deepening opportunities",
+    "expected": [
+      "arch"
+    ],
+    "avoid": [],
+    "notes": "Select only canonical skill, relevant branch and authorized execution."
+  },
+  {
+    "id": "RT-49",
+    "kind": "Route",
+    "prompt": "Implement specs, fix bugs, prepare new features",
+    "expected": [
+      "dev"
+    ],
+    "avoid": [],
+    "notes": "Select only canonical skill, relevant branch and authorized execution."
+  },
+  {
+    "id": "RT-50",
+    "kind": "Route",
+    "prompt": "/craft, write or audit SKILL.md",
+    "expected": [
+      "craft"
+    ],
+    "avoid": [],
+    "notes": "Select only canonical skill, relevant branch and authorized execution."
+  },
+  {
+    "id": "RT-51",
+    "kind": "Route",
+    "prompt": "/build-feature-map, build or update feature map",
+    "expected": [
+      "build-feature-map"
+    ],
+    "avoid": [],
+    "notes": "Select only canonical skill, relevant branch and authorized execution."
   }
 ]

@@ -9,57 +9,51 @@ export type SkillRoutingHint = {
 }
 
 export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
-  'code-review': {
-    useWhen: ['Review a PR or diff, inspect code changes', 'Review code, rà soát code, xem diff'],
-    avoidWhen: 'Not general artifact critique; use actual change evidence.',
-    relatedSkills: ['review', 'devops'],
+  'align': {
+    useWhen: ['Resolve design-tree decisions and terminology', 'Chốt hướng, làm rõ thuật ngữ'],
+    avoidWhen: 'Do not repeat approved alignment or write a PRD here.',
+    relatedSkills: ['reqs', 'arch', 'track'],
+    starter: 'entry',
+  },
+  'arch': {
+    useWhen: ['Design module seams, assess architecture and deepening opportunities', 'Thiết kế module, rà soát kiến trúc'],
+    avoidWhen: 'Do not implement a refactor merely from a report request.',
+    relatedSkills: ['align', 'dev', 'review'],
+    starter: 'entry',
+  },
+  'dev': {
+    useWhen: ['Implement specs, fix bugs, prepare new features', 'Triển khai tính năng, sửa lỗi, tạo CRUD'],
+    avoidWhen: 'Use devops for standalone infra incidents; do not invent scope or claim unrun tests.',
+    relatedSkills: ['reqs', 'design', 'arch', 'qa', 'review', 'devops'],
+    starter: 'entry',
+  },
+  'craft': {
+    useWhen: ['/craft, write or audit SKILL.md', 'Viết skill, rà soát skill'],
+    avoidWhen: 'Explicit selection; not general project setup.',
+    relatedSkills: ['setup', 'review'],
+    starter: 'entry',
+  },
+  'build-feature-map': {
+    useWhen: ['/build-feature-map, build or update feature map', 'Dựng bản đồ vùng, cập nhật feature map'],
+    avoidWhen: 'Explicit selection; not UI design or QA approval.',
+    relatedSkills: ['setup', 'qa', 'design', 'dev'],
     starter: 'entry',
   },
   'devops': {
     useWhen: ['Investigate deployment or CI failure, diagnose infrastructure', 'Sửa deploy, lỗi build, fix CI'],
     avoidWhen: 'Not feature implementation or release readiness alone.',
-    relatedSkills: ['release', 'code-review'],
-    starter: 'entry',
-  },
-  'to-issues': {
-    useWhen: ['/to-issues, split approved PRD into issues', 'Tách PRD thành issue triển khai'],
-    avoidWhen: 'Explicit invocation; no publication before approved slices and verified destination.',
-    relatedSkills: ['to-prd', 'task'],
-    starter: 'entry',
-  },
-  'to-prd': {
-    useWhen: ['/to-prd, synthesize a PRD from aligned decisions', 'Chốt PRD từ quyết định đã thống nhất'],
-    avoidWhen: 'Explicit invocation; use reqs for discovery, never auto-publish.',
-    relatedSkills: ['align-loop', 'reqs', 'to-issues'],
-    starter: 'entry',
-  },
-  'align-loop': {
-    useWhen: ['Challenge a plan, grill design decisions', 'Làm rõ quyết định, chốt hướng'],
-    avoidWhen: 'Not PRD publication or unattended business approval.',
-    relatedSkills: ['domain-modeling', 'to-prd'],
-    starter: 'entry',
-  },
-  'triage': {
-    useWhen: ['/triage, classify backlog or verify reported issue', 'Phân loại issue, triage backlog'],
-    avoidWhen: 'Explicit invocation; no unauthorized labels, comments or closure.',
-    relatedSkills: ['align-loop', 'domain-modeling', 'track'],
-    starter: 'entry',
-  },
-  'domain-modeling': {
-    useWhen: ['Sharpen domain glossary, record ADR decisions', 'Thống nhất thuật ngữ, cập nhật mô hình domain'],
-    avoidWhen: 'Not passive glossary reading or unauthorized canonical edits.',
-    relatedSkills: ['align-loop', 'to-prd'],
+    relatedSkills: ['release', 'review'],
     starter: 'entry',
   },
   'setup': {
     useWhen: ['/setup, configure project tools and execution profile', 'Cấu hình repo, nguồn dữ liệu và công cụ'],
     avoidWhen: 'Explicit invocation; do not run setup just to read existing project context.',
-    relatedSkills: ['domain-modeling', 'triage'],
+    relatedSkills: ['align', 'track'],
     starter: 'entry',
   },
   reqs: {
     useWhen: [
-      'Define business rules, BRD, PRD or acceptance criteria',
+      'Define requirements, BRD, enterprise or lean PRD, or publish an aligned PRD when authorized',
       'Làm rõ yêu cầu, viết đặc tả nghiệp vụ',
       "Chốt phạm vi, nghiệp vụ, quyền và điều kiện nghiệm thu; dac ta yeu cau",
     ],
@@ -107,7 +101,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   },
   task: {
     useWhen: [
-      'Draft or create new work items with verifiable outcomes',
+      'Draft or create work items, including vertical slicing of approved PRDs',
       'Viết task, chia công việc, tạo ticket mới',
       "Soạn đầu việc có tiêu chí hoàn thành, tạo task mới; tao task",
     ],
@@ -127,7 +121,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   },
   track: {
     useWhen: [
-      'Inspect, summarize or update existing tickets and their fields',
+      'Inspect, update or triage issues and external PRs using configured roles',
       'Check ticket, assign hàng loạt, cập nhật deadline, thống kê backlog',
       "Check giúp a ticket quá hạn, đổi assignee; check ticket qua han",
     ],
@@ -147,7 +141,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   },
   qa: {
     useWhen: [
-      'Derive functional tests, review coverage or report real QA evidence',
+      'Design functional tests, report real evidence, automate E2E or diagnose suite flake',
       'Viết test case, kiểm tra UAT, regression, xác minh acceptance criteria',
       "Còn thiếu case nào, kiểm tra độ phủ AC; viet test case",
     ],
@@ -168,11 +162,11 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   },
   review: {
     useWhen: [
-      'Challenge assumptions, requirements, decisions or plans',
+      'Review assumptions, requirements, plans, source code, PRs and diffs',
       'Review tài liệu, tìm mâu thuẫn, phản biện proposal',
       "Proposal này có gì chưa ổn, rà giả định; ra soat proposal",
     ],
-    avoidWhen: 'Source-code review is a separate engineering workflow; verification against acceptance criteria belongs to qa. Không dùng để review source code hoặc chạy test.',
+    avoidWhen: 'Use the three-axis branch for source changes. Test execution belongs to qa or dev; do not mutate code from a review request.',
     relatedSkills: ['reqs', 'business', 'research', 'plan', 'qa'],
     starter: 'primary',
   },

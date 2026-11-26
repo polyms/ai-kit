@@ -88,7 +88,7 @@ Scan conversation, align handoff, and codebase for details an implementer still 
 `[NEEDS CLARIFICATION]` in [lean-prd-template.md](lean-prd-template.md).
 
 If any would appear in **Open Questions**: list them, **do not draft or publish yet**, and ask the
-**open-questions confirmation** turn ([GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md)) — **A** here means
+**open-questions confirmation** turn ([GRILL-FORMAT.md](../align/GRILL-FORMAT.md)) — **A** here means
 run `/align` on the listed items; **B** proceeds to step 4 with confirmed markers. If `/align` already
 deferred the same items with **B**, restate the list and proceed only after explicit yes.
 

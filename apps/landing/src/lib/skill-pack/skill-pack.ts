@@ -11,6 +11,8 @@ export const REQS_SKILL_PATHS = [
   'skills/reqs/assumptions-and-change.md',
   'skills/reqs/prd-interview.md',
   'skills/reqs/user-story-guide.md',
+  'skills/reqs/lean-prd-workflow.md',
+  'skills/reqs/lean-prd-template.md',
 ] as const
 
 export const DESIGN_SKILL_PATHS = [
@@ -52,7 +54,8 @@ export const UI_KIT_SKILL_PATHS = [
 ] as const
 
 export const REQS_REFERENCE_PATHS = [
-  'skills/to-prd/lean-prd-template.md',
+  'skills/align/GRILL-FORMAT.md',
+  'docs/agents/portable-skills.md',
   'skills/setup/requirements.md',
   'skills/setup/language.md',
   'docs/agents/client-compatibility.md',
@@ -72,55 +75,22 @@ export const WORK_SKILL_PATHS = {
     'skills/business/decision-templates.md',
   ],
   docs: ['skills/docs/SKILL.md', 'skills/docs/business-doc-template.md', 'skills/docs/work-records.md'],
-  task: ['skills/task/SKILL.md', 'skills/task/task-template.md'],
+  task: ['skills/task/SKILL.md', 'skills/task/task-template.md', 'skills/task/vertical-slicing.md', 'skills/task/vertical-slice-template.md'],
   bug: ['skills/bug/SKILL.md', 'skills/bug/bug-template.md'],
-  track: ['skills/track/SKILL.md', 'skills/track/tracking-templates.md'],
+  track: ['skills/track/SKILL.md', 'skills/track/tracking-templates.md', 'skills/track/triage-workflow.md', 'skills/track/agent-brief.md', 'skills/track/out-of-scope.md'],
   plan: ['skills/plan/SKILL.md', 'skills/plan/delivery-plan-template.md'],
-  qa: ['skills/qa/SKILL.md', 'skills/qa/qa-templates.md'],
+  qa: ['skills/qa/SKILL.md', 'skills/qa/qa-templates.md', 'skills/qa/e2e-workflow.md'],
   comms: ['skills/comms/SKILL.md', 'skills/comms/communication-templates.md'],
-  review: ['skills/review/SKILL.md', 'skills/review/review-template.md'],
+  review: ['skills/review/SKILL.md', 'skills/review/review-template.md', 'skills/review/code-review-workflow.md', 'skills/review/standards-baseline.md', 'skills/review/simplify-baseline.md'],
   release: ['skills/release/SKILL.md', 'skills/release/release-templates.md'],
 } as const
 
 export const PORTABLE_SKILL_STANDARD = 'docs/agents/portable-skills.md'
 
 export const ENGINEERING_SKILL_PATHS = {
-  'code-review': [
-    'skills/code-review/SKILL.md',
-    'skills/code-review/standards-baseline.md',
-    'skills/code-review/simplify-baseline.md',
-  ],
   'devops': [
     'skills/devops/SKILL.md',
     'skills/devops/incident-templates.md',
-  ],
-  'to-issues': [
-    'skills/to-issues/SKILL.md',
-    'skills/to-issues/issue-template.md',
-  ],
-  'to-prd': [
-    'skills/to-prd/SKILL.md',
-    'skills/to-prd/lean-prd-template.md',
-    'skills/reqs/enterprise-prd-template.md',
-    'skills/align-loop/GRILL-FORMAT.md',
-    'skills/setup/language.md',
-  ],
-  'align-loop': [
-    'skills/align-loop/SKILL.md',
-    'skills/align-loop/GRILL-FORMAT.md',
-  ],
-  'triage': [
-    'skills/triage/SKILL.md',
-    'skills/triage/agent-brief.md',
-    'skills/triage/out-of-scope.md',
-    'skills/align-loop/GRILL-FORMAT.md',
-  ],
-  'domain-modeling': [
-    'skills/domain-modeling/SKILL.md',
-    'skills/setup/domain.md',
-    'skills/setup/context-format.md',
-    'skills/setup/adr-format.md',
-    'skills/align-loop/GRILL-FORMAT.md',
   ],
   'setup': [
     'skills/setup/SKILL.md',
@@ -141,36 +111,99 @@ export const ENGINEERING_SKILL_PATHS = {
     'skills/build-feature-map/repo-skill-template.md',
     'skills/build-feature-map/index-template.md',
   ],
+  'align': [
+    'skills/align/SKILL.md',
+    'skills/align/decision-loop.md',
+    'skills/align/domain-modeling.md',
+    'skills/align/GRILL-FORMAT.md',
+    'skills/setup/domain.md',
+    'skills/setup/context-format.md',
+    'skills/setup/adr-format.md',
+  ],
+  'arch': [
+    'skills/arch/SKILL.md',
+    'skills/arch/DEEPENING.md',
+    'skills/arch/DESIGN-IT-TWICE.md',
+    'skills/arch/refactor-workflow.md',
+    'skills/arch/HTML-REPORT.md',
+    'skills/setup/stack-profile.md',
+    'skills/dev/stack-defaults.md',
+    'skills/align/GRILL-FORMAT.md',
+    'docs/agents/knowledge.md',
+  ],
+  'dev': [
+    'skills/dev/SKILL.md',
+    'skills/dev/tdd-guide.md',
+    'skills/dev/solution-ladder.md',
+    'skills/dev/characterization.md',
+    'skills/dev/debug-loop.md',
+    'skills/dev/scope-self-check.md',
+    'skills/dev/stack-defaults.md',
+    'skills/dev/status-report.md',
+    'skills/dev/visual-ship.md',
+    'skills/dev/feature-preparation.md',
+    'skills/dev/inference-brief.md',
+    'docs/agents/knowledge.md',
+    'docs/agents/invocation.md',
+    'skills/design/PREFLIGHT.md',
+    'skills/design/REDESIGN.md',
+    'skills/design/ANTI-SLOP.md',
+    'skills/design/BRIEF-INFERENCE.md',
+    'skills/design/QUALITY-BAR.md',
+    'skills/design/CSS-INTENT.md',
+    'skills/design/VISUAL-ACCEPTANCE.md',
+  ],
+  'craft': [
+    'skills/craft/SKILL.md',
+    'skills/craft/glossary.md',
+    'docs/agents/invocation.md',
+    'docs/adr/0001-skill-setup-dependencies.md',
+    'docs/agents/knowledge.md',
+  ],
+  'build-feature-map': [
+    'skills/build-feature-map/SKILL.md',
+    'skills/build-feature-map/feature-file-template.md',
+    'skills/build-feature-map/repo-skill-template.md',
+    'skills/build-feature-map/index-template.md',
+    'skills/build-feature-map/pointer-template.md',
+  ],
 } as const
 
 export type EngineeringSkillName = keyof typeof ENGINEERING_SKILL_PATHS
-const MANUAL_ENGINEERING_SKILLS: readonly EngineeringSkillName[] = ['setup', 'to-prd', 'to-issues', 'triage']
+const MANUAL_ENGINEERING_SKILLS: readonly EngineeringSkillName[] = ['setup', 'align', 'craft', 'build-feature-map']
 
 export type WorkSkillName = keyof typeof WORK_SKILL_PATHS
+
+export const WORK_REFERENCE_PATHS: Partial<Record<WorkSkillName, readonly string[]>> = {
+  docs: DOCS_REFERENCE_PATHS,
+  task: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
+  track: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'skills/align/GRILL-FORMAT.md'],
+  review: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
+  qa: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'docs/agents/invocation.md', 'skills/dev/visual-ship.md', ...DESIGN_SKILL_PATHS.filter(path => !path.endsWith('/SKILL.md'))],
+}
 export type SkillPackName = 'reqs' | 'design' | WorkSkillName | EngineeringSkillName
 
 const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
-  reqs: 'Business and product requirements, PRDs, user stories and acceptance criteria',
+  reqs: 'Requirements discovery, enterprise and lean PRDs, stories and authorized publication',
   design: 'UI design specifications with optional Polyms UI Kit references',
   research: 'Evidence-based research and comparative analysis',
   business: 'Business cases, pricing, costs and decision analysis',
   docs: 'Business and technical documentation',
-  task: 'Actionable, testable work tickets',
+  task: 'Work tickets and dependency-ordered vertical slicing',
   bug: 'Evidence-based and reproducible defect reports',
-  track: 'Ticket inspection, backlog summaries and verified work-item updates',
+  track: 'Ticket inspection, verified updates and engineering triage',
   plan: 'Effort estimation, delivery planning, capacity and dependencies',
-  qa: 'Functional test design, requirements coverage and QA evidence',
+  qa: 'Functional tests, E2E automation and QA evidence',
   comms: 'Professional messages, client replies and stakeholder updates',
-  review: 'Evidence-based artifact review, gap analysis and assumption challenge',
+  review: 'Artifact review and three-axis code/PR review',
   release: 'Go-live readiness, rollout, rollback and release notes',
-  'code-review': 'Three-axis source-code change review',
   'devops': 'Evidence-based deploy, CI and infrastructure diagnosis',
-  'to-issues': 'Vertical-slice implementation issues from approved scope',
-  'to-prd': 'Lean PRD synthesis from aligned decisions',
-  'align-loop': 'Design-tree decision alignment',
-  'triage': 'Tracker issue and external PR triage',
-  'domain-modeling': 'Domain vocabulary and architectural decision modeling',
   'setup': 'Project integration and execution profile configuration',
+  'align': 'Align decisions, domain vocabulary and ADRs',
+  'arch': 'Architecture design, deep modules and refactor assessment',
+  'dev': 'Feature preparation, implementation and disciplined debugging',
+  'craft': 'Author, audit and improve AI skill methodology',
+  'build-feature-map': 'Build and maintain project-owned behavior maps',
 }
 
 export type SkillPackFile = {
@@ -242,7 +275,27 @@ function engineeringInvocation(name: EngineeringSkillName): 'explicit' | 'model'
   return MANUAL_ENGINEERING_SKILLS.includes(name) ? 'explicit' : 'model'
 }
 
+/** Old workflow names resolve to canonical packs but never compete in the catalog. */
+export const LEGACY_SKILL_ALIASES = {
+  'to-prd': 'reqs',
+  'to-issues': 'task',
+  'triage': 'track',
+  'align-loop': 'align',
+  'domain-modeling': 'align',
+  'arch-refactor': 'arch',
+  'collab': 'dev',
+  'e2e': 'qa',
+  'code-review': 'review',
+} as const satisfies Record<string, SkillPackName>
+
+export function canonicalSkillName(name: string): string {
+  return Object.hasOwn(LEGACY_SKILL_ALIASES, name)
+    ? LEGACY_SKILL_ALIASES[name as keyof typeof LEGACY_SKILL_ALIASES]
+    : name
+}
+
 export function getSkillPack(name: string): SkillPack | null {
+  name = canonicalSkillName(name)
   if (isEngineeringSkill(name)) {
     return {
       name,
@@ -279,7 +332,7 @@ export function getSkillPack(name: string): SkillPack | null {
   }
   if (Object.hasOwn(WORK_SKILL_PATHS, name)) {
     const workName = name as WorkSkillName
-    const references = workName === 'docs' ? DOCS_REFERENCE_PATHS : []
+    const references = WORK_REFERENCE_PATHS[workName] ?? []
     return {
       name: workName,
       contract: SKILL_CONTRACTS[workName],
@@ -300,10 +353,11 @@ export function starterPaths(name: SkillPackName): string[] {
   if (name === 'design') return [entry, CONTEXT_PROTOCOL]
   if (isEngineeringSkill(name)) {
     const paths = ENGINEERING_SKILL_PATHS[name]
-    const core = name === 'setup' ? paths.slice(1, 2) : paths.slice(1)
+    const core = name === 'setup' ? paths.slice(1, 2) : []
     return [entry, PORTABLE_SKILL_STANDARD, CONTEXT_PROTOCOL, WORK_ARTIFACT_STANDARD, ...core]
   }
   const paths = [entry, WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL]
+  if (name === 'reqs' || ['task', 'track', 'qa', 'review'].includes(name)) paths.push(PORTABLE_SKILL_STANDARD)
   if (name !== 'reqs' && SKILL_ROUTING[name].starter === 'primary') {
     paths.push(WORK_SKILL_PATHS[name][1])
   }
