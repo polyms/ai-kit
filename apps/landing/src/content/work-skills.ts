@@ -122,8 +122,8 @@ export const workSkillOverlays: SkillOverlay[] = [
       "vi": "Ticket độc lập có bối cảnh, kết quả cần giao, phụ thuộc và tiêu chí nghiệm thu."
     },
     "whenToUse": {
-      "en": "New work items or implementation task breakdowns.",
-      "vi": "Khi cần ticket mới hoặc chia nhỏ công việc triển khai."
+      "en": "New work items, standard task breakdowns or dependency-ordered vertical slices from an approved PRD.",
+      "vi": "Khi cần ticket mới, chia task hoặc tách PRD đã duyệt thành các lát dọc có phụ thuộc."
     },
     "boundaries": {
       "en": "Use bug for defects and track for changes to existing tickets; draft by default.",
@@ -215,8 +215,8 @@ export const workSkillOverlays: SkillOverlay[] = [
     "invoke": "/track",
     "slug": "track",
     "description": {
-      "en": "Inspect, summarize and update existing work items with verified results.",
-      "vi": "Kiểm tra, tổng hợp và cập nhật ticket hiện có với kết quả xác minh."
+      "en": "Inspect, update or triage work items and external PRs with verified transitions.",
+      "vi": "Đọc, cập nhật hoặc triage ticket và PR ngoài với chuyển trạng thái đã xác minh."
     },
     "invocation": "model",
     "domain": "work",
@@ -226,8 +226,8 @@ export const workSkillOverlays: SkillOverlay[] = [
       "vi": "Thao tác tracker xác định đúng đối tượng, giữ nguyên trường không liên quan và phân biệt ghi với xác minh."
     },
     "whenToUse": {
-      "en": "Backlog summaries, ticket status checks and authorized field updates.",
-      "vi": "Khi tổng hợp backlog, kiểm tra trạng thái hay cập nhật trường được phép."
+      "en": "Inspect or update existing tickets, triage backlog, verify readiness or write agent briefs.",
+      "vi": "Kiểm tra hoặc cập nhật ticket, triage backlog, xác minh readiness hoặc viết agent brief."
     },
     "boundaries": {
       "en": "Use task or bug for new work; never infer a successful write or readback.",
@@ -319,8 +319,8 @@ export const workSkillOverlays: SkillOverlay[] = [
     "invoke": "/qa",
     "slug": "qa",
     "description": {
-      "en": "Derive functional test coverage and report only observed QA evidence.",
-      "vi": "Thiết kế test coverage chức năng và chỉ báo cáo bằng chứng QA thực tế."
+      "en": "Design functional tests, verify QA evidence and stabilize E2E suites.",
+      "vi": "Thiết kế test chức năng, xác minh bằng chứng QA và ổn định bộ E2E."
     },
     "invocation": "model",
     "domain": "work",
@@ -330,12 +330,12 @@ export const workSkillOverlays: SkillOverlay[] = [
       "vi": "Test plan và test case truy được về yêu cầu, có ca dương/âm và tách thiết kế với chạy test."
     },
     "whenToUse": {
-      "en": "Acceptance criteria coverage, functional QA, UAT or regression retest.",
-      "vi": "Khi cần coverage AC, functional QA, UAT hay regression retest."
+      "en": "Test coverage, actual QA verification, browser journeys, Playwright flakes or CI test sharding.",
+      "vi": "Độ phủ test, xác minh QA, hành trình trình duyệt, Playwright flake hoặc chia test CI."
     },
     "boundaries": {
-      "en": "A planned test is not a passed test; automation infrastructure belongs to e2e.",
-      "vi": "Test dự kiến không phải test đã pass; hạ tầng automation thuộc e2e."
+      "en": "A planned test is not a passed test; use the E2E branch for automation infrastructure.",
+      "vi": "Test dự kiến không phải test đã pass; dùng nhánh E2E cho hạ tầng automation."
     },
     "prerequisites": [
       {
@@ -423,8 +423,8 @@ export const workSkillOverlays: SkillOverlay[] = [
     "invoke": "/review",
     "slug": "review",
     "description": {
-      "en": "Challenge non-code artifacts, assumptions and decisions with prioritized findings.",
-      "vi": "Phản biện tài liệu, giả định và quyết định với phát hiện được ưu tiên."
+      "en": "Review artifacts, plans and source-code changes using evidence and actionable findings.",
+      "vi": "Review tài liệu, kế hoạch và thay đổi mã nguồn bằng bằng chứng và đề xuất cụ thể."
     },
     "invocation": "model",
     "domain": "work",
@@ -434,12 +434,12 @@ export const workSkillOverlays: SkillOverlay[] = [
       "vi": "Rà soát yêu cầu, kế hoạch và đề xuất dựa trên bằng chứng, không tự đổi quyết định đã chốt."
     },
     "whenToUse": {
-      "en": "BRDs, decision memos, estimates and other non-code artifacts needing scrutiny.",
-      "vi": "Khi BRD, bản quyết định, estimate hay tài liệu phi mã nguồn cần phản biện."
+      "en": "Review requirements, proposals, pull requests or diffs for standards, specification and simplicity.",
+      "vi": "Rà yêu cầu, đề xuất, PR hoặc diff theo chuẩn, đặc tả và độ đơn giản."
     },
     "boundaries": {
-      "en": "Use code-review for source code and qa for functional test execution.",
-      "vi": "Dùng code-review cho mã nguồn và qa cho chạy test chức năng."
+      "en": "Use the three-axis code-review branch for source changes and qa for functional test execution.",
+      "vi": "Dùng nhánh review mã nguồn ba trục và qa để chạy test chức năng."
     },
     "prerequisites": [
       {

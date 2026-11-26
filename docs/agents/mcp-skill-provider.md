@@ -60,7 +60,7 @@ existing specialized quality guidance. The manifest, not this table, determines 
 Routing: research gathers evidence; business evaluates decisions; reqs specifies outcomes and
 behavior; docs explains or communicates; task defines work to perform; bug records a defect. Track manages existing work; plan estimates delivery; qa designs and verifies
 functional coverage; comms drafts professional messages.
-The existing `to-prd`, `to-issues`, `triage`, and engineering pipeline are not replaced.
+The consolidated reqs, task and track packs own lean PRD publication, vertical slicing and triage respectively; their original gates remain.
 Use an explicit BRD for business-facing scope; use the enterprise PRD for detailed product behavior.
 Do not generate duplicate PRD/BRD artifacts unless requested.
 
@@ -120,14 +120,18 @@ landing app after it reaches main. New packs, changed file lists and server chan
 deployment. Preview/local servers also fetch from main, not the PR branch; mocked tests or a
 controlled test fixture are needed for pre-merge content checks.
 
-## Portable engineering packs
+## Canonical skill catalog
 
-The live MCP catalog includes setup, code-review, devops, to-issues, to-prd, align-loop, triage and
-domain-modeling. Load a known skill directly. The portable standard distinguishes methodology,
-project configuration and host execution; use the target project's execution profile, not the kit's
-profile. Explicit invocation is advertised for setup, to-prd, to-issues and triage. It does not grant
-write authority. Existing published SDK snapshots remain unchanged; a later validated release may
-unify immutable delivery. Native Grok compatibility requires real client tests.
+The live MCP catalog exposes 20 canonical packs, including all engineering responsibilities.
+Use reqs for discovery or lean PRD publication; task for standard tickets or vertical slicing;
+track for inspect/update or triage; align for decision loop/domain modeling; arch for design/refactor;
+dev for preparation/implementation/debug; qa for functional/E2E; review for artifact/code.
+Setup, devops, craft and build-feature-map retain distinct responsibilities.
+
+Legacy workflow names resolve to their canonical packs with requestedName metadata and are not listed
+as skills. Native clients should use the new canonical commands with the branch described in prose.
+Authorization and verification gates remain independent of routing. Existing immutable SDK releases
+are unchanged; live MCP retains mutable-main provenance pending versioned release validation.
 
 ## Progressive retrieval
 

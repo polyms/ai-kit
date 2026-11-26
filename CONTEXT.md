@@ -48,7 +48,7 @@ Human types `/name` (e.g. `/align`, `/craft`). Skill has `disable-model-invocati
 _Avoid_: manual, human-only skill
 
 **Model-invoked**:
-Agent reaches the skill via `description` (e.g. `align-loop`, `domain-modeling`, `dev`). No `disable-model-invocation` flag.
+Agent reaches the skill via `description` (e.g. `align`, `align`, `dev`). No `disable-model-invocation` flag.
 _Avoid_: auto, automatic, agent-discovered
 
 ## Skills & Agents
@@ -62,16 +62,16 @@ Subagent at `agents/<role>.md` — isolated context for long artifact work. Maps
 role**, not 1:1 with a skill. **Principal** tier: `pm`, `designer`, `developer`, `tester`,
 `techlead`. **`/align`** has no agent — grill is interactive in the main chat. Skills stay
 playbooks; multiple skills per agent OK (`developer` → `/dev` + `/devops`; `techlead` → `/docs`,
-`arch`, `/code-review`, `/arch-refactor`, `/devops`). Skill↔agent: `/reqs`→`pm`, `/design`→`designer`,
-`/dev`→`developer`, `/e2e`→`tester`; `/docs`, `arch`, `/code-review`, `/arch-refactor`→`techlead`;
+`arch`, `/review`, `/arch`, `/devops`). Skill↔agent: `/reqs`→`pm`, `/design`→`designer`,
+`/dev`→`developer`, `/qa`→`tester`; `/docs`, `arch`, `/review`, `/arch`→`techlead`;
 `/devops`→`developer` (exec) + `techlead` (SEV).
 _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` principal files), `*-agent` filename
 
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/reqs` or `/to-prd` → `/to-issues` →
-`/design` → `/dev` → `/code-review`; raw issues via `/triage`. A single feature prompt may enter through
+The stage chain that turns ideas into shipped code: `/align` → `/reqs` → `/task` →
+`/design` → `/dev` → `/review`; raw issues via `/track`. A single feature prompt may enter through
 **Collab** instead of invoking each stage. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
@@ -80,7 +80,7 @@ Model-invoked front door for one feature prompt. Codebase pass, at most one batc
 writes a lean PRD, `techlead` writes an ADR only when the three-part test passes, and `designer` writes
 the UI spec when there is a screen. Follows `dev` in the same turn when no blocking gap remains.
 Asks once when a blocking fork is still open, and does not implement until that answer lands. Does
-not publish. Invoke with `/collab` or a build-a-page prompt that names no skill.
+not publish. Use dev feature preparation for a build-a-page prompt that names no skill.
 _Avoid_: agency pipeline, interview (when meaning the `/reqs` discovery script), waiting for a
 confirm when the packet has no blocking gap
 
@@ -100,13 +100,13 @@ input, the PRD records who decides and how a wrong answer is recovered. Market (
 documents are out of this skill. Invoke with `/reqs` (user-invoked). Interview:
 `skills/reqs/prd-interview.md`.
 Template: `skills/reqs/enterprise-prd-template.md`. Long sessions: `pm`.
-After align to ship lean PRD → `/to-prd`.
-_Avoid_: /pm (old invoke), PM (when meaning this skill — agent role stays `pm`), write PRD (when meaning `/to-prd`
+After align to ship lean PRD → `/reqs`.
+_Avoid_: /pm (old invoke), PM (when meaning this skill — agent role stays `pm`), write PRD (when meaning `/reqs`
 publish), product management (generic)
 
 **To PRD**:
 Synthesize the current conversation into a lean PRD and publish to the issue tracker — no interview. Invoke with
-`/to-prd` (user-invoked). Template: `skills/to-prd/lean-prd-template.md`.
+`/reqs` (user-invoked). Template: `skills/reqs/lean-prd-template.md`.
 _Avoid_: publish PRD (generic), enterprise discovery (when meaning `/reqs`)
 
 **Design**:
@@ -119,14 +119,14 @@ _Avoid_: component library (generic), shadcn
 
 **Dev**:
 Ship production code from spec — TDD, solution ladder, scope self-check, multi-slice status report, debugging.
-Pre-merge review via `code-review`. Invoke with `/dev`. Long sessions: `developer`.
+Pre-merge review via `review`. Invoke with `/dev`. Long sessions: `developer`.
 _Avoid_: implementation, coding phase
 
 **Code review**:
 Three-axis review skill (Standards + Spec + Simplify) since a pinned git fixed point — parallel sub-agents,
 severity-tagged findings (🔴 blocker / 🟡 suggestion / 💭 nit). Diffs under 10 changed lines skip sub-agent
 spawn and review inline instead. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code",
-"over-engineered", "cắt bớt". Invoke with `/code-review`. Long sessions: `techlead`.
+"over-engineered", "cắt bớt". Invoke with `/review`. Long sessions: `techlead`.
 _Avoid_: PR review (generic), lint check
 
 **Docs**:
@@ -134,13 +134,13 @@ Developer-facing documentation — API reference, tutorials, integration/migrati
 _Avoid_: technical writer (generic), README dump, /reqs (when meaning requirements)
 
 **E2E**:
-End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/e2e`. Long sessions: **`tester`** (skill id `e2e`, agent id `tester`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
-_Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when meaning seam TDD)
+End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/qa`. Long sessions: **`tester`** (skill id `qa`, agent id `tester`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
+_Avoid_: QA (generic), tester skill (wrong id — use `/qa`), unit test (when meaning seam TDD)
 
 **Feature map**:
 Repo-local skill (default `.agents/skills/feature-map/`) whose `references/features/` index routes an agent to
 one behavior file. Four headings per area: `Sub-features`, `How to get to it (user POV)`, `Driving it`,
-`Gotchas`. The kit skill `/build-feature-map` authors that package. `/collab`, `/dev`, and `/e2e` read it
+`Gotchas`. The kit skill `/build-feature-map` authors that package. `/dev`, `/dev`, and `/qa` read it
 when the index has area links. Pointer: `docs/agents/feature-map.md`.
 _Avoid_: wiki, reading the app to find a surface the index already names, `docs/features/` (the map is not
 public docs)
@@ -177,11 +177,11 @@ allow **at most two** alternatives, each with a one-line when/why. Never a menu 
 _Avoid_: handover, transition, Next Steps (plural heading), multi-skill pipe menus
 
 **Triage**:
-Move raw GitHub issues through a state machine — categorise, verify, grill, write agent briefs. Invoke with `/triage`.
+Move raw GitHub issues through a state machine — categorise, verify, grill, write agent briefs. Invoke with `/track`.
 _Avoid_: backlog grooming (when meaning the triage skill specifically)
 
 **To Issues**:
-Break an approved PRD or plan into vertical-slice GitHub issues. Invoke with `/to-issues`.
+Break an approved PRD or plan into vertical-slice GitHub issues. Invoke with `/task`.
 _Avoid_: issue splitting (generic)
 
 **Arch**:
@@ -189,7 +189,7 @@ Model-invoked vocabulary skill for designing deep modules — seams, depth, leve
 _Avoid_: codebase design (generic), architecture patterns (when meaning the `arch` skill), devops (when meaning deploy/CI fixes)
 
 **Arch refactor**:
-Maintenance scan for deepening opportunities — HTML report, then grill chosen candidate. Invoke with `/arch-refactor`.
+Maintenance scan for deepening opportunities — HTML report, then grill chosen candidate. Invoke with `/arch`.
 _Avoid_: architecture review (generic), refactor (when meaning `/dev`)
 
 ## Artifacts
@@ -243,7 +243,7 @@ _Avoid_: knowledge index in git (when meaning live CMS content)
 **Language pointer**:
 Setup output at `docs/agents/language.md` — the fixed language for persistent written docs
 (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft
-dependency for `domain-modeling`, `reqs`/`to-prd`, `design`, `arch` — they match this language
+dependency for `align`, `reqs`, `design`, `arch` — they match this language
 or, absent the file, whatever doc they're already editing. Prose stays natural in that language;
 only **pure-tech tokens** (invokes, protocols, identifiers, canonical glossary terms) stay
 English — no mid-sentence language mix. Chat tone is unaffected — IDE/user rules, or opt-in
@@ -296,12 +296,12 @@ echo inputs; per intent `{ covered, articleIds }`. An article **covers** when
 `axes ⊆ article.axisTags`; only **published** articles. Empty/blank `axes` or `intents: []` →
 tool validation error; omit intents → all three.
 OAuth any connected user. Soft-required for `/setup` (persist Coverage into stack-profile as
-bootstrap via fixed per-intent axis heuristics), `/arch`, `/arch-refactor` — those two **re-call
+bootstrap via fixed per-intent axis heuristics), `/arch`, `/arch` — those two **re-call
 MCP** for the subset under work; stack-profile notes are not live SSOT. Placeholder / kit-bleed
 stripping on upsert stays **agent-owned**. Complements `search_knowledge`; does not replace it.
 _Avoid_: `/ops/matrix` dump for agents, inventing seams when coverage already lists a hit,
 server-side “strip apps/landing” as a complete authoring fix, trusting stale stack-profile
-Coverage without re-calling MCP in `/arch` / `/arch-refactor`
+Coverage without re-calling MCP in `/arch` / `/arch`
 
 **Ops CMS**:
 Kit-site ops knowledge admin at `/ops/*` — canonical store is **Knowledge** (articles + chunks +
@@ -332,7 +332,7 @@ Canonical domain vocabulary for the repo. Lives in `CONTEXT.md` — glossary onl
 _Avoid_: CONTEXT, domain doc
 
 **CONTEXT.md**:
-Root glossary file — single source of truth for domain terms. Updated inline when terms resolve during `/align` or `domain-modeling`.
+Root glossary file — single source of truth for domain terms. Updated inline when terms resolve during `/align` or `align`.
 _Avoid_: context file, domain model file
 
 **Domain modeling**:
@@ -342,7 +342,7 @@ _Avoid_: domain design, terminology session
 ## Triage
 
 **Triage role**:
-A canonical label role in the triage state machine — either a **state** (`needs-triage`, `ready-for-agent`, …) or **category** (`bug`, `enhancement`). Mapped to tracker label strings in `docs/agents/triage-labels.md`.
+A canonical label role in the triage state machine — either a **state** (`needs-triage`, `ready-for-agent`, …) or **category** (`bug`, `enhancement`). Mapped to tracker label strings in `docs/agents/track-labels.md`.
 _Avoid_: label, tag (when meaning triage roles specifically)
 
 **Agent brief**:
@@ -360,7 +360,7 @@ User-invoked skill for writing and editing ai-kit skills. Authoring vocabulary (
 _Avoid_: skill writing, meta-skill
 
 **Hard setup dependency**:
-Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without it (e.g. `/to-prd`, `/to-issues`, `/triage`). See ADR-0001.
+Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without it (e.g. `/reqs`, `/task`, `/track`). See ADR-0001.
 _Avoid_: must run setup (when meaning hard dependency only)
 
 **Soft setup dependency**:

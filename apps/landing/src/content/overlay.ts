@@ -64,7 +64,7 @@ export const AGENT_SKILL_SLUG: Record<string, string> = {
   pm: 'reqs',
   designer: 'design',
   developer: 'dev',
-  tester: 'e2e',
+  tester: 'qa',
   techlead: 'docs',
 }
 
@@ -76,8 +76,8 @@ export const skillOverlays: SkillOverlay[] = [
     invoke: '/setup',
     slug: 'setup',
     description: {
-      en: 'Prepare a repo so ai-kit can find your issue tracker, domain docs, and agent pointers.',
-      vi: 'Chuẩn bị repo để ai-kit biết issue tracker, tài liệu domain, và chỗ trỏ tới agent.',
+      en: 'Configure canonical project data, execution routes, issue tracker, domain docs and agent pointers.',
+      vi: 'Cấu hình nguồn dữ liệu chính thức, đường thực thi, issue tracker, tài liệu domain và agent.',
     },
     invocation: 'user',
     domain: 'repo-config',
@@ -88,8 +88,8 @@ export const skillOverlays: SkillOverlay[] = [
       vi: 'Cấu hình một lần cho dự án: issue nằm đâu, docs bố cục thế nào, và pipeline nên dùng file agent nào.',
     },
     whenToUse: {
-      en: 'New repo, or the first time you wire ai-kit into a project. Run this before `/to-prd`, `/to-issues`, or `/triage`.',
-      vi: 'Repo mới, hoặc lần đầu gắn ai-kit vào dự án. Chạy trước `/to-prd`, `/to-issues`, hoặc `/triage`.',
+      en: 'New repo, or the first time you wire ai-kit into a project. Run this before `/reqs`, `/task`, or `/track`.',
+      vi: 'Repo mới, hoặc lần đầu gắn ai-kit vào dự án. Chạy trước `/reqs`, `/task`, hoặc `/track`.',
     },
     pipeline: {
       upstream: {
@@ -97,8 +97,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Cài đặt (`npx skills add`) — đưa skill vào editor',
       },
       downstream: {
-        en: '/align, /reqs, /triage, and the rest of the pipeline',
-        vi: '/align, /reqs, /triage, và các bước còn lại của pipeline',
+        en: '/align, /reqs, /track, and the rest of the pipeline',
+        vi: '/align, /reqs, /track, và các bước còn lại của pipeline',
       },
     },
     boundaries: {
@@ -129,13 +129,13 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Xác nhận agent ghi pointer trong `docs/agents/` và cấu hình liên quan cho repo này.',
       },
       {
-        en: 'Restart or refresh the chat, then run `/align` or `/triage` as needed.',
-        vi: 'Restart hoặc làm mới chat, rồi chạy `/align` hoặc `/triage` khi cần.',
+        en: 'Restart or refresh the chat, then run `/align` or `/track` as needed.',
+        vi: 'Restart hoặc làm mới chat, rồi chạy `/align` hoặc `/track` khi cần.',
       },
     ],
     doneWhen: {
-      en: 'The repo has setup artifacts so `/to-prd`, `/to-issues`, and `/triage` can find the tracker and docs layout.',
-      vi: 'Repo đã có artifact setup để `/to-prd`, `/to-issues`, và `/triage` tìm được tracker và bố cục docs.',
+      en: 'The repo has setup artifacts so `/reqs`, `/task`, and `/track` can find the tracker and docs layout.',
+      vi: 'Repo đã có artifact setup để `/reqs`, `/task`, và `/track` tìm được tracker và bố cục docs.',
     },
     tips: [
       {
@@ -168,23 +168,23 @@ export const skillOverlays: SkillOverlay[] = [
     },
     githubPath: 'skills/align/',
     summary: {
-      en: 'Make fuzzy decisions explicit before `/reqs`, `/design`, or `/dev`, and land shared vocabulary in CONTEXT.md.',
-      vi: 'Làm rõ quyết định mơ hồ trước `/reqs`, `/design`, hoặc `/dev`, rồi chốt từ vựng chung vào CONTEXT.md.',
+      en: "Resolve decision branches and model domain vocabulary and ADRs, using one question at a time when needed.",
+      vi: "Làm rõ nhánh quyết định, thuật ngữ domain và ADR; hỏi từng câu khi cần.",
     },
     whenToUse: {
-      en: 'Before `/reqs`, `/to-prd`, `/design`, or `/dev` when scope, terms, or trade-offs are still fuzzy.',
-      vi: 'Trước `/reqs`, `/to-prd`, `/design`, hoặc `/dev` khi phạm vi, thuật ngữ, hoặc đánh đổi còn mơ hồ.',
+      en: 'Before `/reqs`, `/reqs`, `/design`, or `/dev` when scope, terms, or trade-offs are still fuzzy.',
+      vi: 'Trước `/reqs`, `/reqs`, `/design`, hoặc `/dev` khi phạm vi, thuật ngữ, hoặc đánh đổi còn mơ hồ.',
     },
     pipeline: {
       upstream: { en: 'Idea or rough plan', vi: 'Ý tưởng hoặc kế hoạch sơ bộ' },
       downstream: {
-        en: '/reqs or /to-prd → /design → /dev',
-        vi: '/reqs hoặc /to-prd → /design → /dev',
+        en: '/reqs or /reqs → /design → /dev',
+        vi: '/reqs hoặc /reqs → /design → /dev',
       },
     },
     boundaries: {
-      en: 'Does not write a PRD — use `/reqs` for a full draft or `/to-prd` to publish a lean one. Does not implement code.',
-      vi: 'Không viết PRD — dùng `/reqs` cho bản đầy đủ hoặc `/to-prd` để xuất bản bản gọn. Không implement code.',
+      en: 'Does not write a PRD — use `/reqs` for a full draft or `/reqs` to publish a lean one. Does not implement code.',
+      vi: 'Không viết PRD — dùng `/reqs` cho bản đầy đủ hoặc `/reqs` để xuất bản bản gọn. Không implement code.',
     },
     prerequisites: [
       {
@@ -210,8 +210,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Để agent cập nhật `CONTEXT.md` với từ vựng chung trong lúc làm.',
       },
       {
-        en: 'When decisions are clear, follow the `## Next Step` cue (`/reqs`, `/to-prd`, `/design`, or `/dev`).',
-        vi: 'Khi quyết định đã rõ, làm theo gợi ý `## Next Step` (`/reqs`, `/to-prd`, `/design`, hoặc `/dev`).',
+        en: 'When decisions are clear, follow the `## Next Step` cue (`/reqs`, `/reqs`, `/design`, or `/dev`).',
+        vi: 'Khi quyết định đã rõ, làm theo gợi ý `## Next Step` (`/reqs`, `/reqs`, `/design`, hoặc `/dev`).',
       },
     ],
     doneWhen: {
@@ -220,8 +220,8 @@ export const skillOverlays: SkillOverlay[] = [
     },
     tips: [
       {
-        en: 'Still need discovery or a long PRD? Next is `/reqs`. Aligned and ready to publish lean? Use `/to-prd`.',
-        vi: 'Còn cần khám phá hoặc PRD dài? Tiếp là `/reqs`. Đã align và muốn publish bản gọn? Dùng `/to-prd`.',
+        en: 'Still need discovery or a long PRD? Next is `/reqs`. Aligned and ready to publish lean? Use `/reqs`.',
+        vi: 'Còn cần khám phá hoặc PRD dài? Tiếp là `/reqs`. Đã align và muốn publish bản gọn? Dùng `/reqs`.',
       },
       {
         en: 'The grill stays in this chat — there is no `align` subagent.',
@@ -251,8 +251,8 @@ export const skillOverlays: SkillOverlay[] = [
       },
     },
     summary: {
-      en: 'Turn ideas into specs engineers can build from — enterprise PRD and stories in chat. Publishing a lean PRD to the tracker is `/to-prd`.',
-      vi: 'Biến ý tưởng thành đặc tả engineer build được — PRD đầy đủ và user story trong chat. Xuất bản PRD gọn lên tracker là việc của `/to-prd`.',
+      en: "Discover requirements, write enterprise or lean PRDs, and publish aligned specifications only when authorized.",
+      vi: "Làm rõ yêu cầu, viết PRD enterprise hoặc lean, và xuất bản đặc tả đã thống nhất khi được phép.",
     },
     whenToUse: {
       en: 'When you still need discovery, a formal PRD, prioritization, or stakeholder-ready requirements — not the post-align publish path.',
@@ -261,13 +261,13 @@ export const skillOverlays: SkillOverlay[] = [
     pipeline: {
       upstream: { en: '/align (recommended)', vi: '/align (nên chạy trước)' },
       downstream: {
-        en: '/to-prd (to publish), /to-issues, /design, /dev',
-        vi: '/to-prd (để xuất bản), /to-issues, /design, /dev',
+        en: '/reqs (to publish), /task, /design, /dev',
+        vi: '/reqs (để xuất bản), /task, /design, /dev',
       },
     },
     boundaries: {
-      en: 'Does not publish a lean PRD from chat — that is `/to-prd`. Does not design UI layout — that is `/design`.',
-      vi: 'Không xuất bản PRD gọn từ chat — việc đó của `/to-prd`. Không thiết kế layout UI — đó là `/design`.',
+      en: 'Does not publish a lean PRD from chat — that is `/reqs`. Does not design UI layout — that is `/design`.',
+      vi: 'Không xuất bản PRD gọn từ chat — việc đó của `/reqs`. Không thiết kế layout UI — đó là `/design`.',
     },
     prerequisites: [
       {
@@ -293,236 +293,24 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Rà PRD đầy đủ / story trong chat — điền hoặc đánh `[NEEDS CLARIFICATION]`.',
       },
       {
-        en: 'When ready to publish a lean tracker PRD, invoke `/to-prd` (not `/reqs` again).',
-        vi: 'Khi sẵn sàng publish PRD gọn lên tracker, gọi `/to-prd` (không gọi `/reqs` lại).',
+        en: 'When ready to publish a lean tracker PRD, invoke `/reqs` (not `/reqs` again).',
+        vi: 'Khi sẵn sàng publish PRD gọn lên tracker, gọi `/reqs` (không gọi `/reqs` lại).',
       },
     ],
     doneWhen: {
-      en: 'You have a testable PRD or story set in chat with explicit in/out of scope — still unpublished until `/to-prd`.',
-      vi: 'Đã có PRD hoặc bộ story có AC trong chat, in/out of scope rõ — chưa publish cho tới `/to-prd`.',
+      en: 'You have a testable PRD or story set in chat with explicit in/out of scope — still unpublished until `/reqs`.',
+      vi: 'Đã có PRD hoặc bộ story có AC trong chat, in/out of scope rõ — chưa publish cho tới `/reqs`.',
     },
     tips: [
       {
-        en: '`/reqs` drafts; `/to-prd` publishes. Do not expect `/reqs` to create a tracker issue.',
-        vi: '`/reqs` soạn thảo; `/to-prd` xuất bản. Đừng kỳ vọng `/reqs` tạo issue trên tracker.',
+        en: '`/reqs` drafts; `/reqs` publishes. Do not expect `/reqs` to create a tracker issue.',
+        vi: '`/reqs` soạn thảo; `/reqs` xuất bản. Đừng kỳ vọng `/reqs` tạo issue trên tracker.',
       },
       {
         en: 'For deep PM work, ask to use the `pm` agent.',
         vi: 'Cho công việc PM sâu, nhờ dùng agent `pm`.',
       },
     ],
-  },
-  {
-    name: 'to-prd',
-    invoke: '/to-prd',
-    slug: 'to-prd',
-    description: {
-      en: 'Turn the current conversation into a lean PRD and publish it as a tracker issue — no extra interview.',
-      vi: 'Gói cuộc chat hiện tại thành PRD gọn và xuất bản thành issue trên tracker — không phỏng vấn thêm.',
-    },
-    invocation: 'user',
-    domain: 'requirements',
-    samplePrompt: {
-      en: '/to-prd\n\nLock the PRD from this chat.',
-      vi: '/to-prd\n\nChốt PRD từ cuộc chat này.',
-    },
-    githubPath: 'skills/to-prd/',
-    summary: {
-      en: 'When alignment is done, synthesize the chat into a lean PRD and create the tracker issue. No PM interview round.',
-      vi: 'Khi đã align xong, gói chat thành PRD gọn và tạo issue trên tracker. Không vòng phỏng vấn PM thêm.',
-    },
-    whenToUse: {
-      en: 'After `/align` when decisions are settled and you want a published PRD issue quickly.',
-      vi: 'Sau `/align` khi quyết định đã chốt và bạn muốn có ngay issue PRD đã xuất bản.',
-    },
-    pipeline: {
-      upstream: '/align',
-      downstream: '/to-issues, /design',
-    },
-    boundaries: {
-      en: 'Does not discover or renegotiate scope — use `/reqs` if gaps remain. Needs `/setup` first.',
-      vi: 'Không khám phá hay đàm phán lại phạm vi — còn thiếu gì thì dùng `/reqs`. Cần `/setup` trước.',
-    },
-    prerequisites: [
-      {
-        en: '`/setup` completed for this repo (tracker + auth via `gh` or configured CLI).',
-        vi: 'Đã `/setup` cho repo này (tracker + auth qua `gh` hoặc CLI đã cấu hình).',
-      },
-      {
-        en: 'An aligned chat (or settled decisions) ready to synthesize — not a blank discovery session.',
-        vi: 'Chat đã align (hoặc quyết định đã chốt) sẵn để gói lại — không phải phiên discovery trống.',
-      },
-    ],
-    howTo: [
-      {
-        en: 'In the same chat where you aligned, invoke `/to-prd`.',
-        vi: 'Trong cùng chat đã align, gọi `/to-prd`.',
-      },
-      {
-        en: 'Confirm the lean PRD draft the agent proposes.',
-        vi: 'Xác nhận bản PRD gọn agent đề xuất.',
-      },
-      {
-        en: 'Approve publishing — the skill creates the tracker issue (no extra interview).',
-        vi: 'Duyệt publish — skill tạo issue trên tracker (không phỏng vấn thêm).',
-      },
-      {
-        en: 'Save the issue link, then continue with `/to-issues` or `/design`.',
-        vi: 'Lưu link issue, rồi tiếp `/to-issues` hoặc `/design`.',
-      },
-    ],
-    doneWhen: {
-      en: 'A lean PRD issue exists on the tracker and you have its URL or number.',
-      vi: 'Đã có issue PRD gọn trên tracker và bạn có URL hoặc số issue.',
-    },
-    tips: [
-      {
-        en: 'Gaps remaining? Stop and run `/reqs` — `/to-prd` will not renegotiate scope.',
-        vi: 'Còn thiếu? Dừng và chạy `/reqs` — `/to-prd` không đàm phán lại phạm vi.',
-      },
-      {
-        en: 'Uses the lean PRD template, not the enterprise `/reqs` template.',
-        vi: 'Dùng template PRD gọn, không phải template enterprise của `/reqs`.',
-      },
-    ],
-  },
-  {
-    name: 'to-issues',
-    invoke: '/to-issues',
-    slug: 'to-issues',
-    description: {
-      en: 'Break a plan, spec, or PRD into GitHub issues that can be picked up independently — one vertical slice per issue.',
-      vi: 'Bẻ kế hoạch, đặc tả, hoặc PRD thành issue GitHub nhận việc độc lập được — mỗi issue một lát cắt dọc.',
-    },
-    invocation: 'user',
-    domain: 'requirements',
-    samplePrompt: '/to-issues\n\nPRD #42',
-    githubPath: 'skills/to-issues/',
-    summary: {
-      en: 'Split an approved PRD or plan into vertical-slice GitHub issues so people or agents can grab work without waiting on a giant epic.',
-      vi: 'Chia PRD hoặc kế hoạch đã duyệt thành issue GitHub theo lát cắt dọc, để người hoặc agent nhận việc mà không chờ một epic khổng lồ.',
-    },
-    whenToUse: {
-      en: 'The PRD or plan is approved and you need tracker-ready work items.',
-      vi: 'PRD hoặc kế hoạch đã duyệt và bạn cần hạng mục công việc sẵn sàng trên tracker.',
-    },
-    pipeline: {
-      upstream: {
-        en: '/reqs or /to-prd',
-        vi: '/reqs hoặc /to-prd',
-      },
-      downstream: {
-        en: '/dev (via agent briefs or direct pickup)',
-        vi: '/dev (qua tóm tắt cho agent hoặc nhận việc trực tiếp)',
-      },
-    },
-    boundaries: {
-      en: 'Does not triage raw backlog issues — that is `/triage`. Needs `/setup` first.',
-      vi: 'Không sàng lọc issue backlog thô — đó là `/triage`. Cần `/setup` trước.',
-    },
-    prerequisites: [
-      {
-        en: '`/setup` done; tracker CLI working.',
-        vi: 'Đã `/setup`; CLI tracker hoạt động.',
-      },
-      {
-        en: 'An approved PRD, plan, or story set to slice (issue number or path).',
-        vi: 'PRD, kế hoạch, hoặc bộ story đã duyệt để chia (số issue hoặc đường dẫn).',
-      },
-    ],
-    howTo: [
-      {
-        en: 'Invoke `/to-issues` and point at the PRD or plan (e.g. PRD #42).',
-        vi: 'Gọi `/to-issues` và chỉ PRD hoặc kế hoạch (ví dụ PRD #42).',
-      },
-      {
-        en: 'Review proposed vertical slices — adjust granularity when quizzed.',
-        vi: 'Rà các lát cắt dọc đề xuất — chỉnh độ chi tiết khi được hỏi.',
-      },
-      {
-        en: 'Approve publish; issues land with labels such as `ready-for-agent` when configured.',
-        vi: 'Duyệt publish; issue được tạo kèm label như `ready-for-agent` nếu đã cấu hình.',
-      },
-      {
-        en: 'Pick the first unblocked slice and hand off to `/dev`.',
-        vi: 'Chọn lát cắt không bị chặn đầu tiên và giao cho `/dev`.',
-      },
-    ],
-    doneWhen: {
-      en: 'Independent tracker issues exist for each vertical slice and the first `/dev` target is clear.',
-      vi: 'Đã có issue độc lập trên tracker cho mỗi lát cắt và mục tiêu `/dev` đầu tiên đã rõ.',
-    },
-    tips: [
-      {
-        en: '`/to-issues` creates slices from a spec; `/triage` processes inbound backlog.',
-        vi: '`/to-issues` tạo lát cắt từ spec; `/triage` xử lý backlog đến.',
-      },
-      {
-        en: 'Prefer one vertical slice per issue — avoid giant epics agents cannot finish.',
-        vi: 'Ưu tiên một lát cắt dọc mỗi issue — tránh epic khổng lồ agent không xong nổi.',
-      },
-    ],
-  },
-  {
-    name: 'triage',
-    invoke: '/triage',
-    slug: 'triage',
-    description: {
-      en: 'Move GitHub issues through triage — categorize, verify, grill if needed, and attach agent briefs.',
-      vi: 'Đưa issue GitHub qua sàng lọc — phân loại, xác minh, hỏi xoáy nếu cần, rồi gắn tóm tắt cho agent.',
-    },
-    invocation: 'user',
-    domain: 'triage',
-    samplePrompt: '/triage\n\nIssue #42',
-    githubPath: 'skills/triage/',
-    summary: {
-      en: 'Process raw GitHub issues until they are verified and ready for `/dev`, with briefs agents can follow.',
-      vi: 'Xử lý issue GitHub thô đến khi đã xác minh và sẵn sàng cho `/dev`, kèm tóm tắt agent làm theo được.',
-    },
-    whenToUse: {
-      en: 'The backlog has unverified issues, or you need `ready-for-agent` briefs before implementation.',
-      vi: 'Backlog còn issue chưa xác minh, hoặc bạn cần tóm tắt `ready-for-agent` trước khi implement.',
-    },
-    pipeline: {
-      upstream: { en: 'Raw GitHub issues', vi: 'Issue GitHub thô' },
-      downstream: '/dev → /code-review',
-    },
-    boundaries: {
-      en: 'Does not split a PRD into new issues — that is `/to-issues`. Needs `/setup` first.',
-      vi: 'Không chia PRD thành issue mới — đó là `/to-issues`. Cần `/setup` trước.',
-    },
-    prerequisites: [
-      {
-        en: '`/setup` done with triage label mapping.',
-        vi: 'Đã `/setup` kèm map label triage.',
-      },
-      {
-        en: 'Raw or unverified issues already on the tracker.',
-        vi: 'Đã có issue thô hoặc chưa xác minh trên tracker.',
-      },
-    ],
-    howTo: [
-      {
-        en: 'Invoke `/triage` — ask what needs attention or name an issue (e.g. #42).',
-        vi: 'Gọi `/triage` — hỏi việc cần chú ý hoặc nêu issue (ví dụ #42).',
-      },
-      {
-        en: 'Confirm category, verification, and any grill questions.',
-        vi: 'Xác nhận phân loại, xác minh, và câu hỏi xoáy nếu có.',
-      },
-      {
-        en: 'Accept the agent brief when the issue reaches `ready-for-agent`.',
-        vi: 'Chấp nhận tóm tắt agent khi issue đạt `ready-for-agent`.',
-      },
-      {
-        en: 'Hand the brief to `/dev`.',
-        vi: 'Giao tóm tắt cho `/dev`.',
-      },
-    ],
-    doneWhen: {
-      en: 'Target issues are categorized, verified, and either `ready-for-agent` or parked out of scope with a reason.',
-      vi: 'Issue mục tiêu đã phân loại, xác minh, và hoặc `ready-for-agent` hoặc để out-of-scope kèm lý do.',
-    },
   },
   {
     name: 'design',
@@ -555,8 +343,8 @@ export const skillOverlays: SkillOverlay[] = [
     },
     pipeline: {
       upstream: {
-        en: '/align → /reqs or /to-prd',
-        vi: '/align → /reqs hoặc /to-prd',
+        en: '/align → /reqs or /reqs',
+        vi: '/align → /reqs hoặc /reqs',
       },
       downstream: '/dev',
     },
@@ -608,81 +396,6 @@ export const skillOverlays: SkillOverlay[] = [
     ],
   },
   {
-    name: 'collab',
-    invoke: '/collab',
-    slug: 'collab',
-    description: {
-      en: 'One feature prompt runs PM, tech lead, and design together — lean PRD, ADR only if hard to reverse, UI spec — from the codebase.',
-      vi: 'Một prompt feature cho PM, tech lead, và design làm cùng nhau — PRD gọn, ADR khi khó đảo, spec UI — dựa trên codebase.',
-    },
-    invocation: 'model',
-    domain: 'requirements',
-    samplePrompt: {
-      en: 'Build a CRUD user page.',
-      vi: 'Làm một trang CRUD user.',
-    },
-    footnote: {
-      en: 'Model-invoked. Naming /reqs, /design, or /dev skips this and keeps that skill.',
-      vi: 'Agent tự gọi. Gọi đúng /reqs, /design, hoặc /dev thì bỏ qua collab và giữ skill đó.',
-    },
-    githubPath: 'skills/collab/',
-    relatedAgents: ['pm', 'designer', 'techlead'],
-    summary: {
-      en: 'Turn "build a page" into a spec packet without invoking each principal or sitting through a discovery interview.',
-      vi: 'Biến “làm một trang” thành gói spec mà không cần gọi từng agent hay ngồi phỏng vấn discovery.',
-    },
-    whenToUse: {
-      en: 'A new screen or CRUD flow in one prompt, and you did not already name /reqs, /design, or /dev.',
-      vi: 'Màn hình hoặc luồng CRUD mới trong một prompt, và anh chưa gọi /reqs, /design, hay /dev.',
-    },
-    pipeline: {
-      upstream: { en: 'One feature prompt', vi: 'Một prompt feature' },
-      downstream: 'docs/prd + docs/design → /dev',
-    },
-    boundaries: {
-      en: 'Implements when the packet has no blocking gap. Asks once when a fork is still open. Does not publish (/to-prd). Skips the ADR when the three-part test fails.',
-      vi: 'Làm luôn khi gói spec không còn chỗ kẹt. Hỏi một lần khi còn ngã rẽ chưa chốt. Không publish (/to-prd). Bỏ ADR khi bài test ba điều kiện không đạt.',
-    },
-    prerequisites: [
-      {
-        en: 'A repo to read — nearest list, form, or entity is the evidence.',
-        vi: 'Có repo để đọc — list, form, hoặc entity gần nhất là bằng chứng.',
-      },
-    ],
-    howTo: [
-      {
-        en: 'Say the feature in one prompt, for example “build a CRUD user page”.',
-        vi: 'Nói feature trong một prompt, ví dụ “làm trang CRUD user”.',
-      },
-      {
-        en: 'Answer only if the agent batches a blocking fork the repo cannot settle.',
-        vi: 'Chỉ trả lời khi agent gom một ngã rẽ chặn mà repo không chốt được.',
-      },
-      {
-        en: 'Read the lean PRD, optional ADR, and UI spec the principals wrote.',
-        vi: 'Đọc PRD gọn, ADR nếu có, và spec UI mà các agent đã viết.',
-      },
-      {
-        en: 'If nothing blocking remains, collab continues into /dev in the same turn.',
-        vi: 'Nếu không còn chỗ kẹt, collab chạy tiếp /dev ngay trong lượt đó.',
-      },
-    ],
-    doneWhen: {
-      en: 'The spec packet is on disk, and implementation has started unless one blocking question is still open.',
-      vi: 'Gói spec đã có trên đĩa, và phần implement đã chạy trừ khi còn một câu hỏi chặn.',
-    },
-    tips: [
-      {
-        en: 'Assumptions are labeled. A [NEEDS CLARIFICATION] marker is the only open product fork.',
-        vi: 'Giả định được ghi rõ. Marker [NEEDS CLARIFICATION] là ngã rẽ sản phẩm còn mở.',
-      },
-      {
-        en: 'Copying an existing CRUD screen does not earn an ADR.',
-        vi: 'Chép một màn CRUD có sẵn thì không cần ADR.',
-      },
-    ],
-  },
-  {
     name: 'dev',
     invoke: '/dev',
     slug: 'dev',
@@ -704,8 +417,8 @@ export const skillOverlays: SkillOverlay[] = [
       },
     },
     summary: {
-      en: 'Build from a PRD, design spec, or agent brief: climb the solution ladder, write tests at the seams you confirmed, keep scope honest, and debug with a tight loop.',
-      vi: 'Build từ PRD, đặc tả design, hoặc tóm tắt agent: leo thang giải pháp, viết test tại seam đã chốt, giữ phạm vi trung thực, và gỡ lỗi bằng vòng lặp chặt.',
+      en: "Prepare feature specifications when missing, implement approved behavior and debug with verified tests.",
+      vi: "Chuẩn bị đặc tả còn thiếu, triển khai hành vi đã duyệt và sửa lỗi bằng kiểm thử có bằng chứng.",
     },
     whenToUse: {
       en: 'The spec is ready (`ready-for-agent` issue, PRD, or `docs/design/`). Pick up one vertical slice at a time.',
@@ -713,14 +426,14 @@ export const skillOverlays: SkillOverlay[] = [
     },
     pipeline: {
       upstream: {
-        en: '/design or agent brief from `/triage`',
-        vi: '/design hoặc agent brief từ `/triage`',
+        en: '/design or agent brief from `/track`',
+        vi: '/design hoặc agent brief từ `/track`',
       },
-      downstream: '/code-review',
+      downstream: '/review',
     },
     boundaries: {
-      en: 'Does not write requirements or UI specs. Pre-merge review is `/code-review`, not part of the `/dev` loop.',
-      vi: 'Không viết yêu cầu hay đặc tả UI. Rà soát trước merge là `/code-review`, không nằm trong vòng `/dev`.',
+      en: 'Does not write requirements or UI specs. Pre-merge review is `/review`, not part of the `/dev` loop.',
+      vi: 'Không viết yêu cầu hay đặc tả UI. Rà soát trước merge là `/review`, không nằm trong vòng `/dev`.',
     },
     prerequisites: [
       {
@@ -746,13 +459,13 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Kỳ vọng TDD tại seam đã chốt — test trước khi skill yêu cầu.',
       },
       {
-        en: 'When the slice is green, run `/code-review` before merge.',
-        vi: 'Khi lát cắt đã xanh, chạy `/code-review` trước khi merge.',
+        en: 'When the slice is green, run `/review` before merge.',
+        vi: 'Khi lát cắt đã xanh, chạy `/review` trước khi merge.',
       },
     ],
     doneWhen: {
-      en: 'The vertical slice is implemented with tests at confirmed seams and ready for `/code-review`.',
-      vi: 'Lát cắt đã implement kèm test tại seam đã chốt và sẵn sàng cho `/code-review`.',
+      en: 'The vertical slice is implemented with tests at confirmed seams and ready for `/review`.',
+      vi: 'Lát cắt đã implement kèm test tại seam đã chốt và sẵn sàng cho `/review`.',
     },
     tips: [
       {
@@ -762,89 +475,6 @@ export const skillOverlays: SkillOverlay[] = [
       {
         en: 'Deploy/CI breakage is `/devops`, not a feature `/dev` pass.',
         vi: 'Deploy/CI gãy là `/devops`, không phải vòng `/dev` feature.',
-      },
-    ],
-  },
-  {
-    name: 'code-review',
-    invoke: '/code-review',
-    slug: 'code-review',
-    description: {
-      en: 'Review code since a pinned git baseline — Standards, Spec, and Simplify.',
-      vi: 'Rà soát code kể từ một mốc git cố định — theo Chuẩn mực, Đặc tả, và Đơn giản hóa.',
-    },
-    invocation: 'model',
-    domain: 'review',
-    samplePrompt: {
-      en: '/code-review\n\nDiff since main',
-      vi: '/code-review\n\nDiff so với main',
-    },
-    githubPath: 'skills/code-review/',
-    relatedAgents: ['techlead'],
-    agentPanel: {
-      role: 'PRINCIPAL TECH LEAD',
-      owns: ['Standards', 'Spec', 'Simplify', 'pre-merge gate'],
-      invokeHint: {
-        en: 'Use the techlead to review diff since main',
-        vi: 'Nhờ agent techlead rà soát diff so với main',
-      },
-    },
-    summary: {
-      en: 'Three-axis review from a fixed git point — parallel subagents, findings tagged blocker / suggestion / nit.',
-      vi: 'Rà soát ba trục từ một điểm git cố định — chạy song song bằng subagent, gắn nhãn chặn / gợi ý / nhỏ.',
-    },
-    whenToUse: {
-      en: 'Before merge, or when asked to review a branch, PR, or diff — including cuts for over-engineering.',
-      vi: 'Trước khi merge, hoặc khi được nhờ rà soát nhánh, PR, hoặc diff — kể cả để cắt phần over-engineer.',
-    },
-    pipeline: {
-      upstream: '/dev',
-      downstream: { en: 'Ship', vi: 'Ship' },
-    },
-    boundaries: {
-      en: 'Not lint-only or generic PR comments — always uses a pinned baseline. Spec is optional; Simplify always runs.',
-      vi: 'Không chỉ lint hay comment PR chung — luôn neo một baseline. Đặc tả là tùy chọn; Đơn giản hóa luôn chạy.',
-    },
-    prerequisites: [
-      {
-        en: 'A branch or diff with a clear git baseline (e.g. `main`).',
-        vi: 'Nhánh hoặc diff có baseline git rõ (ví dụ `main`).',
-      },
-      {
-        en: 'Implementation for the slice is largely done (`/dev`).',
-        vi: 'Phần implement lát cắt cơ bản đã xong (`/dev`).',
-      },
-    ],
-    howTo: [
-      {
-        en: 'Invoke `/code-review` and pin the baseline (e.g. review since `main`).',
-        vi: 'Gọi `/code-review` và neo baseline (ví dụ rà kể từ `main`).',
-      },
-      {
-        en: 'Let the three axes run — Standards, Spec (if provided), Simplify.',
-        vi: 'Để ba trục chạy — Chuẩn mực, Đặc tả (nếu có), Đơn giản hóa.',
-      },
-      {
-        en: 'Triage findings: fix blockers, consider suggestions, defer nits as needed.',
-        vi: 'Phân loại finding: sửa blocker, cân nhắc gợi ý, để nits sau nếu cần.',
-      },
-      {
-        en: 'Re-run or merge when blockers are clear.',
-        vi: 'Chạy lại hoặc merge khi không còn blocker.',
-      },
-    ],
-    doneWhen: {
-      en: 'Findings are listed with severity and blockers are resolved or explicitly accepted before merge.',
-      vi: 'Finding đã liệt kê theo mức độ và blocker đã xử lý hoặc chấp nhận rõ trước merge.',
-    },
-    tips: [
-      {
-        en: 'Always pin a baseline — “review this PR” without a base is not enough.',
-        vi: 'Luôn neo baseline — “rà PR này” mà không có base là chưa đủ.',
-      },
-      {
-        en: 'Long reviews: ask to use the `techlead` agent.',
-        vi: 'Review dài: nhờ dùng agent `techlead`.',
       },
     ],
   },
@@ -883,8 +513,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: '/dev (seam đã ship) hoặc schema/MCP sẵn có',
       },
       downstream: {
-        en: 'Published docs path / optional `/e2e` how-to',
-        vi: 'Đường docs đã publish / tùy chọn hướng dẫn cho `/e2e`',
+        en: 'Published docs path / optional `/qa` how-to',
+        vi: 'Đường docs đã publish / tùy chọn hướng dẫn cho `/qa`',
       },
     },
     boundaries: {
@@ -911,79 +541,13 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Rà bản nháp theo đường người tích hợp mới — không cần hỏi Slack.',
       },
       {
-        en: 'Publish to the agreed docs path; optionally add an `/e2e` how-to if journeys matter.',
-        vi: 'Publish vào đường docs đã chốt; tùy chọn thêm hướng dẫn `/e2e` nếu hành trình quan trọng.',
+        en: 'Publish to the agreed docs path; optionally add an `/qa` how-to if journeys matter.',
+        vi: 'Publish vào đường docs đã chốt; tùy chọn thêm hướng dẫn `/qa` nếu hành trình quan trọng.',
       },
     ],
     doneWhen: {
       en: 'Verified developer docs exist for the surface and examples match real code.',
       vi: 'Đã có docs developer đã kiểm chứng cho bề mặt đó và ví dụ khớp code thật.',
-    },
-  },
-  {
-    name: 'e2e',
-    invoke: '/e2e',
-    slug: 'e2e',
-    description: {
-      en: 'End-to-end test automation — Playwright flakes, CI parallelization, journey suites, and traces.',
-      vi: 'Tự động hóa kiểm thử đầu cuối — flaky Playwright, chạy CI song song, bộ hành trình, và trace.',
-    },
-    invocation: 'user',
-    domain: 'e2e',
-    samplePrompt: {
-      en: '/e2e\n\nPlaywright CI flakes on checkout journey',
-      vi: '/e2e\n\nPlaywright CI flaky trên hành trình checkout',
-    },
-    githubPath: 'skills/e2e/',
-    relatedAgents: ['tester'],
-    agentPanel: {
-      role: 'PRINCIPAL TESTER',
-      owns: ['Playwright suite', 'flake elimination', 'CI sharding', 'traces'],
-      invokeHint: { en: 'Use the tester to [task]', vi: 'Nhờ agent tester làm [công việc]' },
-    },
-    summary: {
-      en: 'Keep the E2E harness and CI test jobs healthy — fix flakes, shard work, cover critical journeys. Skill id `e2e`; agent id `tester`.',
-      vi: 'Giữ khung E2E và job test trên CI khỏe — sửa flaky, chia shard, cover hành trình quan trọng. Id skill là `e2e`; id agent là `tester`.',
-    },
-    whenToUse: {
-      en: 'Flaky or slow E2E CI, new critical journey coverage, or trace-driven triage of failing test jobs.',
-      vi: 'CI E2E flaky hoặc chậm, cần cover hành trình quan trọng mới, hoặc sàng lọc job fail dựa trên trace.',
-    },
-    pipeline: {
-      upstream: { en: 'CI test failure or suite map', vi: 'CI test fail hoặc bản đồ bộ test' },
-      downstream: '/dev (product bug) · `/devops` (deploy) · `/code-review`',
-    },
-    boundaries: {
-      en: 'Not unit/seam TDD (`/dev`). Not deploy or build Knowledge fixes (`/devops`). Not the pre-merge three-axis review.',
-      vi: 'Không phải TDD ở seam (`/dev`). Không sửa Knowledge cho deploy hay build (`/devops`). Không phải rà soát ba trục trước merge.',
-    },
-    prerequisites: [
-      {
-        en: 'An E2E harness or CI test jobs (often Playwright) to stabilize or extend.',
-        vi: 'Có khung E2E hoặc job test CI (thường Playwright) cần ổn định hoặc mở rộng.',
-      },
-    ],
-    howTo: [
-      {
-        en: 'Invoke `/e2e` with the failing journey, flake symptom, or new coverage goal.',
-        vi: 'Gọi `/e2e` kèm hành trình fail, triệu chứng flaky, hoặc mục tiêu cover mới.',
-      },
-      {
-        en: 'Share CI links or traces when available.',
-        vi: 'Chia sẻ link CI hoặc trace nếu có.',
-      },
-      {
-        en: 'Confirm wait strategy, quarantine owner, or shard plan the agent proposes.',
-        vi: 'Xác nhận chiến lược wait, owner quarantine, hoặc plan shard agent đề xuất.',
-      },
-      {
-        en: 'Re-run CI; escalate product bugs to `/dev` or deploy issues to `/devops`.',
-        vi: 'Chạy lại CI; escalate bug sản phẩm sang `/dev` hoặc lỗi deploy sang `/devops`.',
-      },
-    ],
-    doneWhen: {
-      en: 'The targeted journey is green or quarantined with an owner, and CI sharding/waits are documented if changed.',
-      vi: 'Hành trình mục tiêu đã xanh hoặc quarantine kèm owner, và sharding/wait đã ghi nếu có đổi.',
     },
   },
   {
@@ -1044,78 +608,6 @@ export const skillOverlays: SkillOverlay[] = [
     },
   },
   {
-    name: 'arch-refactor',
-    invoke: '/arch-refactor',
-    slug: 'arch-refactor',
-    description: {
-      en: 'Scan the codebase for deepening opportunities, show a visual HTML report, then grill the candidate you pick.',
-      vi: 'Quét codebase tìm chỗ làm sâu module, hiện báo cáo HTML, rồi hỏi xoáy ứng viên bạn chọn.',
-    },
-    invocation: 'user',
-    domain: 'architecture',
-    samplePrompt: {
-      en: '/arch-refactor\n\nFocus: [module area]',
-      vi: '/arch-refactor\n\nFocus: [vùng module]',
-    },
-    githubPath: 'skills/arch-refactor/',
-    relatedAgents: ['techlead'],
-    agentPanel: {
-      role: 'PRINCIPAL TECH LEAD',
-      owns: ['deepening scan', 'HTML report', 'grill candidate'],
-      invokeHint: {
-        en: 'Use the techlead to scan for deepening opportunities',
-        vi: 'Nhờ agent techlead quét tìm cơ hội làm sâu module',
-      },
-    },
-    summary: {
-      en: 'Maintenance pass: find modules that should go deeper, review them in an HTML report, then stress-test the one you choose.',
-      vi: 'Vòng bảo trì: tìm module nên làm sâu hơn, xem trong báo cáo HTML, rồi stress-test ứng viên bạn chọn.',
-    },
-    whenToUse: {
-      en: 'You want a focused refactor or architecture improvement pass on an existing codebase.',
-      vi: 'Khi cần một vòng refactor hoặc cải thiện kiến trúc có trọng tâm trên codebase hiện có.',
-    },
-    pipeline: {
-      upstream: { en: 'Codebase with deepening debt', vi: 'Codebase đang có nợ làm sâu' },
-      downstream: {
-        en: '/align or `/dev` on the chosen candidate',
-        vi: '/align hoặc `/dev` cho ứng viên đã chọn',
-      },
-    },
-    boundaries: {
-      en: 'Not greenfield architecture vocabulary — that is model-invoked `arch`. Does not implement by default (`/dev`).',
-      vi: 'Không phải từ vựng kiến trúc cho dự án mới — đó là `arch` (agent tự gọi). Mặc định không tự implement (`/dev`).',
-    },
-    prerequisites: [
-      {
-        en: 'An existing codebase with suspected deepening debt.',
-        vi: 'Codebase hiện có với nợ làm sâu module nghi ngờ.',
-      },
-    ],
-    howTo: [
-      {
-        en: 'Invoke `/arch-refactor` and describe the area to scan (or let it explore).',
-        vi: 'Gọi `/arch-refactor` và mô tả vùng cần quét (hoặc để agent khám phá).',
-      },
-      {
-        en: 'Open the HTML report in the OS temp directory when it is written.',
-        vi: 'Mở báo cáo HTML trong thư mục temp của OS khi đã ghi xong.',
-      },
-      {
-        en: 'Pick a candidate; answer the grill questions.',
-        vi: 'Chọn một ứng viên; trả lời câu hỏi xoáy.',
-      },
-      {
-        en: 'Hand off to `/align` or `/dev` for the chosen deepening work.',
-        vi: 'Giao cho `/align` hoặc `/dev` cho việc làm sâu đã chọn.',
-      },
-    ],
-    doneWhen: {
-      en: 'You have a report plus a grilled candidate and a clear next skill (`/align` or `/dev`).',
-      vi: 'Đã có báo cáo kèm ứng viên đã hỏi xoáy và skill tiếp theo rõ (`/align` hoặc `/dev`).',
-    },
-  },
-  {
     name: 'arch',
     invoke: '/arch',
     slug: 'arch',
@@ -1140,8 +632,8 @@ export const skillOverlays: SkillOverlay[] = [
       },
     },
     summary: {
-      en: 'Shared words for deep modules — where the public interface sits, how deep it goes, what leverage it buys. Other skills reach for this when drawing boundaries.',
-      vi: 'Từ chung cho module sâu — interface công khai nằm đâu, sâu tới đâu, leverage mang lại gì. Skill khác gọi tới đây khi cần vẽ ranh giới.',
+      en: "Design deep modules and assess architectural refactor candidates with evidence and testable seams.",
+      vi: "Thiết kế module sâu, đánh giá phương án refactor kiến trúc bằng bằng chứng và seam kiểm thử.",
     },
     whenToUse: {
       en: 'Automatically when designing module seams or deepening interfaces; invoke explicitly for architecture discussions.',
@@ -1178,8 +670,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Áp từ vựng vào module đang đổi — không bịa glossary song song.',
       },
       {
-        en: 'For a maintenance scan of deepening debt, use `/arch-refactor` instead.',
-        vi: 'Để quét bảo trì nợ làm sâu, dùng `/arch-refactor` thay thế.',
+        en: 'For a maintenance scan of deepening debt, use `/arch` instead.',
+        vi: 'Để quét bảo trì nợ làm sâu, dùng `/arch` thay thế.',
       },
     ],
     doneWhen: {
@@ -1265,6 +757,26 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Deploy/CI is verified green (or rolled back safely) and severity paperwork is done when required.',
       vi: 'Deploy/CI đã xác minh xanh (hoặc rollback an toàn) và giấy tờ mức độ nghiêm trọng đã xong khi cần.',
     },
+  },
+  {
+    name: 'build-feature-map',
+    invoke: '/build-feature-map',
+    slug: 'build-feature-map',
+    description: { en: 'Build and maintain a project-owned behavior index and feature-map skill.', vi: 'Tạo và duy trì bản đồ hành vi cùng skill feature map của dự án.' },
+    invocation: 'user',
+    domain: 'docs',
+    githubPath: 'skills/build-feature-map/',
+    summary: { en: 'Index feature areas using verified behavior, routes, scoped selectors and harness evidence.', vi: 'Lập chỉ mục vùng tính năng dựa trên hành vi, route, selector và bằng chứng harness đã xác minh.' },
+    whenToUse: { en: 'A project needs a reusable behavior map or an existing area needs repair.', vi: 'Khi dự án cần bản đồ hành vi dùng lại hoặc cần sửa một vùng hiện có.' },
+    boundaries: { en: 'Does not imply QA approval or permission to install tools; preserve the canonical map owner.', vi: 'Không tự phê duyệt QA hay cài công cụ; giữ đúng nguồn bản đồ chính thức.' },
+    prerequisites: [{ en: 'Confirmed project, canonical owner, and available repository or behavior evidence.', vi: 'Dự án, nguồn sở hữu và bằng chứng repository hoặc hành vi đã xác định.' }],
+    howTo: [
+      { en: 'Read the target feature-map pointer and existing behavior evidence.', vi: 'Đọc pointer feature map của dự án và bằng chứng hành vi hiện có.' },
+      { en: 'Seed or update only the requested areas using verified selectors and routes.', vi: 'Tạo hoặc cập nhật vùng được yêu cầu bằng selector và route đã xác minh.' },
+      { en: 'Verify the index and map references, then report write status and gaps.', vi: 'Kiểm tra chỉ mục, tham chiếu bản đồ và báo trạng thái ghi cùng phần còn thiếu.' },
+    ],
+    doneWhen: { en: 'Map entries and index are traceable to current evidence; unsupported observations are explicit.', vi: 'Mục bản đồ và chỉ mục truy được về bằng chứng hiện tại; điểm chưa xác minh được nêu rõ.' },
+    samplePrompt: { en: '/build-feature-map\n\nMap the team invitation area.', vi: '/build-feature-map\n\nLập bản đồ vùng mời thành viên.' },
   },
   ...workSkillOverlays,
 ]

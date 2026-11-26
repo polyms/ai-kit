@@ -6,6 +6,7 @@ import {
 } from '../content/overlay'
 import { m } from '../paraglide/messages.js'
 import type { Locale } from '../paraglide/runtime'
+import { canonicalSkillName } from './skill-pack/skill-pack'
 
 export type ResolvedSkillPipeline =
   | string
@@ -106,7 +107,7 @@ export function getSkills(locale: Locale): ResolvedSkillOverlay[] {
 }
 
 export function getSkillBySlug(slug: string, locale: Locale): ResolvedSkillOverlay | undefined {
-  const skill = skillOverlays.find(s => s.slug === slug)
+  const skill = skillOverlays.find(s => s.slug === canonicalSkillName(slug))
   return skill === undefined ? undefined : getSkillCopy(skill, locale)
 }
 

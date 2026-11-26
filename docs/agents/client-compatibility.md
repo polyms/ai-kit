@@ -28,7 +28,7 @@ Use the project's existing component library and design system for mapping in
 Codex/Copilot. An installed Polyms `ui-kit` skill is an optional reference only
 when the project uses Polyms UI Kit or the user requests it. If it is absent,
 continue with grounded project components or generic semantic roles rather than
-requesting a vendor-specific skill. The existing `collab` exception and all
+requesting a vendor-specific skill. The dev feature-preparation exception and all
 design/spec quality checks remain in effect.
 
 ## Files and project setup
@@ -91,7 +91,7 @@ client calls. Translate the intent using the **actual tool schema in this sessio
   Launch independent work concurrently only up to available slots; queue the remainder.
   Do not require three tool calls in a single message if the client cannot express it.
   For a pure scan or review with no delegation tool, apply its checklists in the parent
-  and disclose the missing isolation. For `collab`, do not impersonate absent principals;
+  and disclose the missing isolation. For dev feature preparation, do not impersonate absent principals;
   report the missing capability before starting that delegated packet.
 
 Use the current client's question, browser, preview, and shell capabilities. Do not

@@ -6,11 +6,11 @@ import { HomeSectionChip } from './HomeSectionChip'
 const STAGES = [
   { label: m.pipeline_stage_idea },
   { label: m.pipeline_stage_align, invoke: '/align' },
-  { label: m.pipeline_stage_reqs, invoke: '/reqs | /to-prd' },
-  { label: m.pipeline_stage_issues, invoke: '/to-issues' },
+  { label: m.pipeline_stage_reqs, invoke: '/reqs' },
+  { label: m.pipeline_stage_issues, invoke: '/task' },
   { label: m.pipeline_stage_design, invoke: '/design' },
   { label: m.pipeline_stage_dev, invoke: '/dev' },
-  { label: m.pipeline_stage_review, invoke: '/code-review' },
+  { label: m.pipeline_stage_review, invoke: '/review' },
   { label: m.pipeline_stage_ship },
 ] as const
 

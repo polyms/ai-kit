@@ -101,12 +101,8 @@ describe('skillOverlays catalog copy', () => {
         'setup',
         'align',
         'reqs',
-        'to-prd',
-        'to-issues',
         'design',
-        'collab',
         'dev',
-        'code-review',
       ])
       for (const s of getSkills(locale)) {
         if (!mainPath.has(s.slug)) continue
