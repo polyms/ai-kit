@@ -8,7 +8,8 @@ const packCount = metadata.releases[latest as keyof typeof metadata.releases].pa
 const catalog = { schemaVersion: 1, version: latest, revision, packs: Array.from({ length: packCount }, (_, i) => ({ name: String(i) })) }
 const read = async (result: Awaited<ReturnType<typeof executeGetReleaseInfo>>) => JSON.parse(result.content[0].text)
 
-function fakeFetch({ staleLatest = false, missingQa = false, blocked = false, unreachable = false } = {}) {
+function fakeFetch({ staleLatest = false, missingQa = false, blocked = false, unreachable = false,
+  differentPinnedMetadata = false, reorderedPinned = false } = {}) {
   return vi.fn<typeof fetch>(async (url, init) => {
     expect(new URL(String(url)).origin).toBe('https://ai-kit.polyms.dev')
     expect(init?.redirect).toBe('error')
@@ -18,7 +19,17 @@ function fakeFetch({ staleLatest = false, missingQa = false, blocked = false, un
     if (path === '/skill-bundles/latest.json') {
       return Response.json(staleLatest ? { ...catalog, version: '0.3.4' } : catalog)
     }
-    if (path === '/skill-bundles/' + latest + '/catalog.json') return Response.json(catalog)
+    if (path === '/skill-bundles/' + latest + '/catalog.json') {
+      if (differentPinnedMetadata) return Response.json({
+        ...catalog,
+        packs: catalog.packs.map((pack, index) => index === 0
+          ? { ...pack, contract: { readyWhen: 'changed without revision bump' } } : pack),
+      })
+      if (reorderedPinned) return Response.json({
+        packs: catalog.packs, revision, version: latest, schemaVersion: 1,
+      })
+      return Response.json(catalog)
+    }
     if (path === '/skill-bundles/' + latest + '/qa/starter.json') {
       return Response.json({
         name: 'qa', version: latest, revision,
@@ -59,10 +70,13 @@ describe('MCP get_release_info', () => {
   it('verifies public HTTP delivery and retired 404s using allowlisted requests', async () => {
     const mock = fakeFetch()
     const result = await read(await executeGetReleaseInfo({
-      checkHttp: true, retiredVersion: '0.3.4',
+      checkHttp: true, expectedVersion: latest, retiredVersion: '0.3.4',
     }, mock))
     expect(result.httpVerification.status).toBe('passed')
-    expect(result.httpVerification.checks).toHaveLength(6)
+    expect(result.httpVerification.checks).toHaveLength(7)
+    expect(result.expectedVersionCheck).toEqual({
+      status: 'passed', expectedVersion: latest, observedVersion: latest,
+    })
     expect(result.httpVerification.checks.every((check: { status: string }) => check.status === 'passed')).toBe(true)
     expect(mock).toHaveBeenCalledTimes(6)
     expect(mock.mock.calls.map(call => new URL(String(call[0])).pathname)).not.toContain('/api/private')
@@ -80,6 +94,57 @@ describe('MCP get_release_info', () => {
       const result = await read(await executeGetReleaseInfo({ checkHttp: true }, fakeFetch(options)))
       expect(result.httpVerification.status).toBe('unverified')
     }
+  })
+
+
+  it('fails closed when the requested release is not configured, without making HTTP requests', async () => {
+    for (const checkHttp of [false, true]) {
+      const mock = fakeFetch()
+      const response = await executeGetReleaseInfo({
+        expectedVersion: '0.3.6', checkHttp,
+      }, mock)
+      const body = await read(response)
+      expect(response.isError).toBe(true)
+      expect(body.activeRelease.version).toBe(latest)
+      expect(body.expectedVersionCheck).toEqual({
+        status: 'failed', expectedVersion: '0.3.6', observedVersion: latest,
+      })
+      expect(body.verificationStatus).toBe('failed')
+      expect(body.httpVerification.status).toBe('not-run')
+      expect(mock).not.toHaveBeenCalled()
+    }
+  })
+
+  it('rejects an invalid expectedVersion without any HTTP request', async () => {
+    const mock = fakeFetch()
+    const result = await executeGetReleaseInfo({
+      expectedVersion: '../other', checkHttp: true,
+    }, mock)
+    expect(result.isError).toBe(true)
+    expect((await read(result)).error).toBe('INVALID_EXPECTED_VERSION')
+    expect(mock).not.toHaveBeenCalled()
+  })
+
+  it('rejects catalog metadata drift despite matching version, revision and pack count', async () => {
+    const body = await read(await executeGetReleaseInfo({
+      expectedVersion: latest, checkHttp: true,
+    }, fakeFetch({ differentPinnedMetadata: true })))
+    expect(body.httpVerification.status).toBe('failed')
+    expect(body.httpVerification.checks.find((check: { name: string }) =>
+      check.name === 'latest-catalog').status).toBe('passed')
+    expect(body.httpVerification.checks.find((check: { name: string }) =>
+      check.name === 'pinned-catalog').status).toBe('passed')
+    expect(body.httpVerification.checks.find((check: { name: string }) =>
+      check.name === 'catalog-consistency').status).toBe('failed')
+  })
+
+  it('accepts semantically identical catalogs with different JSON key order', async () => {
+    const body = await read(await executeGetReleaseInfo({
+      expectedVersion: latest, checkHttp: true,
+    }, fakeFetch({ reorderedPinned: true })))
+    expect(body.httpVerification.status).toBe('passed')
+    expect(body.httpVerification.checks.find((check: { name: string }) =>
+      check.name === 'catalog-consistency').status).toBe('passed')
   })
 
   it('rejects the active version as retired before network work', async () => {
