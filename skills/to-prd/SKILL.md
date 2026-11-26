@@ -8,10 +8,16 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
-Synthesize the **current conversation** and codebase understanding into a lean PRD and **publish** it to the
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve target
+project context and execution routes from `docs/agents/execution-profile.md` when available. CLI
+commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
+bounded draft or blocked handoff for unavailable actions.
+
+Synthesize the **confirmed decisions from conversation or authorized project artifacts** and available codebase understanding into a lean PRD and **publish** it to the
 issue tracker.
 
-**Do NOT interview** — synthesize from conversation + codebase context already in session.
+**Do NOT interview** — synthesize from available decisions, source artifacts and codebase context.
+Reuse approved alignment handoffs across sessions; do not assume missing prior chat.
 
 ## When `/reqs` vs `/to-prd` vs `/align`
 
@@ -50,8 +56,8 @@ language before synthesis.
 
 **Downstream:** `/to-issues` breaks the published PRD into vertical-slice issues.
 
-**Prerequisites:** Run `/setup` if `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is
-missing. Read `docs/agents/language.md` when present — publish the PRD in that language (**one prose
+**Prerequisites:** Resolve confirmed tracker and label mapping from project setup or authorized context.
+Missing policy blocks publication, not a bounded draft; propose setup only if needed. Read `docs/agents/language.md` when present — publish the PRD in that language (**one prose
 language**; **English thrift** — prefer confirmed language for ordinary words; only pure-tech / specialty
 tokens stay English — no mid-sentence EN/VI mix; VI SSOT `skills/setup/language.md`).
 
@@ -59,8 +65,8 @@ tokens stay English — no mid-sentence EN/VI mix; VI SSOT `skills/setup/languag
 
 | Topic            | Read when                                                                                                       |
 | ---------------- | --------------------------------------------------------------------------------------------------------------- |
-| Issue tracker    | [docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md) — create/read commands                       |
-| Triage labels    | [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md) — `ready-for-agent` mapping                  |
+| Issue tracker    | `docs/agents/issue-tracker.md` — create/read commands                       |
+| Triage labels    | `docs/agents/triage-labels.md` — `ready-for-agent` mapping                  |
 | PRD body         | [lean-prd-template.md](lean-prd-template.md)                                                                    |
 | Template default | `docs/agents/requirements.md` when present                                                                      |
 | Domain glossary  | `CONTEXT.md` — use terms in **prose**; do not cite the file as main PRD content                                 |
@@ -95,7 +101,7 @@ Sketch the seams at which you will test the feature:
 Present the proposed seams to the user and **check that they match expectations** before writing the PRD. User
 may explicitly defer confirmation.
 
-**Completion criterion:** User confirmed seams (or explicitly deferred).
+**Completion criterion:** User confirmed seams (including existing approved decisions) or explicitly deferred. If unavailable in a delegated run, return proposed seams as a blocker, not approval.
 
 ### 3. Open-questions gate (before write)
 
@@ -147,10 +153,11 @@ any exist; human-readable check passed.
 ### 5. Publish
 
 Create an issue titled `PRD: <feature>` per
-[docs/agents/issue-tracker.md](../../docs/agents/issue-tracker.md). Apply the mapped `ready-for-agent` label
-string from [docs/agents/triage-labels.md](../../docs/agents/triage-labels.md). Also write the same body to
-`docs/prd/<feature-slug>.md` (create `docs/prd/` if missing). Tracker issue is canonical; the repo file is the
-mirror (header/links may differ; prose and stories must match).
+`docs/agents/issue-tracker.md`. Apply the mapped `ready-for-agent` label
+string from `docs/agents/triage-labels.md`. Use the configured tracker route and verify the returned issue. Mirror the same body to the
+configured repository path (default `docs/prd/<feature-slug>.md`) when project policy requires it
+and an authorized write route exists. The tracker is canonical by default; respect confirmed project
+ownership. Report a required mirror as pending if it cannot be written; do not claim completion.
 
 ```bash
 gh issue create --title "PRD: <feature>" --body "$(cat <<'EOF'
@@ -165,7 +172,7 @@ Skip `/triage` — this skill publishes a pre-aligned spec from conversation (`/
 inbound issue. No agent brief needed; the PRD body is the AFK contract.
 
 **Completion criterion:** Issue created on tracker with full PRD body and mapped `ready-for-agent` label;
-matching `docs/prd/<feature-slug>.md` written.
+required mirror verified or explicitly pending; never claim full completion for a pending required write.
 
 ### 6. Handoff
 

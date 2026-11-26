@@ -7,6 +7,11 @@ description: Deploy, CI, and infra — symptom → fix via Knowledge retrieval. 
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve target
+project context and execution routes from `docs/agents/execution-profile.md` when available. CLI
+commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
+bounded draft or blocked handoff for unavailable actions.
+
 Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → cause → fix → verify. Do not guess config.
 
 **Boundary vs `/dev`:** a deploy/CI symptom reported cold — no `/dev` slice already in progress — routes here automatically. One surfacing mid-slice (deploy-aware `/dev` touching infra config inside a feature slice) stays in `/dev`. **`/devops`** owns operational incidents end-to-end otherwise. Hand off app feature work to `/dev`.
@@ -36,8 +41,8 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 - Classify **severity** when user impact is unclear — [incident-templates.md](incident-templates.md)
 - Read **`docs/agents/stack-profile.md`** when present — pass manifest `axes` to search
 - Read per-app **`apps/*/DEPLOY.md`** when the incident is app-scoped — env vars, project paths, local repro commands
-- Read [Knowledge pointer](../../docs/agents/knowledge.md) (`intent: incident`) — MCP setup at
-  [ops-cms-mcp.md](../../docs/agents/ops-cms-mcp.md)
+- Read [Knowledge pointer](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md) (`intent: incident`) — MCP setup at
+  [ops-cms-mcp.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/ops-cms-mcp.md)
 
 **Completion criterion:** Symptom stated; severity noted when impact unclear; stack axes noted when
 manifest exists; app deploy guide located when applicable.
@@ -68,8 +73,9 @@ Do **not** apply fixes from a partial symptom match. If no match: say so; do not
 
 1. Apply **fix** steps minimally — smallest config change that addresses the confirmed cause
 2. Run **verify** steps from the same chunk (build, deploy preview, CI green, curl check, …) —
-   re-run on disk yourself; a nested agent's "green" is not enough
-   ([invocation.md](../../docs/agents/invocation.md) **Verification after delegation**)
+   obtain actual gate-deciding exit codes/logs from the matching workspace or authorized CI run;
+   a nested agent's "green" is not enough. Do not trigger deployment or CI mutations without authority
+   ([invocation.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/invocation.md) **Verification after delegation**)
 3. If verify fails, return to **Retrieve** — do not stack speculative changes
 
 **Completion criterion:** Verify steps from Knowledge pass with observed exit codes / logs, or
@@ -99,15 +105,19 @@ Two max only when feature work and process docs both genuinely apply.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
 
+If no execution route is available, report diagnosis and proposed fix separately from implementation
+and verification. Never close an unverified incident as green. Preserve incident/environment/revision
+and actual evidence in the handoff.
+
 ## References
 
 | Topic             | Read when                                                                                          |
 | ----------------- | -------------------------------------------------------------------------------------------------- |
-| Retrieval policy  | [knowledge.md](../../docs/agents/knowledge.md) — `intent: incident`                                |
-| MCP tools + OAuth | [knowledge.md](../../docs/agents/knowledge.md), [ops-cms-mcp.md](../../docs/agents/ops-cms-mcp.md) |
+| Retrieval policy  | [knowledge.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md) — `intent: incident`                                |
+| MCP tools + OAuth | [knowledge.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md), [ops-cms-mcp.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/ops-cms-mcp.md) |
 | SEV / post-mortem | [incident-templates.md](incident-templates.md)                                                     |
 | App context       | `apps/*/DEPLOY.md`                                                                                 |
-| Design seams      | **`arch`** + [knowledge.md](../../docs/agents/knowledge.md) (`intent: design`) — not this skill    |
+| Design seams      | **`arch`** + [knowledge.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md) (`intent: design`) — not this skill    |
 
 ## Agent
 

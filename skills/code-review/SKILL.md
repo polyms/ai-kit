@@ -9,14 +9,19 @@ description: Review code changes since a pinned git fixed point — Standards, S
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve target
+project context and execution routes from `docs/agents/execution-profile.md` when available. CLI
+commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
+bounded draft or blocked handoff for unavailable actions.
+
 Three-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 - **Standards** — does the code conform to this repo's documented coding standards?
 - **Spec** — does the code faithfully implement the originating issue / PRD / spec?
 - **Simplify** — what surplus complexity can the diff delete without losing the ask?
 
-All three axes run as **parallel sub-agents** so they don't pollute each other's context,
-then this skill aggregates their findings.
+Review all three axes independently. Prefer parallel sub-agents when supported; otherwise perform
+separate checklist passes in the host and disclose missing isolation. Aggregate without merging axes.
 
 **Issue fetch (soft):** If `docs/agents/issue-tracker.md` exists, follow it for
 `gh issue view` / `gh pr view`. If missing, use `gh` directly — no `/setup` gate unless
@@ -27,13 +32,13 @@ you need to publish or write to the tracker.
 ### 1. Pin the fixed point
 
 Whatever the user said is the fixed point — a commit SHA, branch name, tag, `main`,
-`HEAD~5`, etc. If they didn't specify one, ask for it.
+`HEAD~5`, etc. For a named PR use its verified base/head and PR comparison semantics. Ask for a fixed point only when the target cannot resolve it.
 
-Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, merge-base
-comparison). Also note commits via `git log <fixed-point>..HEAD --oneline`.
+Capture the exact comparison once: local `git diff <fixed-point>...HEAD` (three-dot, merge-base)
+or equivalent PR/compare operation through authorized source control. Record base/head, merge-base
+semantics, change set and commit list; disclose incomplete or truncated patches.
 
-Confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is
-non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents.
+Confirm the fixed point resolves (e.g. `git rev-parse <fixed-point>` or provider metadata) and the diff is non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents.
 
 Check diff size (`git diff <fixed-point>...HEAD --stat`, sum of `+N/-M`). Under 10 changed
 lines → skip sub-agent spawn; read the diff yourself and apply all three checklists
@@ -56,8 +61,7 @@ Look for the originating spec, in this order:
 3. A PRD/spec file under `docs/`, `docs/design/`, `specs/`, or `.scratch/` matching the
    branch name or feature.
 
-If nothing is found, ask the user where the spec is. If they say there isn't one, skip
-the Spec sub-agent and report **no spec available** explicitly.
+If nothing is found, ask only when an interactive user can resolve it; otherwise report **no spec available** or **spec inaccessible** and skip that axis. Never imply spec compliance.
 
 **Completion criterion:** Spec path or fetched contents recorded, or explicit decision to
 skip Spec axis.
@@ -83,8 +87,9 @@ paste.
 Skip this step when step 1 decided **inline** (diff under 10 changed lines) — go straight
 to **5. Aggregate** and **6. Handoff** with your own inline findings instead.
 
-Send a **single message** with three Agent tool calls (`subagent_type: general-purpose`) —
-or two when Spec is skipped. Do not run axes sequentially.
+Use available delegation for independent parallel briefs. If delegation or slots are unavailable,
+perform separate inline passes or queue within available slots. Supply actual retrieved diff/spec
+content or accessible references to each reviewer; a local command alone is insufficient remotely.
 
 Always include Standards and Simplify. Include Spec when a spec source exists.
 
@@ -121,8 +126,7 @@ Always include Standards and Simplify. Include Spec when a spec source exists.
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 Simplify still runs.
 
-**Completion criterion:** Standards + Simplify launched in one parallel batch; Spec in the
-same batch when available, or skipped with explicit reason.
+**Completion criterion:** Standards + Simplify completed independently; Spec completed when available or skipped with explicit reason; disclose when delegation is unavailable.
 
 ### 5. Aggregate
 
@@ -132,7 +136,7 @@ rerank findings across axes.
 
 **Never paste raw sub-agent output to the user.** Sub-agents write terse, jargon-dense
 English under a word limit — that's fine for their own reasoning, but it isn't the report
-a person reads. Rewrite every finding as one full, plain Vietnamese sentence: what's wrong,
+a person reads. Rewrite every finding as one full, plain sentence in the requested or project language: what's wrong,
 where, why it matters. Keep file paths, identifiers, quoted code, and rule names verbatim —
 translate everything around them. Cryptic axis-specific tags never reach the user bare:
 turn Simplify's `delete:` / `stdlib:` / `native:` / `yagni:` / `shrink:` into a short
@@ -150,10 +154,10 @@ findings):
 
 Prefix each finding line with one tag. When an axis returns unstructured prose, assign the
 strongest justified tag per discrete issue — prefer under-tagging over inflating blockers.
-State the legend once, briefly, near the top of the report (in Vietnamese) so 🔴/🟡/💭
+State the legend once, briefly, near the top of the report (in the requested or project language) so 🔴/🟡/💭
 don't require the reader to already know this table.
 
-Close the findings with a one-line summary in Vietnamese: total findings per axis **by
+Close the findings with a one-line summary in the requested or project language: total findings per axis **by
 severity** (e.g. `Standards: 1🔴 2🟡 · Spec: 0 · Simplify: 3💭`), and the worst issue
 _within each axis_ (if any), stated as a plain sentence — not a re-paste of the
 sub-agent's shorthand. Don't pick a single winner across axes. Then run **6. Handoff**.

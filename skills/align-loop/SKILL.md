@@ -7,6 +7,11 @@ description: Relentless grill of a plan or design — walk the design tree one d
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve target
+project context and execution routes from `docs/agents/execution-profile.md` when available. CLI
+commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
+bounded draft or blocked handoff for unavailable actions.
+
 Interview relentlessly about every aspect of the plan until shared understanding.
 
 The mental model is a **design tree**: decisions branch and depend on each other. Descend one node at a time — settle the parent before the choices hanging off it. A firehose of parallel questions loses the structure that makes the interview converge.
@@ -26,6 +31,13 @@ Question shape and examples: [GRILL-FORMAT.md](GRILL-FORMAT.md).
 
 Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (opt-in `/setup`), follow it.
 Match the user's language; grill shape stays in [GRILL-FORMAT.md](GRILL-FORMAT.md).
+
+## Delegated work
+
+When no interactive user is available, resolve from existing approved evidence first. Do not invent
+answers to design forks. Return the highest blocking question with lettered options and recommendation,
+confirmed decisions and remaining risks as a resumable handoff. Use the authorized project destination
+only when requested. Do not require persistent local chat or a calibration turn for an independent run.
 
 ## Calibration
 
