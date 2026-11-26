@@ -25,6 +25,8 @@ test('feedback GitHub Issue Form has essential fields and public consent', () =>
   const tool = read('apps/landing/src/lib/feedback/feedback.mcp.ts')
   assert.ok(tool.includes("url.searchParams.set('template', 'feedback.yml')"))
   assert.ok(tool.includes("url.searchParams.set('feedback', feedback)"))
+  const options = fields.category.attributes.options
+  for (const option of options) assert.ok(tool.includes(option), 'Unmapped issue form category: ' + option)
 })
 test('assistant-driven feedback and issue links hidden in landing footer', () => {
   assert.ok(read('README.md').includes('prepare_feedback_issue'))

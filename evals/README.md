@@ -26,7 +26,7 @@ baseline or provider audit trace.
 
 This benchmark runner is for maintainers and researchers, **not** an expected
 end-user step. End users who wish to comment can use the
-[public GitHub Issue feedback template](../docs/feedback.md) without logs,
+[AI-assisted conversational GitHub Issue workflow](../docs/feedback.md) without logs,
 trace exports or tests. Maintainers may later turn verified public feedback
 into narrowly scoped regression cases.
 

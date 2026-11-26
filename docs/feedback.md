@@ -35,7 +35,12 @@ It cannot guarantee a draft is safe. Read the full content before publishing.
 **Authentication boundary:** The AI Kit OAuth account is *not* a GitHub
 authorization. The MCP draft tool cannot create an issue on its own. To
 publish from inside the AI chat, the host needs its own authenticated
-GitHub connector/MCP with write permission. No shared server token is used.
+GitHub connector/MCP with **Issues write access to the target
+`polyms/ai-kit` repository**. A connector linked to a user's GitHub
+account may still lack access to this repository. If GitHub returns an
+authorization or creation error, the assistant should state the failure,
+**not retry or claim success**, and offer the prefilled fallback.
+No shared server token is used.
 Neither a successful draft nor an approval message proves the issue was
 created. Only a real GitHub response confirms publication.
 

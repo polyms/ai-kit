@@ -8,6 +8,8 @@ describe('AI Kit feedback issue drafting and authorized handoff', () => {
     expect(registerTool.mock.calls.map(call => call[0])).toEqual(['prepare_feedback_issue'])
     expect(PREPARE_FEEDBACK_DESCRIPTION).toContain('explicit approval')
     expect(PREPARE_FEEDBACK_DESCRIPTION).toContain('create_issue')
+    expect(PREPARE_FEEDBACK_DESCRIPTION).toContain('Issues write access')
+    expect(PREPARE_FEEDBACK_DESCRIPTION).toContain('do NOT automatically retry')
   })
 
   it('returns fixed GitHub target, ready-to-file body and prefilled fallback', () => {
@@ -97,5 +99,8 @@ describe('AI Kit feedback issue drafting and authorized handoff', () => {
     expect(result.status).toBe('draft')
     expect(result).not.toHaveProperty('issueNumber')
     expect(result).not.toHaveProperty('submitted')
+    if (result.status === 'draft') {
+      expect(result.nextStep).toContain('report the failure without retries')
+    }
   })
 })

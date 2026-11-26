@@ -113,7 +113,10 @@ to build a complete title and Markdown body for the **public**
 show the exact draft and obtain explicit publication approval.
 
 After approval, a host AI client with its **own separately authenticated**
-GitHub tool can call `create_issue` and report the real URL/number.
+GitHub tool and Issues write permission on `polyms/ai-kit` can call
+`create_issue` and report the real URL/number. A connected GitHub app is
+not evidence of permission on this repository. On a GitHub error, report
+the failed action, do not automatically retry, and offer the fallback URL.
 AI Kit's OAuth bearer token **cannot** be used as GitHub authorization.
 Without a connected GitHub write action, use the returned **prefilled**
 Issue Form link and let the user review/submit. If

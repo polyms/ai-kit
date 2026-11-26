@@ -19,7 +19,7 @@ export type FeedbackInput = {
 }
 
 export const PREPARE_FEEDBACK_DESCRIPTION =
-  'When a user voluntarily wants to give feedback about AI Kit, gather the small amount of useful context already in the chat and use this tool to draft a complete PUBLIC GitHub Issue in polyms/ai-kit. Show the title and body for the user to review and approve. AFTER explicit approval, if the AI client has a separately authenticated GitHub create_issue action, call it with the exact approved title/body and return its verified URL. Never use the AI Kit OAuth token for GitHub, silently publish, or claim a successful write without a GitHub response. Without a GitHub connector, offer the prefilledUrl returned by this tool, not a blank form. No benchmark, traces, files or full chat transcript required. Remind the user the GitHub Issue is public and contains only sanitized details.'
+  'When a user voluntarily wants to give feedback about AI Kit, gather the small amount of useful context already in the chat and use this tool to draft a complete PUBLIC GitHub Issue in polyms/ai-kit. Show the title and body for the user to review and approve. AFTER explicit approval, if the AI client has a separately authenticated GitHub create_issue action WITH Issues write access to polyms/ai-kit, call it with the exact approved title/body and return its verified URL. A connected GitHub app may lack permissions on that repository. On any authorization or creation failure, report the error, do NOT automatically retry, and offer the prefilled issue URL instead. Never use the AI Kit OAuth token for GitHub, silently publish, or claim a successful write without a GitHub response. Without a GitHub connector, offer the prefilledUrl returned by this tool, not a blank form. No benchmark, traces, files or full chat transcript required. Remind the user the GitHub Issue is public and contains only sanitized details.'
 
 const inputSchema = z.object({
   description: z.string().trim().min(8).max(2500),
@@ -136,7 +136,7 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
     githubCreateIssue: { repository_full_name: FEEDBACK_REPOSITORY, title, body },
     prefilledUrl,
     prefilledUrlTruncated,
-    nextStep: 'Show the user the exact title/body and obtain explicit confirmation. Then call the separately authorized host GitHub create_issue tool, if available. Otherwise provide the prefilled GitHub Issue Form URL. If prefilledUrlTruncated is true, clearly explain that the link contains an excerpt and the full approved draft is available in chat. The user still needs to check public-consent and possibly category on GitHub. Never claim submission without a real returned issue URL.',
+    nextStep: 'Show the user the exact title/body and obtain explicit confirmation. Then call the separately authorized host GitHub create_issue tool only if it has Issues write access to polyms/ai-kit. If access is absent or creation fails, report the failure without retries and provide the prefilled GitHub Issue Form URL. If prefilledUrlTruncated is true, clearly explain that the link contains an excerpt and the full approved draft is available in chat. The user still needs to check public-consent and possibly category on GitHub. Never claim submission without a real returned issue URL.',
   }
 }
 
