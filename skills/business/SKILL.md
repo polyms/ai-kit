@@ -6,6 +6,10 @@ description: Analyze business decisions, pricing, costs, feasibility, ROI and op
 
 # Business analysis
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile.
+
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Use [business-case-template.md](business-case-template.md) and the shared work artifact standard
 (`docs/agents/work-artifact-standard.md`). For explicit business requirements, use `reqs`.
 

@@ -249,9 +249,11 @@ describe('skill pack MCP tools', () => {
 })
 
 describe('consolidated engineering packs', () => {
-  it('lists 20 canonical skills and resolves all retired names without duplicate catalog entries', async () => {
+  it('lists exactly the canonical native skill entries and resolves retired names without duplicate catalog entries', async () => {
     const names = listSkillPacks().map(pack => pack.name)
     expect(names).toHaveLength(20)
+    const nativeNames = readdirSync(join(repoRoot, 'skills')).filter(name => existsSync(join(repoRoot, 'skills', name, 'SKILL.md'))).sort()
+    expect([...names].sort()).toEqual(nativeNames)
     for (const [alias, canonical] of Object.entries(LEGACY_SKILL_ALIASES)) {
       expect(names).not.toContain(alias)
       expect(getSkillPack(alias)).toEqual(getSkillPack(canonical))
@@ -263,7 +265,7 @@ describe('consolidated engineering packs', () => {
 describe('portable engineering packs', () => {
   it('delivers starter content and explicit invocation metadata for all engineering packs', async () => {
     const catalog = listSkillPacks()
-    const manual = ['setup', 'align', 'craft', 'build-feature-map']
+    const manual = ['setup', 'craft', 'build-feature-map']
     for (const name of Object.keys(ENGINEERING_SKILL_PATHS)) {
       const summary = catalog.find(pack => pack.name === name)!
       expect(summary.invocation).toBe(manual.includes(name) ? 'explicit' : 'model')
@@ -272,7 +274,7 @@ describe('portable engineering packs', () => {
       const result = await executeGetSkillPack(name, fetchFile, summary.starterPaths)
       expect(result.isError).toBeUndefined()
       expect(JSON.parse(result.content[0]!.text).invocation).toBe(summary.invocation)
-      expect(fetchFile.mock.calls.map(call => call[0])).toEqual(summary.starterPaths.map(skillPackRawUrl))
+      expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(summary.starterPaths.map(skillPackRawUrl).sort())
     }
     expect(getSkillPack('review')?.files.map(file => file.path)).toContain('skills/review/standards-baseline.md')
     expect(getSkillPack('review')?.files.map(file => file.path)).toContain('skills/review/simplify-baseline.md')

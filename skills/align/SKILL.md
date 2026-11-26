@@ -1,14 +1,13 @@
 ---
 name: align
 description: Align on a plan before building — relentless grill (design tree, lettered options), sharpen domain language, update CONTEXT.md and ADRs as you go. Invoke with /align, grill, làm rõ kế hoạch, chốt hướng.
-disable-model-invocation: true
 ---
 
 # Align — Align Before You Build
 
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
 
-Choose full alignment, [decision loop](decision-loop.md), or [domain modeling](domain-modeling.md) when only those responsibilities are requested. A named legacy align-loop or domain-modeling request selects the corresponding branch. Do not run an interview when approved decisions suffice.
+Choose full alignment only for a clear request to align or resolve a blocking decision; otherwise use the specific decision-loop or domain branch. Choose [decision loop](decision-loop.md), or [domain modeling](domain-modeling.md) when only those responsibilities are requested. A named legacy align-loop or domain-modeling request selects the corresponding branch. Do not run an interview when approved decisions suffice.
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 

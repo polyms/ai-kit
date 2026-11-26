@@ -6,6 +6,8 @@ description: Draft or create actionable work tickets for features, technical wor
 
 # Task
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile.
 
 Choose standard task creation or [vertical slicing](vertical-slicing.md) for an approved spec with end-to-end

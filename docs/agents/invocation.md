@@ -42,7 +42,7 @@ language and the confirmed destination language for artifacts; preserve technica
 
 | User-invoked                                                                                                                                  | Model-invoked                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map` | `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
+| `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map` | `align`, `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
 
 Canonical skills select one reference workflow from the user's intent. Align owns the decision loop
 and domain modeling; reqs owns lean PRD synthesis/publication; task owns vertical slicing; track owns

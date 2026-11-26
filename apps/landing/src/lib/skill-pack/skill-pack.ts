@@ -170,12 +170,18 @@ export const ENGINEERING_SKILL_PATHS = {
 } as const
 
 export type EngineeringSkillName = keyof typeof ENGINEERING_SKILL_PATHS
-const MANUAL_ENGINEERING_SKILLS: readonly EngineeringSkillName[] = ['setup', 'align', 'craft', 'build-feature-map']
+const MANUAL_ENGINEERING_SKILLS: readonly EngineeringSkillName[] = ['setup', 'craft', 'build-feature-map']
 
 export type WorkSkillName = keyof typeof WORK_SKILL_PATHS
 
 export const WORK_REFERENCE_PATHS: Partial<Record<WorkSkillName, readonly string[]>> = {
-  docs: DOCS_REFERENCE_PATHS,
+  docs: [...DOCS_REFERENCE_PATHS, PORTABLE_SKILL_STANDARD],
+  research: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
+  business: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
+  bug: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
+  plan: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
+  comms: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
+  release: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
   task: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
   track: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'skills/align/GRILL-FORMAT.md'],
   review: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
@@ -357,7 +363,7 @@ export function starterPaths(name: SkillPackName): string[] {
     return [entry, PORTABLE_SKILL_STANDARD, CONTEXT_PROTOCOL, WORK_ARTIFACT_STANDARD, ...core]
   }
   const paths = [entry, WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL]
-  if (name === 'reqs' || ['task', 'track', 'qa', 'review'].includes(name)) paths.push(PORTABLE_SKILL_STANDARD)
+  paths.push(PORTABLE_SKILL_STANDARD)
   if (name !== 'reqs' && SKILL_ROUTING[name].starter === 'primary') {
     paths.push(WORK_SKILL_PATHS[name][1])
   }

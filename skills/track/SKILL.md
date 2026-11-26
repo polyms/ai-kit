@@ -6,6 +6,8 @@ description: Inspect, summarize and update existing work items across issue trac
 
 # Track
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile.
 
 Choose Inspect or Update for ordinary tracker operations. For configured backlog classification,

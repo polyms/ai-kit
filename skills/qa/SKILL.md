@@ -6,6 +6,8 @@ description: Derive test coverage from requirements and assess manual QA, UAT an
 
 # QA
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
 
 For browser journey automation, flaky tests, sharding or suite CI health, read [E2E automation](e2e-workflow.md). Legacy e2e selects this branch. Keep feature TDD under dev and incident/build diagnosis under devops. A test plan is not test execution.

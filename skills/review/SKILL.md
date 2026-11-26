@@ -6,6 +6,8 @@ description: Challenge product requirements, business decisions, delivery plans 
 
 # Review
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
 
 Choose artifact review for documents and proposals, or [three-axis source-code review](code-review-workflow.md) for PRs and diffs. Legacy code-review selects the latter. Do not apply the generic prose checklist as a substitute for Standards, Spec and Simplify.

@@ -39,7 +39,7 @@ workspace. A cloud sandbox is not necessarily a checkout; a connector is not nec
   policy. Reconcile ambiguous outcomes before retrying; never fall through to another write tool
   blindly. Draft, publication, actual test evidence and human approval are distinct.
 - Setup, craft and build-feature-map retain explicit invocation; respect native manual-only policies
-  for align, reqs, design and docs. A canonical skill may select a relevant reference branch without
+  for reqs, design and docs. Alignment branches are model-invocable when materially required; do not start a full interactive grill without a relevant request. A canonical skill may select a relevant reference branch without
   automatically invoking a second skill. Lean publication, slice creation, triage mutations, ADR writes,
   architecture refactors, implementation and deployment require their original evidence and approval
   gates. Reading references or relatedSkills is not invocation or authorization.
