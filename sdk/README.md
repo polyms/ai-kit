@@ -58,6 +58,11 @@ For installation, configure the consuming repository's npm scope:
 pnpm add @polyms/ai-kit-sdk
 ```
 
+For an **on-demand read-only delivery check**, use the [release and consumer
+verification runbook](../docs/quality/release-consumer-verification.md). Its SDK
+reference consumer uses the local workspace build, not Astra's deployed SDK:
+a separate consumer-side receipt is required before claiming Astra compatibility.
+
 The latest catalog is refreshed on demand after 30 minutes by default; override with `latestTtlMs`.
 Pinned bundles remain cached until eviction or explicit clearing.
 
