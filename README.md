@@ -21,7 +21,9 @@ After deploying AI Kit, ask your connected AI client: **"Check AI Kit
 production, verify skill release 0.3.5 and Astra compatibility."**
 
 The `get_release_info` MCP tool reports configured immutable skill release
-metadata, with optional bounded public HTTP verification (`checkHttp=true`).
+metadata, with a requested-version guard (`expectedVersion="0.3.5"`) and
+optional public HTTP verification (`checkHttp=true`). A version mismatch fails
+closed, and `latest` and pinned catalog metadata must match completely.
 Combine it with `server_info` and `get_skill_pack` to distinguish the
 deployed MCP commit, immutable release and mutable main-branch content.
 Checks report **Passed / Failed / Unverified** with provenance.
