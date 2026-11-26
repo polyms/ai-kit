@@ -484,5 +484,140 @@
       "Do not silently force Polyms UI Kit into the draft implementation.",
       "No invented repo facts or external writes."
     ]
+  },
+  {
+    "id": "CP-22",
+    "recipe": null,
+    "prompt": "Decisions and scope are already approved, but a test seam and an open failure-recovery question remain unconfirmed. Synthesize a lean PRD from these decisions. Draft only; no tracker writes.",
+    "requiredSkills": [
+      "reqs"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Preserve approved scope, prioritized stories and test-seam alternatives; surface the open question and proposed options without another discovery interview."
+    ],
+    "hardGates": [
+      "Never imply seam or deferral approval; do not publish or mirror."
+    ]
+  },
+  {
+    "id": "CP-23",
+    "recipe": null,
+    "prompt": "Approved PRD has P0 invite creation and invalid-email rejection, P1 resend. Design tracer-bullet vertical slices with dependencies; no publishing.",
+    "requiredSkills": [
+      "task"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Independently verifiable slices, P0-first, prefactoring if needed, stable source IDs and blocker order; preserve parent."
+    ],
+    "hardGates": [
+      "No new business requirements, fake issue IDs or tracker writes; approval remains pending."
+    ]
+  },
+  {
+    "id": "CP-24",
+    "recipe": null,
+    "prompt": "Triage issue #42 and external PR #43; project permits external PR triage. No reporter repro, no executable workspace or label mapping. Recommend outcomes only.",
+    "requiredSkills": [
+      "track"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Distinct issue/PR verification status, redundancy/prior rejection evidence gaps, needs-info notes and no assumed label mapping."
+    ],
+    "hardGates": [
+      "No closure, labels, comments, out-of-scope mutation or claimed reproduction."
+    ]
+  },
+  {
+    "id": "CP-25",
+    "recipe": null,
+    "prompt": "Delegated run: a domain term is ambiguous, one approved ADR exists, no interactive decision owner or write route. Recommend alignment.",
+    "requiredSkills": [
+      "align"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Respect ADR, propose a single material decision with lettered options, explain unresolved glossary delta."
+    ],
+    "hardGates": [
+      "No invented domain approval, no claimed CONTEXT.md write or interview loop."
+    ]
+  },
+  {
+    "id": "CP-26",
+    "recipe": null,
+    "prompt": "Review architecture for shallow modules. Supplied source excerpts are limited; propose deepening candidates, do not modify code.",
+    "requiredSkills": [
+      "arch"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Evidence-grounded seams, leverage/locality, candidate alternatives, testability and limitations; no fake visual file."
+    ],
+    "hardGates": [
+      "No implementation, unapproved ADR or invented source inspection."
+    ]
+  },
+  {
+    "id": "CP-27",
+    "recipe": null,
+    "prompt": "A new screen request has no PRD or design and no accessible repository or test execution. Draft feature preparation only.",
+    "requiredSkills": [
+      "dev"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "State assumptions, identify material blocking forks, propose lean PRD/UI packet and ADR only if justified."
+    ],
+    "hardGates": [
+      "No fabricated codebase patterns, principal delegation, implementation or tests."
+    ]
+  },
+  {
+    "id": "CP-28",
+    "recipe": null,
+    "prompt": "Analyze Playwright flake and proposed sharding. Supplied CI log is from an older revision; no test execution tool.",
+    "requiredSkills": [
+      "qa"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Separate current/older evidence, signal-based waits and isolation, proposed journey/CI verification plan."
+    ],
+    "hardGates": [
+      "No green claim, fake rerun, or release approval."
+    ]
+  },
+  {
+    "id": "CP-29",
+    "recipe": null,
+    "prompt": "Review a partial PR patch for Standards, Spec and Simplify. Spec unavailable, no subagent tools. Draft findings only.",
+    "requiredSkills": [
+      "review"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Separate axes, skip unavailable Spec with reason, ground findings in supplied diff and disclose partial coverage and inline isolation."
+    ],
+    "hardGates": [
+      "No invented source/spec, tests, PR comments or merge approval."
+    ]
+  },
+  {
+    "id": "CP-30",
+    "recipe": null,
+    "prompt": "Configure an existing GitHub project for a connector-only host; target repository confirmed, GitHub MCP read available, gh unavailable, write route unverified. Only draft execution profile changes.",
+    "requiredSkills": [
+      "setup"
+    ],
+    "skipSkills": [],
+    "criteria": [
+      "Separate canonical source from access route, preferred/fallback operations, write policy and actual read verification; preserve other setup choices."
+    ],
+    "hardGates": [
+      "No sample mutation, credential changes, installed tools or claim of write access."
+    ]
   }
 ]

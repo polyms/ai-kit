@@ -342,7 +342,7 @@ _Avoid_: domain design, terminology session
 ## Triage
 
 **Triage role**:
-A canonical label role in the triage state machine — either a **state** (`needs-triage`, `ready-for-agent`, …) or **category** (`bug`, `enhancement`). Mapped to tracker label strings in `docs/agents/track-labels.md`.
+A canonical label role in the triage state machine — either a **state** (`needs-triage`, `ready-for-agent`, …) or **category** (`bug`, `enhancement`). Mapped to tracker label strings in `docs/agents/triage-labels.md`.
 _Avoid_: label, tag (when meaning triage roles specifically)
 
 **Agent brief**:

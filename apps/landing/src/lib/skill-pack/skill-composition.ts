@@ -175,7 +175,7 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
     ],
     accepts: ['context', 'evidence', 'decision', 'review-findings', 'requirements'],
     produces: ['requirements', 'change-receipt'],
-    readyWhen: 'Scope, rules and acceptance criteria are traceable; unresolved decisions are explicit.',
+    readyWhen: 'Scope, rules, acceptance and lean synthesis gates are traceable; actual publication and mirror status are explicit.',
   },
   design: {
     knowledge: [
@@ -318,7 +318,7 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       { key: 'constraints', importance: 'recommended', description: 'Workflow rules and requested filters.' },
     ],
     accepts: ['context', 'work-item', 'defect', 'tracker-snapshot', 'delivery-plan'],
-    produces: ['tracker-snapshot', 'change-receipt'],
+    produces: ['tracker-snapshot', 'change-receipt', 'review-findings'],
     readyWhen:
       'Targets and current fields are resolved; requested changes and verification are reported separately.',
   },
@@ -510,7 +510,7 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       'release-readiness',
     ],
     produces: ['review-findings'],
-    readyWhen: 'Findings have evidence, severity, impact and actionable fixes; review is not approval.',
+    readyWhen: 'Artifact or Standards/Spec/Simplify code findings have evidence, severity, impact and actionable fixes; review is not approval.',
   },
   release: {
     knowledge: [

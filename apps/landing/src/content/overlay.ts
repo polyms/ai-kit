@@ -156,15 +156,15 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Agree on the plan before you build — grill decisions one question at a time, sharpen domain words, update CONTEXT.md as you go.',
       vi: 'Thống nhất kế hoạch trước khi code — hỏi xoáy từng câu một, chốt từ domain, cập nhật CONTEXT.md ngay trong lúc làm.',
     },
-    invocation: 'user',
+    invocation: 'model',
     domain: 'alignment',
     samplePrompt: {
       en: '/align\n\nGrill the plan for [feature].',
       vi: '/align\n\nGrill kế hoạch [feature].',
     },
     footnote: {
-      en: 'Uses align-loop and domain-modeling under the hood (model-invoked). The grill stays in this chat — no subagent.',
-      vi: 'Dùng align-loop và domain-modeling bên dưới (agent tự gọi). Hỏi xoáy diễn ra ngay trong chat này — không tách subagent.',
+      en: 'Uses decision-loop and domain-modeling references; interactive grilling stays in the conversation, while delegated work returns blockers.',
+      vi: 'Dùng workflow làm rõ quyết định và mô hình domain; phiên tự động trả về câu hỏi còn vướng.',
     },
     githubPath: 'skills/align/',
     summary: {
@@ -234,7 +234,7 @@ export const skillOverlays: SkillOverlay[] = [
     invoke: '/reqs',
     slug: 'reqs',
     description: {
-      en: 'Requirements work — discovery, enterprise PRD, user stories, acceptance criteria, scope, and prioritization. Does not publish to the tracker.',
+      en: 'Requirements work — discovery, enterprise PRD, user stories, acceptance criteria, scope, and prioritization. Publishes only through the explicitly authorized lean PRD branch.',
       vi: 'Làm yêu cầu sản phẩm — khám phá, PRD đầy đủ, user story, tiêu chí chấp nhận, phạm vi, và ưu tiên. Không xuất bản lên tracker.',
     },
     invocation: 'user',
@@ -266,7 +266,7 @@ export const skillOverlays: SkillOverlay[] = [
       },
     },
     boundaries: {
-      en: 'Does not publish a lean PRD from chat — that is `/reqs`. Does not design UI layout — that is `/design`.',
+      en: 'Lean PRD publication requires the explicit publish intent and approval gates. Does not design UI layout — that is `/design`.',
       vi: 'Không xuất bản PRD gọn từ chat — việc đó của `/reqs`. Không thiết kế layout UI — đó là `/design`.',
     },
     prerequisites: [
@@ -293,8 +293,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Rà PRD đầy đủ / story trong chat — điền hoặc đánh `[NEEDS CLARIFICATION]`.',
       },
       {
-        en: 'When ready to publish a lean tracker PRD, invoke `/reqs` (not `/reqs` again).',
-        vi: 'Khi sẵn sàng publish PRD gọn lên tracker, gọi `/reqs` (không gọi `/reqs` lại).',
+        en: 'When ready, request the lean PRD publication branch of `/reqs`; do not repeat discovery.',
+        vi: 'Khi sẵn sàng, yêu cầu nhánh publish PRD gọn của `/reqs`; không hỏi lại phần đã thống nhất.',
       },
     ],
     doneWhen: {
@@ -303,7 +303,7 @@ export const skillOverlays: SkillOverlay[] = [
     },
     tips: [
       {
-        en: '`/reqs` drafts; `/reqs` publishes. Do not expect `/reqs` to create a tracker issue.',
+        en: '`/reqs` drafts by default. Explicit publication uses the lean workflow and mapped tracker policy.',
         vi: '`/reqs` soạn thảo; `/reqs` xuất bản. Đừng kỳ vọng `/reqs` tạo issue trên tracker.',
       },
       {
@@ -647,8 +647,8 @@ export const skillOverlays: SkillOverlay[] = [
       },
     },
     boundaries: {
-      en: 'Not visual UI design. Not the arch-refactor maintenance scan.',
-      vi: 'Không phải thiết kế giao diện. Cũng không phải vòng quét bảo trì của arch-refactor.',
+      en: 'Not visual UI design; the refactor assessment branch proposes changes without implementing them.',
+      vi: 'Không phải thiết kế giao diện; nhánh đánh giá refactor chỉ đề xuất, không tự triển khai.',
     },
     prerequisites: [
       {

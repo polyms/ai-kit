@@ -60,7 +60,7 @@ Deploy/CI/infra **incident**, stack-combo **design**, and **toolchain** recipes 
 
 ### Triage labels
 
-Canonical roles mapped to tracker labels. See `docs/agents/track-labels.md`.
+Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Pipeline
 

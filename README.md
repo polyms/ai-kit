@@ -430,7 +430,7 @@ Show me what needs attention.
 Phân loại issue #42 — verify và viết agent brief.
 ```
 
-Categorises (`bug` / `enhancement`), verifies claims, grills via `align` + `align` when needed, writes agent briefs, manages `.out-of-scope/`. Issues reaching `ready-for-agent` hand off to `/dev`. Complements `/task` — triage processes inbound backlog; `/task` creates slices from specs. See [agent-brief.md](skills/track/agent-brief.md) and [triage-labels.md](docs/agents/track-labels.md).
+Categorises (`bug` / `enhancement`), verifies claims, grills via `align` + `align` when needed, writes agent briefs, manages `.out-of-scope/`. Issues reaching `ready-for-agent` hand off to `/dev`. Complements `/task` — triage processes inbound backlog; `/task` creates slices from specs. See [agent-brief.md](skills/track/agent-brief.md) and [triage-labels.md](docs/agents/triage-labels.md).
 
 ### `/craft` — Writing Great Skills
 

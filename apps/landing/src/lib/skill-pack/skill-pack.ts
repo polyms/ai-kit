@@ -145,6 +145,8 @@ export const ENGINEERING_SKILL_PATHS = {
     'skills/dev/inference-brief.md',
     'docs/agents/knowledge.md',
     'docs/agents/invocation.md',
+    'skills/design/SKILL.md',
+    'skills/design/design-spec-template.md',
     'skills/design/PREFLIGHT.md',
     'skills/design/REDESIGN.md',
     'skills/design/ANTI-SLOP.md',
@@ -185,7 +187,7 @@ export const WORK_REFERENCE_PATHS: Partial<Record<WorkSkillName, readonly string
   task: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
   track: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'skills/align/GRILL-FORMAT.md'],
   review: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
-  qa: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'docs/agents/invocation.md', 'skills/dev/visual-ship.md', ...DESIGN_SKILL_PATHS.filter(path => !path.endsWith('/SKILL.md'))],
+  qa: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'docs/agents/invocation.md', 'skills/dev/visual-ship.md', ...DESIGN_SKILL_PATHS],
 }
 export type SkillPackName = 'reqs' | 'design' | WorkSkillName | EngineeringSkillName
 

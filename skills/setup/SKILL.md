@@ -24,7 +24,7 @@ installation, symlinks and voice are optional local-client steps, not requiremen
 For Codex/Copilot, apply the client compatibility guide's **Files and project setup**
 branch throughout this process. It adds `AGENTS.md` discovery and opt-in voice pointers
 to the outputs below. Include those files in the draft and completion check. The legacy
-single-config-file rule below applies to Cursor/Claude-only setup. The feature map
+single-config-file rule below applies to Cursor/Claude-only setup. . The feature map
 package is always `.agents/skills/<slug>/`; Cursor and Claude reach it through symlinks.
 See **Feature map publication** in that guide.
 
@@ -332,6 +332,8 @@ Write docs using templates:
   `.agents/skills/<slug>/SKILL.md` (replace `{slug}` in the frontmatter `name`)
 - Feature map index → [../build-feature-map/index-template.md](../build-feature-map/index-template.md)
   at `.agents/skills/<slug>/references/features/README.md` (no area links yet)
+
+**Remote or connector-only setup:** Write the canonical configuration using the approved repository route. Native-client persona and symlinks are optional; if selected but unsupported, report them pending instead of claiming they exist. Never require a local installation for MCP.
 
 **If voice Yes:**
 

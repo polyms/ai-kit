@@ -249,6 +249,32 @@ describe('skill pack MCP tools', () => {
 })
 
 describe('consolidated engineering packs', () => {
+  it('preserves every retired workflow as an allowlisted reference rather than a new skill', async () => {
+    const branches = {
+      'to-prd': 'skills/reqs/lean-prd-workflow.md',
+      'to-issues': 'skills/task/vertical-slicing.md',
+      triage: 'skills/track/triage-workflow.md',
+      'align-loop': 'skills/align/decision-loop.md',
+      'domain-modeling': 'skills/align/domain-modeling.md',
+      'arch-refactor': 'skills/arch/refactor-workflow.md',
+      collab: 'skills/dev/feature-preparation.md',
+      e2e: 'skills/qa/e2e-workflow.md',
+      'code-review': 'skills/review/code-review-workflow.md',
+    }
+    for (const [alias, path] of Object.entries(branches)) {
+      const pack = getSkillPack(alias)!
+      expect(pack.files.map(file => file.path)).toContain(path)
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Selected branch'))
+      const result = await executeGetSkillPack(alias, fetchFile, [path])
+      expect(result.isError).toBeUndefined()
+      expect(fetchFile).toHaveBeenCalledTimes(1)
+      expect(fetchFile.mock.calls[0]?.[0]).toBe(skillPackRawUrl(path))
+      const body = JSON.parse(result.content[0]!.text)
+      expect(body.requestedName).toBe(alias)
+      expect(body.files.find((file: { path: string }) => file.path === path).content).toBe('# Selected branch')
+    }
+  })
+
   it('lists exactly the canonical native skill entries and resolves retired names without duplicate catalog entries', async () => {
     const names = listSkillPacks().map(pack => pack.name)
     expect(names).toHaveLength(20)

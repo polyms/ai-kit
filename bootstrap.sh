@@ -37,6 +37,20 @@ fi
 
 if [ "$TARGET" = all ] || [ "$TARGET" = claude ]; then
   mkdir -p "$CLAUDE/skills" "$CLAUDE/agents"
+  for name in to-prd to-issues triage align-loop domain-modeling arch-refactor collab e2e code-review; do
+    target="$CLAUDE/skills/$name"
+    if [ -L "$target" ]; then
+      link="$(readlink "$target")"
+      if [ "${link%/}" = "$REPO/skills/$name" ]; then
+        backup="$CLAUDE/ai-kit-backups/skills"
+        mkdir -p "$backup"
+        dest="$backup/$name.bak"
+        i=1
+        while [ -e "$dest" ] || [ -L "$dest" ]; do dest="$backup/$name.bak.$i"; i=$((i+1)); done
+        mv "$target" "$dest"
+      fi
+    fi
+  done
   for skill in "$REPO"/skills/*/; do
     [ -f "$skill/SKILL.md" ] || continue
     name="$(basename "$skill")"

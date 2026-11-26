@@ -222,14 +222,15 @@
   },
   {
     "id": "RT-18",
-    "kind": "Skip",
+    "kind": "Route",
     "prompt": "Review this TypeScript function for bugs and complexity.",
-    "expected": [],
+    "expected": [
+      "review"
+    ],
     "avoid": [
-      "review",
       "bug"
     ],
-    "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
+    "notes": "Code review is the source-review branch of review."
   },
   {
     "id": "RT-19",
@@ -621,5 +622,77 @@
     ],
     "avoid": [],
     "notes": "Select only canonical skill, relevant branch and authorized execution."
+  },
+  {
+    "id": "RT-52",
+    "kind": "Route",
+    "prompt": "Review PR #123 in GitHub; no document review and no code modifications.",
+    "expected": [
+      "review"
+    ],
+    "avoid": [
+      "qa",
+      "dev"
+    ],
+    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+  },
+  {
+    "id": "RT-53",
+    "kind": "Route",
+    "prompt": "Diagnose Playwright CI flake; no changes yet.",
+    "expected": [
+      "qa"
+    ],
+    "avoid": [
+      "devops",
+      "dev"
+    ],
+    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+  },
+  {
+    "id": "RT-54",
+    "kind": "Route",
+    "prompt": "Implement a small approved fix from the existing spec.",
+    "expected": [
+      "dev"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
+    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+  },
+  {
+    "id": "RT-55",
+    "kind": "Route",
+    "prompt": "Evaluate module deepening candidates only, no edits.",
+    "expected": [
+      "arch"
+    ],
+    "avoid": [],
+    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+  },
+  {
+    "id": "RT-56",
+    "kind": "Route",
+    "prompt": "New CRUD page, no spec yet, prepare the packet without publication.",
+    "expected": [
+      "dev"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
+    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+  },
+  {
+    "id": "RT-57",
+    "kind": "Route",
+    "prompt": "Resolve a domain term without interviewing about an unrelated feature.",
+    "expected": [
+      "align"
+    ],
+    "avoid": [],
+    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
   }
 ]

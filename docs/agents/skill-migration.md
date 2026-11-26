@@ -40,3 +40,7 @@ the host selects real tools and permissions. No new runtime, adapter or automati
 Existing local installations should rerun bootstrap or reinstall canonical skills. Remove old copies
 only when they are known to belong to AI Kit, not personal user skills. Do not silently execute a
 legacy write workflow from a read-only request.
+
+The legacy template-only directories may temporarily remain to keep existing mutable-main consumers
+and old local documentation links working; they contain no SKILL.md and do not participate in routing.
+Canonical templates and workflow authoring live in the receiving skill directories.
