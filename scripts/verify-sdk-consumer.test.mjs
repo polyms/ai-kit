@@ -10,11 +10,11 @@ const snapshot = JSON.parse(readFileSync(new URL(
 const release = snapshot.releases[snapshot.latest].catalog
 const meta = { version: release.version, revision: release.revision }
 
-function mockFetch({ missingGuard = false, staleCatalog = false, leakReference = false } = {}) {
+function mockFetch({ missingGuard = false, staleCatalog = false, missingReference = false } = {}) {
   const project = (bundle, paths) => ({
     ...bundle,
     files: bundle.files.map(file => {
-      if (!paths.includes(file.path) && !leakReference)
+      if (!paths.includes(file.path) || (missingReference && file.path === 'docs/agents/memory-protocol.md'))
         return { path: file.path, rawUrl: file.rawUrl }
       if (missingGuard && file.path === 'docs/agents/context-contract.md')
         return { ...file, content: file.content.replace(
@@ -70,6 +70,6 @@ test('rejects absent QA environment separation instructions', async () => {
   await assert.rejects(run({ missingGuard: true }), /Missing environment separation guard/)
 })
 
-test('rejects exact-path retrieval that leaks unrelated file bodies', async () => {
-  await assert.rejects(run({ leakReference: true }), /Exact-path selection loaded unrelated content/)
+test('rejects incomplete exact-path retrieval', async () => {
+  await assert.rejects(run({ missingReference: true }), /Incomplete skill bundle/)
 })
