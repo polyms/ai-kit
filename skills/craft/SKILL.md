@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Use the target project execution profile for read/write/test routes. For delegated hosts, return a proposed patch or branch/PR when authorized; do not claim unrun checks.
+
 Adapted from [Matt Pocock's `writing-great-skills`](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills). A skill wrangles determinism out of a stochastic system. **Predictability** — same _process_ every run, not same output — is the root virtue.
 
 **Bold terms** are defined in [glossary.md](glossary.md).

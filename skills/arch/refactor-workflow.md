@@ -4,7 +4,7 @@
 
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
 
-**Maintenance skill** — outside the daily ship pipeline (`/align` → … → `/code-review`). Complements `/align` (product alignment) and `/dev` (implementation).
+**Maintenance skill** — outside the daily ship pipeline (`/align` → … → `/review`). Complements `/align` (product alignment) and `/dev` (implementation).
 
 This command is _informed_ by the project's domain model and built on shared design vocabulary:
 
@@ -38,7 +38,7 @@ MCP — [knowledge.md](../../docs/agents/knowledge.md):
 3. Follow with **`search_knowledge`** (`intent: "design"`) before inventing module conventions when
    coverage reports a hit.
 
-Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid
+Then explore the relevant codebase through the actual authorized host tools; delegate exploration when supported, otherwise inspect directly and disclose reduced isolation. Don't follow rigid
 heuristics — explore organically and note where you experience friction:
 
 - Where does understanding one concept require bouncing between many small modules?
@@ -77,7 +77,7 @@ Once the user picks a candidate, run **the align decision loop** with **the alig
 Run **the align domain workflow** inline as terms resolve.
 
 - **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.
-- **Want to explore alternative interfaces for the deepened module?** Use **`arch`** design-it-twice (parallel sub-agents).
+- **Want to explore alternative interfaces for the deepened module?** Use **`arch`** design-it-twice (parallel sub-agents when available, otherwise separate independent passes).
 
 **Completion criterion:** Decision tree resolved for chosen candidate, or explicit handoff (typically `/dev` to implement deepening).
 

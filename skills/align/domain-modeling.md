@@ -62,7 +62,7 @@ If any condition is missing, skip the ADR. Use the adr-format guide in `setup`.
 
 ## During align-loop
 
-When `/align`, `/triage`, or `/arch-refactor` runs align-loop, stay active for the **whole session** — not only when the user says "domain":
+When `/align`, `/track`, or `/arch` runs align-loop, stay active for the **whole session** — not only when the user says "domain":
 
 - Challenge overloaded terms **in the grill question itself** before offering lettered options
 - Invent concrete edge-case scenarios as lettered options when domain boundaries are fuzzy (see [GRILL-FORMAT.md](GRILL-FORMAT.md))

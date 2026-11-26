@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve canonical map ownership, target revision and write route from the execution profile. A connector-only host may author the canonical package through approved repository writes; only create native-client symlinks when required and supported. Otherwise mark discovery setup pending. If no write route exists, return a proposed map and exact files; never claim publication or harness execution.
+
 Write and keep a **repo-local** skill that routes behavior questions to one file. This kit skill
 holds the playbook and the templates. It does not hold the map.
 
@@ -101,13 +103,12 @@ Cursor package → [Layout](#layout) before writing files.
    [index-template.md](index-template.md) with the areas in sweep order. Ask once for a harness
    command; record `none` when there is no command.
 5. Write `docs/agents/feature-map.md` from [pointer-template.md](pointer-template.md), replacing
-   `{slug}`. Create the Cursor and Claude symlinks in [Layout](#layout).
+   `{slug}`. Create the Cursor and Claude symlinks in [Layout](#layout) only for configured local clients with a supported route; otherwise record not applicable or pending.
 
 **Completion criterion:** Pointer `Skill` line is `.agents/skills/<slug>/SKILL.md`; index lists one
 to three area links; each area file has the four H2s; repo `SKILL.md` routes to
 `references/features/`; no `{slug}` remains; `agents/openai.yaml` disables implicit invocation;
-slug is not `build-feature-map`; `.cursor/skills/<slug>` and `.claude/skills/<slug>` are symlinks
-to the `.agents` package.
+slug is not `build-feature-map`; required configured client links are verified, or explicitly pending/not applicable; the canonical package and pointer are verified.
 
 Tell the user the keep rule: the next UI change that touches an area updates that one file in the
 same PR. A later audit is `/build-feature-map` on the Maintain branch.
@@ -149,7 +150,7 @@ added (none when `journeys.md` already existed); other area files were not rewri
 End with `## Next Step` — one preferred skill:
 
 - A product slice is in progress → `→ /dev`
-- This session just walked a journey → `→ /e2e`
+- This session just walked a journey → `→ /qa`
 - Neither → state the map path and stop
 
 ## Agent
@@ -159,4 +160,4 @@ Use the tester to [task]
 ```
 
 The agent reads this skill when the task is building or repairing the map. Journey flake and CI
-sharding stay on `/e2e`.
+sharding stay on `/qa`.

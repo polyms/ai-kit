@@ -46,11 +46,11 @@ revision. Without execution capability, provide diagnosis and test plan only; ne
 2. Prefer **await signal** (role, network idle of known request, test-id) over fixed sleeps
 3. Isolate shared state (unique user/db, no cross-test globals)
 4. Quarantine only with owner + issue link; do not silent-skip forever
-5. Re-run locally and in CI; document repro
+5. Re-run in the matching workspace and CI when available; otherwise verify the available matching test evidence and disclose missing execution; document repro
 
 **Completion criterion:** Flake reproduced then fixed, or quarantined with owner; sleep-based
 “fixes” rejected unless justified as last resort; gate-deciding suite/CI command re-run on
-disk before claiming green ([invocation.md](../../docs/agents/invocation.md)
+matching workspace or authorized matching CI evidence before claiming green ([invocation.md](../../docs/agents/invocation.md)
 **Verification after delegation**).
 
 ## Parallelize Workflow
@@ -79,8 +79,7 @@ disk before claiming green ([invocation.md](../../docs/agents/invocation.md)
    this session explores as usual, and `/build-feature-map` lets later sessions open one file
    instead. Then finish this journey.
 
-**Completion criterion:** Journey green locally + CI path noted (disk exit code, not a nested
-agent summary); out-of-scope journeys listed. If the index has no areas and the map is not
+**Completion criterion:** Journey green only on actual matching workspace or CI evidence (exit code/logs, not a nested agent summary); out-of-scope journeys listed. If the index has no areas and the map is not
 declined, `## Next Step` is `→ /build-feature-map`.
 
 ## Triage Workflow
@@ -98,7 +97,7 @@ declined, `## Next Step` is `→ /build-feature-map`.
 
 ## Agent
 
-Skill folder is `e2e`; long sessions use **`tester`** (skill id ≠ agent id by design — principal
+Skill folder is `qa`; long sessions use **`tester`** (skill id ≠ agent id by design — principal
 tester owns this skill):
 
 ```

@@ -17,7 +17,7 @@ Review all three axes independently. Prefer parallel sub-agents when supported; 
 separate checklist passes in the host and disclose missing isolation. Aggregate without merging axes.
 
 **Issue fetch (soft):** If `docs/agents/issue-tracker.md` exists, follow it for
-`gh issue view` / `gh pr view`. If missing, use `gh` directly — no `/setup` gate unless
+`gh issue view` / `gh pr view`. If missing, use an available authorized tracker route to the same source — no `/setup` gate unless
 you need to publish or write to the tracker.
 
 ## Process
@@ -156,7 +156,7 @@ _within each axis_ (if any), stated as a plain sentence — not a re-paste of th
 sub-agent's shorthand. Don't pick a single winner across axes. Then run **6. Handoff**.
 
 **Completion criterion:** Each run axis under its heading (`## Spec` states **no spec
-available** when skipped); every finding rewritten as a full Vietnamese sentence with no
+available** when skipped); every finding rewritten as a full sentence in the requested/project language with no
 bare jargon tags; every finding tagged; severity legend stated once; per-axis totals by
 severity and worst issue stated in prose. Step 6 has run.
 
