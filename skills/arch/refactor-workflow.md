@@ -1,9 +1,3 @@
----
-name: arch-refactor
-description: Scan codebase for deepening opportunities, present visual HTML report, then grill the candidate you pick. Invoke with /arch-refactor, architecture review, refactor architecture, rà soát kiến trúc, refactor kiến trúc, cải thiện kiến trúc code.
-disable-model-invocation: true
----
-
 # Arch Refactor
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
@@ -25,8 +19,8 @@ This command is _informed_ by the project's domain model and built on shared des
 | HTML report     | [HTML-REPORT.md](HTML-REPORT.md) — scaffold, diagrams, tone                           |
 | Domain glossary | `CONTEXT.md` at repo root                                                             |
 | ADRs            | `docs/adr/` — decisions in the area you are touching                                  |
-| Grill           | `align-loop` skill — one question, lettered options + `(Recommended)` (model-invoked) |
-| Domain terms    | `domain-modeling` skill — update `CONTEXT.md` inline                                  |
+| Grill           | the align decision loop skill — one question, lettered options + `(Recommended)` (model-invoked) |
+| Domain terms    | the align domain workflow skill — update `CONTEXT.md` inline                                  |
 
 ## Process
 
@@ -59,6 +53,9 @@ Apply the **deletion test** to anything you suspect is shallow: would deleting i
 
 ### 2. Present candidates as an HTML report
 
+When the host can produce an authorized HTML artifact, use the report template. Otherwise provide the
+same complete report structure in chat as Markdown, with evidence and limitations; do not invent a file.
+
 Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html`. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
 
 Each candidate gets a card with files, problem, solution, benefits, before/after diagram, and recommendation strength (`Strong`, `Worth exploring`, `Speculative`). End with a **Top recommendation** section.
@@ -75,9 +72,9 @@ Do NOT propose interfaces yet. After the file is written, ask the user: "Which o
 
 ### 3. Grilling loop
 
-Once the user picks a candidate, run **`align-loop`** with **`domain-modeling`** to walk the design tree — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive. One question, lettered options + `(Recommended)`; see [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md).
+Once the user picks a candidate, run **the align decision loop** with **the align domain workflow** to walk the design tree — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive. One question, lettered options + `(Recommended)`; see [GRILL-FORMAT.md](../align/GRILL-FORMAT.md).
 
-Run **`domain-modeling`** inline as terms resolve.
+Run **the align domain workflow** inline as terms resolve.
 
 - **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.
 - **Want to explore alternative interfaces for the deepened module?** Use **`arch`** design-it-twice (parallel sub-agents).

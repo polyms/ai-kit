@@ -1,25 +1,14 @@
----
-name: collab
-description: >-
-  Orchestrate principals on one feature prompt into a lean PRD, an ADR only when hard
-  to reverse, and a UI spec when there is a screen. Use for a new feature when the user
-  says build a page, tạo trang mới, add CRUD, or thêm CRUD without naming a skill.
-  Do NOT use when the user named a skill or principal, or asks for a bugfix, review,
-  deploy incident, or docs-only work. Unaccented Vietnamese examples include tao trang moi, them CRUD.
----
-
 # Collab
 
 **Codex / GitHub Copilot:** Apply
 [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
 One feature prompt drives the spec packet. Principals stay in lane; this skill only
-sequences them. It does **not** fire user-invoked skills. It spawns agents, and each
-agent reads its own skill.
+sequences them. It does **not** fire user-invoked skills. Prefer available principal delegation; otherwise execute distinct methodology passes in the host, preserving each gate and disclosing the absence of isolation. The host owns execution; no server-side orchestration.
 
 **Packet:** lean PRD at `docs/prd/<slug>.md`, UI spec at `docs/design/<slug>.md` when the
 feature has a screen, ADR in `docs/adr/` only when the three-part test in
-`domain-modeling` passes. No tracker publish. A blocking fork
+the align domain-modeling workflow passes. No tracker publish. A blocking fork
 is defined only in [inference-brief.md](inference-brief.md).
 
 **Soft setup:** read `CONTEXT.md`, `docs/adr/`, and `docs/agents/language.md` when present.
@@ -45,6 +34,9 @@ the gaps; do not replace the file wholesale. For an ADR, reuse an existing decis
 the same trade-off; otherwise choose the next free `docs/adr/NNNN-*.md` path.
 
 ## Workflow
+
+Use the same authorized workspace/ref or connector evidence for the packet. If actual implementation or
+verification is unavailable, return the proposed packet and blocked handoff, not a shipped feature.
 
 ### 1. Codebase pass
 
@@ -104,11 +96,11 @@ its required sections before treating it as complete.
 
 ### 4. ADR — spawn `techlead` only if the test passes
 
-Run `domain-modeling` to apply its three-part ADR test. Copying an existing CRUD screen fails the
+Run the align domain-modeling workflow to apply its three-part ADR test. Copying an existing CRUD screen fails the
 test — skip the ADR and name which part failed.
 
 When all three pass, spawn **`techlead`** with the decision, the brief, and the ADR path to create
-or resume. This run includes `domain-modeling` (ADR + glossary lines the decision forces) and
+or resume. This run includes the align domain-modeling workflow (ADR + glossary lines the decision forces) and
 `arch` for the seam. Reuse an existing ADR for the same trade-off or use the next free
 `docs/adr/NNNN-*.md`. Do not widen product scope.
 

@@ -1,11 +1,3 @@
----
-name: e2e
-description: End-to-end test automation — Playwright flake, CI parallelization, journey
-  suites, traces. Invoke with /e2e, Playwright flake, stabilize E2E, CI test sharding, test
-  automation, flake CI, làm ổn định E2E, or use tester for long suite work.
-disable-model-invocation: true
----
-
 # E2E — Test Automation
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
@@ -14,14 +6,14 @@ Own the **E2E / browser suite and its CI health** — deterministic journeys, fl
 sharding, traces. Not feature TDD at code seams.
 
 **Boundary vs `/dev`:** `/dev` owns red-green at confirmed **seams** (unit/integration) and
-one-slice visual evidence ([visual-ship.md](../dev/visual-ship.md)). **`/e2e`** owns the
+one-slice visual evidence ([visual-ship.md](../dev/visual-ship.md)). **`/qa` (E2E)** owns the
 harness, long journeys, and CI test jobs — do not replace seam TDD with E2E for every AC.
 
 **Boundary vs `/devops`:** `/devops` owns deploy/build/install Knowledge fixes (symptom →
-cause → fix → verify). **`/e2e`** owns flaky/slow/wrong **test** jobs and Playwright config.
+cause → fix → verify). **`/qa` (E2E)** owns flaky/slow/wrong **test** jobs and Playwright config.
 “No Output Directory” / package install → `/devops`.
 
-**Boundary vs `code-review`:** Pre-merge Standards/Spec/Simplify is `code-review`. Suite
+**Boundary vs `review` (code changes):** Pre-merge Standards/Spec/Simplify is `review` (code changes). Suite
 stability is this skill.
 
 **Feature map:** Read `docs/agents/feature-map.md` when it exists. An area is a markdown link in
@@ -35,6 +27,9 @@ run `/build-feature-map` on this turn. Flake, shard, and triage never hand off t
 No `/setup` gate. Use repo Playwright/Cypress config and CI workflows as source of truth.
 
 ## Quick Router
+
+A remote host may inspect actual CI artifacts or run a supported browser/test tool at the correct
+revision. Without execution capability, provide diagnosis and test plan only; never claim test PASS.
 
 | Intent                         | Workflow                                      |
 | ------------------------------ | --------------------------------------------- |
@@ -95,7 +90,7 @@ declined, `## Next Step` is `→ /build-feature-map`.
 | Class                   | Hand off                        |
 | ----------------------- | ------------------------------- |
 | Product regression      | `/dev` with repro steps         |
-| Flake / harness         | Stay on `/e2e` — Flake workflow |
+| Flake / harness         | Stay on `/qa` (E2E) — Flake workflow |
 | Deploy/build/install    | `/devops`                       |
 | Spec wrong / missing AC | `/reqs`                         |
 
@@ -123,7 +118,7 @@ When/why cues for escalation (not a pasteable menu). End the session with `## Ne
 | Journey walked, no areas, not declined | `/build-feature-map`                           |
 | Deploy/CI infra (non-test)             | `/devops`                                      |
 | Public flows stabilized                | optional `/docs` for tester/contributor how-to |
-| Harness changes on a branch            | `/code-review` when ready for merge            |
+| Harness changes on a branch            | `/review` (code changes) when ready for merge            |
 | Suite green; nothing queued            | ship / done                                    |
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).

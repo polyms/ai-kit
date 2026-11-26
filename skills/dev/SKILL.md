@@ -2,10 +2,14 @@
 name: dev
 description: Fullstack implementation with TDD and disciplined debugging. Use when user mentions /dev,
   implement from spec, fix bug, sửa lỗi, red-green-refactor, test-first, triển khai, or ship from
-  spec. Do NOT start a new page or CRUD that has no PRD and no design spec — that is collab. Unaccented Vietnamese examples include sua loi, trien khai theo spec.
+  spec. Do NOT start a new page or CRUD that has no PRD and no design spec — use the feature-preparation workflow. Unaccented Vietnamese examples include sua loi, trien khai theo spec.
 ---
 
 # Dev — Fullstack Implementation
+
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
+
+For a new feature without a spec packet, select [feature preparation](feature-preparation.md) instead of implementing from invented scope. This branch reuses the existing reqs/design/arch methodologies and authorized handoffs; no automatic external publication. For a bug or an approved spec, use the existing implementation/debug branch.
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
@@ -19,7 +23,7 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
   red-green (Implement step 3b / Debug)
 - Bug / regression → [Debug workflow](#debug-workflow);
   reference: [debug-loop.md](debug-loop.md)
-- Branch / PR review → **`code-review`** (pre-merge gate, not red-green loop)
+- Branch / PR review → **`review` (code changes)** (pre-merge gate, not red-green loop)
 
 ## Implement Workflow
 
@@ -27,24 +31,24 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
 
 ### 0. Spec packet
 
-An explicit `/dev` (or "use developer") wins. Do not hand off to `collab`, even for a new screen with
+An explicit `/dev` (or "use developer") wins. Do not hand off to the feature-preparation workflow, even for a new screen with
 no spec. Read whatever spec exists, record the missing PRD or design spec as one line of assumptions,
 and continue to Orient.
 
 Without an explicit `/dev`, a new screen or CRUD whose PRD or `docs/design/<feature>.md` is missing
-is not this skill. Stop and follow `collab`, which resumes from whichever file exists. Do not write
+is not this skill. Stop and follow the feature-preparation workflow, which resumes from whichever file exists. Do not write
 tests or production code on that turn.
 
-A `collab` packet with no `[NEEDS CLARIFICATION]` and no blocking fork enters here in the same
+A the feature-preparation workflow packet with no `[NEEDS CLARIFICATION]` and no blocking fork enters here in the same
 turn. Do not wait for a second confirm. A packet that still has a blocking marker stays in
-`collab` until that question is answered.
+the feature-preparation workflow until that question is answered.
 
 Any other ask (a field, an endpoint, a refactor, a change to an existing screen) skips this step.
 It needs no PRD or design spec. Go to Orient.
 
 **Completion criterion:** One of: the user typed `/dev` and any missing spec is recorded as
 assumptions; the ask is not a new screen or CRUD; the PRD and design spec are on disk with no
-blocking marker, including a packet `collab` just wrote; or the turn handed off to `collab`
+blocking marker, including a packet the feature-preparation workflow just wrote; or the turn handed off to the feature-preparation workflow
 because a blocking gap remains.
 
 ### 1. Orient
