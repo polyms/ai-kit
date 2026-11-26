@@ -16,13 +16,16 @@ The host should use only tools that are actually connected and available:
 2. Call AI Kit `get_release_info` **without arguments** for the *configured*
    immutable HTTP skill release, revision and supported versions. This step
    makes **no network request**, and is **not HTTP delivery verification**.
-3. Call `get_release_info({ "checkHttp": true, "retiredVersion": "0.3.4" })`
-   for a bounded read-only verification of public HTTP `latest`, pinned
+3. Call `get_release_info({ "expectedVersion": "0.3.5", "checkHttp": true, "retiredVersion": "0.3.4" })`
+   to require the requested release and perform bounded read-only verification of public HTTP `latest`, pinned
    catalog, QA starter, exact Context Contract retrieval and retired
    catalog/API 404. The tool uses a **fixed** destination
    `https://ai-kit.polyms.dev`; the caller cannot supply a URL or token.
-   A failed, timed-out or protected request is reported **Unverified**, never
-   silently treated as Passed. A wrong status or wrong content is **Failed**.
+   If the configured release differs from `expectedVersion`, the check is
+   **Failed** without attempting HTTP. A failed, timed-out or protected request
+   is **Unverified**, never silently treated as Passed. Wrong status/content or
+   differing `latest` and pinned catalog metadata is **Failed**. The catalogs
+   are compared recursively, regardless of JSON object key order.
 4. Optionally use `list_skill_packs` / `get_skill_pack` to read current
    MCP skill bodies and validate specific guidance. **MCP skills use mutable
    `main`**, so this does not prove that immutable HTTP release `0.3.5`
@@ -41,7 +44,7 @@ status that conflates MCP, HTTP, SDK and Astra.
 | --- | --- | --- |
 | `server_info` | MCP deployment commit and server identity | HTTP skill version or SDK dependency |
 | `get_release_info` default | Immutable skill version and revision **configured in the deployed build** | Public HTTP bundle retrieval |
-| `get_release_info` with `checkHttp=true` | Public HTTP identity/QA/Context content from **the MCP server's network perspective** | Independent outside network, Astra SDK/runtime |
+| `get_release_info` with `expectedVersion` and `checkHttp=true` | Requested version and public HTTP identity/QA/Context content from **the MCP server's network perspective** | Independent outside network, Astra SDK/runtime |
 | `get_skill_pack` | Live mutable-`main` MCP content returned to AI client | Immutable SDK release content |
 | Astra `get_issue_template` | Template/methodology retrieval as observed | Installed SDK version, end-to-end Grok flow or approved QA evidence |
 | Consumer-specific diagnostic | Resolved package/runtime release when implemented and read from actual deployment | PM/PO approval or QA confirmation by itself |
@@ -58,7 +61,7 @@ deeper troubleshooting.
 
 PR CI still compiles the SDK and runs deterministic regression tests. It
 covers `get_release_info` configuration, expected/retired HTTP responses,
-stale catalogs, missing QA guidance, restricted network and errors. It also
+stale catalogs, expected-version mismatches, complete latest/pinned metadata drift, missing QA guidance, restricted network and errors. It also
 tests the reference SDK against generated fixtures, including negative cases.
 
 **No manual or scheduled production GitHub Actions job is required** to ask
