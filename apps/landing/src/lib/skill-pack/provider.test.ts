@@ -11,6 +11,17 @@ describe('versioned snapshot provider', () => {
     expect(data.revision).toBe(RELEASES['0.3.5'])
     expect(data.files.filter((file: {content?: string}) => file.content)).toHaveLength(data.starterPaths.length)
   })
+  it('ships 0.3.5 environment-aware context and QA governance in pinned bundles', async () => {
+    const reqs = await (await skillProvider({ name: 'reqs', version: '0.3.5' })).json()
+    const protocol = reqs.files.find((file: { path: string }) => file.path === 'docs/agents/context-contract.md')
+    expect(protocol?.content).toContain('Feature lifecycle and environment-aware context')
+    expect(protocol?.content).toContain('Never substitute Dev evidence for Production')
+    const qa = await (await skillProvider({ name: 'qa', version: '0.3.5' })).json()
+    const workflow = qa.files.find((file: { path: string }) => file.path === 'skills/qa/SKILL.md')
+    expect(workflow?.content).toContain('cannot self-approve')
+    expect(protocol?.rawUrl).toBe(`https://raw.githubusercontent.com/polyms/ai-kit/${reqs.revision}/docs/agents/context-contract.md`)
+    expect((await skillProvider({ version: '0.3.4' })).status).toBe(404)
+  })
   it('retires the experimental skill snapshot', async () => {
     expect((await skillProvider({ version: '0.3.2' })).status).toBe(404)
     expect((await skillProvider({ name: 'plan', version: '0.3.2' })).status).toBe(404)
