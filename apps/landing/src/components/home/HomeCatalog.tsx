@@ -14,7 +14,7 @@ import { HomeSectionChip } from './HomeSectionChip'
 /** Six representative entries per audience; the full catalog remains at /skills. */
 const FEATURED_SKILL_SLUGS = {
   work: ['research', 'business', 'reqs', 'plan', 'qa', 'release'],
-  engineering: ['setup', 'align', 'reqs', 'design', 'dev', 'code-review'],
+  engineering: ['setup', 'align', 'reqs', 'design', 'dev', 'review'],
 } as const
 
 export function HomeCatalog() {

@@ -18,11 +18,11 @@ that outlive the conversation.
 
 Skills that write persistent docs read this file and write in the confirmed language:
 
-- `domain-modeling` — `CONTEXT.md`, glossary entries
-- `reqs`, `to-prd` — PRDs, user stories, acceptance criteria
+- the align domain-modeling workflow — `CONTEXT.md`, glossary entries
+- `reqs`, the reqs lean publication workflow — PRDs, user stories, acceptance criteria
 - `design` — `docs/design/<feature>.md`
 - `arch` — ADRs in `docs/adr/`
-- `to-issues` — issue bodies on the tracker
+- the task vertical-slicing workflow — issue bodies on the tracker
 
 No `docs/agents/language.md`: skills match the language of the existing docs they're editing; if none exist,
 ask the user once and note the answer here.
@@ -48,7 +48,7 @@ canonical domain terms):
 | Keep English                                                          | Translate / rewrite into the confirmed language               |
 | --------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Code, identifiers, paths, env keys, commit subjects                   | Ordinary adjectives, verbs, clauses ("confident")             |
-| Skill invokes and pipeline names (`/reqs`, `/to-prd`, `handoff`)      | Half-English marketing phrases ("living diagram")             |
+| Skill invokes and pipeline names (`/reqs`, `handoff`)      | Half-English marketing phrases ("living diagram")             |
 | Protocols & standards (OAuth, WCAG, HTTP, CI)                         | Soft product description ("information-rich")                 |
 | Product/vendor proper nouns (GitHub, Cursor, Umami)                   | Full English sentences inside confirmed-language body         |
 | Canonical glossary tokens from `CONTEXT.md` (e.g. PRD, ADR, **seam**) | Restating glossary meaning — write that meaning once in prose |

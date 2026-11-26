@@ -172,19 +172,19 @@ export const skillOverlays: SkillOverlay[] = [
       vi: "Làm rõ nhánh quyết định, thuật ngữ domain và ADR; hỏi từng câu khi cần.",
     },
     whenToUse: {
-      en: 'Before `/reqs`, `/reqs`, `/design`, or `/dev` when scope, terms, or trade-offs are still fuzzy.',
-      vi: 'Trước `/reqs`, `/reqs`, `/design`, hoặc `/dev` khi phạm vi, thuật ngữ, hoặc đánh đổi còn mơ hồ.',
+      en: 'Before `/reqs`, `/design`, or `/dev` when scope, terms, or trade-offs are still fuzzy.',
+      vi: 'Trước `/reqs`, `/design`, hoặc `/dev` khi phạm vi, thuật ngữ, hoặc đánh đổi còn mơ hồ.',
     },
     pipeline: {
       upstream: { en: 'Idea or rough plan', vi: 'Ý tưởng hoặc kế hoạch sơ bộ' },
       downstream: {
-        en: '/reqs or /reqs → /design → /dev',
-        vi: '/reqs hoặc /reqs → /design → /dev',
+        en: '/reqs → /design → /dev',
+        vi: '/reqs → /design → /dev',
       },
     },
     boundaries: {
-      en: 'Does not write a PRD — use `/reqs` for a full draft or `/reqs` to publish a lean one. Does not implement code.',
-      vi: 'Không viết PRD — dùng `/reqs` cho bản đầy đủ hoặc `/reqs` để xuất bản bản gọn. Không implement code.',
+      en: 'Does not write a PRD; use the discovery or lean branch of `/reqs`. Does not implement code.',
+      vi: 'Không viết PRD; dùng nhánh khám phá hoặc lean của `/reqs`. Không implement code.',
     },
     prerequisites: [
       {
@@ -210,8 +210,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Để agent cập nhật `CONTEXT.md` với từ vựng chung trong lúc làm.',
       },
       {
-        en: 'When decisions are clear, follow the `## Next Step` cue (`/reqs`, `/reqs`, `/design`, or `/dev`).',
-        vi: 'Khi quyết định đã rõ, làm theo gợi ý `## Next Step` (`/reqs`, `/reqs`, `/design`, hoặc `/dev`).',
+        en: 'When decisions are clear, follow the `## Next Step` cue (`/reqs`, `/design`, or `/dev`).',
+        vi: 'Khi quyết định đã rõ, làm theo gợi ý `## Next Step` (`/reqs`, `/design`, hoặc `/dev`).',
       },
     ],
     doneWhen: {
@@ -304,7 +304,7 @@ export const skillOverlays: SkillOverlay[] = [
     tips: [
       {
         en: '`/reqs` drafts by default. Explicit publication uses the lean workflow and mapped tracker policy.',
-        vi: '`/reqs` soạn thảo; `/reqs` xuất bản. Đừng kỳ vọng `/reqs` tạo issue trên tracker.',
+        vi: '`/reqs` mặc định soạn nháp; chỉ xuất bản bằng nhánh lean PRD khi được phép.',
       },
       {
         en: 'For deep PM work, ask to use the `pm` agent.',
@@ -343,8 +343,8 @@ export const skillOverlays: SkillOverlay[] = [
     },
     pipeline: {
       upstream: {
-        en: '/align → /reqs or /reqs',
-        vi: '/align → /reqs hoặc /reqs',
+        en: '/align → /reqs',
+        vi: '/align → /reqs',
       },
       downstream: '/dev',
     },

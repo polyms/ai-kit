@@ -32,7 +32,7 @@ a `/ui-kit` invocation to finish the spec.
 
 **Boundary vs `arch`:** `arch` is code module/seam shape — not visual design.
 
-**Upstream:** `/align` → `/reqs` or `/to-prd` → `/to-issues` (optional) → `/design`.
+**Upstream:** `/align` → `/reqs` → `/task` (optional) → `/design`.
 
 **Downstream:** `/dev` implements from `docs/design/<feature>.md` using the selected project UI stack.
 
@@ -87,10 +87,10 @@ this feature must satisfy.
 When the project uses Polyms UI Kit, selectively load its optional component
 references; otherwise use existing project components or neutral semantic roles.
 Do not ask the user to install or invoke `/ui-kit`. The existing brief-confirmation
-rules, including the `collab` exception, still apply.
+rules, including the the dev feature-preparation workflow exception, still apply.
 
 **Completion criterion:** Brief + theme direction stated; anti-slop rows cited; user corrects or explicitly
-proceeds before step 3, or a `collab` brief already cleared the ask gate.
+proceeds before step 3, or a the dev feature-preparation workflow brief already cleared the ask gate.
 
 ### 3. Draft spec
 
@@ -124,7 +124,7 @@ Run [PREFLIGHT.md](PREFLIGHT.md) honestly. Fix failures before handoff.
 ### 5. Handoff
 
 Summarize what was written (path + feature name). End with `## Next Step` — preferred `→ /dev`.
-Second option only when P0 CSS/visual slices should ship separately via `/to-issues` (one-line
+Second option only when P0 CSS/visual slices should ship separately via `/task` (one-line
 when). Not a flat pipe menu.
 
 **Completion criterion:** Summary delivered; one preferred next skill named (optional second with

@@ -8,7 +8,7 @@ How `/align`, `/reqs`, and `/dev` consume domain documentation.
 - **`CONTEXT-MAP.md`** if multi-context — read each relevant `CONTEXT.md`
 - **`docs/adr/`** — ADRs touching the work area
 
-If files don't exist, proceed silently. `domain-modeling` creates them lazily when terms resolve.
+If files don't exist, proceed silently. the align domain-modeling workflow creates them lazily when terms resolve.
 
 ## File structure
 

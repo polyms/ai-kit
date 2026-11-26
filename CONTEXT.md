@@ -48,7 +48,7 @@ Human types `/name` (e.g. `/align`, `/craft`). Skill has `disable-model-invocati
 _Avoid_: manual, human-only skill
 
 **Model-invoked**:
-Agent reaches the skill via `description` (e.g. `align`, `align`, `dev`). No `disable-model-invocation` flag.
+Agent reaches the skill via `description` (e.g. `align`, `arch`, `dev`). No `disable-model-invocation` flag.
 _Avoid_: auto, automatic, agent-discovered
 
 ## Skills & Agents

@@ -24,7 +24,7 @@ installation, symlinks and voice are optional local-client steps, not requiremen
 For Codex/Copilot, apply the client compatibility guide's **Files and project setup**
 branch throughout this process. It adds `AGENTS.md` discovery and opt-in voice pointers
 to the outputs below. Include those files in the draft and completion check. The legacy
-single-config-file rule below applies to Cursor/Claude-only setup. . The feature map
+single-config-file rule below applies to Cursor/Claude-only setup. The feature map
 package is always `.agents/skills/<slug>/`; Cursor and Claude reach it through symlinks.
 See **Feature map publication** in that guide.
 
@@ -397,8 +397,8 @@ Never write a map package, and never remove an existing map or pointer.
 **Completion criterion:** For full setup, `docs/agents/execution-profile.md` and `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
 `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`,
 `docs/agents/requirements.md`, `docs/agents/stack-profile.md`, and agent config file written; if voice Yes,
-Cursor rule + Claude symlink present; if feature map Yes, pointer + empty skill package with
-`agents/openai.yaml` + Claude and Codex symlinks present, and the generated files contain no `{slug}`;
+Cursor rule and Claude symlink verified if required and supported; if feature map Yes, pointer + empty skill package with
+`agents/openai.yaml` and required configured client links verified; unsupported native links are pending or not applicable, and generated files contain no `{slug}`;
 if feature map No, a declined pointer or the existing pointer is present.
 For Keep existing, the agent config links the actual Skill path and pointer, and existing map
 contents are preserved. For both Yes and Keep existing, the Feature map subsection appears once.

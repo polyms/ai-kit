@@ -7,13 +7,13 @@ Use when onboarding contributors or checking that handoffs stay in lane.
 
 **Ask:** "Build a CRUD user page." No `/reqs`, no `/design`.
 
-`collab` reads the existing user entity and the nearest admin list, copies who-may-mutate from that
+the dev feature-preparation workflow reads the existing user entity and the nearest admin list, copies who-may-mutate from that
 screen, and asks only if a destructive fork is still open (delete vs archive). Then it spawns `pm`
 (lean PRD, no interview), `techlead` only if the three-part ADR test passes, and `designer` for
 `docs/design/<slug>.md`. Packet checked on disk. No blocking marker → follow `/dev` in that
 turn. A still-open fork → ask once and do not implement yet.
 
-Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own interview or confirm.
+Naming `/reqs` or `/design` yourself skips the dev feature-preparation workflow and keeps that skill's own interview or confirm.
 
 ## Scenario
 
@@ -29,11 +29,11 @@ Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own i
 | ------------------- | -------------- | ------------------------------------- | -------------------------------------------------------------------- |
 | Align               | `/align`       | (main chat — no subagent)             | Decision summary: filter is MVP; search URL param; no new CMS schema |
 | Product             | `/reqs`        | `pm`                                  | Enterprise PRD draft (chat; does not publish)                        |
-| Publish             | `/to-prd`      | — (skill, main chat)                  | Lean tracker PRD + ready-for-agent                                   |
-| Issues              | `/to-issues`   | —                                     | Slice issues (UI filter, URL sync, empty state)                      |
+| Publish             | `/reqs`      | — (skill, main chat)                  | Lean tracker PRD + ready-for-agent                                   |
+| Issues              | `/task`   | —                                     | Slice issues (UI filter, URL sync, empty state)                      |
 | Design              | `/design`      | `designer`                            | `docs/design/knowledge-intent-filter.md`                             |
 | Implement           | `/dev`         | `developer`                           | Code + tests at confirmed seams                                      |
-| Review              | `/code-review` | `techlead`                            | Severity-tagged Standards / Spec / Simplify                          |
+| Review              | `/review` | `techlead`                            | Severity-tagged Standards / Spec / Simplify                          |
 | Ops (if deploy red) | `/devops`      | `developer` (exec) / `techlead` (SEV) | Knowledge match → fix → verify                                       |
 
 ## Align (grill)
@@ -42,14 +42,14 @@ Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own i
 **Deferred:** Saved user prefs, analytics events.
 **Not in scope:** New Knowledge authoring UI.
 
-Handoff → `/reqs` (or `/to-prd` if already aligned enough).
+Handoff → `/reqs` (or `/reqs` if already aligned enough).
 
 ## Product
 
 PRD covers: personas (agent authors / ops readers), AC for URL sync and empty state,
 MoSCoW — chips + URL = Must. No implementation code.
 
-Handoff → `/to-issues` then `/design`.
+Handoff → `/task` then `/design`.
 
 ## Design
 
@@ -79,10 +79,10 @@ Example status mid-flight:
 **Next:** failing test for `?intent=design` round-trip
 ```
 
-Handoff → `/code-review`.
+Handoff → `/review`.
 
 Public surface (MCP/API) after ship → optional `/docs` (`techlead`).
-Browser journey flake in CI → `/e2e` (`tester`), not seam TDD.
+Browser journey flake in CI → `/qa` (`tester`), not seam TDD.
 
 ## Code review
 
@@ -98,7 +98,7 @@ If Vercel preview fails "No Output Directory": `/devops` → `search_knowledge` 
 ## Lane discipline (what not to do)
 
 - `developer` does not rewrite PRDs or restyle past design acceptance without `/design`.
-- `pm` does not publish tracker issues (`/to-prd` / `/to-issues` only).
+- `pm` does not publish tracker issues (`/reqs` / `/task` only).
 - `techlead` does not implement product features (`/dev`).
 - `/align` stays in main chat — no subagent grill.
 - Marketing / "whimsy" specialists are **out of kit** — keep principals thin.

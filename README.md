@@ -90,24 +90,36 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ### Catalog
 
-| Invoke               | Name                                                                                                         | Status        | Domain                                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------- |
-| `/setup`             | [`setup`](skills/setup/)                                                                                     | **Available** | Repo config — issue tracker, domain docs, pipeline              |
-| `/align` | [`align`](skills/align/) | **Available** | Decision alignment and domain modeling |
-| `/reqs`              | [`reqs`](skills/reqs/)                                                                                       | **Available** | Discovery, BRD, enterprise PRD, stories (draft by default)      |
-| `/design`            | [`design`](skills/design/)                                                                                   | **Available** | UI spec from PRD — flows, screens, project component map, a11y   |
-| `/dev`               | [`dev`](skills/dev/)                                                                                         | **Available** | Fullstack — TDD, solution ladder, scope self-check, debugging   |
-| `/docs`              | [`docs`](skills/docs/)                                                                                       | **Available** | Business and developer docs — proposals, API ref, tutorials     |
-| `/build-feature-map` | [`build-feature-map`](skills/build-feature-map/)                                                             | **Available** | Author the repo `feature-map` skill (`tester`)                  |
-| `/devops`            | [`devops`](skills/devops/)                                                                                   | **Available** | Deploy/CI incidents — Knowledge retrieval + SEV/post-mortem     |
-| `/craft`             | [`craft`](skills/craft/)                                                                                     | **Available** | Authoring and editing skills — predictability, pruning          |
-| `/arch`              | [`arch`](skills/arch/)                                                                                       | **Available** | Architecture vocabulary — deep modules, seams (model-invoked)   |
+20 canonical skills are available both as native skill entries and live MCP packs. Select the relevant workflow within each skill; actual execution depends on the host.
+
+| Invoke | Scope |
+| --- | --- |
+| [`/align`](skills/align/) | Decision alignment, glossary and ADRs |
+| [`/arch`](skills/arch/) | Architecture design and refactor assessment |
+| [`/bug`](skills/bug/) | Evidence-based defect reports |
+| [`/build-feature-map`](skills/build-feature-map/) | Project-owned behavior map authoring and maintenance |
+| [`/business`](skills/business/) | Commercial and strategic decision analysis |
+| [`/comms`](skills/comms/) | Stakeholder messages and ticket replies |
+| [`/craft`](skills/craft/) | Skill methodology authoring and evaluation |
+| [`/design`](skills/design/) | UI flows, component mapping and specifications |
+| [`/dev`](skills/dev/) | Feature preparation, implementation, TDD and debugging |
+| [`/devops`](skills/devops/) | Deploy, CI and infrastructure incidents |
+| [`/docs`](skills/docs/) | Business and technical documentation |
+| [`/plan`](skills/plan/) | Effort, dependencies, capacity and delivery planning |
+| [`/qa`](skills/qa/) | Functional test design, verification and E2E automation |
+| [`/release`](skills/release/) | Go-live readiness and rollback |
+| [`/reqs`](skills/reqs/) | Discovery, BRD, enterprise/lean PRD and authorized publication |
+| [`/research`](skills/research/) | Evidence-based research |
+| [`/review`](skills/review/) | Artifact critique and Standards/Spec/Simplify source review |
+| [`/setup`](skills/setup/) | Canonical sources, operation routes and project execution policy |
+| [`/task`](skills/task/) | Standard work items and dependency-ordered vertical slicing |
+| [`/track`](skills/track/) | Inspect, update and triage issues/PRs |
 
 Principal agents (`pm`, `designer`, `developer`, `tester`, `techlead`) map to **org roles** — multiple
 skills per agent OK. Use `/craft` when writing or editing any skill.
 
 **Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery
-for model-invoked skills (`align`, `align`, `arch`, `dev`, `review`, `devops`, `dev`).
+for model-invoked skills (`align`, `arch`, `dev`, `review`, `devops`, `qa`, `task`, `track`).
 
 ## Remote skill provider (MCP)
 
@@ -115,21 +127,7 @@ In addition to local installation, MCP-capable clients can connect to `https://a
 with Streamable HTTP and OAuth. Discover available packs via `list_skill_packs` and load workflow,
 templates and references using `get_skill_pack`. The server retrieves Markdown from GitHub main.
 
-| Pack                         | Scope                                                          |
-| ---------------------------- | -------------------------------------------------------------- |
-| [research](skills/research/) | Research briefs and comparative analysis                       |
-| [business](skills/business/) | Business cases, pricing and decision analysis                  |
-| [reqs](skills/reqs/)         | BRD, PRD and user stories                                      |
-| [docs](skills/docs/)         | Business and developer-facing documents                        |
-| [task](skills/task/)         | Human-readable and AI-readable work tickets                    |
-| [bug](skills/bug/)           | Evidence-based defect reports                                  |
-| [design](skills/design/)     | UI specifications and UI Kit references                        |
-| [track](skills/track/)       | Ticket review, status and verified updates                     |
-| [plan](skills/plan/)         | Effort estimates, capacity and delivery plans                  |
-| [qa](skills/qa/)             | Test cases, requirements coverage and QA evidence              |
-| [comms](skills/comms/)       | Client replies, ticket comments and stakeholder communications |
-| [review](skills/review/)     | Artifact review and assumption challenge                       |
-| [release](skills/release/)   | Release readiness, go-live and rollback                        |
+The live MCP exposes the same 20 canonical entries above. No checkout or native install is required to retrieve methodology. The published immutable SDK snapshot has its own release catalog; do not infer its contents from live MCP.
 
 Use the catalog routing hints and `starterPaths` to choose and load the smallest relevant workflow;
 fetch additional exact paths only when needed. `[]` returns the manifest only; omission retains full-pack
@@ -234,7 +232,7 @@ After `/align`, to synthesize and **publish** a lean PRD, invoke `/reqs` and req
 Use the pm to write a PRD for [feature]
 ```
 
-### `/reqs` — Synthesize & Publish PRD
+### `/reqs` — Lean synthesis and authorized publication
 
 When the conversation is aligned and you want the PRD on GitHub — no interview:
 
@@ -269,9 +267,9 @@ Clarify plans and sharpen domain language before specs or code:
 Grill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.
 ```
 
-`/align` (user-invoked) runs **align-loop** + **domain-modeling** together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/reqs`, `/design`, or `/dev`.
+`/align` (when alignment is requested or materially needed) runs the decision-loop and domain-modeling references together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/design`, or `/dev`.
 
-### `/dev` — One prompt, spec packet
+### `/dev` — Feature preparation branch
 
 Model-invoked. A feature ask that names no skill — "build a CRUD user page", "làm trang user" —
 runs a codebase pass, asks at most once when a blocking fork is still open, then spawns `pm`,
@@ -329,7 +327,7 @@ from design spec: [visual-ship.md](skills/dev/visual-ship.md) (evidence log requ
 
 Pipeline walkthrough: [examples/pipeline-feature-walkthrough.md](examples/pipeline-feature-walkthrough.md).
 
-### `/review` — Three-Axis Code Review
+### `/review` — Three-axis source-code branch
 
 Review branch or PR work since a pinned git fixed point — Standards, Spec, and Simplify in parallel:
 
@@ -363,7 +361,7 @@ Write a tutorial: connect Cursor to kit MCP and search Knowledge intent: inciden
 
 See [SKILL.md](skills/docs/SKILL.md).
 
-### `/qa` — Test Automation
+### `/qa` — E2E automation branch
 
 Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Skill
 id **`qa`**; principal agent **`tester`**. Not seam TDD (`/dev`); not deploy Knowledge
@@ -407,7 +405,7 @@ Vercel build failed — No Output Directory named dist.
 
 See [SKILL.md](skills/devops/SKILL.md) and [knowledge.md](docs/agents/knowledge.md).
 
-### `/task` — Spec to GitHub Issues
+### `/task` — Vertical-slicing branch
 
 Break an approved PRD or plan into independently-grabbable vertical-slice issues:
 
@@ -417,9 +415,9 @@ Break an approved PRD or plan into independently-grabbable vertical-slice issues
 Bẻ PRD #42 thành issues — vertical slices, publish lên GitHub.
 ```
 
-After `/reqs` produces a PRD or user stories, `/task` drafts tracer-bullet slices, quizzes you on granularity and dependencies, then publishes to GitHub via `gh` with the `ready-for-agent` label when triage labels are configured. Hands off to `/dev` for the first unblocked slice. See [issue-template.md](skills/task/vertical-slice-template.md).
+After `/reqs` produces a PRD or user stories, `/task` drafts tracer-bullet slices, quizzes you on granularity and dependencies, then publishes through the configured authorized tracker route (GitHub MCP or CLI) with the `ready-for-agent` label when triage labels are configured. Hands off to `/dev` for the first unblocked slice. See [issue-template.md](skills/task/vertical-slice-template.md).
 
-### `/track` — Issue Backlog Triage
+### `/track` — Triage branch
 
 Move raw GitHub issues (and optional external PRs) through a triage state machine:
 
@@ -430,7 +428,7 @@ Show me what needs attention.
 Phân loại issue #42 — verify và viết agent brief.
 ```
 
-Categorises (`bug` / `enhancement`), verifies claims, grills via `align` + `align` when needed, writes agent briefs, manages `.out-of-scope/`. Issues reaching `ready-for-agent` hand off to `/dev`. Complements `/task` — triage processes inbound backlog; `/task` creates slices from specs. See [agent-brief.md](skills/track/agent-brief.md) and [triage-labels.md](docs/agents/triage-labels.md).
+Categorises (`bug` / `enhancement`), verifies claims, grills via the align decision and domain branches when needed, writes agent briefs, manages `.out-of-scope/`. Issues reaching `ready-for-agent` hand off to `/dev`. Complements `/task` — triage processes inbound backlog; `/task` creates slices from specs. See [agent-brief.md](skills/track/agent-brief.md) and [triage-labels.md](docs/agents/triage-labels.md).
 
 ### `/craft` — Writing Great Skills
 
@@ -444,7 +442,7 @@ Review skills/reqs/SKILL.md for sprawl and no-ops.
 
 Covers predictability, invocation, information hierarchy, leading words, and pruning. See [glossary.md](skills/craft/glossary.md).
 
-### `/arch` — Architecture Maintenance
+### `/arch` — Refactor assessment branch
 
 Scan the codebase for deepening opportunities — shallow modules, seam leakage, poor test surfaces:
 
@@ -454,7 +452,7 @@ Scan the codebase for deepening opportunities — shallow modules, seam leakage,
 Rà soát kiến trúc — tìm chỗ deepen module.
 ```
 
-Explores organically, writes a visual HTML report to the OS temp directory (Tailwind + Mermaid), then grills your chosen candidate via `align` + `align`. Uses **`arch`** vocabulary throughout. Hands off to `/dev` when the design is resolved. Maintenance skill — outside the daily ship pipeline.
+Explores organically, writes a visual HTML report to the OS temp directory (Tailwind + Mermaid), then grills your chosen candidate via the align decision and domain branches. Uses **`arch`** vocabulary throughout. Hands off to `/dev` when the design is resolved. Maintenance skill — outside the daily ship pipeline.
 
 ### `/arch` — Architecture Vocabulary
 
@@ -462,135 +460,28 @@ Model-invoked vocabulary for deep modules — seam, depth, leverage, locality, d
 
 ## Repository structure
 
-```
+```text
 ai-kit/
-├── README.md
-├── LICENSE
-├── bootstrap.sh
-├── examples/
-│   ├── README.md
-│   └── pipeline-feature-walkthrough.md
-├── agents/
-│   ├── designer.md
-│   ├── developer.md
-│   ├── pm.md
-│   ├── techlead.md
-│   └── tester.md
-└── skills/
-    ├── align/
-    │   └── SKILL.md
-    ├── align-loop/
-    │   └── SKILL.md
-    ├── arch/
-    │   ├── SKILL.md
-    │   ├── DEEPENING.md
-    │   └── DESIGN-IT-TWICE.md
-    ├── arch-refactor/
-    │   ├── SKILL.md
-    │   └── HTML-REPORT.md
-    ├── craft/
-    │   ├── SKILL.md
-    │   └── glossary.md
-    ├── code-review/
-    │   ├── SKILL.md
-    │   ├── standards-baseline.md
-    │   └── simplify-baseline.md
-    ├── docs/
-    │   ├── SKILL.md
-    │   └── business-doc-template.md
-    ├── research/
-    │   ├── SKILL.md
-    │   └── research-template.md
-    ├── business/
-    │   ├── SKILL.md
-    │   └── business-case-template.md
-    ├── task/
-    │   ├── SKILL.md
-    │   └── task-template.md
-    ├── track/
-    │   ├── SKILL.md
-    │   └── tracking-templates.md
-    ├── plan/
-    │   ├── SKILL.md
-    │   └── delivery-plan-template.md
-    ├── qa/
-    │   ├── SKILL.md
-    │   └── qa-templates.md
-    ├── comms/
-    │   ├── SKILL.md
-    │   └── communication-templates.md
-    ├── review/
-    │   ├── SKILL.md
-    │   └── review-template.md
-    ├── release/
-    │   ├── SKILL.md
-    │   └── release-templates.md
-    ├── bug/
-    │   ├── SKILL.md
-    │   └── bug-template.md
-    ├── domain-modeling/
-    │   └── SKILL.md
-    ├── devops/
-    │   ├── SKILL.md
-    │   └── incident-templates.md
-    ├── e2e/
-    │   └── SKILL.md
-    ├── dev/
-    │   ├── SKILL.md
-    │   ├── visual-ship.md
-    │   ├── stack-defaults.md
-    │   ├── tdd-guide.md
-    │   ├── solution-ladder.md
-    │   ├── scope-self-check.md
-    │   ├── status-report.md
-    │   └── debug-loop.md
-    ├── design/
-    │   ├── SKILL.md
-    │   ├── QUALITY-BAR.md
-    │   ├── CSS-INTENT.md
-    │   ├── VISUAL-ACCEPTANCE.md
-    │   ├── ANTI-SLOP.md
-    │   ├── BRIEF-INFERENCE.md
-    │   ├── design-spec-template.md
-    │   ├── PREFLIGHT.md
-    │   └── REDESIGN.md
-    ├── reqs/
-    │   ├── SKILL.md
-    │   ├── prd-interview.md
-    │   ├── enterprise-prd-template.md
-    │   ├── business-requirements-template.md
-    │   └── user-story-guide.md
-    ├── to-prd/
-    │   ├── SKILL.md
-    │   └── lean-prd-template.md
-    ├── to-issues/
-    │   ├── SKILL.md
-    │   └── issue-template.md
-    ├── triage/
-    │   ├── SKILL.md
-    │   ├── agent-brief.md
-    │   └── out-of-scope.md
-    └── setup/
-        ├── SKILL.md
-        ├── adr-format.md
-        ├── context-format.md
-        ├── domain.md
-        ├── issue-tracker-github.md
-        ├── issue-tracker-gitlab.md
-        ├── issue-tracker-local.md
-        ├── requirements.md
-        └── triage-labels.md
+├── agents/                  # Principal roles
+├── docs/agents/             # Shared protocols and project setup
+├── workflows/               # Optional composition recipes
+├── skills/                  # 20 canonical skill entries
+│   ├── reqs/                # Discovery, enterprise and lean PRD branches
+│   ├── task/                # Standard tasks and vertical slicing
+│   ├── track/               # Inspect, update and triage
+│   ├── align/               # Decision loop and domain modeling
+│   ├── arch/                # Design vocabulary and refactor assessment
+│   ├── dev/                 # Feature preparation, implementation and debug
+│   ├── qa/                  # Functional and E2E test workflows
+│   ├── review/              # Artifact and source-code review
+│   ├── setup/               # Project execution profile and configuration
+│   └── ...                  # Remaining canonical entries in catalog above
+└── registry/releases/       # Immutable published skill snapshots
 ```
 
-`docs/agents/` (per-repo, written by `/setup`):
-
-```
-docs/agents/
-├── issue-tracker.md
-├── domain.md
-├── requirements.md
-└── triage-labels.md
-```
+Each canonical skill has one `SKILL.md` plus branch references and templates.
+The project's `docs/agents/execution-profile.md` records canonical sources, preferred and fallback
+operation routes, and write/verification policy. The host checks real availability and authority.
 
 ## Adding skills and agents
 
@@ -645,7 +536,7 @@ mapped to the project's chosen components; Dev implements against briefs and des
 ## Roadmap
 
 - [x] `/setup` — repo configuration for ai-kit pipeline
-- [x] `/align` + `align` + `align` — alignment and domain docs with auto-discovery (EN/VI)
+- [x] `/align` + the align decision and domain branches — alignment and domain docs with auto-discovery (EN/VI)
 - [x] `/reqs` — discovery, enterprise PRD, user stories (user-invoked; does not publish)
 - [x] `/reqs` — synthesize conversation into lean PRD, publish to GitHub (from Matt's to-prd)
 - [x] `/task` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
