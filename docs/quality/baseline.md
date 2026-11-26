@@ -1,6 +1,6 @@
 # Quality Baseline and Release Verification
 
-Status (2026-11-23): **historical skill delivery verified; new 0.3.5 HTTP release delivery and workflow-augmentation effectiveness are not yet independently measured**.
+Status (2026-11-26): **historical skill delivery verified; new 0.3.5 HTTP release delivery and workflow-augmentation effectiveness are not yet independently measured**.
 This is an evaluation and delivery-verification plan, not a claim that skills outperform
 the baseline, a new release gate or authorization to run paid models.
 
