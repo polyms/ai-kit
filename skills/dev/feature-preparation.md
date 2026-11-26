@@ -20,7 +20,7 @@ Own the turn when all of these are true:
 
 - The ask is a new product feature: a new screen, a new CRUD, or a new user-facing flow. A change
   to a screen that already exists (a filter, a field, a column) is `dev`, not this skill.
-- The user did not name a skill or a principal (`/reqs`, `use pm`, …).
+- The user requested the feature in natural language or explicitly selected `/dev` feature preparation. An explicitly selected different skill or principal retains its own scope.
 - The packet is missing, or it is on disk and the `dev` ship checklist has not passed.
 
 Explicit skill invokes win. A bugfix, review, deploy, docs, or E2E ask is not this skill.

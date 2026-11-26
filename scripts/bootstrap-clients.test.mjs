@@ -225,3 +225,20 @@ test('collab continues into dev only when the spec packet has no blocking questi
     /complete spec packet with no blocking questions/
   )
 })
+
+for (const [client, root] of [['codex', '.agents'], ['claude', '.claude']]) {
+  test(`${client} retires owned aliases but preserves personal skills`, t => {
+    const { home, run } = fixture(t)
+    const skills = join(home, root, 'skills')
+    mkdirSync(skills, { recursive: true })
+    symlinkSync(join(repo, 'skills', 'to-prd'), join(skills, 'to-prd'))
+    mkdirSync(join(skills, 'triage'))
+    writeFileSync(join(skills, 'triage', 'SKILL.md'), 'personal')
+    const result = run(client)
+    assert.equal(result.status, 0, result.stderr)
+    assert.equal(lstatSync(join(skills, 'to-prd'), { throwIfNoEntry: false }), undefined)
+    assert.ok(lstatSync(join(home, root, 'ai-kit-backups/skills/to-prd.bak')).isSymbolicLink())
+    assert.equal(readFileSync(join(skills, 'triage', 'SKILL.md'), 'utf8'), 'personal')
+    assert.ok(existsSync(join(skills, 'reqs', 'SKILL.md')))
+  })
+}
