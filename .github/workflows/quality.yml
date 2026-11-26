@@ -9,6 +9,11 @@ on:
         required: true
         default: '0.3.5'
         type: string
+      retired:
+        description: 'Comma-separated versions that must return HTTP 404'
+        required: true
+        default: '0.3.4'
+        type: string
 
 permissions:
   contents: read
@@ -27,15 +32,29 @@ jobs:
         run: node --test scripts/verify-skill-release.test.mjs evals/report.test.mjs
 
   production:
-    name: Verify deployed latest against immutable release
+    name: Verify deployed HTTP release and SDK consumer
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
       EXPECTED_SKILL_VERSION: ${{ inputs.version }}
+      RETIRED_SKILL_VERSIONS: ${{ inputs.retired }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-      - name: Verify public production endpoints and exact reference retrieval
-        run: node scripts/verify-skill-release.mjs --version "$EXPECTED_SKILL_VERSION" --endpoint https://ai-kit.polyms.dev
+      - name: Verify live latest, pinned bundles, exact reference and retired routes
+        run: |
+          node scripts/verify-skill-release.mjs --version "$EXPECTED_SKILL_VERSION" \
+            --retired "$RETIRED_SKILL_VERSIONS" --endpoint https://ai-kit.polyms.dev
+      - uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build SDK reference consumer
+        run: pnpm exec tsc -p sdk/tsconfig.json
+      - name: Verify live SDK retrieval, context, QA and additive extension (read-only)
+        run: |
+          node scripts/verify-sdk-consumer.mjs --version "$EXPECTED_SKILL_VERSION" \
+            --endpoint https://ai-kit.polyms.dev
