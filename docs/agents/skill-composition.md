@@ -46,6 +46,7 @@ For each material transfer, retain the artifact itself or a sufficient accessibl
 ```text
 From / to: <producer> -> <consumer>
 Goal and scope: <requested outcome>
+Target context: <project / feature / environment / build / time when relevant>
 Artifacts: <kind; draft label or real reference; version/status>
 Confirmed facts and decisions: <source-backed statements>
 Open assumptions and blockers: <impact / affected scope>
@@ -58,6 +59,14 @@ Use compact prose or this shape. Do not force JSON into user-facing documents or
 ledger unless useful. Validate the receiver can access the artifact; pass the relevant excerpt if
 not. A handoff preserves original acceptance criteria and references; it does not reapprove them.
 Artifact readiness is independent of publication, execution and approval status.
+
+For feature lifecycle handoffs, retain the **approved specification revision** separately from
+**environment-specific map/observations**, deployment state and QA evidence. Include the source
+owner and observed/verified time if available. Do not turn a QA-confirmed behavior into business
+approval, or an approved requirement into a claim that a feature is deployed or available.
+When the requested environment has no reliable evidence, carry `Unknown` forward; a recipient
+must not fill that gap with another environment's results. Consumer-specific QA and PM/PO roles
+remain enforced by the owning integration; a handoff never carries confirmation authority.
 
 At a material handoff, the receiving skill checks its own contract against the supplied artifact:
 
