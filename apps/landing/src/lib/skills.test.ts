@@ -127,6 +127,7 @@ describe('MCP packs in the skill catalog', () => {
       expect(getSkillBySlug('review', locale)?.slug).toBe('review')
       for (const pack of listSkillPacks()) {
         expect(slugs).toContain(pack.name)
+        expect(getSkillBySlug(pack.name, locale)?.invocation, pack.name).toBe(pack.nativeInvocation === 'explicit' ? 'user' : 'model')
         expect(pack.relatedSkills.every(name => slugs.includes(name))).toBe(true)
       }
     })

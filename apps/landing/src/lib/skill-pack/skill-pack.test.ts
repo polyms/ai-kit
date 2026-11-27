@@ -177,6 +177,7 @@ describe('skill pack MCP tools', () => {
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
+      ...skillInvocationPolicy('reqs'),
       contract: SKILL_CONTRACTS.reqs,
       source: MCP_SKILL_SOURCE,
       files: [
@@ -197,6 +198,7 @@ describe('skill pack MCP tools', () => {
       const references = WORK_REFERENCE_PATHS[name as keyof typeof WORK_SKILL_PATHS] ?? []
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
+        ...skillInvocationPolicy(name as SkillPackName),
         contract: SKILL_CONTRACTS[name as SkillPackName],
         source: MCP_SKILL_SOURCE,
         files: [
