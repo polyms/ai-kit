@@ -36,14 +36,16 @@ export type KnowledgeHint = {
 
 export const MEMORY_PROTOCOL = 'docs/agents/memory-protocol.md'
 
-/** Semantic topic and applicability condition; not a provider query or permission. */
+/** Topic for the executing agent's own native recall/reflection; never a provider query or permission. */
 export type MemoryHint = {
   topic: string
   when: string
 }
 
 export type MemoryHints = {
+  /** Consider already-available host memory; do not look up external memory systems. */
   recall?: readonly MemoryHint[]
+  /** Reflect on a durable lesson; native retention follows host settings, no external write. */
   capture?: readonly MemoryHint[]
 }
 
@@ -56,7 +58,7 @@ export type SkillContract = {
   context: readonly ContextRequirement[]
   /** Conditional search hints for the existing Knowledge catalog, never mandatory calls. */
   knowledge?: readonly KnowledgeHint[]
-  /** Optional experience-use hints. Never a prerequisite or automatic persistence. */
+  /** Optional hints for the host agent's own available memory. Never a tool requirement or persistence command. */
   memory?: MemoryHints
 }
 

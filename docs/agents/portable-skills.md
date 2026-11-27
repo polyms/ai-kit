@@ -21,6 +21,10 @@ workspace. A cloud sandbox is not necessarily a checkout; a connector is not nec
 
 ## Execution and continuity
 
+- Memory hints refer to the host agent's own available memory and conversation context. Never
+  discover, connect to or call a separate memory service to fulfill a skill hint. If no relevant
+  native memory is available, continue; project evidence retrieval remains a separate task need.
+
 - Express gates as observable outcomes, not mandatory commands. CLI examples are equivalent
   operations, not required tools. Verify checkout/ref or remote comparison; preserve merge-base
   semantics and disclose truncated diffs. Do not mix a PR patch and unrelated HEAD.

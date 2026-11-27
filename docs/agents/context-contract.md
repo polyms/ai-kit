@@ -10,11 +10,12 @@ The client remains responsible for reasoning, retrieval and authorized actions.
   complete outcome; recommended improves confidence; optional is useful only when relevant.
 - Reuse reliable supplied context before retrieving more. Resolve only material gaps. Context
   keys are semantic hints, not fixed JSON fields, tool names or permissions.
-- Prefer current authoritative workspace/business records for mutable facts, published Knowledge
-  for reusable guidance, and authorized Memory for past decisions, preferences and lessons.
-  Conversation context establishes the current request. Memory is optional and may be unavailable. Read [Memory Protocol](memory-protocol.md) when
-  historical experience or reflection materially helps; optional `contract.memory` hints are not
-  retrieval requirements. Reuse evidence already in context; no permission or persistence is implied.
+- Prefer current authoritative workspace/business records for mutable facts and published Knowledge
+  for reusable guidance. For relevant past decisions, preferences or lessons, consider the host
+  agent's own already available memory and conversation context first. Memory is optional.
+  Read [Memory Protocol](memory-protocol.md) when useful; `contract.memory` hints are prompts for
+  native recall/reflection, not retrieval or persistence requirements. Never discover, connect to,
+  or call an external memory service to satisfy them. No relevant memory: continue normally.
 - Search Knowledge only for relevant gaps; open matching articles/chunks before applying them.
   Never invent a source, assume access, bypass permissions or upload private context to a public
   Knowledge catalog. Do not confuse historical memory with current state.
@@ -98,9 +99,9 @@ Neither answer silently substitutes one kind of evidence for another.
 
 ## After work
 
-Return the requested artifact and material limitations. If a reusable lesson is evident, suggest
-capturing it only when useful and authorized. Do not persist conversations, create memory records,
-publish Knowledge or modify Skills by default.
+Return the requested artifact and material limitations. Consider useful durable lessons in the host's
+own context; native memory retention follows host settings. Do not create external memory records,
+ask for a memory connection, persist conversations, publish Knowledge or modify Skills by default.
 
 Local engineering clients continue to use repository context, invocation and verification rules.
 This guidance supplements those rules; it does not change the engineering pipeline.

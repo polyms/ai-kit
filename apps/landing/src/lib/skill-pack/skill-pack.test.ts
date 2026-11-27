@@ -469,6 +469,18 @@ describe('skill composition', () => {
     }
   })
 
+  it('defines memory as the host agent own context, not external retrieval', () => {
+    const protocol = readFileSync(join(repoRoot, MEMORY_PROTOCOL), 'utf8')
+    expect(protocol).toContain("the executing host agent's own available memory")
+    expect(protocol).toContain('Do not search for, discover,')
+    expect(protocol).toContain('silently skip recall and continue')
+    const provider = readFileSync(join(repoRoot, 'apps/landing/src/lib/skill-pack/skill-pack.mcp.ts'), 'utf8')
+    expect(provider).toContain('Memory means your own host agent memory')
+    expect(provider).toContain('Never discover, connect to, or call a memory service')
+    const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/memory/cases.json'), 'utf8'))
+    expect(cases.every((item: { memoryLookup?: unknown }) => item.memoryLookup === undefined)).toBe(true)
+  })
+
   it('loads the memory protocol selectively and preserves contract metadata', async () => {
     const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Memory Protocol'))
     const result = await executeGetSkillPack('plan', fetchFile, [MEMORY_PROTOCOL])
@@ -489,7 +501,7 @@ describe('skill composition', () => {
       forbidden: string
     }[]
     const names = new Set(listSkillPacks().map(pack => pack.name))
-    expect(cases).toHaveLength(15)
+    expect(cases).toHaveLength(18)
     expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
     for (const item of cases) {
       expect(item.id).toMatch(/^MP-\d{2}$/)
