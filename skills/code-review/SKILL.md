@@ -40,6 +40,9 @@ Capture the exact comparison once: local `git diff <fixed-point>...HEAD` (three-
 or equivalent PR/compare operation through authorized source control. Record base/head, merge-base
 semantics, change set and commit list; disclose incomplete or truncated patches.
 
+For a Review-Fix Protocol iteration, retain the pinned baseline and refresh the comparison against
+the current snapshot, including authorized uncommitted changes. Record exactly what was reviewed.
+
 Confirm the fixed point resolves (e.g. `git rev-parse <fixed-point>` or provider metadata) and the diff is non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents.
 
 Check diff size (`git diff <fixed-point>...HEAD --stat`, sum of `+N/-M`). Under 10 changed
@@ -171,7 +174,9 @@ severity and worst issue stated in prose. Step 6 has run.
 
 ### 6. Handoff
 
-Severity cues are when/why (not a pasteable menu). Review-only does not authorize fixes, PR comments, approvals or merge. A clean review is a finding, not a merge instruction; if the user requests fixes, preserve the verified diff/ref and use the authorized implementation route. The report always ends with
+Severity cues are when/why (not a pasteable menu). Review-only does not authorize fixes, PR comments, approvals or merge. A clean review is a finding, not a merge instruction; if the user requests fixes, preserve the verified diff/ref and run the
+[Review-Fix Protocol](../../docs/agents/review-fix-protocol.md) with `dev`. Return findings to an
+existing parent loop instead of starting a nested loop. The report always ends with
 `## Next Step` (CONTEXT.md **Handoff**) — prefer **exactly one** `→ /skill`. A summary
 without this block is an unfinished review.
 
