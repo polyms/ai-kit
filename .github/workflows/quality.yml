@@ -2,13 +2,6 @@ name: Verify Skill Release and Quality Reports
 
 on:
   pull_request:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Expected deployed skill release version'
-        required: true
-        default: '0.3.5'
-        type: string
 
 permissions:
   contents: read
@@ -16,7 +9,6 @@ permissions:
 jobs:
   deterministic:
     name: Validate release verifier and report summarizer
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -25,17 +17,3 @@ jobs:
           node-version: '24'
       - name: Run isolated verification regression tests
         run: node --test scripts/verify-skill-release.test.mjs evals/report.test.mjs
-
-  production:
-    name: Verify deployed latest against immutable release
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    env:
-      EXPECTED_SKILL_VERSION: ${{ inputs.version }}
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-      - name: Verify public production endpoints and exact reference retrieval
-        run: node scripts/verify-skill-release.mjs --version "$EXPECTED_SKILL_VERSION" --endpoint https://ai-kit.polyms.dev

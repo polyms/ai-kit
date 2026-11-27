@@ -104,10 +104,12 @@ describe('skill pack manifest', () => {
 })
 
 describe('skill pack MCP tools', () => {
-  it('registers list_skill_packs and get_skill_pack', () => {
+  it('registers list_skill_packs, get_skill_pack and get_release_info', () => {
     const registerTool = vi.fn()
     registerSkillPackMcpTools({ registerTool } as never)
-    expect(registerTool.mock.calls.map(call => call[0])).toEqual(['list_skill_packs', 'get_skill_pack'])
+    expect(registerTool.mock.calls.map(call => call[0])).toEqual([
+      'list_skill_packs', 'get_skill_pack', 'get_release_info',
+    ])
   })
 
   it('exposes explicit mutable provenance and a derived pack count for everyday clients', () => {

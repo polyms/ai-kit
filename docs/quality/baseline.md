@@ -24,32 +24,39 @@ These are observed deployment and delivery checks. They do not prove model-outpu
 quality, SDK package consumption in Astra, private memory access, or authorization
 to persist or publish any business artifact.
 
-## Production release verification
+## AI-driven production release verification
 
-Run from a clean checkout on Node.js 24 or later:
+Ask an AI client connected to AI Kit MCP:
+
+> Check AI Kit production, verify skill release 0.3.5 and Astra compatibility.
+
+The AI calls `server_info`, then `get_release_info` for the configured
+immutable release, and optionally `get_release_info` with
+`expectedVersion="0.3.5", checkHttp=true, retiredVersion="0.3.4"` for **bounded public HTTP
+checks** (latest and pinned catalogs, QA skill, exact Context Contract, and
+retired endpoints returning HTTP 404). That HTTP result is observed from the
+**MCP server's network perspective**. A requested-version mismatch fails before HTTP; complete latest/pinned catalog metadata must match. An access block or network error is
+**Unverified**, not Passed. MCP `get_skill_pack` independently checks mutable
+`main` content, not the pinned immutable release.
+
+`.github/workflows/quality.yml` runs **offline regression tests on PRs only**;
+there is no required production CI dispatch or recurring polling. Operators
+can still run the optional full HTTP verifier locally from an independent
+network vantage using Node.js 24 or later:
 
 ```sh
-node scripts/verify-skill-release.mjs --version 0.3.5 --endpoint https://ai-kit.polyms.dev
+node scripts/verify-skill-release.mjs --version 0.3.5 --retired 0.3.4 --endpoint https://ai-kit.polyms.dev
 ```
 
-The verifier reads `registry/releases/0.3.5/release.json` and compares its immutable
-revision with live `latest.json` and pinned `catalog.json`. It checks key
-bundle identities, contracts, manifest-only and starter content, `rawUrl` origin,
-five Memory hint contracts, and an exact-path POST for the shared Memory Protocol.
-Any mismatch, non-JSON response or missing expected content is a failure.
+It validates more metadata, starter/manifest content and Memory reference
+retrieval than the lightweight MCP diagnostic. Generic SDK regression tests use
+the workspace build and synthetic release snapshot. Neither a PR test nor the
+AI Kit MCP diagnostic establishes the SDK package actually running inside
+Astra. Do not confuse Astra Template `1.3.0`, skill release `0.3.5`,
+SDK `1.0.0-rc.1` or MCP server package `0.3.0`.
 
-`.github/workflows/quality.yml` provides two independent paths:
-
-- Pull requests run isolated, deterministic tests for the verifier and report
-  formatter. These tests use mock response fixtures and **never** touch production.
-- A manual `workflow_dispatch` runs the public production smoke verifier **on demand**,
-  such as immediately after a skill release deployment. The expected version defaults
-  to `0.3.5`; update it deliberately for future releases.
-  There is no recurring production polling. Production checks are read-only and need
-  no secret or authenticated MCP session.
-
-The production smoke checks **HTTP skill delivery**, not OAuth/MCP client behavior. The previous `0.3.3` and `0.3.4` versions are not supported by the new registry; old pinned provider requests should return 404 once production is deployed. Confirm no dependent consumer is still pinned to either retired version before promoting `latest`.
-Do not call a PR test run proof of production deployment.
+See the [AI-driven release and consumer verification runbook](release-consumer-verification.md)
+for evidence boundaries and the remaining Astra consumer-side diagnostic work.
 
 ## Everyday-mode manual baseline
 

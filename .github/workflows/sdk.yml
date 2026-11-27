@@ -39,7 +39,9 @@ jobs:
       - name: Compile localized site catalog
         run: pnpm --filter @polyms/landing i18n
       - name: Test provider, SDK and site catalog
-        run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts src/lib/skill-pack/skill-pack.test.ts src/lib/feedback/feedback.mcp.test.ts src/lib/skills.test.ts
+        run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts src/lib/skill-pack/skill-pack.test.ts src/lib/skill-pack/release-info.mcp.test.ts src/lib/feedback/feedback.mcp.test.ts src/lib/skills.test.ts
+      - name: Verify read-only SDK consumer against generated release snapshot
+        run: node --test scripts/verify-sdk-consumer.test.mjs
       - name: Check evaluation fixtures and scoring
         run: |
           pnpm eval:test
