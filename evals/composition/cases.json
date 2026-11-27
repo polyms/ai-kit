@@ -595,9 +595,11 @@
     "recipe": null,
     "prompt": "Review a partial PR patch for Standards, Spec and Simplify. Spec unavailable, no subagent tools. Draft findings only.",
     "requiredSkills": [
+      "code-review"
+    ],
+    "skipSkills": [
       "review"
     ],
-    "skipSkills": [],
     "criteria": [
       "Separate axes, skip unavailable Spec with reason, ground findings in supplied diff and disclose partial coverage and inline isolation."
     ],

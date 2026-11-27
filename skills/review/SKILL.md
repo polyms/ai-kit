@@ -10,7 +10,7 @@ description: Challenge product requirements, business decisions, delivery plans 
 
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
 
-Choose artifact review for documents and proposals, or [three-axis source-code review](code-review-workflow.md) for PRs and diffs. Legacy code-review selects the latter. Do not apply the generic prose checklist as a substitute for Standards, Spec and Simplify.
+Review non-code work artifacts. For source changes, commits, diffs or pull requests use `code-review`; do not substitute this checklist for code-review gates.
 
 Use [review-template.md](review-template.md) and the shared work artifact standard
 (`docs/agents/work-artifact-standard.md`).
@@ -34,4 +34,4 @@ when the owning project designates a separate canonical feature map.
 
 **Done when:** Findings are grounded, prioritized, actionable and independent of the author's intent.
 
-Use the code-review workflow above for source-code changes. Use `qa` to execute or assess tests, not to review prose.
+Use `code-review` for source-code changes. Use `qa` to execute or assess tests, not to review prose.

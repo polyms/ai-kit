@@ -61,6 +61,15 @@ export type SkillContract = {
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
+  'code-review': {
+    context: [
+      { key: 'review-target', importance: 'required', description: 'Exact repository, comparison/base and head revision or supplied source diff.' },
+      { key: 'source-spec', importance: 'recommended', description: 'Originating approved requirement or issue and applicable coding standards; explicit gaps.' },
+    ],
+    accepts: ['context', 'evidence', 'requirements', 'work-item', 'change-receipt', 'decision'],
+    produces: ['review-findings'],
+    readyWhen: 'Standards, Spec and Simplify findings remain independent and evidence-grounded; missing specification or partial diff and merge blockers are explicit.',
+  },
   'align': {
     context: [{ key: 'decision-goal', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
     accepts: ['context', 'requirements', 'decision'],
@@ -510,7 +519,7 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       'release-readiness',
     ],
     produces: ['review-findings'],
-    readyWhen: 'Artifact or Standards/Spec/Simplify code findings have evidence, severity, impact and actionable fixes; review is not approval.',
+    readyWhen: 'Artifact findings have evidence, severity, impact and actionable fixes; review is not approval.',
   },
   release: {
     knowledge: [

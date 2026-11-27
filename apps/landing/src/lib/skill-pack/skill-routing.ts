@@ -9,6 +9,12 @@ export type SkillRoutingHint = {
 }
 
 export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
+  'code-review': {
+    useWhen: ['Review source code, a commit, PR or diff for Standards, Spec and Simplify', 'Review PR, rà soát mã nguồn, kiểm tra diff trước merge'],
+    avoidWhen: 'Review of requirements, proposals, business documents or plans belongs to review. Do not implement fixes or merge unless separately authorized.',
+    relatedSkills: ['dev', 'arch', 'reqs', 'qa'],
+    starter: 'entry',
+  },
   'align': {
     useWhen: ['Resolve design-tree decisions and terminology', 'Chốt hướng, làm rõ thuật ngữ'],
     avoidWhen: 'Do not repeat approved alignment or write a PRD here.',
@@ -18,13 +24,13 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   'arch': {
     useWhen: ['Design module seams, assess architecture and deepening opportunities', 'Thiết kế module, rà soát kiến trúc'],
     avoidWhen: 'Do not implement a refactor merely from a report request.',
-    relatedSkills: ['align', 'dev', 'review'],
+    relatedSkills: ['align', 'dev', 'code-review'],
     starter: 'entry',
   },
   'dev': {
     useWhen: ['Implement specs, fix bugs, prepare new features', 'Triển khai tính năng, sửa lỗi, tạo CRUD'],
     avoidWhen: 'Use devops for standalone infra incidents; do not invent scope or claim unrun tests.',
-    relatedSkills: ['reqs', 'design', 'arch', 'qa', 'review', 'devops'],
+    relatedSkills: ['reqs', 'design', 'arch', 'qa', 'code-review', 'devops'],
     starter: 'entry',
   },
   'craft': {
@@ -42,7 +48,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   'devops': {
     useWhen: ['Investigate deployment or CI failure, diagnose infrastructure', 'Sửa deploy, lỗi build, fix CI'],
     avoidWhen: 'Not feature implementation or release readiness alone.',
-    relatedSkills: ['release', 'review'],
+    relatedSkills: ['release', 'code-review'],
     starter: 'entry',
   },
   'setup': {
@@ -162,11 +168,11 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   },
   review: {
     useWhen: [
-      'Review assumptions, requirements, plans, source code, PRs and diffs',
+      'Challenge assumptions, requirements, decisions or plans',
       'Review tài liệu, tìm mâu thuẫn, phản biện proposal',
       "Proposal này có gì chưa ổn, rà giả định; ra soat proposal",
     ],
-    avoidWhen: 'Use the three-axis branch for source changes. Test execution belongs to qa or dev; do not mutate code from a review request.',
+    avoidWhen: 'Source-code changes, PRs and diffs belong to code-review; test execution belongs to qa or dev.',
     relatedSkills: ['reqs', 'business', 'research', 'plan', 'qa'],
     starter: 'primary',
   },

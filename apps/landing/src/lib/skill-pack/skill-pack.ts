@@ -81,13 +81,18 @@ export const WORK_SKILL_PATHS = {
   plan: ['skills/plan/SKILL.md', 'skills/plan/delivery-plan-template.md'],
   qa: ['skills/qa/SKILL.md', 'skills/qa/qa-templates.md', 'skills/qa/e2e-workflow.md'],
   comms: ['skills/comms/SKILL.md', 'skills/comms/communication-templates.md'],
-  review: ['skills/review/SKILL.md', 'skills/review/review-template.md', 'skills/review/code-review-workflow.md', 'skills/review/standards-baseline.md', 'skills/review/simplify-baseline.md'],
+  review: ['skills/review/SKILL.md', 'skills/review/review-template.md'],
   release: ['skills/release/SKILL.md', 'skills/release/release-templates.md'],
 } as const
 
 export const PORTABLE_SKILL_STANDARD = 'docs/agents/portable-skills.md'
 
 export const ENGINEERING_SKILL_PATHS = {
+  'code-review': [
+    'skills/code-review/SKILL.md',
+    'skills/code-review/standards-baseline.md',
+    'skills/code-review/simplify-baseline.md',
+  ],
   'devops': [
     'skills/devops/SKILL.md',
     'skills/devops/incident-templates.md',
@@ -203,8 +208,9 @@ const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   plan: 'Effort estimation, delivery planning, capacity and dependencies',
   qa: 'Functional tests, E2E automation and QA evidence',
   comms: 'Professional messages, client replies and stakeholder updates',
-  review: 'Artifact review and three-axis code/PR review',
+  review: 'Evidence-based artifact critique, gap analysis and assumption challenge',
   release: 'Go-live readiness, rollout, rollback and release notes',
+  'code-review': 'Three-axis source code and PR review: Standards, Spec and Simplify',
   'devops': 'Evidence-based deploy, CI and infrastructure diagnosis',
   'setup': 'Project integration and execution profile configuration',
   'align': 'Align decisions, domain vocabulary and ADRs',
@@ -293,7 +299,6 @@ export const LEGACY_SKILL_ALIASES = {
   'arch-refactor': 'arch',
   'collab': 'dev',
   'e2e': 'qa',
-  'code-review': 'review',
 } as const satisfies Record<string, SkillPackName>
 
 export function canonicalSkillName(name: string): string {

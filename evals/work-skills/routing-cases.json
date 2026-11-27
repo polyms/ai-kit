@@ -151,7 +151,8 @@
     ],
     "avoid": [
       "qa",
-      "reqs"
+      "reqs",
+      "code-review"
     ],
     "notes": "Routing checks only; authorization is separate."
   },
@@ -225,12 +226,13 @@
     "kind": "Route",
     "prompt": "Review this TypeScript function for bugs and complexity.",
     "expected": [
-      "review"
+      "code-review"
     ],
     "avoid": [
-      "bug"
+      "bug",
+      "review"
     ],
-    "notes": "Code review is the source-review branch of review."
+    "notes": "Source-code review is a separate skill from artifact review."
   },
   {
     "id": "RT-19",
@@ -377,7 +379,8 @@
       "review"
     ],
     "avoid": [
-      "qa"
+      "qa",
+      "code-review"
     ],
     "notes": "Vietnamese semantic routing; no write authorization."
   },
@@ -506,10 +509,12 @@
     "kind": "Route",
     "prompt": "Review a PR or diff, inspect code changes",
     "expected": [
+      "code-review"
+    ],
+    "avoid": [
       "review"
     ],
-    "avoid": [],
-    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+    "notes": "Source-code review is a separate skill from artifact review."
   },
   {
     "id": "RT-41",
@@ -628,13 +633,14 @@
     "kind": "Route",
     "prompt": "Review PR #123 in GitHub; no document review and no code modifications.",
     "expected": [
-      "review"
+      "code-review"
     ],
     "avoid": [
       "qa",
-      "dev"
+      "dev",
+      "review"
     ],
-    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+    "notes": "Source-code review is a separate skill from artifact review."
   },
   {
     "id": "RT-53",

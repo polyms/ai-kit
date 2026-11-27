@@ -65,6 +65,7 @@ describe('skill pack manifest', () => {
       'comms',
       'review',
       'release',
+      'code-review',
       'devops',
       'setup',
       'align',
@@ -249,6 +250,17 @@ describe('skill pack MCP tools', () => {
 })
 
 describe('consolidated engineering packs', () => {
+  it('keeps artifact review and source-code review distinct', () => {
+    const artifact = getSkillPack('review')!
+    const code = getSkillPack('code-review')!
+    expect(artifact.name).toBe('review')
+    expect(code.name).toBe('code-review')
+    expect(artifact.files.map(file => file.path)).not.toContain('skills/code-review/SKILL.md')
+    expect(code.files.map(file => file.path)).not.toContain('skills/review/SKILL.md')
+    expect(listSkillPacks().find(pack => pack.name === 'review')?.avoidWhen).toContain('code-review')
+    expect(listSkillPacks().find(pack => pack.name === 'code-review')?.avoidWhen).toContain('review')
+  })
+
   it('preserves every retired workflow as an allowlisted reference rather than a new skill', async () => {
     const branches = {
       'to-prd': 'skills/reqs/lean-prd-workflow.md',
@@ -259,7 +271,6 @@ describe('consolidated engineering packs', () => {
       'arch-refactor': 'skills/arch/refactor-workflow.md',
       collab: 'skills/dev/feature-preparation.md',
       e2e: 'skills/qa/e2e-workflow.md',
-      'code-review': 'skills/review/code-review-workflow.md',
     }
     for (const [alias, path] of Object.entries(branches)) {
       const pack = getSkillPack(alias)!
@@ -277,7 +288,7 @@ describe('consolidated engineering packs', () => {
 
   it('lists exactly the canonical native skill entries and resolves retired names without duplicate catalog entries', async () => {
     const names = listSkillPacks().map(pack => pack.name)
-    expect(names).toHaveLength(20)
+    expect(names).toHaveLength(21)
     const nativeNames = readdirSync(join(repoRoot, 'skills')).filter(name => existsSync(join(repoRoot, 'skills', name, 'SKILL.md'))).sort()
     expect([...names].sort()).toEqual(nativeNames)
     for (const [alias, canonical] of Object.entries(LEGACY_SKILL_ALIASES)) {
@@ -302,8 +313,8 @@ describe('portable engineering packs', () => {
       expect(JSON.parse(result.content[0]!.text).invocation).toBe(summary.invocation)
       expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(summary.starterPaths.map(skillPackRawUrl).sort())
     }
-    expect(getSkillPack('review')?.files.map(file => file.path)).toContain('skills/review/standards-baseline.md')
-    expect(getSkillPack('review')?.files.map(file => file.path)).toContain('skills/review/simplify-baseline.md')
+    expect(getSkillPack('code-review')?.files.map(file => file.path)).toContain('skills/code-review/standards-baseline.md')
+    expect(getSkillPack('code-review')?.files.map(file => file.path)).toContain('skills/code-review/simplify-baseline.md')
     expect(starterPaths('setup')).toContain('skills/setup/execution-profile.md')
   })
 })
