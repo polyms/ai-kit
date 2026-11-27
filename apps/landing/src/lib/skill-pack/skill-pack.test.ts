@@ -28,6 +28,7 @@ import {
   WORK_SKILL_PATHS,
   ENGINEERING_SKILL_PATHS,
   LEGACY_SKILL_ALIASES,
+  legacyWorkflow,
   WORK_REFERENCE_PATHS,
   PORTABLE_SKILL_STANDARD,
 } from './skill-pack'
@@ -128,6 +129,7 @@ describe('skill pack MCP tools', () => {
       packCount: listSkillPacks().length,
       source: MCP_SKILL_SOURCE,
       composition: compositionCatalog(),
+      legacyWorkflows: Object.keys(LEGACY_SKILL_ALIASES).map(name => legacyWorkflow(name)),
     })
   })
 
@@ -290,8 +292,21 @@ describe('consolidated engineering packs', () => {
       expect(fetchFile.mock.calls[0]?.[0]).toBe(skillPackRawUrl(path))
       const body = JSON.parse(result.content[0]!.text)
       expect(body.requestedName).toBe(alias)
+      expect(body.requestedWorkflow).toMatchObject({ requestedName: alias, canonical: pack.name, workflowPath: path })
+      expect(body.requestedWorkflow.starterPaths).toContain(path)
+      expect(body.requestedWorkflow.starterPaths.every((file: string) => pack.files.some(entry => entry.path === file))).toBe(true)
       expect(body.files.find((file: { path: string }) => file.path === path).content).toBe('# Selected branch')
     }
+  })
+
+  it('loads incident guidance through MCP without a client-side GitHub lookup', async () => {
+    const paths = ['docs/agents/knowledge.md', 'docs/agents/ops-cms-mcp.md', 'docs/agents/invocation.md']
+    const fetchFile = vi.fn<typeof fetch>(async url => new Response(readFileSync(join(repoRoot, String(url).slice(SKILL_PACK_RAW_BASE.length)), 'utf8')))
+    const result = await executeGetSkillPack('devops', fetchFile, paths)
+    expect(result.isError).toBeUndefined()
+    expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(paths.map(skillPackRawUrl).sort())
+    expect(JSON.parse(result.content[0]!.text).files.filter((file: { content?: string }) => file.content)).toHaveLength(paths.length)
+    expect(readFileSync(join(repoRoot, 'skills/devops/SKILL.md'), 'utf8')).not.toContain('github.com/polyms/ai-kit/blob/main/docs/agents/')
   })
 
   it('lists exactly the canonical native skill entries and resolves retired names without duplicate catalog entries', async () => {
@@ -343,7 +358,7 @@ describe('skill intelligence', () => {
       if (summary.name !== 'design') expect(summary.starterPaths).toContain(WORK_ARTIFACT_STANDARD)
       expect(summary.relatedSkills.every(name => name !== summary.name && names.has(name))).toBe(true)
     }
-    expect(starterPaths('design')).toEqual(['skills/design/SKILL.md', CONTEXT_PROTOCOL])
+    expect(starterPaths('design')).toEqual(['skills/design/SKILL.md', CONTEXT_PROTOCOL, PORTABLE_SKILL_STANDARD])
     expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL, PORTABLE_SKILL_STANDARD])
     expect(starterPaths('task')).toEqual([
       'skills/task/SKILL.md',
@@ -387,7 +402,15 @@ describe('skill intelligence', () => {
           if (file.path === 'skills/build-feature-map/repo-skill-template.md' && target === 'references/features/README.md') continue
           if (file.path === 'skills/build-feature-map/index-template.md' && target === 'slug.md') continue
           // Shared policy documentation links are navigation, not workflow dependencies; resolve via the owning pack.
-          if (['docs/agents/invocation.md', 'docs/agents/knowledge.md', 'docs/adr/0001-skill-setup-dependencies.md'].includes(file.path)) continue
+          if (['docs/agents/invocation.md', 'docs/agents/knowledge.md', 'docs/adr/0001-skill-setup-dependencies.md'].includes(file.path)) {
+            expect(existsSync(join(repoRoot, resolved)), resolved).toBe(true)
+            continue
+          }
+          // Ops CMS guide's two navigation destinations are not required incident inputs.
+          if (file.path === 'docs/agents/ops-cms-mcp.md' && ['docs/feedback.md', 'docs/agents/mcp-skill-provider.md'].includes(resolved)) {
+            expect(existsSync(join(repoRoot, resolved)), resolved).toBe(true)
+            continue
+          }
           expect(allowed.has(resolved), `${summary.name}: ${file.path} -> ${resolved}`).toBe(true)
         }
       }

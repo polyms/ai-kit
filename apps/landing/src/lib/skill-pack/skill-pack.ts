@@ -28,6 +28,7 @@ export const DESIGN_SKILL_PATHS = [
 ] as const
 
 export const DESIGN_REFERENCE_PATHS = [
+  'docs/agents/portable-skills.md',
   'docs/agents/client-compatibility.md',
   'skills/dev/visual-ship.md',
 ] as const
@@ -135,10 +136,15 @@ export const ENGINEERING_SKILL_PATHS = {
   'devops': [
     'skills/devops/SKILL.md',
     'skills/devops/incident-templates.md',
+    'docs/agents/knowledge.md',
+    'docs/agents/ops-cms-mcp.md',
+    'docs/agents/invocation.md',
   ],
   'setup': [
     'skills/setup/SKILL.md',
     'skills/setup/execution-profile.md',
+    'docs/agents/knowledge.md',
+    'docs/agents/ops-cms-mcp.md',
     'skills/setup/language.md',
     'skills/setup/issue-tracker-github.md',
     'skills/setup/issue-tracker-gitlab.md',
@@ -334,6 +340,26 @@ export const LEGACY_SKILL_ALIASES = {
   'triage': 'track',
 } as const satisfies Record<string, SkillPackName>
 
+export const LEGACY_WORKFLOW_PATHS = {
+  'to-prd': 'skills/reqs/lean-prd-workflow.md',
+  'to-issues': 'skills/task/vertical-slicing.md',
+  triage: 'skills/track/triage-workflow.md',
+} as const satisfies Record<keyof typeof LEGACY_SKILL_ALIASES, string>
+
+/** Metadata only: the legacy name selects a branch, never grants action authority. */
+export function legacyWorkflow(name: string) {
+  if (!Object.hasOwn(LEGACY_SKILL_ALIASES, name)) return undefined
+  const alias = name as keyof typeof LEGACY_SKILL_ALIASES
+  const canonical = LEGACY_SKILL_ALIASES[alias]
+  const workflowPath = LEGACY_WORKFLOW_PATHS[alias]
+  return {
+    requestedName: alias,
+    canonical,
+    workflowPath,
+    starterPaths: [...new Set([...starterPaths(canonical), workflowPath])],
+  }
+}
+
 export function canonicalSkillName(name: string): string {
   return Object.hasOwn(LEGACY_SKILL_ALIASES, name)
     ? LEGACY_SKILL_ALIASES[name as keyof typeof LEGACY_SKILL_ALIASES]
@@ -396,7 +422,7 @@ export function getSkillPack(name: string): SkillPack | null {
 /** First request: entry point, applicable shared standard and default template for short workflows. */
 export function starterPaths(name: SkillPackName): string[] {
   const entry = `skills/${name}/SKILL.md`
-  if (name === 'design') return [entry, CONTEXT_PROTOCOL]
+  if (name === 'design') return [entry, CONTEXT_PROTOCOL, PORTABLE_SKILL_STANDARD]
   if (isEngineeringSkill(name)) {
     const paths = ENGINEERING_SKILL_PATHS[name]
     const core = name === 'setup' ? paths.slice(1, 2) : []

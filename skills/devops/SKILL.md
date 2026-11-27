@@ -41,8 +41,8 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 - Classify **severity** when user impact is unclear — [incident-templates.md](incident-templates.md)
 - Read **`docs/agents/stack-profile.md`** when present — pass manifest `axes` to search
 - Read per-app **`apps/*/DEPLOY.md`** when the incident is app-scoped — env vars, project paths, local repro commands
-- Read [Knowledge pointer](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md) (`intent: incident`) — MCP setup at
-  [ops-cms-mcp.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/ops-cms-mcp.md)
+- Read [Knowledge pointer](../../docs/agents/knowledge.md) (`intent: incident`) — MCP setup at
+  [ops-cms-mcp.md](../../docs/agents/ops-cms-mcp.md)
 
 **Completion criterion:** Symptom stated; severity noted when impact unclear; stack axes noted when
 manifest exists; app deploy guide located when applicable.
@@ -75,7 +75,7 @@ Do **not** apply fixes from a partial symptom match. If no match: say so; do not
 2. Run **verify** steps from the same chunk (build, deploy preview, CI green, curl check, …) —
    obtain actual gate-deciding exit codes/logs from the matching workspace or authorized CI run;
    a nested agent's "green" is not enough. Do not trigger deployment or CI mutations without authority
-   ([invocation.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/invocation.md) **Verification after delegation**)
+   ([invocation.md](../../docs/agents/invocation.md) **Verification after delegation**)
 3. If verify fails, return to **Retrieve** — do not stack speculative changes
 
 **Completion criterion:** Verify steps from Knowledge pass with observed exit codes / logs, or
@@ -113,11 +113,11 @@ and actual evidence in the handoff.
 
 | Topic             | Read when                                                                                          |
 | ----------------- | -------------------------------------------------------------------------------------------------- |
-| Retrieval policy  | [knowledge.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md) — `intent: incident`                                |
-| MCP tools + OAuth | [knowledge.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md), [ops-cms-mcp.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/ops-cms-mcp.md) |
+| Retrieval policy  | [knowledge.md](../../docs/agents/knowledge.md) — `intent: incident`                                |
+| MCP tools + OAuth | [knowledge.md](../../docs/agents/knowledge.md), [ops-cms-mcp.md](../../docs/agents/ops-cms-mcp.md) |
 | SEV / post-mortem | [incident-templates.md](incident-templates.md)                                                     |
 | App context       | `apps/*/DEPLOY.md`                                                                                 |
-| Design seams      | **`arch`** + [knowledge.md](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md) (`intent: design`) — not this skill    |
+| Design seams      | **`arch`** + [knowledge.md](../../docs/agents/knowledge.md) (`intent: design`) — not this skill    |
 
 ## Agent
 

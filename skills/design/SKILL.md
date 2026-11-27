@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 # Design
 
+**All hosts:** Apply [portable skill standard](../../docs/agents/portable-skills.md) and the target project's execution profile.
+
 **Execution mode:** For draft-only or no authorized target write route, return the complete spec or requested amendment in conversation or a requested standalone artifact with proposed path; no repository writes. Verify preflight on the actual draft. Write/merge spec files only when requested and authorized, using the target execution profile. Pass this mode to delegated reviewers; do not infer authority from a brief. Report missing write capability separately from draft readiness.
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.

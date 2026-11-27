@@ -141,7 +141,7 @@ Existing paths and URLs are preserved. Cursor and Claude keep reading the same f
 
 Any MCP-capable AI client or agent can connect to `https://ai-kit.polyms.dev/mcp` using the
 supported transport and OAuth flow. Call `list_skill_packs` to discover available packs and
-`get_skill_pack` to load the selected pack directly. No client-side HTTP GET is needed.
+`get_skill_pack` to load the selected pack directly. No client-side HTTP GET is needed. Legacy aliases expose `requestedWorkflow` and the exact workflow path; `list_skill_packs` includes `legacyWorkflows`. Memory hints refer only to the host agent's own available memory and context, never an external memory system.
 Client-specific MCP availability, authentication, and invocation behavior may vary.
 
 - Prefer `paths: starterPaths` from the selected catalog entry, then load only needed references.
