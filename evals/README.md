@@ -1,11 +1,10 @@
 # Evaluation runner
 
-The local, opt-in benchmark includes 17 output, 39 routing, 21 composition and 15 memory cases
-(92 scenarios total).
+The local, opt-in benchmark includes output, routing, composition and 18 host-agent memory scenarios. Use the runner's dry-run count for the current total.
 The runner is separate from the deployed MCP server and does not introduce a provider dependency.
 It uses the repository's existing tsx and MCP functions; a configurable OpenAI-compatible chat
 completion HTTP endpoint is the reference adapter. Tool-call support is required for assisted
-output/composition and the four memory cases that simulate recall. Native client testing (ChatGPT, Claude, Codex, etc.) remains a separate exercise.
+output/composition and two memory cases that expose an external lookup trap (expected zero calls). Native client testing (ChatGPT, Claude, Codex, etc.) remains a separate exercise.
 
 ## Everyday-first native client priority
 
@@ -40,9 +39,9 @@ establish model correctness or real integration behavior. Use the ordinary
 
 ## Memory Protocol pilot
 
-See [Memory Protocol evaluation](memory/README.md) for 15 paired P0/P1 versus P2 scenarios.
+See [Memory Protocol evaluation](memory/README.md) for 18 paired host-agent memory scenarios.
 Run `pnpm eval:run --suite memory --dry-run`. Both arms get pinned P0/P1 methodology;
-only assisted receives P2 guidance and hints. Synthetic lookup tools are identical in both arms.
+only assisted receives the current live host-native memory guidance and hints. Native remembered context is fixture-supplied; external lookup traps are identical in both arms and expect zero calls.
 Fixture count is not a benchmark result. A full Git checkout is required.
 
 ## Run
@@ -135,7 +134,7 @@ actual paired model run has been completed, judged and reviewed.
 ## End-to-end harness smoke (no real model)
 
 `pnpm exec node evals/mock-model-smoke.mjs` runs the full generation → synthetic
-`recall_memory` tool → blinded-judge JSON protocol → paired-run JSON → Markdown
+zero external `recall_memory` calls → blinded-judge JSON protocol → paired-run JSON → Markdown
 report path against a **localhost mock** using the MP-01 fixture. This validates
 integration wiring and report coverage without network access to any model provider.
 It is included in SDK CI and performs **zero** real model calls. Its all-pass

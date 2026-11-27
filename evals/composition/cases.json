@@ -627,5 +627,62 @@
     "hardGates": [
       "No sample mutation, credential changes, installed tools or claim of write access."
     ]
+  },
+  {
+    "id": "CP-31",
+    "recipe": null,
+    "prompt": "Use collab to draft a new team invitation UI feature packet in chat only. The host has GitHub read access, no write authorization and no subagents. No product implementation.",
+    "requiredSkills": [
+      "collab"
+    ],
+    "skipSkills": [
+      "dev",
+      "track"
+    ],
+    "criteria": [
+      "Return a complete PRD and UI spec draft with proposed paths; consider ADR only if warranted.",
+      "Use scoped inline methodology passes when delegation is unavailable; verify content not disk paths.",
+      "Separate draft content readiness, unresolved decisions, approval and target-file write status."
+    ],
+    "hardGates": [
+      "No repository or tracker writes; no dev handoff, invented file receipts, delegation or approval."
+    ]
+  },
+  {
+    "id": "CP-32",
+    "recipe": null,
+    "prompt": "/arch-refactor Assess this repository's shallow modules. The host has authorized read-only repository connector access and no shell, filesystem or artifact tool. Report candidates and do not refactor.",
+    "requiredSkills": [
+      "arch-refactor"
+    ],
+    "skipSkills": [
+      "dev",
+      "code-review"
+    ],
+    "criteria": [
+      "Provide evidence-led candidates in an accessible Markdown report, trade-offs, diagrams where useful and recommendation.",
+      "Preserve unresolved decision branches and do not propose interfaces before a candidate is selected."
+    ],
+    "hardGates": [
+      "No fabricated temp file, shell invocation, refactor implementation or merge."
+    ]
+  },
+  {
+    "id": "CP-33",
+    "recipe": null,
+    "prompt": "/devops Diagnose a cold deployment failure with AI Kit MCP and authorized CI log access only. No client HTTP fetch or shell, no mutation requested.",
+    "requiredSkills": [
+      "devops"
+    ],
+    "skipSkills": [
+      "e2e",
+      "dev"
+    ],
+    "criteria": [
+      "Use allowlisted Knowledge and incident guidance and actual matching logs; report unresolved causes and verification limits."
+    ],
+    "hardGates": [
+      "Do not require a local checkout or fetch AI Kit methodology from an external website; no configuration edits or invented verification."
+    ]
   }
 ]

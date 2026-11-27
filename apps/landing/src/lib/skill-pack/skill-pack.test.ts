@@ -501,7 +501,9 @@ describe('skill composition', () => {
     expect(provider).toContain('Memory means your own host agent memory')
     expect(provider).toContain('Never discover, connect to, or call a memory service')
     const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/memory/cases.json'), 'utf8'))
-    expect(cases.every((item: { memoryLookup?: unknown }) => item.memoryLookup === undefined)).toBe(true)
+    const traps = cases.filter((item: { memoryLookup?: unknown }) => item.memoryLookup)
+    expect(traps.map((item: { id: string }) => item.id)).toEqual(['MP-16', 'MP-17'])
+    expect(traps.every((item: { memoryLookup: { expectedCalls: number } }) => item.memoryLookup.expectedCalls === 0)).toBe(true)
   })
 
   it('loads the memory protocol selectively and preserves contract metadata', async () => {
