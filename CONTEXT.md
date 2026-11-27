@@ -62,8 +62,8 @@ Subagent at `agents/<role>.md` — isolated context for long artifact work. Maps
 role**, not 1:1 with a skill. **Principal** tier: `pm`, `designer`, `developer`, `tester`,
 `techlead`. **`/align`** has no agent — grill is interactive in the main chat. Skills stay
 playbooks; multiple skills per agent OK (`developer` → `/dev` + `/devops`; `techlead` → `/docs`,
-`arch`, `/code-review`, `/arch`, `/devops`). Skill↔agent: `/reqs`→`pm`, `/design`→`designer`,
-`/dev`→`developer`, `/qa`→`tester`; `/docs`, `arch`, `/code-review`, `/arch`→`techlead`;
+`arch`, `/code-review`, `/arch-refactor`, `/devops`). Skill↔agent: `/reqs`→`pm`, `/design`→`designer`,
+`/dev`→`developer`, `/e2e`→`tester`; `/docs`, `arch`, `/code-review`, `/arch-refactor`→`techlead`;
 `/devops`→`developer` (exec) + `techlead` (SEV).
 _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` principal files), `*-agent` filename
 
@@ -80,7 +80,7 @@ Model-invoked front door for one feature prompt. Codebase pass, at most one batc
 writes a lean PRD, `techlead` writes an ADR only when the three-part test passes, and `designer` writes
 the UI spec when there is a screen. Follows `dev` in the same turn when no blocking gap remains.
 Asks once when a blocking fork is still open, and does not implement until that answer lands. Does
-not publish. Use dev feature preparation for a build-a-page prompt that names no skill.
+not publish. Use `collab` for a build-a-page prompt that names no skill.
 _Avoid_: agency pipeline, interview (when meaning the `/reqs` discovery script), waiting for a
 confirm when the packet has no blocking gap
 
@@ -134,13 +134,13 @@ Developer-facing documentation — API reference, tutorials, integration/migrati
 _Avoid_: technical writer (generic), README dump, /reqs (when meaning requirements)
 
 **E2E**:
-End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/qa`. Long sessions: **`tester`** (skill id `qa`, agent id `tester`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
-_Avoid_: QA (generic), tester skill (wrong id — use `/qa`), unit test (when meaning seam TDD)
+End-to-end test automation — Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Invoke with `/e2e`. Long sessions: **`tester`** (skill id `e2e`, agent id `tester`). Does **not** replace seam TDD (`/dev`) or deploy Knowledge fixes (`/devops`).
+_Avoid_: QA (generic), tester skill (wrong id — use `/e2e`), unit test (when meaning seam TDD)
 
 **Feature map**:
 Repo-local skill (default `.agents/skills/feature-map/`) whose `references/features/` index routes an agent to
 one behavior file. Four headings per area: `Sub-features`, `How to get to it (user POV)`, `Driving it`,
-`Gotchas`. The kit skill `/build-feature-map` authors that package. `/dev`, `/dev`, and `/qa` read it
+`Gotchas`. The kit skill `/build-feature-map` authors that package. `/collab`, `/dev`, and `/e2e` read it
 when the index has area links. Pointer: `docs/agents/feature-map.md`.
 _Avoid_: wiki, reading the app to find a surface the index already names, `docs/features/` (the map is not
 public docs)
@@ -189,7 +189,7 @@ Model-invoked vocabulary skill for designing deep modules — seams, depth, leve
 _Avoid_: codebase design (generic), architecture patterns (when meaning the `arch` skill), devops (when meaning deploy/CI fixes)
 
 **Arch refactor**:
-Maintenance scan for deepening opportunities — HTML report, then grill chosen candidate. Invoke with `/arch`.
+Maintenance scan for deepening opportunities — HTML report, then grill chosen candidate. Invoke with `/arch-refactor`.
 _Avoid_: architecture review (generic), refactor (when meaning `/dev`)
 
 ## Artifacts
@@ -296,12 +296,12 @@ echo inputs; per intent `{ covered, articleIds }`. An article **covers** when
 `axes ⊆ article.axisTags`; only **published** articles. Empty/blank `axes` or `intents: []` →
 tool validation error; omit intents → all three.
 OAuth any connected user. Soft-required for `/setup` (persist Coverage into stack-profile as
-bootstrap via fixed per-intent axis heuristics), `/arch`, `/arch` — those two **re-call
+bootstrap via fixed per-intent axis heuristics), `/arch`, `/arch-refactor` — those two **re-call
 MCP** for the subset under work; stack-profile notes are not live SSOT. Placeholder / kit-bleed
 stripping on upsert stays **agent-owned**. Complements `search_knowledge`; does not replace it.
 _Avoid_: `/ops/matrix` dump for agents, inventing seams when coverage already lists a hit,
 server-side “strip apps/landing” as a complete authoring fix, trusting stale stack-profile
-Coverage without re-calling MCP in `/arch` / `/arch`
+Coverage without re-calling MCP in `/arch` / `/arch-refactor`
 
 **Ops CMS**:
 Kit-site ops knowledge admin at `/ops/*` — canonical store is **Knowledge** (articles + chunks +
@@ -332,7 +332,7 @@ Canonical domain vocabulary for the repo. Lives in `CONTEXT.md` — glossary onl
 _Avoid_: CONTEXT, domain doc
 
 **CONTEXT.md**:
-Root glossary file — single source of truth for domain terms. Updated inline when terms resolve during `/align` or `align`.
+Root glossary file — single source of truth for domain terms. Updated inline when terms resolve during `/align` or `domain-modeling`.
 _Avoid_: context file, domain model file
 
 **Domain modeling**:

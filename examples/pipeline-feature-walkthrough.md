@@ -7,13 +7,13 @@ Use when onboarding contributors or checking that handoffs stay in lane.
 
 **Ask:** "Build a CRUD user page." No `/reqs`, no `/design`.
 
-the dev feature-preparation workflow reads the existing user entity and the nearest admin list, copies who-may-mutate from that
+`collab` reads the existing user entity and the nearest admin list, copies who-may-mutate from that
 screen, and asks only if a destructive fork is still open (delete vs archive). Then it spawns `pm`
 (lean PRD, no interview), `techlead` only if the three-part ADR test passes, and `designer` for
 `docs/design/<slug>.md`. Packet checked on disk. No blocking marker → follow `/dev` in that
 turn. A still-open fork → ask once and do not implement yet.
 
-Naming `/reqs` or `/design` yourself skips the dev feature-preparation workflow and keeps that skill's own interview or confirm.
+Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own interview or confirm.
 
 ## Scenario
 
@@ -82,7 +82,7 @@ Example status mid-flight:
 Handoff → `/code-review`.
 
 Public surface (MCP/API) after ship → optional `/docs` (`techlead`).
-Browser journey flake in CI → `/qa` (`tester`), not seam TDD.
+Browser journey flake in CI → `/e2e` (`tester`), not seam TDD.
 
 ## Code review
 

@@ -37,7 +37,7 @@ to use/integrate what was built.
 **Boundary vs `/dev`:** `/dev` owns production code and TDD. **`/docs`** may cite seams and
 examples; does not implement features or rewrite AC.
 
-**Boundary vs the align domain-modeling workflow:** Reading `CONTEXT.md` for vocabulary is fine. Active glossary
+**Boundary vs `domain-modeling`:** Reading `CONTEXT.md` for vocabulary is fine. Active glossary
 or ADR updates → escalate; do not expand product language in docs alone.
 
 **Boundary vs the feature map:** `.agents/skills/feature-map/` (path in `docs/agents/feature-map.md`)
@@ -163,7 +163,7 @@ ship — prefer **exactly one**:
 - `/align` — plan or domain still fuzzy; need design-tree grill before more docs
 
 Pick one preferred next action (two max only when the fork is genuine — each with when).
-Escalation cues (cite `/devops` for infra Knowledge; pair with `/qa` for tester how-to) may appear
+Escalation cues (cite `/devops` for infra Knowledge; pair with `/e2e` for tester how-to) may appear
 in body prose; `## Next Step` still names one preferred.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).

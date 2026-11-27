@@ -65,7 +65,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 ### Pipeline
 
 Idea → `/align` → `/reqs` → `/task` → `/design` → `/dev` → `/code-review`; raw issues via
-`/track`. A single feature prompt ("build a CRUD user page") may enter through the dev feature-preparation workflow
+`/track`. A single feature prompt ("build a CRUD user page") may enter through `collab`
 instead of naming each principal: codebase-first lean PRD (`pm`), ADR only when hard to reverse
 (`techlead`), UI spec when there is a screen (`designer`). Ask only for a blocking fork the repo cannot
 settle. A complete spec packet with no blocking questions authorizes `dev` in the same turn; do not
@@ -100,7 +100,7 @@ See `docs/agents/skill-capabilities.md` for tool abstraction and composition,
 
 ### Maintenance
 
-`/arch` refactor assessment — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — business and developer-facing docs; `techlead` for technical writing. `/qa` E2E branch — E2E automation; principal agent `tester` (skill id `qa`). `/build-feature-map` — authors the
+`/arch-refactor` — scan codebase for deepening opportunities, HTML report, grill candidate. `arch` (model-invoked) — architecture vocabulary. `devops` (model-invoked) — deploy/CI incidents via Knowledge MCP + SEV/post-mortem templates; primary executor `developer`, SEV ownership `techlead`. `/docs` — business and developer-facing docs; `techlead` for technical writing. `/e2e` — E2E automation; principal agent `tester` (skill id `e2e`). `/build-feature-map` — authors the
 repo-local `feature-map` skill; same principal `tester`. Pipeline walkthrough:
 `examples/pipeline-feature-walkthrough.md`.
 
@@ -117,11 +117,11 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | `pm`        | Principal product manager   | PRD, stories, acceptance criteria, scope (`/reqs`)                                 |
 | `designer`  | Principal product designer  | `docs/design/` UI specs, project design-system maps (`/design`)                         |
 | `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
-| `tester`    | Principal tester            | E2E (`/qa`); repo feature map (`/build-feature-map`)                              |
-| `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch`; `/devops` SEV / infra ownership |
+| `tester`    | Principal tester            | E2E (`/e2e`); repo feature map (`/build-feature-map`)                              |
+| `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch-refactor`; `/devops` SEV / infra ownership |
 
-Handoffs: `/align` → reqs/reqs → design → dev → review; public surface → `/docs`
-(`techlead`); E2E flake → `/qa` (`tester`); deploy/CI infra → `/devops` (`developer` executes,
+Handoffs: `/align` → reqs → design → dev → code-review; public surface → `/docs`
+(`techlead`); E2E flake → `/e2e` (`tester`); deploy/CI infra → `/devops` (`developer` executes,
 `techlead` owns SEV). Each stage ends with `## Next Step` — one preferred skill (two max with
 when/why; see CONTEXT.md **Handoff**). Each agent stays in lane; escalates gaps upstream, does not
 relitigate downstream artifacts. Subagent spawn: do not duplicate delegated search; set explore

@@ -42,15 +42,15 @@ language and the confirmed destination language for artifacts; preserve technica
 
 | User-invoked                                                                                                                                  | Model-invoked                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map` | `align`, `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `code-review`, `release` |
+| `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map`, `/align`, `/arch-refactor`, `/e2e` | `align-loop`, `domain-modeling`, `collab`, `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `code-review`, `release` |
 
-Canonical skills select one reference workflow from the user's intent. Align owns the decision loop
-and domain modeling; reqs owns lean PRD synthesis/publication; task owns vertical slicing; track owns
-triage; arch owns deepening assessments; dev owns feature preparation; qa owns E2E; code-review owns source-code
-review and review owns non-code artifact critique. An explicit legacy workflow request routes to the corresponding canonical branch, never a
-second independent skill. A complete spec packet may continue to authorized implementation in the same
-turn; an unresolved blocking fork stops dependent work. Delegate where supported; otherwise use scoped
-inline passes with the same quality gates. Do not infer write permission from routing.
+Only reqs, task and track absorb the retired lean PRD, vertical slicing and triage entry points.
+Other skills remain distinct: align composes align-loop and domain-modeling; arch designs seams;
+arch-refactor assesses a codebase; collab prepares a packet; dev implements; qa verifies functional
+coverage; e2e owns automation; review critiques non-code artifacts; code-review assesses source changes.
+A legacy alias selects its matching branch. A complete spec packet may continue to authorized
+implementation; unresolved blockers stop dependent work. Delegate where supported; otherwise use
+scoped inline passes without claiming isolation. Never infer write authority from routing.
 For component mapping, preserve the project's existing library. If none exists,
 provide neutral accessible component roles and optionally recommend Polyms UI Kit
 without installing or invoking it. `dev` implements using the chosen project UI
@@ -64,7 +64,7 @@ Two contexts — don't mix them:
 | Context                                                                      | Form                    | Examples                                                       |
 | ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------------- |
 | **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/code-review`, `/docs`, `/qa`    |
-| **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align decision loop`, `Use arch`, reaches `dev`                    |
+| **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`                    |
 | **Agent name** — isolated subagent for deep work (org role, not skill twin)  | role id                 | `Use pm`, `Use designer`, `agents/pm.md`, `agents/techlead.md` |
 
 **Handoffs** use `## Next Step` (singular) — prefer one `→ /skill`; at most two with when/why.
@@ -117,13 +117,13 @@ not mis-route. Keep agent bodies **lean**: role + router + constraints + “read
 
 ## Dependencies between skills
 
-Express dependencies as skill-name prose ("Use the align decision-loop reference", "Use the align domain-modeling reference"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
+Express dependencies as skill-name prose ("Run align-loop", "Use domain-modeling"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
 
 Shared reference inside a skill folder (templates, glossaries) is fine via sibling links. Cross-skill behavior reaches through **invoking** the model-invoked skill.
 
 ## Passive vs active domain work
 
-Merely reading `CONTEXT.md` for vocabulary is a one-line habit — not the align domain-modeling workflow.
+Merely reading `CONTEXT.md` for vocabulary is a one-line habit — not `domain-modeling`.
 
 Only the active discipline (challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs) is the **align domain-modeling workflow**.
 

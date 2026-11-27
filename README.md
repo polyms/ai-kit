@@ -73,7 +73,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 /design        → UI spec from PRD using the project's design system
 /dev           → fullstack implementation, TDD, debugging
 /code-review → three-axis review (Standards + Spec + Simplify) before merge
-/arch → scan codebase for deepening opportunities (maintenance)
+/arch-refactor → scan codebase for deepening opportunities (maintenance)
 ```
 
 `arch` (model-invoked) supplies architecture vocabulary. **Polyms UI Kit** (`@polyms/ui-kit`) offers an **optional** component library and `/ui-kit` skill. AI Kit `/design` and `/dev` work with the existing project's chosen design system and do not require installing or invoking Polyms UI Kit.
@@ -90,23 +90,28 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ### Catalog
 
-21 canonical skills are available both as native skill entries and live MCP packs. Select the relevant workflow within each skill; actual execution depends on the host.
+26 canonical skills are available both as native skill entries and live MCP packs. Select the relevant workflow within each skill; actual execution depends on the host.
 
 | Invoke | Scope |
 | --- | --- |
-| [`/align`](skills/align/) | Decision alignment, glossary and ADRs |
-| [`/arch`](skills/arch/) | Architecture design and refactor assessment |
+| [`/align`](skills/align/) | Combined alignment session |
+| [`/align-loop`](skills/align-loop/) | Calibrated decision-tree questioning |
+| [`/domain-modeling`](skills/domain-modeling/) | Canonical terminology, glossary and ADRs |
+| [`/arch`](skills/arch/) | Deep-module vocabulary, interface and seam design |
+| [`/arch-refactor`](skills/arch-refactor/) | Codebase deepening assessment and candidate report |
 | [`/bug`](skills/bug/) | Evidence-based defect reports |
 | [`/build-feature-map`](skills/build-feature-map/) | Project-owned behavior map authoring and maintenance |
 | [`/business`](skills/business/) | Commercial and strategic decision analysis |
 | [`/comms`](skills/comms/) | Stakeholder messages and ticket replies |
 | [`/craft`](skills/craft/) | Skill methodology authoring and evaluation |
 | [`/design`](skills/design/) | UI flows, component mapping and specifications |
-| [`/dev`](skills/dev/) | Feature preparation, implementation, TDD and debugging |
+| [`/dev`](skills/dev/) | Implementation, TDD and debugging |
+| [`/collab`](skills/collab/) | Coordinate feature PRD, ADR and UI spec packet |
 | [`/devops`](skills/devops/) | Deploy, CI and infrastructure incidents |
 | [`/docs`](skills/docs/) | Business and technical documentation |
 | [`/plan`](skills/plan/) | Effort, dependencies, capacity and delivery planning |
-| [`/qa`](skills/qa/) | Functional test design, verification and E2E automation |
+| [`/qa`](skills/qa/) | Functional test design, UAT and verification |
+| [`/e2e`](skills/e2e/) | Browser automation harness, flake, journey and CI sharding |
 | [`/release`](skills/release/) | Go-live readiness and rollback |
 | [`/reqs`](skills/reqs/) | Discovery, BRD, enterprise/lean PRD and authorized publication |
 | [`/research`](skills/research/) | Evidence-based research |
@@ -128,7 +133,7 @@ In addition to local installation, MCP-capable clients can connect to `https://a
 with Streamable HTTP and OAuth. Discover available packs via `list_skill_packs` and load workflow,
 templates and references using `get_skill_pack`. The server retrieves Markdown from GitHub main.
 
-The live MCP exposes the same 21 canonical entries above. No checkout or native install is required to retrieve methodology. The published immutable SDK snapshot has its own release catalog; do not infer its contents from live MCP.
+The live MCP exposes the same 26 canonical entries above. No checkout or native install is required to retrieve methodology. The published immutable SDK snapshot has its own release catalog; do not infer its contents from live MCP.
 
 Use the catalog routing hints and `starterPaths` to choose and load the smallest relevant workflow;
 fetch additional exact paths only when needed. `[]` returns the manifest only; omission retains full-pack
@@ -268,9 +273,9 @@ Clarify plans and sharpen domain language before specs or code:
 Grill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.
 ```
 
-`/align` (when alignment is requested or materially needed) runs the decision-loop and domain-modeling references together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/design`, or `/dev`.
+`/align` (when alignment is requested or materially needed) runs the `align-loop` and `domain-modeling` skills together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/design`, or `/dev`.
 
-### `/dev` — Feature preparation branch
+### `/collab` — Feature preparation
 
 Model-invoked. A feature ask that names no skill — "build a CRUD user page", "làm trang user" —
 runs a codebase pass, asks at most once when a blocking fork is still open, then spawns `pm`,
@@ -362,26 +367,26 @@ Write a tutorial: connect Cursor to kit MCP and search Knowledge intent: inciden
 
 See [SKILL.md](skills/docs/SKILL.md).
 
-### `/qa` — E2E automation branch
+### `/e2e` — E2E automation
 
 Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Skill
 id **`qa`**; principal agent **`tester`**. Not seam TDD (`/dev`); not deploy Knowledge
 (`/devops`).
 
 ```
-/qa
+/e2e
 
 Stabilize flaky Playwright checkout journey — signal waits, quarantine with owner.
 ```
 
-See [E2E workflow](skills/qa/e2e-workflow.md).
+See [E2E workflow](skills/e2e/SKILL.md).
 
 ### `/build-feature-map` — Repo feature map
 
 Authors a repo-local skill at `.agents/skills/feature-map/`. Cursor and Claude symlink to that
 directory. That skill reads
 `references/features/` and opens one area file. The kit skill does not contain the map.
-`/setup` can scaffold an empty package. `/dev`, `/dev`, and `/qa` read it once areas
+`/setup` can scaffold an empty package. `/collab`, `/dev`, and `/e2e` read it once areas
 exist. Principal: `tester`.
 
 ```
@@ -443,12 +448,12 @@ Review skills/reqs/SKILL.md for sprawl and no-ops.
 
 Covers predictability, invocation, information hierarchy, leading words, and pruning. See [glossary.md](skills/craft/glossary.md).
 
-### `/arch` — Refactor assessment branch
+### `/arch-refactor` — Refactor assessment
 
 Scan the codebase for deepening opportunities — shallow modules, seam leakage, poor test surfaces:
 
 ```
-/arch
+/arch-refactor
 
 Rà soát kiến trúc — tìm chỗ deepen module.
 ```
@@ -457,7 +462,7 @@ Explores organically, writes a visual HTML report to the OS temp directory (Tail
 
 ### `/arch` — Architecture Vocabulary
 
-Model-invoked vocabulary for deep modules — seam, depth, leverage, locality, design-it-twice. Skills `dev` and `/arch` reach for it when placing seams or deepening interfaces. See [SKILL.md](skills/arch/SKILL.md), [DEEPENING.md](skills/arch/DEEPENING.md), [DESIGN-IT-TWICE.md](skills/arch/DESIGN-IT-TWICE.md).
+Model-invoked vocabulary for deep modules — seam, depth, leverage, locality, design-it-twice. Skills `dev` and `arch-refactor` reach for it when placing seams or deepening interfaces. See [SKILL.md](skills/arch/SKILL.md), [DEEPENING.md](skills/arch/DEEPENING.md), [DESIGN-IT-TWICE.md](skills/arch/DESIGN-IT-TWICE.md).
 
 ## Repository structure
 
@@ -466,14 +471,19 @@ ai-kit/
 ├── agents/                  # Principal roles
 ├── docs/agents/             # Shared protocols and project setup
 ├── workflows/               # Optional composition recipes
-├── skills/                  # 21 canonical skill entries
+├── skills/                  # 26 canonical skill entries
 │   ├── reqs/                # Discovery, enterprise and lean PRD branches
 │   ├── task/                # Standard tasks and vertical slicing
 │   ├── track/               # Inspect, update and triage
-│   ├── align/               # Decision loop and domain modeling
-│   ├── arch/                # Design vocabulary and refactor assessment
-│   ├── dev/                 # Feature preparation, implementation and debug
-│   ├── qa/                  # Functional and E2E test workflows
+│   ├── align/               # Combined alignment
+│   ├── align-loop/          # Decision-tree questions
+│   ├── domain-modeling/     # Domain terminology and ADRs
+│   ├── arch/                # Design vocabulary and seam design
+│   ├── arch-refactor/       # Architecture assessment
+│   ├── collab/              # Feature preparation
+│   ├── dev/                 # Implementation and debug
+│   ├── qa/                  # Functional QA
+│   ├── e2e/                 # Automation harness and suite health
 │   ├── review/              # Artifact review
 │   ├── code-review/         # Three-axis source-code review
 │   ├── setup/               # Project execution profile and configuration
@@ -538,7 +548,7 @@ mapped to the project's chosen components; Dev implements against briefs and des
 ## Roadmap
 
 - [x] `/setup` — repo configuration for ai-kit pipeline
-- [x] `/align` + the align decision and domain branches — alignment and domain docs with auto-discovery (EN/VI)
+- [x] `/align` + `align-loop` and `domain-modeling` — alignment and domain docs with auto-discovery (EN/VI)
 - [x] `/reqs` — discovery, enterprise PRD, user stories (user-invoked; does not publish)
 - [x] `/reqs` — synthesize conversation into lean PRD, publish to GitHub (from Matt's to-prd)
 - [x] `/task` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
@@ -548,11 +558,11 @@ mapped to the project's chosen components; Dev implements against briefs and des
 - [x] `/docs` — business and developer-facing docs
 - [x] `research`, `business`, `task`, `bug` — work operations skills and templates
 - [x] MCP skill provider — mutable Markdown delivery; new 0.3.4 pinned release pending production smoke
-- [x] `/qa` — E2E automation (`tester`)
+- [x] `/e2e` — E2E automation (`tester`)
 - [x] `/build-feature-map` — authors the repo-local `feature-map` skill (`tester`)
 - [x] `/devops` — Knowledge incident workflow + SEV/post-mortem templates
 - [x] `/craft` — writing and editing skills (from Matt's writing-great-skills)
-- [x] `/arch` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)
+- [x] `/arch-refactor` + `arch` — architecture maintenance and vocabulary (from Matt's improve-codebase-architecture + codebase-design)
 - [x] `/design` — vendor-neutral UI specs at `docs/design/`, optional Polyms UI Kit integration
 - [x] `examples/` — pipeline feature walkthrough for onboarding
 - [ ] Frontmatter validation script
@@ -573,4 +583,4 @@ for production delivery checks. See [Quality Baseline](docs/quality/baseline.md)
 
 ## Skill migration
 
-The canonical catalog has 21 skills. Old workflow names are MCP aliases only; use the canonical native command plus the requested branch. See [skill migration](docs/agents/skill-migration.md) for the complete map and preserved gates.
+The canonical catalog has 26 skills. Old workflow names are MCP aliases only; use the canonical native command plus the requested branch. See [skill migration](docs/agents/skill-migration.md) for the complete map and preserved gates.

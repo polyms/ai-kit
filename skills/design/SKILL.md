@@ -87,10 +87,10 @@ this feature must satisfy.
 When the project uses Polyms UI Kit, selectively load its optional component
 references; otherwise use existing project components or neutral semantic roles.
 Do not ask the user to install or invoke `/ui-kit`. The existing brief-confirmation
-rules, including the the dev feature-preparation workflow exception, still apply.
+rules, including the `collab` exception, still apply.
 
 **Completion criterion:** Brief + theme direction stated; anti-slop rows cited; user corrects or explicitly
-proceeds before step 3, or a the dev feature-preparation workflow brief already cleared the ask gate.
+proceeds before step 3, or a `collab` brief already cleared the ask gate.
 
 ### 3. Draft spec
 

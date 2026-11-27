@@ -122,10 +122,12 @@ controlled test fixture are needed for pre-merge content checks.
 
 ## Canonical skill catalog
 
-The live MCP catalog exposes 21 canonical packs, including all engineering responsibilities.
+The live MCP catalog exposes 26 canonical packs, including all engineering responsibilities.
 Use reqs for discovery or lean PRD publication; task for standard tickets or vertical slicing;
-track for inspect/update or triage; align for decision loop/domain modeling; arch for design/refactor;
-dev for preparation/implementation/debug; qa for functional/E2E; review for non-code artifacts; code-review for source changes.
+track for inspect/update or triage. Align composes align-loop and domain-modeling. Arch designs
+interfaces; arch-refactor assesses the codebase. Collab prepares feature packets; dev implements.
+QA owns functional verification; e2e owns automation. Review critiques artifacts; code-review
+assesses source changes. These skills keep independent invocation, contract and gates.
 Setup, devops, craft and build-feature-map retain distinct responsibilities.
 
 Legacy workflow names resolve to their canonical packs with requestedName metadata and are not listed

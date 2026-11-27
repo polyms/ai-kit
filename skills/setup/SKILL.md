@@ -133,7 +133,7 @@ required before adoption. `/design` writes specs independently of `/ui-kit`.
 **G — Chat voice** (optional)
 
 Repo-level chat **persona** for agents. Distinct from documentation language (step A) and from grill
-question shape (align decision loop / GRILL-FORMAT). Default: **do not** install — use the user's IDE/user rules.
+question shape (align-loop / GRILL-FORMAT). Default: **do not** install — use the user's IDE/user rules.
 
 Ask: _Do you want a kit-written chat voice for this repo?_ If Explore found an existing
 `.cursor/rules/agent-voice.mdc`, say so and ask skip / replace / keep.
@@ -382,7 +382,7 @@ ln -sfn ../../.agents/skills/<slug> .claude/skills/<slug>
 Do **not** copy a second map under `.cursor/` or `.claude/` — one directory, two links.
 
 **If feature map No:** when no pointer exists, write `docs/agents/feature-map.md` with this body so
-dev feature preparation and QA E2E stop suggesting the map:
+`collab` and `e2e` stop suggesting the map:
 
 ```markdown
 # Feature map
