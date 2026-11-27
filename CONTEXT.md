@@ -48,7 +48,7 @@ Human types `/name` (e.g. `/align`, `/craft`). Skill has `disable-model-invocati
 _Avoid_: manual, human-only skill
 
 **Model-invoked**:
-Agent reaches the skill via `description` (e.g. `align`, `arch`, `dev`). No `disable-model-invocation` flag.
+Agent reaches the skill via `description` (e.g. `align-loop`, `domain-modeling`, `arch`, `dev`, `collab`). No `disable-model-invocation` flag.
 _Avoid_: auto, automatic, agent-discovered
 
 ## Skills & Agents
@@ -243,7 +243,7 @@ _Avoid_: knowledge index in git (when meaning live CMS content)
 **Language pointer**:
 Setup output at `docs/agents/language.md` — the fixed language for persistent written docs
 (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft
-dependency for `align`, `reqs`, `design`, `arch` — they match this language
+dependency for `domain-modeling`, `reqs`, `design`, `arch`, `collab`, `arch-refactor` — they match this language
 or, absent the file, whatever doc they're already editing. Prose stays natural in that language;
 only **pure-tech tokens** (invokes, protocols, identifiers, canonical glossary terms) stay
 English — no mid-sentence language mix. Chat tone is unaffected — IDE/user rules, or opt-in

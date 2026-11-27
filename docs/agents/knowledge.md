@@ -92,7 +92,7 @@ Ids come from search results — never from skill memory or seed fixtures.
 ## Knowledge coverage
 
 Gap/hit check for intentional axis **subsets** — complements `search_knowledge`, does not replace
-it. Soft-required for `/setup` (persist into stack-profile), `/arch`, and `/arch`
+it. Soft-required for `/setup` (persist into stack-profile), `/arch`, and `/arch-refactor`
 (those two **re-call MCP** for the subset under work; do not trust stale stack-profile alone).
 
 ### Tool: `get_knowledge_coverage`

@@ -16,7 +16,7 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 
 **Boundary vs `/dev`:** a deploy/CI symptom reported cold — no `/dev` slice already in progress — routes here automatically. One surfacing mid-slice (deploy-aware `/dev` touching infra config inside a feature slice) stays in `/dev`. **`/devops`** owns operational incidents end-to-end otherwise. Hand off app feature work to `/dev`.
 
-**Boundary vs `/qa`:** flaky or slow **test** jobs, Playwright config, sharding → **`/qa`**
+**Boundary vs `/e2e`:** flaky or slow **test** jobs, Playwright config, sharding → **`/e2e`**
 (`tester`). Deploy/build/install Knowledge matches stay here.
 
 **Boundary vs `arch`:** design seams and module shape → **`arch`** + `intent: design`. Irreversible **why** → `docs/adr/`. This skill applies **symptom → fix** only.
@@ -29,7 +29,7 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 | Proactive infra or CI change  | [Incident workflow](#incident-workflow) — retrieve via search                                 |
 | Post-fix confirmation         | Re-run **verify** steps from matched Knowledge chunk                                          |
 | SEV classify / status / close | [Close & communicate](#5-close--communicate) + [incident-templates.md](incident-templates.md) |
-| Flaky Playwright / E2E job    | User invokes `/qa` — not this skill                                                          |
+| Flaky Playwright / E2E job    | User invokes `/e2e` — not this skill                                                          |
 
 ## Incident Workflow
 

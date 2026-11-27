@@ -42,7 +42,7 @@ Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own i
 **Deferred:** Saved user prefs, analytics events.
 **Not in scope:** New Knowledge authoring UI.
 
-Handoff → `/reqs` (or `/reqs` if already aligned enough).
+Handoff → `/reqs` for discovery if needed, or its lean synthesis workflow if already aligned.
 
 ## Product
 

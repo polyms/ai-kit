@@ -63,7 +63,7 @@ Two contexts — don't mix them:
 
 | Context                                                                      | Form                    | Examples                                                       |
 | ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------------- |
-| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/code-review`, `/docs`, `/qa`    |
+| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch-refactor`, `/code-review`, `/docs`, `/e2e`    |
 | **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`                    |
 | **Agent name** — isolated subagent for deep work (org role, not skill twin)  | role id                 | `Use pm`, `Use designer`, `agents/pm.md`, `agents/techlead.md` |
 
@@ -108,7 +108,7 @@ claims done — same discipline, no silent trust of an earlier turn's claim).
 
 Do **not** re-run the entire monorepo "just in case". Docs-only / no-runnable-gate diffs skip this.
 
-Skills that ship code (`dev`, `qa`, `devops`, `code-review` when claiming build/test green)
+Skills that ship code (`dev`, `e2e`, `devops`, `code-review` when claiming build/test green)
 point here from their ship/close steps.
 
 Agent `description` frontmatter should include **negative triggers** (`Do NOT use for…`) so the parent does
@@ -125,7 +125,7 @@ Shared reference inside a skill folder (templates, glossaries) is fine via sibli
 
 Merely reading `CONTEXT.md` for vocabulary is a one-line habit — not `domain-modeling`.
 
-Only the active discipline (challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs) is the **align domain-modeling workflow**.
+Only the active discipline (challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs) is the **`domain-modeling` skill**.
 
 ## Setup dependencies
 

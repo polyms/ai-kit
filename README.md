@@ -141,7 +141,7 @@ Principal agents (`pm`, `designer`, `developer`, `tester`, `techlead`) map to **
 skills per agent OK. Use `/craft` when writing or editing any skill.
 
 **Descriptions:** WHAT in English; invoke triggers in **English + Vietnamese** — bilingual recall for you, auto-discovery
-for model-invoked skills (`align`, `arch`, `dev`, `review`, `devops`, `qa`, `task`, `track`).
+for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`, `review`, `qa`, `task`, `track`).
 
 ## Remote skill provider (MCP)
 
@@ -289,7 +289,7 @@ Clarify plans and sharpen domain language before specs or code:
 Grill kế hoạch [feature] — một câu một lần, chọn A/B/C/D.
 ```
 
-`/align` (when alignment is requested or materially needed) runs the `align-loop` and `domain-modeling` skills together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/design`, or `/dev`.
+`/align` (explicitly invoked) runs the `align-loop` and `domain-modeling` skills together (Matt `grill-with-docs` pairing): design tree, **one question**, **lettered options** (2–4 real forks) with **(Recommended)**, codebase explored before asking when possible, `CONTEXT.md` updated inline. Hands off to `/reqs`, `/design`, or `/dev`.
 
 ### `/collab` — Feature preparation
 
@@ -386,7 +386,7 @@ See [SKILL.md](skills/docs/SKILL.md).
 ### `/e2e` — E2E automation
 
 Playwright (or repo harness) flake elimination, CI sharding, journey coverage, traces. Skill
-id **`qa`**; principal agent **`tester`**. Not seam TDD (`/dev`); not deploy Knowledge
+id **`e2e`**; principal agent **`tester`**. Not seam TDD (`/dev`); not deploy Knowledge
 (`/devops`).
 
 ```
@@ -450,7 +450,7 @@ Show me what needs attention.
 Phân loại issue #42 — verify và viết agent brief.
 ```
 
-Categorises (`bug` / `enhancement`), verifies claims, grills via the align decision and domain branches when needed, writes agent briefs, manages `.out-of-scope/`. Issues reaching `ready-for-agent` hand off to `/dev`. Complements `/task` — triage processes inbound backlog; `/task` creates slices from specs. See [agent-brief.md](skills/track/agent-brief.md) and [triage-labels.md](docs/agents/triage-labels.md).
+Categorises (`bug` / `enhancement`), verifies claims, grills via `align-loop` and `domain-modeling` when needed, writes agent briefs, manages `.out-of-scope/`. Issues reaching `ready-for-agent` hand off to `/dev`. Complements `/task` — triage processes inbound backlog; `/task` creates slices from specs. See [agent-brief.md](skills/track/agent-brief.md) and [triage-labels.md](docs/agents/triage-labels.md).
 
 ### `/craft` — Writing Great Skills
 
@@ -474,7 +474,7 @@ Scan the codebase for deepening opportunities — shallow modules, seam leakage,
 Rà soát kiến trúc — tìm chỗ deepen module.
 ```
 
-Explores organically, writes a visual HTML report to the OS temp directory (Tailwind + Mermaid), then grills your chosen candidate via the align decision and domain branches. Uses **`arch`** vocabulary throughout. Hands off to `/dev` when the design is resolved. Maintenance skill — outside the daily ship pipeline.
+Explores organically, writes a visual HTML report to the OS temp directory (Tailwind + Mermaid), then grills your chosen candidate via `align-loop` and `domain-modeling`. Uses **`arch`** vocabulary throughout. Hands off to `/dev` when the design is resolved. Maintenance skill — outside the daily ship pipeline.
 
 ### `/arch` — Architecture Vocabulary
 

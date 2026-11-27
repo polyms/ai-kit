@@ -513,8 +513,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: '/dev (seam đã ship) hoặc schema/MCP sẵn có',
       },
       downstream: {
-        en: 'Published docs path / optional `/qa` how-to',
-        vi: 'Đường docs đã publish / tùy chọn hướng dẫn cho `/qa`',
+        en: 'Published docs path / optional `/e2e` how-to',
+        vi: 'Đường docs đã publish / tùy chọn hướng dẫn cho `/e2e`',
       },
     },
     boundaries: {
@@ -541,8 +541,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Rà bản nháp theo đường người tích hợp mới — không cần hỏi Slack.',
       },
       {
-        en: 'Publish to the agreed docs path; optionally add an `/qa` how-to if journeys matter.',
-        vi: 'Publish vào đường docs đã chốt; tùy chọn thêm hướng dẫn `/qa` nếu hành trình quan trọng.',
+        en: 'Publish to the agreed docs path; optionally add an `/e2e` how-to if journeys matter.',
+        vi: 'Publish vào đường docs đã chốt; tùy chọn thêm hướng dẫn `/e2e` nếu hành trình quan trọng.',
       },
     ],
     doneWhen: {
@@ -670,8 +670,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Áp từ vựng vào module đang đổi — không bịa glossary song song.',
       },
       {
-        en: 'For a maintenance scan of deepening debt, use `/arch` instead.',
-        vi: 'Để quét bảo trì nợ làm sâu, dùng `/arch` thay thế.',
+        en: 'For a maintenance scan of deepening debt, use `/arch-refactor` instead.',
+        vi: 'Để quét bảo trì nợ làm sâu, dùng `/arch-refactor` thay thế.',
       },
     ],
     doneWhen: {
@@ -917,8 +917,8 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Đọc PRD gọn, ADR nếu có, và spec UI mà các agent đã viết.',
       },
       {
-        en: 'If nothing blocking remains, collab continues into /dev in the same turn.',
-        vi: 'Nếu không còn chỗ kẹt, collab chạy tiếp /dev ngay trong lượt đó.',
+        en: 'If no blockers remain and implementation is requested and authorized, collab hands off to /dev in the same turn.',
+        vi: 'Nếu không còn blocker và được yêu cầu, cấp quyền triển khai, collab chuyển sang /dev ngay trong lượt đó.',
       },
     ],
     doneWhen: {

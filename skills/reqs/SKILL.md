@@ -88,7 +88,7 @@ including who is not a user).
 
 ## Codebase-first
 
-**Goal:** Lean PRD from the repo when dev feature preparation passes an inference brief, or the user says to
+**Goal:** Lean PRD from the repo when `collab` passes an inference brief, or the user says to
 draft from the codebase without an interview.
 
 1. Do **not** run [prd-interview.md](prd-interview.md), the confirmation turn, or the behavior-pass
@@ -104,7 +104,7 @@ draft from the codebase without an interview.
 **Completion criterion:** `docs/prd/<slug>.md` exists; no tracker issue; no interview questions
 were sent.
 
-When the user invoked `/reqs` this way themselves (no dev feature preparation parent), end with `## Next Step`
+When the user invoked `/reqs` this way themselves (no `collab` parent), end with `## Next Step`
 → `/design` if the feature has a screen, otherwise → `/reqs` (publish the approved lean PRD if requested).
 
 ## PRD Workflow

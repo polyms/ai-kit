@@ -166,7 +166,7 @@ that settles the tree carries `## Next Step` and no further **Q:** (`/reqs`, `/d
 | Ask what code already shows                         | Explore, report, then lettered options                    |
 | Dump the whole decision tree upfront                | Descend the tree; parent before child                     |
 | Robotic listing without a lead-in sentence          | One line why this decision is up now, then **Q:**         |
-| Batch glossary updates at the end                   | the align domain-modeling workflow writes each term when it resolves       |
+| Batch glossary updates at the end                   | `domain-modeling` writes each term when it resolves       |
 | Hand off with "no open questions" while gaps remain | Open-questions audit; defer only with explicit user **B** |
 | `## Next Step` instead of the next question         | Ask the next **Q:**; closer only when leaving the grill   |
 | Glossary update, then stop                          | Next **Q:**, or the leaving block if the tree settled     |

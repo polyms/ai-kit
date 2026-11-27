@@ -438,6 +438,6 @@ they have a raw backlog ready: `→ /triage` with when.
 
 ## Language
 
-Once `docs/agents/language.md` exists, all skills that write persistent docs (`align`, `reqs`, `design`, `arch`, `task`) read it and write in the confirmed language. Prose stays natural in
+Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `reqs`, `design`, `arch`, `task`, `collab`, `arch-refactor`) read it and write in the confirmed language. Prose stays natural in
 that language; only **pure-tech tokens** stay English ([language.md](language.md)). Chat tone is unaffected
 by this file — IDE/user rules, or `.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in.

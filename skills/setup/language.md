@@ -18,8 +18,8 @@ that outlive the conversation.
 
 Skills that write persistent docs read this file and write in the confirmed language:
 
-- the align domain-modeling workflow — `CONTEXT.md`, glossary entries
-- `reqs`, the reqs lean publication workflow — PRDs, user stories, acceptance criteria
+- `domain-modeling` — `CONTEXT.md`, glossary entries
+- `reqs` (including lean publication) — PRDs, user stories, acceptance criteria
 - `design` — `docs/design/<feature>.md`
 - `arch` — ADRs in `docs/adr/`
 - the task vertical-slicing workflow — issue bodies on the tracker

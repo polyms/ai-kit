@@ -160,4 +160,4 @@ Use the tester to [task]
 ```
 
 The agent reads this skill when the task is building or repairing the map. Journey flake and CI
-sharding stay on `/qa`.
+sharding stay on `/e2e`.
