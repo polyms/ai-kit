@@ -12,15 +12,16 @@ layer. Independently owned systems supply actual context and perform authorized 
 Host AI / coding agent / business assistant
   | selects skills, resolves context, reasons, verifies results
   |
+  +-- Own available conversation context and native memory (optional)
+  |
   +-- AI Kit delivery: local skills / MCP / SDK / compatible plugins
   |     +-- Skills, templates, quality gates
   |     +-- Knowledge (published technical guidance)
   |     +-- Context Contract and Skill Composition
-  |     +-- Memory Protocol and Reflection guidance (planned)
+  |     +-- Memory Protocol and reflection guidance
   |
   +-- Authorized tools and data
-        +-- Repository, tracker, documents, business state and APIs
-        +-- Agent-native, business or external memory (optional)
+        +-- Repository, tracker, documents, business state and APIs (task evidence)
 ```
 
 | Concern | AI Kit | Host / connected system |
@@ -29,8 +30,8 @@ Host AI / coding agent / business assistant
 | Expertise | Maintain reusable Knowledge | Retrieve and verify applicability |
 | Context | Declare information needs and source rules | Resolve available evidence and gaps |
 | Composition | Define optional recipes and artifact gates | Choose stages and execute |
-| Experience | Define memory-use guidance (planned) | Own or access memory under its policy |
-| Reflection | Define lesson and feedback methodology (planned) | Analyze and propose; owners approve changes |
+| Experience | Define optional host-native memory guidance | Consider own already available context and native memory |
+| Reflection | Define optional reflection and lesson guidance | Reflect on supported lessons; native retention follows host settings |
 | Actions | No permission granted by a skill | Authenticate, authorize, execute, verify |
 | Quality | Fixtures, rubrics and service diagnostics | Client behavior and actual work evidence |
 
@@ -119,8 +120,7 @@ local skills can reference shared methods when useful.
 - Future inward external skill sources may reuse the same packaging, discovery and quality
   principles. Do not make an external registry or aggregator mandatory. Check provenance,
   licensing, dependency closure and exact revision before any import.
-- External Memory is not an ecosystem integration that AI Kit must host. Clients and businesses
-  choose their own provider, retrieval, synchronization and access rules.
+- Memory hints refer to the executing agent's own available native memory and context, not an external memory integration. No connector discovery, lookup, synchronization or persistence is implied. External business records are separate task evidence; access them only for an actual authorized task need.
 - Keep AI Kit internals unobtrusive for ordinary business users; expose version/source diagnostics
   when technically requested, without hiding failures or inventing compatibility.
 

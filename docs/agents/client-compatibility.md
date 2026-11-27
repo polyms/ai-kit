@@ -87,12 +87,12 @@ client calls. Translate the intent using the **actual tool schema in this sessio
   use `runSubagent` when exposed. Their argument schemas differ; do not copy arguments
   from another client. Local subagent calls are stateless: pass prior results into a
   fresh call rather than attempting a resume the client does not support.
-- Preserve independent review/design briefs, role ownership, and disk verification.
+- Preserve independent review/design briefs, role ownership, and mode-specific verification: actual draft content for draft-only, matching readback/tests for authorized execution.
   Launch independent work concurrently only up to available slots; queue the remainder.
   Do not require three tool calls in a single message if the client cannot express it.
   For a pure scan or review with no delegation tool, apply its checklists in the parent
   and disclose the missing isolation. For `collab`, do not impersonate absent principals;
-  report the missing capability before starting that delegated packet.
+  run the same scoped methodology passes inline, disclose the missing isolation, and pass actual artifact content or a verified accessible reference. Do not claim delegation or require an unwritten file.
 
 Use the current client's question, browser, preview, and shell capabilities. Do not
 invent unavailable tools, require Plan mode for a conversation, or change permissions

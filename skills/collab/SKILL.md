@@ -42,14 +42,14 @@ Explicit skill invokes win. A bugfix, review, deploy, docs, or E2E ask is not th
 **Slug and resume:** An existing `docs/prd/` or `docs/design/` file that covers the same entity
 and screen is this feature — reuse its slug. Otherwise pick a kebab-case slug that neither folder
 already uses. Inspect each existing artifact against its completion criterion before deciding
-whether to skip or resume its owner. If complete, pass its path to the next principal and do not
+whether to skip or resume its owner. If complete, pass its verified accessible reference or actual content to the next principal and do not
 spawn its owner again. If incomplete, resume with that owner, preserve existing content, and fill
 the gaps; do not replace the file wholesale. For an ADR, reuse an existing decision that covers
 the same trade-off; otherwise choose the next free `docs/adr/NNNN-*.md` path.
 
 ## Workflow
 
-**Execution mode (before step 1 and every delegation):** Resolve the requested outcome, write authority and available routes. Draft-only/spec-only without write authority means produce the full packet in conversation or a user-requested standalone artifact, with proposed paths, **zero repository writes**, no tracker mutation, and no `dev` handoff. Authorized packet write means create/update only approved packet artifacts, then stop unless implementation is separately requested and authorized. Implementation mode requires verified packet artifacts in the target project before product code changes. If a write route is unavailable, fall back to a clearly labeled draft and report the write/implementation blocker. Pass mode, allowed actions, approved decisions and actual evidence to every principal; a brief never grants write authority or approval.
+**Execution mode (before step 1 and every delegation):** Resolve the requested outcome, write authority and available routes. Draft-only/spec-only without write authority means produce the full packet in conversation or a user-requested standalone artifact, with proposed paths, **zero repository writes**, no tracker mutation, and no `dev` handoff. Authorized packet write means create/update only approved packet artifacts, then stop unless implementation is separately requested and authorized. Implementation mode requires verified packet artifacts in the target project before product code changes. If a write route is unavailable, fall back to a clearly labeled draft and report the write/implementation blocker. Pass mode, allowed actions, approved decisions and actual evidence to every principal; a brief never grants write authority or approval. Use the composition handoff: pass actual draft artifact content (including requirements, decisions, assumptions and blockers), or an existing verified reference accessible to the receiver. A proposed path is only an output label, never a readable input. If the receiver cannot access a verified reference, pass its relevant content instead.
 
 Use the same authorized workspace/ref or connector evidence for the packet. If actual implementation or
 verification is unavailable, return the proposed packet and blocked handoff, not a shipped feature.
@@ -99,7 +99,7 @@ dependent work.
 If `docs/prd/<slug>.md` exists, verify it against the completion criterion. Skip only when it passes;
 otherwise resume with `pm` (see **Slug and resume**).
 
-Delegate to **`pm`** if available, otherwise run the scoped reqs pass with the brief and the expected output path. Load the `reqs` pack via MCP or local skill reference and follows
+Delegate to **`pm`** if available, otherwise run the scoped reqs pass with the brief and the expected output path. Load the `reqs` pack via MCP or local skill reference and follow
 **Codebase-first** only: lean PRD content with proposed `docs/prd/<slug>.md`, no tracker publish, no interview. Write only in authorized packet-write or implementation mode.
 Use the brief as the codebase pass; inspect only gaps needed to write or complete the PRD, and do not
 repeat the parent's broad exploration. Parent does not draft the PRD in parallel.
@@ -133,7 +133,7 @@ chosen, optionally suggest Polyms UI Kit for consideration but never install
 or adopt it without the user's choice. Polyms `/ui-kit` is optional and may be
 consulted only when the user selects Polyms UI Kit or the project already uses it.
 
-Delegate to **`designer`** if available, otherwise run the scoped design pass with the PRD path, the brief, and the expected output path. The agent reads
+Delegate to **`designer`** if available, otherwise run the scoped design pass. Pass the actual PRD draft content in draft mode (and any relevant ADR/glossary delta), or the verified PRD and ADR references accessible to the receiver in write mode; include the brief, execution mode and proposed output path. Never ask the designer to read an unwritten PRD path. The agent reads
 the `design` pack via MCP or local skill reference. Brief lock is already inferred — do not wait for a second confirm. Map actual project components from verified sources, or use semantic component roles when the design system is not established; do not invent a library. Return the UI spec with proposed `docs/design/<slug>.md`; write only in an authorized write mode.
 
 **Completion criterion:** The returned spec content names flows and four content states per screen and passes `skills/design/PREFLIGHT.md`; verify the actual target file only in write mode, or explicitly record that there is no screen.

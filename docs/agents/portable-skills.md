@@ -37,9 +37,10 @@ workspace. A cloud sandbox is not necessarily a checkout; a connector is not nec
   settle unapproved business decisions. If nobody can answer, return a conditional/blocked handoff
   with questions and proposed options, rather than waiting in an empty loop.
 - Carry decisions, source/revision, artifacts, blockers, gate and actual receipts using the existing
-  composition handoff. For separate runs use authorized durable project records or a portable draft;
+  composition handoff. For drafts pass actual content; for persisted artifacts pass a verified accessible
+  reference or relevant content. Proposed paths are labels only, not evidence of writes. For separate runs use authorized durable project records or a portable draft;
   AI Kit does not store workflow state.
-- Establish draft-only, authorized artifact write, or implementation mode before delegation or workflow steps that could mutate state. In draft-only mode no repository or tracker writes, including spec, ADR and glossary files. A draft can pass content gates without a file; authorized write and implementation gates still require actual receipts. Pass mode to every child; do not infer approval from a draft.
+- Establish draft-only/diagnose-only, authorized artifact write, or implementation mode before delegation or workflow steps that could mutate state. In draft-only mode no repository or tracker writes, including spec, ADR and glossary files. A draft can pass content gates without a file; authorized write and implementation gates still require actual receipts. Pass mode to every child; do not infer approval from a draft.
 - Read before writing. Preserve unrelated content, confirm identity/permission/scope and branch/PR
   policy. Reconcile ambiguous outcomes before retrying; never fall through to another write tool
   blindly. Draft, publication, actual test evidence and human approval are distinct.

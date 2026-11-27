@@ -40,8 +40,7 @@ proof of product value.
 
 The existing evaluation runner compares baseline and skill-assisted outputs using synthetic
 fixtures and an explicitly configured compatible model endpoint. It tests routing, output and
-composition; it can record retrieval traces and optional judge scores. At the PR #12 foundation there were 68 scenarios; the current foundation includes
-17 output, 39 routing, 21 composition and 15 memory scenarios (92 total). Scenario counts,
+composition and native-memory guidance; it can record retrieval traces and optional judge scores. At the PR #12 foundation there were 68 scenarios; use the current runner dry-run count rather than a fixed total. Scenario counts,
 fixture validity, successful CI and dry runs are not measured model quality. Native clients
 need separate integration tests. See [evaluation runner](../../evals/README.md).
 
@@ -51,16 +50,12 @@ need separate integration tests. See [evaluation runner](../../evals/README.md).
 | Template / artifact adherence | Required structure, traceable evidence, correct acceptance fields, explicit limitations; don't equate length with quality |
 | Context continuity | Approved scope, IDs, decisions and evidence retained through handoffs |
 | Knowledge utilization | Relevant search, opened source, applicable version, fewer invented recipes |
-| Memory use (0.3.4 pilot) | Relevant recall, accurate use of past facts, handling of stale/conflicting context |
-| Capture / reflection (0.3.4 pilot) | Supported lessons, no fabricated outcomes, privacy and owner permissions |
+| Host-native memory use | Relevant already available recollections, accurate use of past facts, handling of stale/conflicting context, zero unnecessary external memory calls |
+| Capture / reflection | Supported lessons, no fabricated outcomes or persistence; host settings and privacy respected |
 | Efficiency | Tool calls, reloaded bytes, latency, reported tokens; no unnecessary context inflation |
 | Compatibility | Real behavior across tested models, clients, versions and tool capabilities |
 
-For memory cases, give baseline and assisted conditions the same authorized synthetic historical
-facts, current state and capabilities. Isolate the effect of usage guidance; do not conflate
-availability of a memory store with skill quality. Include no memory, irrelevant memory, false or
-stale memory, approved versus proposed decisions, cross-scope privacy, and absent write capability.
-A recall score alone is not end-to-end answer accuracy.
+For memory cases, give baseline and assisted conditions the same simulated host-native remembered context and current evidence. Only the assisted arm receives current guidance. No real memory provider is used. External synthetic lookup traps expect zero calls in both arms; test missing/disabled memory, irrelevant or stale recollections, approved versus proposed decisions, cross-scope privacy and no persistence. The actual trace checks external tool calls; it cannot observe internal recollection. Mock protocol checks and dry runs are not model-quality measurements.
 
 Run deterministic contract, manifest, retrieval, scoring and fixture checks before model tests.
 Compare like-for-like model and client configurations across repeated runs. Record revision,
@@ -83,7 +78,7 @@ measurements over time, and traces connect related operations and their timing.
 | Traces | Correlated delivery and Knowledge-service steps, time spent and failed operation |
 
 Separate operational health from quality. A successful response proves delivery only, not that the
-host chose the correct skill, retrieved the right memory or completed the user's task.
+host chose the correct skill, appropriately used its own memory or completed the user's task.
 A Knowledge match is not proof of applicability. A service trace is not the model's hidden reasoning.
 
 An illustrative timing chain could measure catalog resolution, bundle fetch and Knowledge search/open

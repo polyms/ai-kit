@@ -191,12 +191,12 @@ name an upstream skill when blocked.
 When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after the
 ship checklist — prefer **exactly one**:
 
-- Ship / done — feature closed, nothing queued
+- `/code-review` — source changes require pre-merge review under project policy or user request; provide the exact diff/ref, specification or assumptions, and actual test evidence. Review is not merge authorization.
+- Ship / done — implementation checks passed and no applicable review or other gate remains
 - `/docs` — public integrator surface (API, MCP, CLI) just shipped
 - `/e2e` — critical browser journey needs CI coverage (not a substitute for seam TDD)
 
-Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces
-genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/design`.
+When an applicable pre-merge review remains, prefer `/code-review` after required implementation and verification gates; if browser coverage or another prerequisite blocks review, name that prerequisite first. Do not force a full review for a trivial change when policy and user scope do not require it, and do not skip a required review. Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
 
@@ -217,7 +217,7 @@ genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/
    cleanup temptations as follow-ups, do not sneak them in
 
 **Completion criterion:** Loop goes green on matching workspace/CI evidence; regression test exists or seam gap
-documented; characterization done or skipped with reason; scope self-check filled.
+documented; characterization done or skipped with reason; scope self-check filled. For a source-changing fix with an applicable pre-merge review gate, use the Implement handoff to `/code-review`; do not claim merge approval.
 
 ## Stack Defaults
 
