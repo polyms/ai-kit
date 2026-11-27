@@ -94,6 +94,7 @@ export const ENGINEERING_SKILL_PATHS = {
   ],
   'domain-modeling': [
     'skills/domain-modeling/SKILL.md',
+    'skills/align-loop/GRILL-FORMAT.md',
     'skills/setup/domain.md',
     'skills/setup/context-format.md',
     'skills/setup/adr-format.md',
@@ -109,7 +110,8 @@ export const ENGINEERING_SKILL_PATHS = {
     'skills/collab/SKILL.md',
     'skills/collab/inference-brief.md',
     'docs/agents/invocation.md',
-    'skills/design/PREFLIGHT.md',
+    ...DESIGN_SKILL_PATHS,
+    'skills/dev/visual-ship.md',
   ],
   'e2e': [
     'skills/e2e/SKILL.md',

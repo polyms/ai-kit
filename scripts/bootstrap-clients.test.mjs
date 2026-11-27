@@ -187,6 +187,9 @@ test('every manual-only skill has matching Codex policy while retaining legacy f
       const directory = join(repo, root, name)
       const file = join(directory, 'SKILL.md')
       if (!existsSync(file)) continue
+      // Dependency installation can inject third-party skills into .agents/skills.
+      // This repository owns only tracked project skills, not package-managed content.
+      if (root === '.agents/skills' && spawnSync('git', ['ls-files', '--error-unmatch', '--', `${root}/${name}/SKILL.md`], { cwd: repo, stdio: 'ignore' }).status !== 0) continue
       const content = readFileSync(file, 'utf8')
       const header = parse(content.match(/^---\n([\s\S]*?)\n---/)[1])
       assert.equal(header.name, name)

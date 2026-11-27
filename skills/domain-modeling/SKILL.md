@@ -70,7 +70,7 @@ If any condition is missing, skip the ADR. Use the adr-format guide in `setup`.
 When `/align`, track triage, or `/arch-refactor` runs align-loop, stay active for the **whole session** — not only when the user says "domain":
 
 - Challenge overloaded terms **in the grill question itself** before offering lettered options
-- Invent concrete edge-case scenarios as lettered options when domain boundaries are fuzzy (see [GRILL-FORMAT.md](GRILL-FORMAT.md))
+- Invent concrete edge-case scenarios as lettered options when domain boundaries are fuzzy (see [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md))
 - After the user picks, record the glossary delta **immediately**, apply it if authorized, and show the line and actual write status
 - Cross-reference code when a pick implies behavior — surface contradictions as the next grill question
 

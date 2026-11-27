@@ -255,7 +255,7 @@ describe('skill pack MCP tools', () => {
 })
 
 describe('consolidated engineering packs', () => {
-  it('keeps artifact review and source-code review distinct', () => {
+  it('keeps independent engineering and work skill responsibilities distinct', () => {
     for (const [a, b] of [['arch', 'arch-refactor'], ['qa', 'e2e'], ['dev', 'collab'], ['align', 'align-loop'], ['align', 'domain-modeling']]) {
       expect(getSkillPack(a)?.name).toBe(a)
       expect(getSkillPack(b)?.name).toBe(b)

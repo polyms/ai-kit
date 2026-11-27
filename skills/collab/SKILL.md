@@ -18,6 +18,8 @@ description: >-
 One feature prompt drives the spec packet. Principals stay in lane; this skill only
 sequences them. It does **not** fire user-invoked skills. Prefer available principal delegation; otherwise execute distinct methodology passes in the host, preserving each gate and disclosing the absence of isolation. The host owns execution; no server-side orchestration.
 
+**Boundary:** This skill prepares and verifies a spec packet, then hands off to `dev` only when implementation is requested and authorized. Standalone PRD, UI spec, architecture and bug-fix requests keep their own skills.
+
 **Packet:** lean PRD at `docs/prd/<slug>.md`, UI spec at `docs/design/<slug>.md` when the
 feature has a screen, ADR in `docs/adr/` only when the three-part test in
 `domain-modeling` passes. No tracker publish. A blocking fork

@@ -163,7 +163,7 @@ export const skillOverlays: SkillOverlay[] = [
       vi: '/align\n\nGrill kế hoạch [feature].',
     },
     footnote: {
-      en: 'Uses align-loop and domain-modeling skills; interactive grilling stays in the conversation, while delegated work returns blockers.',
+      en: 'Composes the independent align-loop and domain-modeling skills; interactive grilling stays in the conversation, while delegated work returns blockers.',
       vi: 'Dùng workflow làm rõ quyết định và mô hình domain; phiên tự động trả về câu hỏi còn vướng.',
     },
     githubPath: 'skills/align/',
@@ -647,8 +647,8 @@ export const skillOverlays: SkillOverlay[] = [
       },
     },
     boundaries: {
-      en: 'Not visual UI design; the refactor assessment branch proposes changes without implementing them.',
-      vi: 'Không phải thiết kế giao diện; nhánh đánh giá refactor chỉ đề xuất, không tự triển khai.',
+      en: 'Not visual UI design; use arch-refactor for repository assessment and candidate reports.',
+      vi: 'Không phải thiết kế giao diện; dùng arch-refactor cho đánh giá kiến trúc và báo cáo phương án.',
     },
     prerequisites: [
       {
