@@ -235,6 +235,45 @@ describe('SDK wire contract and resilience', () => {
     expect(count).toBe(2)
   })
 
+  it('rejects metadata drift between latest and pinned catalogs despite matching version and revision', async () => {
+    const source = await (await skillProvider({ version })).json() as SkillCatalog
+    const drift = {
+      ...source,
+      packs: source.packs.map((pack, index) =>
+        index === 0 ? { ...pack, description: pack.description + ' stale' } : pack),
+    }
+    for (const order of ['latest-first', 'pinned-first']) {
+      const transport = vi.fn(async (url: RequestInfo | URL) =>
+        Response.json(new URL(String(url)).pathname.endsWith('/latest.json') ? source : drift))
+      const client = createSkillProvider({ endpoint, fetch: transport })
+      if (order === 'latest-first') {
+        await client.list('latest')
+        await expect(client.list(version)).rejects.toThrow('Immutable release catalog metadata changed')
+      } else {
+        await client.list(version)
+        await expect(client.list('latest')).rejects.toThrow('Immutable release catalog metadata changed')
+      }
+    }
+  })
+
+  it('does not reject equivalent catalogs just because JSON key order differs', async () => {
+    const source = await (await skillProvider({ version })).json() as SkillCatalog
+    const reorderKeys = (value: unknown): unknown => Array.isArray(value)
+      ? value.map(reorderKeys)
+      : value !== null && typeof value === 'object'
+        ? Object.fromEntries(Object.entries(value).reverse().map(([key, nested]) => [key, reorderKeys(nested)]))
+        : value
+    const client = createSkillProvider({
+      endpoint,
+      fetch: async (url: RequestInfo | URL) => Response.json(
+        new URL(String(url)).pathname.endsWith('/latest.json') ? reorderKeys(source) : source),
+    })
+    const latest = await client.list('latest')
+    const pinned = await client.list(version)
+    expect(latest.revision).toBe(pinned.revision)
+    expect(latest.packs).toHaveLength(pinned.packs.length)
+  })
+
   it('rejects malformed bundles and untrusted reference URLs before returning data', async () => {
     const source = await (await skillProvider({ name: 'plan', version, strategy: 'full' })).json() as SkillBundle
     const invalid = [
