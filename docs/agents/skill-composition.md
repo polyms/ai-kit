@@ -110,8 +110,10 @@ execution layer; no cross-domain data access is implied.
 3. When reviewing a proposed artifact, return concrete issues upstream. Revise only when the user
    requested revision or it is within a requested draft's scope. Never silently alter approved
    requirements, commercial decisions, tracker state or commitments.
-4. Recheck affected criteria once after a permitted revision; if the blocker persists or resolving
-   it requires a user decision, report the issue and stop that branch. Do not loop indefinitely.
+4. Recheck affected criteria once after a permitted artifact revision; if the blocker persists or
+   resolving it requires a user decision, report the issue and stop that branch. Authorized source
+   changes with applicable review use the bounded [Review-Fix Protocol](review-fix-protocol.md)
+   instead. Do not loop indefinitely.
 5. Parallelize only independent read-only/drafting stages with stable inputs. Do not parallelize
    conflicting writes or downstream work that needs unsettled upstream decisions.
 6. Before writing, resolve the destination, exact targets and authorization. Preserve unrelated
