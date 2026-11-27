@@ -46,8 +46,9 @@ changes plus inspect authorized untracked files; include their contents and size
 Do not stage or commit merely to review. Exclude unrelated edits and disclose any inseparable
 or inaccessible changes. Record exactly what was reviewed.
 
-Confirm the fixed point resolves (e.g. `git rev-parse <fixed-point>` or provider metadata) and the diff is non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents. In the loop, an empty diff
-is a no-change outcome to reconcile against the original ask, not a clean review.
+Confirm the fixed point resolves (e.g. `git rev-parse <fixed-point>` or provider metadata) and the
+diff is non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents. In the
+loop, an empty diff is a no-change outcome to reconcile against the original ask, not a clean review.
 
 Check the size of the actual reviewed snapshot (sum of `+N/-M`, including authorized new files).
 Under 10 changed lines → skip sub-agent spawn; read the diff yourself and apply all three checklists
@@ -185,7 +186,8 @@ Severity cues are when/why (not a pasteable menu). Review-only does not authoriz
 comments, approvals or merge. A clean review is a finding, not a merge instruction; if the user
 requests fixes, preserve the verified diff/ref and run the
 [Review-Fix Protocol](../../docs/agents/review-fix-protocol.md) with `dev`. Return findings to an
-existing parent loop instead of starting a nested loop. The report always ends with
+existing parent loop instead of starting a nested loop. Intermediate handoffs are internal;
+do not return control to the user between authorized iterations. The final report ends with
 `## Next Step` (CONTEXT.md **Handoff**) — prefer **exactly one** `→ /skill`. A summary
 without this block is an unfinished review.
 
