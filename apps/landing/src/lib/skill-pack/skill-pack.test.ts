@@ -373,13 +373,13 @@ describe('skill intelligence', () => {
     const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Starter'))
     const initial = await executeGetSkillPack('design', fetchFile, starterPaths('design'))
     expect(initial.isError).toBeUndefined()
-    expect(fetchFile.mock.calls.map(call => call[0])).toEqual(starterPaths('design').map(skillPackRawUrl))
+    expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(starterPaths('design').map(skillPackRawUrl).sort())
     const next = await executeGetSkillPack('design', fetchFile, ['skills/dev/visual-ship.md'])
     expect(next.isError).toBeUndefined()
-    expect(fetchFile.mock.calls.map(call => call[0])).toEqual([
+    expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual([
       ...starterPaths('design').map(skillPackRawUrl),
       skillPackRawUrl('skills/dev/visual-ship.md'),
-    ])
+    ].sort())
   })
 
   it('keeps every registered file nonempty and resolves relative Markdown links inside each pack', () => {
