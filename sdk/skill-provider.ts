@@ -188,6 +188,19 @@ function parseBundle(data: unknown, name: string, version: string): SkillBundle 
   }
   return data as unknown as SkillBundle
 }
+/** Compare complete JSON wire metadata; ignore object key order, not array order. */
+function canonicalJson(value: unknown): string {
+  if (Array.isArray(value)) return '[' + value.map(canonicalJson).join(',') + ']'
+  if (record(value)) {
+    return '{' + Object.keys(value).sort()
+      .map(key => JSON.stringify(key) + ':' + canonicalJson(value[key])).join(',') + '}'
+  }
+  return JSON.stringify(value) ?? 'null'
+}
+function sameCatalog(a: SkillCatalog, b: SkillCatalog): boolean {
+  return canonicalJson(a) === canonicalJson(b)
+}
+
 function sameManifest(a: SkillBundle, b: SkillBundle) {
   return a.revision === b.revision && a.entry === b.entry &&
     JSON.stringify(a.contract) === JSON.stringify(b.contract) &&
@@ -243,8 +256,16 @@ export function createSkillProvider(options: SkillProviderOptions) {
       const path = version === 'latest' ? '/skill-bundles/latest.json' : '/skill-bundles/' + version + '/catalog.json'
       const data = parseCatalog(await request<unknown>(path))
       if (version !== 'latest' && data.version !== version) throw new Error('Invalid catalog version')
+      // The mutable latest alias and the immutable pinned URL must describe the
+      // same complete catalog for a given version. Equal revision/count alone is
+      // insufficient: a stale proxy can return a different contract or recipe.
       const pinned = catalogs.get(data.version)?.data
-      if (pinned && pinned.revision !== data.revision) throw new Error('Immutable release changed')
+      const latest = catalogs.get('latest')?.data
+      const peers = version === 'latest' ? [pinned] :
+        [pinned, latest?.version === data.version ? latest : undefined]
+      if (peers.some(peer => peer && !sameCatalog(peer, data))) {
+        throw new Error('Immutable release catalog metadata changed')
+      }
       if (startedGeneration === generation) {
         remember(catalogs, version, { data, expires: version === 'latest' ? Date.now() + ttl : Infinity })
       }

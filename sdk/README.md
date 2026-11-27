@@ -23,11 +23,15 @@ const skill = extendSkill(base, {
 GitHub Actions builds and tests on Node.js 24. RC `1.0.0-rc.1` was built,
 pack-verified and **published to GitHub Packages** by tag `sdk-v1.0.0-rc.1`
 ([release workflow](https://github.com/polyms/ai-kit/actions/runs/45020141109)).
-It uses the `next` dist-tag, not `latest`. Public Polyms proxy installation
-has not yet been independently verified.
+It uses the `next` dist-tag, not `latest`. Astra's operator confirms
+`@polyms/ai-kit-sdk@1.0.0-rc.1` was installed via `registry.polyms.dev`
+and deployed in production. This is practical consumer evidence; Astra MCP's
+template output does not independently report the resolved SDK package version.
 
-For future versions: update `sdk/package.json`, verify CI, then push a
-matching `sdk-v<version>` tag. The workflow tests, packs and publishes the
+PR #23 prepares `1.0.0` in `sdk/package.json` together with the SDK
+catalog-integrity fix. **This does not publish a stable SDK yet.** After
+merging and verifying CI on the release commit, push `sdk-v1.0.0` from `main`
+to publish the tested package. The workflow tests, packs and publishes the
 exact verified tarball. Prereleases use `next`; stable tags use `latest`
 and must point to `main`. Do not reuse an already published version.
 
@@ -43,6 +47,8 @@ Run from the host that will consume the provider, after building the SDK and dep
 node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.5 20
 ```
 
+This is an **optional troubleshooting and regression measurement**, not a
+stable SDK release gate without an agreed SLO or known latency issue.
 The report includes cold/warm p50 and p95, reference fetch timing and network call counts.
 Cold means a new SDK instance, not an empty CDN, DNS or connection cache. Use the same host and
 version for comparisons. Initial targets for `reqs` are cold p95 under 500 ms and warm p95 under
@@ -106,10 +112,12 @@ resolved release version. Reuse it within the session. Starter-only consumers st
 core context rules and hints; consumers must expose the reference to enable full guidance.
 The SDK only retrieves public methodology, never memory contents or business data.
 
-## API stability and release candidate
+## API stability and stable release preparation
 
-The source package version is `1.0.0-rc.1`. This is a **published release candidate**,
-not a stable `1.0.0` release. `list()` returns typed `SkillCatalog`, `getSkill()`
+The source package version is `1.0.0` for the proposed stable release in
+PR #23, while `1.0.0-rc.1` remains the currently published and
+Astra-deployed candidate. Only a successful post-merge
+`sdk-v1.0.0` tag workflow will publish stable `1.0.0`. `list()` returns typed `SkillCatalog`, `getSkill()`
 returns typed `SkillBundle` with `SkillContract` (including optional
 `MemoryHints`), and `extendSkill()` applies trusted local instructions only.
 Responses are checked for schema, pinned identity, known paths, duplicate entries,
@@ -120,5 +128,6 @@ remains 1; added optional fields never imply authorization or memory persistence
 Skill content versions are separate from SDK package versions. Older experimental
 content versions are no longer served by the deployed provider.
 
-The SDK remains prerelease pending the remaining external gates in
+The SDK stable release is prepared in PR #23. Publication remains pending the
+post-merge tag workflow, as detailed in
 [SDK stability review](../docs/agents/sdk-stability.md).

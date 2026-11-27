@@ -1,6 +1,6 @@
 # SDK stable-release readiness
 
-Status (2026-11-22): **`1.0.0-rc.1` published; stable `1.0.0` not yet authorized**.
+Status (2026-11-27): **SDK `1.0.0` prepared in PR #23; publication pending merge and tag.** `1.0.0-rc.1` remains the published and Astra-deployed candidate.
 SDK versions are independent of skill release `0.3.5`; the former `0.3.3` and `0.3.4` registry snapshots are retired, while historical evidence remains.
 Only Node.js 24+ / ESM with built-in `fetch` is supported.
 
@@ -28,18 +28,44 @@ Only Node.js 24+ / ESM with built-in `fetch` is supported.
 | --- | --- | --- |
 | PR source tests and local packed tarball import | GitHub CI on SDK RC head | Verified |
 | Publishing to GitHub Packages | Tag workflow `sdk-v1.0.0-rc.1` | Verified |
-| Historical 0.3.3 skill delivery | Earlier production MCP and Astra Stg smoke | Verified previously; 0.3.5 production smoke pending |
-| Public Polyms registry proxy install | Clean install of RC through `registry.polyms.dev/npm` | Not verified |
-| Explicit consumer SDK runtime version | Inspect actual resolved dependency and run RC methods | Not verified by MCP response |
-| Consuming-host performance | Cold/warm and reference timing with `sdk/benchmark.mjs` | Not measured |
+| Current 0.3.5 skill HTTP delivery | AI Kit production MCP `get_release_info` expectedVersion=0.3.5, checkHttp=true, retiredVersion=0.3.4 | Passed (7/7 from server network; not independent client runtime) |
+| Polyms registry and real consumer installation | Astra operator confirms `1.0.0-rc.1` installed via `registry.polyms.dev` and deployed in production | Operator-confirmed; no duplicate synthetic installation needed |
+| Explicit consumer SDK runtime version | Astra operator reports RC1 at mcp.astra.shadeofhue.com; Astra `get_issue_template` returns skill 0.3.5 | Operator-reported RC1; SDK dependency version not independently returned by Astra MCP |
+| Consuming-host performance (optional) | `sdk/benchmark.mjs` is available for diagnosing latency or measuring regressions | No agreed SLO or reported issue; **not a stable release blocker** |
 | Full native-client Memory behavior | Client-specific tool traces, not just delivery | Not verified |
 | Paired model-quality benefit | Real model + judge measurements under quality plan | Not measured; separate quality track |
 
+## Catalog integrity follow-up
+
+The SDK now compares complete JSON metadata for the same release between
+`latest` and the pinned catalog, regardless of object key order. Revision-only
+checks previously allowed contracts or composition data to drift without a
+revision change. Existing public API, skill schema and consumer behavior remain
+unchanged except that inconsistent responses are rejected.
+
+Astra is the real consumer: the operator confirms that SDK RC1 was installed
+from the Polyms registry and deployed in production. The Astra MCP template
+retrieval verifies skill release 0.3.5, but it does not independently identify
+the loaded SDK package. Record the operator confirmation without creating an
+additional registry-install harness or claiming tool-verified package identity.
+
+Performance measurements can be made using the existing
+`node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.5 20` command, only if
+there is a concrete latency issue, a measured regression or an agreed SLO.
+The benchmark has **no mandatory pass/fail threshold** for the stable SDK
+release today. Model-quality and native-client memory behavior are separate
+product evaluation tracks, not gates for the SDK's packaging/API stability.
+
 ## Stable decision
 
-Do not tag `sdk-v1.0.0` until the actual registry and consumer
-compatibility gates have concrete results and the SDK package version
-has been updated on `main`. Promotion of the SDK does not require
+PR #23 includes the `sdk/package.json` bump to `1.0.0` with the
+catalog-integrity fix. A version bump in a PR is not a published release:
+merge to `main` only after green SDK build, regression and packed-package
+import checks. Then create the one-time `sdk-v1.0.0` tag on the merged `main`
+commit; the tag workflow packs, tests and publishes the SDK with the `latest`
+dist-tag to GitHub Packages. Never retag an already published version.
+Do not block this on duplicate registry tests or unestablished performance
+targets. Promotion of the SDK does not require
 inventing a Memory storage engine or claiming a model-quality lift.
 Retain the `schemaVersion: 1` compatibility contract and optional hints.
 

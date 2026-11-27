@@ -1,6 +1,6 @@
 {
   "name": "@polyms/ai-kit-sdk",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "type": "module",
   "description": "Typed, dependency-free AI Kit skill delivery SDK for Node.js",
   "license": "MIT",
