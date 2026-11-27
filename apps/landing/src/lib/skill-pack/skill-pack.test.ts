@@ -347,6 +347,21 @@ describe('portable engineering packs', () => {
     expect(JSON.parse(alias.content[0]!.text)).toMatchObject({ name: 'reqs', nativeInvocation: 'explicit', mcpSelection: 'intent' })
   })
 
+  it('delivers the shared review-fix protocol on demand from both owning packs', async () => {
+    const path = 'docs/agents/review-fix-protocol.md'
+    const source = readFileSync(join(repoRoot, path), 'utf8')
+    for (const name of ['dev', 'code-review'] as const) {
+      expect(getSkillPack(name)?.files.map(file => file.path)).toContain(path)
+      expect(starterPaths(name)).not.toContain(path)
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response(source))
+      const result = await executeGetSkillPack(name, fetchFile, [path])
+      expect(result.isError).toBeUndefined()
+      expect(fetchFile.mock.calls.map(call => call[0])).toEqual([skillPackRawUrl(path)])
+      expect(JSON.parse(result.content[0]!.text).files.find((file: { path: string }) => file.path === path).content).toBe(source)
+    }
+    expect(getSkillPack('review')?.files.map(file => file.path)).not.toContain(path)
+  })
+
   it('delivers starter content and explicit invocation metadata for all engineering packs', async () => {
     const catalog = listSkillPacks()
     const manual = ['setup', 'craft', 'build-feature-map', 'align', 'arch-refactor', 'e2e']
