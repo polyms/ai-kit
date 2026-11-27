@@ -13,7 +13,7 @@ harness, long journeys, and CI test jobs — do not replace seam TDD with E2E fo
 cause → fix → verify). **`/qa` (E2E)** owns flaky/slow/wrong **test** jobs and Playwright config.
 “No Output Directory” / package install → `/devops`.
 
-**Boundary vs `review` (code changes):** Pre-merge Standards/Spec/Simplify is `review` (code changes). Suite
+**Boundary vs `code-review`:** Pre-merge Standards/Spec/Simplify is `code-review`. Suite
 stability is this skill.
 
 **Feature map:** Read `docs/agents/feature-map.md` when it exists. An area is a markdown link in
@@ -117,7 +117,7 @@ When/why cues for escalation (not a pasteable menu). End the session with `## Ne
 | Journey walked, no areas, not declined | `/build-feature-map`                           |
 | Deploy/CI infra (non-test)             | `/devops`                                      |
 | Public flows stabilized                | optional `/docs` for tester/contributor how-to |
-| Harness changes on a branch            | `/review` (code changes) when ready for merge            |
+| Harness changes on a branch            | `/code-review` when ready for merge            |
 | Suite green; nothing queued            | ship / done                                    |
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).

@@ -62,8 +62,8 @@ Subagent at `agents/<role>.md` — isolated context for long artifact work. Maps
 role**, not 1:1 with a skill. **Principal** tier: `pm`, `designer`, `developer`, `tester`,
 `techlead`. **`/align`** has no agent — grill is interactive in the main chat. Skills stay
 playbooks; multiple skills per agent OK (`developer` → `/dev` + `/devops`; `techlead` → `/docs`,
-`arch`, `/review`, `/arch`, `/devops`). Skill↔agent: `/reqs`→`pm`, `/design`→`designer`,
-`/dev`→`developer`, `/qa`→`tester`; `/docs`, `arch`, `/review`, `/arch`→`techlead`;
+`arch`, `/code-review`, `/arch`, `/devops`). Skill↔agent: `/reqs`→`pm`, `/design`→`designer`,
+`/dev`→`developer`, `/qa`→`tester`; `/docs`, `arch`, `/code-review`, `/arch`→`techlead`;
 `/devops`→`developer` (exec) + `techlead` (SEV).
 _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` principal files), `*-agent` filename
 
@@ -71,7 +71,7 @@ _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` principal fil
 
 **Pipeline**:
 The stage chain that turns ideas into shipped code: `/align` → `/reqs` → `/task` →
-`/design` → `/dev` → `/review`; raw issues via `/track`. A single feature prompt may enter through
+`/design` → `/dev` → `/code-review`; raw issues via `/track`. A single feature prompt may enter through
 **Collab** instead of invoking each stage. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
@@ -119,14 +119,14 @@ _Avoid_: component library (generic), shadcn
 
 **Dev**:
 Ship production code from spec — TDD, solution ladder, scope self-check, multi-slice status report, debugging.
-Pre-merge review via `review`. Invoke with `/dev`. Long sessions: `developer`.
+Pre-merge review via `code-review`. Invoke with `/dev`. Long sessions: `developer`.
 _Avoid_: implementation, coding phase
 
 **Code review**:
 Three-axis review skill (Standards + Spec + Simplify) since a pinned git fixed point — parallel sub-agents,
 severity-tagged findings (🔴 blocker / 🟡 suggestion / 💭 nit). Diffs under 10 changed lines skip sub-agent
 spawn and review inline instead. Model-invoked; auto-fires on "review PR", "review diff", "rà soát code",
-"over-engineered", "cắt bớt". Invoke with `/review`. Long sessions: `techlead`.
+"over-engineered", "cắt bớt". Invoke with `/code-review`. Long sessions: `techlead`.
 _Avoid_: PR review (generic), lint check
 
 **Docs**:

@@ -23,7 +23,7 @@ Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touc
   red-green (Implement step 3b / Debug)
 - Bug / regression → [Debug workflow](#debug-workflow);
   reference: [debug-loop.md](debug-loop.md)
-- Branch / PR review → **`review` (code changes)** (pre-merge gate, not red-green loop)
+- Branch / PR review → **`code-review`** (pre-merge gate, not red-green loop)
 
 ## Implement Workflow
 

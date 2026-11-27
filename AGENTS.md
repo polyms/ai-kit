@@ -64,7 +64,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Pipeline
 
-Idea → `/align` → `/reqs` → `/task` → `/design` → `/dev` → `/review`; raw issues via
+Idea → `/align` → `/reqs` → `/task` → `/design` → `/dev` → `/code-review`; raw issues via
 `/track`. A single feature prompt ("build a CRUD user page") may enter through the dev feature-preparation workflow
 instead of naming each principal: codebase-first lean PRD (`pm`), ADR only when hard to reverse
 (`techlead`), UI spec when there is a screen (`designer`). Ask only for a blocking fork the repo cannot
@@ -118,7 +118,7 @@ Isolated subagents for deep artifact work — one **principal** owner per org ro
 | `designer`  | Principal product designer  | `docs/design/` UI specs, project design-system maps (`/design`)                         |
 | `developer` | Principal software engineer | Implementation + TDD (`/dev`); cold deploy/CI execution (`/devops`)                |
 | `tester`    | Principal tester            | E2E (`/qa`); repo feature map (`/build-feature-map`)                              |
-| `techlead`  | Principal tech lead         | `/docs`, `arch`, `/review`, `/arch`; `/devops` SEV / infra ownership |
+| `techlead`  | Principal tech lead         | `/docs`, `arch`, `/code-review`, `/arch`; `/devops` SEV / infra ownership |
 
 Handoffs: `/align` → reqs/reqs → design → dev → review; public surface → `/docs`
 (`techlead`); E2E flake → `/qa` (`tester`); deploy/CI infra → `/devops` (`developer` executes,

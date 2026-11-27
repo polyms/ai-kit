@@ -33,7 +33,7 @@ Naming `/reqs` or `/design` yourself skips the dev feature-preparation workflow 
 | Issues              | `/task`   | —                                     | Slice issues (UI filter, URL sync, empty state)                      |
 | Design              | `/design`      | `designer`                            | `docs/design/knowledge-intent-filter.md`                             |
 | Implement           | `/dev`         | `developer`                           | Code + tests at confirmed seams                                      |
-| Review              | `/review` | `techlead`                            | Severity-tagged Standards / Spec / Simplify                          |
+| Review              | `/code-review` | `techlead`                            | Severity-tagged Standards / Spec / Simplify                          |
 | Ops (if deploy red) | `/devops`      | `developer` (exec) / `techlead` (SEV) | Knowledge match → fix → verify                                       |
 
 ## Align (grill)
@@ -79,7 +79,7 @@ Example status mid-flight:
 **Next:** failing test for `?intent=design` round-trip
 ```
 
-Handoff → `/review`.
+Handoff → `/code-review`.
 
 Public surface (MCP/API) after ship → optional `/docs` (`techlead`).
 Browser journey flake in CI → `/qa` (`tester`), not seam TDD.

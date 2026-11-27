@@ -4,7 +4,7 @@
 
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
 
-**Maintenance skill** — outside the daily ship pipeline (`/align` → … → `/review`). Complements `/align` (product alignment) and `/dev` (implementation).
+**Maintenance skill** — outside the daily ship pipeline (`/align` → … → `/code-review`). Complements `/align` (product alignment) and `/dev` (implementation).
 
 This command is _informed_ by the project's domain model and built on shared design vocabulary:
 

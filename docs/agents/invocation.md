@@ -42,12 +42,12 @@ language and the confirmed destination language for artifacts; preserve technica
 
 | User-invoked                                                                                                                                  | Model-invoked                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map` | `align`, `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
+| `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map` | `align`, `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `code-review`, `release` |
 
 Canonical skills select one reference workflow from the user's intent. Align owns the decision loop
 and domain modeling; reqs owns lean PRD synthesis/publication; task owns vertical slicing; track owns
-triage; arch owns deepening assessments; dev owns feature preparation; qa owns E2E; review owns source
-review. An explicit legacy workflow request routes to the corresponding canonical branch, never a
+triage; arch owns deepening assessments; dev owns feature preparation; qa owns E2E; code-review owns source-code
+review and review owns non-code artifact critique. An explicit legacy workflow request routes to the corresponding canonical branch, never a
 second independent skill. A complete spec packet may continue to authorized implementation in the same
 turn; an unresolved blocking fork stops dependent work. Delegate where supported; otherwise use scoped
 inline passes with the same quality gates. Do not infer write permission from routing.
@@ -63,7 +63,7 @@ Two contexts — don't mix them:
 
 | Context                                                                      | Form                    | Examples                                                       |
 | ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------------- |
-| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/review`, `/docs`, `/qa`    |
+| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/code-review`, `/docs`, `/qa`    |
 | **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align decision loop`, `Use arch`, reaches `dev`                    |
 | **Agent name** — isolated subagent for deep work (org role, not skill twin)  | role id                 | `Use pm`, `Use designer`, `agents/pm.md`, `agents/techlead.md` |
 
@@ -108,7 +108,7 @@ claims done — same discipline, no silent trust of an earlier turn's claim).
 
 Do **not** re-run the entire monorepo "just in case". Docs-only / no-runnable-gate diffs skip this.
 
-Skills that ship code (`dev`, `qa`, `devops`, `review` when claiming build/test green)
+Skills that ship code (`dev`, `qa`, `devops`, `code-review` when claiming build/test green)
 point here from their ship/close steps.
 
 Agent `description` frontmatter should include **negative triggers** (`Do NOT use for…`) so the parent does
