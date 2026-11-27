@@ -1,6 +1,6 @@
 # Grill Question Format
 
-Used by **align-loop** (and any skill that delegates to it: `/align`, `/triage`, `/arch-refactor`).
+Used by **align-loop** (and any skill that delegates to it: `/align`, `/track`, `/arch-refactor`).
 
 Shape only — one short lead-in sentence, then **Q:** and lettered options. No section headings in the
 grill body. Do not append `## Next Step` to a grill question; that closer is only for a turn that leaves
@@ -129,7 +129,7 @@ options. Pair with **domain-modeling** — update `CONTEXT.md` inline when the u
 
 ## Open-questions confirmation (handoff)
 
-Used by `/align` handoff and `/to-prd` step 3 when the audit finds unsettled implementer-facing details.
+Used by `/align` handoff and `/reqs` step 3 when the audit finds unsettled implementer-facing details.
 List the items first, then one confirmation turn — three real forks:
 
 ```markdown
@@ -145,7 +145,7 @@ List the items first, then one confirmation turn — three real forks:
 ## Turn closer
 
 Not part of a grill question. While a branch is open, ask it and do not append `## Next Step`. The reply
-that settles the tree carries `## Next Step` and no further **Q:** (`/reqs`, `/to-prd`, `/design`, `/dev`
+that settles the tree carries `## Next Step` and no further **Q:** (`/reqs`, `/design`, `/dev`
 — when-table in the parent skill). Do not end on a summary that waits for another confirmation.
 
 ```markdown
@@ -166,7 +166,7 @@ that settles the tree carries `## Next Step` and no further **Q:** (`/reqs`, `/t
 | Ask what code already shows                         | Explore, report, then lettered options                    |
 | Dump the whole decision tree upfront                | Descend the tree; parent before child                     |
 | Robotic listing without a lead-in sentence          | One line why this decision is up now, then **Q:**         |
-| Batch glossary updates at the end                   | `domain-modeling` writes each term when it resolves       |
+| Batch glossary updates at the end                   | the align domain-modeling workflow writes each term when it resolves       |
 | Hand off with "no open questions" while gaps remain | Open-questions audit; defer only with explicit user **B** |
 | `## Next Step` instead of the next question         | Ask the next **Q:**; closer only when leaving the grill   |
 | Glossary update, then stop                          | Next **Q:**, or the leaving block if the tree settled     |
