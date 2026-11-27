@@ -14,7 +14,7 @@ Status: product and architecture direction, not an implementation specification 
 
 - Consistency: apply the right skill and preserve agreed requirements, evidence and quality gates.
 - Expertise: use relevant, reviewed Knowledge instead of improvising reusable technical practices.
-- Continuity: use relevant prior experience when the host or business makes memory available.
+- Continuity: use relevant prior experience already available to the executing host agent.
 - Evolution: learn from observed outcomes and feedback through host-led reflection, without model training.
 
 ## Foundation: P0 and P1
@@ -37,18 +37,16 @@ immutable skill release 0.3.3, and 15 synthetic memory evaluation scenarios. Pro
 Astra Stg template retrieval have been smoke-tested at 0.3.3 / revision 2617cd6 after deployment.
 This verifies delivery, not measured model effectiveness or full native-client behavior.
 
-Decision: **AI Kit standardizes memory usage, not memory ownership.** Every business and agent may
-use its own storage model and access mechanism. No memory database, API, provider engine, vector
-index, synchronization service, agent runtime or background extraction service is planned in AI Kit.
+Decision: **AI Kit standardizes how an agent uses its own available memory, not memory ownership.** Live hints prompt native recall and reflection, not access to a memory system. Business records remain separate task evidence. No memory database, API, provider engine, vector index, synchronization service, agent runtime or background extraction service is planned in AI Kit.
 
 | Planned capability | Direction |
 | --- | --- |
 | Memory Vocabulary | Distinguish past decisions, preferences, experiences, lessons and current facts |
 | Memory Awareness | Identify memory that may materially improve a selected skill |
-| Memory Recall | Use relevant, authorized memory when available; reuse supplied context first |
+| Memory Recall | Consider the host agent's own already available memory and context; no external lookup |
 | Memory Integrity | Preserve source, scope and time; reconcile stale or disputed recollections |
 | Memory Reflection | Interpret observed results and feedback; distinguish a lesson from a hypothesis |
-| Memory Capture | Suggest retaining only useful, supported information under the owner's policy |
+| Memory Capture | Reflect on durable lessons; native retention follows host settings, no external write |
 | Memory Governance | Respect owner-specific access, consent, retention, correction and deletion rules |
 
 The workflow is Recall → Apply → Reflect → Capture, only when useful. The host carries it out

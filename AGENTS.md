@@ -7,8 +7,7 @@ Polyms AI Augmentation Layer for existing LLMs and AI tools.
 Read [canonical product positioning](docs/product/positioning.md) before changing the landing page,
 MCP, SDK, skills, composition, or architecture. AI Kit extends the host AI with skills, methodology,
 Knowledge and guidance. The **host** owns inference, reasoning, conversation, context and authorized
-tool execution. Memory remains owned by the agent, business or external provider. AI Kit may define
-memory-use methodology, not memory storage, an API, provider engine or synchronization service.
+tool execution. Memory in AI Kit hints means the executing host agent's own available memory and context. AI Kit defines memory-use methodology, not storage, APIs, provider engines or synchronization. Do not seek external memory connectors for a hint; business evidence retrieval is a separate task.
 Do not propose a server-side LLM, agent runtime, model router or AI orchestration engine. Metadata delivery, static retrieval,
 versioning and deterministic checks are in scope. See the [augmentation roadmap](docs/product/augmentation-roadmap.md)
 for planned capabilities and linked strategy documents; planned work is not implementation authorization. Product copy must address end-user benefit without
@@ -88,7 +87,7 @@ maintenance, verification and the rollout handoff. Read it before changing skill
 For remote routing and progressive retrieval, see `docs/agents/skill-intelligence.md`.
 For context requirements and source integrity, see `docs/agents/context-contract.md`.
 For selective use of historical experience, see `docs/agents/memory-protocol.md` when relevant.
-Memory is optional; existing local invocation and verification gates remain unchanged.
+Memory is optional; use already available native context or skip. Never require a memory service, tool or connection. Existing invocation and verification gates remain unchanged.
 For multi-skill work, follow `docs/agents/skill-composition.md` and select only relevant recipes
 in `workflows/`. Evaluate handoffs with `evals/composition/`.
 See `docs/agents/skill-capabilities.md` for tool abstraction and composition,

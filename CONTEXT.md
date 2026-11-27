@@ -16,12 +16,10 @@ The existing AI client or agent that reasons, resolves context and executes auth
 AI Kit provides methodology and references, not an inference or orchestration runtime.
 
 **Memory**:
-Historical experience, decisions, preferences and lessons owned by the host, business or external
-provider. Distinct from curated AI Kit **Knowledge**, current business state and session context.
+The executing host agent's own remembered experience, decisions, preferences and lessons, already available in its conversation/context or native memory. Distinct from curated AI Kit **Knowledge** and external business records. A Memory hint is not an instruction to retrieve a record from an external system.
 
 **Memory Protocol** (source pilot):
-Provider-agnostic guidance for using relevant Memory with skills: recall, apply, reflect and
-authorized capture. Not a storage format, API, provider engine or synchronization service.
+Host-native guidance for using relevant Memory with skills: recall, apply, reflect and optional capture of lessons under native host settings. Not a retrieval instruction, storage format, API, provider engine or synchronization service.
 See [Memory Protocol](docs/agents/memory-protocol.md) and the
 [augmentation roadmap](docs/product/augmentation-roadmap.md).
 

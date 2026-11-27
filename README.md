@@ -50,14 +50,14 @@ AI Kit **augments** host assistants; it does not replace them or take over user 
 | --- | --- |
 | Skills, standards, templates and Knowledge | Model inference, reasoning and conversation |
 | Context contracts and optional workflow recipes | Skill selection, context and orchestration |
-| Memory Protocol guidance and reflection hints | Agent or business memory; authorized recall and capture |
+| Memory Protocol guidance and reflection hints | The host agent's own available memory, native recall and retention settings |
 | MCP, SDK and local skill delivery | Authenticated tools, actions, approvals and verification |
 
 AI Kit's server may deliver skill content and Knowledge, but does **not** perform LLM inference for
 end-user work. See [canonical product positioning](docs/product/positioning.md) before changing
 architecture or product messaging. The [augmentation roadmap](docs/product/augmentation-roadmap.md)
 records current and planned capabilities. AI Kit does not store or manage agent or business memory;
-its shipped Memory Protocol guides effective use of existing memory sources. The roadmap links the
+its live Memory Protocol guides the executing agent to reuse its own available memory and context, not to connect to an external memory system. The roadmap links the
 architecture, memory, Knowledge and quality strategies; these describe direction, not shipped features.
 
 ## Real engineering

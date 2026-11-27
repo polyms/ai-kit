@@ -91,7 +91,7 @@ positioning_apply_body: "AI của bạn kiểm tra bằng chứng được phép
 positioning_label: "Cách hoạt động"
 positioning_title: "AI của bạn, thêm phương pháp và kiến thức."
 positioning_intro: "Trong client tương thích, AI của bạn chọn và áp dụng hướng dẫn phù hợp. AI Kit cung cấp phương pháp, không phải một bộ máy thực thi riêng."
-positioning_note: "AI Kit cung cấp phương pháp và tài liệu tham chiếu, không phải một model hay agent runtime mới. Memory và dữ liệu nghiệp vụ riêng vẫn thuộc hệ thống sở hữu. MCP, SDK, native skills và plugin là các cách phân phối khi được hỗ trợ."
+positioning_note: "AI Kit cung cấp phương pháp và tài liệu tham chiếu, không phải một model hay agent runtime mới. Memory là ngữ cảnh và trí nhớ sẵn có của chính agent; dữ liệu nghiệp vụ riêng vẫn thuộc hệ thống sở hữu. MCP, SDK, native skills và plugin là các cách phân phối khi được hỗ trợ."
 
 intelligence_technical_details: "Xem ví dụ truy xuất MCP dành cho kỹ thuật"
 

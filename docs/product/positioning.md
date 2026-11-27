@@ -3,7 +3,7 @@
 > **Canonical positioning:** AI Kit is an **AI Augmentation Layer** for existing LLMs and AI tools.
 > It extends their capabilities with reusable skills, structured methodologies, domain knowledge,
 > templates, context contracts, and composable workflow guidance. The product direction also includes
-> guidance for effective use of memory owned by the host AI or connected business systems.
+> guidance for effective use of the executing host AI's own available memory and context.
 
 ## Who AI Kit serves
 
@@ -28,7 +28,7 @@ model's underlying capability. Evaluation must distinguish those effects.
 | --- | --- |
 | Skills, playbooks, templates, standards | Reasoning and model inference |
 | Knowledge retrieval and reference content | Conversation and session context |
-| Shipped Memory Protocol (methodology only) | Use of agent-native or authorized external memory; storage stays with its owner |
+| Shipped Memory Protocol (methodology only) | Use of the agent's own available native memory; retention stays under host settings |
 | Context requirements and artifact contracts | Interpreting intent and selecting when to use a skill |
 | Optional composition recipes and handoff guidance | Orchestrating steps and making tool calls |
 | Versioned content and delivery through MCP, SDK, plugins, or local skills | Authenticated access to project data and external services |
@@ -59,7 +59,7 @@ within AI Kit's scope because they make augmentation dependable without duplicat
 | Skills | Consistent, composable methods for specialized work | AI Kit owns reusable methodology |
 | Knowledge | Curated, reusable technical expertise | AI Kit maintains its existing Knowledge catalog |
 | Context and composition | Use the right facts and artifacts for each selected skill | AI Kit supplies guidance; host resolves context and executes |
-| Memory guidance (0.3.3) | Apply relevant past experience, decisions and preferences | AI Kit defines usage guidance; host or business owns actual memory |
+| Memory guidance (0.3.3) | Apply relevant past experience, decisions and preferences | AI Kit defines usage guidance; host owns its own native memory |
 | Reflection (planned) | Identify useful lessons from observed outcomes and feedback | Host reasons and proposes; authorized owners decide what to retain |
 
 These capabilities are complementary, not a cognitive architecture or an agent execution pipeline.
@@ -69,20 +69,17 @@ their own current facts. Context connects these sources to a skill without becom
 
 ## Memory ownership decision
 
-AI Kit does not own memory. Individual AI clients, agents, businesses and external memory
-providers may implement memory differently. AI Kit will standardize how its skills can benefit
-from such memory, not how any provider stores, indexes, retrieves internally or synchronizes it.
+AI Kit does not own memory. In live skill guidance, Memory means the executing host agent's own
+already available remembered context and native memory. Recall means consider what is already
+known; capture means optional reflection on a useful lesson for that agent's future work. Native
+retention follows the host's existing settings and consent. No memory tool or provider is required.
 
-The shipped Memory Protocol is advisory and provider-agnostic. Its scope is vocabulary,
-selective recall, proper use of historical evidence, reflection, capture suggestions and
-governance. A skill may describe relevant memory categories and useful capture candidates,
-but no provider or memory availability is a prerequisite to using AI Kit.
-
-Memory is scoped by its owner (for example personal, project, team or organization). The host
-uses only sources and actions it is authorized to access. Revalidate mutable claims against
-current evidence; do not confuse recalled facts with live state or approved requirements with
-old proposals. Capture or correction follows the memory owner's policies and permissions.
-There is no automatic persistence, export, cross-provider sharing or publication to Knowledge.
+Do not discover, connect to, or call external memory systems because of a memory hint. Business
+records, project data and externally stored history are separate authoritative evidence sources;
+retrieve them only for an actual task need or explicit user-directed operation. Revalidate mutable
+claims; no recalled fact grants approval, access or execution authority. If the host has no relevant
+memory, continue normally. No automatic persistence, export, cross-provider sharing or publication
+to Knowledge.
 
 See [augmentation roadmap](augmentation-roadmap.md) for staged delivery direction. PR #14 shipped
 provider-neutral Memory Protocol guidance in skill release 0.3.3. Delivery verification does not

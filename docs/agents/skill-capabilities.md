@@ -21,7 +21,7 @@ capabilities degrade to a draft, a partial report or explicit inability to verif
 ## Context
 
 Use [context contract](context-contract.md) to resolve semantic information needs from available,
-authorized sources. Knowledge and Memory are not prerequisites for every skill. Local invocation and
+authorized sources. Knowledge and Memory are not prerequisites for every skill. Memory means the host agent's own available context and native recollections, not a connector capability. A hint must not trigger external memory tool discovery or calls. Local invocation and
 workspace rules remain unchanged; no new provider or runtime is required.
 
 ## Composition

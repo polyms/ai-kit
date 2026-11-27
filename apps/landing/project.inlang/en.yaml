@@ -90,7 +90,7 @@ positioning_apply_body: "Your AI checks available authorized evidence, flags unv
 positioning_label: "How it works"
 positioning_title: "Your AI, with a better playbook."
 positioning_intro: "Your AI chooses and applies the relevant guidance in a compatible client. AI Kit provides the methodology, not a separate execution engine."
-positioning_note: "AI Kit supplies methodology and references, not another model or agent runtime. Memory and private business data stay with their owners. MCP, SDK, native skills and plugins are delivery options where supported."
+positioning_note: "AI Kit supplies methodology and references, not another model or agent runtime. Memory means the host agent's own available context; private business data stays with its owner. MCP, SDK, native skills and plugins are delivery options where supported."
 
 intelligence_technical_details: "View technical MCP retrieval example"
 
