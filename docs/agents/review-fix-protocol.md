@@ -58,6 +58,9 @@ a tighter user/project limit and allow an explicit larger finite limit. Stop ear
 consecutive batches without material progress (the same unresolved finding or failed gate,
 or an oscillating fix), exhausted host/tool budget, or a blocker requiring a human decision.
 A blocked finding need not prevent independent safe fixes within the remaining budget.
+If the final comparison is empty, report no remaining changes and distinguish a verified no-op
+from a reverted or incomplete implementation; never claim the requested behavior was delivered
+without evidence.
 
 - **Ready for approval:** Fresh review of the final snapshot completed, no confirmed actionable
   in-scope findings remain, and every required gate passes on that snapshot (or has an explicit,
