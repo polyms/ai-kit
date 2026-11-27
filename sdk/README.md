@@ -23,20 +23,10 @@ const skill = extendSkill(base, {
 GitHub Actions builds and tests on Node.js 24. RC `1.0.0-rc.1` was built,
 pack-verified and **published to GitHub Packages** by tag `sdk-v1.0.0-rc.1`
 ([release workflow](https://github.com/polyms/ai-kit/actions/runs/45020141109)).
-It uses the `next` dist-tag, not `latest`. Public Polyms proxy installation
-has not yet been independently verified. To check the *published* package
-(rather than a local tarball) and its public HTTP skill delivery from a host
-with Node.js 24+ and registry/network access, run:
-
-```sh
-node scripts/verify-published-sdk.mjs
-```
-
-The check uses a fresh temporary npm project and the published
-`@polyms/ai-kit-sdk@1.0.0-rc.1` through `registry.polyms.dev/npm`,
-then reuses the existing reference consumer verification. It runs **only
-on demand**, never in production CI, and is not proof of the SDK version
-actually loaded by Astra.
+It uses the `next` dist-tag, not `latest`. Astra's operator confirms
+`@polyms/ai-kit-sdk@1.0.0-rc.1` was installed via `registry.polyms.dev`
+and deployed in production. This is practical consumer evidence; Astra MCP's
+template output does not independently report the resolved SDK package version.
 
 For future versions: update `sdk/package.json`, verify CI, then push a
 matching `sdk-v<version>` tag. The workflow tests, packs and publishes the
@@ -55,6 +45,8 @@ Run from the host that will consume the provider, after building the SDK and dep
 node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.5 20
 ```
 
+This is an **optional troubleshooting and regression measurement**, not a
+stable SDK release gate without an agreed SLO or known latency issue.
 The report includes cold/warm p50 and p95, reference fetch timing and network call counts.
 Cold means a new SDK instance, not an empty CDN, DNS or connection cache. Use the same host and
 version for comparisons. Initial targets for `reqs` are cold p95 under 500 ms and warm p95 under
