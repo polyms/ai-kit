@@ -21,6 +21,7 @@ const { values: opts } = parseArgs({
     suite: { type: 'string', default: 'all' },
     case: { type: 'string' },
     repeat: { type: 'string', default: '1' },
+    'max-requests': { type: 'string' },
     model: { type: 'string' },
     'judge-model': { type: 'string' },
     out: { type: 'string' },
@@ -30,13 +31,18 @@ const { values: opts } = parseArgs({
 })
 if (opts.help) {
   console.log(
-    'pnpm eval:run [--suite all|output|routing|composition|memory] [--case ID] [--repeat N] [--model ID] [--judge-model ID] [--out FILE] [--dry-run]'
+    'pnpm eval:run [--suite all|output|routing|composition|memory] [--case ID] [--repeat N] --max-requests N [--model ID] [--judge-model ID] [--out FILE] [--dry-run]'
   )
   process.exit(0)
 }
 const repeat = Number(opts.repeat)
 if (!Number.isSafeInteger(repeat) || repeat < 1 || repeat > 20) throw new Error('repeat must be 1..20')
 if (!['all', 'output', 'routing', 'composition', 'memory'].includes(opts.suite!)) throw new Error('Unknown suite')
+const maxRequests = opts['max-requests'] === undefined ? null : Number(opts['max-requests'])
+if (maxRequests !== null && (!Number.isSafeInteger(maxRequests) || maxRequests < 1 || maxRequests > 100000))
+  throw new Error('--max-requests must be an integer between 1 and 100000')
+if (!opts['dry-run'] && maxRequests === null)
+  throw new Error('Set --max-requests to approve a hard cap on model and judge API requests')
 
 type Case = {
   id: string
@@ -153,6 +159,7 @@ const plan = {
     : 0,
   revision,
   fixtureHash,
+  maxRequests,
 }
 if (opts['dry-run']) {
   console.log(JSON.stringify(plan, null, 2))
@@ -171,6 +178,8 @@ if (url.username || url.password || url.search || url.hash)
 const key = process.env.EVAL_API_KEY
 const maxRounds = 16
 const maxTokens = 4096
+let requestsSent = 0
+let requestCapHit = false
 type Msg = {
   role: string
   content: string | null
@@ -238,6 +247,11 @@ const memoryTools = [{
   },
 }]
 async function chat(model: string, messages: Msg[], exposeTools = false, selectedTools = tools) {
+  if (requestsSent >= maxRequests!) {
+    requestCapHit = true
+    throw new Error('Model request limit reached: --max-requests ' + maxRequests)
+  }
+  requestsSent++
   const response = await fetch(url, {
     method: 'POST',
     redirect: 'error',
@@ -452,19 +466,29 @@ const report = {
   plan,
   maxRounds,
   maxTokens,
+  maxRequests,
+  requestsSent: 0,
+  requestCapHit: false,
   rows,
   summary: {},
 }
 console.log(JSON.stringify(plan, null, 2))
-for (const item of cases) {
+evaluation: for (const item of cases) {
   for (let index = 1; index <= repeat; index++) {
     const modes: Row['mode'][] = index % 2 === 1 ? ['baseline', 'assisted'] : ['assisted', 'baseline']
     for (const mode of modes) {
       const row = await run(item, mode, index)
       rows.push(row)
       report.summary = summarize(rows)
+      report.requestsSent = requestsSent
+      report.requestCapHit = requestCapHit
       await writeFile(out, `${JSON.stringify(report, null, 2)}\n`)
       console.log(item.id, mode, row.status)
+      if (requestCapHit) {
+        console.error('Stopping evaluation after reaching --max-requests ' + maxRequests)
+        process.exitCode = 1
+        break evaluation
+      }
     }
   }
 }

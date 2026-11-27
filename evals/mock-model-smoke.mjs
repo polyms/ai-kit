@@ -14,6 +14,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const temp = mkdtempSync(join(tmpdir(), 'ai-kit-eval-smoke-'))
 const reportPath = join(temp, 'runner.json')
 const markdownPath = join(temp, 'summary.md')
+const cappedReportPath = join(temp, 'capped-runner.json')
 const generationModel = 'local-smoke-generation'
 const judgeModel = 'local-smoke-judge'
 const counters = { generation: 0, judge: 0, recalls: 0, responses: 0 }
@@ -121,7 +122,7 @@ try {
   assert.ok(address && typeof address !== 'string')
   const url = 'http://127.0.0.1:' + address.port + '/v1/chat/completions'
   await runCommand('pnpm', [
-    'eval:run', '--suite', 'memory', '--case', 'MP-01', '--repeat', '1',
+    'eval:run', '--suite', 'memory', '--case', 'MP-01', '--repeat', '1', '--max-requests', '8',
     '--model', generationModel, '--judge-model', judgeModel, '--out', reportPath,
   ], { EVAL_CHAT_URL: url, EVAL_API_KEY: '' })
 
@@ -131,6 +132,9 @@ try {
   assert.equal(report.plan.cases, 1)
   assert.equal(report.plan.pairedRuns, 1)
   assert.equal(report.rows.length, 2)
+  assert.equal(report.maxRequests, 8)
+  assert.equal(report.requestsSent, 6)
+  assert.equal(report.requestCapHit, false)
   assert.deepEqual(report.rows.map(row => row.mode), ['baseline', 'assisted'])
   for (const row of report.rows) {
     assert.equal(row.id, 'MP-01')
@@ -155,6 +159,19 @@ try {
   assert.match(markdown, /Complete pairs \| 1/)
   assert.match(markdown, /Missing or incomplete planned pairs \| 0/)
   assert.match(markdown, /memory/)
+  // A deliberately insufficient cap must never allow a fourth API request.
+  const beforeCappedRun = counters.responses
+  await assert.rejects(runCommand('pnpm', [
+    'eval:run', '--suite', 'memory', '--case', 'MP-01', '--repeat', '1',
+    '--max-requests', '3', '--model', generationModel, '--judge-model', judgeModel,
+    '--out', cappedReportPath,
+  ], { EVAL_CHAT_URL: url, EVAL_API_KEY: '' }), /Stopping evaluation after reaching --max-requests 3/)
+  assert.equal(counters.responses - beforeCappedRun, 3)
+  const capped = JSON.parse(readFileSync(cappedReportPath, 'utf8'))
+  assert.equal(capped.requestsSent, 3)
+  assert.equal(capped.requestCapHit, true)
+  assert.equal(capped.rows.length, 2)
+  assert.notEqual(capped.rows[1].status, 'pass')
   console.log('PASS: localhost model protocol, synthetic tool call, judge and report CLI.')
   console.log('This was a MOCK smoke test, not a measured model-quality benchmark.')
 } finally {
