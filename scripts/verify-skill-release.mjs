@@ -25,10 +25,14 @@ function sameRelease(data, expected, label) {
   assert.equal(data.revision, expected.revision, label + ': revision')
 }
 
-export async function verifySkillRelease({ endpoint, release, fetchImpl = fetch }) {
+export async function verifySkillRelease({ endpoint, release, retiredVersions = [], fetchImpl = fetch }) {
   const origin = endpointUrl(endpoint)
   assert.ok(release && versionPattern.test(release.version) &&
     shaPattern.test(release.revision), 'Expected a pinned release manifest')
+  assert.ok(Array.isArray(retiredVersions) && retiredVersions.every(version =>
+    typeof version === 'string' && versionPattern.test(version) && version !== release.version) &&
+    new Set(retiredVersions).size === retiredVersions.length && retiredVersions.length <= 8,
+    'Retired versions must be distinct valid versions other than the active release')
   const counters = { requests: 0 }
   async function request(path, init) {
     counters.requests++
@@ -103,6 +107,26 @@ export async function verifySkillRelease({ endpoint, release, fetchImpl = fetch 
         'Memory Protocol reference was not loaded')
     } else assert.equal(file.content, undefined, 'Unrequested reference was loaded')
   }
+  // A stale CDN or API proxy must not silently serve current content for a retired release.
+  for (const retiredVersion of retiredVersions) {
+    const checks = [
+      ['/skill-bundles/' + retiredVersion + '/catalog.json'],
+      ['/skill-bundles/' + retiredVersion + '/qa/starter.json'],
+      ['/api/skills', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ name: 'qa', version: retiredVersion }),
+      }],
+    ]
+    for (const [path, init] of checks) {
+      counters.requests++
+      const response = await fetchImpl(new URL(path, origin), {
+        ...init, redirect: 'error', signal: AbortSignal.timeout(15_000),
+      })
+      assert.equal(response.status, 404,
+        'Retired ' + retiredVersion + ' must return HTTP 404 for ' + path +
+        ', got ' + response.status)
+    }
+  }
   return {
     status: 'passed',
     version: release.version,
@@ -112,6 +136,7 @@ export async function verifySkillRelease({ endpoint, release, fetchImpl = fetch 
     checkedBundles: checkedPacks,
     selectedReference: memoryPath,
     requests: counters.requests,
+    retiredVersionsChecked: retiredVersions,
   }
 }
 
@@ -120,9 +145,10 @@ if (process.argv[1] && resolve(process.argv[1]) === mainFile) {
   const args = process.argv.slice(2)
   const versionFlag = args.indexOf('--version')
   const endpointFlag = args.indexOf('--endpoint')
+  const retiredFlag = args.indexOf('--retired')
   if (versionFlag === -1 || !args[versionFlag + 1] ||
       endpointFlag === -1 || !args[endpointFlag + 1]) {
-    console.error('Usage: node scripts/verify-skill-release.mjs --version 0.3.5 --endpoint https://ai-kit.polyms.dev')
+    console.error('Usage: node scripts/verify-skill-release.mjs --version 0.3.5 --endpoint https://ai-kit.polyms.dev [--retired 0.3.4]')
     process.exitCode = 2
   } else {
     const version = args[versionFlag + 1]
@@ -130,7 +156,8 @@ if (process.argv[1] && resolve(process.argv[1]) === mainFile) {
       assert.match(version, versionPattern, 'Invalid release version')
       const file = resolve('registry/releases', version, 'release.json')
       const release = JSON.parse(readFileSync(file, 'utf8'))
-      const result = await verifySkillRelease({ endpoint: args[endpointFlag + 1], release })
+      const retiredVersions = retiredFlag === -1 ? [] : (args[retiredFlag + 1] ?? '').split(',')
+      const result = await verifySkillRelease({ endpoint: args[endpointFlag + 1], release, retiredVersions })
       console.log(JSON.stringify(result, null, 2))
     } catch (error) {
       console.error('Skill release verification FAILED:', error.message)

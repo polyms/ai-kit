@@ -15,6 +15,22 @@ Use native/local skill installation, MCP or the SDK to deliver the same version-
 
 **Kit site:** [ai-kit.polyms.dev](https://ai-kit.polyms.dev) — browse skills, copy sample prompts, quick start. Source in `apps/landing/`.
 
+## AI-driven release checks
+
+After deploying AI Kit, ask your connected AI client: **"Check AI Kit
+production, verify skill release 0.3.5 and Astra compatibility."**
+
+The `get_release_info` MCP tool reports configured immutable skill release
+metadata, with a requested-version guard (`expectedVersion="0.3.5"`) and
+optional public HTTP verification (`checkHttp=true`). A version mismatch fails
+closed, and `latest` and pinned catalog metadata must match completely.
+Combine it with `server_info` and `get_skill_pack` to distinguish the
+deployed MCP commit, immutable release and mutable main-branch content.
+Checks report **Passed / Failed / Unverified** with provenance.
+Actual Astra SDK package/version must come from that consumer's runtime;
+an AI Kit tool cannot infer it. No separate production GitHub Actions job
+is required. See [release verification](docs/quality/release-consumer-verification.md).
+
 ## Optional feedback
 
 Have an idea or a problem with an AI Kit skill, workflow or template?

@@ -27,10 +27,13 @@ function makeBundle(name, strategy, changed = {}) {
     entry: starter, starterPaths: [starter], contract: packs.find(p => p.name === name).contract,
     files, ...changed }
 }
-function fakeFetch({ staleLatest = false, badStarter = false, noMemory = false } = {}) {
+function fakeFetch({ staleLatest = false, badStarter = false, noMemory = false, retiredCatalogLive = false, retiredApiLive = false } = {}) {
   return async (url, init) => {
     const path = new URL(url).pathname
     const response = (value, status = 200) => Response.json(value, { status })
+    if (path === '/skill-bundles/0.3.4/catalog.json' && retiredCatalogLive) {
+      return response({ ...catalog, version: '0.3.4' })
+    }
     if (path === '/skill-bundles/latest.json') {
       return response({ ...catalog, ...(staleLatest ? { version: '0.3.2' } : {}),
         packs: noMemory ? packs.map(p => ({ ...p, contract: { ...p.contract, memory: undefined } })) : packs })
@@ -40,6 +43,7 @@ function fakeFetch({ staleLatest = false, badStarter = false, noMemory = false }
     } : catalog)
     if (path === '/api/skills') {
       const body = JSON.parse(init.body)
+      if (body.version === '0.3.4') return response({ error: 'VERSION_NOT_FOUND' }, retiredApiLive ? 200 : 404)
       return response(makeBundle(body.name, 'selected'))
     }
     const match = path.match(/^\/skill-bundles\/0\.3\.5\/(reqs|plan|bug)\/(starter|manifest)\.json$/)
@@ -55,10 +59,11 @@ function fakeFetch({ staleLatest = false, badStarter = false, noMemory = false }
 }
 test('production release smoke validates all expected metadata and content', async () => {
   const result = await verifySkillRelease({
-    endpoint: 'https://ai-kit.polyms.dev', release, fetchImpl: fakeFetch(),
+    endpoint: 'https://ai-kit.polyms.dev', release, retiredVersions: ['0.3.4'], fetchImpl: fakeFetch(),
   })
   assert.equal(result.status, 'passed')
-  assert.equal(result.requests, 10)
+  assert.equal(result.requests, 13)
+  assert.deepEqual(result.retiredVersionsChecked, ['0.3.4'])
   assert.deepEqual(result.checkedBundles, ['reqs', 'plan', 'bug'])
 })
 test('fails on outdated latest catalog', async () => {
@@ -80,4 +85,25 @@ test('rejects non-HTTPS production endpoint', async () => {
   await assert.rejects(verifySkillRelease({
     endpoint: 'http://example.com', release, fetchImpl: fakeFetch(),
   }), /Use HTTPS/)
+})
+
+test('fails closed when retired catalog still resolves HTTP 200', async () => {
+  await assert.rejects(verifySkillRelease({
+    endpoint: 'https://ai-kit.polyms.dev', release, retiredVersions: ['0.3.4'],
+    fetchImpl: fakeFetch({ retiredCatalogLive: true }),
+  }), /Retired 0.3.4 must return HTTP 404/)
+})
+test('fails closed when retired POST route silently succeeds', async () => {
+  await assert.rejects(verifySkillRelease({
+    endpoint: 'https://ai-kit.polyms.dev', release, retiredVersions: ['0.3.4'],
+    fetchImpl: fakeFetch({ retiredApiLive: true }),
+  }), /Retired 0.3.4 must return HTTP 404/)
+})
+test('rejects invalid or conflicting retired versions before network access', async () => {
+  for (const retiredVersions of [['0.3.5'], ['0.3.4', '0.3.4'], ['../../private'], ['latest']]) {
+    await assert.rejects(verifySkillRelease({
+      endpoint: 'https://ai-kit.polyms.dev', release, retiredVersions,
+      fetchImpl: () => { throw new Error('Unexpected network call') },
+    }), /Retired versions must be distinct valid versions/)
+  }
 })

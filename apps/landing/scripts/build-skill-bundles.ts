@@ -99,3 +99,9 @@ rmSync(output, { recursive: true, force: true })
 const releases = Object.fromEntries(await Promise.all((Object.keys(registry) as (keyof typeof registry)[])
   .map(async version => [version, await buildRelease(version)])))
 writeFileSync(resolve(app, 'src/lib/skill-pack/release-snapshot.generated.json'), JSON.stringify({ latest, releases }))
+// Small deployment metadata for MCP diagnostics. Never bundle full skill bodies for an info request.
+writeFileSync(resolve(app, 'src/lib/skill-pack/release-info.generated.json'), JSON.stringify({
+  latest,
+  releases: Object.fromEntries(Object.entries(releases).map(([version, { catalog }]) =>
+    [version, { revision: catalog.revision, packCount: catalog.packs.length }])),
+}))
