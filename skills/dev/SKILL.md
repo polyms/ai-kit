@@ -163,10 +163,11 @@ name an upstream skill when blocked.
 
 ### 5. Ship checklist
 
-When source review is required or requested, enter the Review-Fix Protocol as soon as the
-implementation is reviewable. Apply this checklist during the loop; a repairable failed check
-is a finding, not a reason to end the turn. Missing authority or a material prerequisite still
-blocks the affected action.
+When source review is required or requested, enter the
+[Review-Fix Protocol](../../docs/agents/review-fix-protocol.md) as soon as the implementation is
+reviewable, unless already inside a fix batch. Apply this checklist during the loop; a repairable
+failed check is a finding, not a reason to end the turn. Missing authority or a material
+prerequisite still blocks the affected action.
 
 - [ ] Types complete — no `any` without justification
 - [ ] Error, empty, and loading states handled
@@ -194,10 +195,10 @@ blocks the affected action.
 
 ### 6. Handoff
 
-For authorized source changes with a required or requested pre-merge review, run the
-[Review-Fix Protocol](../../docs/agents/review-fix-protocol.md) with `code-review` in the same
-execution flow. Do not stop at a review recommendation while the host can continue within scope.
-A fix batch, delegated or inline, must return to the parent loop instead of starting another loop.
+For authorized source changes with a required or requested pre-merge review, continue the
+Review-Fix Protocol from step 5 with `code-review` in the same execution flow. Do not stop at a
+review recommendation while the host can continue within scope. A fix batch, delegated or inline,
+must return to the parent loop instead of starting another loop.
 
 When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after the
 ship checklist — prefer **exactly one**:
@@ -211,7 +212,10 @@ ship checklist — prefer **exactly one**:
 
 Run the protocol when source changes are reviewable; required implementation and verification
 checks must pass before readiness. If browser coverage or another prerequisite cannot be completed,
-report that gate as blocked while continuing independent in-scope fixes. Do not force a full review for a trivial change when policy and user scope do not require it, and do not skip a required review. Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
+report that gate as blocked while continuing independent in-scope fixes. Do not force a full
+review for a trivial change when policy and user scope do not require it, and do not skip a required review.
+Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces
+genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
 
