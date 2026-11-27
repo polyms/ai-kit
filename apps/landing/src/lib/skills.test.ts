@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { catalogCategory, catalogDisplayName } from '../components/home/catalogCategory'
 import type { SkillOverlay } from '../content/overlay'
 import { listSkillPacks } from './skill-pack/skill-pack'
 import { getSkillBySlug, getSkillCopy, getSkills } from './skills'
@@ -129,4 +130,32 @@ describe('MCP packs in the skill catalog', () => {
       }
     })
   }
+})
+
+
+describe('home catalog metadata', () => {
+  it('defines a specific category for every canonical pack', () => {
+    for (const pack of listSkillPacks()) {
+      expect(catalogCategory(pack.name), pack.name).not.toBe('SKILL')
+    }
+    expect(catalogCategory('unknown-skill')).toBe('SKILL')
+  })
+
+  it('preserves restored engineering categories and display names', () => {
+    const restored = [
+      ['arch-refactor', 'MAINT', 'Arch refactor'],
+      ['e2e', 'E2E', 'E2E'],
+      ['collab', 'COLLAB', 'Collab'],
+      ['align-loop', 'GRILL', 'Align loop'],
+      ['domain-modeling', 'DOMAIN', 'Domain modeling'],
+      ['code-review', 'AUDIT', 'Code review'],
+    ] as const
+    for (const [slug, category, label] of restored) {
+      expect(catalogCategory(slug)).toBe(category)
+      expect(catalogDisplayName(slug, slug)).toBe(label)
+    }
+    expect(catalogCategory('arch')).toBe('ARCH')
+    expect(catalogCategory('qa')).toBe('QA')
+    expect(catalogCategory('review')).toBe('REVIEW')
+  })
 })
