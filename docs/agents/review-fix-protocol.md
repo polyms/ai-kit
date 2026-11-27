@@ -3,11 +3,12 @@
 Host-executed guidance for source changes. AI Kit supplies methodology, not an autonomous runtime.
 Use `dev` for implementation and `code-review` for independent Standards, Spec and Simplify
 passes. Load each owning skill through the available host route (MCP: its pack's entry and needed
-references), not by assuming the other pack is bundled. This protocol does not replace either skill, functional QA, E2E, or release gates.
+references), not by assuming the other pack is bundled. This protocol does not replace either
+skill, functional QA, E2E, or release gates.
 
 ## Activation and authority
 
-- Enter after an authorized implementation or bug fix when pre-merge review is required by the
+- Enter once authorized source changes are reviewable and pre-merge review is required by the
   project or requested by the user, or when the user requests code review AND fixes.
 - Review-only, draft-only and diagnosis-only requests retain their original mode. Review-only
   stops with findings; a draft may be revised in context but never written without authority.
@@ -40,17 +41,20 @@ material missing evidence or permissions block the affected action.
    security and scope risks in the applicable axes. Assign stable IDs to actionable findings.
 2. Run the applicable verification gates on the reviewed snapshot when matching evidence is
    missing. A failed check becomes a finding even if the review is clean. Validate findings
-   against actual evidence. Fix confirmed, in-scope blockers and actionable
-   suggestions through `dev`; do not chase cosmetic nits, speculative improvements or rejected
+   against actual evidence. Fix confirmed, in-scope blockers and actionable suggestions through
+   `dev`; do not chase cosmetic nits, speculative improvements or rejected
    findings. Record why any remaining finding is deferred, rejected or blocked. Escalate
    decisions that would change scope; do not silently mark them resolved.
 3. Run affected verification after each fix batch and the required full gate set before readiness.
-   Use actual commands or matching authorized CI evidence; missing execution or stale evidence is not a pass.
+   Use actual commands or matching authorized CI evidence; missing execution or stale evidence
+   is not a pass.
    Carry failed checks into the next review and fix batch. If a check is pending or unavailable,
    continue independent in-scope work; report incomplete if the gate cannot be verified in this run.
 4. Refresh the entire comparison and repeat the review on the changed snapshot. A fix or a green
    test alone never completes the loop. Continue without asking for approval again for fixes
    already authorized in scope. Do not recursively start another loop inside the fixer or reviewer.
+   If verification later fails on the same snapshot, feed that failure into the active loop;
+   a review without findings is not permission to ignore a failed gate.
 
 **Completion criterion:** Each fix batch has a fresh review of its resulting snapshot; verification
 receipts and finding dispositions refer to the current changes, not an earlier head.
