@@ -429,11 +429,11 @@ export const skillOverlays: SkillOverlay[] = [
         en: '/design or agent brief from `/track`',
         vi: '/design hoặc agent brief từ `/track`',
       },
-      downstream: '/review',
+      downstream: '/code-review',
     },
     boundaries: {
-      en: 'Does not write requirements or UI specs. Pre-merge review is `/review`, not part of the `/dev` loop.',
-      vi: 'Không viết yêu cầu hay đặc tả UI. Rà soát trước merge là `/review`, không nằm trong vòng `/dev`.',
+      en: 'Does not write requirements or UI specs. Pre-merge review is `/code-review`, not part of the `/dev` loop.',
+      vi: 'Không viết yêu cầu hay đặc tả UI. Rà soát trước merge là `/code-review`, không nằm trong vòng `/dev`.',
     },
     prerequisites: [
       {
@@ -459,13 +459,13 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Kỳ vọng TDD tại seam đã chốt — test trước khi skill yêu cầu.',
       },
       {
-        en: 'When the slice is green, run `/review` before merge.',
-        vi: 'Khi lát cắt đã xanh, chạy `/review` trước khi merge.',
+        en: 'When the slice is green, run `/code-review` before merge.',
+        vi: 'Khi lát cắt đã xanh, chạy `/code-review` trước khi merge.',
       },
     ],
     doneWhen: {
-      en: 'The vertical slice is implemented with tests at confirmed seams and ready for `/review`.',
-      vi: 'Lát cắt đã implement kèm test tại seam đã chốt và sẵn sàng cho `/review`.',
+      en: 'The vertical slice is implemented with tests at confirmed seams and ready for `/code-review`.',
+      vi: 'Lát cắt đã implement kèm test tại seam đã chốt và sẵn sàng cho `/code-review`.',
     },
     tips: [
       {
@@ -777,6 +777,89 @@ export const skillOverlays: SkillOverlay[] = [
     ],
     doneWhen: { en: 'Map entries and index are traceable to current evidence; unsupported observations are explicit.', vi: 'Mục bản đồ và chỉ mục truy được về bằng chứng hiện tại; điểm chưa xác minh được nêu rõ.' },
     samplePrompt: { en: '/build-feature-map\n\nMap the team invitation area.', vi: '/build-feature-map\n\nLập bản đồ vùng mời thành viên.' },
+  },
+  {
+    name: 'code-review',
+    invoke: '/code-review',
+    slug: 'code-review',
+    description: {
+      en: 'Review code since a pinned git baseline — Standards, Spec, and Simplify.',
+      vi: 'Rà soát code kể từ một mốc git cố định — theo Chuẩn mực, Đặc tả, và Đơn giản hóa.',
+    },
+    invocation: 'model',
+    domain: 'review',
+    samplePrompt: {
+      en: '/code-review\n\nDiff since main',
+      vi: '/code-review\n\nDiff so với main',
+    },
+    githubPath: 'skills/code-review/',
+    relatedAgents: ['techlead'],
+    agentPanel: {
+      role: 'PRINCIPAL TECH LEAD',
+      owns: ['Standards', 'Spec', 'Simplify', 'pre-merge gate'],
+      invokeHint: {
+        en: 'Use the techlead to review diff since main',
+        vi: 'Nhờ agent techlead rà soát diff so với main',
+      },
+    },
+    summary: {
+      en: 'Three-axis review from a fixed git point — parallel subagents, findings tagged blocker / suggestion / nit.',
+      vi: 'Rà soát ba trục từ một điểm git cố định — chạy song song bằng subagent, gắn nhãn chặn / gợi ý / nhỏ.',
+    },
+    whenToUse: {
+      en: 'Before merge, or when asked to review a branch, PR, or diff — including cuts for over-engineering.',
+      vi: 'Trước khi merge, hoặc khi được nhờ rà soát nhánh, PR, hoặc diff — kể cả để cắt phần over-engineer.',
+    },
+    pipeline: {
+      upstream: '/dev',
+      downstream: { en: 'Ship', vi: 'Ship' },
+    },
+    boundaries: {
+      en: 'Not lint-only or generic PR comments — always uses a pinned baseline. Spec is optional; Simplify always runs.',
+      vi: 'Không chỉ lint hay comment PR chung — luôn neo một baseline. Đặc tả là tùy chọn; Đơn giản hóa luôn chạy.',
+    },
+    prerequisites: [
+      {
+        en: 'A branch or diff with a clear git baseline (e.g. `main`).',
+        vi: 'Nhánh hoặc diff có baseline git rõ (ví dụ `main`).',
+      },
+      {
+        en: 'Implementation for the slice is largely done (`/dev`).',
+        vi: 'Phần implement lát cắt cơ bản đã xong (`/dev`).',
+      },
+    ],
+    howTo: [
+      {
+        en: 'Invoke `/code-review` and pin the baseline (e.g. review since `main`).',
+        vi: 'Gọi `/code-review` và neo baseline (ví dụ rà kể từ `main`).',
+      },
+      {
+        en: 'Let the three axes run — Standards, Spec (if provided), Simplify.',
+        vi: 'Để ba trục chạy — Chuẩn mực, Đặc tả (nếu có), Đơn giản hóa.',
+      },
+      {
+        en: 'Triage findings: fix blockers, consider suggestions, defer nits as needed.',
+        vi: 'Phân loại finding: sửa blocker, cân nhắc gợi ý, để nits sau nếu cần.',
+      },
+      {
+        en: 'Re-run or merge when blockers are clear.',
+        vi: 'Chạy lại hoặc merge khi không còn blocker.',
+      },
+    ],
+    doneWhen: {
+      en: 'Findings are listed with severity and blockers are resolved or explicitly accepted before merge.',
+      vi: 'Finding đã liệt kê theo mức độ và blocker đã xử lý hoặc chấp nhận rõ trước merge.',
+    },
+    tips: [
+      {
+        en: 'Always pin a baseline — “review this PR” without a base is not enough.',
+        vi: 'Luôn neo baseline — “rà PR này” mà không có base là chưa đủ.',
+      },
+      {
+        en: 'Long reviews: ask to use the `techlead` agent.',
+        vi: 'Review dài: nhờ dùng agent `techlead`.',
+      },
+    ],
   },
   ...workSkillOverlays,
 ]

@@ -423,8 +423,8 @@ export const workSkillOverlays: SkillOverlay[] = [
     "invoke": "/review",
     "slug": "review",
     "description": {
-      "en": "Review artifacts, plans and source-code changes using evidence and actionable findings.",
-      "vi": "Review tài liệu, kế hoạch và thay đổi mã nguồn bằng bằng chứng và đề xuất cụ thể."
+      "en": "Review non-code work artifacts and plans using evidence and actionable findings.",
+      "vi": "Review tài liệu và kế hoạch bằng bằng chứng và đề xuất cụ thể."
     },
     "invocation": "model",
     "domain": "work",
@@ -434,12 +434,12 @@ export const workSkillOverlays: SkillOverlay[] = [
       "vi": "Rà soát yêu cầu, kế hoạch và đề xuất dựa trên bằng chứng, không tự đổi quyết định đã chốt."
     },
     "whenToUse": {
-      "en": "Review requirements, proposals, pull requests or diffs for standards, specification and simplicity.",
-      "vi": "Rà yêu cầu, đề xuất, PR hoặc diff theo chuẩn, đặc tả và độ đơn giản."
+      "en": "Review requirements, proposals and plans for assumptions, gaps, risks and evidence.",
+      "vi": "Rà yêu cầu, đề xuất và kế hoạch để tìm giả định, khoảng trống, rủi ro và bằng chứng."
     },
     "boundaries": {
-      "en": "Use the three-axis code-review branch for source changes and qa for functional test execution.",
-      "vi": "Dùng nhánh review mã nguồn ba trục và qa để chạy test chức năng."
+      "en": "Use code-review for source changes and qa for functional test execution.",
+      "vi": "Dùng code-review cho mã nguồn và qa để chạy test chức năng."
     },
     "prerequisites": [
       {

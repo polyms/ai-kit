@@ -72,7 +72,7 @@ Heavy frameworks that own the whole process can hide bugs in the process itself.
 /track        → move raw issues through triage state machine
 /design        → UI spec from PRD using the project's design system
 /dev           → fullstack implementation, TDD, debugging
-/review   → three-axis review (Standards + Spec + Simplify) before merge
+/code-review → three-axis review (Standards + Spec + Simplify) before merge
 /arch → scan codebase for deepening opportunities (maintenance)
 ```
 
@@ -90,7 +90,7 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 
 ### Catalog
 
-20 canonical skills are available both as native skill entries and live MCP packs. Select the relevant workflow within each skill; actual execution depends on the host.
+21 canonical skills are available both as native skill entries and live MCP packs. Select the relevant workflow within each skill; actual execution depends on the host.
 
 | Invoke | Scope |
 | --- | --- |
@@ -110,7 +110,8 @@ The goal: a coherent pipeline where PM artifacts hand off cleanly to design and 
 | [`/release`](skills/release/) | Go-live readiness and rollback |
 | [`/reqs`](skills/reqs/) | Discovery, BRD, enterprise/lean PRD and authorized publication |
 | [`/research`](skills/research/) | Evidence-based research |
-| [`/review`](skills/review/) | Artifact critique and Standards/Spec/Simplify source review |
+| [`/review`](skills/review/) | Evidence-based artifact critique and assumption challenge |
+| [`/code-review`](skills/code-review/) | Standards, Spec and Simplify source-code review |
 | [`/setup`](skills/setup/) | Canonical sources, operation routes and project execution policy |
 | [`/task`](skills/task/) | Standard work items and dependency-ordered vertical slicing |
 | [`/track`](skills/track/) | Inspect, update and triage issues/PRs |
@@ -127,7 +128,7 @@ In addition to local installation, MCP-capable clients can connect to `https://a
 with Streamable HTTP and OAuth. Discover available packs via `list_skill_packs` and load workflow,
 templates and references using `get_skill_pack`. The server retrieves Markdown from GitHub main.
 
-The live MCP exposes the same 20 canonical entries above. No checkout or native install is required to retrieve methodology. The published immutable SDK snapshot has its own release catalog; do not infer its contents from live MCP.
+The live MCP exposes the same 21 canonical entries above. No checkout or native install is required to retrieve methodology. The published immutable SDK snapshot has its own release catalog; do not infer its contents from live MCP.
 
 Use the catalog routing hints and `starterPaths` to choose and load the smallest relevant workflow;
 fetch additional exact paths only when needed. `[]` returns the manifest only; omission retains full-pack
@@ -327,12 +328,12 @@ from design spec: [visual-ship.md](skills/dev/visual-ship.md) (evidence log requ
 
 Pipeline walkthrough: [examples/pipeline-feature-walkthrough.md](examples/pipeline-feature-walkthrough.md).
 
-### `/review` — Three-axis source-code branch
+### `/code-review` — Three-axis source-code review
 
 Review branch or PR work since a pinned git fixed point — Standards, Spec, and Simplify in parallel:
 
 ```
-/review
+/code-review
 
 Review diff since main.
 Rà soát code trên branch này so với main.
@@ -342,8 +343,8 @@ Fetches spec from issue refs in commits (`gh issue view`), `docs/design/`, user 
 `docs/` / `.scratch/`. Reports findings under separate `## Standards`, `## Spec`, and
 `## Simplify` headings — each finding tagged 🔴 blocker / 🟡 suggestion / 💭 nit. Model-invoked
 — also auto-fires on "review PR", "review diff", "xem diff", "over-engineered", "cắt bớt". See
-[standards-baseline.md](skills/review/standards-baseline.md) and
-[simplify-baseline.md](skills/review/simplify-baseline.md).
+[standards-baseline.md](skills/code-review/standards-baseline.md) and
+[simplify-baseline.md](skills/code-review/simplify-baseline.md).
 
 _Future:_ dedicated `prd-view` skill for presenting PRDs from issues — not in scope yet; Spec axis uses `gh` + paths for now.
 
@@ -465,7 +466,7 @@ ai-kit/
 ├── agents/                  # Principal roles
 ├── docs/agents/             # Shared protocols and project setup
 ├── workflows/               # Optional composition recipes
-├── skills/                  # 20 canonical skill entries
+├── skills/                  # 21 canonical skill entries
 │   ├── reqs/                # Discovery, enterprise and lean PRD branches
 │   ├── task/                # Standard tasks and vertical slicing
 │   ├── track/               # Inspect, update and triage
@@ -473,7 +474,8 @@ ai-kit/
 │   ├── arch/                # Design vocabulary and refactor assessment
 │   ├── dev/                 # Feature preparation, implementation and debug
 │   ├── qa/                  # Functional and E2E test workflows
-│   ├── review/              # Artifact and source-code review
+│   ├── review/              # Artifact review
+│   ├── code-review/         # Three-axis source-code review
 │   ├── setup/               # Project execution profile and configuration
 │   └── ...                  # Remaining canonical entries in catalog above
 └── registry/releases/       # Immutable published skill snapshots
@@ -514,8 +516,8 @@ Run `/craft` before authoring or editing skills. Then:
 ## Agentic fullstack pipeline
 
 ```
-Idea → /align → /reqs → /task → /design → /dev → /review → ship
-Raw issues → /track → ready-for-agent → /dev → /review
+Idea → /align → /reqs → /task → /design → /dev → /code-review → ship
+Raw issues → /track → ready-for-agent → /dev → /code-review
 ```
 
 Run `/setup` once per repo first (includes triage label mapping).
@@ -523,7 +525,7 @@ Run `/setup` once per repo first (includes triage label mapping).
 Each stage produces artifacts the next agent can consume. `/reqs` drafts enterprise PRD/stories in chat;
 `/reqs` publishes a lean PRD to the tracker; `/task` publishes vertical-slice GitHub issues; `/track`
 processes inbound backlog into `ready-for-agent` issues with agent briefs; `/design` adds `docs/design/` specs
-mapped to the project's chosen components; Dev implements against briefs and design specs (Polyms UI Kit is optional); `/review` gates merge on Standards + Spec + Simplify before ship.
+mapped to the project's chosen components; Dev implements against briefs and design specs (Polyms UI Kit is optional); `/code-review` gates merge on Standards + Spec + Simplify before ship.
 
 ## Daily workflow
 
@@ -542,7 +544,7 @@ mapped to the project's chosen components; Dev implements against briefs and des
 - [x] `/task` — break spec into vertical-slice GitHub issues (from Matt's to-issues)
 - [x] `/track` — issue backlog triage, agent briefs, `ready-for-agent` (from Matt's triage)
 - [x] `/dev` — fullstack implementation, TDD, solution ladder, scope self-check, status report
-- [x] `/review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
+- [x] `/code-review` — three-axis review (Standards + Spec + Simplify), 🔴/🟡/💭 tags
 - [x] `/docs` — business and developer-facing docs
 - [x] `research`, `business`, `task`, `bug` — work operations skills and templates
 - [x] MCP skill provider — mutable Markdown delivery; new 0.3.4 pinned release pending production smoke
@@ -571,4 +573,4 @@ for production delivery checks. See [Quality Baseline](docs/quality/baseline.md)
 
 ## Skill migration
 
-The canonical catalog has 20 skills. Old workflow names are MCP aliases only; use the canonical native command plus the requested branch. See [skill migration](docs/agents/skill-migration.md) for the complete map and preserved gates.
+The canonical catalog has 21 skills. Old workflow names are MCP aliases only; use the canonical native command plus the requested branch. See [skill migration](docs/agents/skill-migration.md) for the complete map and preserved gates.

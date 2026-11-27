@@ -1,6 +1,6 @@
 # Canonical skill migration
 
-The live catalog and native library have one entry for each responsibility (20 canonical skills).
+The live catalog and native library have one entry for each responsibility (21 canonical skills).
 Legacy names remain MCP aliases, not independently discoverable skills. Native clients invoke the
 canonical command and state the intended branch. Existing published SDK releases are immutable.
 
@@ -14,7 +14,6 @@ canonical command and state the intended branch. Existing published SDK releases
 | arch-refactor | arch | skills/arch/refactor-workflow.md |
 | collab | dev | skills/dev/feature-preparation.md |
 | e2e | qa | skills/qa/e2e-workflow.md |
-| code-review | review | skills/review/code-review-workflow.md |
 
 The remaining engineering skills setup, arch, dev, devops, craft, align and build-feature-map are
 available in MCP with their own templates. Setup supplies canonical sources and operation routes;
@@ -34,8 +33,9 @@ the host selects real tools and permissions. No new runtime, adapter or automati
 - Dev: preserve feature-map/brief/PRD/ADR/UI packet gates, TDD, characterization, debug and ship
   evidence; use inline fallback without claiming absent subagents.
 - QA: preserve functional coverage and E2E flake, sharding, journey, trace and CI workflows.
-- Review: preserve artifact review and independent Standards/Spec/Simplify code review, including
-  exact revision, unavailable-spec/partial-diff handling and actionable findings.
+- Review and code-review are independent canonical skills: artifact critique and source review have
+  different evidence, methodology and completion gates. Code-review preserves independent Standards,
+  Spec and Simplify axes, exact revision, unavailable-spec/partial-diff handling and actionable findings.
 
 Existing local installations should rerun bootstrap or reinstall canonical skills. Remove old copies
 only when they are known to belong to AI Kit, not personal user skills. Do not silently execute a

@@ -135,7 +135,7 @@ quickstart_target_body: 'Swap -a cursor for your client. Repeat -a to install in
 quickstart_setup_title: 'Run /setup'
 quickstart_setup_body: 'Restart your editor or open a new chat, then run /setup in your project.'
 quickstart_mcp_title: "For AI chat tools · connect via MCP"
-quickstart_mcp_body: "For ChatGPT or other chat clients that support custom remote MCP with OAuth. Access the 20 canonical skill packs without cloning the repo or installing skills. Client support and permissions vary."
+quickstart_mcp_body: "For ChatGPT or other chat clients that support custom remote MCP with OAuth. Access the 21 canonical skill packs without cloning the repo or installing skills. Client support and permissions vary."
 
 # --- nav ---
 nav_catalog: Skills
@@ -310,7 +310,7 @@ skillDetail_contract_note: "Advisory artifact identifiers and completion gate fr
 
 hero_chat_path: "ChatGPT and compatible MCP chat clients · research, planning, business and QA"
 hero_dev_path: "Cursor, Claude Code, Codex, Copilot · repo-aware engineering workflows"
-home_catalog_chat_hint: "20 canonical skill packs via remote MCP. Labels like /research identify skills, not commands you must type. In a compatible connected chat, describe your goal naturally; invocation and permissions depend on the client."
+home_catalog_chat_hint: "21 canonical skill packs via remote MCP. Labels like /research identify skills, not commands you must type. In a compatible connected chat, describe your goal naturally; invocation and permissions depend on the client."
 home_catalog_dev_hint: "Install local skills for coding agents, open a repository and follow that client's invocation rules. Slash-style labels identify workflows; their exact invocation differs by client."
 skill_audience_both: "Chat (MCP) · Development (local)"
 skill_audience_dev: "Development tools · local"

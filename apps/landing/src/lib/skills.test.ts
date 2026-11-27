@@ -119,9 +119,10 @@ describe('MCP packs in the skill catalog', () => {
       const slugs = skills.map(skill => skill.slug)
       expect(new Set(slugs).size).toBe(slugs.length)
       expect([...slugs].sort()).toEqual(listSkillPacks().map(pack => pack.name).sort())
-      expect(slugs).toHaveLength(20)
+      expect(slugs).toHaveLength(21)
       expect(getSkillBySlug('to-prd', locale)?.slug).toBe('reqs')
-      expect(getSkillBySlug('code-review', locale)?.slug).toBe('review')
+      expect(getSkillBySlug('code-review', locale)?.slug).toBe('code-review')
+      expect(getSkillBySlug('review', locale)?.slug).toBe('review')
       for (const pack of listSkillPacks()) {
         expect(slugs).toContain(pack.name)
         expect(pack.relatedSkills.every(name => slugs.includes(name))).toBe(true)
