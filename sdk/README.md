@@ -28,8 +28,10 @@ It uses the `next` dist-tag, not `latest`. Astra's operator confirms
 and deployed in production. This is practical consumer evidence; Astra MCP's
 template output does not independently report the resolved SDK package version.
 
-For future versions: update `sdk/package.json`, verify CI, then push a
-matching `sdk-v<version>` tag. The workflow tests, packs and publishes the
+PR #23 prepares `1.0.0` in `sdk/package.json` together with the SDK
+catalog-integrity fix. **This does not publish a stable SDK yet.** After
+merging and verifying CI on the release commit, push `sdk-v1.0.0` from `main`
+to publish the tested package. The workflow tests, packs and publishes the
 exact verified tarball. Prereleases use `next`; stable tags use `latest`
 and must point to `main`. Do not reuse an already published version.
 
@@ -110,10 +112,12 @@ resolved release version. Reuse it within the session. Starter-only consumers st
 core context rules and hints; consumers must expose the reference to enable full guidance.
 The SDK only retrieves public methodology, never memory contents or business data.
 
-## API stability and release candidate
+## API stability and stable release preparation
 
-The source package version is `1.0.0-rc.1`. This is a **published release candidate**,
-not a stable `1.0.0` release. `list()` returns typed `SkillCatalog`, `getSkill()`
+The source package version is `1.0.0` for the proposed stable release in
+PR #23, while `1.0.0-rc.1` remains the currently published and
+Astra-deployed candidate. Only a successful post-merge
+`sdk-v1.0.0` tag workflow will publish stable `1.0.0`. `list()` returns typed `SkillCatalog`, `getSkill()`
 returns typed `SkillBundle` with `SkillContract` (including optional
 `MemoryHints`), and `extendSkill()` applies trusted local instructions only.
 Responses are checked for schema, pinned identity, known paths, duplicate entries,
@@ -124,5 +128,6 @@ remains 1; added optional fields never imply authorization or memory persistence
 Skill content versions are separate from SDK package versions. Older experimental
 content versions are no longer served by the deployed provider.
 
-The SDK remains prerelease pending the remaining external gates in
+The SDK stable release is prepared in PR #23. Publication remains pending the
+post-merge tag workflow, as detailed in
 [SDK stability review](../docs/agents/sdk-stability.md).
