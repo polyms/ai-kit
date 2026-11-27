@@ -46,10 +46,11 @@ changes plus inspect authorized untracked files; include their contents and size
 Do not stage or commit merely to review. Exclude unrelated edits and disclose any inseparable
 or inaccessible changes. Record exactly what was reviewed.
 
-Confirm the fixed point resolves (e.g. `git rev-parse <fixed-point>` or provider metadata) and the diff is non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents.
+Confirm the fixed point resolves (e.g. `git rev-parse <fixed-point>` or provider metadata) and the diff is non-empty. A bad ref or empty diff fails here — not inside parallel sub-agents. In the loop, an empty diff
+is a no-change outcome to reconcile against the original ask, not a clean review.
 
-Check the size of the actual reviewed snapshot (sum of `+N/-M`, including authorized new files). Under 10 changed
-lines → skip sub-agent spawn; read the diff yourself and apply all three checklists
+Check the size of the actual reviewed snapshot (sum of `+N/-M`, including authorized new files).
+Under 10 changed lines → skip sub-agent spawn; read the diff yourself and apply all three checklists
 (Standards/Spec/Simplify) inline in one pass, then go straight to **5. Aggregate** and
 **6. Handoff** using the same headings and severity tags as a spawned run. 10 lines or
 more → continue to steps 3–4 as normal.
@@ -71,7 +72,8 @@ Look for the originating spec, in this order:
 
 For a bounded change without a formal spec, use the original explicit user request as the Spec
 source when its behavior and scope are sufficiently clear. If nothing is found, ask only when an
-interactive user can resolve it; otherwise report **no spec available** or **spec inaccessible** and skip that axis. Never imply spec compliance.
+interactive user can resolve it; otherwise report **no spec available** or **spec inaccessible**
+and skip that axis. Never imply spec compliance.
 
 **Completion criterion:** Spec path or fetched contents recorded, or explicit decision to
 skip Spec axis.
@@ -179,7 +181,9 @@ severity and worst issue stated in prose. Step 6 has run.
 
 ### 6. Handoff
 
-Severity cues are when/why (not a pasteable menu). Review-only does not authorize fixes, PR comments, approvals or merge. A clean review is a finding, not a merge instruction; if the user requests fixes, preserve the verified diff/ref and run the
+Severity cues are when/why (not a pasteable menu). Review-only does not authorize fixes, PR
+comments, approvals or merge. A clean review is a finding, not a merge instruction; if the user
+requests fixes, preserve the verified diff/ref and run the
 [Review-Fix Protocol](../../docs/agents/review-fix-protocol.md) with `dev`. Return findings to an
 existing parent loop instead of starting a nested loop. The report always ends with
 `## Next Step` (CONTEXT.md **Handoff**) — prefer **exactly one** `→ /skill`. A summary
