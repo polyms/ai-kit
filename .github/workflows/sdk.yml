@@ -36,6 +36,8 @@ jobs:
         run: pnpm exec tsc -p sdk/tsconfig.json
       - name: Test provider and SDK
         run: pnpm --filter @polyms/landing test src/lib/skill-pack/provider.test.ts src/lib/skill-pack/skill-pack.test.ts src/lib/skill-pack/release-info.mcp.test.ts src/lib/feedback/feedback.mcp.test.ts
+      - name: Check on-demand registry verification script syntax (offline)
+        run: node --check scripts/verify-published-sdk.mjs
       - name: Verify read-only SDK consumer against generated release snapshot
         run: node --test scripts/verify-sdk-consumer.test.mjs
       - name: Check evaluation fixtures and scoring
