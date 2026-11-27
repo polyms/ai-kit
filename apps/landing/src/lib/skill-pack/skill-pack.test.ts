@@ -52,6 +52,11 @@ describe('skill pack manifest', () => {
   it('builds raw URLs on refs/heads/main and does not embed file bodies', () => {
     const packs = listSkillPacks()
     expect(packs.map(pack => pack.name)).toEqual([
+      'align-loop',
+      'domain-modeling',
+      'arch-refactor',
+      'collab',
+      'e2e',
       'reqs',
       'design',
       'research',
@@ -251,6 +256,12 @@ describe('skill pack MCP tools', () => {
 
 describe('consolidated engineering packs', () => {
   it('keeps artifact review and source-code review distinct', () => {
+    for (const [a, b] of [['arch', 'arch-refactor'], ['qa', 'e2e'], ['dev', 'collab'], ['align', 'align-loop'], ['align', 'domain-modeling']]) {
+      expect(getSkillPack(a)?.name).toBe(a)
+      expect(getSkillPack(b)?.name).toBe(b)
+      expect(getSkillPack(a)?.files.map(file => file.path)).not.toContain(`skills/${b}/SKILL.md`)
+    }
+    expect(Object.keys(LEGACY_SKILL_ALIASES).sort()).toEqual(['to-issues', 'to-prd', 'triage'])
     const artifact = getSkillPack('review')!
     const code = getSkillPack('code-review')!
     expect(artifact.name).toBe('review')
@@ -266,11 +277,6 @@ describe('consolidated engineering packs', () => {
       'to-prd': 'skills/reqs/lean-prd-workflow.md',
       'to-issues': 'skills/task/vertical-slicing.md',
       triage: 'skills/track/triage-workflow.md',
-      'align-loop': 'skills/align/decision-loop.md',
-      'domain-modeling': 'skills/align/domain-modeling.md',
-      'arch-refactor': 'skills/arch/refactor-workflow.md',
-      collab: 'skills/dev/feature-preparation.md',
-      e2e: 'skills/qa/e2e-workflow.md',
     }
     for (const [alias, path] of Object.entries(branches)) {
       const pack = getSkillPack(alias)!
@@ -288,7 +294,7 @@ describe('consolidated engineering packs', () => {
 
   it('lists exactly the canonical native skill entries and resolves retired names without duplicate catalog entries', async () => {
     const names = listSkillPacks().map(pack => pack.name)
-    expect(names).toHaveLength(21)
+    expect(names).toHaveLength(26)
     const nativeNames = readdirSync(join(repoRoot, 'skills')).filter(name => existsSync(join(repoRoot, 'skills', name, 'SKILL.md'))).sort()
     expect([...names].sort()).toEqual(nativeNames)
     for (const [alias, canonical] of Object.entries(LEGACY_SKILL_ALIASES)) {
@@ -302,7 +308,7 @@ describe('consolidated engineering packs', () => {
 describe('portable engineering packs', () => {
   it('delivers starter content and explicit invocation metadata for all engineering packs', async () => {
     const catalog = listSkillPacks()
-    const manual = ['setup', 'craft', 'build-feature-map']
+    const manual = ['setup', 'craft', 'build-feature-map', 'align', 'arch-refactor', 'e2e']
     for (const name of Object.keys(ENGINEERING_SKILL_PATHS)) {
       const summary = catalog.find(pack => pack.name === name)!
       expect(summary.invocation).toBe(manual.includes(name) ? 'explicit' : 'model')
@@ -551,7 +557,7 @@ describe('skill composition', () => {
     const dev = readFileSync(join(repoRoot, 'skills/dev/SKILL.md'), 'utf8')
     const template = readFileSync(join(repoRoot, 'skills/design/design-spec-template.md'), 'utf8')
     const readme = readFileSync(join(repoRoot, 'README.md'), 'utf8')
-    const collab = readFileSync(join(repoRoot, 'skills/dev/feature-preparation.md'), 'utf8')
+    const collab = readFileSync(join(repoRoot, 'skills/collab/SKILL.md'), 'utf8')
     const redesign = readFileSync(join(repoRoot, 'skills/design/REDESIGN.md'), 'utf8')
     expect(design).toMatch(/vendor-neutral|existing design system/i)
     expect(design).toMatch(/optional Polyms products/)

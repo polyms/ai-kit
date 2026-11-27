@@ -64,7 +64,7 @@ export const AGENT_SKILL_SLUG: Record<string, string> = {
   pm: 'reqs',
   designer: 'design',
   developer: 'dev',
-  tester: 'qa',
+  tester: 'e2e',
   techlead: 'docs',
 }
 
@@ -156,14 +156,14 @@ export const skillOverlays: SkillOverlay[] = [
       en: 'Agree on the plan before you build — grill decisions one question at a time, sharpen domain words, update CONTEXT.md as you go.',
       vi: 'Thống nhất kế hoạch trước khi code — hỏi xoáy từng câu một, chốt từ domain, cập nhật CONTEXT.md ngay trong lúc làm.',
     },
-    invocation: 'model',
+    invocation: 'user',
     domain: 'alignment',
     samplePrompt: {
       en: '/align\n\nGrill the plan for [feature].',
       vi: '/align\n\nGrill kế hoạch [feature].',
     },
     footnote: {
-      en: 'Uses decision-loop and domain-modeling references; interactive grilling stays in the conversation, while delegated work returns blockers.',
+      en: 'Uses align-loop and domain-modeling skills; interactive grilling stays in the conversation, while delegated work returns blockers.',
       vi: 'Dùng workflow làm rõ quyết định và mô hình domain; phiên tự động trả về câu hỏi còn vướng.',
     },
     githubPath: 'skills/align/',
@@ -860,6 +860,323 @@ export const skillOverlays: SkillOverlay[] = [
         vi: 'Review dài: nhờ dùng agent `techlead`.',
       },
     ],
+  },
+  {
+    name: 'collab',
+    invoke: '/collab',
+    slug: 'collab',
+    description: {
+      en: 'One feature prompt runs PM, tech lead, and design together — lean PRD, ADR only if hard to reverse, UI spec — from the codebase.',
+      vi: 'Một prompt feature cho PM, tech lead, và design làm cùng nhau — PRD gọn, ADR khi khó đảo, spec UI — dựa trên codebase.',
+    },
+    invocation: 'model',
+    domain: 'requirements',
+    samplePrompt: {
+      en: 'Build a CRUD user page.',
+      vi: 'Làm một trang CRUD user.',
+    },
+    footnote: {
+      en: 'Model-invoked. Naming /reqs, /design, or /dev skips this and keeps that skill.',
+      vi: 'Agent tự gọi. Gọi đúng /reqs, /design, hoặc /dev thì bỏ qua collab và giữ skill đó.',
+    },
+    githubPath: 'skills/collab/',
+    relatedAgents: ['pm', 'designer', 'techlead'],
+    summary: {
+      en: 'Turn "build a page" into a spec packet without invoking each principal or sitting through a discovery interview.',
+      vi: 'Biến “làm một trang” thành gói spec mà không cần gọi từng agent hay ngồi phỏng vấn discovery.',
+    },
+    whenToUse: {
+      en: 'A new screen or CRUD flow in one prompt, and you did not already name /reqs, /design, or /dev.',
+      vi: 'Màn hình hoặc luồng CRUD mới trong một prompt, và anh chưa gọi /reqs, /design, hay /dev.',
+    },
+    pipeline: {
+      upstream: { en: 'One feature prompt', vi: 'Một prompt feature' },
+      downstream: 'docs/prd + docs/design → /dev',
+    },
+    boundaries: {
+      en: 'Implements when the packet has no blocking gap. Asks once when a fork is still open. Does not publish (/reqs). Skips the ADR when the three-part test fails.',
+      vi: 'Làm luôn khi gói spec không còn chỗ kẹt. Hỏi một lần khi còn ngã rẽ chưa chốt. Không publish (/reqs). Bỏ ADR khi bài test ba điều kiện không đạt.',
+    },
+    prerequisites: [
+      {
+        en: 'A repo to read — nearest list, form, or entity is the evidence.',
+        vi: 'Có repo để đọc — list, form, hoặc entity gần nhất là bằng chứng.',
+      },
+    ],
+    howTo: [
+      {
+        en: 'Say the feature in one prompt, for example “build a CRUD user page”.',
+        vi: 'Nói feature trong một prompt, ví dụ “làm trang CRUD user”.',
+      },
+      {
+        en: 'Answer only if the agent batches a blocking fork the repo cannot settle.',
+        vi: 'Chỉ trả lời khi agent gom một ngã rẽ chặn mà repo không chốt được.',
+      },
+      {
+        en: 'Read the lean PRD, optional ADR, and UI spec the principals wrote.',
+        vi: 'Đọc PRD gọn, ADR nếu có, và spec UI mà các agent đã viết.',
+      },
+      {
+        en: 'If nothing blocking remains, collab continues into /dev in the same turn.',
+        vi: 'Nếu không còn chỗ kẹt, collab chạy tiếp /dev ngay trong lượt đó.',
+      },
+    ],
+    doneWhen: {
+      en: 'The spec packet is on disk, and implementation has started unless one blocking question is still open.',
+      vi: 'Gói spec đã có trên đĩa, và phần implement đã chạy trừ khi còn một câu hỏi chặn.',
+    },
+    tips: [
+      {
+        en: 'Assumptions are labeled. A [NEEDS CLARIFICATION] marker is the only open product fork.',
+        vi: 'Giả định được ghi rõ. Marker [NEEDS CLARIFICATION] là ngã rẽ sản phẩm còn mở.',
+      },
+      {
+        en: 'Copying an existing CRUD screen does not earn an ADR.',
+        vi: 'Chép một màn CRUD có sẵn thì không cần ADR.',
+      },
+    ],
+  },
+  {
+    name: 'arch-refactor',
+    invoke: '/arch-refactor',
+    slug: 'arch-refactor',
+    description: {
+      en: 'Scan the codebase for deepening opportunities, show a visual HTML report, then grill the candidate you pick.',
+      vi: 'Quét codebase tìm chỗ làm sâu module, hiện báo cáo HTML, rồi hỏi xoáy ứng viên bạn chọn.',
+    },
+    invocation: 'user',
+    domain: 'architecture',
+    samplePrompt: {
+      en: '/arch-refactor\n\nFocus: [module area]',
+      vi: '/arch-refactor\n\nFocus: [vùng module]',
+    },
+    githubPath: 'skills/arch-refactor/',
+    relatedAgents: ['techlead'],
+    agentPanel: {
+      role: 'PRINCIPAL TECH LEAD',
+      owns: ['deepening scan', 'HTML report', 'grill candidate'],
+      invokeHint: {
+        en: 'Use the techlead to scan for deepening opportunities',
+        vi: 'Nhờ agent techlead quét tìm cơ hội làm sâu module',
+      },
+    },
+    summary: {
+      en: 'Maintenance pass: find modules that should go deeper, review them in an HTML report, then stress-test the one you choose.',
+      vi: 'Vòng bảo trì: tìm module nên làm sâu hơn, xem trong báo cáo HTML, rồi stress-test ứng viên bạn chọn.',
+    },
+    whenToUse: {
+      en: 'You want a focused refactor or architecture improvement pass on an existing codebase.',
+      vi: 'Khi cần một vòng refactor hoặc cải thiện kiến trúc có trọng tâm trên codebase hiện có.',
+    },
+    pipeline: {
+      upstream: { en: 'Codebase with deepening debt', vi: 'Codebase đang có nợ làm sâu' },
+      downstream: {
+        en: '/align or `/dev` on the chosen candidate',
+        vi: '/align hoặc `/dev` cho ứng viên đã chọn',
+      },
+    },
+    boundaries: {
+      en: 'Not greenfield architecture vocabulary — that is model-invoked `arch`. Does not implement by default (`/dev`).',
+      vi: 'Không phải từ vựng kiến trúc cho dự án mới — đó là `arch` (agent tự gọi). Mặc định không tự implement (`/dev`).',
+    },
+    prerequisites: [
+      {
+        en: 'An existing codebase with suspected deepening debt.',
+        vi: 'Codebase hiện có với nợ làm sâu module nghi ngờ.',
+      },
+    ],
+    howTo: [
+      {
+        en: 'Invoke `/arch-refactor` and describe the area to scan (or let it explore).',
+        vi: 'Gọi `/arch-refactor` và mô tả vùng cần quét (hoặc để agent khám phá).',
+      },
+      {
+        en: 'Open the HTML report in the OS temp directory when it is written.',
+        vi: 'Mở báo cáo HTML trong thư mục temp của OS khi đã ghi xong.',
+      },
+      {
+        en: 'Pick a candidate; answer the grill questions.',
+        vi: 'Chọn một ứng viên; trả lời câu hỏi xoáy.',
+      },
+      {
+        en: 'Hand off to `/align` or `/dev` for the chosen deepening work.',
+        vi: 'Giao cho `/align` hoặc `/dev` cho việc làm sâu đã chọn.',
+      },
+    ],
+    doneWhen: {
+      en: 'You have a report plus a grilled candidate and a clear next skill (`/align` or `/dev`).',
+      vi: 'Đã có báo cáo kèm ứng viên đã hỏi xoáy và skill tiếp theo rõ (`/align` hoặc `/dev`).',
+    },
+  },
+  {
+    name: 'e2e',
+    invoke: '/e2e',
+    slug: 'e2e',
+    description: {
+      en: 'End-to-end test automation — Playwright flakes, CI parallelization, journey suites, and traces.',
+      vi: 'Tự động hóa kiểm thử đầu cuối — flaky Playwright, chạy CI song song, bộ hành trình, và trace.',
+    },
+    invocation: 'user',
+    domain: 'e2e',
+    samplePrompt: {
+      en: '/e2e\n\nPlaywright CI flakes on checkout journey',
+      vi: '/e2e\n\nPlaywright CI flaky trên hành trình checkout',
+    },
+    githubPath: 'skills/e2e/',
+    relatedAgents: ['tester'],
+    agentPanel: {
+      role: 'PRINCIPAL TESTER',
+      owns: ['Playwright suite', 'flake elimination', 'CI sharding', 'traces'],
+      invokeHint: { en: 'Use the tester to [task]', vi: 'Nhờ agent tester làm [công việc]' },
+    },
+    summary: {
+      en: 'Keep the E2E harness and CI test jobs healthy — fix flakes, shard work, cover critical journeys. Skill id `e2e`; agent id `tester`.',
+      vi: 'Giữ khung E2E và job test trên CI khỏe — sửa flaky, chia shard, cover hành trình quan trọng. Id skill là `e2e`; id agent là `tester`.',
+    },
+    whenToUse: {
+      en: 'Flaky or slow E2E CI, new critical journey coverage, or trace-driven triage of failing test jobs.',
+      vi: 'CI E2E flaky hoặc chậm, cần cover hành trình quan trọng mới, hoặc sàng lọc job fail dựa trên trace.',
+    },
+    pipeline: {
+      upstream: { en: 'CI test failure or suite map', vi: 'CI test fail hoặc bản đồ bộ test' },
+      downstream: '/dev (product bug) · `/devops` (deploy) · `/code-review`',
+    },
+    boundaries: {
+      en: 'Not unit/seam TDD (`/dev`). Not deploy or build Knowledge fixes (`/devops`). Not the pre-merge three-axis review.',
+      vi: 'Không phải TDD ở seam (`/dev`). Không sửa Knowledge cho deploy hay build (`/devops`). Không phải rà soát ba trục trước merge.',
+    },
+    prerequisites: [
+      {
+        en: 'An E2E harness or CI test jobs (often Playwright) to stabilize or extend.',
+        vi: 'Có khung E2E hoặc job test CI (thường Playwright) cần ổn định hoặc mở rộng.',
+      },
+    ],
+    howTo: [
+      {
+        en: 'Invoke `/e2e` with the failing journey, flake symptom, or new coverage goal.',
+        vi: 'Gọi `/e2e` kèm hành trình fail, triệu chứng flaky, hoặc mục tiêu cover mới.',
+      },
+      {
+        en: 'Share CI links or traces when available.',
+        vi: 'Chia sẻ link CI hoặc trace nếu có.',
+      },
+      {
+        en: 'Confirm wait strategy, quarantine owner, or shard plan the agent proposes.',
+        vi: 'Xác nhận chiến lược wait, owner quarantine, hoặc plan shard agent đề xuất.',
+      },
+      {
+        en: 'Re-run CI; escalate product bugs to `/dev` or deploy issues to `/devops`.',
+        vi: 'Chạy lại CI; escalate bug sản phẩm sang `/dev` hoặc lỗi deploy sang `/devops`.',
+      },
+    ],
+    doneWhen: {
+      en: 'The targeted journey is green or quarantined with an owner, and CI sharding/waits are documented if changed.',
+      vi: 'Hành trình mục tiêu đã xanh hoặc quarantine kèm owner, và sharding/wait đã ghi nếu có đổi.',
+    },
+  },
+  {
+    "name": "align-loop",
+    "invoke": "/align-loop",
+    "slug": "align-loop",
+    "description": {
+      "en": "Calibrated decision-tree questioning and explicit decisions, one branch at a time.",
+      "vi": "Làm rõ từng nhánh quyết định với lựa chọn và khuyến nghị có căn cứ."
+    },
+    "invocation": "model",
+    "domain": "alignment",
+    "githubPath": "skills/align-loop/",
+    "summary": {
+      "en": "Calibrated decision-tree questioning and explicit decisions, one branch at a time.",
+      "vi": "Làm rõ từng nhánh quyết định với lựa chọn và khuyến nghị có căn cứ."
+    },
+    "whenToUse": {
+      "en": "Calibrated decision-tree questioning and explicit decisions, one branch at a time.",
+      "vi": "Làm rõ từng nhánh quyết định với lựa chọn và khuyến nghị có căn cứ."
+    },
+    "boundaries": {
+      "en": "Use align for combined alignment; domain-modeling for glossary and ADR changes.",
+      "vi": "Dùng align cho phiên tổng hợp; domain-modeling cho thuật ngữ và ADR."
+    },
+    "prerequisites": [
+      {
+        "en": "Read available project context and confirmed decisions.",
+        "vi": "Đọc ngữ cảnh dự án và quyết định đã xác nhận."
+      }
+    ],
+    "howTo": [
+      {
+        "en": "Read existing decisions and calibrate the remaining uncertainty.",
+        "vi": "Đọc quyết định hiện có và xác định phần chưa rõ."
+      },
+      {
+        "en": "Ask one grounded decision with real options and a recommendation.",
+        "vi": "Hỏi một quyết định với các lựa chọn và khuyến nghị."
+      },
+      {
+        "en": "Record the decision and continue or report unresolved blockers.",
+        "vi": "Ghi nhận quyết định, tiếp tục hoặc báo phần còn vướng."
+      }
+    ],
+    "doneWhen": {
+      "en": "Decisions and remaining blockers are explicit; authorized changes are verified.",
+      "vi": "Quyết định và phần còn vướng được nêu rõ; thao tác ghi được xác minh."
+    },
+    "samplePrompt": {
+      "en": "/align-loop\n\nCalibrated decision-tree questioning and explicit decisions, one branch at a time.",
+      "vi": "/align-loop\n\nLàm rõ từng nhánh quyết định với lựa chọn và khuyến nghị có căn cứ."
+    }
+  },
+  {
+    "name": "domain-modeling",
+    "invoke": "/domain-modeling",
+    "slug": "domain-modeling",
+    "description": {
+      "en": "Sharpen domain vocabulary, maintain canonical glossary and record justified architectural decisions.",
+      "vi": "Chuẩn hóa thuật ngữ nghiệp vụ, duy trì glossary và ghi nhận ADR có căn cứ."
+    },
+    "invocation": "model",
+    "domain": "architecture",
+    "githubPath": "skills/domain-modeling/",
+    "summary": {
+      "en": "Sharpen domain vocabulary, maintain canonical glossary and record justified architectural decisions.",
+      "vi": "Chuẩn hóa thuật ngữ nghiệp vụ, duy trì glossary và ghi nhận ADR có căn cứ."
+    },
+    "whenToUse": {
+      "en": "Sharpen domain vocabulary, maintain canonical glossary and record justified architectural decisions.",
+      "vi": "Chuẩn hóa thuật ngữ nghiệp vụ, duy trì glossary và ghi nhận ADR có căn cứ."
+    },
+    "boundaries": {
+      "en": "Reading the glossary alone is not domain modeling; do not invent approvals.",
+      "vi": "Chỉ đọc glossary không phải domain modeling; không tự suy diễn phê duyệt."
+    },
+    "prerequisites": [
+      {
+        "en": "Read available project context and confirmed decisions.",
+        "vi": "Đọc ngữ cảnh dự án và quyết định đã xác nhận."
+      }
+    ],
+    "howTo": [
+      {
+        "en": "Read canonical terminology and relevant code or decisions.",
+        "vi": "Đọc thuật ngữ chính thống, code hoặc quyết định liên quan."
+      },
+      {
+        "en": "Challenge ambiguous terms and probe boundary scenarios.",
+        "vi": "Làm rõ thuật ngữ mơ hồ và tình huống biên."
+      },
+      {
+        "en": "Record confirmed changes or proposed ADRs; verify authorized writes.",
+        "vi": "Ghi thay đổi đã xác nhận hoặc ADR đề xuất; kiểm tra thao tác ghi."
+      }
+    ],
+    "doneWhen": {
+      "en": "Decisions and remaining blockers are explicit; authorized changes are verified.",
+      "vi": "Quyết định và phần còn vướng được nêu rõ; thao tác ghi được xác minh."
+    },
+    "samplePrompt": {
+      "en": "/domain-modeling\n\nSharpen domain vocabulary, maintain canonical glossary and record justified architectural decisions.",
+      "vi": "/domain-modeling\n\nChuẩn hóa thuật ngữ nghiệp vụ, duy trì glossary và ghi nhận ADR có căn cứ."
+    }
   },
   ...workSkillOverlays,
 ]

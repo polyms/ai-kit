@@ -136,7 +136,7 @@ quickstart_target_body: 'Đổi -a cursor sang client bạn dùng. Lặp lại -
 quickstart_setup_title: 'Chạy /setup'
 quickstart_setup_body: 'Khởi động lại editor hoặc mở chat mới, rồi chạy /setup trong dự án.'
 quickstart_mcp_title: "Cho AI chat · kết nối qua MCP"
-quickstart_mcp_body: "Cho ChatGPT hoặc công cụ chat khác hỗ trợ remote MCP tùy chỉnh với OAuth. Dùng 21 skill chính qua MCP mà không cần clone repo hay cài skill. Khả năng và quyền tùy client."
+quickstart_mcp_body: "Cho ChatGPT hoặc công cụ chat khác hỗ trợ remote MCP tùy chỉnh với OAuth. Dùng 26 skill chính qua MCP mà không cần clone repo hay cài skill. Khả năng và quyền tùy client."
 
 # --- nav ---
 nav_catalog: Kỹ năng
@@ -311,7 +311,7 @@ skillDetail_contract_note: "Định danh artifact và điều kiện hoàn thàn
 
 hero_chat_path: "ChatGPT và chat client hỗ trợ MCP · nghiên cứu, kế hoạch, nghiệp vụ và QA"
 hero_dev_path: "Cursor, Claude Code, Codex, Copilot · workflow kỹ thuật theo repo"
-home_catalog_chat_hint: "21 skill chính qua remote MCP. Tên như /research là định danh skill, không phải lệnh bắt buộc phải gõ. Trong AI chat tương thích đã kết nối, hãy mô tả mục tiêu tự nhiên; cách gọi và quyền truy cập tùy client."
+home_catalog_chat_hint: "26 skill chính qua remote MCP. Tên như /research là định danh skill, không phải lệnh bắt buộc phải gõ. Trong AI chat tương thích đã kết nối, hãy mô tả mục tiêu tự nhiên; cách gọi và quyền truy cập tùy client."
 home_catalog_dev_hint: "Cài skill cục bộ cho coding agent, mở repo và tuân thủ cách gọi của client. Tên có dấu / là định danh workflow; cú pháp dùng thực tế tùy công cụ."
 skill_audience_both: "Chat (MCP) · Development (cục bộ)"
 skill_audience_dev: "Development tools · cục bộ"

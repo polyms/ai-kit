@@ -125,7 +125,8 @@
     ],
     "avoid": [
       "review",
-      "bug"
+      "bug",
+      "e2e"
     ],
     "notes": "Routing checks only; authorization is separate."
   },
@@ -354,7 +355,8 @@
       "qa"
     ],
     "avoid": [
-      "review"
+      "review",
+      "e2e"
     ],
     "notes": "Vietnamese semantic routing; no write authorization."
   },
@@ -551,12 +553,15 @@
   {
     "id": "RT-44",
     "kind": "Route",
-    "prompt": "Challenge a plan, grill design decisions",
+    "prompt": "Stress-test a plan one decision at a time; no glossary changes.",
     "expected": [
-      "align"
+      "align-loop"
     ],
-    "avoid": [],
-    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+    "avoid": [
+      "align",
+      "domain-modeling"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
   },
   {
     "id": "RT-45",
@@ -571,12 +576,15 @@
   {
     "id": "RT-46",
     "kind": "Route",
-    "prompt": "Sharpen domain glossary, record ADR decisions",
+    "prompt": "Sharpen domain glossary, record ADR decisions; no alignment interview.",
     "expected": [
-      "align"
+      "domain-modeling"
     ],
-    "avoid": [],
-    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+    "avoid": [
+      "align",
+      "align-loop"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
   },
   {
     "id": "RT-47",
@@ -591,22 +599,26 @@
   {
     "id": "RT-48",
     "kind": "Route",
-    "prompt": "Design module seams, assess architecture and deepening opportunities",
+    "prompt": "Design module interfaces and test seams for a known module, not a repository audit.",
     "expected": [
       "arch"
     ],
-    "avoid": [],
-    "notes": "Select only canonical skill, relevant branch and authorized execution."
+    "avoid": [
+      "arch-refactor"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
   },
   {
     "id": "RT-49",
     "kind": "Route",
-    "prompt": "Implement specs, fix bugs, prepare new features",
+    "prompt": "Implement an approved spec or fix a product bug.",
     "expected": [
       "dev"
     ],
-    "avoid": [],
-    "notes": "Select only canonical skill, relevant branch and authorized execution."
+    "avoid": [
+      "collab"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
   },
   {
     "id": "RT-50",
@@ -645,15 +657,16 @@
   {
     "id": "RT-53",
     "kind": "Route",
-    "prompt": "Diagnose Playwright CI flake; no changes yet.",
+    "prompt": "/e2e Diagnose Playwright CI flake; no changes yet.",
     "expected": [
-      "qa"
+      "e2e"
     ],
     "avoid": [
+      "qa",
       "devops",
       "dev"
     ],
-    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+    "notes": "Respect independent skill responsibility and approval boundaries."
   },
   {
     "id": "RT-54",
@@ -671,34 +684,53 @@
   {
     "id": "RT-55",
     "kind": "Route",
-    "prompt": "Evaluate module deepening candidates only, no edits.",
+    "prompt": "/arch-refactor Evaluate module deepening candidates only, no edits.",
     "expected": [
-      "arch"
+      "arch-refactor"
     ],
-    "avoid": [],
-    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+    "avoid": [
+      "code-review",
+      "dev"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
   },
   {
     "id": "RT-56",
     "kind": "Route",
     "prompt": "New CRUD page, no spec yet, prepare the packet without publication.",
     "expected": [
-      "dev"
+      "collab"
     ],
     "avoid": [
-      "reqs",
+      "dev",
       "task"
     ],
-    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+    "notes": "Respect independent skill responsibility and approval boundaries."
   },
   {
     "id": "RT-57",
     "kind": "Route",
     "prompt": "Resolve a domain term without interviewing about an unrelated feature.",
     "expected": [
+      "domain-modeling"
+    ],
+    "avoid": [
+      "align",
+      "align-loop"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-58",
+    "kind": "Route",
+    "prompt": "/align combine plan grilling and domain terminology decisions before building.",
+    "expected": [
       "align"
     ],
-    "avoid": [],
-    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+    "avoid": [
+      "reqs",
+      "dev"
+    ],
+    "notes": "Explicit combined session; align-loop and domain-modeling are reusable dependencies."
   }
 ]

@@ -319,8 +319,8 @@ export const workSkillOverlays: SkillOverlay[] = [
     "invoke": "/qa",
     "slug": "qa",
     "description": {
-      "en": "Design functional tests, verify QA evidence and stabilize E2E suites.",
-      "vi": "Thiết kế test chức năng, xác minh bằng chứng QA và ổn định bộ E2E."
+      "en": "Design functional tests, verify UAT and environment-specific QA evidence.",
+      "vi": "Thiết kế test chức năng, xác minh UAT và bằng chứng QA theo môi trường."
     },
     "invocation": "model",
     "domain": "work",
@@ -330,12 +330,12 @@ export const workSkillOverlays: SkillOverlay[] = [
       "vi": "Test plan và test case truy được về yêu cầu, có ca dương/âm và tách thiết kế với chạy test."
     },
     "whenToUse": {
-      "en": "Test coverage, actual QA verification, browser journeys, Playwright flakes or CI test sharding.",
-      "vi": "Độ phủ test, xác minh QA, hành trình trình duyệt, Playwright flake hoặc chia test CI."
+      "en": "Test coverage, actual QA verification, UAT and environment-specific feature evidence.",
+      "vi": "Độ phủ test, xác minh QA, UAT và bằng chứng tính năng theo môi trường."
     },
     "boundaries": {
-      "en": "A planned test is not a passed test; use the E2E branch for automation infrastructure.",
-      "vi": "Test dự kiến không phải test đã pass; dùng nhánh E2E cho hạ tầng automation."
+      "en": "A planned test is not a passed test; use e2e for automation infrastructure.",
+      "vi": "Test dự kiến không phải test đã pass; dùng e2e cho hạ tầng automation."
     },
     "prerequisites": [
       {

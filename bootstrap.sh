@@ -37,7 +37,7 @@ fi
 
 if [ "$TARGET" = all ] || [ "$TARGET" = claude ]; then
   mkdir -p "$CLAUDE/skills" "$CLAUDE/agents"
-  for name in to-prd to-issues triage align-loop domain-modeling arch-refactor collab e2e; do
+  for name in to-prd to-issues triage; do
     target="$CLAUDE/skills/$name"
     if [ -L "$target" ]; then
       link="$(readlink "$target")"

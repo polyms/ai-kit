@@ -533,7 +533,7 @@
   {
     "id": "CP-25",
     "recipe": null,
-    "prompt": "Delegated run: a domain term is ambiguous, one approved ADR exists, no interactive decision owner or write route. Recommend alignment.",
+    "prompt": "/align Delegated run: a domain term is ambiguous, one approved ADR exists, no interactive decision owner or write route. Recommend alignment.",
     "requiredSkills": [
       "align"
     ],
@@ -548,11 +548,13 @@
   {
     "id": "CP-26",
     "recipe": null,
-    "prompt": "Review architecture for shallow modules. Supplied source excerpts are limited; propose deepening candidates, do not modify code.",
+    "prompt": "/arch-refactor Review architecture for shallow modules. Supplied source excerpts are limited; propose deepening candidates, do not modify code.",
     "requiredSkills": [
-      "arch"
+      "arch-refactor"
     ],
-    "skipSkills": [],
+    "skipSkills": [
+      "code-review"
+    ],
     "criteria": [
       "Evidence-grounded seams, leverage/locality, candidate alternatives, testability and limitations; no fake visual file."
     ],
@@ -565,9 +567,11 @@
     "recipe": null,
     "prompt": "A new screen request has no PRD or design and no accessible repository or test execution. Draft feature preparation only.",
     "requiredSkills": [
+      "collab"
+    ],
+    "skipSkills": [
       "dev"
     ],
-    "skipSkills": [],
     "criteria": [
       "State assumptions, identify material blocking forks, propose lean PRD/UI packet and ADR only if justified."
     ],
@@ -578,11 +582,13 @@
   {
     "id": "CP-28",
     "recipe": null,
-    "prompt": "Analyze Playwright flake and proposed sharding. Supplied CI log is from an older revision; no test execution tool.",
+    "prompt": "/e2e Analyze Playwright flake and proposed sharding. Supplied CI log is from an older revision; no test execution tool.",
     "requiredSkills": [
+      "e2e"
+    ],
+    "skipSkills": [
       "qa"
     ],
-    "skipSkills": [],
     "criteria": [
       "Separate current/older evidence, signal-based waits and isolation, proposed journey/CI verification plan."
     ],
