@@ -1,6 +1,6 @@
 # SDK stable-release readiness
 
-Status (2026-11-27): **`1.0.0-rc.1` published; stable `1.0.0` not yet authorized**.
+Status (2026-11-27): **SDK `1.0.0` prepared in PR #23; publication pending merge and tag.** `1.0.0-rc.1` remains the published and Astra-deployed candidate.
 SDK versions are independent of skill release `0.3.5`; the former `0.3.3` and `0.3.4` registry snapshots are retired, while historical evidence remains.
 Only Node.js 24+ / ESM with built-in `fetch` is supported.
 
@@ -58,9 +58,12 @@ product evaluation tracks, not gates for the SDK's packaging/API stability.
 
 ## Stable decision
 
-Do not tag `sdk-v1.0.0` until the SDK API and behavior changes pass
-regression/packaging tests, the Astra production consumer evidence is recorded,
-and the SDK package version is intentionally updated to 1.0.0 on `main`.
+PR #23 includes the `sdk/package.json` bump to `1.0.0` with the
+catalog-integrity fix. A version bump in a PR is not a published release:
+merge to `main` only after green SDK build, regression and packed-package
+import checks. Then create the one-time `sdk-v1.0.0` tag on the merged `main`
+commit; the tag workflow packs, tests and publishes the SDK with the `latest`
+dist-tag to GitHub Packages. Never retag an already published version.
 Do not block this on duplicate registry tests or unestablished performance
 targets. Promotion of the SDK does not require
 inventing a Memory storage engine or claiming a model-quality lift.
