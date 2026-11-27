@@ -171,13 +171,13 @@ severity and worst issue stated in prose. Step 6 has run.
 
 ### 6. Handoff
 
-Severity cues are when/why (not a pasteable menu). The report always ends with
+Severity cues are when/why (not a pasteable menu). Review-only does not authorize fixes, PR comments, approvals or merge. A clean review is a finding, not a merge instruction; if the user requests fixes, preserve the verified diff/ref and use the authorized implementation route. The report always ends with
 `## Next Step` (CONTEXT.md **Handoff**) — prefer **exactly one** `→ /skill`. A summary
 without this block is an unfinished review.
 
 | Next step | When                                                                                                   |
 | --------- | ------------------------------------------------------------------------------------------------------ |
-| `/dev`    | 🔴 in the code or Simplify cuts — name the fix or delete-list. No open 🔴 — ship checklist, then merge |
+| `/dev`    | 🔴 in the code or Simplify cuts — name the fix or delete-list. No open 🔴 — report review result; verify remaining ship gates and merge only when separately authorized |
 | `/reqs`   | Spec is wrong (not the code) — update the issue before coding further                                  |
 
 🟡 suggestions and 💭 nits stay in the report body. They do not add a third arrow.

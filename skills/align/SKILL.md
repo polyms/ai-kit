@@ -24,13 +24,13 @@ Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (op
 
 1. Read `CONTEXT.md` if present
 2. Run `align-loop` — one question, lettered options (2–4 real forks), one **(Recommended)**, codebase-first when possible
-3. Run `domain-modeling` throughout — challenge terms in questions, probe edge-case scenarios, update `CONTEXT.md` inline when a term resolves (show the user the line), offer ADRs only when the three-part test passes
+3. Run `domain-modeling` throughout — challenge terms in questions, probe edge-case scenarios, record the glossary delta immediately when a term resolves (show the user the line), update `CONTEXT.md` only when authorized, and offer ADRs only when the three-part test passes. In draft-only alignment keep proposed glossary/ADR content in the conversation; approval of a decision does not authorize a repository write.
 
 ## It's working if
 
 - Calibration lands early (or is skipped when level is obvious) — grill depth matches knowledge and pressure
 - One question at a time with lettered options and **(Recommended)** — count matches real forks, not a fixed four; user reacts to a proposal, not a blank prompt
-- Terms land in `CONTEXT.md` the moment they resolve — not batched at the end
+- Terms are recorded the moment they resolve — not batched at the end; authorized glossary writes are verified, otherwise proposed deltas remain in context
 - The agent reads the codebase to answer its own questions where it can, then reports findings before options
 - ADRs stay rare — reversible choices are not rubber-stamped
 - Open-questions audit runs before a leaving skill — `## Open Questions` is never silently empty when

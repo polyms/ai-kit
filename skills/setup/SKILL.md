@@ -16,6 +16,8 @@ then write.
 
 ## Process
 
+**Execution mode:** Determine whether the user requests a configuration draft or actual setup changes before making decisions. For draft-only, do not edit, install, migrate, create symlinks or change tracker state, even if a write tool is available and the user approves the draft's content. Return the proposed configuration, paths and unresolved choices; only a separate authorized write request may enter step 4. For requested writes, confirm the target and branch/PR policy and verify the route; if unavailable, return the draft and blocker. A choice or content approval is not write authority.
+
 Inspect the target project using authorized repository/project tools (including GitHub MCP) before
 assuming a checkout. On a rerun, update only requested sections and preserve other choices. Confirm
 material unknowns and write through approved project routes or return a draft. Host-specific
@@ -238,9 +240,11 @@ Show before writing:
 
 Let user edit.
 
-**Completion criterion:** User approves draft or requests edits before any files are written.
+**Completion criterion:** Proposed content and material choices are presented; required approvals are obtained or explicitly pending. For draft-only, deliver the draft and stop here, without requiring write approval or claiming setup complete.
 
 ### 4. Write
+
+Enter only when setup writes are requested and authorized, with confirmed content and an available target write route. Otherwise stop with the draft and blockers.
 
 **Pick config file:** edit existing `CLAUDE.md` or `AGENTS.md`; if neither exists, ask which to create. Never
 create both.
@@ -333,7 +337,7 @@ Write docs using templates:
 
 **Remote or connector-only setup:** Write the canonical configuration using the approved repository route. Native-client persona and symlinks are optional; if selected but unsupported, report them pending instead of claiming they exist. Never require a local installation for MCP.
 
-**If voice Yes:**
+**If voice Yes and the required native routes are supported and authorized:**
 
 1. Write `.cursor/rules/agent-voice.mdc` from [voice-rule.mdc](voice-rule.mdc) (apply user overrides).
 2. `mkdir -p .claude/rules`
@@ -369,8 +373,8 @@ policy:
    exists and is not a symlink to the `.agents` package, stop: diff it against the package, keep a
    backup outside any skill folder, and reconcile with the user. `ln -sfn` on a real directory
    nests the link inside it instead of replacing it.
-5. `mkdir -p .cursor/skills .claude/skills`
-6. Symlink Cursor and Claude → the `.agents` skill (relative paths so clones stay portable):
+5. For configured native clients only, and when the required operations are supported and authorized, create the relevant skill directories (local example: `mkdir -p .cursor/skills .claude/skills`). Otherwise record required links as pending or not applicable.
+6. For those configured clients, create only the applicable symlinks to the `.agents` skill (relative paths so clones stay portable):
 
 ```bash
 ln -sfn ../../.agents/skills/<slug> .cursor/skills/<slug>
@@ -416,7 +420,7 @@ If an existing map was kept, point at the same pointer and say its config refere
 
 Orientation is **not** `## Next Step` — see [Handoff](#handoff).
 
-**Completion criterion:** User notified setup is complete; orientation tour mentions pipeline
+**Completion criterion:** Actual setup status (complete, partial or blocked) reported according to readback; orientation tour mentions pipeline
 entry points; stack-profile / Knowledge mentioned; label creation reminder given; voice path
 mentioned only when opted in; feature-map path mentioned when scaffolded or kept; Handoff block
 delivered.
@@ -425,7 +429,7 @@ delivered.
 
 When/why cues (CONTEXT.md **Handoff**) — not a pasteable menu. After Done's orientation tour,
 end with `## Next Step` — preferred `→ /align` (default after setup). Optional second only when
-they have a raw backlog ready: `→ /triage` with when.
+they have a raw backlog ready: `→ /track` (triage) with when.
 
 ```
 ## Next Step

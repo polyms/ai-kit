@@ -15,6 +15,8 @@ Use `collab` for a new feature without a spec packet. This skill owns implementa
 
 Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touching code.
 
+**Execution mode:** Only implement/debug with target writes when the user requests the change and the actual route is authorized under project policy. Draft patch, analysis-only and read-only requests return proposed changes, tests and limitations without repository writes, commit/PR creation or CI/deploy mutation. A skill selection, spec packet, or green check is not authorization. If write or execution is unavailable, return a bounded proposal and mark tests Not run or cite matching existing evidence; do not enter the ship gate as if a change landed.
+
 ## Quick Router
 
 - New feature from spec → [Implement workflow](#implement-workflow);
@@ -39,8 +41,7 @@ Without an explicit `/dev`, a new screen or CRUD whose PRD or `docs/design/<feat
 is not this skill. Stop and follow `collab`, which resumes from whichever file exists. Do not write
 tests or production code on that turn.
 
-A `collab` packet with no `[NEEDS CLARIFICATION]` and no blocking fork enters here in the same
-turn. Do not wait for a second confirm. A packet that still has a blocking marker stays in
+A verified written `collab` packet with no `[NEEDS CLARIFICATION]` and no blocking fork enters here in the same turn only when implementation was requested and authorized. Do not wait for a second confirm of the same authorized action. A draft packet alone never starts implementation. A packet that still has a blocking marker stays in
 `collab` until that question is answered.
 
 Any other ask (a field, an endpoint, a refactor, a change to an existing screen) skips this step.

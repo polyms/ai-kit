@@ -317,3 +317,25 @@ test('draft handoff, diagnosis-only and pre-merge gates survive portable workflo
   assert.doesNotMatch(read('docs/product/architecture-principles.md'), /Agent-native, business or external memory/)
   assert.doesNotMatch(read('docs/product/knowledge-strategy.md'), /authorized external Memory/)
 })
+
+
+test('portable setup, feature-map, E2E and implementation distinguish drafts from writes', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const setup = read('skills/setup/SKILL.md')
+  assert.match(setup, /For draft-only, deliver the draft and stop here/)
+  assert.match(setup, /Enter only when setup writes are requested and authorized/)
+  assert.doesNotMatch(setup, /raw backlog ready: `→ \/triage`/)
+  const map = read('skills/build-feature-map/SKILL.md')
+  assert.ok(map.indexOf('**Execution mode (before Layout)') < map.indexOf('## Layout'))
+  assert.match(map, /in draft mode replace each write\/move\/link with the proposed content or operation/)
+  assert.match(map, /In draft mode deliver the complete proposed files/)
+  const e2e = read('skills/e2e/SKILL.md')
+  assert.match(e2e, /An installed write\/execution tool is not authorization/)
+  assert.match(e2e, /For draft-only, proposed journey coverage/)
+  assert.match(read('skills/dev/SKILL.md'), /A draft packet alone never starts implementation/)
+  assert.match(read('skills/align/SKILL.md'), /approval of a decision does not authorize a repository write/)
+  for (const principal of ['developer', 'techlead', 'tester']) {
+    assert.match(read(`agents/${principal}.md`), /authorized matching CI evidence/)
+  }
+  assert.match(read('skills/code-review/SKILL.md'), /A clean review is a finding, not a merge instruction/)
+})
