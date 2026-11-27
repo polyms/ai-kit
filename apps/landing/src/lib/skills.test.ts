@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { catalogCategory, catalogDisplayName } from '../components/home/catalogCategory'
 import type { SkillOverlay } from '../content/overlay'
+import { skillIconBySlug } from './skill-icons'
 import { listSkillPacks } from './skill-pack/skill-pack'
 import { getSkillBySlug, getSkillCopy, getSkills } from './skills'
 
@@ -139,6 +140,7 @@ describe('home catalog metadata', () => {
       expect(catalogCategory(pack.name), pack.name).not.toBe('SKILL')
     }
     expect(catalogCategory('unknown-skill')).toBe('SKILL')
+    expect(Object.keys(skillIconBySlug).sort()).toEqual(listSkillPacks().map(pack => pack.name).sort())
   })
 
   it('preserves restored engineering categories and display names', () => {

@@ -13,12 +13,13 @@ import {
   Structure,
 } from '@solar-icons/react-perf/BoldDuotone'
 import type { ComponentProps, ReactElement } from 'react'
+import type { SkillPackName } from './skill-pack/skill-pack'
 
 type IconComponent = (props: ComponentProps<typeof LinkRound>) => ReactElement
 
 const iconProps = { size: 22, className: 'text-primary-600' } as const
 
-export const skillIconBySlug: Record<string, IconComponent> = {
+export const skillIconBySlug = {
   research: p => <DocumentText {...iconProps} {...p} />,
   business: p => <Structure {...iconProps} {...p} />,
   task: p => <ChecklistMinimalistic {...iconProps} {...p} />,
@@ -31,10 +32,11 @@ export const skillIconBySlug: Record<string, IconComponent> = {
   release: p => <ServerSquare {...iconProps} {...p} />,
   setup: p => <LinkRound {...iconProps} {...p} />,
   align: p => <ChatRoundDots {...iconProps} {...p} />,
+  'align-loop': p => <ChatRoundDots {...iconProps} {...p} />,
+  'domain-modeling': p => <Structure {...iconProps} {...p} />,
+  collab: p => <LinkRound {...iconProps} {...p} />,
+  'build-feature-map': p => <Structure {...iconProps} {...p} />,
   reqs: p => <ClipboardList {...iconProps} {...p} />,
-  'to-prd': p => <DocumentText {...iconProps} {...p} />,
-  'to-issues': p => <ChecklistMinimalistic {...iconProps} {...p} />,
-  triage: p => <SortByTime {...iconProps} {...p} />,
   design: p => <PaletteRound {...iconProps} {...p} />,
   dev: p => <CodeSquare {...iconProps} {...p} />,
   'code-review': p => <ShieldCheck {...iconProps} {...p} />,
@@ -44,10 +46,10 @@ export const skillIconBySlug: Record<string, IconComponent> = {
   devops: p => <ServerSquare {...iconProps} {...p} />,
   docs: p => <DocumentText {...iconProps} {...p} />,
   e2e: p => <ChecklistMinimalistic {...iconProps} {...p} />,
-}
+} satisfies Record<SkillPackName, IconComponent>
 
 export function SkillIcon({ slug }: { slug: string }) {
-  const Icon = skillIconBySlug[slug]
+  const Icon = Object.hasOwn(skillIconBySlug, slug) ? skillIconBySlug[slug as SkillPackName] : undefined
   if (!Icon) return <CodeSquare {...iconProps} />
   return <Icon />
 }
