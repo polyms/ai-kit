@@ -2,7 +2,8 @@
 
 Host-executed guidance for source changes. AI Kit supplies methodology, not an autonomous runtime.
 Use `dev` for implementation and `code-review` for independent Standards, Spec and Simplify
-passes. This protocol does not replace either skill, functional QA, E2E, or release gates.
+passes. Load each owning skill through the available host route (MCP: its pack's entry and needed
+references), not by assuming the other pack is bundled. This protocol does not replace either skill, functional QA, E2E, or release gates.
 
 ## Activation and authority
 
@@ -37,13 +38,16 @@ material missing evidence or permissions block the affected action.
 1. Run a fresh `code-review` on the entire in-scope change set against the pinned comparison base
    and original requirements. Do not merely recheck the previous fixes. Include regression,
    security and scope risks in the applicable axes. Assign stable IDs to actionable findings.
-2. Validate findings against actual evidence. Fix confirmed, in-scope blockers and actionable
+2. Run the applicable verification gates on the reviewed snapshot when matching evidence is
+   missing. A failed check becomes a finding even if the review is clean. Validate findings
+   against actual evidence. Fix confirmed, in-scope blockers and actionable
    suggestions through `dev`; do not chase cosmetic nits, speculative improvements or rejected
    findings. Record why any remaining finding is deferred, rejected or blocked. Escalate
    decisions that would change scope; do not silently mark them resolved.
 3. Run affected verification after each fix batch and the required full gate set before readiness.
-   Use actual commands or matching authorized CI evidence. A failed check becomes a finding;
-   missing execution or stale evidence is not a pass.
+   Use actual commands or matching authorized CI evidence; missing execution or stale evidence is not a pass.
+   Carry failed checks into the next review and fix batch. If a check is pending or unavailable,
+   continue independent in-scope work; report incomplete if the gate cannot be verified in this run.
 4. Refresh the entire comparison and repeat the review on the changed snapshot. A fix or a green
    test alone never completes the loop. Continue without asking for approval again for fixes
    already authorized in scope. Do not recursively start another loop inside the fixer or reviewer.
