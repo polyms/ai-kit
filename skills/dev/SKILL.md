@@ -197,12 +197,16 @@ A delegated fix batch returns to its parent loop rather than starting another lo
 When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after the
 ship checklist — prefer **exactly one**:
 
-- `/code-review` — source changes require pre-merge review under project policy or user request; provide the exact diff/ref, specification or assumptions, and actual test evidence. Review is not merge authorization.
+- `/code-review` — only if required review remains and the host cannot execute it in this run;
+  provide the exact snapshot, specification or assumptions, and actual test evidence. Mark review
+  incomplete. When the protocol completes, report readiness for approval, not merge authorization.
 - Ship / done — implementation checks passed and no applicable review or other gate remains
 - `/docs` — public integrator surface (API, MCP, CLI) just shipped
 - `/e2e` — critical browser journey needs CI coverage (not a substitute for seam TDD)
 
-When an applicable pre-merge review remains, prefer `/code-review` after required implementation and verification gates; if browser coverage or another prerequisite blocks review, name that prerequisite first. Do not force a full review for a trivial change when policy and user scope do not require it, and do not skip a required review. Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
+When an applicable pre-merge review remains, execute the protocol after required implementation
+and verification gates; if browser coverage or another prerequisite blocks review, name that
+prerequisite first. Do not force a full review for a trivial change when policy and user scope do not require it, and do not skip a required review. Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
 
@@ -223,7 +227,8 @@ When an applicable pre-merge review remains, prefer `/code-review` after require
    cleanup temptations as follow-ups, do not sneak them in
 
 **Completion criterion:** Loop goes green on matching workspace/CI evidence; regression test exists or seam gap
-documented; characterization done or skipped with reason; scope self-check filled. For a source-changing fix with an applicable pre-merge review gate, follow Implement step 6
+documented; characterization done or skipped with reason; scope self-check filled. For a source-changing fix with an applicable pre-merge review gate,
+follow Implement step 6
 and the Review-Fix Protocol; do not claim merge approval.
 
 ## Stack Defaults
