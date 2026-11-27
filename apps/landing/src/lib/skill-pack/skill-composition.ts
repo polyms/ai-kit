@@ -61,6 +61,36 @@ export type SkillContract = {
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
+  'align-loop': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","decision","evidence"],
+    produces: ["decision"],
+    readyWhen: "Decision tree is traversed one branch at a time; options, resolved decisions and remaining blockers are explicit.",
+  },
+  'domain-modeling': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","decision","evidence"],
+    produces: ["decision","document","change-receipt"],
+    readyWhen: "Resolved terminology or ADR rationale is traceable; writes are verified or pending, and approval is not invented.",
+  },
+  'arch-refactor': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","evidence","requirements","decision"],
+    produces: ["review-findings","decision","document"],
+    readyWhen: "Candidates cite actual source evidence, explain leverage/locality and test seams, and preserve unresolved decisions; report is not refactor approval.",
+  },
+  'collab': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","decision","ui-spec","evidence"],
+    produces: ["requirements","ui-spec","decision","document"],
+    readyWhen: "Applicable packet gates pass or are explicitly blocked; no invented principal delegation, approvals, repository facts or implementation.",
+  },
+  'e2e': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","test-plan","evidence","change-receipt"],
+    produces: ["test-report","change-receipt"],
+    readyWhen: "Harness changes and test-job outcomes are grounded in matching execution evidence; no QA approval inferred from automation results.",
+  },
   'code-review': {
     context: [
       { key: 'review-target', importance: 'required', description: 'Exact repository, comparison/base and head revision or supplied source diff.' },

@@ -7,7 +7,7 @@ description: Architecture vocabulary for deep modules — seam, depth, leverage,
 
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
 
-For architecture assessment, deepening candidates, visual reports and decision grilling, use [architecture refactor](refactor-workflow.md). Legacy arch-refactor selects that branch. For a design vocabulary question use this entry directly. Do not apply a refactor merely because a report was requested.
+Use `arch-refactor` for an evidence-led codebase scan, candidate report and refactor selection. This skill owns deep-module vocabulary and interface/seam design. Do not treat design guidance as permission to edit.
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 

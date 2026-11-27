@@ -1,17 +1,18 @@
 ---
 name: align
 description: Align on a plan before building — relentless grill (design tree, lettered options), sharpen domain language, update CONTEXT.md and ADRs as you go. Invoke with /align, grill, làm rõ kế hoạch, chốt hướng.
+disable-model-invocation: true
 ---
 
 # Align — Align Before You Build
 
 **All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
 
-Choose full alignment only for a clear request to align or resolve a blocking decision; otherwise use the specific decision-loop or domain branch. Choose [decision loop](decision-loop.md), or [domain modeling](domain-modeling.md) when only those responsibilities are requested. A named legacy align-loop or domain-modeling request selects the corresponding branch. Do not run an interview when approved decisions suffice.
+Use `/align` for the combined alignment session only. For decision-tree questioning alone use `align-loop`; for glossary or ADR changes alone use `domain-modeling`. Do not repeat approved decisions.
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
-Run [decision loop](decision-loop.md) using [domain modeling](domain-modeling.md) — the same pairing as Matt `grill-with-docs`: grill the plan **and** write vocabulary and hard decisions down as they land.
+Run `align-loop` using `domain-modeling` — the same pairing as Matt `grill-with-docs`: grill the plan **and** write vocabulary and hard decisions down as they land.
 
 Close the communication gap before `/reqs`, `/design`, or `/dev`. Do not substitute `/reqs` discovery, a PRD draft, or a feature list for the grill.
 
@@ -22,8 +23,8 @@ Read confirmed context if available; missing setup is not a reason to auto-run i
 Chat tone: ambient IDE/user rules. If `.cursor/rules/agent-voice.mdc` exists (opt-in `/setup`), follow it.
 
 1. Read `CONTEXT.md` if present
-2. Run [decision loop](decision-loop.md) — one question, lettered options (2–4 real forks), one **(Recommended)**, codebase-first when possible
-3. Run [domain modeling](domain-modeling.md) throughout — challenge terms in questions, probe edge-case scenarios, update `CONTEXT.md` inline when a term resolves (show the user the line), offer ADRs only when the three-part test passes
+2. Run `align-loop` — one question, lettered options (2–4 real forks), one **(Recommended)**, codebase-first when possible
+3. Run `domain-modeling` throughout — challenge terms in questions, probe edge-case scenarios, update `CONTEXT.md` inline when a term resolves (show the user the line), offer ADRs only when the three-part test passes
 
 ## It's working if
 
@@ -46,11 +47,11 @@ next while a branch is open, ask that question. The reply that settles the tree 
 
 `## Next Step` is only the leaving reply: the tree just settled, the user asked to close, or they confirmed
 deferral. That same reply carries `## Decisions`, `## Open Questions`, and `## Next Step`. Do not stop on
-a summary that asks them to confirm later. See [Turn closer](GRILL-FORMAT.md#turn-closer).
+a summary that asks them to confirm later. See [Turn closer](../align-loop/GRILL-FORMAT.md#turn-closer).
 
 **Open questions gate** — before pointing to `/reqs` (lean synthesis/publication): if the audit found unsettled items, list them under
 `## Open Questions` and ask the **open-questions confirmation** turn
-([GRILL-FORMAT.md](GRILL-FORMAT.md)). `/reqs` (lean synthesis/publication) is valid only when open questions are **zero**,
+([GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md)). `/reqs` (lean synthesis/publication) is valid only when open questions are **zero**,
 or the user picked **B** and confirmed the deferred list — never with a silently empty section while
 implementer-facing gaps remain (that is how `/reqs` (lean synthesis/publication) surfaces markers the user never saw). An open branch
 is still a grill question, not `→ /align`.

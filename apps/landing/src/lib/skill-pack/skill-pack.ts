@@ -54,7 +54,7 @@ export const UI_KIT_SKILL_PATHS = [
 ] as const
 
 export const REQS_REFERENCE_PATHS = [
-  'skills/align/GRILL-FORMAT.md',
+  'skills/align-loop/GRILL-FORMAT.md',
   'docs/agents/portable-skills.md',
   'skills/setup/requirements.md',
   'skills/setup/language.md',
@@ -79,7 +79,7 @@ export const WORK_SKILL_PATHS = {
   bug: ['skills/bug/SKILL.md', 'skills/bug/bug-template.md'],
   track: ['skills/track/SKILL.md', 'skills/track/tracking-templates.md', 'skills/track/triage-workflow.md', 'skills/track/agent-brief.md', 'skills/track/out-of-scope.md'],
   plan: ['skills/plan/SKILL.md', 'skills/plan/delivery-plan-template.md'],
-  qa: ['skills/qa/SKILL.md', 'skills/qa/qa-templates.md', 'skills/qa/e2e-workflow.md'],
+  qa: ['skills/qa/SKILL.md', 'skills/qa/qa-templates.md'],
   comms: ['skills/comms/SKILL.md', 'skills/comms/communication-templates.md'],
   review: ['skills/review/SKILL.md', 'skills/review/review-template.md'],
   release: ['skills/release/SKILL.md', 'skills/release/release-templates.md'],
@@ -88,6 +88,43 @@ export const WORK_SKILL_PATHS = {
 export const PORTABLE_SKILL_STANDARD = 'docs/agents/portable-skills.md'
 
 export const ENGINEERING_SKILL_PATHS = {
+  'align-loop': [
+    'skills/align-loop/SKILL.md',
+    'skills/align-loop/GRILL-FORMAT.md',
+  ],
+  'domain-modeling': [
+    'skills/domain-modeling/SKILL.md',
+    'skills/setup/domain.md',
+    'skills/setup/context-format.md',
+    'skills/setup/adr-format.md',
+  ],
+  'arch-refactor': [
+    'skills/arch-refactor/SKILL.md',
+    'skills/arch-refactor/HTML-REPORT.md',
+    'skills/align-loop/GRILL-FORMAT.md',
+    'skills/setup/stack-profile.md',
+    'docs/agents/knowledge.md',
+  ],
+  'collab': [
+    'skills/collab/SKILL.md',
+    'skills/collab/inference-brief.md',
+    'docs/agents/invocation.md',
+    'skills/design/PREFLIGHT.md',
+  ],
+  'e2e': [
+    'skills/e2e/SKILL.md',
+    'docs/agents/invocation.md',
+    'skills/dev/visual-ship.md',
+    'skills/design/SKILL.md',
+    'skills/design/BRIEF-INFERENCE.md',
+    'skills/design/ANTI-SLOP.md',
+    'skills/design/QUALITY-BAR.md',
+    'skills/design/CSS-INTENT.md',
+    'skills/design/VISUAL-ACCEPTANCE.md',
+    'skills/design/design-spec-template.md',
+    'skills/design/PREFLIGHT.md',
+    'skills/design/REDESIGN.md',
+  ],
   'code-review': [
     'skills/code-review/SKILL.md',
     'skills/code-review/standards-baseline.md',
@@ -118,9 +155,7 @@ export const ENGINEERING_SKILL_PATHS = {
   ],
   'align': [
     'skills/align/SKILL.md',
-    'skills/align/decision-loop.md',
-    'skills/align/domain-modeling.md',
-    'skills/align/GRILL-FORMAT.md',
+    'skills/align-loop/GRILL-FORMAT.md',
     'skills/setup/domain.md',
     'skills/setup/context-format.md',
     'skills/setup/adr-format.md',
@@ -129,11 +164,9 @@ export const ENGINEERING_SKILL_PATHS = {
     'skills/arch/SKILL.md',
     'skills/arch/DEEPENING.md',
     'skills/arch/DESIGN-IT-TWICE.md',
-    'skills/arch/refactor-workflow.md',
-    'skills/arch/HTML-REPORT.md',
     'skills/setup/stack-profile.md',
     'skills/dev/stack-defaults.md',
-    'skills/align/GRILL-FORMAT.md',
+    'skills/align-loop/GRILL-FORMAT.md',
     'docs/agents/knowledge.md',
   ],
   'dev': [
@@ -146,8 +179,6 @@ export const ENGINEERING_SKILL_PATHS = {
     'skills/dev/stack-defaults.md',
     'skills/dev/status-report.md',
     'skills/dev/visual-ship.md',
-    'skills/dev/feature-preparation.md',
-    'skills/dev/inference-brief.md',
     'docs/agents/knowledge.md',
     'docs/agents/invocation.md',
     'skills/design/SKILL.md',
@@ -177,7 +208,7 @@ export const ENGINEERING_SKILL_PATHS = {
 } as const
 
 export type EngineeringSkillName = keyof typeof ENGINEERING_SKILL_PATHS
-const MANUAL_ENGINEERING_SKILLS: readonly EngineeringSkillName[] = ['setup', 'craft', 'build-feature-map']
+const MANUAL_ENGINEERING_SKILLS: readonly EngineeringSkillName[] = ['setup', 'craft', 'build-feature-map', 'align', 'arch-refactor', 'e2e']
 
 export type WorkSkillName = keyof typeof WORK_SKILL_PATHS
 
@@ -190,13 +221,18 @@ export const WORK_REFERENCE_PATHS: Partial<Record<WorkSkillName, readonly string
   comms: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
   release: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
   task: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
-  track: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'skills/align/GRILL-FORMAT.md'],
+  track: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'skills/align-loop/GRILL-FORMAT.md'],
   review: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
-  qa: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD, 'docs/agents/invocation.md', 'skills/dev/visual-ship.md', ...DESIGN_SKILL_PATHS],
+  qa: ['docs/agents/client-compatibility.md', PORTABLE_SKILL_STANDARD],
 }
 export type SkillPackName = 'reqs' | 'design' | WorkSkillName | EngineeringSkillName
 
 const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
+  'align-loop': "Decision-tree grilling, calibrated questioning and explicit decision branches",
+  'domain-modeling': "Active domain vocabulary, glossary and ADR changes",
+  'arch-refactor': "Evidence-led repository architecture assessment and deepening candidates",
+  'collab': "Coordinate feature preparation across product, architecture and design before implementation",
+  'e2e': "Browser automation harness, journey tests, flake elimination and CI sharding",
   reqs: 'Requirements discovery, enterprise and lean PRDs, stories and authorized publication',
   design: 'UI design specifications with optional Polyms UI Kit references',
   research: 'Evidence-based research and comparative analysis',
@@ -206,16 +242,16 @@ const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   bug: 'Evidence-based and reproducible defect reports',
   track: 'Ticket inspection, verified updates and engineering triage',
   plan: 'Effort estimation, delivery planning, capacity and dependencies',
-  qa: 'Functional tests, E2E automation and QA evidence',
+  qa: 'Functional test design, UAT and environment-specific QA evidence',
   comms: 'Professional messages, client replies and stakeholder updates',
   review: 'Evidence-based artifact critique, gap analysis and assumption challenge',
   release: 'Go-live readiness, rollout, rollback and release notes',
   'code-review': 'Three-axis source code and PR review: Standards, Spec and Simplify',
   'devops': 'Evidence-based deploy, CI and infrastructure diagnosis',
   'setup': 'Project integration and execution profile configuration',
-  'align': 'Align decisions, domain vocabulary and ADRs',
-  'arch': 'Architecture design, deep modules and refactor assessment',
-  'dev': 'Feature preparation, implementation and disciplined debugging',
+  'align': 'Combined plan alignment session using decision grilling and domain modeling',
+  'arch': 'Deep-module architecture vocabulary, interface and seam design',
+  'dev': 'Implementation from spec and disciplined debugging',
   'craft': 'Author, audit and improve AI skill methodology',
   'build-feature-map': 'Build and maintain project-owned behavior maps',
 }
@@ -294,11 +330,6 @@ export const LEGACY_SKILL_ALIASES = {
   'to-prd': 'reqs',
   'to-issues': 'task',
   'triage': 'track',
-  'align-loop': 'align',
-  'domain-modeling': 'align',
-  'arch-refactor': 'arch',
-  'collab': 'dev',
-  'e2e': 'qa',
 } as const satisfies Record<string, SkillPackName>
 
 export function canonicalSkillName(name: string): string {

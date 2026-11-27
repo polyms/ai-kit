@@ -28,7 +28,7 @@ ship executive-summary rollups or agent-only shorthand (e.g. `"W1 P0 #1–9: ten
   **Repo references** only when the user asked; never as a banner under the title, never as a substitute for
   writing the decision in prose.
 
-**Upstream:** `/align` decision loop and domain-modeling references sharpen decisions and domain
+**Upstream:** `/align` with `align-loop` and `domain-modeling` sharpen decisions and domain
 language before synthesis.
 
 **Downstream:** `/task` (vertical slicing) breaks the published PRD into vertical-slice issues.
@@ -87,7 +87,7 @@ Scan conversation, align handoff, and codebase for details an implementer still 
 `[NEEDS CLARIFICATION]` in [lean-prd-template.md](lean-prd-template.md).
 
 If any would appear in **Open Questions**: list them, **do not finalize or publish yet**; a bounded draft with unconfirmed markers is allowed only as a clearly labeled draft, and ask the
-**open-questions confirmation** turn ([GRILL-FORMAT.md](../align/GRILL-FORMAT.md)) — **A** here means
+**open-questions confirmation** turn ([GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md)) — **A** here means
 run `/align` on the listed items; **B** proceeds to step 4 with confirmed markers. If `/align` already
 deferred the same items with **B**, restate the list and proceed only after explicit yes.
 
