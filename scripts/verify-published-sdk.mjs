@@ -30,6 +30,8 @@ try {
   // Do not inherit the user's npm config, auth token or workspace node_modules.
   const userconfig = join(root, '.npmrc')
   writeFileSync(userconfig, '')
+  const globalconfig = join(root, '.npm-globalrc')
+  writeFileSync(globalconfig, '')
   writeFileSync(join(root, 'package.json'), JSON.stringify({
     name: 'ai-kit-sdk-independent-check', private: true, type: 'module',
   }))
@@ -45,8 +47,14 @@ try {
     timeout: 120_000,
     stdio: 'pipe',
     env: {
-      ...process.env,
+      // A separate HOME and minimal environment prevent accidental use of
+      // personal npm auth, repository .npmrc, and custom npm config variables.
+      PATH: process.env.PATH ?? '',
+      HOME: root,
+      USERPROFILE: root,
+      CI: 'true',
       npm_config_userconfig: userconfig,
+      npm_config_globalconfig: globalconfig,
       npm_config_registry: registry,
       npm_config_cache: join(root, '.npm-cache'),
     },
