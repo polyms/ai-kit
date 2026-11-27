@@ -1,9 +1,9 @@
-# Memory strategy: provider-neutral usage
+# Memory strategy: host-agent native usage
 
 Status: ownership decision agreed; Memory Protocol and five optional skill hints shipped in
 immutable skill release 0.3.3. Production MCP and Astra template retrieval were smoke-tested
 after PR #14; model-quality and full native-client behavior remain unmeasured.
-AI Kit does not own, implement or operate memory. See [positioning](positioning.md).
+AI Kit does not own, implement or operate memory. The live protocol now explicitly means the executing agent's own available memory and context, not a requirement to access a memory system. Historical release wording is preserved in immutable releases. See [positioning](positioning.md).
 
 ## Research rationale
 
@@ -30,8 +30,7 @@ datasets, metrics, settings and evaluation methods. AI Kit has run no independen
 The earlier hybrid design idea combined evidence-first recall, selective fact extraction, temporal
 awareness, linked lessons and tiered context. **The later ownership decision supersedes building
 that hybrid inside AI Kit.** Borrow these behavioral principles without adopting storage engines,
-graph models, memory tiers, extraction pipelines or a vendor-specific adapter. The host uses the
-memory source it already has; a business can choose any approach for itself.
+graph models, memory tiers, extraction pipelines or a vendor-specific adapter. The host considers its own already available memory; a business can choose any approach for its records independently of AI Kit hints.
 
 ### Research references
 
@@ -64,16 +63,13 @@ available. A past inference is not a confirmed fact.
 
 The protocol guides behavior at the skill level, not transport, database, records or tool names.
 
-1. **Recall:** identify a relevant gap. Reuse supplied context. Seek narrow authorized historical
-   evidence when available; do not search everything or demand a provider.
+1. **Recall:** consider relevant experience already available in the agent's own conversation or native memory. Do not discover or call an external memory system; verify historical claims through normal project evidence only when the task needs it.
 2. **Apply:** use relevant evidence in the skill, preserve source/scope/time when available, and
    distinguish a preference, decision, reported experience, proposal and factual observation.
    Revalidate mutable claims; surface material contradictions rather than silently picking a memory.
 3. **Reflect:** compare intended and observed outcomes, evidence and feedback. Identify a useful
    lesson or correction; distinguish a verified lesson from an untested hypothesis.
-4. **Capture:** suggest a supported and durable fact, confirmed preference, decision or lesson only
-   if worthwhile. Persist or correct it using the owner's available capability and applicable
-   permissions/policies; never claim an unavailable write succeeded.
+4. **Capture:** consider a supported, durable lesson or preference for the executing agent's own future work. Retain in current context if useful; native retention follows host settings. Do not create external records or claim persistence without confirmation.
 
 Use the minimum relevant context, preserve source evidence over lossy summaries when material,
 respect changed circumstances, and avoid indiscriminate capture. Related events can inspire
@@ -98,10 +94,7 @@ memory:
 This is an illustrative subset of the shipped plan hints; inspect the versioned catalog for
 the full contract. Hosts may ignore hints when memory is irrelevant or unavailable.
 
-The host must be free to use native memory, business APIs, authorized local notes, external
-memory tools or no memory at all. No provider interface, common storage schema, mandatory
-retrieval middleware, synchronization service or automatic cross-agent portability is required.
-A shared external source can enable continuity between clients only if each has authorized access.
+The agent uses its own available memory or no memory at all. A hint must not cause external memory lookup, connection or write. Separate authorized business APIs or documents may provide task evidence when needed, but that is not Memory recall. No provider interface, schema, synchronization or automatic cross-agent portability is required.
 
 ### Governance
 

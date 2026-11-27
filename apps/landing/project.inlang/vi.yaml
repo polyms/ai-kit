@@ -91,7 +91,7 @@ positioning_apply_body: "AI của bạn kiểm tra bằng chứng được phép
 positioning_label: "Cách hoạt động"
 positioning_title: "AI của bạn, thêm phương pháp và kiến thức."
 positioning_intro: "Trong client tương thích, AI của bạn chọn và áp dụng hướng dẫn phù hợp. AI Kit cung cấp phương pháp, không phải một bộ máy thực thi riêng."
-positioning_note: "AI Kit cung cấp phương pháp và tài liệu tham chiếu, không phải một model hay agent runtime mới. Memory và dữ liệu nghiệp vụ riêng vẫn thuộc hệ thống sở hữu. MCP, SDK, native skills và plugin là các cách phân phối khi được hỗ trợ."
+positioning_note: "AI Kit cung cấp phương pháp và tài liệu tham chiếu, không phải một model hay agent runtime mới. Memory là ngữ cảnh và trí nhớ sẵn có của chính agent; dữ liệu nghiệp vụ riêng vẫn thuộc hệ thống sở hữu. MCP, SDK, native skills và plugin là các cách phân phối khi được hỗ trợ."
 
 intelligence_technical_details: "Xem ví dụ truy xuất MCP dành cho kỹ thuật"
 
@@ -136,7 +136,7 @@ quickstart_target_body: 'Đổi -a cursor sang client bạn dùng. Lặp lại -
 quickstart_setup_title: 'Chạy /setup'
 quickstart_setup_body: 'Khởi động lại editor hoặc mở chat mới, rồi chạy /setup trong dự án.'
 quickstart_mcp_title: "Cho AI chat · kết nối qua MCP"
-quickstart_mcp_body: "Cho ChatGPT hoặc công cụ chat khác hỗ trợ remote MCP tùy chỉnh với OAuth. Dùng 13 work pack đã công bố mà không cần clone repo hay cài skill. Khả năng và quyền tùy client."
+quickstart_mcp_body: "Cho ChatGPT hoặc công cụ chat khác hỗ trợ remote MCP tùy chỉnh với OAuth. Dùng 26 skill chính qua MCP mà không cần clone repo hay cài skill. Khả năng và quyền tùy client."
 
 # --- nav ---
 nav_catalog: Kỹ năng
@@ -311,13 +311,13 @@ skillDetail_contract_note: "Định danh artifact và điều kiện hoàn thàn
 
 hero_chat_path: "ChatGPT và chat client hỗ trợ MCP · nghiên cứu, kế hoạch, nghiệp vụ và QA"
 hero_dev_path: "Cursor, Claude Code, Codex, Copilot · workflow kỹ thuật theo repo"
-home_catalog_chat_hint: "13 skill pack từ xa qua MCP. Tên như /research là định danh skill, không phải lệnh bắt buộc phải gõ. Trong AI chat tương thích đã kết nối, hãy mô tả mục tiêu tự nhiên; cách gọi và quyền truy cập tùy client."
+home_catalog_chat_hint: "26 skill chính qua remote MCP. Tên như /research là định danh skill, không phải lệnh bắt buộc phải gõ. Trong AI chat tương thích đã kết nối, hãy mô tả mục tiêu tự nhiên; cách gọi và quyền truy cập tùy client."
 home_catalog_dev_hint: "Cài skill cục bộ cho coding agent, mở repo và tuân thủ cách gọi của client. Tên có dấu / là định danh workflow; cú pháp dùng thực tế tùy công cụ."
 skill_audience_both: "Chat (MCP) · Development (cục bộ)"
 skill_audience_dev: "Development tools · cục bộ"
 skill_audience_title: "Dùng skill ở đâu"
-skill_audience_both_detail: "Có trong catalog work pack qua remote MCP ở chat client tương thích và dưới dạng skill cục bộ ở công cụ phát triển tương thích. Chat không cần checkout repo. Thao tác phụ thuộc công cụ và quyền rõ ràng; quy tắc gọi thủ công vẫn áp dụng."
-skill_audience_dev_detail: "Cài cục bộ vào công cụ phát triển tương thích như Cursor, Claude Code, Codex hoặc Copilot. Skill này không nằm trong catalog work pack remote MCP đã công bố."
+skill_audience_both_detail: "Có trong catalog skill qua remote MCP ở chat client tương thích và dưới dạng skill cục bộ ở công cụ phát triển tương thích. Chat không cần checkout repo. Thao tác phụ thuộc công cụ và quyền rõ ràng; quy tắc gọi thủ công vẫn áp dụng."
+skill_audience_dev_detail: "Cài cục bộ vào công cụ phát triển tương thích như Cursor, Claude Code, Codex hoặc Copilot. Skill này không nằm trong catalog skill remote MCP đã công bố."
 pipeline_dev_note: "Các giai đoạn chỉ là hướng dẫn tùy chọn, không phải orchestration engine của AI Kit. Người dùng chat có thể dùng workflow nghiệp vụ mà không cần checkout repo."
 intelligence_eval_method: "So sánh các tác vụ giả lập tương đương khi có và không có hướng dẫn skill; chấm riêng hard gate, chất lượng đầu ra và dấu vết truy xuất. Chỉ công bố mức cải thiện khi có số liệu đo."
 quickstart_choose: "Chọn công cụ AI của bạn"

@@ -1,7 +1,7 @@
 # Enterprise PRD Template
 
 Enterprise template for `/reqs` — discovery + formal PRD in chat (optional `docs/prd/`). Does **not** publish
-to the issue tracker; use `/to-prd` + [lean-prd-template.md](../to-prd/lean-prd-template.md) to publish from
+to the issue tracker; use `/reqs` lean synthesis + [lean-prd-template.md](lean-prd-template.md) to publish from
 an aligned conversation.
 
 Copy this structure when writing a PRD. Replace bracketed placeholders. Delete instructional comments.

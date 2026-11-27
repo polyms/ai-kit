@@ -125,7 +125,8 @@
     ],
     "avoid": [
       "review",
-      "bug"
+      "bug",
+      "e2e"
     ],
     "notes": "Routing checks only; authorization is separate."
   },
@@ -151,7 +152,8 @@
     ],
     "avoid": [
       "qa",
-      "reqs"
+      "reqs",
+      "code-review"
     ],
     "notes": "Routing checks only; authorization is separate."
   },
@@ -222,14 +224,16 @@
   },
   {
     "id": "RT-18",
-    "kind": "Skip",
+    "kind": "Route",
     "prompt": "Review this TypeScript function for bugs and complexity.",
-    "expected": [],
-    "avoid": [
-      "review",
-      "bug"
+    "expected": [
+      "code-review"
     ],
-    "notes": "Do not force a work pack when a direct answer or local engineering skill is more appropriate."
+    "avoid": [
+      "bug",
+      "review"
+    ],
+    "notes": "Source-code review is a separate skill from artifact review."
   },
   {
     "id": "RT-19",
@@ -351,7 +355,8 @@
       "qa"
     ],
     "avoid": [
-      "review"
+      "review",
+      "e2e"
     ],
     "notes": "Vietnamese semantic routing; no write authorization."
   },
@@ -376,7 +381,8 @@
       "review"
     ],
     "avoid": [
-      "qa"
+      "qa",
+      "code-review"
     ],
     "notes": "Vietnamese semantic routing; no write authorization."
   },
@@ -471,9 +477,11 @@
   },
   {
     "id": "RT-38",
-    "kind": "Skip",
+    "kind": "Route",
     "prompt": "Fix loi build Vercel trong repo local, run lai build",
-    "expected": [],
+    "expected": [
+      "devops"
+    ],
     "avoid": [
       "release",
       "bug",
@@ -497,5 +505,287 @@
       "release"
     ],
     "notes": "Everyday/default-client regression based on a ChatGPT Instant sample; behavior is client-agnostic. Use approved requirements, minimal routing and read-only draft."
+  },
+  {
+    "id": "RT-40",
+    "kind": "Route",
+    "prompt": "Review a PR or diff, inspect code changes",
+    "expected": [
+      "code-review"
+    ],
+    "avoid": [
+      "review"
+    ],
+    "notes": "Source-code review is a separate skill from artifact review."
+  },
+  {
+    "id": "RT-41",
+    "kind": "Route",
+    "prompt": "Investigate deployment or CI failure, diagnose infrastructure",
+    "expected": [
+      "devops"
+    ],
+    "avoid": [
+      "release"
+    ],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-42",
+    "kind": "Route",
+    "prompt": "/to-issues, split approved PRD into issues",
+    "expected": [
+      "task"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-43",
+    "kind": "Route",
+    "prompt": "/to-prd, synthesize a PRD from aligned decisions",
+    "expected": [
+      "reqs"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-44",
+    "kind": "Route",
+    "prompt": "Stress-test a plan one decision at a time; no glossary changes.",
+    "expected": [
+      "align-loop"
+    ],
+    "avoid": [
+      "align",
+      "domain-modeling"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-45",
+    "kind": "Route",
+    "prompt": "/triage, classify backlog or verify reported issue",
+    "expected": [
+      "track"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-46",
+    "kind": "Route",
+    "prompt": "Sharpen domain glossary, record ADR decisions; no alignment interview.",
+    "expected": [
+      "domain-modeling"
+    ],
+    "avoid": [
+      "align",
+      "align-loop"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-47",
+    "kind": "Route",
+    "prompt": "/setup, configure project tools and execution profile",
+    "expected": [
+      "setup"
+    ],
+    "avoid": [],
+    "notes": "Portable engineering route; honor explicit invocation, target execution profile and actual host capabilities."
+  },
+  {
+    "id": "RT-48",
+    "kind": "Route",
+    "prompt": "Design module interfaces and test seams for a known module, not a repository audit.",
+    "expected": [
+      "arch"
+    ],
+    "avoid": [
+      "arch-refactor"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-49",
+    "kind": "Route",
+    "prompt": "Implement an approved spec or fix a product bug.",
+    "expected": [
+      "dev"
+    ],
+    "avoid": [
+      "collab"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-50",
+    "kind": "Route",
+    "prompt": "/craft, write or audit SKILL.md",
+    "expected": [
+      "craft"
+    ],
+    "avoid": [],
+    "notes": "Select only canonical skill, relevant branch and authorized execution."
+  },
+  {
+    "id": "RT-51",
+    "kind": "Route",
+    "prompt": "/build-feature-map, build or update feature map",
+    "expected": [
+      "build-feature-map"
+    ],
+    "avoid": [],
+    "notes": "Select only canonical skill, relevant branch and authorized execution."
+  },
+  {
+    "id": "RT-52",
+    "kind": "Route",
+    "prompt": "Review PR #123 in GitHub; no document review and no code modifications.",
+    "expected": [
+      "code-review"
+    ],
+    "avoid": [
+      "qa",
+      "dev",
+      "review"
+    ],
+    "notes": "Source-code review is a separate skill from artifact review."
+  },
+  {
+    "id": "RT-53",
+    "kind": "Route",
+    "prompt": "/e2e Diagnose Playwright CI flake; no changes yet.",
+    "expected": [
+      "e2e"
+    ],
+    "avoid": [
+      "qa",
+      "devops",
+      "dev"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-54",
+    "kind": "Route",
+    "prompt": "Implement a small approved fix from the existing spec.",
+    "expected": [
+      "dev"
+    ],
+    "avoid": [
+      "reqs",
+      "task"
+    ],
+    "notes": "Consolidated canonical skill routing; no duplicate invocation or unauthorized writes."
+  },
+  {
+    "id": "RT-55",
+    "kind": "Route",
+    "prompt": "/arch-refactor Evaluate module deepening candidates only, no edits.",
+    "expected": [
+      "arch-refactor"
+    ],
+    "avoid": [
+      "code-review",
+      "dev"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-56",
+    "kind": "Route",
+    "prompt": "New CRUD page, no spec yet, prepare the packet without publication.",
+    "expected": [
+      "collab"
+    ],
+    "avoid": [
+      "dev",
+      "task"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-57",
+    "kind": "Route",
+    "prompt": "Resolve a domain term without interviewing about an unrelated feature.",
+    "expected": [
+      "domain-modeling"
+    ],
+    "avoid": [
+      "align",
+      "align-loop"
+    ],
+    "notes": "Respect independent skill responsibility and approval boundaries."
+  },
+  {
+    "id": "RT-58",
+    "kind": "Route",
+    "prompt": "/align combine plan grilling and domain terminology decisions before building.",
+    "expected": [
+      "align"
+    ],
+    "avoid": [
+      "reqs",
+      "dev"
+    ],
+    "notes": "Explicit combined session; align-loop and domain-modeling are reusable dependencies."
+  },
+  {
+    "id": "RT-59",
+    "kind": "Route",
+    "prompt": "Draft a detailed PRD for a team invitation feature from approved requirements in this chat; no slash commands and no publishing.",
+    "expected": [
+      "reqs"
+    ],
+    "avoid": [
+      "setup",
+      "task",
+      "collab"
+    ],
+    "notes": "Conversational MCP selects reqs by intent even though installed native invocation is manual."
+  },
+  {
+    "id": "RT-60",
+    "kind": "Route",
+    "prompt": "Prepare a UI specification for the approved invitation flow, with loading and error states, as a draft.",
+    "expected": [
+      "design"
+    ],
+    "avoid": [
+      "dev",
+      "collab",
+      "e2e"
+    ],
+    "notes": "Natural language design request is sufficient for conversational selection; no native slash invocation required."
+  },
+  {
+    "id": "RT-61",
+    "kind": "Route",
+    "prompt": "Write an internal integration guide for the existing API from supplied facts; draft only.",
+    "expected": [
+      "docs"
+    ],
+    "avoid": [
+      "reqs",
+      "dev",
+      "setup"
+    ],
+    "notes": "Native manual-only docs policy does not prevent conversational selection."
+  },
+  {
+    "id": "RT-62",
+    "kind": "Route",
+    "prompt": "Assess this repository's architecture for shallow modules and report deepening candidates; no refactoring or writes.",
+    "expected": [
+      "arch-refactor"
+    ],
+    "avoid": [
+      "dev",
+      "code-review"
+    ],
+    "notes": "Clearly requested special assessment intent is sufficient without a slash command."
   }
 ]

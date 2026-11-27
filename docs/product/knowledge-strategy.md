@@ -24,7 +24,7 @@ See [agent Knowledge guidance](../agents/knowledge.md) for current behavior.
 | --- | --- |
 | Skills | Reviewed methods and quality gates |
 | Knowledge | Reusable, validated technical guidance |
-| External memory | Owner-scoped experiences, decisions, preferences and lessons |
+| Host-agent memory | The executing agent's own available remembered experience, decisions, preferences and lessons |
 | Live workspace/business data | Current authoritative state, domain requirements and evidence |
 
 Knowledge must not absorb private memory, become a replacement for an ADR, or be used as the
@@ -55,7 +55,7 @@ service. Verify the need and current schema when planning implementation.
 ```text
 Experience and actual evidence
   -> host-led Reflection
-  -> authorized external Memory, when useful
+  -> optional host-native recall/reflection and retention under host settings
   -> reviewed Knowledge candidate, if generalized and verified
   -> reviewed Skill change, if methodology itself needs improvement
 ```
@@ -63,8 +63,7 @@ Experience and actual evidence
 This is a conceptual route with optional branches, not a mandatory pipeline. A candidate may be
 discarded, remain private to its owner, or be proposed directly from independently verified
 evidence. Memory is not a required intermediary. The host does the reasoning; AI Kit supplies
-methodology. The owner decides memory capture; authorized maintainers decide Knowledge and Skill
-changes. No model weights are trained; no automatic promotion, self-editing skills or hosted
+methodology. Native memory retention follows the host's existing settings; a hint never requests a memory-system lookup or write. Authorized maintainers decide Knowledge and Skill changes. No model weights are trained; no automatic promotion, self-editing skills or hosted
 reflection process follows from this strategy.
 
 Reflection should distinguish: what happened, what was expected, evidence, what may explain

@@ -6,6 +6,10 @@ description: Estimate effort and plan delivery using scope, dependencies, capaci
 
 # Plan
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile.
+
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Use [delivery-plan-template.md](delivery-plan-template.md) and the shared work artifact standard
 (`docs/agents/work-artifact-standard.md`).
 

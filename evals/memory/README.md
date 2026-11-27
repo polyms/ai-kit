@@ -1,33 +1,26 @@
-# Memory Protocol evaluation pilot
+# Host-agent memory evaluation
 
-The 15 synthetic scenarios run through the existing paired evaluation runner:
+The 18 synthetic scenarios use the existing paired evaluation runner.
 
 ```sh
 pnpm eval:run --suite memory --dry-run
-pnpm eval:run --suite memory --case MP-01 --model YOUR_MODEL --judge-model YOUR_JUDGE
+pnpm eval:run --suite memory --case MP-16 --model YOUR_MODEL --judge-model YOUR_JUDGE
 ```
 
-Actual model calls require the existing explicitly configured endpoint. A full Git checkout
-containing the historical baseline blobs is required. The runner loads files via
-content-addressed Git blob SHAs recorded in the pinned manifests, then independently
-recomputes each blob hash. It does **not** rely on the pinned source commit
-being fetchable as a Git ref after squash merges; a missing blob is an explicit error.
-No network fallback or silent substitution with current source text is permitted. No real workspace, memory provider or write tool is involved.
+Both arms receive the same historical P0/P1 skill contracts and starter content, verified against
+the content-addressed Git blobs in baseline.json. Only the assisted arm receives the current
+live Memory Protocol and optional hints. The fixture supplies simulated host-native remembered
+context directly; it is not fetched from a real provider. A full Git checkout containing the
+historical baseline blobs is required. Missing blobs fail closed. Fixture fingerprints cover the
+actual guidance, so these revised cases are not comparable to the older 0.3.5 memory pilot.
+Immutable SDK snapshots are unchanged.
 
-Both arms receive the same P0/P1 contract fields from the pinned 0.3.5 manifest with memory
-hints removed, and historical starter files verified against a pre-P2 Git revision in
-`baseline.json`. This baseline is a test fixture, not an available skill release. Only the
-assisted arm receives the P2 hints and protocol from the pinned 0.3.5 source. In this targeted suite the skill route is fixed
-to isolate memory behavior rather than routing accuracy. Fixture fingerprints include the actual
-guidance. Never use private records or run paid calls without explicit configuration.
+MP-16 and MP-17 expose an optional synthetic external lookup to both arms as a trap: expected
+calls are zero. The trace must not contain a memory call, and semantic grading checks that no
+connection, enablement, persistence or invented history is requested. Other scenarios have no
+lookup tool. No real memory provider, memory writes, or workspace integration is involved.
 
-Four fixtures expose the same narrow synthetic read-only lookup to both arms. The actual
-trace verifies one necessary recall, no redundant recalls, and denied scope requests.
-Other cases have no lookup capability. The judge receives the same user evidence and actual
-lookup trace when available; mark tool behavior unobservable where it cannot be checked.
-Semantic output and hard gates use the existing blinded judge. No memory writes are enabled;
-a model must not claim persistence or external execution.
-
-Dry runs and structural tests are not measured quality. Compare paired runs and record actual
-token, latency, tool and semantic results. Native client and Astra compatibility require
-separate verification.
+Dry runs, structural tests and the localhost mock are not measured model quality. Run actual
+models only with an explicitly configured endpoint, synthetic records and appropriate authorization.
+Report paired token, latency, trace and semantic results. Native agent behavior and actual
+host-memory availability require separate client verification.

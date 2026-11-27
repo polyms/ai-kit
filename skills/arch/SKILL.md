@@ -5,6 +5,10 @@ description: Architecture vocabulary for deep modules — seam, depth, leverage,
 
 # Arch
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
+
+Use `arch-refactor` for an evidence-led codebase scan, candidate report and refactor selection. This skill owns deep-module vocabulary and interface/seam design. Do not treat design guidance as permission to edit.
+
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
 Architecture vocabulary for **deep modules**: a lot of behaviour behind a small interface, placed at
@@ -146,7 +150,7 @@ Good interfaces make testing natural:
 
 - **Stack-combo design seams** — run [Stack-combo seams](#stack-combo-seams) first; then deepen
 - **Deepening a cluster given its dependencies** — see [DEEPENING.md](DEEPENING.md): dependency categories, seam discipline, and replace-don't-layer testing.
-- **Exploring alternative interfaces** — see [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.
+- **Exploring alternative interfaces** — see [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): spin up parallel sub-agents when available, otherwise independent inline passes to design the interface several radically different ways, then compare on depth, locality, and seam placement.
 
 ## Agent
 

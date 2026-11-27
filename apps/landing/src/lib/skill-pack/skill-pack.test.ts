@@ -15,7 +15,6 @@ import {
 import {
   DESIGN_REFERENCE_PATHS,
   DESIGN_SKILL_PATHS,
-  DOCS_REFERENCE_PATHS,
   getSkillPack,
   listSkillPacks,
   REQS_REFERENCE_PATHS,
@@ -27,6 +26,12 @@ import {
   UI_KIT_SKILL_PATHS,
   WORK_ARTIFACT_STANDARD,
   WORK_SKILL_PATHS,
+  ENGINEERING_SKILL_PATHS,
+  LEGACY_SKILL_ALIASES,
+  legacyWorkflow,
+  skillInvocationPolicy,
+  WORK_REFERENCE_PATHS,
+  PORTABLE_SKILL_STANDARD,
 } from './skill-pack'
 import { executeGetSkillPack, executeListSkillPacks, MCP_SKILL_SOURCE, registerSkillPackMcpTools } from './skill-pack.mcp'
 
@@ -49,6 +54,11 @@ describe('skill pack manifest', () => {
   it('builds raw URLs on refs/heads/main and does not embed file bodies', () => {
     const packs = listSkillPacks()
     expect(packs.map(pack => pack.name)).toEqual([
+      'align-loop',
+      'domain-modeling',
+      'arch-refactor',
+      'collab',
+      'e2e',
       'reqs',
       'design',
       'research',
@@ -62,6 +72,14 @@ describe('skill pack manifest', () => {
       'comms',
       'review',
       'release',
+      'code-review',
+      'devops',
+      'setup',
+      'align',
+      'arch',
+      'dev',
+      'craft',
+      'build-feature-map',
     ])
     for (const pack of packs) {
       expect(pack.skillRawUrl).toBe(skillPackRawUrl(`skills/${pack.name}/SKILL.md`))
@@ -88,7 +106,7 @@ describe('skill pack manifest', () => {
 })
 
 describe('skill pack MCP tools', () => {
-  it('registers list_skill_packs and get_skill_pack', () => {
+  it('registers list_skill_packs, get_skill_pack and get_release_info', () => {
     const registerTool = vi.fn()
     registerSkillPackMcpTools({ registerTool } as never)
     expect(registerTool.mock.calls.map(call => call[0])).toEqual([
@@ -112,15 +130,16 @@ describe('skill pack MCP tools', () => {
       packCount: listSkillPacks().length,
       source: MCP_SKILL_SOURCE,
       composition: compositionCatalog(),
+      legacyWorkflows: Object.keys(LEGACY_SKILL_ALIASES).map(name => legacyWorkflow(name)),
     })
   })
 
   it('returns NOT_FOUND for an unknown pack name', async () => {
     const fetchFile = vi.fn<typeof fetch>()
-    const result = await executeGetSkillPack('craft', fetchFile)
+    const result = await executeGetSkillPack('unknown-skill', fetchFile)
     expect(fetchFile).not.toHaveBeenCalled()
     expect(result.isError).toBe(true)
-    expect(JSON.parse(result.content[0]!.text)).toEqual({ error: 'NOT_FOUND', name: 'craft' })
+    expect(JSON.parse(result.content[0]!.text)).toEqual({ error: 'NOT_FOUND', name: 'unknown-skill' })
   })
 
   it('returns design and uiKit Markdown with existing raw URLs', async () => {
@@ -158,6 +177,7 @@ describe('skill pack MCP tools', () => {
     expect(result.isError).toBeUndefined()
     expect(JSON.parse(result.content[0]!.text)).toEqual({
       name: 'reqs',
+      ...skillInvocationPolicy('reqs'),
       contract: SKILL_CONTRACTS.reqs,
       source: MCP_SKILL_SOURCE,
       files: [
@@ -175,9 +195,10 @@ describe('skill pack MCP tools', () => {
       expect([...paths].sort()).toEqual(markdownPaths(`skills/${name}`))
       const result = await executeGetSkillPack(name, fetchFile)
       expect(result.isError).toBeUndefined()
-      const references = name === 'docs' ? DOCS_REFERENCE_PATHS : []
+      const references = WORK_REFERENCE_PATHS[name as keyof typeof WORK_SKILL_PATHS] ?? []
       expect(JSON.parse(result.content[0]!.text)).toEqual({
         name,
+        ...skillInvocationPolicy(name as SkillPackName),
         contract: SKILL_CONTRACTS[name as SkillPackName],
         source: MCP_SKILL_SOURCE,
         files: [
@@ -240,6 +261,111 @@ describe('skill pack MCP tools', () => {
   })
 })
 
+describe('consolidated engineering packs', () => {
+  it('keeps independent engineering and work skill responsibilities distinct', () => {
+    for (const [a, b] of [['arch', 'arch-refactor'], ['qa', 'e2e'], ['dev', 'collab'], ['align', 'align-loop'], ['align', 'domain-modeling']]) {
+      expect(getSkillPack(a)?.name).toBe(a)
+      expect(getSkillPack(b)?.name).toBe(b)
+      expect(getSkillPack(a)?.files.map(file => file.path)).not.toContain(`skills/${b}/SKILL.md`)
+    }
+    expect(Object.keys(LEGACY_SKILL_ALIASES).sort()).toEqual(['to-issues', 'to-prd', 'triage'])
+    const artifact = getSkillPack('review')!
+    const code = getSkillPack('code-review')!
+    expect(artifact.name).toBe('review')
+    expect(code.name).toBe('code-review')
+    expect(artifact.files.map(file => file.path)).not.toContain('skills/code-review/SKILL.md')
+    expect(code.files.map(file => file.path)).not.toContain('skills/review/SKILL.md')
+    expect(listSkillPacks().find(pack => pack.name === 'review')?.avoidWhen).toContain('code-review')
+    expect(listSkillPacks().find(pack => pack.name === 'code-review')?.avoidWhen).toContain('review')
+  })
+
+  it('preserves every retired workflow as an allowlisted reference rather than a new skill', async () => {
+    const branches = {
+      'to-prd': 'skills/reqs/lean-prd-workflow.md',
+      'to-issues': 'skills/task/vertical-slicing.md',
+      triage: 'skills/track/triage-workflow.md',
+    }
+    for (const [alias, path] of Object.entries(branches)) {
+      const pack = getSkillPack(alias)!
+      expect(pack.files.map(file => file.path)).toContain(path)
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Selected branch'))
+      const result = await executeGetSkillPack(alias, fetchFile, [path])
+      expect(result.isError).toBeUndefined()
+      expect(fetchFile).toHaveBeenCalledTimes(1)
+      expect(fetchFile.mock.calls[0]?.[0]).toBe(skillPackRawUrl(path))
+      const body = JSON.parse(result.content[0]!.text)
+      expect(body.requestedName).toBe(alias)
+      expect(body.requestedWorkflow).toMatchObject({ requestedName: alias, canonical: pack.name, workflowPath: path })
+      expect(body.requestedWorkflow.starterPaths).toContain(path)
+      expect(body.requestedWorkflow.starterPaths.every((file: string) => pack.files.some(entry => entry.path === file))).toBe(true)
+      expect(body.files.find((file: { path: string }) => file.path === path).content).toBe('# Selected branch')
+    }
+  })
+
+  it('loads incident guidance through MCP without a client-side GitHub lookup', async () => {
+    const paths = ['docs/agents/knowledge.md', 'docs/agents/ops-cms-mcp.md', 'docs/agents/invocation.md']
+    const fetchFile = vi.fn<typeof fetch>(async url => new Response(readFileSync(join(repoRoot, String(url).slice(SKILL_PACK_RAW_BASE.length)), 'utf8')))
+    const result = await executeGetSkillPack('devops', fetchFile, paths)
+    expect(result.isError).toBeUndefined()
+    expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(paths.map(skillPackRawUrl).sort())
+    expect(JSON.parse(result.content[0]!.text).files.filter((file: { content?: string }) => file.content)).toHaveLength(paths.length)
+    expect(readFileSync(join(repoRoot, 'skills/devops/SKILL.md'), 'utf8')).not.toContain('github.com/polyms/ai-kit/blob/main/docs/agents/')
+  })
+
+  it('lists exactly the canonical native skill entries and resolves retired names without duplicate catalog entries', async () => {
+    const names = listSkillPacks().map(pack => pack.name)
+    expect(names).toHaveLength(26)
+    const nativeNames = readdirSync(join(repoRoot, 'skills')).filter(name => existsSync(join(repoRoot, 'skills', name, 'SKILL.md'))).sort()
+    expect([...names].sort()).toEqual(nativeNames)
+    for (const [alias, canonical] of Object.entries(LEGACY_SKILL_ALIASES)) {
+      expect(names).not.toContain(alias)
+      expect(getSkillPack(alias)).toEqual(getSkillPack(canonical))
+      const response = await executeGetSkillPack(alias, vi.fn<typeof fetch>(), [])
+      expect(JSON.parse(response.content[0]!.text)).toMatchObject({ name: canonical, requestedName: alias })
+    }
+  })
+})
+describe('portable engineering packs', () => {
+  it('separates native invocation from conversational selection for every canonical pack', async () => {
+    const manualEngineering = ['setup', 'craft', 'build-feature-map', 'align', 'arch-refactor', 'e2e']
+    const nativeManual = [...manualEngineering, 'reqs', 'design', 'docs']
+    for (const pack of listSkillPacks()) {
+      const source = readFileSync(join(repoRoot, 'skills', pack.name, 'SKILL.md'), 'utf8')
+      const frontmatter = source.split('---')[1] ?? ''
+      const expectedNative = /^disable-model-invocation:\s*true\s*$/m.test(frontmatter) ? 'explicit' : 'model'
+      expect(pack.nativeInvocation, pack.name).toBe(expectedNative)
+      expect(pack.nativeInvocation, pack.name).toBe(nativeManual.includes(pack.name) ? 'explicit' : 'model')
+      expect(pack.mcpSelection, pack.name).toBe(manualEngineering.includes(pack.name) ? 'explicit-intent' : 'intent')
+      expect(getSkillPack(pack.name), pack.name).toMatchObject(skillInvocationPolicy(pack.name))
+      const result = await executeGetSkillPack(pack.name, vi.fn<typeof fetch>(), [])
+      expect(JSON.parse(result.content[0]!.text), pack.name).toMatchObject(skillInvocationPolicy(pack.name))
+    }
+    for (const name of ['reqs', 'design', 'docs'] as const) {
+      expect(skillInvocationPolicy(name)).toEqual({ nativeInvocation: 'explicit', mcpSelection: 'intent' })
+    }
+    const alias = await executeGetSkillPack('to-prd', vi.fn<typeof fetch>(), [])
+    expect(JSON.parse(alias.content[0]!.text)).toMatchObject({ name: 'reqs', nativeInvocation: 'explicit', mcpSelection: 'intent' })
+  })
+
+  it('delivers starter content and explicit invocation metadata for all engineering packs', async () => {
+    const catalog = listSkillPacks()
+    const manual = ['setup', 'craft', 'build-feature-map', 'align', 'arch-refactor', 'e2e']
+    for (const name of Object.keys(ENGINEERING_SKILL_PATHS)) {
+      const summary = catalog.find(pack => pack.name === name)!
+      expect(summary.invocation).toBe(manual.includes(name) ? 'explicit' : 'model')
+      expect(summary.starterPaths).toContain(PORTABLE_SKILL_STANDARD)
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Methodology'))
+      const result = await executeGetSkillPack(name, fetchFile, summary.starterPaths)
+      expect(result.isError).toBeUndefined()
+      expect(JSON.parse(result.content[0]!.text).invocation).toBe(summary.invocation)
+      expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(summary.starterPaths.map(skillPackRawUrl).sort())
+    }
+    expect(getSkillPack('code-review')?.files.map(file => file.path)).toContain('skills/code-review/standards-baseline.md')
+    expect(getSkillPack('code-review')?.files.map(file => file.path)).toContain('skills/code-review/simplify-baseline.md')
+    expect(starterPaths('setup')).toContain('skills/setup/execution-profile.md')
+  })
+})
+
 describe('skill intelligence', () => {
   it('advertises valid minimal starter paths and known optional handoffs for every pack', () => {
     const catalog = listSkillPacks()
@@ -256,12 +382,13 @@ describe('skill intelligence', () => {
       if (summary.name !== 'design') expect(summary.starterPaths).toContain(WORK_ARTIFACT_STANDARD)
       expect(summary.relatedSkills.every(name => name !== summary.name && names.has(name))).toBe(true)
     }
-    expect(starterPaths('design')).toEqual(['skills/design/SKILL.md', CONTEXT_PROTOCOL])
-    expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL])
+    expect(starterPaths('design')).toEqual(['skills/design/SKILL.md', CONTEXT_PROTOCOL, PORTABLE_SKILL_STANDARD])
+    expect(starterPaths('reqs')).toEqual(['skills/reqs/SKILL.md', WORK_ARTIFACT_STANDARD, CONTEXT_PROTOCOL, PORTABLE_SKILL_STANDARD])
     expect(starterPaths('task')).toEqual([
       'skills/task/SKILL.md',
       WORK_ARTIFACT_STANDARD,
       CONTEXT_PROTOCOL,
+      PORTABLE_SKILL_STANDARD,
       'skills/task/task-template.md',
     ])
   })
@@ -270,13 +397,13 @@ describe('skill intelligence', () => {
     const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Starter'))
     const initial = await executeGetSkillPack('design', fetchFile, starterPaths('design'))
     expect(initial.isError).toBeUndefined()
-    expect(fetchFile.mock.calls.map(call => call[0])).toEqual(starterPaths('design').map(skillPackRawUrl))
+    expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(starterPaths('design').map(skillPackRawUrl).sort())
     const next = await executeGetSkillPack('design', fetchFile, ['skills/dev/visual-ship.md'])
     expect(next.isError).toBeUndefined()
-    expect(fetchFile.mock.calls.map(call => call[0])).toEqual([
+    expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual([
       ...starterPaths('design').map(skillPackRawUrl),
       skillPackRawUrl('skills/dev/visual-ship.md'),
-    ])
+    ].sort())
   })
 
   it('keeps every registered file nonempty and resolves relative Markdown links inside each pack', () => {
@@ -294,6 +421,20 @@ describe('skill intelligence', () => {
         for (const [, target] of body.matchAll(/\]\(([^)\s#]+\.md)(?:#[^)]*)?\)/g)) {
           if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(target)) continue
           const resolved = posix.normalize(posix.join(posix.dirname(file.path), target))
+          // These exact template links refer to files generated in the target project, not AI Kit references.
+          if (file.path === 'skills/setup/context-format.md' && ['./src/ordering/CONTEXT.md', './src/billing/CONTEXT.md'].includes(target)) continue
+          if (file.path === 'skills/build-feature-map/repo-skill-template.md' && target === 'references/features/README.md') continue
+          if (file.path === 'skills/build-feature-map/index-template.md' && target === 'slug.md') continue
+          // Shared policy documentation links are navigation, not workflow dependencies; resolve via the owning pack.
+          if (['docs/agents/invocation.md', 'docs/agents/knowledge.md', 'docs/adr/0001-skill-setup-dependencies.md'].includes(file.path)) {
+            expect(existsSync(join(repoRoot, resolved)), resolved).toBe(true)
+            continue
+          }
+          // Ops CMS guide's two navigation destinations are not required incident inputs.
+          if (file.path === 'docs/agents/ops-cms-mcp.md' && ['docs/feedback.md', 'docs/agents/mcp-skill-provider.md'].includes(resolved)) {
+            expect(existsSync(join(repoRoot, resolved)), resolved).toBe(true)
+            continue
+          }
           expect(allowed.has(resolved), `${summary.name}: ${file.path} -> ${resolved}`).toBe(true)
         }
       }
@@ -375,6 +516,20 @@ describe('skill composition', () => {
     }
   })
 
+  it('defines memory as the host agent own context, not external retrieval', () => {
+    const protocol = readFileSync(join(repoRoot, MEMORY_PROTOCOL), 'utf8')
+    expect(protocol).toContain("the executing host agent's own available memory")
+    expect(protocol).toContain('Do not search for, discover,')
+    expect(protocol).toContain('silently skip recall and continue')
+    const provider = readFileSync(join(repoRoot, 'apps/landing/src/lib/skill-pack/skill-pack.mcp.ts'), 'utf8')
+    expect(provider).toContain('Memory means your own host agent memory')
+    expect(provider).toContain('Never discover, connect to, or call a memory service')
+    const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/memory/cases.json'), 'utf8'))
+    const traps = cases.filter((item: { memoryLookup?: unknown }) => item.memoryLookup)
+    expect(traps.map((item: { id: string }) => item.id)).toEqual(['MP-16', 'MP-17'])
+    expect(traps.every((item: { memoryLookup: { expectedCalls: number } }) => item.memoryLookup.expectedCalls === 0)).toBe(true)
+  })
+
   it('loads the memory protocol selectively and preserves contract metadata', async () => {
     const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Memory Protocol'))
     const result = await executeGetSkillPack('plan', fetchFile, [MEMORY_PROTOCOL])
@@ -395,7 +550,7 @@ describe('skill composition', () => {
       forbidden: string
     }[]
     const names = new Set(listSkillPacks().map(pack => pack.name))
-    expect(cases).toHaveLength(15)
+    expect(cases).toHaveLength(18)
     expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
     for (const item of cases) {
       expect(item.id).toMatch(/^MP-\d{2}$/)

@@ -9,8 +9,12 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve canonical map ownership, target revision and write route from the execution profile. A connector-only host may author the canonical package through approved repository writes; only create native-client symlinks when required and supported. Otherwise mark discovery setup pending. If no write route exists, return a proposed map and exact files; never claim publication or harness execution.
+
 Write and keep a **repo-local** skill that routes behavior questions to one file. This kit skill
 holds the playbook and the templates. It does not hold the map.
+
+**Execution mode (before Layout):** Draft-only, audit-only, or unconfirmed write intent means inspect and return proposed map content, paths, index and migration plan without creating, moving, editing or linking anything. For authorized publication or maintenance, verify canonical target and write route first. Approval of a draft or journey selection alone is not permission to write. Every Layout/Seed/Maintain/Add area step below inherits this mode: in draft mode replace each write/move/link with the proposed content or operation, and check content gates rather than existence. Do not claim a draft is installed, current in the repository, or harness-verified.
 
 ## Layout
 
@@ -41,7 +45,7 @@ directory that is not this package, stop: diff it, keep a backup outside any ski
 reconcile with the user. `ln -sfn` on a real directory nests the link inside it.
 
 Run Layout before Seed, Maintain, or Add area when the pointer or the tree still uses the Cursor
-directory as the real package.
+directory as the real package. In draft/audit mode inspect layout and propose migration only; never move existing content.
 
 Default `<slug>` is `feature-map`. Never use `build-feature-map` — that name is this kit skill, and
 a project skill with the same name would hide the global symlink. If `.agents/skills/feature-map/`
@@ -58,7 +62,7 @@ verified in the relevant state or an unresolved/unverified gap recorded in `Gotc
 ## Soft setup dependency
 
 No `/setup` gate. When `docs/agents/feature-map.md` exists, trust its `Skill`, `Index`, and
-`Harness` paths. When it does not, write that pointer anyway. Prose in feature files follows
+`Harness` paths. When it does not, include the proposed pointer; write it only in authorized write mode. Prose in feature files follows
 `docs/agents/language.md` when present. The four H2 headings stay English.
 
 ## What counts as an area
@@ -94,20 +98,19 @@ Cursor package → [Layout](#layout) before writing files.
    total stays at three. Leave the rest.
 3. For each area, draft [feature-file-template.md](feature-file-template.md) from labels, routes,
    and tests already in the repo. Show the draft. The user edits **Gotchas** and paths the harness
-   cannot drive. Write the file before starting the next area.
+   cannot drive. Retain the actual draft content before starting the next area; write the file only in authorized write mode.
 4. Write `.agents/skills/<slug>/SKILL.md` from [repo-skill-template.md](repo-skill-template.md),
    replacing `{slug}`. Write `agents/openai.yaml` there with
    `policy: { allow_implicit_invocation: false }`. Write the index from
    [index-template.md](index-template.md) with the areas in sweep order. Ask once for a harness
    command; record `none` when there is no command.
 5. Write `docs/agents/feature-map.md` from [pointer-template.md](pointer-template.md), replacing
-   `{slug}`. Create the Cursor and Claude symlinks in [Layout](#layout).
+   `{slug}`. Create the Cursor and Claude symlinks in [Layout](#layout) only for configured local clients with a supported route; otherwise record not applicable or pending.
 
-**Completion criterion:** Pointer `Skill` line is `.agents/skills/<slug>/SKILL.md`; index lists one
+**Completion criterion:** Check the following against the returned draft contents in draft mode, or actual repository files in authorized write mode. Pointer `Skill` line is `.agents/skills/<slug>/SKILL.md`; index lists one
 to three area links; each area file has the four H2s; repo `SKILL.md` routes to
 `references/features/`; no `{slug}` remains; `agents/openai.yaml` disables implicit invocation;
-slug is not `build-feature-map`; `.cursor/skills/<slug>` and `.claude/skills/<slug>` are symlinks
-to the `.agents` package.
+slug is not `build-feature-map`; in write mode the canonical package and pointer are read back and required configured client links verified or explicitly pending/not applicable. In draft mode deliver the complete proposed files, including the pointer and index, and note that no links or files were installed.
 
 Tell the user the keep rule: the next UI change that touches an area updates that one file in the
 same PR. A later audit is `/build-feature-map` on the Maintain branch.
@@ -125,7 +128,7 @@ same PR. A later audit is `/build-feature-map` on the Maintain branch.
 4. Do not slash-invoke this skill from `/dev`. `/dev` may edit the one area file during ship. This
    branch is for drift, audit, and splits.
 
-**Completion criterion:** Every touched area file still has the four H2s; the index link matches;
+**Completion criterion:** Every proposed or actually updated area has the four H2s; the index link matches;
 untouched areas were not rewritten.
 
 ## Add area
@@ -138,10 +141,10 @@ untouched areas were not rewritten.
    when missing; otherwise add the flow to it. Any other surface gets its own `<area>.md`.
 3. Draft from [feature-file-template.md](feature-file-template.md) using labels, routes, and tests
    already in the repo. Show the draft. The user edits **Gotchas** and paths the harness cannot
-   drive. Write the file.
+   drive. Return the draft; write the file only in authorized write mode.
 4. Add one index line in sweep order. `journeys.md` stays last.
 
-**Completion criterion:** The new or extended file has the four H2s; exactly one index line was
+**Completion criterion:** The proposed or verified new/extended area has the four H2s; exactly one index line was
 added (none when `journeys.md` already existed); other area files were not rewritten.
 
 ## Handoff
@@ -149,8 +152,8 @@ added (none when `journeys.md` already existed); other area files were not rewri
 End with `## Next Step` — one preferred skill:
 
 - A product slice is in progress → `→ /dev`
-- This session just walked a journey → `→ /e2e`
-- Neither → state the map path and stop
+- This session just walked a journey → `→ /qa`
+- Neither → state actual map path if verified, or proposed path and draft status, then stop
 
 ## Agent
 

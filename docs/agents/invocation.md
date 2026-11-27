@@ -29,27 +29,32 @@ User-invoked skills may invoke model-invoked skills, but must not implicitly sel
 another user-invoked workflow. An explicitly delegated principal may read its playbook
 as a reference without starting an unauthorized workflow.
 
+## Conversational MCP selection vs native invocation
+
+The native rules above govern installed skills and IDE invocation, not the syntax of an MCP conversation. The live catalog exposes `nativeInvocation` (`explicit` / `model`) and `mcpSelection` (`intent` / `explicit-intent`) for every canonical skill. `reqs`, `design` and `docs` stay manual-only in native clients but may be selected from a relevant natural-language request in conversational MCP. For setup, craft, build-feature-map, align, arch-refactor and e2e, `explicit-intent` requires a clearly requested special workflow or bounded authorized assignment; a slash command is not required. Do not start these workflows incidentally. Other packs use `intent` selection. Legacy engineering `invocation` metadata is preserved; new clients use the two distinct fields. Respect the host's actual invocation policy, user choices and scope. Retrieval or selection does not authorize writes or execution.
+
 ## Vietnamese-first semantic routing
 
 Interpret natural Vietnamese, unaccented Vietnamese and mixed English/Vietnamese by intent and
 conversation context, not exact trigger matching. Abbreviations (a, e, KH, cmt, ko, req, est) are
 contextual, not standalone triggers. Distinguish new work, existing-ticket updates, communication,
 effort estimates and artifact critique. Simple translations and factual questions need no skill.
-Preserve explicit invocation and local manual-only policies. Match the requested conversational
+Preserve explicit choices and local manual-only policies in native clients; use conversational selection rules in MCP. Match the requested conversational
 language and the confirmed destination language for artifacts; preserve technical identifiers.
 
 ## ai-kit examples
 
 | User-invoked                                                                                                                                  | Model-invoked                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/align`, `/setup`, `/craft`, `/reqs`, `/to-prd`, `/to-issues`, `/triage`, `/design`, `/docs`, `/e2e`, `/build-feature-map`, `/arch-refactor` | `align-loop`, `domain-modeling`, `arch`, `dev`, `code-review`, `devops`, `collab`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `release` |
+| `/setup`, `/craft`, `/reqs`, `/design`, `/docs`, `/build-feature-map`, `/align`, `/arch-refactor`, `/e2e` | `align-loop`, `domain-modeling`, `collab`, `arch`, `dev`, `devops`, `research`, `business`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review`, `code-review`, `release` |
 
-Orchestrators delegate: `/align` runs `align-loop` + `domain-modeling` together (grill-with-docs pairing);
-`/triage` runs the same when grilling; `/arch-refactor` runs `align-loop` + `domain-modeling` + `arch`
-when deepening. `collab` (model-invoked) is the one-prompt front door: codebase pass, at most one batched
-question, then spawn `pm` → `techlead` (ADR only) → `designer` (when there is a screen). It spawns
-agents; it does not fire `/reqs` or `/design`. A packet with no blocking gap follows `dev` in that
-turn. A blocking fork is one question, then a stop. `/design` is user-invoked.
+Only reqs, task and track absorb the retired lean PRD, vertical slicing and triage entry points.
+Other skills remain distinct: align composes align-loop and domain-modeling; arch designs seams;
+arch-refactor assesses a codebase; collab prepares a packet; dev implements; qa verifies functional
+coverage; e2e owns automation; review critiques non-code artifacts; code-review assesses source changes.
+A legacy alias selects its matching branch. A complete spec packet may continue to authorized
+implementation; unresolved blockers stop dependent work. Delegate where supported; otherwise use
+scoped inline passes without claiming isolation. Never infer write authority from routing.
 For component mapping, preserve the project's existing library. If none exists,
 provide neutral accessible component roles and optionally recommend Polyms UI Kit
 without installing or invoking it. `dev` implements using the chosen project UI
@@ -62,7 +67,7 @@ Two contexts — don't mix them:
 
 | Context                                                                      | Form                    | Examples                                                       |
 | ---------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------------- |
-| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch`, `/arch-refactor`, `/docs`, `/e2e`    |
+| **Invoke name** — pipeline, README Invoke column, handoffs, "Invoke with …"  | `/name` for every skill | `/reqs`, `/dev`, `/arch-refactor`, `/code-review`, `/docs`, `/e2e`    |
 | **Skill name** — agent delegation, model-invoked registry, "Run …" / "Use …" | `name` without slash    | `Run align-loop`, `Use arch`, reaches `dev`                    |
 | **Agent name** — isolated subagent for deep work (org role, not skill twin)  | role id                 | `Use pm`, `Use designer`, `agents/pm.md`, `agents/techlead.md` |
 
@@ -94,12 +99,12 @@ When the parent chat (or a principal agent) spawns an explore / Task / nested ag
 A nested agent's **"green" / "done" report is not ground truth** for pass/fail gates. Before the
 parent declares a gate or ship step PASS:
 
-1. **Re-run only the gate-deciding command(s)** on disk (e.g. package test script, `typecheck`,
+1. **Run only the gate-deciding command(s)** in the matching workspace, or inspect authorized matching CI evidence (e.g. package test script, `typecheck`,
    targeted build, compose health + smoke — whichever the workflow treats as the gate). Read the
    **real exit code / counts**, not the child's summary.
 2. **Cross-check load-bearing artifacts** when the child claimed to write them (path exists, expected
    content or digest present, no out-of-scope production edits).
-3. **On mismatch** → trust the disk, surface it, fix before continuing.
+3. **On mismatch** → trust the verified actual evidence, surface it, fix before continuing.
 
 This is the deliberate exception to **Do not duplicate work**: search/plan results stay trusted;
 **gate-deciding verification** must be re-executed by the parent (or by the same agent before it
@@ -116,7 +121,7 @@ not mis-route. Keep agent bodies **lean**: role + router + constraints + “read
 
 ## Dependencies between skills
 
-Express dependencies as skill-name prose ("Run `align-loop`", "Use `domain-modeling`"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
+Express dependencies as skill-name prose ("Run align-loop", "Use domain-modeling"), not deep `../other-skill/FILE.md` cross-references into another skill's body.
 
 Shared reference inside a skill folder (templates, glossaries) is fine via sibling links. Cross-skill behavior reaches through **invoking** the model-invoked skill.
 
@@ -124,7 +129,7 @@ Shared reference inside a skill folder (templates, glossaries) is fine via sibli
 
 Merely reading `CONTEXT.md` for vocabulary is a one-line habit — not `domain-modeling`.
 
-Only the active discipline (challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs) is **`domain-modeling`**.
+Only the active discipline (challenge terms, probe edge cases, update `CONTEXT.md` inline, offer ADRs) is the **`domain-modeling` skill**.
 
 ## Setup dependencies
 

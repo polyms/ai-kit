@@ -6,6 +6,10 @@ description: Record and triage observed defects with reproducible steps, evidenc
 
 # Bug
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile.
+
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
 Use [bug-template.md](bug-template.md) and the shared work artifact standard
 (`docs/agents/work-artifact-standard.md`).
 

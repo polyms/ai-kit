@@ -29,8 +29,8 @@ Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own i
 | ------------------- | -------------- | ------------------------------------- | -------------------------------------------------------------------- |
 | Align               | `/align`       | (main chat — no subagent)             | Decision summary: filter is MVP; search URL param; no new CMS schema |
 | Product             | `/reqs`        | `pm`                                  | Enterprise PRD draft (chat; does not publish)                        |
-| Publish             | `/to-prd`      | — (skill, main chat)                  | Lean tracker PRD + ready-for-agent                                   |
-| Issues              | `/to-issues`   | —                                     | Slice issues (UI filter, URL sync, empty state)                      |
+| Publish             | `/reqs`      | — (skill, main chat)                  | Lean tracker PRD + ready-for-agent                                   |
+| Issues              | `/task`   | —                                     | Slice issues (UI filter, URL sync, empty state)                      |
 | Design              | `/design`      | `designer`                            | `docs/design/knowledge-intent-filter.md`                             |
 | Implement           | `/dev`         | `developer`                           | Code + tests at confirmed seams                                      |
 | Review              | `/code-review` | `techlead`                            | Severity-tagged Standards / Spec / Simplify                          |
@@ -42,14 +42,14 @@ Naming `/reqs` or `/design` yourself skips `collab` and keeps that skill's own i
 **Deferred:** Saved user prefs, analytics events.
 **Not in scope:** New Knowledge authoring UI.
 
-Handoff → `/reqs` (or `/to-prd` if already aligned enough).
+Handoff → `/reqs` for discovery if needed, or its lean synthesis workflow if already aligned.
 
 ## Product
 
 PRD covers: personas (agent authors / ops readers), AC for URL sync and empty state,
 MoSCoW — chips + URL = Must. No implementation code.
 
-Handoff → `/to-issues` then `/design`.
+Handoff → `/task` then `/design`.
 
 ## Design
 
@@ -98,7 +98,7 @@ If Vercel preview fails "No Output Directory": `/devops` → `search_knowledge` 
 ## Lane discipline (what not to do)
 
 - `developer` does not rewrite PRDs or restyle past design acceptance without `/design`.
-- `pm` does not publish tracker issues (`/to-prd` / `/to-issues` only).
+- `pm` does not publish tracker issues (`/reqs` / `/task` only).
 - `techlead` does not implement product features (`/dev`).
 - `/align` stays in main chat — no subagent grill.
 - Marketing / "whimsy" specialists are **out of kit** — keep principals thin.

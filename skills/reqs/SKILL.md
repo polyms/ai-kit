@@ -3,13 +3,15 @@ name: reqs
 description: Requirements — discovery interview, enterprise PRD, user stories, acceptance criteria, scope,
   MVP, MoSCoW, RICE. Invoke with /reqs, requirements, user stories, PRD generator, FRD, functional
   requirements, đặc tả chức năng, ưu tiên backlog, or stakeholder alignment, BRD, business requirements.
-  After align to publish lean PRD → /to-prd. Plan grill → /align.
+  Also synthesize aligned decisions into lean PRDs and publish when explicitly requested. Plan grill → /align.
 disable-model-invocation: true
 ---
 
 # Reqs — Requirements
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target project's execution profile. Choose actual authorized tools for the same source, preserve project policy and verify writes. Draft unless publication or mutation is explicitly requested. Missing access blocks only the affected action.
 
 Turn ideas into engineering-ready artifacts. Read this skill fully before producing output.
 
@@ -22,20 +24,16 @@ Read `docs/agents/requirements.md` when present — follow its **Confirmed defau
 AI-optimized). No file: Standard, the enterprise template; the kit copy of that catalog is
 `skills/setup/requirements.md`.
 
-## When `/reqs` vs `/to-prd` vs `/align`
+## Choose one workflow
 
-Same decision tree in `/align` handoff and `/to-prd` — keep in sync:
+- Missing problem or scope → discovery and enterprise PRD.
+- Scope already established → codebase-first or [lean PRD synthesis](lean-prd-workflow.md); no repeat interview.
+- Explicit publish request → [lean PRD synthesis and publication](lean-prd-workflow.md), with test-seam,
+  open-question, authorization, tracker/label and mirror gates. A draft request never publishes.
+- Design-tree forks or terminology alignment → `align` only if materially needed.
 
-```
-Decisions / problem statement clear?
-├─ Yes, aligned chat ready to ship a PRD → user invokes `/to-prd`
-│     (lean template, publish to tracker — this skill does NOT publish)
-├─ No — need design-tree grill (tech forks, domain terms) → user invokes `/align`
-└─ No — need requirements discovery, enterprise PRD, stories, or prioritization → `/reqs` (this skill)
-      (draft in chat or docs/prd/; does NOT create tracker issues)
-```
-
-Do **not** treat "viết PRD" / "write a PRD" after `/align` as this skill — that path is `/to-prd`.
+Legacy `/to-prd` means the lean synthesis/publication workflow of `reqs`, subject to the same
+approval gates. Do not load another skill or rewrite approved requirements.
 
 ## Assumptions and changes
 
@@ -56,7 +54,7 @@ When the user explicitly requests a business-facing BRD or business requirement 
 standard (`docs/agents/work-artifact-standard.md`, bundled by the MCP provider). Focus on business
 outcomes and rules; use the enterprise PRD for detailed product behavior. Do not create a second
 artifact unless requested. If project context is unavailable, use supplied inputs and flag unknowns.
-The skill drafts requirements; publishing requires explicit user direction and an authorized integration.
+The skill drafts requirements; publishing requires explicit user direction and an authorized integration; apply the relevant readiness and destination gates.
 The existing PRD and engineering handoff workflows below remain unchanged.
 
 ## Document types
@@ -68,12 +66,14 @@ top) names which. Do not open a second document.
 
 ## Quick Router
 
+For aligned synthesis/publication, follow [lean PRD workflow](lean-prd-workflow.md) rather than repeating discovery.
+
 | User intent                       | Workflow                                            | Reference                                                |
 | --------------------------------- | --------------------------------------------------- | -------------------------------------------------------- |
 | Discovery + formal enterprise PRD | [PRD workflow](#prd-workflow)                       | [enterprise-prd-template.md](enterprise-prd-template.md) |
 | User stories / backlog            | [User story workflow](#user-story-workflow)         | [user-story-guide.md](user-story-guide.md)               |
 | Làm rõ req / clarify              | [Discovery workflow](#discovery-workflow)           | [prd-interview.md](prd-interview.md)                     |
-| Codebase đã đủ, đừng phỏng vấn    | [Codebase-first](#codebase-first)                   | [lean-prd-template.md](../to-prd/lean-prd-template.md)   |
+| Codebase đã đủ, đừng phỏng vấn    | [Codebase-first](#codebase-first)                   | [lean-prd-template.md](lean-prd-template.md)   |
 | Ưu tiên / prioritize              | [Prioritization workflow](#prioritization-workflow) | —                                                        |
 | Review req hiện có                | [Refinement workflow](#refinement-workflow)         | —                                                        |
 
@@ -93,19 +93,18 @@ draft from the codebase without an interview.
 
 1. Do **not** run [prd-interview.md](prd-interview.md), the confirmation turn, or the behavior-pass
    questions. The brief already settled scope.
-2. Write `docs/prd/<slug>.md` from [lean-prd-template.md](../to-prd/lean-prd-template.md). Fill a
+2. Draft content from [lean-prd-template.md](lean-prd-template.md) with proposed `docs/prd/<slug>.md`. Write to the target only when requested and authorized. Fill a
    section or delete it. Do **not** publish a tracker issue.
 3. Put inferences under **Assumptions**. Cite the product pattern in prose ("same as the member
    list"), not a repo path, unless the user asked for paths.
 4. Use `[NEEDS CLARIFICATION]` only for a blocking fork the brief left open. Do not invent a
    threshold the brief did not infer.
-5. Return the path and any markers to the parent. Do not ask the user a second interview.
+5. Return the actual draft or verified file path and any markers to the parent. Do not ask the user a second interview.
 
-**Completion criterion:** `docs/prd/<slug>.md` exists; no tracker issue; no interview questions
-were sent.
+**Completion criterion:** Required lean PRD content is complete (with explicit blocking markers if any); actual file verified only for authorized writes, otherwise draft returned with proposed path; no tracker issue or repeated interview.
 
 When the user invoked `/reqs` this way themselves (no `collab` parent), end with `## Next Step`
-→ `/design` if the feature has a screen, otherwise → `/to-prd`.
+→ `/design` if the feature has a screen, otherwise → `/reqs` (publish the approved lean PRD if requested).
 
 ## PRD Workflow
 
@@ -174,6 +173,9 @@ Mark **MVP line** clearly. List items deferred with reason.
 
 ## Quality Checklist
 
+This checklist applies to enterprise/discovery drafts. Lean synthesis uses its own preserved
+human-readable checklist and the shared work artifact standard; publication gates are separate.
+
 Before delivering any artifact, verify:
 
 - [ ] Problem statement answers "why" before "what"
@@ -206,7 +208,7 @@ Before delivering any artifact, verify:
 - [ ] **No internal repo links** — no repo paths, blob URLs, or `docs/…` / `CONTEXT.md` links in body or
       Appendix unless the user asked; tracker issue keys/URLs and opaque ids (`FR-01`, open-question markers)
       are fine
-- [ ] **No publish** — this skill did not create a tracker issue; publish path is `/to-prd`
+- [ ] **No publish** — this skill did not create a tracker issue; publication is a separate explicitly authorized lean workflow
 
 ## Handoff
 
@@ -214,7 +216,7 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 
 | Next step | When                                                              |
 | --------- | ----------------------------------------------------------------- |
-| `/to-prd` | Enterprise draft ready to publish as a lean tracker PRD (default) |
+| `/reqs` (publish) | Enterprise draft ready to publish as a lean tracker PRD (default) |
 | `/design` | UI flows / design specs are the clear next work                   |
 | `/align`  | Plan or domain still fuzzy — need grill before publish            |
 
@@ -223,7 +225,7 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 - [list unresolved items]
 
 ## Next Step
-→ /to-prd
+→ /reqs — publish the approved lean PRD if requested
 ```
 
 **Completion criterion:** `## Next Step` names one preferred skill (two max with when/why).
@@ -238,7 +240,7 @@ End with `## Next Step` — CONTEXT.md **Handoff** (one preferred; two max). Cue
 | Solution in req before validation              | Problem + options + recommendation                 |
 | Missing error flows                            | Include failure/empty/loading states               |
 | Unrequested second BRD, FRD, MRD, TRD, QRD     | One PRD — [Document types](#document-types)        |
-| Publishing PRD via `gh` here                   | Tell user to invoke `/to-prd`                      |
+| Publishing PRD via `gh` here                   | Use the lean publication workflow only when authorized                      |
 | Repo/code links in body or Appendix by default | Write the requirement; omit paths unless asked     |
 | Flavor English in a Vietnamese body            | Prefer VI; keep only tech specialty tokens         |
 

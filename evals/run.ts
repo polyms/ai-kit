@@ -89,11 +89,10 @@ hash.update(JSON.stringify(catalog))
 hash.update(executeListSkillPacks().content[0].text)
 hash.update(JSON.stringify(cases)).update(JSON.stringify(fixtureContext))
 // Freeze the comparison base for memory cases. Both arms get identical P0/P1
-// contracts and starter content, and only the assisted arm gets the P2 additions.
+// contracts and starter content; only the assisted arm gets the current host-native memory guidance.
 const memoryInputs = new Map<string, { baseline: string; assisted: string }>()
 if (cases.some(item => item.suite === 'memory')) {
   const baselineSource = await readJson('evals/memory/baseline.json')
-  const p2Release = await readJson('registry/releases/0.3.5/release.json')
   const readPinned = (snapshot: { revision: string; files: Record<string, string> }, path: string) => {
     // A pinned source commit may become unreachable after a squash merge.
     // Git blob IDs are content-addressed: read the exact manifest-pinned bytes
@@ -109,7 +108,8 @@ if (cases.some(item => item.suite === 'memory')) {
     if (blob !== expected) throw new Error('Invalid pinned evaluation file: ' + path)
     return bytes.toString('utf8')
   }
-  const protocol = readPinned(p2Release, 'docs/agents/memory-protocol.md')
+  // Test current live guidance, not the frozen 0.3.5 memory wording.
+  const protocol = await readFile(resolve(root, 'docs/agents/memory-protocol.md'), 'utf8')
   const memoryPacks = listSnapshotPacks()
   for (const item of cases.filter(item => item.suite === 'memory')) {
     const selected = item.skills!
@@ -130,7 +130,7 @@ if (cases.some(item => item.suite === 'memory')) {
     if (selected.length > 1) paths.add('docs/agents/skill-composition.md')
     const baseline = 'Selected P0/P1 skill contracts: ' + JSON.stringify(contracts) +
       '\n\n' + [...paths].map(path => 'FILE ' + path + '\n' + readPinned(baselineSource, path)).join('\n\n')
-    const assisted = baseline + '\n\nP2 optional memory hints: ' + JSON.stringify(hints) +
+    const assisted = baseline + '\n\nOptional host-agent memory/reflection hints (not tool instructions): ' + JSON.stringify(hints) +
       '\n\n' + protocol
     memoryInputs.set(item.id, { baseline, assisted })
     hash.update(item.id).update(baseline).update(assisted)
@@ -359,7 +359,7 @@ async function run(item: Case, mode: Row['mode'], iteration: number): Promise<Ro
       const input = memoryInputs.get(item.id)!
       const messages: Msg[] = [
         { role: 'system', content: safeSystem +
-          ' Complete the request using the selected skill guidance. Only when exposed, recall_memory can read synthetic authorized history. No persistence, real connector or external action is available.\n\n' + input[mode] },
+          ' Complete the request using the selected skill guidance. The fixture supplies any native remembered context. If a synthetic recall_memory tool is exposed, it represents a separate external system, not native agent memory. No persistence, real connector or external action is available.\n\n' + input[mode] },
         { role: 'user', content: userInput(item) },
       ]
       for (let round = 0; round < (item.memoryLookup ? maxRounds : 1); round++) {

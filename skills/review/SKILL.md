@@ -6,6 +6,12 @@ description: Challenge product requirements, business decisions, delivery plans 
 
 # Review
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
+
+Review non-code work artifacts. For source changes, commits, diffs or pull requests use `code-review`; do not substitute this checklist for code-review gates.
+
 Use [review-template.md](review-template.md) and the shared work artifact standard
 (`docs/agents/work-artifact-standard.md`).
 

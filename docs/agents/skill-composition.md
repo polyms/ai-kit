@@ -26,8 +26,9 @@ read these files from the kit. Do not use all recipes for a single request.
 
 ## Shared execution context
 
-Maintain a compact session-local ledger, in memory or a user-requested handover artifact. Do not
-create a persistent workspace record merely to orchestrate a task. Record only what is relevant:
+Maintain a compact session-local ledger in the agent's current conversation/context, or a
+user-requested handover artifact. This is ordinary reasoning context, not a memory-system operation.
+Do not create a persistent workspace record merely to orchestrate a task. Record only what is relevant:
 
 - Goal, requested deliverables, explicit exclusions, destination, language and relevant constraints.
 - Confirmed requirements and decisions, each with its source or version; proposals and assumptions

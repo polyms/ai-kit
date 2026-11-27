@@ -90,7 +90,7 @@ positioning_apply_body: "Your AI checks available authorized evidence, flags unv
 positioning_label: "How it works"
 positioning_title: "Your AI, with a better playbook."
 positioning_intro: "Your AI chooses and applies the relevant guidance in a compatible client. AI Kit provides the methodology, not a separate execution engine."
-positioning_note: "AI Kit supplies methodology and references, not another model or agent runtime. Memory and private business data stay with their owners. MCP, SDK, native skills and plugins are delivery options where supported."
+positioning_note: "AI Kit supplies methodology and references, not another model or agent runtime. Memory means the host agent's own available context; private business data stays with its owner. MCP, SDK, native skills and plugins are delivery options where supported."
 
 intelligence_technical_details: "View technical MCP retrieval example"
 
@@ -135,7 +135,7 @@ quickstart_target_body: 'Swap -a cursor for your client. Repeat -a to install in
 quickstart_setup_title: 'Run /setup'
 quickstart_setup_body: 'Restart your editor or open a new chat, then run /setup in your project.'
 quickstart_mcp_title: "For AI chat tools · connect via MCP"
-quickstart_mcp_body: "For ChatGPT or other chat clients that support custom remote MCP with OAuth. Access the 13 published work packs without cloning the repo or installing skills. Client support and permissions vary."
+quickstart_mcp_body: "For ChatGPT or other chat clients that support custom remote MCP with OAuth. Access the 26 canonical skill packs without cloning the repo or installing skills. Client support and permissions vary."
 
 # --- nav ---
 nav_catalog: Skills
@@ -310,13 +310,13 @@ skillDetail_contract_note: "Advisory artifact identifiers and completion gate fr
 
 hero_chat_path: "ChatGPT and compatible MCP chat clients · research, planning, business and QA"
 hero_dev_path: "Cursor, Claude Code, Codex, Copilot · repo-aware engineering workflows"
-home_catalog_chat_hint: "13 remote MCP skill packs. Labels like /research identify skills, not commands you must type. In a compatible connected chat, describe your goal naturally; invocation and permissions depend on the client."
+home_catalog_chat_hint: "26 canonical skill packs via remote MCP. Labels like /research identify skills, not commands you must type. In a compatible connected chat, describe your goal naturally; invocation and permissions depend on the client."
 home_catalog_dev_hint: "Install local skills for coding agents, open a repository and follow that client's invocation rules. Slash-style labels identify workflows; their exact invocation differs by client."
 skill_audience_both: "Chat (MCP) · Development (local)"
 skill_audience_dev: "Development tools · local"
 skill_audience_title: "Where to use this skill"
-skill_audience_both_detail: "Available through the remote MCP work catalog in supported chat clients and as a local skill in supported development tools. Chat does not need a repository checkout. Actions still depend on available tools and explicit permissions; manual-only invocation rules remain in effect."
-skill_audience_dev_detail: "Install locally in a supported development tool such as Cursor, Claude Code, Codex or Copilot. This skill is not in the published remote MCP work catalog."
+skill_audience_both_detail: "Available through the remote MCP catalog in supported chat clients and as a local skill in supported development tools. Chat does not need a repository checkout. Actions still depend on available tools and explicit permissions; manual-only invocation rules remain in effect."
+skill_audience_dev_detail: "Install locally in a supported development tool such as Cursor, Claude Code, Codex or Copilot. This skill is not in the published remote MCP catalog."
 pipeline_dev_note: "Stages are optional guidance, not an AI Kit orchestration engine. Chat users can use business workflows without checking out a repository."
 intelligence_eval_method: "Compare equivalent synthetic tasks with and without skill guidance; score hard gates and output quality separately from retrieval traces. Model uplift requires measured results."
 quickstart_choose: "Choose your AI tool"

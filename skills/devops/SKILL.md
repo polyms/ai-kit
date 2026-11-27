@@ -7,6 +7,11 @@ description: Deploy, CI, and infra — symptom → fix via Knowledge retrieval. 
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve target
+project context and execution routes from `docs/agents/execution-profile.md` when available. CLI
+commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
+bounded draft or blocked handoff for unavailable actions.
+
 Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → cause → fix → verify. Do not guess config.
 
 **Boundary vs `/dev`:** a deploy/CI symptom reported cold — no `/dev` slice already in progress — routes here automatically. One surfacing mid-slice (deploy-aware `/dev` touching infra config inside a feature slice) stays in `/dev`. **`/devops`** owns operational incidents end-to-end otherwise. Hand off app feature work to `/dev`.
@@ -28,7 +33,9 @@ Resolve deploy/CI/infra incidents via **Knowledge** retrieval — symptom → ca
 
 ## Incident Workflow
 
-**Goal:** Verified green deploy/CI state from a confirmed Knowledge match — not an invented fix.
+**Goal:** Evidence-led diagnosis, and verified green deploy/CI state only when a fix and verification are requested and authorized.
+
+**Execution mode (before step 1):** Diagnose-only or read-only requests (including unclear write intent) permit inspection of existing evidence and a proposed fix, not config edits, commits, PR creation, incident state changes, outbound messages or CI/deployment triggers. Default to diagnose-only unless the user requests a specific change or fix. Explicit fix intent authorizes only the requested scope under project policy; verify actual write permissions and route before editing. A request to fix does not automatically authorize merge, deploy or CI mutations. Pass the same mode to any delegate. If a requested action lacks authority or capability, report it as blocked and return a proposal.
 
 ### 1. Orient
 
@@ -44,11 +51,11 @@ manifest exists; app deploy guide located when applicable.
 
 ### 2. Retrieve
 
-Call **`search_knowledge`** with `q` (symptom or trigger phrase) and `intent: "incident"` — pass `axes` only when a stack manifest names them. No MCP connection: browse `/knowledge?q=…&intent=incident` on the kit site instead.
+Call **`search_knowledge`** with `q` (symptom or trigger phrase) and `intent: "incident"` — pass `axes` only when a stack manifest names them. If Knowledge MCP is unavailable and authorized browser access exists, browse `/knowledge?q=…&intent=incident` on the kit site; otherwise use existing evidence, report the missing Knowledge check and continue with bounded hypotheses.
 
 Open **`get_knowledge`** for the best match.
 
-**Completion criterion:** At least one candidate article returned, or explicit search exhausted with documented query terms.
+**Completion criterion:** At least one candidate article returned, explicit search exhausted with query terms, or unavailable Knowledge retrieval disclosed. No fabricated match.
 
 ### 3. Confirm before fix
 
@@ -62,13 +69,16 @@ Use **`get_knowledge_chunk`** to pull a config artifact on its own.
 
 Do **not** apply fixes from a partial symptom match. If no match: say so; do not invent Vercel/Nx/CI config.
 
-**Completion criterion:** User or agent confirms symptom + cause alignment with the chosen Knowledge article.
+**Completion criterion:** Symptom and cause alignment is supported by evidence, or cause remains an explicit hypothesis/unknown. In diagnose-only mode, return findings, proposed fix, verification plan and evidence gaps here and stop before step 4. Existing read-only post-fix evidence may be inspected when requested; never initiate a mutation just to verify.
 
 ### 4. Apply + verify
 
+**Authorization gate:** Enter this step only for an explicitly requested fix with verified write authority to the target. If the cause or write route is unresolved, return a bounded proposal and stop. Do not edit configuration or perform any other mutation in diagnose-only mode.
+
 1. Apply **fix** steps minimally — smallest config change that addresses the confirmed cause
 2. Run **verify** steps from the same chunk (build, deploy preview, CI green, curl check, …) —
-   re-run on disk yourself; a nested agent's "green" is not enough
+   obtain actual gate-deciding exit codes/logs from the matching workspace or authorized CI run;
+   a nested agent's "green" is not enough. Do not trigger deployment or CI mutations without authority
    ([invocation.md](../../docs/agents/invocation.md) **Verification after delegation**)
 3. If verify fails, return to **Retrieve** — do not stack speculative changes
 
@@ -79,8 +89,8 @@ gap documented with next search terms.
 
 After verify is green (or when the incident is SEV1/SEV2 even mid-flight):
 
-1. Send a [status update](incident-templates.md#status-update) when stakeholders need cadence
-2. Run the [close checklist](incident-templates.md#close-checklist)
+1. Draft a [status update](incident-templates.md#status-update) when stakeholders need cadence; send only when requested and authorized
+2. Run the [close checklist](incident-templates.md#close-checklist); close or update actual incident state only when specifically authorized
 3. Draft a [post-mortem](incident-templates.md#post-mortem) for SEV1/SEV2 (or repeated same class)
    within 48h — blameless; action items have owners
 
@@ -91,13 +101,18 @@ After verify is green (or when the incident is SEV1/SEV2 even mid-flight):
 When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) — prefer
 **exactly one**:
 
-- Ship / done — incident closed; no feature work queued
+- Diagnosis delivered — findings and proposed fix only; incident remains open/unverified as applicable
+- Ship / done — incident resolved with verified evidence; state closed only if authorized; no feature work queued
 - `/dev` — feature application work remains after infra is green
 - `/docs` — only when process/close-out docs are needed after SEV (not default)
 
 Two max only when feature work and process docs both genuinely apply.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
+
+If no execution route is available, report diagnosis and proposed fix separately from implementation
+and verification. Never close an unverified incident as green. Preserve incident/environment/revision
+and actual evidence in the handoff.
 
 ## References
 

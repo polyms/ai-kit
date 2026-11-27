@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
+import { catalogCategory, catalogDisplayName } from '../components/home/catalogCategory'
 import type { SkillOverlay } from '../content/overlay'
+import { skillIconBySlug } from './skill-icons'
 import { listSkillPacks } from './skill-pack/skill-pack'
-import { getSkillCopy, getSkills } from './skills'
+import { getSkillBySlug, getSkillCopy, getSkills } from './skills'
 
 const skill: SkillOverlay = {
   name: 'demo',
@@ -101,12 +103,8 @@ describe('skillOverlays catalog copy', () => {
         'setup',
         'align',
         'reqs',
-        'to-prd',
-        'to-issues',
         'design',
-        'collab',
         'dev',
-        'code-review',
       ])
       for (const s of getSkills(locale)) {
         if (!mainPath.has(s.slug)) continue
@@ -122,10 +120,45 @@ describe('MCP packs in the skill catalog', () => {
       const skills = getSkills(locale)
       const slugs = skills.map(skill => skill.slug)
       expect(new Set(slugs).size).toBe(slugs.length)
+      expect([...slugs].sort()).toEqual(listSkillPacks().map(pack => pack.name).sort())
+      expect(slugs).toHaveLength(26)
+      expect(getSkillBySlug('to-prd', locale)?.slug).toBe('reqs')
+      expect(getSkillBySlug('code-review', locale)?.slug).toBe('code-review')
+      expect(getSkillBySlug('review', locale)?.slug).toBe('review')
       for (const pack of listSkillPacks()) {
         expect(slugs).toContain(pack.name)
+        expect(getSkillBySlug(pack.name, locale)?.invocation, pack.name).toBe(pack.nativeInvocation === 'explicit' ? 'user' : 'model')
         expect(pack.relatedSkills.every(name => slugs.includes(name))).toBe(true)
       }
     })
   }
+})
+
+
+describe('home catalog metadata', () => {
+  it('defines a specific category for every canonical pack', () => {
+    for (const pack of listSkillPacks()) {
+      expect(catalogCategory(pack.name), pack.name).not.toBe('SKILL')
+    }
+    expect(catalogCategory('unknown-skill')).toBe('SKILL')
+    expect(Object.keys(skillIconBySlug).sort()).toEqual(listSkillPacks().map(pack => pack.name).sort())
+  })
+
+  it('preserves restored engineering categories and display names', () => {
+    const restored = [
+      ['arch-refactor', 'MAINT', 'Arch refactor'],
+      ['e2e', 'E2E', 'E2E'],
+      ['collab', 'COLLAB', 'Collab'],
+      ['align-loop', 'GRILL', 'Align loop'],
+      ['domain-modeling', 'DOMAIN', 'Domain modeling'],
+      ['code-review', 'AUDIT', 'Code review'],
+    ] as const
+    for (const [slug, category, label] of restored) {
+      expect(catalogCategory(slug)).toBe(category)
+      expect(catalogDisplayName(slug, slug)).toBe(label)
+    }
+    expect(catalogCategory('arch')).toBe('ARCH')
+    expect(catalogCategory('qa')).toBe('QA')
+    expect(catalogCategory('review')).toBe('REVIEW')
+  })
 })

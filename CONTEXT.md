@@ -16,12 +16,10 @@ The existing AI client or agent that reasons, resolves context and executes auth
 AI Kit provides methodology and references, not an inference or orchestration runtime.
 
 **Memory**:
-Historical experience, decisions, preferences and lessons owned by the host, business or external
-provider. Distinct from curated AI Kit **Knowledge**, current business state and session context.
+The executing host agent's own remembered experience, decisions, preferences and lessons, already available in its conversation/context or native memory. Distinct from curated AI Kit **Knowledge** and external business records. A Memory hint is not an instruction to retrieve a record from an external system.
 
 **Memory Protocol** (source pilot):
-Provider-agnostic guidance for using relevant Memory with skills: recall, apply, reflect and
-authorized capture. Not a storage format, API, provider engine or synchronization service.
+Host-native guidance for using relevant Memory with skills: recall, apply, reflect and optional capture of lessons under native host settings. Not a retrieval instruction, storage format, API, provider engine or synchronization service.
 See [Memory Protocol](docs/agents/memory-protocol.md) and the
 [augmentation roadmap](docs/product/augmentation-roadmap.md).
 
@@ -48,7 +46,7 @@ Human types `/name` (e.g. `/align`, `/craft`). Skill has `disable-model-invocati
 _Avoid_: manual, human-only skill
 
 **Model-invoked**:
-Agent reaches the skill via `description` (e.g. `align-loop`, `domain-modeling`, `dev`). No `disable-model-invocation` flag.
+Agent reaches the skill via `description` (e.g. `align-loop`, `domain-modeling`, `arch`, `dev`, `collab`). No `disable-model-invocation` flag.
 _Avoid_: auto, automatic, agent-discovered
 
 ## Skills & Agents
@@ -70,8 +68,8 @@ _Avoid_: subagent, bot, assistant (when referring to `agents/*.md` principal fil
 ## Pipeline
 
 **Pipeline**:
-The stage chain that turns ideas into shipped code: `/align` → `/reqs` or `/to-prd` → `/to-issues` →
-`/design` → `/dev` → `/code-review`; raw issues via `/triage`. A single feature prompt may enter through
+The stage chain that turns ideas into shipped code: `/align` → `/reqs` → `/task` →
+`/design` → `/dev` → `/code-review`; raw issues via `/track`. A single feature prompt may enter through
 **Collab** instead of invoking each stage. Each stage produces artifacts the next stage consumes.
 _Avoid_: workflow, process, flow
 
@@ -80,7 +78,7 @@ Model-invoked front door for one feature prompt. Codebase pass, at most one batc
 writes a lean PRD, `techlead` writes an ADR only when the three-part test passes, and `designer` writes
 the UI spec when there is a screen. Follows `dev` in the same turn when no blocking gap remains.
 Asks once when a blocking fork is still open, and does not implement until that answer lands. Does
-not publish. Invoke with `/collab` or a build-a-page prompt that names no skill.
+not publish. Use `collab` for a build-a-page prompt that names no skill.
 _Avoid_: agency pipeline, interview (when meaning the `/reqs` discovery script), waiting for a
 confirm when the packet has no blocking gap
 
@@ -100,13 +98,13 @@ input, the PRD records who decides and how a wrong answer is recovered. Market (
 documents are out of this skill. Invoke with `/reqs` (user-invoked). Interview:
 `skills/reqs/prd-interview.md`.
 Template: `skills/reqs/enterprise-prd-template.md`. Long sessions: `pm`.
-After align to ship lean PRD → `/to-prd`.
-_Avoid_: /pm (old invoke), PM (when meaning this skill — agent role stays `pm`), write PRD (when meaning `/to-prd`
+After align to ship lean PRD → `/reqs`.
+_Avoid_: /pm (old invoke), PM (when meaning this skill — agent role stays `pm`), write PRD (when meaning `/reqs`
 publish), product management (generic)
 
 **To PRD**:
 Synthesize the current conversation into a lean PRD and publish to the issue tracker — no interview. Invoke with
-`/to-prd` (user-invoked). Template: `skills/to-prd/lean-prd-template.md`.
+`/reqs` (user-invoked). Template: `skills/reqs/lean-prd-template.md`.
 _Avoid_: publish PRD (generic), enterprise discovery (when meaning `/reqs`)
 
 **Design**:
@@ -177,11 +175,11 @@ allow **at most two** alternatives, each with a one-line when/why. Never a menu 
 _Avoid_: handover, transition, Next Steps (plural heading), multi-skill pipe menus
 
 **Triage**:
-Move raw GitHub issues through a state machine — categorise, verify, grill, write agent briefs. Invoke with `/triage`.
+Move raw GitHub issues through a state machine — categorise, verify, grill, write agent briefs. Invoke with `/track`.
 _Avoid_: backlog grooming (when meaning the triage skill specifically)
 
 **To Issues**:
-Break an approved PRD or plan into vertical-slice GitHub issues. Invoke with `/to-issues`.
+Break an approved PRD or plan into vertical-slice GitHub issues. Invoke with `/task`.
 _Avoid_: issue splitting (generic)
 
 **Arch**:
@@ -243,7 +241,7 @@ _Avoid_: knowledge index in git (when meaning live CMS content)
 **Language pointer**:
 Setup output at `docs/agents/language.md` — the fixed language for persistent written docs
 (`CONTEXT.md`, ADRs, PRDs, design specs, `docs/agents/*.md`). Written by `/setup`; soft
-dependency for `domain-modeling`, `reqs`/`to-prd`, `design`, `arch` — they match this language
+dependency for `domain-modeling`, `reqs`, `design`, `arch`, `collab`, `arch-refactor` — they match this language
 or, absent the file, whatever doc they're already editing. Prose stays natural in that language;
 only **pure-tech tokens** (invokes, protocols, identifiers, canonical glossary terms) stay
 English — no mid-sentence language mix. Chat tone is unaffected — IDE/user rules, or opt-in
@@ -360,7 +358,7 @@ User-invoked skill for writing and editing ai-kit skills. Authoring vocabulary (
 _Avoid_: skill writing, meta-skill
 
 **Hard setup dependency**:
-Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without it (e.g. `/to-prd`, `/to-issues`, `/triage`). See ADR-0001.
+Skill that requires `docs/agents/*.md` from `/setup` — output is wrong without it (e.g. `/reqs`, `/task`, `/track`). See ADR-0001.
 _Avoid_: must run setup (when meaning hard dependency only)
 
 **Soft setup dependency**:

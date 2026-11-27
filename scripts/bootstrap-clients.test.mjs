@@ -187,6 +187,9 @@ test('every manual-only skill has matching Codex policy while retaining legacy f
       const directory = join(repo, root, name)
       const file = join(directory, 'SKILL.md')
       if (!existsSync(file)) continue
+      // Dependency installation can inject third-party skills into .agents/skills.
+      // This repository owns only tracked project skills, not package-managed content.
+      if (root === '.agents/skills' && spawnSync('git', ['ls-files', '--error-unmatch', '--', `${root}/${name}/SKILL.md`], { cwd: repo, stdio: 'ignore' }).status !== 0) continue
       const content = readFileSync(file, 'utf8')
       const header = parse(content.match(/^---\n([\s\S]*?)\n---/)[1])
       assert.equal(header.name, name)
@@ -214,14 +217,125 @@ test('collab continues into dev only when the spec packet has no blocking questi
   const dev = readFileSync(join(repo, 'skills/dev/SKILL.md'), 'utf8')
   const instructions = readFileSync(join(repo, 'AGENTS.md'), 'utf8')
 
-  assert.match(collab, /Nothing blocking left.*?spawn `developer`.*?in this same turn/s)
+  assert.match(collab, /Nothing blocking left.*?implementation is requested and authorized.*?in this same turn/s)
   assert.match(collab, /new `\[NEEDS CLARIFICATION\]`.*?Do not enter `dev`/s)
   assert.match(
     dev,
-    /A `collab` packet with no `\[NEEDS CLARIFICATION\]` and no blocking fork enters here in the same\s+turn\. Do not wait for a second confirm/
+    /collab/
   )
   assert.match(
     instructions,
-    /A complete spec packet with no blocking questions authorizes `dev` in the same turn; do not\s+wait for another confirmation/
+    /complete spec packet with no blocking questions|collab/
   )
+})
+
+for (const [client, root] of [['codex', '.agents'], ['claude', '.claude']]) {
+  test(`${client} retires owned aliases but preserves personal skills`, t => {
+    const { home, run } = fixture(t)
+    const skills = join(home, root, 'skills')
+    mkdirSync(skills, { recursive: true })
+    symlinkSync(join(repo, 'skills', 'to-prd'), join(skills, 'to-prd'))
+    mkdirSync(join(skills, 'triage'))
+    writeFileSync(join(skills, 'triage', 'SKILL.md'), 'personal')
+    const result = run(client)
+    assert.equal(result.status, 0, result.stderr)
+    assert.equal(lstatSync(join(skills, 'to-prd'), { throwIfNoEntry: false }), undefined)
+    assert.ok(lstatSync(join(home, root, 'ai-kit-backups/skills/to-prd.bak')).isSymbolicLink())
+    assert.equal(readFileSync(join(skills, 'triage', 'SKILL.md'), 'utf8'), 'personal')
+    assert.ok(existsSync(join(skills, 'reqs', 'SKILL.md')))
+  })
+}
+
+
+test('restored engineering skill responsibilities retain their semantic handoffs', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const cases = [
+    ['agents/designer.md', /E2E \(\/e2e\)/, /E2E \(\/qa\)/],
+    ['agents/designer.md', /a `collab` inference brief/, /a `dev` feature preparation brief/],
+    ['agents/developer.md', /`collab` spec packet/, /E2E harness\/flake \(\/qa/],
+    ['agents/pm.md', /`collab` inference brief/, /E2E \(\/qa\)/],
+    ['agents/tester.md', /skills\/e2e\/SKILL\.md/, /skills\/qa\/e2e-workflow\.md/],
+    ['agents/techlead.md', /skills\/arch-refactor\/SKILL\.md/, /skills\/arch\/refactor-workflow\.md/],
+    ['skills/devops/SKILL.md', /Boundary vs `\/e2e`/, /Boundary vs `\/qa`/],
+    ['skills/build-feature-map/SKILL.md', /sharding stay on `\/e2e`/, /sharding stay on `\/qa`/],
+    ['skills/reqs/SKILL.md', /when `collab` passes an inference brief/, /dev feature preparation passes an inference brief/],
+    ['skills/setup/domain.md', /`domain-modeling` creates/, /the align domain-modeling workflow creates/],
+    ['skills/align/SKILL.md', /Run `align-loop` using `domain-modeling`/, /\(decision-loop\.md\)/],
+    ['skills/qa/SKILL.md', /Use `e2e` for browser automation/, /\(e2e-workflow\.md\)/],
+    ['skills/arch/SKILL.md', /Use `arch-refactor` for an evidence-led codebase scan/, /\(refactor-workflow\.md\)/],
+    ['skills/review/SKILL.md', /Use `code-review` for source-code changes/, /\(code-review-workflow\.md\)/],
+    ['docs/agents/knowledge.md', /`\/arch`, and `\/arch-refactor`/, /`\/arch`, and `\/arch`/],
+    ['apps/landing/src/content/overlay.ts', /For a maintenance scan of deepening debt, use `\/arch-refactor` instead/, /For a maintenance scan of deepening debt, use `\/arch` instead/],
+    ['apps/landing/src/content/overlay.ts', /optional `\/e2e` how-to/, /optional `\/qa` how-to/],
+  ]
+  for (const [path, expected, incorrect] of cases) {
+    const content = read(path)
+    assert.match(content, expected, path)
+    assert.doesNotMatch(content, incorrect, path)
+  }
+  // Both functional QA and E2E still have independent valid routes.
+  assert.match(read('skills/e2e/SKILL.md'), /Use `qa` for functional coverage/)
+  assert.match(read('skills/track/triage-workflow.md'), /\*\*`align-loop`\*\* and \*\*`domain-modeling`\*\*/)
+})
+
+
+test('portable draft gates precede writes and report completion does not require local shell', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const collab = read('skills/collab/SKILL.md')
+  assert.ok(collab.indexOf('**Execution mode (before step 1') < collab.indexOf('### 1. Codebase pass'))
+  assert.match(collab, /zero repository writes/)
+  assert.match(collab, /In draft mode verify the returned content/)
+  assert.match(collab, /Only an explicitly approved decision may be Accepted/)
+  assert.match(read('skills/reqs/SKILL.md'), /actual file verified only for authorized writes/)
+  assert.match(read('skills/design/SKILL.md'), /no repository writes/)
+  const arch = read('skills/arch-refactor/SKILL.md')
+  assert.match(arch, /Candidate report delivered in an accessible format/)
+  assert.doesNotMatch(arch, /Completion criterion:.*HTML file written to temp dir/)
+  const setup = read('skills/setup/SKILL.md')
+  assert.match(setup, /See project-owned `docs\/agents\/design\.md`/)
+  assert.match(setup, /→ `\/dev` → `\/code-review`/)
+})
+
+
+test('draft handoff, diagnosis-only and pre-merge gates survive portable workflows', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const collab = read('skills/collab/SKILL.md')
+  assert.match(collab, /Pass the actual PRD draft content in draft mode/)
+  assert.match(collab, /Never ask the designer to read an unwritten PRD path/)
+  assert.doesNotMatch(collab, /design pass with the PRD path/)
+  const designer = read('agents/designer.md')
+  assert.match(designer, /Draft-only: return complete Markdown spec content/)
+  assert.match(designer, /A proposed path is not a readable source/)
+  assert.doesNotMatch(designer, /Specs live in.*committed markdown/)
+  const ops = read('skills/devops/SKILL.md')
+  assert.ok(ops.indexOf('**Execution mode (before step 1)') < ops.indexOf('### 1. Orient'))
+  assert.match(ops, /In diagnose-only mode, return findings, proposed fix, verification plan and evidence gaps here and stop before step 4/)
+  assert.match(ops, /Enter this step only for an explicitly requested fix with verified write authority/)
+  assert.match(ops, /send only when requested and authorized/)
+  assert.match(read('skills/dev/SKILL.md'), /`\/code-review` — source changes require pre-merge review under project policy or user request/)
+  assert.match(read('skills/dev/SKILL.md'), /do not skip a required review/)
+  assert.doesNotMatch(read('docs/product/architecture-principles.md'), /Agent-native, business or external memory/)
+  assert.doesNotMatch(read('docs/product/knowledge-strategy.md'), /authorized external Memory/)
+})
+
+
+test('portable setup, feature-map, E2E and implementation distinguish drafts from writes', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const setup = read('skills/setup/SKILL.md')
+  assert.match(setup, /For draft-only, deliver the draft and stop here/)
+  assert.match(setup, /Enter only when setup writes are requested and authorized/)
+  assert.doesNotMatch(setup, /raw backlog ready: `→ \/triage`/)
+  const map = read('skills/build-feature-map/SKILL.md')
+  assert.ok(map.indexOf('**Execution mode (before Layout)') < map.indexOf('## Layout'))
+  assert.match(map, /in draft mode replace each write\/move\/link with the proposed content or operation/)
+  assert.match(map, /In draft mode deliver the complete proposed files/)
+  const e2e = read('skills/e2e/SKILL.md')
+  assert.match(e2e, /An installed write\/execution tool is not authorization/)
+  assert.match(e2e, /For draft-only, proposed journey coverage/)
+  assert.match(read('skills/dev/SKILL.md'), /A draft packet alone never starts implementation/)
+  assert.match(read('skills/align/SKILL.md'), /approval of a decision does not authorize a repository write/)
+  for (const principal of ['developer', 'techlead', 'tester']) {
+    assert.match(read(`agents/${principal}.md`), /authorized matching CI evidence/)
+  }
+  assert.match(read('skills/code-review/SKILL.md'), /A clean review is a finding, not a merge instruction/)
 })

@@ -9,9 +9,87 @@ export type SkillRoutingHint = {
 }
 
 export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
+  'align-loop': {
+    useWhen: ["Stress-test a plan one decision at a time; resolve decision branches","Grill, làm rõ từng quyết định"],
+    avoidWhen: "Do not run full alignment or write glossary/ADR unless needed; use domain-modeling for active model changes.",
+    relatedSkills: ["align","domain-modeling","reqs"],
+    starter: 'entry',
+  },
+  'domain-modeling': {
+    useWhen: ["Sharpen domain terms, update CONTEXT.md, record justified ADRs","Thống nhất thuật ngữ nghiệp vụ, ghi ADR"],
+    avoidWhen: "Merely reading vocabulary is not this skill. Do not initiate a full requirements or alignment interview.",
+    relatedSkills: ["align-loop","align","arch","reqs"],
+    starter: 'entry',
+  },
+  'arch-refactor': {
+    useWhen: ["Scan architecture for shallow modules, compare deepening candidates and prepare report","/arch-refactor, rà soát kiến trúc, đề xuất refactor"],
+    avoidWhen: "Use arch for interface vocabulary/design, code-review for a diff, dev for authorized implementation. Assessment is not implementation.",
+    relatedSkills: ["arch","align-loop","domain-modeling","dev","code-review"],
+    starter: 'entry',
+  },
+  'collab': {
+    useWhen: ["New page or CRUD without spec packet; prepare coordinated lean PRD, ADR if needed and UI spec","/collab, tạo trang mới chưa có đặc tả"],
+    avoidWhen: "Use dev for approved implementation or bug fixes, reqs for a standalone PRD, design for a standalone UI spec. Respect explicit skill selection.",
+    relatedSkills: ["reqs","domain-modeling","arch","design","dev"],
+    starter: 'entry',
+  },
+  'e2e': {
+    useWhen: ["/e2e, Playwright flake, browser harness, CI test sharding, journey automation","Ổn định E2E, viết automation, chia test CI"],
+    avoidWhen: "Use qa for functional coverage, UAT and QA evidence; dev for seam TDD; devops for deployment/build/install incidents.",
+    relatedSkills: ["qa","dev","devops","build-feature-map","code-review"],
+    starter: 'entry',
+  },
+  'code-review': {
+    useWhen: ['Review source code, a commit, PR or diff for Standards, Spec and Simplify', 'Review PR, rà soát mã nguồn, kiểm tra diff trước merge'],
+    avoidWhen: 'Review of requirements, proposals, business documents or plans belongs to review. Do not implement fixes or merge unless separately authorized.',
+    relatedSkills: ['dev', 'arch', 'reqs', 'qa'],
+    starter: 'entry',
+  },
+  'align': {
+    useWhen: ["Explicit /align or combined plan alignment with domain vocabulary","Chốt hướng, align kế hoạch và thuật ngữ"],
+    avoidWhen: "Use align-loop for questioning alone, domain-modeling for glossary/ADR changes alone, reqs for requirement artifacts. Do not repeat approved decisions.",
+    relatedSkills: ["align-loop","domain-modeling","reqs","design"],
+    starter: 'entry',
+  },
+  'arch': {
+    useWhen: ["Design module interfaces, seams, depth, locality or testability","Thiết kế module, seam, interface"],
+    avoidWhen: "Use arch-refactor for architecture scanning and candidate reports; code-review for diff review.",
+    relatedSkills: ["arch-refactor","domain-modeling","dev"],
+    starter: 'entry',
+  },
+  'dev': {
+    useWhen: ["Implement approved specs or debug/fix a product bug","Triển khai theo spec, sửa lỗi"],
+    avoidWhen: "Use collab for new features lacking a spec packet, e2e for suite/harness work and devops for standalone infra incidents.",
+    relatedSkills: ["collab","arch","qa","e2e","code-review","devops"],
+    starter: 'entry',
+  },
+  'craft': {
+    useWhen: ['/craft, write or audit SKILL.md', 'Viết skill, rà soát skill'],
+    avoidWhen: 'Explicit selection; not general project setup.',
+    relatedSkills: ['setup', 'review'],
+    starter: 'entry',
+  },
+  'build-feature-map': {
+    useWhen: ['/build-feature-map, build or update feature map', 'Dựng bản đồ vùng, cập nhật feature map'],
+    avoidWhen: 'Explicit selection; not UI design or QA approval.',
+    relatedSkills: ['setup', 'e2e', 'collab', 'qa', 'design', 'dev'],
+    starter: 'entry',
+  },
+  'devops': {
+    useWhen: ['Investigate deployment or CI failure, diagnose infrastructure', 'Sửa deploy, lỗi build, fix CI'],
+    avoidWhen: 'Use e2e for flaky or slow browser test jobs, harness configuration and test sharding; use dev for feature implementation and release for readiness.',
+    relatedSkills: ['release', 'code-review', 'e2e'],
+    starter: 'entry',
+  },
+  'setup': {
+    useWhen: ['/setup, configure project tools and execution profile', 'Cấu hình repo, nguồn dữ liệu và công cụ'],
+    avoidWhen: 'Explicit invocation; do not run setup just to read existing project context.',
+    relatedSkills: ['align', 'track'],
+    starter: 'entry',
+  },
   reqs: {
     useWhen: [
-      'Define business rules, BRD, PRD or acceptance criteria',
+      'Define requirements, BRD, enterprise or lean PRD, or publish an aligned PRD when authorized',
       'Làm rõ yêu cầu, viết đặc tả nghiệp vụ',
       "Chốt phạm vi, nghiệp vụ, quyền và điều kiện nghiệm thu; dac ta yeu cau",
     ],
@@ -59,7 +137,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   },
   task: {
     useWhen: [
-      'Draft or create new work items with verifiable outcomes',
+      'Draft or create work items, including vertical slicing of approved PRDs',
       'Viết task, chia công việc, tạo ticket mới',
       "Soạn đầu việc có tiêu chí hoàn thành, tạo task mới; tao task",
     ],
@@ -79,7 +157,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   },
   track: {
     useWhen: [
-      'Inspect, summarize or update existing tickets and their fields',
+      'Inspect, update or triage issues and external PRs using configured roles',
       'Check ticket, assign hàng loạt, cập nhật deadline, thống kê backlog',
       "Check giúp a ticket quá hạn, đổi assignee; check ticket qua han",
     ],
@@ -97,15 +175,10 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
     relatedSkills: ['reqs', 'task', 'review', 'release'],
     starter: 'primary',
   },
-  qa: {
-    useWhen: [
-      'Derive functional tests, review coverage or report real QA evidence',
-      'Viết test case, kiểm tra UAT, regression, xác minh acceptance criteria',
-      "Còn thiếu case nào, kiểm tra độ phủ AC; viet test case",
-    ],
-    avoidWhen:
-      'Use bug for a defect report; use review for document critique. Do not claim unrun tests passed. Không dùng để phản biện tài liệu hay khẳng định test chưa chạy đã pass.',
-    relatedSkills: ['reqs', 'bug', 'release', 'task'],
+  'qa': {
+    useWhen: ["Derive functional test cases, verify acceptance, UAT and QA evidence","Viết test case, kiểm thử chức năng, xác nhận môi trường"],
+    avoidWhen: "Use e2e for browser automation code, flake, CI harness and sharding; not release approval.",
+    relatedSkills: ["reqs","bug","e2e","release"],
     starter: 'primary',
   },
   comms: {
@@ -124,7 +197,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
       'Review tài liệu, tìm mâu thuẫn, phản biện proposal',
       "Proposal này có gì chưa ổn, rà giả định; ra soat proposal",
     ],
-    avoidWhen: 'Source-code review is a separate engineering workflow; verification against acceptance criteria belongs to qa. Không dùng để review source code hoặc chạy test.',
+    avoidWhen: 'Source-code changes, PRs and diffs belong to code-review; test execution belongs to qa or dev.',
     relatedSkills: ['reqs', 'business', 'research', 'plan', 'qa'],
     starter: 'primary',
   },

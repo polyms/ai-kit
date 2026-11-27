@@ -31,6 +31,6 @@ Template: `skills/design/design-spec-template.md` in AI Kit.
 - Read `CONTEXT.md` for domain names and applicable `docs/adr/` decisions.
 - Respect the verified existing component API or use vendor-neutral semantic roles.
 - Define loading, empty, error and success states for each screen.
-- Run [PREFLIGHT.md](../../skills/design/PREFLIGHT.md) before handing off to `/dev`.
+- Load `skills/design/PREFLIGHT.md` from the design skill pack before handing off to `/dev`.
 
 No design-system choice, installation or migration is implied by running AI Kit.

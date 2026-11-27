@@ -16,13 +16,15 @@ Split skills into **hard-dependency** and **soft-dependency**:
 
 ### Hard dependency
 
-Include an explicit prerequisite — run `/setup` if the required `docs/agents/*.md` file is missing. Without the mapping, output is **wrong**, not just fuzzy.
+Require confirmed tracker destination and mapping before mutation. Target project setup output or
+other authorized confirmed context can supply it. Missing mapping blocks publication/state changes,
+not a read-only draft; propose `/setup` only when useful. Never auto-run setup in a delegated host.
 
 | Skill        | Requires                                                       |
 | ------------ | -------------------------------------------------------------- |
-| `/to-prd`    | `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` |
-| `/to-issues` | `docs/agents/issue-tracker.md`                                 |
-| `/triage`    | `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` |
+| `reqs` lean publication    | `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` |
+| `task` vertical-slice publication | `docs/agents/issue-tracker.md`                                 |
+| `track` triage mutation    | `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` |
 
 When publishing issues, apply labels from `docs/agents/triage-labels.md` when that file exists.
 
@@ -37,7 +39,7 @@ Reference "the project's domain glossary" and "ADRs in the area you're touching"
 | `align-loop`        | Same when exploring codebase                                                                                                                                                                                                            |
 | `collab`            | `CONTEXT.md` + `docs/adr/` + `docs/agents/language.md` when present; codebase is enough to draft; no `/setup` gate. Reads `docs/agents/feature-map.md` when the index has area links                                                    |
 | `domain-modeling`   | Creates `CONTEXT.md` lazily when terms resolve; writes in `docs/agents/language.md` if present                                                                                                                                          |
-| `reqs`, `to-prd`    | Glossary when `CONTEXT.md` exists; `docs/agents/language.md` if present; PRD shape from `docs/agents/requirements.md` when present (`/reqs` does not publish; `/to-prd` does)                                                           |
+| `reqs`    | Glossary when `CONTEXT.md` exists; `docs/agents/language.md` if present; PRD shape from `docs/agents/requirements.md` when present (drafts do not publish; lean publication requires explicit authority)                                                           |
 | `design`            | `CONTEXT.md`; `docs/design/` output; user invokes `/ui-kit` before component map; writes in `docs/agents/language.md` if present                                                                                                        |
 | `devops`            | [knowledge.md](../agents/knowledge.md) (`intent: incident`) + MCP; `stack-profile.md` when present (from `/setup`)                                                                                                                      |
 | `docs`              | `docs/agents/language.md` when present; `CONTEXT.md` vocabulary only (no glossary expansion). Does not edit the repo feature-map package                                                                                                |

@@ -3,13 +3,25 @@
 Provider-independent behavioral guidance for using experience with AI Kit skills. It supplements
 the Context Contract and Skill Composition guidance, not the host's invocation or verification rules.
 
-## Ownership and vocabulary
+## Meaning and ownership: the host agent's own memory
 
-AI Kit owns only these instructions and optional semantic skill hints. The host resolves context,
-reasons, selects authorized sources and verifies results. Native AI memory, business records,
-external providers and local notes remain under their owners' access, isolation, retention,
-correction and deletion policies. No provider, common record format, API or write capability is
-required. Skills work without Memory.
+In AI Kit, **Memory means the executing host agent's own available memory and remembered context**:
+the current conversation, prior work or preferences already surfaced by the host, and the host's
+native memory when enabled and available to that agent. It is not an AI Kit database, a business
+memory store, a separate retrieval service, or a request to connect to one.
+
+Use what you already know about this user and project when relevant. Do not search for, discover,
+install, connect to, or call an external memory system because a skill mentions Memory,
+`memory.recall`, or `memory.capture`. Do not ask the user to enable Memory or expose a memory tool.
+A host with no accessible past context simply works from the current conversation and evidence.
+No dedicated memory tool, API, MCP connector, record format, or persistence capability is required.
+
+AI Kit owns only methodology and optional semantic hints. The host owns its memory lifecycle,
+settings, consent, isolation, retention, correction and deletion. Recalled information is not
+automatically authoritative. Business records and project artifacts are separate evidence sources;
+retrieve them only when the task itself needs them, using normal authorized routes, not as a
+consequence of a memory hint. An explicitly requested external memory operation is a separate
+user-directed task governed by the host's actual access and policies.
 
 Distinguish a historical fact or experience (what happened), an observed outcome (what resulted),
 a decision (including its approval status), a preference (including its applicable scope) and a
@@ -26,14 +38,17 @@ These are conditional host behaviors, not a mandatory workflow chain or four too
 
 - Start from user intent, approved scope and the selected skill's information needs. Reuse reliable
   supplied context and handoffs before looking elsewhere.
-- Recall only if past experience can materially improve the result, reduce repeated work or
-  resolve a relevant gap. Optional hints describe topics and applicability, not tool names,
-  queries, mandatory inputs or permissions.
-- Use available, authorized sources with the narrowest relevant project, team, person and time
-  scope. Retrieve the minimum useful evidence; prefer original records over summaries when
-  attribution or nuance matters. Stop when sufficient; do not retry indefinitely or force access.
-- If no Memory is available, proceed with existing context, current evidence and bounded
-  assumptions. Ask only for a genuinely blocking decision or evidence gap.
+- Recall means consider relevant experience already available to you, the host agent. Use your
+  current conversation and native remembered context first. If your host surfaces relevant
+  memories natively, use them within their applicable scope; do not manufacture missing memories.
+- Recall only when it materially improves the result or avoids repeated work. Hints identify
+  what to consider, not a query, tool, source selection mandate, or permission.
+- Do not issue a memory-system lookup or seek a new connector to satisfy a hint. If a remembered
+  claim needs independent verification, use normal authoritative project/business evidence when
+  relevant and authorized. Do not label a new tracker or document search as Memory recall.
+- If nothing relevant is remembered, silently skip recall and continue. No memory status report,
+  configuration question or blocker is needed solely because past memory is absent.
+
 
 ### Apply
 
@@ -63,29 +78,33 @@ rather than at every stage.
 
 ### Capture
 
-Consider retaining a fact, confirmed preference, decision, correction or lesson only when it is
-relevant to future work, durable, supported, non-redundant and authorized. Keep a compact statement
-with its applicability and source reference when available. Do not create parallel records of
-current authoritative facts simply to demonstrate learning.
+Capture means identify a concise, durable lesson or preference useful to **this host agent's own
+future work**. It is optional reflection, not a memory-write instruction. Retain it in the current
+conversation/handoff if useful; let the host's existing native memory behavior and user settings
+govern any cross-session retention. Never create a separate memory record, issue, document,
+database entry or connector call just to satisfy a capture hint.
 
-A candidate is not a persisted record. Follow the owner's actual consent, retention and
-write/correction mechanisms; do not infer write access from read access or a skill hint.
-If unavailable or not authorized, skip the write; optionally propose a candidate when helpful.
-Claim persistence or correction only with observable confirmation. Do not recreate deleted or
-revoked records, synchronize providers, copy raw conversations or increase access scope.
-Avoid secrets, unnecessary personal data and private context in AI Kit requests, logs or Knowledge.
-Knowledge and skill contributions require their separate existing review process.
+Only consider supported, relevant, non-redundant facts, confirmed preferences, decisions,
+corrections or lessons. Preserve scope and provenance where material. Skip transient details and
+unverified outcomes. Do not ask for permission to save a routine lesson merely because a hint
+exists. If the user explicitly requests remembering or forgetting, follow the host's actual
+capabilities and controls; do not claim that a change was persisted without confirmation.
+Do not recreate revoked records, synchronize providers, copy conversations, increase access,
+or expose secrets/private context to AI Kit or Knowledge. Separate business-record updates and
+Knowledge/skill contributions follow their own authorized workflows.
+
 
 ## Delivery and optional hints
 
 A skill contract may contain `memory.recall` and/or `memory.capture` arrays. Each hint has an open
 semantic `topic` identifier (lowercase kebab-case) and a nonempty `when` applicability condition.
-The host may use a conditional hint or skip it. Do not interpret topics as provider queries,
-required context keys, a storage schema or authority to act.
+The host may consider a conditional hint or skip it. The hints refer to its own memory only.
+Do not interpret topics as provider queries, required context keys, storage schemas, tool calls,
+or authority to act.
 
 The live source manifest makes this reference available to every remote pack; it is not a
 starter file. Load it only if historical experience or reflection is materially useful. Local
-engineering clients can read the same guidance without changing their pipeline. Versioned skill snapshots remain immutable; release 0.3.3 includes this reference and hints.
+engineering clients can read the same guidance without changing their pipeline. Versioned skill snapshots remain immutable; older immutable releases retain their original reference and hints.
 No private data is needed to retrieve the protocol.
 
 See also [Context Contract](context-contract.md) and [Skill Composition](skill-composition.md).

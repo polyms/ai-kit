@@ -6,6 +6,15 @@ description: Inspect, summarize and update existing work items across issue trac
 
 # Track
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile.
+
+Choose Inspect or Update for ordinary tracker operations. For configured backlog classification,
+verification, state transitions, external PRs, agent briefs or rejection records, read
+[triage workflow](triage-workflow.md). Legacy `/triage` selects that workflow, not another skill.
+Never run triage mutations from a mere inspection request.
+
 Use the [tracking templates](tracking-templates.md) and shared work artifact standard
 (`docs/agents/work-artifact-standard.md`).
 
@@ -30,5 +39,4 @@ Use the [tracking templates](tracking-templates.md) and shared work artifact sta
 
 **Done when:** Requested changes are verified or their verification limitations are explicit.
 
-Use `task` for new work, `bug` for defects and `triage` for the configured engineering triage
-state machine. Never interpret a read-only review or a proposed change as write authorization.
+Use `task` for new work, `bug` for defects and the triage workflow above for the configured engineering state machine. Never interpret a read-only review or a proposed change as write authorization.

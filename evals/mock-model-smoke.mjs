@@ -56,31 +56,12 @@ const server = createServer(async (req, res) => {
     } else if (body.model === generationModel) {
       counters.generation++
       assert.ok(Array.isArray(body.tools) && body.tools.length === 1,
-        'Memory fixture must expose the synthetic recall tool')
+        'Memory fixture must expose the external memory trap')
       assert.equal(body.tools[0].function.name, 'recall_memory')
-      const toolMessage = body.messages.find(m => m.role === 'tool')
-      if (!toolMessage) {
-        counters.recalls++
-        message = {
-          role: 'assistant',
-          content: null,
-          tool_calls: [{
-            id: 'smoke-call-' + counters.recalls,
-            type: 'function',
-            function: {
-              name: 'recall_memory',
-              arguments: JSON.stringify({ scope: 'atlas', topic: 'historical-effort' }),
-            },
-          }],
-        }
-      } else {
-        const record = JSON.parse(toolMessage.content)
-        assert.match(record.record, /actual 5 developer-days/)
-        message = {
-          role: 'assistant',
-          content: 'Synthetic response: historical actual effort was 5 developer-days; ' +
-            'capacity is unknown, so there is no delivery date commitment.',
-        }
+      assert.equal(body.messages.some(m => m.role === 'tool'), false)
+      message = {
+        role: 'assistant',
+        content: 'Synthetic draft: estimate using bounded assumptions and uncertainty; draft tasks and QA cases from supplied requirements. No external memory access or publishing.',
       }
     } else throw new Error('Unexpected local model name')
     counters.responses++
@@ -121,7 +102,7 @@ try {
   assert.ok(address && typeof address !== 'string')
   const url = 'http://127.0.0.1:' + address.port + '/v1/chat/completions'
   await runCommand('pnpm', [
-    'eval:run', '--suite', 'memory', '--case', 'MP-01', '--repeat', '1',
+    'eval:run', '--suite', 'memory', '--case', 'MP-16', '--repeat', '1',
     '--model', generationModel, '--judge-model', judgeModel, '--out', reportPath,
   ], { EVAL_CHAT_URL: url, EVAL_API_KEY: '' })
 
@@ -133,21 +114,18 @@ try {
   assert.equal(report.rows.length, 2)
   assert.deepEqual(report.rows.map(row => row.mode), ['baseline', 'assisted'])
   for (const row of report.rows) {
-    assert.equal(row.id, 'MP-01')
+    assert.equal(row.id, 'MP-16')
     assert.equal(row.status, 'pass')
-    assert.equal(row.trace.length, 1)
-    assert.equal(row.trace[0].ok, true)
-    assert.equal(row.trace[0].args.scope, 'atlas')
-    assert.equal(row.trace[0].args.topic, 'historical-effort')
+    assert.equal(row.trace.length, 0)
     assert.equal(row.traceScore.status, 'pass')
     assert.equal(row.grade.hardGates.fail, 0)
     assert.ok(row.usage?.inputTokens > 0)
   }
-  assert.equal(counters.generation, 4)
+  assert.equal(counters.generation, 2)
   assert.equal(counters.judge, 2)
-  assert.equal(counters.recalls, 2)
-  assert.equal(counters.responses, 6)
-  assert.deepEqual(requests.map(r => r.toolCalls), [1, 0, 0, 1, 0, 0])
+  assert.equal(counters.recalls, 0)
+  assert.equal(counters.responses, 4)
+  assert.deepEqual(requests.map(r => r.toolCalls), [0, 0, 0, 0])
   await runCommand(process.execPath, [
     'evals/report.mjs', reportPath, '--out', markdownPath,
   ])
@@ -155,7 +133,7 @@ try {
   assert.match(markdown, /Complete pairs \| 1/)
   assert.match(markdown, /Missing or incomplete planned pairs \| 0/)
   assert.match(markdown, /memory/)
-  console.log('PASS: localhost model protocol, synthetic tool call, judge and report CLI.')
+  console.log('PASS: localhost model protocol, zero external memory calls, judge and report CLI.')
   console.log('This was a MOCK smoke test, not a measured model-quality benchmark.')
 } finally {
   await new Promise(resolveClose => server.close(resolveClose))

@@ -6,6 +6,12 @@ description: Derive test coverage from requirements and assess manual QA, UAT an
 
 # QA
 
+**Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
+
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
+
+Use `e2e` for browser automation, flaky tests, test harness and CI suite health. Keep feature TDD under `dev` and deployment diagnosis under `devops`. A test plan is not test execution.
+
 Use [qa-templates.md](qa-templates.md) and the shared work artifact standard
 (`docs/agents/work-artifact-standard.md`).
 

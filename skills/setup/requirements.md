@@ -9,8 +9,8 @@ prompts. Full index: [Templates](https://thehuman2ai.com/product/templates).
 
 Confirmed default: Standard
 
-Every variant is a shape of one file: `skills/reqs/enterprise-prd-template.md` in ai-kit. `/to-prd`
-publishes `skills/to-prd/lean-prd-template.md` on every variant. Do not open a second BRD, FRD, MRD, SRD,
+Every variant is a shape of one file: `skills/reqs/enterprise-prd-template.md` in ai-kit. `/reqs`
+publishes `skills/reqs/lean-prd-template.md` on every variant. Do not open a second BRD, FRD, MRD, SRD,
 TRD, or QRD.
 
 ## Variants
@@ -44,7 +44,7 @@ An agent (Cursor, Claude Code, or the same) will implement. The Standard body, w
   name; do not install dependencies unless the phase says so; do not create files outside the directories the
   phase names. Stack versions, existing files, and API contracts sit in the same section as constraints.
 
-Architecture choices stay in `/align`, not a technical-approach chapter. `/to-prd` carries each phase's
+Architecture choices stay in `/align`, not a technical-approach chapter. `/reqs` carries each phase's
 testable output into **Testing Decisions** and the prohibitions into **Implementation Decisions**.
 
 ## Other families

@@ -36,14 +36,16 @@ export type KnowledgeHint = {
 
 export const MEMORY_PROTOCOL = 'docs/agents/memory-protocol.md'
 
-/** Semantic topic and applicability condition; not a provider query or permission. */
+/** Topic for the executing agent's own native recall/reflection; never a provider query or permission. */
 export type MemoryHint = {
   topic: string
   when: string
 }
 
 export type MemoryHints = {
+  /** Consider already-available host memory; do not look up external memory systems. */
   recall?: readonly MemoryHint[]
+  /** Reflect on a durable lesson; native retention follows host settings, no external write. */
   capture?: readonly MemoryHint[]
 }
 
@@ -56,11 +58,96 @@ export type SkillContract = {
   context: readonly ContextRequirement[]
   /** Conditional search hints for the existing Knowledge catalog, never mandatory calls. */
   knowledge?: readonly KnowledgeHint[]
-  /** Optional experience-use hints. Never a prerequisite or automatic persistence. */
+  /** Optional hints for the host agent's own available memory. Never a tool requirement or persistence command. */
   memory?: MemoryHints
 }
 
 export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
+  'align-loop': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","decision","evidence"],
+    produces: ["decision"],
+    readyWhen: "Decision tree is traversed one branch at a time; options, resolved decisions and remaining blockers are explicit.",
+  },
+  'domain-modeling': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","decision","evidence"],
+    produces: ["decision","document","change-receipt"],
+    readyWhen: "Resolved terminology or ADR rationale is traceable; writes are verified or pending, and approval is not invented.",
+  },
+  'arch-refactor': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","evidence","requirements","decision"],
+    produces: ["review-findings","decision","document"],
+    readyWhen: "Candidates cite actual source evidence, explain leverage/locality and test seams, and preserve unresolved decisions; report is not refactor approval.",
+  },
+  'collab': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","decision","ui-spec","evidence"],
+    produces: ["requirements","ui-spec","decision","document"],
+    readyWhen: "Applicable packet gates pass or are explicitly blocked; no invented principal delegation, approvals, repository facts or implementation.",
+  },
+  'e2e': {
+    context: [{ key: 'target', importance: 'required', description: 'Requested outcome, target project and available approved decisions or evidence.' }],
+    accepts: ["context","requirements","test-plan","evidence","change-receipt"],
+    produces: ["test-report","change-receipt"],
+    readyWhen: "Harness changes and test-job outcomes are grounded in matching execution evidence; no QA approval inferred from automation results.",
+  },
+  'code-review': {
+    context: [
+      { key: 'review-target', importance: 'required', description: 'Exact repository, comparison/base and head revision or supplied source diff.' },
+      { key: 'source-spec', importance: 'recommended', description: 'Originating approved requirement or issue and applicable coding standards; explicit gaps.' },
+    ],
+    accepts: ['context', 'evidence', 'requirements', 'work-item', 'change-receipt', 'decision'],
+    produces: ['review-findings'],
+    readyWhen: 'Standards, Spec and Simplify findings remain independent and evidence-grounded; missing specification or partial diff and merge blockers are explicit.',
+  },
+  'align': {
+    context: [{ key: 'decision-goal', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'requirements', 'decision'],
+    produces: ['decision', 'document'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'arch': {
+    context: [{ key: 'architecture-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'decision', 'requirements', 'evidence'],
+    produces: ['decision', 'document'],
+    readyWhen: 'Module interface, seam, depth, locality and testability decisions are explicit and grounded in the target context.',
+  },
+  'dev': {
+    context: [{ key: 'implementation-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'requirements', 'ui-spec', 'work-item', 'defect', 'decision'],
+    produces: ['change-receipt', 'test-report'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'craft': {
+    context: [{ key: 'skill-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'document', 'review-findings'],
+    produces: ['document', 'review-findings'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'build-feature-map': {
+    context: [{ key: 'feature-map-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
+    accepts: ['context', 'requirements', 'evidence', 'ui-spec'],
+    produces: ['document', 'change-receipt'],
+    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+  },
+  'devops': {
+    context: [
+      { key: 'incident', importance: 'required', description: 'Observed symptom, affected environment, revision and logs when available.' },
+    ],
+    accepts: ['context', 'evidence', 'defect'],
+    produces: ['review-findings', 'change-receipt'],
+    readyWhen: 'Diagnosis and actual verification are separate; missing evidence remains unverified.',
+  },
+  'setup': {
+    context: [
+      { key: 'project-target', importance: 'required', description: 'Confirmed project, existing configuration and available host tools.' },
+    ],
+    accepts: ['context', 'decision'],
+    produces: ['document', 'change-receipt'],
+    readyWhen: 'Canonical sources, routes and policies are confirmed or unknown; requested writes verified.',
+  },
   research: {
     context: [
       { key: 'research-question', importance: 'required', description: 'Question and scope.' },
@@ -128,8 +215,8 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       },
     ],
     accepts: ['context', 'evidence', 'decision', 'review-findings', 'requirements'],
-    produces: ['requirements'],
-    readyWhen: 'Scope, rules and acceptance criteria are traceable; unresolved decisions are explicit.',
+    produces: ['requirements', 'change-receipt'],
+    readyWhen: 'Scope, rules, acceptance and lean synthesis gates are traceable; actual publication and mirror status are explicit.',
   },
   design: {
     knowledge: [
@@ -272,7 +359,7 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       { key: 'constraints', importance: 'recommended', description: 'Workflow rules and requested filters.' },
     ],
     accepts: ['context', 'work-item', 'defect', 'tracker-snapshot', 'delivery-plan'],
-    produces: ['tracker-snapshot', 'change-receipt'],
+    produces: ['tracker-snapshot', 'change-receipt', 'review-findings'],
     readyWhen:
       'Targets and current fields are resolved; requested changes and verification are reported separately.',
   },
@@ -464,7 +551,7 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
       'release-readiness',
     ],
     produces: ['review-findings'],
-    readyWhen: 'Findings have evidence, severity, impact and actionable fixes; review is not approval.',
+    readyWhen: 'Artifact findings have evidence, severity, impact and actionable fixes; review is not approval.',
   },
   release: {
     knowledge: [

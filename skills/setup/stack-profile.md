@@ -2,7 +2,7 @@
 
 Per-repo **Stack manifest** — axes that filter Knowledge search (`search_knowledge`
 `axes`). Written by `/setup`; consumed by `/dev`, `/devops`, `/arch`. Pointer only; live recipes
-stay in Ops CMS — see [knowledge.md](../../docs/agents/knowledge.md).
+stay in Ops CMS — see the published [Knowledge guide](https://github.com/polyms/ai-kit/blob/main/docs/agents/knowledge.md).
 
 ## Axes
 

@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Configure a repo for the ai-kit pipeline — documentation language, issue tracker, domain docs, requirements templates, stack profile, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
+description: Configure project context and execution routes for the ai-kit pipeline — documentation language, issue tracker, domain docs, requirements templates, stack profile, agent pointers. Invoke with /setup, cấu hình repo, thiết lập repo, cấu hình lần đầu, first-time setup, or configuring CONTEXT.md and issue tracker.
 disable-model-invocation: true
 ---
 
@@ -8,11 +8,20 @@ disable-model-invocation: true
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
-Scaffold per-repo configuration that `/reqs`, `/to-prd`, `/align`, `/design`, `/triage`,
-`/to-issues`, `/dev`, `/devops`, and `/arch` assume. Prompt-driven — explore, confirm with user,
+Scaffold or incrementally update per-project configuration that `/reqs`, `/align`, `/design`, `/track`,
+`/task`, `/dev`, `/devops`, and `/arch` assume. Prompt-driven — explore, confirm with user,
 then write.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md).
+
 ## Process
+
+**Execution mode:** Determine whether the user requests a configuration draft or actual setup changes before making decisions. For draft-only, do not edit, install, migrate, create symlinks or change tracker state, even if a write tool is available and the user approves the draft's content. Return the proposed configuration, paths and unresolved choices; only a separate authorized write request may enter step 4. For requested writes, confirm the target and branch/PR policy and verify the route; if unavailable, return the draft and blocker. A choice or content approval is not write authority.
+
+Inspect the target project using authorized repository/project tools (including GitHub MCP) before
+assuming a checkout. On a rerun, update only requested sections and preserve other choices. Confirm
+material unknowns and write through approved project routes or return a draft. Host-specific
+installation, symlinks and voice are optional local-client steps, not requirements for remote use.
 
 For Codex/Copilot, apply the client compatibility guide's **Files and project setup**
 branch throughout this process. It adds `AGENTS.md` discovery and opt-in voice pointers
@@ -25,7 +34,8 @@ See **Feature map publication** in that guide.
 
 Read what exists; don't assume:
 
-- `git remote -v` — GitHub, GitLab, or local-only?
+- Resolve the repository/provider from host context or `git remote -v` in a matching checkout.
+- Discover actual host tools and read `docs/agents/execution-profile.md` if accessible.
 - `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/` — presence, layout, and written language
 - `docs/agents/` — prior setup output? especially `stack-profile.md` and `requirements.md`
 - Stack signals — `package.json` / lockfile (router, start, zustand, vercel, pnpm, nx);
@@ -61,12 +71,13 @@ write them in the confirmed language.
 
 **B — Issue tracker**
 
-Where issues and PRDs live. Skills read/write here.
+Confirm where issues and PRDs live independently of access tools. GitHub may use GitHub MCP,
+`gh`, or another authorized route; GitLab likewise. Do not infer tool access from provider or host name.
 
 | Choice                                      | When                                     |
 | ------------------------------------------- | ---------------------------------------- |
-| **GitHub** (default if `github.com` remote) | `gh` CLI                                 |
-| **GitLab**                                  | `glab` CLI                               |
+| **GitHub** (default if `github.com` remote) | GitHub MCP / `gh` CLI                                 |
+| **GitLab**                                  | GitLab connector / `glab` CLI                               |
 | **Local markdown**                          | `.scratch/<feature>/` files              |
 | **Other**                                   | User describes workflow in one paragraph |
 
@@ -83,21 +94,21 @@ See [context-format.md](context-format.md) and [adr-format.md](adr-format.md).
 
 **D — Pipeline artifacts**
 
-Where specs land after `/reqs`, `/to-prd`, and `/align`:
+Where specs land after `/reqs` and `/align`:
 
 | Artifact | Default path                                                            |
 | -------- | ----------------------------------------------------------------------- |
-| PRDs     | Issue tracker canonical; `/to-prd` also mirrors to `docs/prd/<slug>.md` |
+| PRDs     | Issue tracker canonical; the reqs publication workflow also mirrors to `docs/prd/<slug>.md` |
 | ADRs     | `docs/adr/`                                                             |
 | Glossary | `CONTEXT.md`                                                            |
 
 Confirm or override paths. `/reqs` drafts enterprise PRDs in chat or `docs/prd/` and does **not** publish;
-`/to-prd` publishes to the tracker (and mirrors to `docs/prd/`). Once published, keep tracker and repo mirror
+the reqs lean publication workflow publishes to the tracker (and mirrors to `docs/prd/`). Once published, keep tracker and repo mirror
 in sync when both exist.
 
 **E — Triage labels**
 
-Map canonical triage roles to label strings on the issue tracker. Required for `/triage` and `/to-issues`.
+Map canonical triage roles to label strings on the issue tracker. Required for track triage mutations and reqs lean publication; optional for task vertical-slice labels.
 
 | Role type    | Canonical roles                                                               |
 | ------------ | ----------------------------------------------------------------------------- |
@@ -124,7 +135,7 @@ required before adoption. `/design` writes specs independently of `/ui-kit`.
 **G — Chat voice** (optional)
 
 Repo-level chat **persona** for agents. Distinct from documentation language (step A) and from grill
-question shape (`align-loop` / GRILL-FORMAT). Default: **do not** install — use the user's IDE/user rules.
+question shape (align-loop / GRILL-FORMAT). Default: **do not** install — use the user's IDE/user rules.
 
 Ask: _Do you want a kit-written chat voice for this repo?_ If Explore found an existing
 `.cursor/rules/agent-voice.mdc`, say so and ask skip / replace / keep.
@@ -140,7 +151,7 @@ If **Yes**, collect any one-line overrides (e.g. keep EN peer tone only; drop em
 **H — Stack profile** (Knowledge filter)
 
 Per-repo **Stack manifest** axes for Knowledge search — see [stack-profile.md](stack-profile.md) and
-[knowledge.md](../../docs/agents/knowledge.md). Filters `search_knowledge` for all intents.
+the published [Knowledge guide](../../docs/agents/knowledge.md). Filters `search_knowledge` for all intents.
 
 1. Propose axes from Explore signals (lowercase CMS tags: `tanstack-start`, `vercel`, `pnpm`, …).
 2. Show the candidate list; let the user add/remove/confirm.
@@ -193,7 +204,16 @@ If **Yes**, ask once for a harness command. No command → `Harness: none`. Slug
 `feature-map` unless `.agents/skills/feature-map/` already holds a different skill — then ask once
 for another slug. Never `build-feature-map`.
 
-**Completion criterion:** Documentation language confirmed; all seven triage role mappings confirmed;
+**K — Execution profile**
+
+Use [execution-profile.md](execution-profile.md). Confirm canonical sources, preferred/fallback routes
+per operation, branch/PR policy, write and verification gates, and target identifiers. Inspect tools
+actually available; never record credentials or assume preferences work for every host. Validate
+read-only access where possible. Reuse existing choices and ask only material unknowns; mark other
+entries Unknown. An explicit setup update may change only K without revisiting A–J.
+
+**Completion criterion:** For full setup, execution profile choices and unknowns recorded;
+Documentation language confirmed; all seven triage role mappings confirmed;
 issue tracker, domain layout, artifact paths, triage labels, design paths, voice choice (No or Yes +
 any overrides), **requirements template** default (Standard, MVP, or AI-optimized), **stack axes**
 confirmed by user, and feature-map choice (No, or Yes + harness and slug).
@@ -205,6 +225,7 @@ Show before writing:
 - `## Agent skills` block for `CLAUDE.md` or `AGENTS.md`
 - `docs/agents/language.md`
 - `docs/agents/issue-tracker.md`
+- `docs/agents/execution-profile.md` (confirmed routes/policies and Unknown entries)
 - `docs/agents/domain.md`
 - `docs/agents/triage-labels.md`
 - `docs/agents/design.md`
@@ -219,9 +240,11 @@ Show before writing:
 
 Let user edit.
 
-**Completion criterion:** User approves draft or requests edits before any files are written.
+**Completion criterion:** Proposed content and material choices are presented; required approvals are obtained or explicitly pending. For draft-only, deliver the draft and stop here, without requiring write approval or claiming setup complete.
 
 ### 4. Write
+
+Enter only when setup writes are requested and authorized, with confirmed content and an available target write route. Otherwise stop with the draft and blockers.
 
 **Pick config file:** edit existing `CLAUDE.md` or `AGENTS.md`; if neither exists, ask which to create. Never
 create both.
@@ -240,6 +263,11 @@ set by the kit unless Chat voice was opted in — see Voice below or the user's 
 
 [one-line summary]. See `docs/agents/issue-tracker.md`.
 
+### Execution profile
+
+Follow `docs/agents/execution-profile.md` for canonical sources, operation routes and write/verification
+policy. Check actual host capabilities and permissions; do not assume local CLI.
+
 ### Domain docs
 
 [single-context or multi-context]. See `docs/agents/domain.md`.
@@ -250,7 +278,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Design
 
-UI specs and existing design system or optional Polyms UI Kit candidate. See `skills/setup/design.md`.
+UI specs and existing design system or optional Polyms UI Kit candidate. See project-owned `docs/agents/design.md`.
 
 ### Requirements templates
 
@@ -258,8 +286,7 @@ Default: [Standard / MVP / AI-optimized]. See `docs/agents/requirements.md`.
 
 ### Knowledge
 
-Stack axes for Knowledge retrieval. See `docs/agents/stack-profile.md` and
-`docs/agents/knowledge.md`.
+Stack axes for Knowledge retrieval. See project-owned `docs/agents/stack-profile.md`. For AI Kit-owned retrieval methodology, load the Knowledge guide through the relevant AI Kit skill pack or installed skill references; do not assume an AI Kit checkout exists here.
 
 ### Voice
 
@@ -276,8 +303,7 @@ Author or repair areas with `/build-feature-map`.
 
 ### Pipeline
 
-Idea → `/align` → `/reqs` or `/to-prd` → `/to-issues` → `/design` → `/dev`; raw issues via `/triage`. Specs in
-[path]; glossary in `CONTEXT.md`.
+Idea → `/align` → `/reqs` → `/task` → `/design` → `/dev` → `/code-review`; raw issues via `/track` (triage). Specs in [path]; glossary in `CONTEXT.md`. Load AI Kit methodology through the host's installed skills or MCP, not relative paths in this target project. `qa` owns functional verification; `e2e` owns browser automation; `collab` prepares feature packets.
 ```
 
 **Context file shape.** That block stays a short pointer. Link `docs/agents/*` instead of pasting them. Do not
@@ -293,6 +319,7 @@ Write docs using templates:
 - GitHub → [issue-tracker-github.md](issue-tracker-github.md)
 - GitLab → [issue-tracker-gitlab.md](issue-tracker-gitlab.md)
 - Local → [issue-tracker-local.md](issue-tracker-local.md)
+- Execution profile → [execution-profile.md](execution-profile.md)
 - Domain → [domain.md](domain.md)
 - Triage labels → [triage-labels.md](triage-labels.md)
 - Design → [design.md](design.md)
@@ -308,7 +335,9 @@ Write docs using templates:
 - Feature map index → [../build-feature-map/index-template.md](../build-feature-map/index-template.md)
   at `.agents/skills/<slug>/references/features/README.md` (no area links yet)
 
-**If voice Yes:**
+**Remote or connector-only setup:** Write the canonical configuration using the approved repository route. Native-client persona and symlinks are optional; if selected but unsupported, report them pending instead of claiming they exist. Never require a local installation for MCP.
+
+**If voice Yes and the required native routes are supported and authorized:**
 
 1. Write `.cursor/rules/agent-voice.mdc` from [voice-rule.mdc](voice-rule.mdc) (apply user overrides).
 2. `mkdir -p .claude/rules`
@@ -344,8 +373,8 @@ policy:
    exists and is not a symlink to the `.agents` package, stop: diff it against the package, keep a
    backup outside any skill folder, and reconcile with the user. `ln -sfn` on a real directory
    nests the link inside it instead of replacing it.
-5. `mkdir -p .cursor/skills .claude/skills`
-6. Symlink Cursor and Claude → the `.agents` skill (relative paths so clones stay portable):
+5. For configured native clients only, and when the required operations are supported and authorized, create the relevant skill directories (local example: `mkdir -p .cursor/skills .claude/skills`). Otherwise record required links as pending or not applicable.
+6. For those configured clients, create only the applicable symlinks to the `.agents` skill (relative paths so clones stay portable):
 
 ```bash
 ln -sfn ../../.agents/skills/<slug> .cursor/skills/<slug>
@@ -367,20 +396,22 @@ Run `/build-feature-map` to start one; it replaces this file.
 
 Never write a map package, and never remove an existing map or pointer.
 
-**Completion criterion:** `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
+**Completion criterion:** For full setup, `docs/agents/execution-profile.md` and `docs/agents/language.md`, `docs/agents/issue-tracker.md`,
 `docs/agents/domain.md`, `docs/agents/triage-labels.md`, `docs/agents/design.md`,
 `docs/agents/requirements.md`, `docs/agents/stack-profile.md`, and agent config file written; if voice Yes,
-Cursor rule + Claude symlink present; if feature map Yes, pointer + empty skill package with
-`agents/openai.yaml` + Claude and Codex symlinks present, and the generated files contain no `{slug}`;
+Cursor rule and Claude symlink verified if required and supported; if feature map Yes, pointer + empty skill package with
+`agents/openai.yaml` and required configured client links verified; unsupported native links are pending or not applicable, and generated files contain no `{slug}`;
 if feature map No, a declined pointer or the existing pointer is present.
 For Keep existing, the agent config links the actual Skill path and pointer, and existing map
 contents are preserved. For both Yes and Keep existing, the Feature map subsection appears once.
 
 ### 5. Done
 
-Tell user setup is complete. Deliver the **orientation tour** in body prose — overview of
-pipeline entry points (`/align` before building; `/reqs` or `/to-prd` for specs; `/design` for
-UI specs; `/triage` for backlog issues; `/dev` / `/devops` / `/arch` filter Knowledge via
+Read back authorized writes; report verified, draft-only and blocked sections separately. For incremental
+setup verify only requested changes and preservation of unrelated configuration. Tell user setup is
+complete only when requested writes and gates are satisfied. Deliver the **orientation tour** in body prose — overview of
+pipeline entry points (`/align` before building; `/reqs` for specs; `/design` for
+UI specs; `/track` (triage) for backlog issues; `/dev` / `/devops` / `/arch` filter Knowledge via
 `docs/agents/stack-profile.md`). Remind them to create GitHub labels matching
 `docs/agents/triage-labels.md`. They can edit `docs/agents/*.md` directly later. If voice was
 installed, point at `.cursor/rules/agent-voice.mdc` to edit persona. If a feature map was
@@ -389,7 +420,7 @@ If an existing map was kept, point at the same pointer and say its config refere
 
 Orientation is **not** `## Next Step` — see [Handoff](#handoff).
 
-**Completion criterion:** User notified setup is complete; orientation tour mentions pipeline
+**Completion criterion:** Actual setup status (complete, partial or blocked) reported according to readback; orientation tour mentions pipeline
 entry points; stack-profile / Knowledge mentioned; label creation reminder given; voice path
 mentioned only when opted in; feature-map path mentioned when scaffolded or kept; Handoff block
 delivered.
@@ -398,18 +429,17 @@ delivered.
 
 When/why cues (CONTEXT.md **Handoff**) — not a pasteable menu. After Done's orientation tour,
 end with `## Next Step` — preferred `→ /align` (default after setup). Optional second only when
-they have a raw backlog ready: `→ /triage` with when.
+they have a raw backlog ready: `→ /track` (triage) with when.
 
 ```
 ## Next Step
 → /align
 ```
 
-**Completion criterion:** `## Next Step` names `/align` (optional second `/triage` with when).
+**Completion criterion:** `## Next Step` names `/align` (optional second `/track` (triage) with when).
 
 ## Language
 
-Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `reqs`,
-`to-prd`, `design`, `arch`, `to-issues`) read it and write in the confirmed language. Prose stays natural in
+Once `docs/agents/language.md` exists, all skills that write persistent docs (`domain-modeling`, `reqs`, `design`, `arch`, `task`, `collab`, `arch-refactor`) read it and write in the confirmed language. Prose stays natural in
 that language; only **pure-tech tokens** stay English ([language.md](language.md)). Chat tone is unaffected
 by this file — IDE/user rules, or `.cursor/rules/agent-voice.mdc` when `/setup` voice was opted in.

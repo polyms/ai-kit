@@ -38,7 +38,7 @@ function SkillDetailPage() {
   const label = domainLabel(skill.domain)
   const summary = skill.summary ?? skill.description
   const showPrompt = Boolean(skill.samplePrompt)
-  const pack = listSkillPacks().find(item => item.name === slug)
+  const pack = listSkillPacks().find(item => item.name === skill.slug)
 
   return (
     <div className='px-8 py-10 md:px-10 md:py-12'>

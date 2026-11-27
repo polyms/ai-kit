@@ -2,14 +2,20 @@
 name: dev
 description: Fullstack implementation with TDD and disciplined debugging. Use when user mentions /dev,
   implement from spec, fix bug, sửa lỗi, red-green-refactor, test-first, triển khai, or ship from
-  spec. Do NOT start a new page or CRUD that has no PRD and no design spec — that is collab. Unaccented Vietnamese examples include sua loi, trien khai theo spec.
+  spec. Do NOT start a new page or CRUD that has no PRD and no design spec — use `collab`. Unaccented Vietnamese examples include sua loi, trien khai theo spec.
 ---
 
 # Dev — Fullstack Implementation
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md) and the target execution profile. Use actual authorized tools and verified target revision. If a gate cannot be performed, report it as blocked; do not invent execution, approval or delegation.
+
+Use `collab` for a new feature without a spec packet. This skill owns implementation and disciplined debugging. Never invent missing business scope.
+
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
 Ship production code from specs. Read `CONTEXT.md` and relevant ADRs before touching code.
+
+**Execution mode:** Only implement/debug with target writes when the user requests the change and the actual route is authorized under project policy. Draft patch, analysis-only and read-only requests return proposed changes, tests and limitations without repository writes, commit/PR creation or CI/deploy mutation. A skill selection, spec packet, or green check is not authorization. If write or execution is unavailable, return a bounded proposal and mark tests Not run or cite matching existing evidence; do not enter the ship gate as if a change landed.
 
 ## Quick Router
 
@@ -35,8 +41,7 @@ Without an explicit `/dev`, a new screen or CRUD whose PRD or `docs/design/<feat
 is not this skill. Stop and follow `collab`, which resumes from whichever file exists. Do not write
 tests or production code on that turn.
 
-A `collab` packet with no `[NEEDS CLARIFICATION]` and no blocking fork enters here in the same
-turn. Do not wait for a second confirm. A packet that still has a blocking marker stays in
+A verified written `collab` packet with no `[NEEDS CLARIFICATION]` and no blocking fork enters here in the same turn only when implementation was requested and authorized. Do not wait for a second confirm of the same authorized action. A draft packet alone never starts implementation. A packet that still has a blocking marker stays in
 `collab` until that question is answered.
 
 Any other ask (a field, an endpoint, a refactor, a change to an existing screen) skips this step.
@@ -56,7 +61,7 @@ because a blocking gap remains.
   open the one area file for this slice before locking the seam. Its user path and gotchas are the
   behavior contract. Still read the module this slice edits. The area file does not replace that
   read, and it is not a reason to stop and retell the gotchas. Do not run `/build-feature-map`.
-  Do not suggest the map when it is missing — `/collab` and `/e2e` own that suggestion. Glossary,
+  Do not suggest the map when it is missing — `collab` and `e2e` own that suggestion. Glossary,
   ADRs, the PRD, and `docs/design/<feature>.md` are still read in full.
 - Read **`docs/agents/stack-profile.md`** when present — pass `axes` on Knowledge searches below
 - **Deploy/CI slice (only when it surfaces mid-implementation):** [Knowledge pointer](../../docs/agents/knowledge.md)
@@ -165,7 +170,7 @@ name an upstream skill when blocked.
 - [ ] No secrets or credentials in code
 - [ ] Conventional commit ready
 - [ ] **Disk gate** — re-run the **gate-deciding** test/typecheck (and build if that is the
-      ship gate) on disk yourself; read real exit code. A sub-agent or prior turn saying
+      ship gate) in the matching checkout yourself, or inspect authorized matching CI evidence; read real exit code/logs. A sub-agent or prior turn saying
       "green" is not enough — see [invocation.md](../../docs/agents/invocation.md)
       (**Verification after delegation**). Skip only for diffs with no runnable gate
       (e.g. docs-only).
@@ -187,12 +192,12 @@ name an upstream skill when blocked.
 When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after the
 ship checklist — prefer **exactly one**:
 
-- Ship / done — feature closed, nothing queued
+- `/code-review` — source changes require pre-merge review under project policy or user request; provide the exact diff/ref, specification or assumptions, and actual test evidence. Review is not merge authorization.
+- Ship / done — implementation checks passed and no applicable review or other gate remains
 - `/docs` — public integrator surface (API, MCP, CLI) just shipped
 - `/e2e` — critical browser journey needs CI coverage (not a substitute for seam TDD)
 
-Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces
-genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/design`.
+When an applicable pre-merge review remains, prefer `/code-review` after required implementation and verification gates; if browser coverage or another prerequisite blocks review, name that prerequisite first. Do not force a full review for a trivial change when policy and user scope do not require it, and do not skip a required review. Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
 
@@ -208,12 +213,12 @@ genuinely apply (each with when). When blocked: single escalate to `/reqs` or `/
 5. Instrument one variable at a time
 6. Fix + regression test at correct seam
 7. Cleanup debug logs; state hypothesis in commit message
-8. **Disk gate** — re-run gate-deciding command on disk (same rule as Implement ship)
+8. **Disk gate** — run the gate-deciding command in the matching workspace or verify authorized matching CI evidence (same rule as Implement ship)
 9. Run [scope-self-check.md](scope-self-check.md) — bug-fix diffs stay minimal; list
    cleanup temptations as follow-ups, do not sneak them in
 
-**Completion criterion:** Loop goes green on disk; regression test exists or seam gap
-documented; characterization done or skipped with reason; scope self-check filled.
+**Completion criterion:** Loop goes green on matching workspace/CI evidence; regression test exists or seam gap
+documented; characterization done or skipped with reason; scope self-check filled. For a source-changing fix with an applicable pre-merge review gate, use the Implement handoff to `/code-review`; do not claim merge approval.
 
 ## Stack Defaults
 

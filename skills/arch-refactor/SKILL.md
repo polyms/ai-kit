@@ -6,6 +6,10 @@ disable-model-invocation: true
 
 # Arch Refactor
 
+Use `arch` for module/interface design vocabulary alone; this skill owns repository-wide evidence-led deepening assessment, candidate reports and selection, not implementation.
+
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve the target project's execution profile and actual authorized tools. A local CLI, workspace or delegation is not mandatory to read methodology; use verified equivalent evidence, or report unavailable operations. Do not infer approval or claim unperformed writes/tests.
+
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
@@ -44,7 +48,7 @@ MCP — [knowledge.md](../../docs/agents/knowledge.md):
 3. Follow with **`search_knowledge`** (`intent: "design"`) before inventing module conventions when
    coverage reports a hit.
 
-Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid
+Then explore the relevant codebase through the actual authorized host tools; delegate exploration when supported, otherwise inspect directly and disclose reduced isolation. Don't follow rigid
 heuristics — explore organically and note where you experience friction:
 
 - Where does understanding one concept require bouncing between many small modules?
@@ -59,7 +63,10 @@ Apply the **deletion test** to anything you suspect is shallow: would deleting i
 
 ### 2. Present candidates as an HTML report
 
-Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html`. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
+When the host can produce an authorized HTML artifact, use the report template. Otherwise provide the
+same complete report structure in chat as Markdown, with evidence and limitations; do not invent a file.
+
+If supported and appropriate, create the self-contained HTML as a user-accessible artifact or in the local OS temp directory outside the repo. On a local host resolve `$TMPDIR` (or the OS equivalent), use `xdg-open`, `open` or `start` only if available, and provide the actual accessible link/path. On a remote host without an artifact tool use the complete Markdown report. Never require a shell, filesystem or graphical viewer to complete the assessment.
 
 Each candidate gets a card with files, problem, solution, benefits, before/after diagram, and recommendation strength (`Strong`, `Worth exploring`, `Speculative`). End with a **Top recommendation** section.
 
@@ -69,9 +76,9 @@ Each candidate gets a card with files, problem, solution, benefits, before/after
 
 See [HTML-REPORT.md](HTML-REPORT.md) for scaffold, diagram patterns, styling, and tone.
 
-Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"
+Do NOT propose interfaces yet. After the report is delivered, ask the user: "Which of these would you like to explore?"
 
-**Completion criterion:** HTML file written to temp dir, opened for user, absolute path reported; no interface proposals in report.
+**Completion criterion:** Candidate report delivered in an accessible format (HTML artifact or equivalent Markdown), including evidence, trade-offs, diagrams where useful and top recommendation; no interface proposals in report. Claim file creation/opening only if verified; no shell or temp path required.
 
 ### 3. Grilling loop
 
@@ -80,7 +87,7 @@ Once the user picks a candidate, run **`align-loop`** with **`domain-modeling`**
 Run **`domain-modeling`** inline as terms resolve.
 
 - **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.
-- **Want to explore alternative interfaces for the deepened module?** Use **`arch`** design-it-twice (parallel sub-agents).
+- **Want to explore alternative interfaces for the deepened module?** Use **`arch`** design-it-twice (parallel sub-agents when available, otherwise separate independent passes).
 
 **Completion criterion:** Decision tree resolved for chosen candidate, or explicit handoff (typically `/dev` to implement deepening).
 

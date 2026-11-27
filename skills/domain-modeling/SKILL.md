@@ -7,6 +7,11 @@ description: Build and sharpen a project's domain model. Use when the user wants
 
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
+**All hosts:** Read [portable skill standard](../../docs/agents/portable-skills.md). Resolve target
+project context and execution routes from `docs/agents/execution-profile.md` when available. CLI
+commands are operation examples, not mandatory tools. Retain evidence and approval gates; use a
+bounded draft or blocked handoff for unavailable actions.
+
 Actively build and sharpen the project's domain model as you design. This is the active discipline: challenge terms, probe edge-case scenarios, and write glossary entries or decisions down the moment they crystallize.
 
 Merely reading `CONTEXT.md` for vocabulary is not this skill. This skill is for changing the model.
@@ -43,7 +48,9 @@ When the user states how something works, check whether code agrees. If code con
 
 ## Update CONTEXT.md Inline
 
-When a term resolves, update `CONTEXT.md` immediately — don't batch. Use the context-format guide in `setup`.
+When a term resolves, record it immediately in the session and update the canonical glossary through
+the configured authorized route only when the task authorizes the write. For a repository this may be a workspace edit or branch/PR; in draft-only mode or if writing is unavailable, return the glossary delta and mark it proposed/pending. Never create files in draft-only mode. Do not create a second
+canonical file or overwrite concurrent changes. Use the context-format guide in `setup`.
 
 `CONTEXT.md` is glossary only: no implementation details, no specs, no scratch notes.
 
@@ -55,15 +62,15 @@ Offer an ADR only when all three are true:
 2. **Surprising without context** — future readers will ask "why?"
 3. **Real trade-off** — genuine alternatives existed
 
-If any condition is missing, skip the ADR. Use the adr-format guide in `setup`.
+If any condition is missing, skip the ADR. Use the adr-format guide in `setup`. A three-part test establishes that an ADR is warranted, not that its decision is approved. Draft as Proposed unless actual approval is evidenced; write only when separately authorized.
 
 ## During align-loop
 
-When `/align`, `/triage`, or `/arch-refactor` runs align-loop, stay active for the **whole session** — not only when the user says "domain":
+When `/align`, track triage, or `/arch-refactor` runs align-loop, stay active for the **whole session** — not only when the user says "domain":
 
 - Challenge overloaded terms **in the grill question itself** before offering lettered options
 - Invent concrete edge-case scenarios as lettered options when domain boundaries are fuzzy (see [GRILL-FORMAT.md](../align-loop/GRILL-FORMAT.md))
-- After the user picks, update `CONTEXT.md` **immediately** and show the new or edited glossary line in chat
+- After the user picks, record the glossary delta **immediately**, apply it if authorized, and show the line and actual write status
 - Cross-reference code when a pick implies behavior — surface contradictions as the next grill question
 
-**Completion criterion:** Every overloaded term is resolved or logged as Open Question; `CONTEXT.md` is updated inline for each resolution; ADRs are created only for decisions that pass the three-part test.
+**Completion criterion:** Every overloaded term is resolved or logged as Open Question; each resolution is recorded and canonical updates are verified or explicitly pending; ADRs are created only for decisions that pass the three-part test.
