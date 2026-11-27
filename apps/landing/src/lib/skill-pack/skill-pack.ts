@@ -87,6 +87,7 @@ export const WORK_SKILL_PATHS = {
 } as const
 
 export const PORTABLE_SKILL_STANDARD = 'docs/agents/portable-skills.md'
+const REVIEW_FIX_PROTOCOL = 'docs/agents/review-fix-protocol.md'
 
 export const ENGINEERING_SKILL_PATHS = {
   'align-loop': [
@@ -132,6 +133,7 @@ export const ENGINEERING_SKILL_PATHS = {
     'skills/code-review/SKILL.md',
     'skills/code-review/standards-baseline.md',
     'skills/code-review/simplify-baseline.md',
+    REVIEW_FIX_PROTOCOL,
   ],
   'devops': [
     'skills/devops/SKILL.md',
@@ -179,6 +181,7 @@ export const ENGINEERING_SKILL_PATHS = {
   ],
   'dev': [
     'skills/dev/SKILL.md',
+    REVIEW_FIX_PROTOCOL,
     'skills/dev/tdd-guide.md',
     'skills/dev/solution-ladder.md',
     'skills/dev/characterization.md',
