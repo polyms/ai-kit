@@ -195,7 +195,7 @@ function canonicalJson(value: unknown): string {
     return '{' + Object.keys(value).sort()
       .map(key => JSON.stringify(key) + ':' + canonicalJson(value[key])).join(',') + '}'
   }
-  return JSON.stringify(value)
+  return JSON.stringify(value) ?? 'null'
 }
 function sameCatalog(a: SkillCatalog, b: SkillCatalog): boolean {
   return canonicalJson(a) === canonicalJson(b)
