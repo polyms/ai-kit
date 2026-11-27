@@ -189,6 +189,11 @@ name an upstream skill when blocked.
 
 ### 6. Handoff
 
+For authorized source changes with a required or requested pre-merge review, run the
+[Review-Fix Protocol](../../docs/agents/review-fix-protocol.md) with `code-review` in the same
+execution flow. Do not stop at a review recommendation while the host can continue within scope.
+A delegated fix batch returns to its parent loop rather than starting another loop.
+
 When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after the
 ship checklist — prefer **exactly one**:
 
@@ -218,7 +223,8 @@ When an applicable pre-merge review remains, prefer `/code-review` after require
    cleanup temptations as follow-ups, do not sneak them in
 
 **Completion criterion:** Loop goes green on matching workspace/CI evidence; regression test exists or seam gap
-documented; characterization done or skipped with reason; scope self-check filled. For a source-changing fix with an applicable pre-merge review gate, use the Implement handoff to `/code-review`; do not claim merge approval.
+documented; characterization done or skipped with reason; scope self-check filled. For a source-changing fix with an applicable pre-merge review gate, follow Implement step 6
+and the Review-Fix Protocol; do not claim merge approval.
 
 ## Stack Defaults
 
