@@ -29,13 +29,17 @@ User-invoked skills may invoke model-invoked skills, but must not implicitly sel
 another user-invoked workflow. An explicitly delegated principal may read its playbook
 as a reference without starting an unauthorized workflow.
 
+## Conversational MCP selection vs native invocation
+
+The native rules above govern installed skills and IDE invocation, not the syntax of an MCP conversation. The live catalog exposes `nativeInvocation` (`explicit` / `model`) and `mcpSelection` (`intent` / `explicit-intent`) for every canonical skill. `reqs`, `design` and `docs` stay manual-only in native clients but may be selected from a relevant natural-language request in conversational MCP. For setup, craft, build-feature-map, align, arch-refactor and e2e, `explicit-intent` requires a clearly requested special workflow or bounded authorized assignment; a slash command is not required. Do not start these workflows incidentally. Other packs use `intent` selection. Legacy engineering `invocation` metadata is preserved; new clients use the two distinct fields. Respect the host's actual invocation policy, user choices and scope. Retrieval or selection does not authorize writes or execution.
+
 ## Vietnamese-first semantic routing
 
 Interpret natural Vietnamese, unaccented Vietnamese and mixed English/Vietnamese by intent and
 conversation context, not exact trigger matching. Abbreviations (a, e, KH, cmt, ko, req, est) are
 contextual, not standalone triggers. Distinguish new work, existing-ticket updates, communication,
 effort estimates and artifact critique. Simple translations and factual questions need no skill.
-Preserve explicit invocation and local manual-only policies. Match the requested conversational
+Preserve explicit choices and local manual-only policies in native clients; use conversational selection rules in MCP. Match the requested conversational
 language and the confirmed destination language for artifacts; preserve technical identifiers.
 
 ## ai-kit examples

@@ -113,15 +113,15 @@ and the server's OAuth flow. Client support for these features varies; do not as
 can connect or automatically invoke remote skills.
 
 1. Call `list_skill_packs` to discover names and descriptions.
-2. Select only relevant packs using descriptions and routing hints; honor explicit invocation and client policy.
+2. Select only relevant packs using descriptions and routing hints; honor native client policy and explicit user choices. For conversational MCP, `mcpSelection: intent` permits natural-language task selection, including reqs/design/docs. `explicit-intent` requires a clearly requested special workflow/outcome or bounded authorized assignment, not slash syntax. `nativeInvocation` is present for all packs and preserves installed skill policy. Legacy engineering `invocation` remains for backward compatibility. Selection grants no action authority.
    Call `get_skill_pack` with the selected name and that pack's `starterPaths` as `paths`.
 3. Read the returned SKILL.md first. Apply the relevant bundled template and shared standard.
 4. Use user-supplied or authorized context. Draft the output, or publish only when requested.
 5. Return actual ticket/document IDs and links after a successful write.
 
-The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, contract}], packCount, source, composition: {protocol, recipes}}`. The `packCount` is derived from `packs.length`.
+The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, nativeInvocation, mcpSelection, contract}], packCount, source, composition: {protocol, recipes}}`. The `packCount` is derived from `packs.length`.
 The additional routing and composition fields are advisory and backward-compatible.
-The get operation returns `{name, contract, source, files: [{path, rawUrl, content}]}`. For an alias it additionally returns `requestedName` and `requestedWorkflow`; the list also provides `legacyWorkflows`.
+The get operation returns `{name, nativeInvocation, mcpSelection, contract, source, files: [{path, rawUrl, content}]}`. For an alias it additionally returns `requestedName` and `requestedWorkflow`; the list also provides `legacyWorkflows`.
 The contract includes advisory context requirements; starter content includes shared context guidance. For design it also exposes optional
 `uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Omitting paths retrieves all core files but **does not load Polyms UI Kit content**; optional UI Kit paths remain discoverable and require explicit selection. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.

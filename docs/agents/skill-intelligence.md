@@ -18,6 +18,7 @@ search, orchestration runtime, analytics database or a new MCP tool.
 - `useWhen`: compact English/Vietnamese intent examples.
 - `avoidWhen`: boundary against neighboring skills.
 - `starterPaths`: trusted manifest paths for the first retrieval.
+- `nativeInvocation`: installed skill policy (`explicit` or `model`); `mcpSelection`: conversational routing (`intent` or `explicit-intent`). Ordinary natural-language intent can select reqs/design/docs; special workflows require a clearly requested outcome or bounded assignment, not literal slash syntax. Neither grants write authority.
 - `relatedSkills`: optional handoffs, not dependency or execution authorization.
 - `contract`: accepted/produced artifact kinds, a semantic completion gate, context needs and
   optional Knowledge search hints. SDK catalogs also expose composition recipes.

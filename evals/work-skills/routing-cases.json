@@ -732,5 +732,60 @@
       "dev"
     ],
     "notes": "Explicit combined session; align-loop and domain-modeling are reusable dependencies."
+  },
+  {
+    "id": "RT-59",
+    "kind": "Route",
+    "prompt": "Draft a detailed PRD for a team invitation feature from approved requirements in this chat; no slash commands and no publishing.",
+    "expected": [
+      "reqs"
+    ],
+    "avoid": [
+      "setup",
+      "task",
+      "collab"
+    ],
+    "notes": "Conversational MCP selects reqs by intent even though installed native invocation is manual."
+  },
+  {
+    "id": "RT-60",
+    "kind": "Route",
+    "prompt": "Prepare a UI specification for the approved invitation flow, with loading and error states, as a draft.",
+    "expected": [
+      "design"
+    ],
+    "avoid": [
+      "dev",
+      "collab",
+      "e2e"
+    ],
+    "notes": "Natural language design request is sufficient for conversational selection; no native slash invocation required."
+  },
+  {
+    "id": "RT-61",
+    "kind": "Route",
+    "prompt": "Write an internal integration guide for the existing API from supplied facts; draft only.",
+    "expected": [
+      "docs"
+    ],
+    "avoid": [
+      "reqs",
+      "dev",
+      "setup"
+    ],
+    "notes": "Native manual-only docs policy does not prevent conversational selection."
+  },
+  {
+    "id": "RT-62",
+    "kind": "Route",
+    "prompt": "Assess this repository's architecture for shallow modules and report deepening candidates; no refactoring or writes.",
+    "expected": [
+      "arch-refactor"
+    ],
+    "avoid": [
+      "dev",
+      "code-review"
+    ],
+    "notes": "Clearly requested special assessment intent is sufficient without a slash command."
   }
 ]

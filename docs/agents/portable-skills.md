@@ -44,8 +44,11 @@ workspace. A cloud sandbox is not necessarily a checkout; a connector is not nec
 - Read before writing. Preserve unrelated content, confirm identity/permission/scope and branch/PR
   policy. Reconcile ambiguous outcomes before retrying; never fall through to another write tool
   blindly. Draft, publication, actual test evidence and human approval are distinct.
-- Setup, craft and build-feature-map retain explicit invocation; respect native manual-only policies
-  for reqs, design and docs. Align, arch-refactor and e2e retain explicit invocation; align-loop, domain-modeling and collab are model-invocable. Do not start a full interactive grill without a relevant request. A canonical skill may select a relevant reference branch without
+- In native clients, preserve manual-only frontmatter for setup, craft, build-feature-map, reqs,
+  design, docs, align, arch-refactor and e2e. In conversational MCP, use `mcpSelection`: ordinary
+  relevant intent selects reqs, design and docs; setup, craft, build-feature-map, align, arch-refactor
+  and e2e require clearly requested workflow intent or a bounded authorized assignment, not literal
+  slash syntax. Align-loop, domain-modeling and collab remain model-invocable. Do not start a full interactive grill without a relevant request. A canonical skill may select a relevant reference branch without
   automatically invoking a second skill. Lean publication, slice creation, triage mutations, ADR writes,
   architecture refactors, implementation and deployment require their original evidence and approval
   gates. Reading references or relatedSkills is not invocation or authorization.

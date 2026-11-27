@@ -235,6 +235,21 @@ export const WORK_REFERENCE_PATHS: Partial<Record<WorkSkillName, readonly string
 }
 export type SkillPackName = 'reqs' | 'design' | WorkSkillName | EngineeringSkillName
 
+export type SkillInvocationPolicy = {
+  /** Native clients must preserve frontmatter/manual selection rules. */
+  nativeInvocation: 'explicit' | 'model'
+  /** Conversational MCP selects by intent; special workflows require a clearly requested outcome or bounded assignment. */
+  mcpSelection: 'intent' | 'explicit-intent'
+}
+
+export function skillInvocationPolicy(name: SkillPackName): SkillInvocationPolicy {
+  const explicitIntent = isEngineeringSkill(name) && MANUAL_ENGINEERING_SKILLS.includes(name)
+  return {
+    nativeInvocation: explicitIntent || name === 'reqs' || name === 'design' || name === 'docs' ? 'explicit' : 'model',
+    mcpSelection: explicitIntent ? 'explicit-intent' : 'intent',
+  }
+}
+
 const PACK_DESCRIPTIONS: Record<SkillPackName, string> = {
   'align-loop': "Decision-tree grilling, calibrated questioning and explicit decision branches",
   'domain-modeling': "Active domain vocabulary, glossary and ADR changes",
@@ -269,7 +284,7 @@ export type SkillPackFile = {
   rawUrl: string
 }
 
-export type SkillPackSummary = {
+export type SkillPackSummary = SkillInvocationPolicy & {
   name: SkillPackName
   skillRawUrl: string
   description: string
@@ -277,25 +292,26 @@ export type SkillPackSummary = {
   avoidWhen: string
   starterPaths: string[]
   relatedSkills: readonly SkillPackName[]
+  /** Legacy engineering-pack field; use nativeInvocation and mcpSelection for new clients. */
   invocation?: 'explicit' | 'model'
   contract: SkillContract
 }
 
-export type ReqsSkillPack = {
+export type ReqsSkillPack = SkillInvocationPolicy & {
   name: 'reqs'
   contract: SkillContract
   files: SkillPackFile[]
 }
 
-export type DesignSkillPack = {
+export type DesignSkillPack = SkillInvocationPolicy & {
   name: 'design'
   contract: SkillContract
   files: SkillPackFile[]
   uiKit: SkillPackFile[]
 }
 
-export type WorkSkillPack = { name: WorkSkillName; contract: SkillContract; files: SkillPackFile[] }
-export type EngineeringSkillPack = {
+export type WorkSkillPack = SkillInvocationPolicy & { name: WorkSkillName; contract: SkillContract; files: SkillPackFile[] }
+export type EngineeringSkillPack = SkillInvocationPolicy & {
   name: EngineeringSkillName
   contract: SkillContract
   files: SkillPackFile[]
@@ -321,6 +337,7 @@ export function listSkillPacks(): SkillPackSummary[] {
     starterPaths: starterPaths(name),
     relatedSkills: SKILL_ROUTING[name].relatedSkills,
     contract: SKILL_CONTRACTS[name],
+    ...skillInvocationPolicy(name),
     ...(isEngineeringSkill(name) ? { invocation: engineeringInvocation(name) } : {}),
   }))
 }
@@ -373,6 +390,7 @@ export function getSkillPack(name: string): SkillPack | null {
       name,
       contract: SKILL_CONTRACTS[name],
       invocation: engineeringInvocation(name),
+      ...skillInvocationPolicy(name),
       files: toFiles([
         ...ENGINEERING_SKILL_PATHS[name],
         PORTABLE_SKILL_STANDARD,
@@ -386,6 +404,7 @@ export function getSkillPack(name: string): SkillPack | null {
     return {
       name: 'reqs',
       contract: SKILL_CONTRACTS.reqs,
+      ...skillInvocationPolicy('reqs'),
       files: toFiles([
         ...REQS_SKILL_PATHS,
         ...REQS_REFERENCE_PATHS,
@@ -398,6 +417,7 @@ export function getSkillPack(name: string): SkillPack | null {
     return {
       name: 'design',
       contract: SKILL_CONTRACTS.design,
+      ...skillInvocationPolicy('design'),
       files: toFiles([...DESIGN_SKILL_PATHS, ...DESIGN_REFERENCE_PATHS, ...compositionPaths('design')]),
       uiKit: toFiles(UI_KIT_SKILL_PATHS),
     }
@@ -408,6 +428,7 @@ export function getSkillPack(name: string): SkillPack | null {
     return {
       name: workName,
       contract: SKILL_CONTRACTS[workName],
+      ...skillInvocationPolicy(workName),
       files: toFiles([
         ...WORK_SKILL_PATHS[workName],
         ...references,

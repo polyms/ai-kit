@@ -29,6 +29,7 @@ import {
   ENGINEERING_SKILL_PATHS,
   LEGACY_SKILL_ALIASES,
   legacyWorkflow,
+  skillInvocationPolicy,
   WORK_REFERENCE_PATHS,
   PORTABLE_SKILL_STANDARD,
 } from './skill-pack'
@@ -323,6 +324,27 @@ describe('consolidated engineering packs', () => {
   })
 })
 describe('portable engineering packs', () => {
+  it('separates native invocation from conversational selection for every canonical pack', async () => {
+    const manualEngineering = ['setup', 'craft', 'build-feature-map', 'align', 'arch-refactor', 'e2e']
+    const nativeManual = [...manualEngineering, 'reqs', 'design', 'docs']
+    for (const pack of listSkillPacks()) {
+      const source = readFileSync(join(repoRoot, 'skills', pack.name, 'SKILL.md'), 'utf8')
+      const frontmatter = source.split('---')[1] ?? ''
+      const expectedNative = /^disable-model-invocation:\s*true\s*$/m.test(frontmatter) ? 'explicit' : 'model'
+      expect(pack.nativeInvocation, pack.name).toBe(expectedNative)
+      expect(pack.nativeInvocation, pack.name).toBe(nativeManual.includes(pack.name) ? 'explicit' : 'model')
+      expect(pack.mcpSelection, pack.name).toBe(manualEngineering.includes(pack.name) ? 'explicit-intent' : 'intent')
+      expect(getSkillPack(pack.name), pack.name).toMatchObject(skillInvocationPolicy(pack.name))
+      const result = await executeGetSkillPack(pack.name, vi.fn<typeof fetch>(), [])
+      expect(JSON.parse(result.content[0]!.text), pack.name).toMatchObject(skillInvocationPolicy(pack.name))
+    }
+    for (const name of ['reqs', 'design', 'docs'] as const) {
+      expect(skillInvocationPolicy(name)).toEqual({ nativeInvocation: 'explicit', mcpSelection: 'intent' })
+    }
+    const alias = await executeGetSkillPack('to-prd', vi.fn<typeof fetch>(), [])
+    expect(JSON.parse(alias.content[0]!.text)).toMatchObject({ name: 'reqs', nativeInvocation: 'explicit', mcpSelection: 'intent' })
+  })
+
   it('delivers starter content and explicit invocation metadata for all engineering packs', async () => {
     const catalog = listSkillPacks()
     const manual = ['setup', 'craft', 'build-feature-map', 'align', 'arch-refactor', 'e2e']
