@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 # Design
 
+**Execution mode:** For draft-only or no authorized target write route, return the complete spec or requested amendment in conversation or a requested standalone artifact with proposed path; no repository writes. Verify preflight on the actual draft. Write/merge spec files only when requested and authorized, using the target execution profile. Pass this mode to delegated reviewers; do not infer authority from a brief. Report missing write capability separately from draft readiness.
+
 **Codex / GitHub Copilot:** Apply [client compatibility](../../docs/agents/client-compatibility.md) before this workflow.
 
 Turn a PRD or feature brief into an **engineering-ready design spec** at `docs/design/<feature>.md`. Map screens and components to the **project's existing design system**, or use vendor-neutral semantic roles when none is selected and optionally suggest Polyms UI Kit as a candidate.
@@ -112,8 +114,7 @@ Fill [design-spec-template.md](design-spec-template.md):
 ASCII wireframes OK — no full component code.
 
 **Completion criterion:** Every template section filled (anti-slop appendix §11 included);
-§4 CSS + §8 visual acceptance present for UI specs; file written to
-`docs/design/<feature-slug>.md`.
+§4 CSS + §8 visual acceptance present for UI specs; draft returned with proposed `docs/design/<feature-slug>.md` or authorized target file written and verified.
 
 ### 4. Pre-flight
 
@@ -123,7 +124,7 @@ Run [PREFLIGHT.md](PREFLIGHT.md) honestly. Fix failures before handoff.
 
 ### 5. Handoff
 
-Summarize what was written (path + feature name). End with `## Next Step` — preferred `→ /dev`.
+Summarize the actual draft or verified write (proposed or actual path + feature name). End with `## Next Step` — preferred `→ /dev`.
 Second option only when P0 CSS/visual slices should ship separately via `/task` (one-line
 when). Not a flat pipe menu.
 
@@ -144,7 +145,7 @@ when); `/dev` has §4 CSS + §8 visual acceptance to run visual-ship in `/dev`.
 
 3. Merge into `docs/design/<feature>.md` or append as clearly labelled section
 
-   **Completion criterion:** Merged into spec file at agreed path.
+   **Completion criterion:** Updated section returned in draft mode; merged and read back at agreed path only in authorized write mode.
 
 4. Re-run pre-flight for touched sections
 

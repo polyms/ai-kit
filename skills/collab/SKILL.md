@@ -49,6 +49,8 @@ the same trade-off; otherwise choose the next free `docs/adr/NNNN-*.md` path.
 
 ## Workflow
 
+**Execution mode (before step 1 and every delegation):** Resolve the requested outcome, write authority and available routes. Draft-only/spec-only without write authority means produce the full packet in conversation or a user-requested standalone artifact, with proposed paths, **zero repository writes**, no tracker mutation, and no `dev` handoff. Authorized packet write means create/update only approved packet artifacts, then stop unless implementation is separately requested and authorized. Implementation mode requires verified packet artifacts in the target project before product code changes. If a write route is unavailable, fall back to a clearly labeled draft and report the write/implementation blocker. Pass mode, allowed actions, approved decisions and actual evidence to every principal; a brief never grants write authority or approval.
+
 Use the same authorized workspace/ref or connector evidence for the packet. If actual implementation or
 verification is unavailable, return the proposed packet and blocked handoff, not a shipped feature.
 
@@ -98,12 +100,11 @@ If `docs/prd/<slug>.md` exists, verify it against the completion criterion. Skip
 otherwise resume with `pm` (see **Slug and resume**).
 
 Delegate to **`pm`** if available, otherwise run the scoped reqs pass with the brief and the expected output path. Load the `reqs` pack via MCP or local skill reference and follows
-**Codebase-first** only: lean PRD at `docs/prd/<slug>.md`, no publish, no interview.
+**Codebase-first** only: lean PRD content with proposed `docs/prd/<slug>.md`, no tracker publish, no interview. Write only in authorized packet-write or implementation mode.
 Use the brief as the codebase pass; inspect only gaps needed to write or complete the PRD, and do not
 repeat the parent's broad exploration. Parent does not draft the PRD in parallel.
 
-**Completion criterion:** The parent confirms `docs/prd/<slug>.md` exists and contains a problem
-statement, scope, and assumptions, with no unresolved `[NEEDS CLARIFICATION]`. If the PM surfaces a
+**Completion criterion:** The parent checks actual PRD content for problem statement, scope and assumptions, with no unresolved `[NEEDS CLARIFICATION]`. In draft mode verify the returned content and proposed path; in write mode additionally verify the actual target file. If the PM surfaces a
 new blocking fork, handle it through step 6 before continuing. If the file already existed, verify
 its required sections before treating it as complete.
 
@@ -113,12 +114,11 @@ Run `domain-modeling` to apply its three-part ADR test. Copying an existing CRUD
 test — skip the ADR and name which part failed.
 
 When all three pass, delegate to **`techlead`** if available, otherwise run the scoped architecture pass with the decision, the brief, and the ADR path to create
-or resume. This run includes `domain-modeling` (ADR + glossary lines the decision forces) and
+or resume only when writing is authorized; otherwise draft the ADR and glossary delta. This run includes `domain-modeling` (ADR + glossary lines the decision forces) and
 `arch` for the seam. Reuse an existing ADR for the same trade-off or use the next free
 `docs/adr/NNNN-*.md`. Do not widen product scope.
 
-**Completion criterion:** ADR file exists and status is Accepted, or the packet states
-which of the three tests failed.
+**Completion criterion:** The packet records which of the three tests failed, or contains the supported ADR and glossary delta. In draft mode mark the ADR Proposed unless an authoritative prior approval is evidenced; no file is required. In write mode verify actual artifacts and their approval status. Only an explicitly approved decision may be Accepted; unresolved required decisions block implementation.
 
 ### 5. UI spec — spawn `designer` when there is a screen
 
@@ -134,16 +134,13 @@ or adopt it without the user's choice. Polyms `/ui-kit` is optional and may be
 consulted only when the user selects Polyms UI Kit or the project already uses it.
 
 Delegate to **`designer`** if available, otherwise run the scoped design pass with the PRD path, the brief, and the expected output path. The agent reads
-the `design` pack via MCP or local skill reference. Brief lock is already inferred — do not wait for a second confirm. Map actual project components from verified sources, or use semantic component roles when the design system is not established; do not invent a library. Write `docs/design/<slug>.md`.
+the `design` pack via MCP or local skill reference. Brief lock is already inferred — do not wait for a second confirm. Map actual project components from verified sources, or use semantic component roles when the design system is not established; do not invent a library. Return the UI spec with proposed `docs/design/<slug>.md`; write only in an authorized write mode.
 
-**Completion criterion:** The spec exists, names flows and four content states per screen, and
-passes `skills/design/PREFLIGHT.md`; or the packet explicitly says there is no screen.
+**Completion criterion:** The returned spec content names flows and four content states per screen and passes `skills/design/PREFLIGHT.md`; verify the actual target file only in write mode, or explicitly record that there is no screen.
 
 ### 6. Check the packet, then implement or ask
 
-Parent checks the actual target workspace or authorized repository artifacts against every applicable completion criterion: PRD has its required sections;
-ADR, when required, exists with Accepted status; UI spec, when required, passes
-`skills/design/PREFLIGHT.md`. A principal's "done" line is not enough — see
+Parent checks the actual returned draft contents or authorized repository artifacts against every applicable completion criterion: PRD has its required sections; ADR when required has explicit rationale and approval status; UI spec when required passes `skills/design/PREFLIGHT.md`. Draft-ready, written and implementation-ready are separate states. In draft mode return content and proposed paths without requiring any file. In implementation mode verify target files and any required ADR approval before `dev`. A principal's "done" line is not enough — see
 [invocation.md](../../docs/agents/invocation.md) verification after delegation. Do not re-run the
 explore.
 
@@ -151,7 +148,7 @@ A new `[NEEDS CLARIFICATION]` that surfaces in an artifact → state the blockin
 batched ask and stop. Do not enter `dev`. Do not re-ask a fork the ask gate already closed. After
 the answer, resume at the unfinished step.
 
-Nothing blocking left → when implementation is requested and authorized, spawn `developer` if available
+Nothing blocking left → when implementation is requested and authorized and the written packet and approvals are verified, spawn `developer` if available
 or perform the implementation branch directly; follow the `dev` ship checklist in this same turn.
 For draft/spec-only requests, return the packet and stop before product changes. Write packet files only when authorized; otherwise return a clearly labeled draft with proposed paths. The parent does not implement in parallel.
 

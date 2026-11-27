@@ -66,7 +66,7 @@ Apply the **deletion test** to anything you suspect is shallow: would deleting i
 When the host can produce an authorized HTML artifact, use the report template. Otherwise provide the
 same complete report structure in chat as Markdown, with evidence and limitations; do not invent a file.
 
-Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html`. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
+If supported and appropriate, create the self-contained HTML as a user-accessible artifact or in the local OS temp directory outside the repo. On a local host resolve `$TMPDIR` (or the OS equivalent), use `xdg-open`, `open` or `start` only if available, and provide the actual accessible link/path. On a remote host without an artifact tool use the complete Markdown report. Never require a shell, filesystem or graphical viewer to complete the assessment.
 
 Each candidate gets a card with files, problem, solution, benefits, before/after diagram, and recommendation strength (`Strong`, `Worth exploring`, `Speculative`). End with a **Top recommendation** section.
 
@@ -76,9 +76,9 @@ Each candidate gets a card with files, problem, solution, benefits, before/after
 
 See [HTML-REPORT.md](HTML-REPORT.md) for scaffold, diagram patterns, styling, and tone.
 
-Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"
+Do NOT propose interfaces yet. After the report is delivered, ask the user: "Which of these would you like to explore?"
 
-**Completion criterion:** HTML file written to temp dir, opened for user, absolute path reported; no interface proposals in report.
+**Completion criterion:** Candidate report delivered in an accessible format (HTML artifact or equivalent Markdown), including evidence, trade-offs, diagrams where useful and top recommendation; no interface proposals in report. Claim file creation/opening only if verified; no shell or temp path required.
 
 ### 3. Grilling loop
 

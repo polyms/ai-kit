@@ -93,16 +93,15 @@ draft from the codebase without an interview.
 
 1. Do **not** run [prd-interview.md](prd-interview.md), the confirmation turn, or the behavior-pass
    questions. The brief already settled scope.
-2. Write `docs/prd/<slug>.md` from [lean-prd-template.md](lean-prd-template.md). Fill a
+2. Draft content from [lean-prd-template.md](lean-prd-template.md) with proposed `docs/prd/<slug>.md`. Write to the target only when requested and authorized. Fill a
    section or delete it. Do **not** publish a tracker issue.
 3. Put inferences under **Assumptions**. Cite the product pattern in prose ("same as the member
    list"), not a repo path, unless the user asked for paths.
 4. Use `[NEEDS CLARIFICATION]` only for a blocking fork the brief left open. Do not invent a
    threshold the brief did not infer.
-5. Return the path and any markers to the parent. Do not ask the user a second interview.
+5. Return the actual draft or verified file path and any markers to the parent. Do not ask the user a second interview.
 
-**Completion criterion:** `docs/prd/<slug>.md` exists; no tracker issue; no interview questions
-were sent.
+**Completion criterion:** Required lean PRD content is complete (with explicit blocking markers if any); actual file verified only for authorized writes, otherwise draft returned with proposed path; no tracker issue or repeated interview.
 
 When the user invoked `/reqs` this way themselves (no `collab` parent), end with `## Next Step`
 → `/design` if the feature has a screen, otherwise → `/reqs` (publish the approved lean PRD if requested).

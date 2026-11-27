@@ -49,8 +49,7 @@ When the user states how something works, check whether code agrees. If code con
 ## Update CONTEXT.md Inline
 
 When a term resolves, record it immediately in the session and update the canonical glossary through
-the configured authorized route. For a repository this may be a workspace edit or branch/PR;
-if writing is unavailable, return the glossary delta and mark it pending. Do not create a second
+the configured authorized route only when the task authorizes the write. For a repository this may be a workspace edit or branch/PR; in draft-only mode or if writing is unavailable, return the glossary delta and mark it proposed/pending. Never create files in draft-only mode. Do not create a second
 canonical file or overwrite concurrent changes. Use the context-format guide in `setup`.
 
 `CONTEXT.md` is glossary only: no implementation details, no specs, no scratch notes.
@@ -63,7 +62,7 @@ Offer an ADR only when all three are true:
 2. **Surprising without context** — future readers will ask "why?"
 3. **Real trade-off** — genuine alternatives existed
 
-If any condition is missing, skip the ADR. Use the adr-format guide in `setup`.
+If any condition is missing, skip the ADR. Use the adr-format guide in `setup`. A three-part test establishes that an ADR is warranted, not that its decision is approved. Draft as Proposed unless actual approval is evidenced; write only when separately authorized.
 
 ## During align-loop
 

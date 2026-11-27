@@ -274,7 +274,7 @@ Canonical roles mapped to tracker labels. See `docs/agents/triage-labels.md`.
 
 ### Design
 
-UI specs and existing design system or optional Polyms UI Kit candidate. See `skills/setup/design.md`.
+UI specs and existing design system or optional Polyms UI Kit candidate. See project-owned `docs/agents/design.md`.
 
 ### Requirements templates
 
@@ -282,8 +282,7 @@ Default: [Standard / MVP / AI-optimized]. See `docs/agents/requirements.md`.
 
 ### Knowledge
 
-Stack axes for Knowledge retrieval. See `docs/agents/stack-profile.md` and
-`docs/agents/knowledge.md`.
+Stack axes for Knowledge retrieval. See project-owned `docs/agents/stack-profile.md`. For AI Kit-owned retrieval methodology, load the Knowledge guide through the relevant AI Kit skill pack or installed skill references; do not assume an AI Kit checkout exists here.
 
 ### Voice
 
@@ -300,8 +299,7 @@ Author or repair areas with `/build-feature-map`.
 
 ### Pipeline
 
-Idea → `/align` → `/reqs` → `/task` → `/design` → `/dev`; raw issues via `/track` (triage). Specs in
-[path]; glossary in `CONTEXT.md`.
+Idea → `/align` → `/reqs` → `/task` → `/design` → `/dev` → `/code-review`; raw issues via `/track` (triage). Specs in [path]; glossary in `CONTEXT.md`. Load AI Kit methodology through the host's installed skills or MCP, not relative paths in this target project. `qa` owns functional verification; `e2e` owns browser automation; `collab` prepares feature packets.
 ```
 
 **Context file shape.** That block stays a short pointer. Link `docs/agents/*` instead of pasting them. Do not

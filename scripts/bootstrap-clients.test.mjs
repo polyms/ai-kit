@@ -277,3 +277,21 @@ test('restored engineering skill responsibilities retain their semantic handoffs
   assert.match(read('skills/e2e/SKILL.md'), /Use `qa` for functional coverage/)
   assert.match(read('skills/track/triage-workflow.md'), /\*\*`align-loop`\*\* and \*\*`domain-modeling`\*\*/)
 })
+
+
+test('portable draft gates precede writes and report completion does not require local shell', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const collab = read('skills/collab/SKILL.md')
+  assert.ok(collab.indexOf('**Execution mode (before step 1') < collab.indexOf('### 1. Codebase pass'))
+  assert.match(collab, /zero repository writes/)
+  assert.match(collab, /In draft mode verify the returned content/)
+  assert.match(collab, /Only an explicitly approved decision may be Accepted/)
+  assert.match(read('skills/reqs/SKILL.md'), /actual file verified only for authorized writes/)
+  assert.match(read('skills/design/SKILL.md'), /no repository writes/)
+  const arch = read('skills/arch-refactor/SKILL.md')
+  assert.match(arch, /Candidate report delivered in an accessible format/)
+  assert.doesNotMatch(arch, /Completion criterion:.*HTML file written to temp dir/)
+  const setup = read('skills/setup/SKILL.md')
+  assert.match(setup, /See project-owned `docs\/agents\/design\.md`/)
+  assert.match(setup, /→ `\/dev` → `\/code-review`/)
+})
