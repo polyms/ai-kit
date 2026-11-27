@@ -245,3 +245,35 @@ for (const [client, root] of [['codex', '.agents'], ['claude', '.claude']]) {
     assert.ok(existsSync(join(skills, 'reqs', 'SKILL.md')))
   })
 }
+
+
+test('restored engineering skill responsibilities retain their semantic handoffs', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const cases = [
+    ['agents/designer.md', /E2E \(\/e2e\)/, /E2E \(\/qa\)/],
+    ['agents/designer.md', /a `collab` inference brief/, /a `dev` feature preparation brief/],
+    ['agents/developer.md', /`collab` spec packet/, /E2E harness\/flake \(\/qa/],
+    ['agents/pm.md', /`collab` inference brief/, /E2E \(\/qa\)/],
+    ['agents/tester.md', /skills\/e2e\/SKILL\.md/, /skills\/qa\/e2e-workflow\.md/],
+    ['agents/techlead.md', /skills\/arch-refactor\/SKILL\.md/, /skills\/arch\/refactor-workflow\.md/],
+    ['skills/devops/SKILL.md', /Boundary vs `\/e2e`/, /Boundary vs `\/qa`/],
+    ['skills/build-feature-map/SKILL.md', /sharding stay on `\/e2e`/, /sharding stay on `\/qa`/],
+    ['skills/reqs/SKILL.md', /when `collab` passes an inference brief/, /dev feature preparation passes an inference brief/],
+    ['skills/setup/domain.md', /`domain-modeling` creates/, /the align domain-modeling workflow creates/],
+    ['skills/align/SKILL.md', /Run `align-loop` using `domain-modeling`/, /\(decision-loop\.md\)/],
+    ['skills/qa/SKILL.md', /Use `e2e` for browser automation/, /\(e2e-workflow\.md\)/],
+    ['skills/arch/SKILL.md', /Use `arch-refactor` for an evidence-led codebase scan/, /\(refactor-workflow\.md\)/],
+    ['skills/review/SKILL.md', /Use `code-review` for source-code changes/, /\(code-review-workflow\.md\)/],
+    ['docs/agents/knowledge.md', /`\/arch`, and `\/arch-refactor`/, /`\/arch`, and `\/arch`/],
+    ['apps/landing/src/content/overlay.ts', /For a maintenance scan of deepening debt, use `\/arch-refactor` instead/, /For a maintenance scan of deepening debt, use `\/arch` instead/],
+    ['apps/landing/src/content/overlay.ts', /optional `\/e2e` how-to/, /optional `\/qa` how-to/],
+  ]
+  for (const [path, expected, incorrect] of cases) {
+    const content = read(path)
+    assert.match(content, expected, path)
+    assert.doesNotMatch(content, incorrect, path)
+  }
+  // Both functional QA and E2E still have independent valid routes.
+  assert.match(read('skills/e2e/SKILL.md'), /Use `qa` for functional coverage/)
+  assert.match(read('skills/track/triage-workflow.md'), /\*\*`align-loop`\*\* and \*\*`domain-modeling`\*\*/)
+})

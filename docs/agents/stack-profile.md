@@ -1,7 +1,7 @@
 # Stack profile
 
 Per-repo **Stack manifest** — axes that filter Knowledge search (`search_knowledge`
-`axes`). Written by `/setup`; consumed by `/dev`, `/devops`, `/arch`. Pointer only; live recipes
+`axes`). Written by `/setup`; consumed by `/dev`, `/devops`, `/arch`, and `/arch-refactor`. Pointer only; live recipes
 stay in Ops CMS — see [knowledge.md](./knowledge.md).
 
 ## Axes

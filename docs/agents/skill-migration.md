@@ -43,3 +43,7 @@ Existing local installations should rerun bootstrap. Retire only known AI Kit sy
 aliases; preserve personal skills. Existing SDK snapshots are immutable. Legacy template-only
 directories for these aliases may remain temporarily for mutable-main compatibility; they contain
 no SKILL.md. Do not create a second invocation or infer write authority from an alias.
+
+## Semantic handoff regression
+
+Native entries alone do not establish correct routing. Maintain the agent, skill, project-guide and site handoff regression in `scripts/bootstrap-clients.test.mjs`. E2E harness work routes to `e2e`, feature-packet preparation to `collab`, glossary/ADR mutation to `domain-modeling`, design-tree questioning to `align-loop`, architecture assessment to `arch-refactor`, and source review to `code-review`. Functional QA, implementation, seam design and artifact review retain their respective independent responsibilities. Check positive and negative routes when changing skill boundaries.

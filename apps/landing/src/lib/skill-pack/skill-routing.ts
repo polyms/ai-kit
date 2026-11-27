@@ -72,13 +72,13 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
   'build-feature-map': {
     useWhen: ['/build-feature-map, build or update feature map', 'Dựng bản đồ vùng, cập nhật feature map'],
     avoidWhen: 'Explicit selection; not UI design or QA approval.',
-    relatedSkills: ['setup', 'qa', 'design', 'dev'],
+    relatedSkills: ['setup', 'e2e', 'collab', 'qa', 'design', 'dev'],
     starter: 'entry',
   },
   'devops': {
     useWhen: ['Investigate deployment or CI failure, diagnose infrastructure', 'Sửa deploy, lỗi build, fix CI'],
-    avoidWhen: 'Not feature implementation or release readiness alone.',
-    relatedSkills: ['release', 'code-review'],
+    avoidWhen: 'Use e2e for flaky or slow browser test jobs, harness configuration and test sharding; use dev for feature implementation and release for readiness.',
+    relatedSkills: ['release', 'code-review', 'e2e'],
     starter: 'entry',
   },
   'setup': {

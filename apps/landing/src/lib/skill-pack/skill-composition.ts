@@ -109,13 +109,13 @@ export const SKILL_CONTRACTS: Record<SkillPackName, SkillContract> = {
   'arch': {
     context: [{ key: 'architecture-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
     accepts: ['context', 'decision', 'requirements', 'evidence'],
-    produces: ['decision', 'review-findings', 'document'],
-    readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
+    produces: ['decision', 'document'],
+    readyWhen: 'Module interface, seam, depth, locality and testability decisions are explicit and grounded in the target context.',
   },
   'dev': {
     context: [{ key: 'implementation-target', importance: 'required', description: 'Requested outcome, target project/revision, approved scope and relevant evidence.' }],
     accepts: ['context', 'requirements', 'ui-spec', 'work-item', 'defect', 'decision'],
-    produces: ['change-receipt', 'test-report', 'requirements', 'ui-spec'],
+    produces: ['change-receipt', 'test-report'],
     readyWhen: 'Selected workflow gates, decisions, evidence, and actual write or execution status are explicit.',
   },
   'craft': {
