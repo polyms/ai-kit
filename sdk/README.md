@@ -24,7 +24,19 @@ GitHub Actions builds and tests on Node.js 24. RC `1.0.0-rc.1` was built,
 pack-verified and **published to GitHub Packages** by tag `sdk-v1.0.0-rc.1`
 ([release workflow](https://github.com/polyms/ai-kit/actions/runs/45020141109)).
 It uses the `next` dist-tag, not `latest`. Public Polyms proxy installation
-has not yet been independently verified.
+has not yet been independently verified. To check the *published* package
+(rather than a local tarball) and its public HTTP skill delivery from a host
+with Node.js 24+ and registry/network access, run:
+
+```sh
+node scripts/verify-published-sdk.mjs
+```
+
+The check uses a fresh temporary npm project and the published
+`@polyms/ai-kit-sdk@1.0.0-rc.1` through `registry.polyms.dev/npm`,
+then reuses the existing reference consumer verification. It runs **only
+on demand**, never in production CI, and is not proof of the SDK version
+actually loaded by Astra.
 
 For future versions: update `sdk/package.json`, verify CI, then push a
 matching `sdk-v<version>` tag. The workflow tests, packs and publishes the
