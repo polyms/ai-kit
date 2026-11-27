@@ -29,53 +29,40 @@ Only Node.js 24+ / ESM with built-in `fetch` is supported.
 | PR source tests and local packed tarball import | GitHub CI on SDK RC head | Verified |
 | Publishing to GitHub Packages | Tag workflow `sdk-v1.0.0-rc.1` | Verified |
 | Current 0.3.5 skill HTTP delivery | AI Kit production MCP `get_release_info` expectedVersion=0.3.5, checkHttp=true, retiredVersion=0.3.4 | Passed (7/7 from server network; not independent client runtime) |
-| Public Polyms registry proxy install | Clean install of RC through `registry.polyms.dev/npm` | Not verified |
+| Polyms registry and real consumer installation | Astra operator confirms `1.0.0-rc.1` installed via `registry.polyms.dev` and deployed in production | Operator-confirmed; no duplicate synthetic installation needed |
 | Explicit consumer SDK runtime version | Astra operator reports RC1 at mcp.astra.shadeofhue.com; Astra `get_issue_template` returns skill 0.3.5 | Operator-reported RC1; SDK dependency version not independently returned by Astra MCP |
-| Consuming-host performance | Cold/warm and reference timing with `sdk/benchmark.mjs` | Not measured |
+| Consuming-host performance (optional) | `sdk/benchmark.mjs` is available for diagnosing latency or measuring regressions | No agreed SLO or reported issue; **not a stable release blocker** |
 | Full native-client Memory behavior | Client-specific tool traces, not just delivery | Not verified |
 | Paired model-quality benefit | Real model + judge measurements under quality plan | Not measured; separate quality track |
 
-## Targeted follow-up: registry and catalog consistency
+## Catalog integrity follow-up
 
-The SDK now checks that the complete catalog metadata for a release matches
-between the `latest` alias and the pinned catalog (regardless of JSON object
-key order). Previous revision-only comparison could silently admit metadata
-drift without a revision bump. This closes an SDK compatibility/integrity gap;
-there is **no wire schema or exported API change**.
+The SDK now compares complete JSON metadata for the same release between
+`latest` and the pinned catalog, regardless of object key order. Revision-only
+checks previously allowed contracts or composition data to drift without a
+revision change. Existing public API, skill schema and consumer behavior remain
+unchanged except that inconsistent responses are rejected.
 
-Use the existing published SDK, not a local workspace tarball, for an
-**on-demand** integration check from a machine with Node.js >=24 and public
-network access:
+Astra is the real consumer: the operator confirms that SDK RC1 was installed
+from the Polyms registry and deployed in production. The Astra MCP template
+retrieval verifies skill release 0.3.5, but it does not independently identify
+the loaded SDK package. Record the operator confirmation without creating an
+additional registry-install harness or claiming tool-verified package identity.
 
-```sh
-node scripts/verify-published-sdk.mjs
-```
-
-The script creates a temporary empty Node project, isolates npm configuration
-and credentials, installs the *exact* SDK candidate version through
-`https://registry.polyms.dev/npm`, imports its published ESM entry point, and
-reuses `verifySdkConsumer` against production skill release 0.3.5. It checks
-latest/pinned catalog consistency, QA context, lazy reference retrieval, and
-additive domain extension. Temporary files are removed afterward. It writes no
-Astra data and is deliberately **not** a scheduled or CI production job.
-
-Record the command output, execution date, package version, Node version and
-network vantage. If DNS, registry permission or public network access fails,
-the gate stays **Unverified** until it is retried from a capable host; do not
-claim a package regression from an inaccessible environment. A successful run
-validates a fresh external consumer of the published SDK, **not** which package
-is loaded inside Astra.
-
-Run `node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.5 20` from the
-intended consumer host for actual performance evidence. Node process timings
-from a different network cannot substitute for that host. Do not infer the
-SDK package from Astra's template version 1.3.0 or skill release 0.3.5.
+Performance measurements can be made using the existing
+`node sdk/benchmark.mjs https://ai-kit.polyms.dev 0.3.5 20` command, only if
+there is a concrete latency issue, a measured regression or an agreed SLO.
+The benchmark has **no mandatory pass/fail threshold** for the stable SDK
+release today. Model-quality and native-client memory behavior are separate
+product evaluation tracks, not gates for the SDK's packaging/API stability.
 
 ## Stable decision
 
-Do not tag `sdk-v1.0.0` until the actual registry and consumer
-compatibility gates have concrete results and the SDK package version
-has been updated on `main`. Promotion of the SDK does not require
+Do not tag `sdk-v1.0.0` until the SDK API and behavior changes pass
+regression/packaging tests, the Astra production consumer evidence is recorded,
+and the SDK package version is intentionally updated to 1.0.0 on `main`.
+Do not block this on duplicate registry tests or unestablished performance
+targets. Promotion of the SDK does not require
 inventing a Memory storage engine or claiming a model-quality lift.
 Retain the `schemaVersion: 1` compatibility contract and optional hints.
 
