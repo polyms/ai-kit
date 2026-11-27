@@ -312,12 +312,30 @@ test('draft handoff, diagnosis-only and pre-merge gates survive portable workflo
   assert.match(ops, /In diagnose-only mode, return findings, proposed fix, verification plan and evidence gaps here and stop before step 4/)
   assert.match(ops, /Enter this step only for an explicitly requested fix with verified write authority/)
   assert.match(ops, /send only when requested and authorized/)
-  assert.match(read('skills/dev/SKILL.md'), /`\/code-review` — source changes require pre-merge review under project policy or user request/)
+  const dev = read('skills/dev/SKILL.md')
+  assert.match(dev, /required or requested pre-merge review/)
+  assert.match(dev, /\[Review-Fix Protocol\]\(\.\.\/\.\.\/docs\/agents\/review-fix-protocol\.md\)/)
+  assert.match(dev, /Do not stop at a review recommendation/)
+  assert.match(dev, /Mark review\s+incomplete/)
   assert.match(read('skills/dev/SKILL.md'), /do not skip a required review/)
   assert.doesNotMatch(read('docs/product/architecture-principles.md'), /Agent-native, business or external memory/)
   assert.doesNotMatch(read('docs/product/knowledge-strategy.md'), /authorized external Memory/)
 })
 
+
+test('review-fix loop retains bounded execution and verification gates', () => {
+  const read = path => readFileSync(join(repo, path), 'utf8')
+  const protocol = read('docs/agents/review-fix-protocol.md')
+  assert.match(protocol, /Review-only\s+stops with findings/)
+  assert.match(protocol, /at most five fix batches, with a final review after the fifth batch/)
+  assert.match(protocol, /two\s+consecutive batches without material progress/)
+  assert.match(protocol, /missing execution or stale evidence is not a pass/)
+  assert.match(protocol, /A failed check becomes a finding/)
+  assert.match(protocol, /Do not recursively start another loop/)
+  assert.match(protocol, /A clean result is not authorization to merge or deploy/)
+  assert.match(read('skills/code-review/SKILL.md'), /Return findings to an\s+existing parent loop/)
+  assert.match(read('skills/dev/SKILL.md'), /return to the parent loop instead of starting another loop/)
+})
 
 test('portable setup, feature-map, E2E and implementation distinguish drafts from writes', () => {
   const read = path => readFileSync(join(repo, path), 'utf8')
