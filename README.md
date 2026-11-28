@@ -351,6 +351,11 @@ Pipeline walkthrough: [examples/pipeline-feature-walkthrough.md](examples/pipeli
 
 ### `/code-review` — Three-axis source-code review
 
+For authorized implementation with required review, or a request to review and fix, the host
+follows the [Review-Fix Protocol](docs/agents/review-fix-protocol.md): review the full change set,
+fix confirmed in-scope findings, verify, and repeat until ready or a bounded stop. Review-only
+stays read-only. This is host-executed guidance, not an AI Kit runtime.
+
 Review branch or PR work since a pinned git fixed point — Standards, Spec, and Simplify in parallel:
 
 ```

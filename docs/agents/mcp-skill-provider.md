@@ -69,6 +69,9 @@ MCP endpoint. No new service, database, cache, dependency or MCP tool is introdu
 | craft | Skill authoring and audit | glossary.md, invocation guide |
 | build-feature-map | Repo-owned behavior index | feature-file and map templates |
 
+The `dev` and `code-review` packs also allowlist `docs/agents/review-fix-protocol.md`.
+Load it on demand for authorized source review-and-fix loops; review-only does not require it.
+
 All packs except design include `docs/agents/work-artifact-standard.md`. Design retains its
 existing specialized quality guidance. The manifest, not this table, determines what MCP serves.
 

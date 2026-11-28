@@ -73,6 +73,11 @@ it, ask before implementation. Explicit `/align`,
 `/reqs`, `/design`, or `/dev` still wins when the user names it. Specs on issue tracker; glossary in
 `CONTEXT.md`.
 
+For authorized implementation or review-and-fix requests with an applicable source review gate,
+follow [Review-Fix Protocol](docs/agents/review-fix-protocol.md). The host repeats review, fixes
+and verification within the authorized scope until ready or a bounded stop condition is reached.
+Review-only remains read-only; merge and deploy require separate authority.
+
 ### Business and work operations
 
 Use `research` for evidence-based investigation, `business` for decisions and financial analysis,

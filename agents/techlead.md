@@ -41,7 +41,9 @@ Route by intent, then read the matching skill:
    **Exception:** a `collab` ADR run tells you to use `domain-modeling` — when the three-part test passes, return ADR and glossary draft content or perform verified writes only when authorized. Use Proposed status unless actual decision approval is evidenced. Do not widen product scope.
    Read **`docs/agents/stack-profile.md`** when present — pass `axes` to Knowledge search.
    Prefer `docs/agents/language.md` when present for documentation language.
-3. Meet each workflow's **completion criterion** before declaring done.
+3. Meet each workflow's **completion criterion** before declaring done. In a Review-Fix Protocol
+   cycle, return fresh read-only review findings against the current full snapshot to the host;
+   route authorized fixes to `developer`, never implement them as the reviewer.
 4. End with `## Next Step` per the skill handoff / CONTEXT.md **Handoff** — one preferred (ship /
    link artifact, or escalate with when); two max only when the fork is real.
 

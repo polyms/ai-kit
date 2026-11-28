@@ -163,6 +163,12 @@ name an upstream skill when blocked.
 
 ### 5. Ship checklist
 
+When source review is required or requested, enter the
+[Review-Fix Protocol](../../docs/agents/review-fix-protocol.md) as soon as the implementation is
+reviewable, unless already inside a fix batch. Apply this checklist during the loop; a repairable
+failed check is a finding, not a reason to end the turn. Missing authority or a material
+prerequisite still blocks the affected action.
+
 - [ ] Types complete — no `any` without justification
 - [ ] Error, empty, and loading states handled
 - [ ] API error surfaces return friendly end-user messages; raw technical errors stay in logs/telemetry
@@ -189,15 +195,27 @@ name an upstream skill when blocked.
 
 ### 6. Handoff
 
+For authorized source changes with a required or requested pre-merge review, continue the
+Review-Fix Protocol from step 5 with `code-review` in the same execution flow. Do not stop at a
+review recommendation while the host can continue within scope. A fix batch, delegated or inline,
+must return to the parent loop instead of starting another loop.
+
 When/why cues (not a pasteable menu). End with `## Next Step` (CONTEXT.md **Handoff**) after the
 ship checklist — prefer **exactly one**:
 
-- `/code-review` — source changes require pre-merge review under project policy or user request; provide the exact diff/ref, specification or assumptions, and actual test evidence. Review is not merge authorization.
+- `/code-review` — only if required review remains and the host cannot execute it in this run;
+  provide the exact snapshot, specification or assumptions, and actual test evidence. Mark review
+  incomplete. When the protocol completes, report readiness for approval, not merge authorization.
 - Ship / done — implementation checks passed and no applicable review or other gate remains
 - `/docs` — public integrator surface (API, MCP, CLI) just shipped
 - `/e2e` — critical browser journey needs CI coverage (not a substitute for seam TDD)
 
-When an applicable pre-merge review remains, prefer `/code-review` after required implementation and verification gates; if browser coverage or another prerequisite blocks review, name that prerequisite first. Do not force a full review for a trivial change when policy and user scope do not require it, and do not skip a required review. Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
+Run the protocol when source changes are reviewable; required implementation and verification
+checks must pass before readiness. If browser coverage or another prerequisite cannot be completed,
+report that gate as blocked while continuing independent in-scope fixes. Do not force a full
+review for a trivial change when policy and user scope do not require it, and do not skip a required review.
+Name the higher-priority one when both `/docs` and `/e2e` could apply; two only if both surfaces
+genuinely apply (each with when). When blocked: single escalate to the owner of the blocking gate.
 
 **Completion criterion:** `## Next Step` names one preferred next action (two max with when/why).
 
@@ -218,7 +236,9 @@ When an applicable pre-merge review remains, prefer `/code-review` after require
    cleanup temptations as follow-ups, do not sneak them in
 
 **Completion criterion:** Loop goes green on matching workspace/CI evidence; regression test exists or seam gap
-documented; characterization done or skipped with reason; scope self-check filled. For a source-changing fix with an applicable pre-merge review gate, use the Implement handoff to `/code-review`; do not claim merge approval.
+documented; characterization done or skipped with reason; scope self-check filled. For a
+source-changing fix with an applicable pre-merge review gate, follow Implement steps 5–6 and the
+Review-Fix Protocol; do not claim merge approval.
 
 ## Stack Defaults
 

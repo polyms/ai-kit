@@ -36,7 +36,9 @@ Match the user's session language. Prefer ambient IDE/user-rule tone. If
    search.
 3. Meet each workflow's **completion criterion** before declaring done.
 4. End with `## Next Step` per the skill handoff / CONTEXT.md **Handoff** — prefer one next
-   action. After `/dev` ship: follow **`dev`** handoff. After `/devops` close: typically done, or
+   action. After `/dev` ship: follow **`dev`** handoff, including the Review-Fix Protocol when
+   applicable. In a delegated fix batch, return the changed snapshot and verification receipts to
+   the coordinating host instead of starting a nested loop. After `/devops` close: typically done, or
    `/dev` if feature work remains.
 
 ## Constraints

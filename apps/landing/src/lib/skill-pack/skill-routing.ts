@@ -40,7 +40,7 @@ export const SKILL_ROUTING: Record<SkillPackName, SkillRoutingHint> = {
     starter: 'entry',
   },
   'code-review': {
-    useWhen: ['Review source code, a commit, PR or diff for Standards, Spec and Simplify', 'Review PR, rà soát mã nguồn, kiểm tra diff trước merge'],
+    useWhen: ['Review source code, a commit, PR or diff for Standards, Spec and Simplify', 'Review PR, rà soát mã nguồn, kiểm tra diff trước merge', 'Review and fix until ready, tự review và sửa đến khi đạt gate'],
     avoidWhen: 'Review of requirements, proposals, business documents or plans belongs to review. Do not implement fixes or merge unless separately authorized.',
     relatedSkills: ['dev', 'arch', 'reqs', 'qa'],
     starter: 'entry',
