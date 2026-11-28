@@ -1,5 +1,5 @@
 name: "AI Kit feedback / Góp ý AI Kit"
-description: "Share a workflow, skill, template or documentation suggestion. Public issue."
+description: "Share feedback or propose reusable technical Knowledge. Public issue."
 title: "[Feedback] "
 body:
   - type: markdown
@@ -22,13 +22,14 @@ body:
         - "Bug / Lỗi"
         - "Suggestion / Đề xuất"
         - "Other / Khác"
+        - "Knowledge contribution / Đóng góp Knowledge"
     validations:
       required: true
   - type: textarea
     id: feedback
     attributes:
       label: "What happened or what should improve? / Nội dung"
-      description: "Describe the issue or idea in your own words. A sentence or two is fine."
+      description: "Feedback can be short. For Knowledge, include proposed guidance, intent, new/update and target if known, applicability, sanitized evidence and overlap findings."
       placeholder: "Example: The plan skill asked for team size again even though I had supplied it."
     validations:
       required: true

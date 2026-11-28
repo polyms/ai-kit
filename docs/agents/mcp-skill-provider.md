@@ -180,6 +180,10 @@ template where applicable; all other file paths remain metadata. For large packs
   shared content within the task, and skip optional recipes when contracts already suffice. Mutable
   main is not a revision identity: refresh shared guidance when freshness matters; do not claim
   same-revision consistency. There is no new cross-request cache or implicit content persistence.
+- Optional `docs/agents/reflection-protocol.md` is available by exact path in every live pack, not in
+  starterPaths. Load it only for a meaningful lesson or requested retrospective when useful;
+  shared contributions remain drafts unless separately approved. No additional search or write is required
+  solely by a reflection hint. Older manifests may not expose this path; do not require it.
 - Related skills are optional handoffs, not prerequisites, automatic execution or permission to publish.
 
 The provider has no arbitrary URL endpoint, cache or orchestration engine. Optional selection is a

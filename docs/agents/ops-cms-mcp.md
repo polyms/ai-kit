@@ -103,7 +103,7 @@ documents workspace files and server options.
 | `delete_knowledge`       | OAuth + JWT `role: admin` |
 | `list_skill_packs`       | OAuth (any user)          |
 | `get_skill_pack`         | OAuth (any user)          |
-| `prepare_feedback_issue` | OAuth (any user, read-only draft) |
+| `prepare_feedback_issue` | OAuth (any user, read-only feedback or Knowledge contribution draft) |
 
 ## Conversational GitHub feedback
 
@@ -125,6 +125,9 @@ excerpt; the complete draft remains available in chat. GitHub still requires
 public-consent confirmation. No blank Issue template required for the
 normal chat flow. Do not claim issue creation from a draft or user approval.
 
+Voluntary Knowledge candidates use the same draft tool with `category: knowledge` and structured
+`knowledge` metadata; GitHub issue review is separate from CMS admin publication. No skill invocation
+or CMS write is required for contributors.
 See [feedback flow and privacy](../feedback.md).
 
 ## Skill packs (MCP clients)
@@ -156,6 +159,10 @@ Client-specific MCP availability, authentication, and invocation behavior may va
 - Follow `SKILL.md` first; consult bundled templates and references when relevant.
 - Work skills include the shared work artifact standard and their applicable templates.
 - Skill loading is read-only; publishing tickets or documents uses the client's authorized integrations.
+- `docs/agents/reflection-protocol.md` is a selective reference in every live pack, not a starter.
+  Shared Knowledge candidates are drafts; `upsert_knowledge` is an immediate admin publication,
+  not a draft tool. Explicit approval, overlap checks, all-status identity evidence for new IDs/slugs
+  and readback are host guidance, not new server-side enforcement.
 - For design, use the returned `uiKit` content when the skill invokes `/ui-kit`.
 
 Files are fetched in parallel without an application cache, with a ten-second timeout per file.

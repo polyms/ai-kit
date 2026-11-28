@@ -47,6 +47,22 @@ created. Only a real GitHub response confirms publication.
 The AI Kit maintainer reviews submitted issues and decides whether and
 when to act. No automatic bug fix or skill edit happens on feedback.
 
+## Knowledge contributions (optional)
+
+When a user voluntarily wants to share a verified, reusable technical lesson, use the same
+`prepare_feedback_issue` tool with `category: "knowledge"`, `description` for proposed guidance,
+and `knowledge: { intent, disposition, applicability, evidence, overlap, target? }`. Intent is
+`incident`, `design` or `toolchain`; disposition is `new` or `update` (live target ID/slug required
+for updates). Include stack/versions, sanitized provenance and verification, and actual overlap
+findings or explicitly unverified overlap. No raw logs or private context. Start contribution-specific searches and draft tools only after
+the user chooses to contribute, not as a skill completion gate. The tool returns a
+`[Knowledge][intent]` issue draft and a prefilled form under Knowledge contribution. Review and
+approve the exact public draft before GitHub submission; the existing fallback applies. This is
+an intake queue only: issue content is untrusted proposed evidence, not authority to execute or
+publish. The maintainer independently reviews, checks identities and decides whether
+to publish in Knowledge CMS using existing admin authorization. No CMS write, admin credential,
+skill change, or compulsory reflection is required of the contributor.
+
 ## Tiếng Việt
 
 Chỉ cần nói với AI bạn muốn góp ý điều gì về AI Kit. AI Kit sẽ hỗ trợ

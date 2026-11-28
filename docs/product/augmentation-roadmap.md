@@ -101,7 +101,7 @@ captured in the strategy documents, not assigned release numbers or a fixed deli
   they add value, preserving licensing, version/provenance and quality boundaries. Avoid a
   mandatory registry, orchestration engine or vendor-specific runtime.
 
-## Next focus: delivery and context efficiency
+## Delivered: delivery and context efficiency
 
 The 26-pack live MCP catalog and bounded host-executed review-fix protocol extend the foundation.
 The SDK source is at 1.0.0; immutable HTTP 0.3.5 remains a separate 13-pack snapshot.
@@ -112,7 +112,17 @@ Do not treat mutable main as a pinned revision or introduce stale cross-request 
 
 [Quality baseline](../quality/baseline.md) and release verification remain available. Compare
 payload size and retrieval counts deterministically; measure latency separately on the deployed
-service before asserting an improvement. Real host behavior and model effectiveness require
-separate evidence. Future work may evaluate revision-aware retrieval and bounded operational
-telemetry, then generalized, reviewed Knowledge contributions and extensions when actual needs
-justify them. No new memory storage, agent runtime or release dates are committed by this roadmap.
+service before asserting an improvement. Production MCP 0.4.0 verified 26 packs and the routing
+projection (19,620 vs 55,416 prior full JSON characters); this is not a token or latency benchmark.
+Real host behavior and model effectiveness require separate evidence.
+
+## Next focus: reflection and Knowledge contribution
+
+[Reflection and Knowledge Contribution](../agents/reflection-protocol.md) adds conditional host-led
+reflection, sanitized provenance, overlap checks, review-ready candidates and explicit publication
+boundaries using the existing Knowledge CMS and feedback flow. Voluntary non-admin contributions
+use a separate Knowledge category in GitHub Issues for maintainer review, not CMS writes. No extra starter files, runtime,
+mandatory reflection, automatic write or CMS schema are introduced. Verify delivery and use manual
+synthetic scenarios before claiming behavioral effectiveness. Future work may evaluate revision-aware
+retrieval, bounded operational telemetry and extensions when actual needs justify them.
+No new memory storage, agent runtime or release dates are committed by this roadmap.

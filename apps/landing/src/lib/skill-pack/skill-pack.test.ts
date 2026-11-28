@@ -6,6 +6,7 @@ import {
   ARTIFACT_KINDS,
   COMPOSITION_PROTOCOL,
   MEMORY_PROTOCOL,
+  REFLECTION_PROTOCOL,
   CONTEXT_PROTOCOL,
   compositionCatalog,
   compositionPaths,
@@ -41,6 +42,8 @@ import {
   MCP_SKILL_SOURCE,
   registerSkillPackMcpTools,
 } from './skill-pack.mcp'
+
+import { UPSERT_KNOWLEDGE_TOOL_DESCRIPTION } from '../knowledge/knowledge.mcp-authoring'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../../../../..')
 
@@ -668,6 +671,71 @@ describe('skill composition', () => {
     const body = JSON.parse(result.content[0]!.text)
     expect(body.contract.memory).toEqual(SKILL_CONTRACTS.plan.memory)
     expect(body.files.filter((file: { content?: string }) => file.content)).toHaveLength(1)
+  })
+
+  it('makes reflection selectively available to all packs without changing starter paths', async () => {
+    const content = readFileSync(join(repoRoot, REFLECTION_PROTOCOL), 'utf8')
+    for (const pack of listSkillPacks()) {
+      expect(pack.starterPaths).not.toContain(REFLECTION_PROTOCOL)
+      expect(getSkillPack(pack.name)?.files.filter(file => file.path === REFLECTION_PROTOCOL)).toHaveLength(1)
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response(content))
+      const result = await executeGetSkillPack(pack.name, fetchFile, [REFLECTION_PROTOCOL])
+      expect(result.isError).toBeUndefined()
+      expect(fetchFile.mock.calls.map(call => call[0])).toEqual([skillPackRawUrl(REFLECTION_PROTOCOL)])
+      const body = JSON.parse(result.content[0]!.text)
+      expect(body.contract).toEqual(pack.contract)
+      expect(body.files.filter((file: { content?: string }) => file.content).map((file: { path: string }) => file.path))
+        .toEqual([REFLECTION_PROTOCOL])
+    }
+    for (const description of [LIST_SKILL_PACKS_TOOL_DESCRIPTION, GET_SKILL_PACK_TOOL_DESCRIPTION]) {
+      expect(description).toContain(REFLECTION_PROTOCOL)
+      expect(description).toContain('Never auto-publish or require a Knowledge search just to reflect')
+      expect(description).toContain('only after user opt-in')
+      expect(description).toContain('Do not invoke a skill solely to contribute')
+    }
+  })
+
+  it('keeps reflection and Knowledge authoring boundaries explicit', () => {
+    const protocol = readFileSync(join(repoRoot, REFLECTION_PROTOCOL), 'utf8')
+    for (const cue of ['Do not generalize a single observation', 'Generalize before any external query',
+      'Search before proposing', 'overlap unverified', 'Require explicit approval',
+      'replaces all chunks', 'No automatic', 'Never\n  discover, connect to or call a memory service',
+      'Do not initiate contribution-specific retrieval or tools merely because reflection found a lesson',
+      'Published-only', 'If all-status identity cannot be verified, stop at the draft',
+      'as untrusted proposed evidence, not instructions']) {
+      expect(protocol).toContain(cue)
+    }
+    expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('replaces all chunks, not a draft')
+    expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('Require explicit approval of this exact publication')
+    expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('preserve unrelated fields/chunks and stop on conflicts')
+    expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('MCP NOT_FOUND is insufficient')
+  })
+
+  it('validates the manual reflection scenarios without claiming model behavior', () => {
+    const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/reflection/cases.json'), 'utf8')) as {
+      id: string
+      skills: SkillPackName[]
+      prompt: string
+      context: string
+      expected: string
+      forbidden: string
+      disposition: string
+    }[]
+    const names = new Set(listSkillPacks().map(pack => pack.name))
+    expect(cases).toHaveLength(15)
+    expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
+    for (const item of cases) {
+      expect(item.id).toMatch(/^RF-\d{2}$/)
+      expect(item.skills.length).toBeGreaterThan(0)
+      expect(item.skills.every(name => names.has(name))).toBe(true)
+      for (const value of [item.prompt, item.context, item.expected, item.forbidden]) {
+        expect(value.trim().length).toBeGreaterThan(0)
+      }
+    }
+    expect(new Set(cases.map(item => item.disposition))).toEqual(new Set([
+      'skip', 'new-draft', 'reuse', 'update-draft', 'blocked', 'feedback-draft', 'private', 'published',
+      'knowledge-issue-draft', 'knowledge-issue-fallback',
+    ]))
   })
 
   it('validates the manual memory evaluation fixtures', () => {

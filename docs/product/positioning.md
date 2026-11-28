@@ -60,7 +60,7 @@ within AI Kit's scope because they make augmentation dependable without duplicat
 | Knowledge | Curated, reusable technical expertise | AI Kit maintains its existing Knowledge catalog |
 | Context and composition | Use the right facts and artifacts for each selected skill | AI Kit supplies guidance; host resolves context and executes |
 | Memory guidance (0.3.3) | Apply relevant past experience, decisions and preferences | AI Kit defines usage guidance; host owns its own native memory |
-| Reflection (planned) | Identify useful lessons from observed outcomes and feedback | Host reasons and proposes; authorized owners decide what to retain |
+| Reflection (host-executed guidance) | Identify useful lessons from observed outcomes and feedback | Host reasons and proposes; authorized owners decide what to retain |
 
 These capabilities are complementary, not a cognitive architecture or an agent execution pipeline.
 Skills describe how to work; Knowledge supplies reviewed general guidance; Memory makes previous
