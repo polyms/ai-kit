@@ -1,17 +1,22 @@
 import type { McpServer } from '@modelcontextprotocol/server'
 import { z } from 'zod'
 import { compositionCatalog } from './skill-composition'
-import { getSkillPack, listSkillPacks, legacyWorkflow, LEGACY_SKILL_ALIASES, type SkillPackFile } from './skill-pack'
+import { getSkillPack, listSkillPacks, legacyWorkflow, LEGACY_SKILL_ALIASES, starterPaths, type SkillPackFile } from './skill-pack'
 import { executeGetReleaseInfo, RELEASE_INFO_INPUT_SCHEMA, RELEASE_INFO_TOOL_DESCRIPTION } from './release-info.mcp'
 
-const listSkillPacksInputSchema = {}
+const listSkillPacksInputSchema = {
+  view: z.enum(['routing', 'full']).optional()
+    .describe('Use routing for skill selection; omit or use full for the legacy catalog with all contracts.'),
+}
 
 const getSkillPackInputSchema = {
   name: z.string().describe('Canonical skill pack name or legacy workflow alias'),
+  strategy: z.enum(['starter', 'full', 'manifest']).optional()
+    .describe('Use starter for a known skill without discovery; full is the legacy default; manifest fetches no content. Mutually exclusive with paths.'),
   paths: z
     .array(z.string())
     .optional()
-    .describe('Optional exact manifest paths to load. Omit for all core files (optional Polyms UI Kit remains metadata-only); [] for manifest.'),
+    .describe('Exact manifest paths; [] for manifest. Omit both paths and strategy for legacy core loading. Optional UI Kit requires exact paths.'),
 }
 
 /** MCP Markdown is fetched from mutable main, not a pinned skill release. */
@@ -23,23 +28,38 @@ export const MCP_SKILL_SOURCE = {
 } as const
 
 export const LIST_SKILL_PACKS_TOOL_DESCRIPTION =
-  'Discover ai-kit workflows for relevant work requests, including engineering implementation, architecture, alignment, project integration, skill authoring, feature maps, DevOps and research, requirements, business decisions, documents, design, task and bug drafting, tracker updates, estimation, QA, communication, review and release. Infer intent in English or Vietnamese, including unaccented, colloquial and mixed-language requests. Select the smallest set using description, useWhen and avoidWhen; honor explicit user choices and native invocation rules of the client. nativeInvocation is the installed skill policy, not a slash-command requirement for conversational MCP. Use mcpSelection for conversational routing: intent permits ordinary relevant natural-language requests (including reqs, design and docs); explicit-intent requires a clearly requested special workflow/outcome or bounded authorized assignment, not a literal slash command. Neither selection mode grants write or execution authority. Legacy invocation metadata on engineering packs is retained for compatibility. Select one branch within reqs (discovery/lean PRD), task (standard/vertical slicing), track (inspect/update/triage), and use independent skills for align (combined session), align-loop (decision questioning), domain-modeling (glossary/ADR), arch (seam design), arch-refactor (assessment), collab (feature packet), dev (implementation), qa (functional verification), and e2e (automation harness). Use review for non-code artifacts and code-review for source changes. Legacy names resolve to canonical packs and explicitly select the branch in legacyWorkflows; request its starterPaths, including workflowPath. Do not run the default branch or duplicate methodologies. A legacy alias never grants write authority. Publication and state mutations still require explicit authorization. Use the target project execution profile and actual available tools; do not require a local checkout merely to read a skill. For each selected pack request its starterPaths, excluding shared files already loaded at the same revision in this conversation. Read contract.context and shared context guidance; reuse available context and resolve only material gaps; contract.knowledge hints are conditional. Memory means your own host agent memory and already available conversation or remembered context, not a memory system to access. contract.memory.recall means consider relevant context you already remember; capture means reflect on a durable lesson under your native host settings. Never discover, connect to, or call a memory service or connector because of these hints; never ask the user to enable memory. If no relevant native memory is available, continue normally. For materially useful guidance, selectively load docs/agents/memory-protocol.md from a selected pack. Verify historical claims against authoritative project evidence when needed for the task; native retention is controlled by the host, not AI Kit. For multi-skill work, inspect contract and composition metadata. Load the shared protocol from any selected pack and an applicable recipe from its hostPack, using exact paths. Related skills and recipe stages are optional; respect completion gates and never infer write authorization. Skip irrelevant packs. Calculate pack totals from packs.length or the returned packCount, never guess. source reports mutable main, not a pinned skill revision; server_info commit identifies the deployment only. No client-side HTTP GET is needed. If the user voluntarily gives AI Kit feedback, use prepare_feedback_issue to build a complete PUBLIC GitHub Issue draft. Present it for review, get explicit user approval, then invoke the separately connected GitHub create_issue action if authorized; otherwise offer the prefilled link from the tool. Never claim a created issue without GitHub confirmation. Do not ask for benchmark/logs or publish automatically.'
+  'Discover AI Kit work and engineering skills in English or Vietnamese (including unaccented, colloquial and mixed-language intent). Use view: routing for ordinary discovery; full only if all contracts are needed. For a known single skill skip discovery and call get_skill_pack with strategy: starter. Select the smallest relevant set via description, useWhen and avoidWhen; honor explicit choices and nativeInvocation for installed clients. For conversational MCP, mcpSelection: intent permits ordinary natural-language requests; explicit-intent requires a clearly requested special outcome or bounded assignment, not slash syntax. Neither grants action authority. Keep reqs (discovery/lean PRD), task (standard/vertical slicing), track (inspect/update/triage) branches distinct. Use review for artifacts, code-review for code, qa for functional verification, e2e for automation; align, align-loop, domain-modeling, arch, arch-refactor, collab and dev remain distinct. Legacy names select the canonical branch via legacyWorkflows; load its starterPaths including workflowPath, not the default workflow. Request selected starterPaths minus still-applicable shared files already loaded; refresh if freshness matters. Read the selected pack contract; reuse available context, resolve material gaps, use Knowledge only when relevant. Memory means your own host agent memory and available context, not an external system; recall considers what you already remember, capture is optional native reflection. Never discover, connect to, or call a memory service or connector because of these hints; never ask to enable memory. If no relevant memory exists, continue normally. Verify historical facts against authoritative evidence when needed; native retention follows host settings. Load docs/agents/memory-protocol.md selectively via its exact manifest path. For composition, load the shared protocol from a selected pack and only the relevant recipe via its hostPack; related skills and recipe stages are optional. Use actual authorized tools and project execution profile; no checkout required for skill retrieval. Respect completion gates and explicit publication/state-change authorization. source is mutable main, not a pinned revision; server_info identifies deployment only. Use packCount or packs.length. No client-side HTTP GET. For voluntary AI Kit feedback, use prepare_feedback_issue for a PUBLIC GitHub draft; show it, get explicit approval, then use separately authorized GitHub create_issue or provide the prefilled link. Never claim creation without confirmation, request benchmarks/logs or publish automatically.'
 
 export const GET_SKILL_PACK_TOOL_DESCRIPTION =
-  'Load one ai-kit skill pack by name. If the skill is already known, call this directly; no prior catalog or client-side download is required. Packs include their workflow, templates and reference files. Returns { name, nativeInvocation, mcpSelection, contract, files: [{ path, rawUrl, content }] }. Honor nativeInvocation for installed skills and mcpSelection for conversational selection; natural-language intent suffices where relevant, including a clearly requested explicit-intent outcome. Skill retrieval itself grants no action authority. design exposes optional uiKit metadata, with content only for explicitly requested exact paths. Prefer paths from starterPaths in list_skill_packs. This loads the entry workflow and applicable standard/template, with remaining file paths returned as metadata. For a legacy name, follow requestedWorkflow.workflowPath; request requestedWorkflow.starterPaths if needed. Exact paths selection still applies; alias selection is not authorization. Memory hints refer only to your own host agent memory and already available context; they never request external memory tools or persistence. If nothing relevant is remembered, proceed normally. Read SKILL.md first; request only referenced files needed for the selected branch, batching related paths when useful. Use paths: [] for manifest-only discovery; omit paths for core full-pack loading (legacy compatible, without optional UI Kit content). Batch missing paths per pack in one call; do not reload files already available in this session unless stale. Recipes are optional: do not request a host pack only for an unnecessary recipe. source is mutable-main metadata, not an immutable file hash. Unregistered paths return INVALID_PATHS without fetching. Follow SKILL.md first and consult bundled templates and references only when needed. Only when the project already uses Polyms UI Kit or the user selects it, load matching optional bundled uiKit references. Never require Polyms UI Kit for core design work. Unknown names return NOT_FOUND; upstream fetch failures return FETCH_FAILED.'
+  'Load one AI Kit pack and its full contract; no prior catalog or client download required. For a known single skill use strategy: starter (entry, shared guidance and applicable template, including the alias workflow if selected). For relevant multi-skill composition, discover routing/recipe metadata if not already available. Use exact paths from starterPaths for selective reuse; batch missing references and avoid reloading still-applicable files. strategy: manifest or paths: [] returns metadata only. Omitting strategy and paths or strategy: full preserves legacy core loading. Never combine strategy and paths (INVALID_SELECTION). Read SKILL.md first, then needed templates/references. Returns files with path/rawUrl/content; unselected files have metadata only. For legacy names follow requestedWorkflow.workflowPath and starterPaths, not the default workflow. Honor nativeInvocation and conversational mcpSelection; a clearly requested special outcome suffices for explicit-intent, not a required slash command. Retrieval never authorizes external actions. Read contract.context, reuse available context, resolve only material gaps and use Knowledge only when relevant. Memory hints refer only to your own host agent memory and available context; never discover, connect to, or call a memory service or connector, or ask to enable memory. Recall considers existing memory; capture is optional native reflection under host settings. If no relevant memory exists, continue. Recipes are optional; do not load a host pack just for an unnecessary recipe. Optional design uiKit files are metadata-only unless requested by exact path and the project uses or user selects Polyms UI Kit; never require it. source is mutable main, not a pinned revision; refresh when freshness matters. Unregistered paths fail with INVALID_PATHS before fetch, unknown names NOT_FOUND, upstream failures FETCH_FAILED.'
 
 type McpTextResult = {
   content: [{ type: 'text'; text: string }]
   isError?: boolean
 }
 
-export function executeListSkillPacks(): McpTextResult {
+type CatalogView = 'routing' | 'full'
+type RetrievalStrategy = 'starter' | 'full' | 'manifest'
+
+export function executeListSkillPacks(view: CatalogView = 'full'): McpTextResult {
   const packs = listSkillPacks()
+  const selected = view === 'routing'
+    ? packs.map(({ name, description, useWhen, avoidWhen, starterPaths: paths, relatedSkills, nativeInvocation, mcpSelection }) => ({
+        name, description, useWhen, avoidWhen, starterPaths: paths, relatedSkills, nativeInvocation, mcpSelection,
+      }))
+    : packs
   return {
     content: [
       {
         type: 'text',
-        text: JSON.stringify({ packs, packCount: packs.length, source: MCP_SKILL_SOURCE, composition: compositionCatalog(), legacyWorkflows: Object.keys(LEGACY_SKILL_ALIASES).map(name => legacyWorkflow(name)) }, null, 2),
+        text: JSON.stringify({
+          ...(view === 'routing' ? { view } : {}),
+          packs: selected,
+          packCount: packs.length,
+          source: MCP_SKILL_SOURCE,
+          composition: compositionCatalog(),
+          legacyWorkflows: Object.keys(LEGACY_SKILL_ALIASES).map(name => legacyWorkflow(name)),
+        }),
       },
     ],
   }
@@ -61,7 +81,8 @@ async function loadFiles(files: SkillPackFile[], fetchFile: typeof fetch, select
 export async function executeGetSkillPack(
   name: string,
   fetchFile: typeof fetch = fetch,
-  paths?: string[]
+  paths?: string[],
+  strategy?: RetrievalStrategy
 ): Promise<McpTextResult> {
   const pack = getSkillPack(name)
   const requestedWorkflow = legacyWorkflow(name)
@@ -71,7 +92,16 @@ export async function executeGetSkillPack(
       isError: true,
     }
   }
-  const selected = paths === undefined ? undefined : new Set(paths)
+  if (paths !== undefined && strategy !== undefined) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: 'INVALID_SELECTION', name }) }],
+      isError: true,
+    }
+  }
+  const requestedPaths = strategy === 'starter'
+    ? requestedWorkflow?.starterPaths ?? starterPaths(pack.name)
+    : strategy === 'manifest' ? [] : paths
+  const selected = requestedPaths === undefined ? undefined : new Set(requestedPaths)
   if (selected) {
     const allowed = new Set(
       [...pack.files, ...(pack.name === 'design' ? pack.uiKit : [])].map(file => file.path)
@@ -90,7 +120,7 @@ export async function executeGetSkillPack(
       pack.name === 'design' ? loadFiles(pack.uiKit, fetchFile, selected ?? new Set<string>()) : Promise.resolve(undefined),
     ])
     return {
-      content: [{ type: 'text', text: JSON.stringify({ ...pack, ...(requestedWorkflow ? { requestedName: name, requestedWorkflow } : {}), source: MCP_SKILL_SOURCE, files, uiKit }, null, 2) }],
+      content: [{ type: 'text', text: JSON.stringify({ ...pack, ...(requestedWorkflow ? { requestedName: name, requestedWorkflow } : {}), source: MCP_SKILL_SOURCE, files, uiKit }) }],
     }
   } catch {
     return {
@@ -107,7 +137,7 @@ export function registerSkillPackMcpTools(server: McpServer): void {
       description: LIST_SKILL_PACKS_TOOL_DESCRIPTION,
       inputSchema: z.object(listSkillPacksInputSchema),
     },
-    async () => executeListSkillPacks()
+    async ({ view }) => executeListSkillPacks(view)
   )
 
   server.registerTool(
@@ -116,7 +146,7 @@ export function registerSkillPackMcpTools(server: McpServer): void {
       description: GET_SKILL_PACK_TOOL_DESCRIPTION,
       inputSchema: z.object(getSkillPackInputSchema),
     },
-    async ({ name, paths }) => executeGetSkillPack(name, fetch, paths)
+    async ({ name, paths, strategy }) => executeGetSkillPack(name, fetch, paths, strategy)
   )
 
   server.registerTool(

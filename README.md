@@ -146,8 +146,11 @@ for model-invoked skills (`align-loop`, `domain-modeling`, `arch`, `dev`, `code-
 ## Remote skill provider (MCP)
 
 In addition to local installation, MCP-capable clients can connect to `https://ai-kit.polyms.dev/mcp`
-with Streamable HTTP and OAuth. Discover available packs via `list_skill_packs` and load workflow,
-templates and references using `get_skill_pack`. The server retrieves Markdown from GitHub main.
+with Streamable HTTP and OAuth. Discover available packs via `list_skill_packs({view: "routing"})`
+and load the selected contract, workflow, templates and references using `get_skill_pack`.
+When the skill is already known, use `get_skill_pack({name, strategy: "starter"})` directly.
+The full discovery view and legacy core retrieval defaults are unchanged. The server retrieves
+Markdown from GitHub main.
 
 The live MCP exposes the same 26 canonical entries above. No checkout or native install is required to retrieve methodology. The published immutable SDK snapshot has its own release catalog; do not infer its contents from live MCP.
 

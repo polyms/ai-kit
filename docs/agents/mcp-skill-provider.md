@@ -115,18 +115,25 @@ Connect the client's MCP implementation to `https://ai-kit.polyms.dev/mcp` using
 and the server's OAuth flow. Client support for these features varies; do not assume every AI product
 can connect or automatically invoke remote skills.
 
-1. Call `list_skill_packs` to discover names and descriptions.
+1. For uncertain intent, call `list_skill_packs({view: "routing"})`. If a single skill is already known,
+   call `get_skill_pack({name, strategy: "starter"})` directly without discovery.
 2. Select only relevant packs using descriptions and routing hints; honor native client policy and explicit user choices. For conversational MCP, `mcpSelection: intent` permits natural-language task selection, including reqs/design/docs. `explicit-intent` requires a clearly requested special workflow/outcome or bounded authorized assignment, not slash syntax. `nativeInvocation` is present for all packs and preserves installed skill policy. Legacy engineering `invocation` remains for backward compatibility. Selection grants no action authority.
-   Call `get_skill_pack` with the selected name and that pack's `starterPaths` as `paths`.
+   Call `get_skill_pack` with the selected name and that pack's `starterPaths` as `paths`;
+   exclude applicable shared files already loaded in the task. Read the selected pack's full contract.
+   For multi-skill composition, discover recipe metadata if not already available.
 3. Read the returned SKILL.md first. Apply the relevant bundled template and shared standard.
 4. Use user-supplied or authorized context. Draft the output, or publish only when requested.
 5. Return actual ticket/document IDs and links after a successful write.
 
 The list returns `{packs: [{name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, nativeInvocation, mcpSelection, contract}], packCount, source, composition: {protocol, recipes}}`. The `packCount` is derived from `packs.length`.
-The additional routing and composition fields are advisory and backward-compatible.
+The additional routing and composition fields are advisory and backward-compatible. The default
+and explicit `view: "full"` preserve the complete catalog shape. `view: "routing"` retains names,
+descriptions, use/avoid hints, starter paths, related skills, invocation policy, recipes, aliases
+and source; it omits raw skill URLs, legacy `invocation` and unselected contracts. Its top-level
+`view` identifies the projection. Both views use compact JSON; the full view's parsed values are unchanged.
 The get operation returns `{name, nativeInvocation, mcpSelection, contract, source, files: [{path, rawUrl, content}]}`. For an alias it additionally returns `requestedName` and `requestedWorkflow`; the list also provides `legacyWorkflows`.
 The contract includes advisory context requirements; starter content includes shared context guidance. For design it also exposes optional
-`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Omitting paths retrieves all core files but **does not load Polyms UI Kit content**; optional UI Kit paths remain discoverable and require explicit selection. Existing raw URLs are retained; clients need not perform
+`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Omitting paths and strategy retrieves all core files but **does not load Polyms UI Kit content**; optional UI Kit paths remain discoverable and require explicit selection. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
 A failed fetch fails the whole pack rather than silently returning incomplete instructions.
 
@@ -157,8 +164,11 @@ are unchanged; live MCP retains mutable-main provenance pending versioned releas
 
 ## Progressive retrieval
 
-Existing clients may continue to omit paths and receive complete packs. Prefer the catalog's
-`starterPaths` for new calls: this returns entry content, shared standard for work packs and the default
+Existing clients may continue to omit both paths and strategy and receive complete core packs.
+`strategy: "starter"` selects the advertised starter paths (including an alias workflow when used);
+`strategy: "manifest"` is equivalent to `paths: []`; `strategy: "full"` is the legacy core default.
+Combining `paths` with `strategy` fails with `INVALID_SELECTION` before upstream retrieval.
+Prefer the catalog's `starterPaths` for new calls: this returns entry content, shared standard for work packs and the default
 template where applicable; all other file paths remain metadata. For large packs:
 
 - Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.
@@ -166,7 +176,10 @@ template where applicable; all other file paths remain metadata. For large packs
 - Unselected files retain path and rawUrl but omit content. The optional design uiKit group is preserved as manifest metadata; select content only when the user/project chose Polyms UI Kit.
 - All paths must match the selected pack manifest; INVALID_PATHS fails before external fetch.
 - For work packs, load the shared work artifact standard and relevant templates before drafting.
-- Request only missing references. Batch needed exact paths per pack in one call, reuse already loaded content, and skip optional recipes when contracts already suffice.
+- Request only missing references. Batch needed exact paths per pack in one call, reuse applicable
+  shared content within the task, and skip optional recipes when contracts already suffice. Mutable
+  main is not a revision identity: refresh shared guidance when freshness matters; do not claim
+  same-revision consistency. There is no new cross-request cache or implicit content persistence.
 - Related skills are optional handoffs, not prerequisites, automatic execution or permission to publish.
 
 The provider has no arbitrary URL endpoint, cache or orchestration engine. Optional selection is a

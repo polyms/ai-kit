@@ -13,7 +13,10 @@ search, orchestration runtime, analytics database or a new MCP tool.
 
 ## Client discovery contract
 
-`list_skill_packs` retains the existing name, description and raw URL and adds:
+`list_skill_packs({view: "routing"})` is the preferred discovery projection. It keeps all routing,
+invocation, starter-path, optional handoff, composition and alias metadata but defers full contracts
+until the selected `get_skill_pack` call. The default/full view retains the existing complete
+contract and raw URL shape. Both serialize compact JSON. The full catalog provides:
 
 - `useWhen`: compact English/Vietnamese intent examples.
 - `avoidWhen`: boundary against neighboring skills.
@@ -31,9 +34,10 @@ selection and the client's invocation policy. For trivial questions or out-of-ca
 force a work pack. The client reasons about user intent; the server returns deterministic metadata.
 
 ```ts
-const catalog = await list_skill_packs()
+const catalog = await list_skill_packs({ view: 'routing' })
 // After selecting design from catalog.packs:
-await get_skill_pack({ name: 'design', paths: ['skills/design/SKILL.md'] })
+const design = catalog.packs.find(pack => pack.name === 'design')!
+await get_skill_pack({ name: design.name, paths: design.starterPaths })
 // After reading the workflow, load only the references for the active branch:
 await get_skill_pack({
   name: 'design',
@@ -41,12 +45,17 @@ await get_skill_pack({
 })
 ```
 
-The first call already returns other files' metadata; a separate manifest-only call is usually
+The first retrieval already returns other files' metadata; a separate manifest-only call is usually
 unnecessary. Short work packs start with workflow, shared standard, context guidance and default template;
 reqs/docs start with workflow, standard and context guidance; design starts with workflow and context
 guidance. Load additional templates/references
 before the step that needs them. Reuse files within the current session. No server-side session state.
-Omitted paths preserve legacy full-pack retrieval; empty arrays remain manifest-only.
+If a single skill is known, `get_skill_pack({name, strategy: "starter"})` skips catalog discovery.
+For multi-skill composition, discover recipe metadata if it is not already available.
+For composition, use explicit starter paths minus still-applicable shared files already loaded
+in the task; refresh when freshness matters because mutable main is not revision-pinned.
+Omitting both paths and strategy preserves legacy full-core retrieval; `strategy: "manifest"` or
+empty paths remain metadata-only. Never combine strategy and paths.
 
 ## Dependency closure
 
