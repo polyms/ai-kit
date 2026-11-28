@@ -1,6 +1,8 @@
 # Knowledge evolution and continuous improvement
 
-Status: existing catalog foundation plus proposed directions. No CMS changes are made by this PR.
+Status: existing catalog foundation plus host-executed contribution guidance and proposed directions.
+See [Reflection and Knowledge Contribution](../agents/reflection-protocol.md) for the live methodology;
+no new CMS schema, draft store or runtime review enforcement is introduced.
 
 ## Existing foundation
 

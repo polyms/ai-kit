@@ -2,7 +2,7 @@
   "name": "@polyms/landing",
   "private": true,
   "type": "module",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "scripts": {
     "dev": "tsx scripts/build-skill-bundles.ts && vite dev",
     "build": "tsx scripts/build-skill-bundles.ts && prisma generate && vite build && tsc --noEmit",

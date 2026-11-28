@@ -35,6 +35,7 @@ export type KnowledgeHint = {
 }
 
 export const MEMORY_PROTOCOL = 'docs/agents/memory-protocol.md'
+export const REFLECTION_PROTOCOL = 'docs/agents/reflection-protocol.md'
 
 /** Topic for the executing agent's own native recall/reflection; never a provider query or permission. */
 export type MemoryHint = {
@@ -652,6 +653,7 @@ export function compositionPaths(name: SkillPackName): string[] {
     COMPOSITION_PROTOCOL,
     CONTEXT_PROTOCOL,
     MEMORY_PROTOCOL,
+    REFLECTION_PROTOCOL,
     ...WORKFLOW_RECIPES.filter(recipe => recipe.hostPack === name).map(recipe => recipe.path),
   ]
 }

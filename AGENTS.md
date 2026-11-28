@@ -93,6 +93,7 @@ For remote routing and progressive retrieval, see `docs/agents/skill-intelligenc
 For context requirements and source integrity, see `docs/agents/context-contract.md`.
 For selective use of historical experience, see `docs/agents/memory-protocol.md` when relevant.
 Memory is optional; use already available native context or skip. Never require a memory service, tool or connection. Existing invocation and verification gates remain unchanged.
+At meaningful verified outcomes, use [Reflection and Knowledge Contribution](docs/agents/reflection-protocol.md) only when a reusable lesson is evident or a retrospective is requested. No automatic publication or mandatory reflection.
 For multi-skill work, follow `docs/agents/skill-composition.md` and select only relevant recipes
 in `workflows/`. Evaluate handoffs with `evals/composition/`.
 See `docs/agents/skill-capabilities.md` for tool abstraction and composition,

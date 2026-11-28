@@ -37,6 +37,11 @@ and canonical feature-map ownership versus E2E exports. These fixtures do not
 establish model correctness or real integration behavior. Use the ordinary
 `--suite output` runner and review model/judge evidence before reporting results.
 
+## Reflection and Knowledge Contribution
+
+See [manual reflection scenarios](reflection/README.md) for ten synthetic host-client cases.
+They are structurally checked in the skill-pack suite, not part of the paired runner; no real writes.
+
 ## Memory Protocol pilot
 
 See [Memory Protocol evaluation](memory/README.md) for 18 paired host-agent memory scenarios.

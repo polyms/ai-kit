@@ -74,7 +74,9 @@ observed result, supporting evidence, possible explanation and scoped reusable l
 Separate verified outcomes from causal hypotheses. Do not generalize a single incident without
 qualification; do not infer execution or success from drafts, estimates or recommendations.
 Skip reflection when no useful lesson is evident. In a composed task, reflect once when useful
-rather than at every stage.
+rather than at every stage. For a materially reusable lesson or requested retrospective, see
+[Reflection and Knowledge Contribution](reflection-protocol.md) for the separate, optional
+Knowledge/skill contribution and evidence review paths. A Memory hint never authorizes them.
 
 ### Capture
 
