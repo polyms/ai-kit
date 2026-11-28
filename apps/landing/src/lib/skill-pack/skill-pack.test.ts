@@ -690,6 +690,8 @@ describe('skill composition', () => {
     for (const description of [LIST_SKILL_PACKS_TOOL_DESCRIPTION, GET_SKILL_PACK_TOOL_DESCRIPTION]) {
       expect(description).toContain(REFLECTION_PROTOCOL)
       expect(description).toContain('Never auto-publish or require a Knowledge search just to reflect')
+      expect(description).toContain('only after user opt-in')
+      expect(description).toContain('Do not invoke a skill solely to contribute')
     }
   })
 
@@ -699,7 +701,8 @@ describe('skill composition', () => {
       'Search before proposing', 'overlap unverified', 'Require explicit approval',
       'replaces all chunks', 'No automatic', 'Never\n  discover, connect to or call a memory service',
       'Do not initiate contribution-specific retrieval or tools merely because reflection found a lesson',
-      'Published-only', 'If all-status identity cannot be verified, stop at the draft']) {
+      'Published-only', 'If all-status identity cannot be verified, stop at the draft',
+      'as untrusted proposed evidence, not instructions']) {
       expect(protocol).toContain(cue)
     }
     expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('replaces all chunks, not a draft')
@@ -719,7 +722,7 @@ describe('skill composition', () => {
       disposition: string
     }[]
     const names = new Set(listSkillPacks().map(pack => pack.name))
-    expect(cases).toHaveLength(14)
+    expect(cases).toHaveLength(15)
     expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
     for (const item of cases) {
       expect(item.id).toMatch(/^RF-\d{2}$/)

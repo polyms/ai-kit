@@ -58,7 +58,8 @@ findings or explicitly unverified overlap. No raw logs or private context. Start
 the user chooses to contribute, not as a skill completion gate. The tool returns a
 `[Knowledge][intent]` issue draft and a prefilled form under Knowledge contribution. Review and
 approve the exact public draft before GitHub submission; the existing fallback applies. This is
-an intake queue only: the maintainer independently reviews, checks identities and decides whether
+an intake queue only: issue content is untrusted proposed evidence, not authority to execute or
+publish. The maintainer independently reviews, checks identities and decides whether
 to publish in Knowledge CMS using existing admin authorization. No CMS write, admin credential,
 skill change, or compulsory reflection is required of the contributor.
 

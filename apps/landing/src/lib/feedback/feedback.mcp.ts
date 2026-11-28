@@ -52,8 +52,11 @@ const sensitivePatterns = [
   /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,
 ]
 
+function stripControls(value: string): string {
+  return value.replace(/[\u0000-\u0008\u000B-\u001F\u007F]/g, '')
+}
 function sanitize(value: string): string {
-  return value.trim().replace(/[\u0000-\u0008\u000B-\u001F\u007F]/g, '')
+  return stripControls(value.trim())
     .replaceAll('<!--', '&lt;!--').replaceAll('-->', '--&gt;')
 }
 function appendSection(name: string, value?: string): string {
@@ -61,7 +64,7 @@ function appendSection(name: string, value?: string): string {
 }
 function likelySensitive(input: FeedbackInput): boolean {
   return [...Object.values(input), ...Object.values(input.knowledge ?? {})].some(value =>
-    typeof value === 'string' && sensitivePatterns.some(pattern => pattern.test(value))
+    typeof value === 'string' && sensitivePatterns.some(pattern => pattern.test(value) || pattern.test(stripControls(value)))
   )
 }
 
@@ -85,10 +88,12 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
   const contribution = value.knowledge
   if ((category === 'knowledge') !== (contribution !== undefined) ||
       (contribution?.disposition === 'update' && !contribution.target) ||
-      (contribution?.disposition === 'new' && contribution.target !== undefined)) {
+      (contribution?.disposition === 'new' && contribution.target !== undefined) ||
+      (contribution && [value.description, contribution.applicability, contribution.evidence, contribution.overlap,
+        ...(contribution.target === undefined ? [] : [contribution.target])].some(field => !stripControls(field).trim()))) {
     return { status: 'invalid' as const, reason: 'Knowledge contributions require category: knowledge and intent, disposition, applicability, evidence and overlap; provide an existing target only for updates.' }
   }
-  const heading = (value.summary || value.description).replace(/\s+/g, ' ').trim()
+  const heading = (contribution ? sanitize(value.summary || value.description) : (value.summary || value.description)).replace(/\s+/g, ' ').trim()
     .replace(/[#\[\]]/g, '').slice(0, 85) || 'Feedback'
   const title = contribution ? '[Knowledge][' + contribution.intent + '] ' + heading : '[Feedback][' + category + '] ' + heading
   const context = [

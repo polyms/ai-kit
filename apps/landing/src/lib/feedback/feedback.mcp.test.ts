@@ -101,6 +101,19 @@ describe('AI Kit feedback issue drafting and authorized handoff', () => {
     expect(JSON.stringify(result)).not.toContain(secret)
   })
 
+  it('checks the public rendering for secrets obscured by stripped controls', () => {
+    const secret = 'ghp_abcdefghijklmnopqrstuvwxyz1234'
+    const obscured = secret.slice(0, 3) + '\u0007' + secret.slice(3)
+    const result = prepareFeedbackIssue({ ...candidate, knowledge: { ...knowledge, evidence: 'Token ' + obscured } })
+    expect(result.status).toBe('review_required')
+    expect(JSON.stringify(result)).not.toContain(secret)
+  })
+
+  it('rejects contribution metadata that becomes empty after sanitization', () => {
+    const result = prepareFeedbackIssue({ ...candidate, knowledge: { ...knowledge, evidence: '\u0007' } })
+    expect(result.status).toBe('invalid')
+  })
+
   it('retains full Knowledge draft when fallback URL requires an excerpt', () => {
     const result = prepareFeedbackIssue({ ...candidate, description: 'Hướng dẫn kỹ thuật có thể dùng lại. '.repeat(60).slice(0, 2400), knowledge: { ...knowledge, evidence: 'Bằng chứng đã xác minh. '.repeat(60).slice(0, 1400) } })
     expect(result.status).toBe('draft')
