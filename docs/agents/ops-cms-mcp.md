@@ -131,23 +131,27 @@ See [feedback flow and privacy](../feedback.md).
 
 See [MCP skill provider](mcp-skill-provider.md) for architecture, pack catalog, maintenance and rollout.
 
-The MCP server fetches Markdown for `reqs`, `design`, `research`, `business`, `docs`, `task`, `bug`, `track`, `plan`, `qa`, `comms`, `review` and `release` from GitHub raw URLs on `main`.
+The MCP server fetches Markdown for all 26 canonical packs from GitHub raw URLs on `main`.
 Existing paths and URLs are preserved. Cursor and Claude keep reading the same files locally.
 
 | Tool               | Returns                                                                                                                                                                                         |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `list_skill_packs` | `{ packs: [{ name, skillRawUrl, description, useWhen, avoidWhen, starterPaths, relatedSkills, nativeInvocation, mcpSelection, contract }], composition: { protocol, recipes } }`.                                               |
-| `get_skill_pack`   | `{ name, files: [{ path, rawUrl, content }] }`. Design also returns `uiKit` with content. Unknown name: `NOT_FOUND`. Upstream failure: `FETCH_FAILED`. Invalid selected paths: `INVALID_PATHS`. |
+| `list_skill_packs` | Full catalog by default; `view: "routing"` omits unselected contracts and raw URLs. Both expose pack count, source, composition and aliases. |
+| `get_skill_pack` | Selected contract, source and file manifest with requested content. Optional design `uiKit` content requires exact paths. Errors: `NOT_FOUND`, `FETCH_FAILED`, `INVALID_PATHS`, `INVALID_SELECTION`. |
 
 Any MCP-capable AI client or agent can connect to `https://ai-kit.polyms.dev/mcp` using the
-supported transport and OAuth flow. Call `list_skill_packs` to discover available packs and
-`get_skill_pack` to load the selected pack directly. No client-side HTTP GET is needed. Legacy aliases expose `requestedWorkflow` and the exact workflow path; `list_skill_packs` includes `legacyWorkflows`. Every live pack exposes `nativeInvocation` (installed-client policy) and `mcpSelection` (conversational intent vs explicitly requested special outcome); no slash syntax is required in MCP, and selection grants no mutation authority. Memory hints refer only to the host agent's own available memory and context, never an external memory system.
+supported transport and OAuth flow. Call `list_skill_packs({view: "routing"})` for discovery and
+`get_skill_pack` to load the selected pack. Skip discovery for a known skill with
+`get_skill_pack({name, strategy: "starter"})`. No client-side HTTP GET is needed. Legacy aliases expose `requestedWorkflow` and the exact workflow path; `list_skill_packs` includes `legacyWorkflows`. Every live pack exposes `nativeInvocation` (installed-client policy) and `mcpSelection` (conversational intent vs explicitly requested special outcome); no slash syntax is required in MCP, and selection grants no mutation authority. Memory hints refer only to the host agent's own available memory and context, never an external memory system.
 Client-specific MCP availability, authentication, and invocation behavior may vary.
 
-- Prefer `paths: starterPaths` from the selected catalog entry, then load only needed references.
+- Prefer `paths: starterPaths` from the selected catalog entry, excluding still-applicable shared
+  files already loaded; load only needed references. Refresh when mutable-main freshness matters.
 - For multi-skill work, retrieve the composition protocol from any pack and a selected recipe via
   its hostPack. See [skill composition](skill-composition.md).
-- Optional `paths` selects exact pack files; `[]` returns metadata only. Omit for the full pack.
+- Optional `paths` selects exact pack files; `[]` or `strategy: "manifest"` returns metadata only.
+  `strategy: "starter"` loads starter content. Omitting both or `strategy: "full"` loads core files.
+  Never combine `paths` and `strategy`.
 - Unselected files have no `content` field; only manifest paths may be requested.
 - Follow `SKILL.md` first; consult bundled templates and references when relevant.
 - Work skills include the shared work artifact standard and their applicable templates.

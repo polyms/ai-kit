@@ -129,10 +129,10 @@ The additional routing and composition fields are advisory and backward-compatib
 and explicit `view: "full"` preserve the complete catalog shape. `view: "routing"` retains names,
 descriptions, use/avoid hints, starter paths, related skills, invocation policy, recipes, aliases
 and source; it omits raw skill URLs, legacy `invocation` and unselected contracts. Its top-level
-`view` identifies the projection. Both views use compact JSON; parsed values are unchanged.
+`view` identifies the projection. Both views use compact JSON; the full view's parsed values are unchanged.
 The get operation returns `{name, nativeInvocation, mcpSelection, contract, source, files: [{path, rawUrl, content}]}`. For an alias it additionally returns `requestedName` and `requestedWorkflow`; the list also provides `legacyWorkflows`.
 The contract includes advisory context requirements; starter content includes shared context guidance. For design it also exposes optional
-`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Omitting paths retrieves all core files but **does not load Polyms UI Kit content**; optional UI Kit paths remain discoverable and require explicit selection. Existing raw URLs are retained; clients need not perform
+`uiKit` entries of the same file shape. Polyms UI Kit is not a required library; honor the existing project design system. Omitting paths and strategy retrieves all core files but **does not load Polyms UI Kit content**; optional UI Kit paths remain discoverable and require explicit selection. Existing raw URLs are retained; clients need not perform
 an HTTP GET. Unknown names return `NOT_FOUND`; upstream failures return `FETCH_FAILED`.
 A failed fetch fails the whole pack rather than silently returning incomplete instructions.
 
@@ -167,8 +167,7 @@ Existing clients may continue to omit both paths and strategy and receive comple
 `strategy: "starter"` selects the advertised starter paths (including an alias workflow when used);
 `strategy: "manifest"` is equivalent to `paths: []`; `strategy: "full"` is the legacy core default.
 Combining `paths` with `strategy` fails with `INVALID_SELECTION` before upstream retrieval.
-Prefer the catalog's
-`starterPaths` for new calls: this returns entry content, shared standard for work packs and the default
+Prefer the catalog's `starterPaths` for new calls: this returns entry content, shared standard for work packs and the default
 template where applicable; all other file paths remain metadata. For large packs:
 
 - Discover file paths with `get_skill_pack({name: "design", paths: []})`; this performs no upstream fetch.

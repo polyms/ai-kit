@@ -134,6 +134,43 @@ describe('skill pack MCP tools', () => {
     })
   })
 
+  it('wires routing and starter strategy through the registered MCP schemas and handlers', async () => {
+    const registerTool = vi.fn()
+    registerSkillPackMcpTools({ registerTool } as never)
+    const list = registerTool.mock.calls.find(call => call[0] === 'list_skill_packs')!
+    const get = registerTool.mock.calls.find(call => call[0] === 'get_skill_pack')!
+    expect(list[1].inputSchema.safeParse({}).success).toBe(true)
+    expect(list[1].inputSchema.safeParse({ view: 'routing' }).success).toBe(true)
+    expect(list[1].inputSchema.safeParse({ view: 'unknown' }).success).toBe(false)
+    expect(JSON.parse((await list[2]({ view: 'routing' })).content[0].text).view).toBe('routing')
+    expect(get[1].inputSchema.safeParse({ name: 'qa', strategy: 'starter' }).success).toBe(true)
+    expect(get[1].inputSchema.safeParse({ name: 'qa', strategy: 'unknown' }).success).toBe(false)
+    expect(await get[2]({ name: 'qa', strategy: 'manifest' }))
+      .toEqual(await executeGetSkillPack('qa', vi.fn<typeof fetch>(), []))
+  })
+
+  it('reuses shared starter content across selected skills through exact paths', async () => {
+    const packs = ['plan', 'task', 'qa'] as const
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Starter'))
+    const loaded = new Set<string>()
+    let naiveCount = 0
+    for (const name of packs) {
+      const wanted = starterPaths(name)
+      naiveCount += wanted.length
+      const missing = wanted.filter(path => !loaded.has(path))
+      const result = await executeGetSkillPack(name, fetchFile, missing)
+      expect(result.isError).toBeUndefined()
+      const body = JSON.parse(result.content[0]!.text)
+      expect(body.contract).toEqual(SKILL_CONTRACTS[name])
+      expect(body.files.filter((file: { content?: string }) => file.content)
+        .map((file: { path: string }) => file.path).sort()).toEqual([...missing].sort())
+      missing.forEach(path => loaded.add(path))
+    }
+    expect(fetchFile).toHaveBeenCalledTimes(loaded.size)
+    expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual([...loaded].map(skillPackRawUrl).sort())
+    expect(loaded.size).toBeLessThan(naiveCount)
+  })
+
   it('provides a compact routing view without dropping selection or composition metadata', () => {
     const fullText = executeListSkillPacks().content[0]!.text
     const routingText = executeListSkillPacks('routing').content[0]!.text
