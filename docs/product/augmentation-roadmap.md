@@ -101,7 +101,18 @@ captured in the strategy documents, not assigned release numbers or a fixed deli
   they add value, preserving licensing, version/provenance and quality boundaries. Avoid a
   mandatory registry, orchestration engine or vendor-specific runtime.
 
-Next focus: [Quality Baseline and Release Verification](../quality/baseline.md).
-Prioritize repeatable production delivery checks, real paired model evaluation with reviewed
-hard gates, then cross-client traces and SDK stable-release evidence. No new memory storage,
-agent runtime or release dates are committed by this roadmap.
+## Next focus: delivery and context efficiency
+
+The 26-pack live MCP catalog and bounded host-executed review-fix protocol extend the foundation.
+The SDK source is at 1.0.0; immutable HTTP 0.3.5 remains a separate 13-pack snapshot.
+Prioritize lightweight discovery, selective retrieval, reuse of applicable shared guidance and
+measurable delivery overhead before adding more skills. The MCP routing projection and direct
+starter selection preserve full legacy responses and leave the immutable HTTP/SDK contract intact.
+Do not treat mutable main as a pinned revision or introduce stale cross-request caching.
+
+[Quality baseline](../quality/baseline.md) and release verification remain available. Compare
+payload size and retrieval counts deterministically; measure latency separately on the deployed
+service before asserting an improvement. Real host behavior and model effectiveness require
+separate evidence. Future work may evaluate revision-aware retrieval and bounded operational
+telemetry, then generalized, reviewed Knowledge contributions and extensions when actual needs
+justify them. No new memory storage, agent runtime or release dates are committed by this roadmap.

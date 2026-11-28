@@ -134,6 +134,68 @@ describe('skill pack MCP tools', () => {
     })
   })
 
+  it('provides a compact routing view without dropping selection or composition metadata', () => {
+    const fullText = executeListSkillPacks().content[0]!.text
+    const routingText = executeListSkillPacks('routing').content[0]!.text
+    const full = JSON.parse(fullText)
+    const routing = JSON.parse(routingText)
+    expect(JSON.parse(executeListSkillPacks('full').content[0]!.text)).toEqual(full)
+    expect(routing).toEqual({
+      ...full,
+      view: 'routing',
+      packs: listSkillPacks().map(pack => ({
+        name: pack.name,
+        description: pack.description,
+        useWhen: pack.useWhen,
+        avoidWhen: pack.avoidWhen,
+        starterPaths: pack.starterPaths,
+        relatedSkills: pack.relatedSkills,
+        nativeInvocation: pack.nativeInvocation,
+        mcpSelection: pack.mcpSelection,
+      })),
+    })
+    expect(fullText.length).toBeLessThan(JSON.stringify(full, null, 2).length)
+    expect(routingText.length).toBeLessThan(fullText.length * 0.65)
+  })
+
+  it('loads direct starters for every canonical skill without discovery or optional UI Kit', async () => {
+    for (const pack of listSkillPacks()) {
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Starter'))
+      const result = await executeGetSkillPack(pack.name, fetchFile, undefined, 'starter')
+      expect(result.isError).toBeUndefined()
+      const body = JSON.parse(result.content[0]!.text)
+      expect(body.contract).toEqual(pack.contract)
+      expect(body.source).toEqual(MCP_SKILL_SOURCE)
+      expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(pack.starterPaths.map(skillPackRawUrl).sort())
+      expect(body.files.filter((file: { content?: string }) => file.content).map((file: { path: string }) => file.path).sort())
+        .toEqual([...pack.starterPaths].sort())
+      expect(body.uiKit?.every((file: { content?: string }) => file.content === undefined) ?? true).toBe(true)
+    }
+  })
+
+  it('selects the legacy workflow when loading alias starters', async () => {
+    for (const alias of Object.keys(LEGACY_SKILL_ALIASES)) {
+      const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Starter'))
+      const result = await executeGetSkillPack(alias, fetchFile, undefined, 'starter')
+      const workflow = legacyWorkflow(alias)!
+      expect(result.isError).toBeUndefined()
+      expect(JSON.parse(result.content[0]!.text).requestedWorkflow).toEqual(workflow)
+      expect(fetchFile.mock.calls.map(call => call[0]).sort()).toEqual(workflow.starterPaths.map(skillPackRawUrl).sort())
+    }
+  })
+
+  it('preserves manifest and full strategies and rejects ambiguous selection before fetching', async () => {
+    const fetchFile = vi.fn<typeof fetch>(async () => new Response('# Content'))
+    const manifest = await executeGetSkillPack('qa', fetchFile, undefined, 'manifest')
+    expect(manifest).toEqual(await executeGetSkillPack('qa', fetchFile, []))
+    const invalid = await executeGetSkillPack('qa', fetchFile, [], 'starter')
+    expect(invalid.isError).toBe(true)
+    expect(JSON.parse(invalid.content[0]!.text)).toEqual({ error: 'INVALID_SELECTION', name: 'qa' })
+    expect(fetchFile).not.toHaveBeenCalled()
+    const full = await executeGetSkillPack('qa', fetchFile, undefined, 'full')
+    expect(full).toEqual(await executeGetSkillPack('qa', fetchFile))
+  })
+
   it('returns NOT_FOUND for an unknown pack name', async () => {
     const fetchFile = vi.fn<typeof fetch>()
     const result = await executeGetSkillPack('unknown-skill', fetchFile)
