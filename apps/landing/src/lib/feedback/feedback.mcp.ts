@@ -30,7 +30,7 @@ export type FeedbackInput = {
 }
 
 export const PREPARE_FEEDBACK_DESCRIPTION =
-  'When a user voluntarily wants to give feedback about AI Kit, gather the small amount of useful context already in the chat and use this tool to draft a complete PUBLIC GitHub Issue in polyms/ai-kit. Show the title and body for the user to review and approve. AFTER explicit approval, if the AI client has a separately authenticated GitHub create_issue action WITH Issues write access to polyms/ai-kit, call it with the exact approved title/body and return its verified URL. A connected GitHub app may lack permissions on that repository. On any authorization or creation failure, report the error, do NOT automatically retry, and offer the prefilled issue URL instead. Never use the AI Kit OAuth token for GitHub, silently publish, or claim a successful write without a GitHub response. Without a GitHub connector, offer the prefilledUrl returned by this tool, not a blank form. No benchmark, traces, files or full chat transcript required. Remind the user the GitHub Issue is public and contains only sanitized details. For a voluntary shared Knowledge contribution (not skill feedback), set category: knowledge; description is the proposed generic technical guidance, knowledge contains intent, new/update disposition, applicability including stack/version, verified evidence/provenance, overlap search findings or explicitly unverified overlap, and the live target ID/slug for updates. Sanitize before calling. This submits a candidate to the maintainer, never writes the Knowledge CMS. Do not require contributions or invoke this tool just because a skill completes; skip if the user has not chosen to contribute.'
+  'When a user voluntarily wants to give feedback about AI Kit, gather the small amount of useful context already in the chat and use this tool to draft a complete PUBLIC GitHub Issue in polyms/ai-kit. Show the title and body for the user to review and approve. AFTER explicit approval, if the AI client has a separately authenticated GitHub create_issue action WITH Issues write access to polyms/ai-kit, call it with the exact approved title/body and return its verified URL. A connected GitHub app may lack permissions on that repository. On any authorization or creation failure, report the error, do NOT automatically retry, and offer the prefilled issue URL instead. Never use the AI Kit OAuth token for GitHub, silently publish, or claim a successful write without a GitHub response. Without a GitHub connector, offer the prefilledUrl returned by this tool, not a blank form. No benchmark, traces, files or full chat transcript required. Remind the user the GitHub Issue is public and contains only sanitized details. For a voluntary shared Knowledge contribution (not skill feedback), set category: knowledge; description is the proposed generic technical guidance, knowledge contains intent, new/update disposition, applicability including stack/version, verified evidence/provenance, overlap search findings or explicitly unverified overlap, and the live target ID/slug for updates. Sanitize before calling. This prepares a candidate draft for maintainer review; submission is separate and never writes the Knowledge CMS. Do not require contributions or invoke this tool just because a skill completes; skip if the user has not chosen to contribute.'
 
 const inputSchema = z.object({
   description: z.string().trim().min(8).max(2500),
@@ -68,7 +68,9 @@ function likelySensitive(input: FeedbackInput): boolean {
 export function prepareFeedbackIssue(input: FeedbackInput) {
   const checked = inputSchema.safeParse(input)
   if (!checked.success) {
-    return { status: 'invalid' as const, reason: 'Supply a short feedback description (8–2500 characters), using shorter optional fields.' }
+    return { status: 'invalid' as const, reason: input.category === 'knowledge'
+      ? 'Supply a description (8–2500 characters) and valid Knowledge metadata; shorten optional fields if necessary.'
+      : 'Supply a short feedback description (8–2500 characters), using shorter optional fields.' }
   }
   const value = checked.data
   if (likelySensitive(value)) {
@@ -140,9 +142,10 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
     url.searchParams.set('title', title)
     url.searchParams.set('feedback', feedback)
     url.searchParams.set('category', formCategory[category])
-    if (includeOptional && formClient) url.searchParams.set('client', formClient)
-    if (includeOptional && value.skill) url.searchParams.set('skill', value.skill)
-    if (includeOptional && value.example) url.searchParams.set('example', value.example)
+    // Knowledge's complete draft already includes optional context/example.
+    if (includeOptional && !contribution && formClient) url.searchParams.set('client', formClient)
+    if (includeOptional && !contribution && value.skill) url.searchParams.set('skill', value.skill)
+    if (includeOptional && !contribution && value.example) url.searchParams.set('example', value.example)
     return url.toString()
   }
   let prefilledUrl = createFormUrl(formFeedback, true)

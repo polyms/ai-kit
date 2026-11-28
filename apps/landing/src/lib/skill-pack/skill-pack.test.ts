@@ -698,6 +698,7 @@ describe('skill composition', () => {
     for (const cue of ['Do not generalize a single observation', 'Generalize before any external query',
       'Search before proposing', 'overlap unverified', 'Require explicit approval',
       'replaces all chunks', 'No automatic', 'Never\n  discover, connect to or call a memory service',
+      'Do not initiate contribution-specific retrieval or tools merely because reflection found a lesson',
       'Published-only', 'If all-status identity cannot be verified, stop at the draft']) {
       expect(protocol).toContain(cue)
     }

@@ -54,7 +54,8 @@ When a user voluntarily wants to share a verified, reusable technical lesson, us
 and `knowledge: { intent, disposition, applicability, evidence, overlap, target? }`. Intent is
 `incident`, `design` or `toolchain`; disposition is `new` or `update` (live target ID/slug required
 for updates). Include stack/versions, sanitized provenance and verification, and actual overlap
-findings or explicitly unverified overlap. No raw logs or private context. The tool returns a
+findings or explicitly unverified overlap. No raw logs or private context. Start contribution-specific searches and draft tools only after
+the user chooses to contribute, not as a skill completion gate. The tool returns a
 `[Knowledge][intent]` issue draft and a prefilled form under Knowledge contribution. Review and
 approve the exact public draft before GitHub submission; the existing fallback applies. This is
 an intake queue only: the maintainer independently reviews, checks identities and decides whether

@@ -68,6 +68,20 @@ describe('AI Kit feedback issue drafting and authorized handoff', () => {
     expect(link.searchParams.get('feedback')).toBe(result.body)
     expect(result.prefilledUrlTruncated).toBe(false)
     expect(result.nextStep).toContain('never call upsert_knowledge')
+    expect(PREPARE_FEEDBACK_DESCRIPTION).toContain('skip if the user has not chosen to contribute')
+    expect(PREPARE_FEEDBACK_DESCRIPTION).toContain('submission is separate')
+  })
+
+  it('includes optional context exactly once in the Knowledge fallback', () => {
+    const result = prepareFeedbackIssue({ ...candidate, client: 'ChatGPT', skill: 'devops', example: 'Synthetic verification example.' })
+    expect(result.status).toBe('draft')
+    if (result.status !== 'draft') return
+    const link = new URL(result.prefilledUrl)
+    expect(link.searchParams.get('feedback')).toBe(result.body)
+    expect(link.searchParams.has('client')).toBe(false)
+    expect(link.searchParams.has('skill')).toBe(false)
+    expect(link.searchParams.has('example')).toBe(false)
+    expect(result.body).toContain('Synthetic verification example.')
   })
 
   it('requires contribution metadata and existing identity for updates, not new candidates', () => {

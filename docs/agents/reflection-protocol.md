@@ -50,8 +50,12 @@ only when each has a distinct material benefit. No new tool or storage is requir
 ## 3. Prepare a Knowledge candidate
 
 Use the existing Ops CMS published Knowledge catalog, not a new database. The candidate is an
-in-conversation draft, not a CMS draft record. For an explicit contribution request or an
-in-scope, useful technical lesson:
+in-conversation draft, not a CMS draft record. After completing the requested work, a material
+reusable lesson may warrant one brief optional offer to contribute. Only start this section
+when the user explicitly requests a contribution draft or voluntarily chooses to contribute.
+Do not initiate contribution-specific retrieval or tools merely because reflection found a lesson;
+reuse any applicable search evidence from the original task. Declining or ignoring the offer has
+no effect on task completion, review gates or skill behavior:
 
 1. **Generalize before any external query.** Remove customer/project identities, private URLs,
    account identifiers, paths/ports, tokens, logs, raw conversations, proprietary code and
@@ -67,12 +71,14 @@ in-scope, useful technical lesson:
    and overlap is plausible. Open relevant matches with `get_knowledge`; use
    `get_knowledge_chunk` for config content. Record the actual searches and matching IDs/slugs.
    Search absence is not proof of uniqueness; coverage alone is not duplicate detection.
-   If retrieval is unavailable or inconclusive, mark overlap unverified and do not publish.
+   If retrieval is unavailable or inconclusive, mark overlap unverified and do not publish to CMS;
+   a sanitized issue candidate may request maintainer verification.
 4. **Choose a disposition.** Existing sufficient guidance: reuse, no contribution. Overlapping
    guidance needing correction: propose a targeted update with live ID/slug and preserve
    unrelated chunks. Distinct applicable guidance: propose a new candidate, explaining the
    difference. Conflicting or stale evidence: mark blocked pending maintainer review, not a
-   silent overwrite or deprecation. Unknown identity or conflicting ID/slug blocks writes.
+   silent overwrite or deprecation. Unknown identity or conflicting ID/slug blocks CMS writes,
+   not a safe candidate submitted for maintainer review. Do not invent a target.
 5. **Draft for review.** Include the following fields; omit unrelated detail:
 
    - Disposition (reuse / update / new / blocked), intent, title, stack axes, version/applicability.
