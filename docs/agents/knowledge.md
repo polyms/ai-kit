@@ -148,7 +148,8 @@ search and open overlapping published articles before drafting; keep sanitized p
 in the content. Show the exact proposed publication and obtain explicit approval separately from task
 completion and admin access. `upsert_knowledge` replaces all chunks and publishes immediately; it is
 not a draft tool. Re-open existing targets, preserve unrelated fields/chunks and stop on conflicts.
-Published-only MCP reads cannot establish unused IDs/slugs across all statuses. Confirm new article
+End users contribute via the voluntary `prepare_feedback_issue` Knowledge category in GitHub;
+only the authorized maintainer reviews and publishes to CMS. Published-only MCP reads cannot establish unused IDs/slugs across all statuses. Confirm new article
 and chunk identities through authorized admin evidence; otherwise stop at the draft.
 The MCP tool description mirrors this policy. Runtime mutation validates structure only (Zod).
 Seed pipeline in this repo additionally enforces forbidden literals via

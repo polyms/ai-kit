@@ -718,7 +718,7 @@ describe('skill composition', () => {
       disposition: string
     }[]
     const names = new Set(listSkillPacks().map(pack => pack.name))
-    expect(cases).toHaveLength(12)
+    expect(cases).toHaveLength(14)
     expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
     for (const item of cases) {
       expect(item.id).toMatch(/^RF-\d{2}$/)
@@ -730,6 +730,7 @@ describe('skill composition', () => {
     }
     expect(new Set(cases.map(item => item.disposition))).toEqual(new Set([
       'skip', 'new-draft', 'reuse', 'update-draft', 'blocked', 'feedback-draft', 'private', 'published',
+      'knowledge-issue-draft', 'knowledge-issue-fallback',
     ]))
   })
 

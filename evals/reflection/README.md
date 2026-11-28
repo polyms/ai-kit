@@ -1,6 +1,6 @@
 # Reflection and Knowledge Contribution scenarios
 
-These twelve synthetic manual host-client scenarios exercise optional reflection, evidence integrity,
+These fourteen synthetic manual host-client scenarios exercise optional reflection, evidence integrity,
 duplicate avoidance, privacy, scope, approval, and publication receipts. They do not require real
 Knowledge writes or actual credentials. Use simulated search/read results, admin authority and
 receipts; never publish a fixture. Use the selected live skill, portable standard and conditional

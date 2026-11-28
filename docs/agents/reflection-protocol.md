@@ -87,8 +87,26 @@ in-scope, useful technical lesson:
    A candidate with a material evidence or privacy gap stays blocked. Do not ask for permission
    to publish merely because a reflection hint exists.
 
-## 4. Review, authorize and verify publication separately
+## 4. Submit a voluntary Knowledge contribution through GitHub
 
+The default shared contribution route for end users is the existing `polyms/ai-kit` GitHub Issues
+queue, not a CMS write. Only offer it when the user wants to contribute; do not interrupt the
+original task, mandate a contribution, or request admin access. Reuse the existing feedback tool
+with `category: knowledge`, `description` containing the proposed generic guidance, and
+`knowledge: { intent, disposition, applicability, evidence, overlap, target? }`. Use `new` or
+`update`; for an update provide the live target ID/slug. If overlap is unverified, state that
+explicitly for maintainer review; a material privacy/evidence gap still blocks submission.
+Show the exact PUBLIC title/body, obtain explicit approval and use the separately authorized host
+GitHub create_issue action; if unavailable or unsuccessful, provide the tool's prefilled URL
+without retrying. Clearly mark any shortened fallback and retain the full draft in chat.
+If the tool does not yet support the category, keep the draft and explain the limitation; never
+misclassify it as a skill issue or seek CMS write access. Issue creation is not CMS publication.
+The maintainer may accept, amend, reject or request verification; no automatic issue-to-CMS
+promotion or skill change. Do not require a contributor to allocate CMS identities.
+
+## 5. Maintainer review, authorization and CMS publication
+
+Only the authorized maintainer handles CMS publication after independently reviewing the candidate.
 Show the complete proposed published content (all fields and chunks), destination, disposition and meaningful changes
 to the user/authorized maintainer. A successful task, admin token, draft approval for another
 artifact or instruction to reflect is not publication approval. Require explicit approval of
@@ -116,6 +134,6 @@ existing admin role and structural validation, not semantic review or secret det
 ## Completion
 
 Return the requested work first. If reflection is useful, provide a concise lesson or
-candidate and its actual disposition (private / draft / reused / blocked / published and
-verified). Do not generate an empty reflection report, count lessons as a success metric,
+candidate and its actual disposition (private / draft / reused / blocked / issue submitted /
+CMS published and verified). Report the actual issue URL if submitted; do not equate it with publication. Do not generate an empty reflection report, count lessons as a success metric,
 or claim improved model intelligence. No contribution is a valid outcome.

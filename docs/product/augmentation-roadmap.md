@@ -120,7 +120,8 @@ Real host behavior and model effectiveness require separate evidence.
 
 [Reflection and Knowledge Contribution](../agents/reflection-protocol.md) adds conditional host-led
 reflection, sanitized provenance, overlap checks, review-ready candidates and explicit publication
-boundaries using the existing Knowledge CMS and feedback flow. No extra starter files, runtime,
+boundaries using the existing Knowledge CMS and feedback flow. Voluntary non-admin contributions
+use a separate Knowledge category in GitHub Issues for maintainer review, not CMS writes. No extra starter files, runtime,
 mandatory reflection, automatic write or CMS schema are introduced. Verify delivery and use manual
 synthetic scenarios before claiming behavioral effectiveness. Future work may evaluate revision-aware
 retrieval, bounded operational telemetry and extensions when actual needs justify them.

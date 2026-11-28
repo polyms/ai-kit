@@ -2,7 +2,9 @@
 
 Status: existing catalog foundation plus host-executed contribution guidance and proposed directions.
 See [Reflection and Knowledge Contribution](../agents/reflection-protocol.md) for the live methodology;
-no new CMS schema, draft store or runtime review enforcement is introduced.
+no new CMS schema, draft store or runtime review enforcement is introduced. Voluntary Knowledge
+candidates enter the existing public GitHub Issues queue via the Knowledge feedback category;
+the authorized maintainer decides what to publish. No contribution is a skill invocation.
 
 ## Existing foundation
 

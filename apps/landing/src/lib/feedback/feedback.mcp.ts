@@ -3,10 +3,19 @@ import { z } from 'zod'
 
 export const FEEDBACK_REPOSITORY = 'polyms/ai-kit'
 export const FEEDBACK_CATEGORIES = [
-  'skill', 'workflow', 'template', 'documentation', 'bug', 'suggestion', 'other',
+  'skill', 'workflow', 'template', 'documentation', 'bug', 'suggestion', 'other', 'knowledge',
 ] as const
 
 export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number]
+const knowledgeContributionSchema = z.object({
+  intent: z.enum(['incident', 'design', 'toolchain']),
+  disposition: z.enum(['new', 'update']),
+  applicability: z.string().trim().min(1).max(1000),
+  evidence: z.string().trim().min(1).max(1500),
+  overlap: z.string().trim().min(1).max(1200),
+  target: z.string().trim().min(1).max(200).optional(),
+})
+
 export type FeedbackInput = {
   description: string
   category?: FeedbackCategory
@@ -16,10 +25,12 @@ export type FeedbackInput = {
   expected?: string
   actual?: string
   example?: string
+  /** Required only for the additive knowledge category. description is the proposed guidance. */
+  knowledge?: z.input<typeof knowledgeContributionSchema>
 }
 
 export const PREPARE_FEEDBACK_DESCRIPTION =
-  'When a user voluntarily wants to give feedback about AI Kit, gather the small amount of useful context already in the chat and use this tool to draft a complete PUBLIC GitHub Issue in polyms/ai-kit. Show the title and body for the user to review and approve. AFTER explicit approval, if the AI client has a separately authenticated GitHub create_issue action WITH Issues write access to polyms/ai-kit, call it with the exact approved title/body and return its verified URL. A connected GitHub app may lack permissions on that repository. On any authorization or creation failure, report the error, do NOT automatically retry, and offer the prefilled issue URL instead. Never use the AI Kit OAuth token for GitHub, silently publish, or claim a successful write without a GitHub response. Without a GitHub connector, offer the prefilledUrl returned by this tool, not a blank form. No benchmark, traces, files or full chat transcript required. Remind the user the GitHub Issue is public and contains only sanitized details.'
+  'When a user voluntarily wants to give feedback about AI Kit, gather the small amount of useful context already in the chat and use this tool to draft a complete PUBLIC GitHub Issue in polyms/ai-kit. Show the title and body for the user to review and approve. AFTER explicit approval, if the AI client has a separately authenticated GitHub create_issue action WITH Issues write access to polyms/ai-kit, call it with the exact approved title/body and return its verified URL. A connected GitHub app may lack permissions on that repository. On any authorization or creation failure, report the error, do NOT automatically retry, and offer the prefilled issue URL instead. Never use the AI Kit OAuth token for GitHub, silently publish, or claim a successful write without a GitHub response. Without a GitHub connector, offer the prefilledUrl returned by this tool, not a blank form. No benchmark, traces, files or full chat transcript required. Remind the user the GitHub Issue is public and contains only sanitized details. For a voluntary shared Knowledge contribution (not skill feedback), set category: knowledge; description is the proposed generic technical guidance, knowledge contains intent, new/update disposition, applicability including stack/version, verified evidence/provenance, overlap search findings or explicitly unverified overlap, and the live target ID/slug for updates. Sanitize before calling. This submits a candidate to the maintainer, never writes the Knowledge CMS. Do not require contributions or invoke this tool just because a skill completes; skip if the user has not chosen to contribute.'
 
 const inputSchema = z.object({
   description: z.string().trim().min(8).max(2500),
@@ -30,6 +41,7 @@ const inputSchema = z.object({
   expected: z.string().trim().max(800).optional(),
   actual: z.string().trim().max(800).optional(),
   example: z.string().trim().max(1200).optional(),
+  knowledge: knowledgeContributionSchema.optional(),
 })
 
 const sensitivePatterns = [
@@ -48,7 +60,7 @@ function appendSection(name: string, value?: string): string {
   return value?.trim() ? '\n## ' + name + '\n' + sanitize(value) + '\n' : ''
 }
 function likelySensitive(input: FeedbackInput): boolean {
-  return Object.values(input).some(value =>
+  return [...Object.values(input), ...Object.values(input.knowledge ?? {})].some(value =>
     typeof value === 'string' && sensitivePatterns.some(pattern => pattern.test(value))
   )
 }
@@ -68,14 +80,32 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
   }
 
   const category = value.category ?? 'other'
+  const contribution = value.knowledge
+  if ((category === 'knowledge') !== (contribution !== undefined) ||
+      (contribution?.disposition === 'update' && !contribution.target) ||
+      (contribution?.disposition === 'new' && contribution.target !== undefined)) {
+    return { status: 'invalid' as const, reason: 'Knowledge contributions require category: knowledge and intent, disposition, applicability, evidence and overlap; provide an existing target only for updates.' }
+  }
   const heading = (value.summary || value.description).replace(/\s+/g, ' ').trim()
     .replace(/[#\[\]]/g, '').slice(0, 85) || 'Feedback'
-  const title = '[Feedback][' + category + '] ' + heading
+  const title = contribution ? '[Knowledge][' + contribution.intent + '] ' + heading : '[Feedback][' + category + '] ' + heading
   const context = [
     value.client?.trim() ? '- AI client: ' + sanitize(value.client) : '',
     value.skill?.trim() ? '- AI Kit skill/workflow: ' + sanitize(value.skill) : '',
   ].filter(Boolean).join('\n')
-  const body = [
+  const body = contribution ? [
+    '## Knowledge contribution\n' + sanitize(value.description),
+    '\n## Intent and disposition\n' + contribution.intent + ' / ' + contribution.disposition,
+    appendSection('Existing target (ID/slug)', contribution.target),
+    appendSection('Applicability (stack, versions, limitations)', contribution.applicability),
+    appendSection('Evidence and provenance (sanitized)', contribution.evidence),
+    appendSection('Overlap check (queries, matches or unverified)', contribution.overlap),
+    context ? '\n## Context (optional)\n' + context : '',
+    appendSection('Expected behavior (optional)', value.expected),
+    appendSection('Observed behavior (optional)', value.actual),
+    appendSection('Short sanitized example (optional)', value.example),
+    '\n---\nPublic Knowledge candidate for maintainer review only. This issue is not CMS publication or a skill change.',
+  ].filter(Boolean).join('\n').trim() : [
     '## Feedback\n' + sanitize(value.description),
     '\n## Category\n' + category,
     context ? '\n## Context\n' + context : '',
@@ -95,8 +125,9 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
     bug: 'Bug / Lỗi',
     suggestion: 'Suggestion / Đề xuất',
     other: 'Other / Khác',
+    knowledge: 'Knowledge contribution / Đóng góp Knowledge',
   }
-  const formFeedback = [
+  const formFeedback = contribution ? body : [
     value.description,
     value.expected ? 'Expected: ' + value.expected : '',
     value.actual ? 'Observed: ' + value.actual : '',
@@ -120,7 +151,7 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
     // Never return null: long Vietnamese text is percent-encoded and can exceed
     // browser URL limits. Fall back to a short, plainly labeled excerpt.
     prefilledUrlTruncated = true
-    const excerpt = Array.from(value.description).slice(0, 200).join('')
+    const excerpt = (contribution ? 'Knowledge candidate: ' + contribution.intent + ' / ' + contribution.disposition + '\n\n' : '') + Array.from(value.description).slice(0, 200).join('')
     prefilledUrl = createFormUrl(
       excerpt + '\n\n[Shortened for GitHub URL length. Review the full draft in the AI conversation.]',
       false,
@@ -136,7 +167,7 @@ export function prepareFeedbackIssue(input: FeedbackInput) {
     githubCreateIssue: { repository_full_name: FEEDBACK_REPOSITORY, title, body },
     prefilledUrl,
     prefilledUrlTruncated,
-    nextStep: 'Show the user the exact title/body and obtain explicit confirmation. Then call the separately authorized host GitHub create_issue tool only if it has Issues write access to polyms/ai-kit. If access is absent or creation fails, report the failure without retries and provide the prefilled GitHub Issue Form URL. If prefilledUrlTruncated is true, clearly explain that the link contains an excerpt and the full approved draft is available in chat. The user still needs to check public-consent and possibly category on GitHub. Never claim submission without a real returned issue URL.',
+    nextStep: 'Show the user the exact title/body and obtain explicit confirmation. Then call the separately authorized host GitHub create_issue tool only if it has Issues write access to polyms/ai-kit. If access is absent or creation fails, report the failure without retries and provide the prefilled GitHub Issue Form URL. If prefilledUrlTruncated is true, clearly explain that the link contains an excerpt and the full approved draft is available in chat. The user still needs to check public-consent and possibly category on GitHub. Never claim submission without a real returned issue URL.' + (contribution ? ' This issue requests maintainer review only; never call upsert_knowledge on behalf of a contributor or report CMS publication.' : ''),
   }
 }
 

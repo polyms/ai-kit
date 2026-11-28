@@ -41,6 +41,64 @@ describe('AI Kit feedback issue drafting and authorized handoff', () => {
     expect(result.prefilledUrlTruncated).toBe(false)
   })
 
+  const knowledge = {
+    intent: 'incident' as const,
+    disposition: 'new' as const,
+    applicability: 'Example tool v2 on Linux; not tested elsewhere.',
+    evidence: 'Synthetic fixture: verified exit 0; no production claim.',
+    overlap: 'Searched generic symptom; no matching published article.',
+  }
+  const candidate = { description: 'A generic remediation with verification steps.', category: 'knowledge' as const, knowledge }
+
+  it('drafts a distinct Knowledge candidate without publishing or changing legacy feedback', () => {
+    const result = prepareFeedbackIssue(candidate)
+    expect(result.status).toBe('draft')
+    if (result.status !== 'draft') return
+    expect(result.title).toBe('[Knowledge][incident] A generic remediation with verification steps.')
+    expect(result.body).toContain('## Intent and disposition')
+    expect(result.body).toContain('incident / new')
+    expect(result.body).toContain(knowledge.applicability)
+    expect(result.body).toContain(knowledge.evidence)
+    expect(result.body).toContain(knowledge.overlap)
+    expect(result.body).toContain('not CMS publication or a skill change')
+    expect(result.githubCreateIssue).toEqual({ repository_full_name: 'polyms/ai-kit', title: result.title, body: result.body })
+    expect(result.requiresApproval).toBe(true)
+    const link = new URL(result.prefilledUrl)
+    expect(link.searchParams.get('category')).toBe('Knowledge contribution / Đóng góp Knowledge')
+    expect(link.searchParams.get('feedback')).toBe(result.body)
+    expect(result.prefilledUrlTruncated).toBe(false)
+    expect(result.nextStep).toContain('never call upsert_knowledge')
+  })
+
+  it('requires contribution metadata and existing identity for updates, not new candidates', () => {
+    expect(prepareFeedbackIssue({ description: candidate.description, category: 'knowledge' }).status).toBe('invalid')
+    expect(prepareFeedbackIssue({ ...candidate, category: 'skill' }).status).toBe('invalid')
+    expect(prepareFeedbackIssue({ ...candidate, knowledge: { ...knowledge, disposition: 'update' } }).status).toBe('invalid')
+    expect(prepareFeedbackIssue({ ...candidate, knowledge: { ...knowledge, target: 'KN-001' } }).status).toBe('invalid')
+    const update = prepareFeedbackIssue({ ...candidate, knowledge: { ...knowledge, disposition: 'update', target: 'KN-001', overlap: 'Existing article KN-001 needs correction.' } })
+    expect(update.status).toBe('draft')
+    if (update.status === 'draft') expect(update.body).toContain('KN-001')
+  })
+
+  it('checks sensitive content inside contribution metadata before drafting', () => {
+    const secret = 'ghp_abcdefghijklmnopqrstuvwxyz1234'
+    const result = prepareFeedbackIssue({ ...candidate, knowledge: { ...knowledge, evidence: 'Private token ' + secret } })
+    expect(result.status).toBe('review_required')
+    expect(JSON.stringify(result)).not.toContain(secret)
+  })
+
+  it('retains full Knowledge draft when fallback URL requires an excerpt', () => {
+    const result = prepareFeedbackIssue({ ...candidate, description: 'Hướng dẫn kỹ thuật có thể dùng lại. '.repeat(60).slice(0, 2400), knowledge: { ...knowledge, evidence: 'Bằng chứng đã xác minh. '.repeat(60).slice(0, 1400) } })
+    expect(result.status).toBe('draft')
+    if (result.status !== 'draft') return
+    expect(result.prefilledUrlTruncated).toBe(true)
+    expect(result.prefilledUrl.length).toBeLessThanOrEqual(6800)
+    const link = new URL(result.prefilledUrl)
+    expect(link.searchParams.get('category')).toBe('Knowledge contribution / Đóng góp Knowledge')
+    expect(link.searchParams.get('feedback')).toContain('Shortened for GitHub URL length')
+    expect(result.body).toContain('## Evidence and provenance')
+  })
+
   it('needs only natural language feedback, not a benchmark or tool logs', () => {
     const result = prepareFeedbackIssue({ description: 'Please add a clearer task template example.' })
     expect(result.status).toBe('draft')
@@ -91,6 +149,11 @@ describe('AI Kit feedback issue drafting and authorized handoff', () => {
     expect(body.status).toBe('draft')
     expect(body.githubCreateIssue.repository_full_name).toBe('polyms/ai-kit')
     expect(body.requiresApproval).toBe(true)
+    const schema = registerTool.mock.calls[0]?.[1].inputSchema
+    expect(schema.safeParse(candidate).success).toBe(true)
+    const contribution = JSON.parse((await handler(candidate)).content[0].text)
+    expect(contribution.title).toContain('[Knowledge][incident]')
+    expect(contribution.requiresApproval).toBe(true)
   })
 
   it('rejects empty descriptions and never claims an issue was published', () => {
