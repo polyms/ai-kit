@@ -697,12 +697,14 @@ describe('skill composition', () => {
     const protocol = readFileSync(join(repoRoot, REFLECTION_PROTOCOL), 'utf8')
     for (const cue of ['Do not generalize a single observation', 'Generalize before any external query',
       'Search before proposing', 'overlap unverified', 'Require explicit approval',
-      'replaces all chunks', 'No automatic', 'Never\n  discover, connect to or call a memory service']) {
+      'replaces all chunks', 'No automatic', 'Never\n  discover, connect to or call a memory service',
+      'Published-only', 'If all-status identity cannot be verified, stop at the draft']) {
       expect(protocol).toContain(cue)
     }
     expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('replaces all chunks, not a draft')
     expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('Require explicit approval of this exact publication')
     expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('preserve unrelated fields/chunks and stop on conflicts')
+    expect(UPSERT_KNOWLEDGE_TOOL_DESCRIPTION).toContain('MCP NOT_FOUND is insufficient')
   })
 
   it('validates the manual reflection scenarios without claiming model behavior', () => {
@@ -716,7 +718,7 @@ describe('skill composition', () => {
       disposition: string
     }[]
     const names = new Set(listSkillPacks().map(pack => pack.name))
-    expect(cases).toHaveLength(10)
+    expect(cases).toHaveLength(12)
     expect(new Set(cases.map(item => item.id)).size).toBe(cases.length)
     for (const item of cases) {
       expect(item.id).toMatch(/^RF-\d{2}$/)

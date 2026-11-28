@@ -89,17 +89,20 @@ in-scope, useful technical lesson:
 
 ## 4. Review, authorize and verify publication separately
 
-Show the complete proposed published content, destination, disposition and meaningful changes
+Show the complete proposed published content (all fields and chunks), destination, disposition and meaningful changes
 to the user/authorized maintainer. A successful task, admin token, draft approval for another
 artifact or instruction to reflect is not publication approval. Require explicit approval of
 the exact Knowledge publication and a verified admin-authorized route before calling
 `upsert_knowledge`. The tool creates/updates **published** content and replaces all chunks;
 it is not a draft, append or review-queue operation.
 
-For a new article, confirm a collision-free ID/slug using the live catalog and maintainer-owned
-identity conventions; do not reuse an existing identity for a different article. For updates,
-re-open the live target immediately before writing, compare the reviewed content and preserve
-all unaffected fields/chunks, their IDs and order. If content changed, identity is uncertain,
+For a new article, confirm unused article and chunk IDs/slugs across all statuses through an
+authorized admin source or maintainer-confirmed allocation backed by that source. Published-only
+MCP reads cannot rule out unpublished collisions; a NOT_FOUND result is not proof of availability.
+If all-status identity cannot be verified, stop at the draft. Never reuse an identity for a different
+article. For updates, re-open the live target immediately before writing, compare the reviewed
+content and preserve all unaffected fields/chunks, their IDs and order. Verify any newly added
+chunk identities against the same all-status source. If content changed, identity is uncertain,
 or concurrent edits cannot be safely reconciled, stop and return a revised draft for approval.
 Do not claim an atomic compare-and-swap guarantee; the existing tool has no revision precondition.
 Do not delete or deprecate another article through this protocol.

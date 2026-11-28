@@ -27,8 +27,9 @@ workspace. A cloud sandbox is not necessarily a checkout; a connector is not nec
 
 - At a meaningful verified outcome, reflect once only when a reusable lesson is evident or a
   retrospective is requested. Load [Reflection and Knowledge Contribution](reflection-protocol.md)
-  selectively for a shared Knowledge or skill contribution; preserve scope and privacy, never
-  auto-publish or force another search. No useful lesson means skip.
+  selectively for a shared Knowledge or skill contribution when available in the current kit;
+  preserve scope and privacy, never auto-publish or force another search. No useful lesson means
+  skip. If the reference is unavailable, keep a bounded private lesson/draft; do not publish.
 - Express gates as observable outcomes, not mandatory commands. CLI examples are equivalent
   operations, not required tools. Verify checkout/ref or remote comparison; preserve merge-base
   semantics and disclose truncated diffs. Do not mix a PR patch and unrelated HEAD.

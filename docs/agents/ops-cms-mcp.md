@@ -156,6 +156,10 @@ Client-specific MCP availability, authentication, and invocation behavior may va
 - Follow `SKILL.md` first; consult bundled templates and references when relevant.
 - Work skills include the shared work artifact standard and their applicable templates.
 - Skill loading is read-only; publishing tickets or documents uses the client's authorized integrations.
+- `docs/agents/reflection-protocol.md` is a selective reference in every live pack, not a starter.
+  Shared Knowledge candidates are drafts; `upsert_knowledge` is an immediate admin publication,
+  not a draft tool. Explicit approval, overlap checks, all-status identity evidence for new IDs/slugs
+  and readback are host guidance, not new server-side enforcement.
 - For design, use the returned `uiKit` content when the skill invokes `/ui-kit`.
 
 Files are fetched in parallel without an application cache, with a ten-second timeout per file.

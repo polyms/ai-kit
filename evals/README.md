@@ -39,7 +39,7 @@ establish model correctness or real integration behavior. Use the ordinary
 
 ## Reflection and Knowledge Contribution
 
-See [manual reflection scenarios](reflection/README.md) for ten synthetic host-client cases.
+See [manual reflection scenarios](reflection/README.md) for twelve synthetic host-client cases.
 They are structurally checked in the skill-pack suite, not part of the paired runner; no real writes.
 
 ## Memory Protocol pilot
