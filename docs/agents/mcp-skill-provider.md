@@ -115,11 +115,12 @@ Connect the client's MCP implementation to `https://ai-kit.polyms.dev/mcp` using
 and the server's OAuth flow. Client support for these features varies; do not assume every AI product
 can connect or automatically invoke remote skills.
 
-1. For uncertain intent, call `list_skill_packs({view: "routing"})`. If the skill is already known,
+1. For uncertain intent, call `list_skill_packs({view: "routing"})`. If a single skill is already known,
    call `get_skill_pack({name, strategy: "starter"})` directly without discovery.
 2. Select only relevant packs using descriptions and routing hints; honor native client policy and explicit user choices. For conversational MCP, `mcpSelection: intent` permits natural-language task selection, including reqs/design/docs. `explicit-intent` requires a clearly requested special workflow/outcome or bounded authorized assignment, not slash syntax. `nativeInvocation` is present for all packs and preserves installed skill policy. Legacy engineering `invocation` remains for backward compatibility. Selection grants no action authority.
    Call `get_skill_pack` with the selected name and that pack's `starterPaths` as `paths`;
    exclude applicable shared files already loaded in the task. Read the selected pack's full contract.
+   For multi-skill composition, discover recipe metadata if not already available.
 3. Read the returned SKILL.md first. Apply the relevant bundled template and shared standard.
 4. Use user-supplied or authorized context. Draft the output, or publish only when requested.
 5. Return actual ticket/document IDs and links after a successful write.

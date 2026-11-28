@@ -33,7 +33,14 @@ import {
   WORK_REFERENCE_PATHS,
   PORTABLE_SKILL_STANDARD,
 } from './skill-pack'
-import { executeGetSkillPack, executeListSkillPacks, MCP_SKILL_SOURCE, registerSkillPackMcpTools } from './skill-pack.mcp'
+import {
+  executeGetSkillPack,
+  executeListSkillPacks,
+  GET_SKILL_PACK_TOOL_DESCRIPTION,
+  LIST_SKILL_PACKS_TOOL_DESCRIPTION,
+  MCP_SKILL_SOURCE,
+  registerSkillPackMcpTools,
+} from './skill-pack.mcp'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '../../../../..')
 
@@ -638,6 +645,15 @@ describe('skill composition', () => {
     const provider = readFileSync(join(repoRoot, 'apps/landing/src/lib/skill-pack/skill-pack.mcp.ts'), 'utf8')
     expect(provider).toContain('Memory means your own host agent memory')
     expect(provider).toContain('Never discover, connect to, or call a memory service')
+    // Direct starter retrieval can bypass catalog discovery: both tool descriptions must retain the boundary.
+    for (const description of [LIST_SKILL_PACKS_TOOL_DESCRIPTION, GET_SKILL_PACK_TOOL_DESCRIPTION]) {
+      expect(description).toContain('your own host agent memory')
+      expect(description.toLowerCase()).toContain('never discover, connect to, or call a memory service or connector')
+      expect(description).toContain('ask to enable memory')
+      expect(description).toContain('If no relevant memory exists, continue')
+    }
+    expect(GET_SKILL_PACK_TOOL_DESCRIPTION).toContain('contract.context')
+    expect(GET_SKILL_PACK_TOOL_DESCRIPTION).toContain('resolve only material gaps')
     const cases = JSON.parse(readFileSync(join(repoRoot, 'evals/memory/cases.json'), 'utf8'))
     const traps = cases.filter((item: { memoryLookup?: unknown }) => item.memoryLookup)
     expect(traps.map((item: { id: string }) => item.id)).toEqual(['MP-16', 'MP-17'])

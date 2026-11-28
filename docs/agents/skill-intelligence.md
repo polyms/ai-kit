@@ -36,7 +36,8 @@ force a work pack. The client reasons about user intent; the server returns dete
 ```ts
 const catalog = await list_skill_packs({ view: 'routing' })
 // After selecting design from catalog.packs:
-await get_skill_pack({ name: 'design', paths: ['skills/design/SKILL.md'] })
+const design = catalog.packs.find(pack => pack.name === 'design')!
+await get_skill_pack({ name: design.name, paths: design.starterPaths })
 // After reading the workflow, load only the references for the active branch:
 await get_skill_pack({
   name: 'design',
@@ -44,12 +45,13 @@ await get_skill_pack({
 })
 ```
 
-The first call already returns other files' metadata; a separate manifest-only call is usually
+The first retrieval already returns other files' metadata; a separate manifest-only call is usually
 unnecessary. Short work packs start with workflow, shared standard, context guidance and default template;
 reqs/docs start with workflow, standard and context guidance; design starts with workflow and context
 guidance. Load additional templates/references
 before the step that needs them. Reuse files within the current session. No server-side session state.
-If the skill is known, `get_skill_pack({name, strategy: "starter"})` skips catalog discovery.
+If a single skill is known, `get_skill_pack({name, strategy: "starter"})` skips catalog discovery.
+For multi-skill composition, discover recipe metadata if it is not already available.
 For composition, use explicit starter paths minus still-applicable shared files already loaded
 in the task; refresh when freshness matters because mutable main is not revision-pinned.
 Omitting both paths and strategy preserves legacy full-core retrieval; `strategy: "manifest"` or
